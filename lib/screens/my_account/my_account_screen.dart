@@ -1,22 +1,28 @@
+import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/my_account/widgets/account_navigation_bar.dart';
 import 'package:almajidoud/screens/my_account/widgets/logout_button.dart';
-import 'package:almajidoud/screens/my_account/widgets/my_account_header.dart';
 import 'package:almajidoud/screens/my_account/widgets/single_account_item.dart';
 import 'package:almajidoud/screens/my_account/widgets/user_email.dart';
 import 'package:almajidoud/screens/my_account/widgets/user_image_widget.dart';
 import 'package:almajidoud/screens/my_account/widgets/user_name.dart';
 import 'package:almajidoud/utils/file_export.dart';
-
+import 'package:almajidoud/screens/my_account/register_bottom_sheet.dart';
 class MyAccountScreen extends StatefulWidget {
   @override
   _MyAccountScreenState createState() => _MyAccountScreenState();
 }
 
 class _MyAccountScreenState extends State<MyAccountScreen> {
+  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  FocusNode fieldNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return NetworkIndicator(
+        child: PageContainer(
+            child:Scaffold(
       backgroundColor: whiteColor,
+      key: _drawerKey,
       body: Container(
           height: height(context),
           width: width(context),
@@ -34,6 +40,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         imagePath:
                             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyj-wgGa-GZ1vJSGgmf6LCmvd7fxUgl-Pl0w&usqp=CAU",
                         onTapAddImage: () {
+                          showRegisterBottomSheet(context: context);
                           print("add image tapped ");
                         }),
                     userName(context: context, name: "User Name"),
@@ -82,13 +89,25 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    myAccountHeader(context: context),
+                //    myAccountHeader(context: context),
+                    ScreenAppBar(
+                      onTapCategoryDrawer: () {
+                        _drawerKey.currentState.openDrawer();
+                      }
+                      ,
+                      left_icon: "assets/icons/notifi.png",
+                    ),
                     accountBottomNavigationBar(context: context)
                   ],
                 ),
               ),
             ],
-          )),
-    );
+          )
+      ),
+      drawer: SettingsDrawer(
+        node: fieldNode,
+      ),
+
+    )));
   }
 }

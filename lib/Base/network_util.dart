@@ -23,7 +23,12 @@ SharedPreferenceManager sharedPreferenceManager =SharedPreferenceManager();
       print("222");
       response = await dio.get(
           url,
-          queryParameters:Map<String, dynamic>.from(headers));
+   //       queryParameters:Map<String, dynamic>.from(headers),
+        options: Options(
+          headers: headers,
+          contentType: 'application/json',
+        )
+      );
 
       print('res : ${response}');
     } on DioError catch (e) {

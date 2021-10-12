@@ -1,5 +1,5 @@
 import 'package:almajidoud/custom_widgets/custom_push_named_navigation.dart';
-import 'package:almajidoud/screens/bottob_Navigation_bar/widgets/bottom_navigation_bar_item.dart';
+import 'package:almajidoud/screens/bottom_Navigation_bar/widgets/bottom_navigation_bar_item.dart';
 import 'package:almajidoud/screens/cart/cart_screen.dart';
 import 'package:almajidoud/screens/home/home_screen.dart';
 import 'package:almajidoud/screens/location/location_screen.dart';

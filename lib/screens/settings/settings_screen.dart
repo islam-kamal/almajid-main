@@ -1,3 +1,4 @@
+import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/settings/widgets/app_version.dart';
 import 'package:almajidoud/screens/settings/widgets/connnected_accounts.dart';
 import 'package:almajidoud/screens/settings/widgets/language_button.dart';
@@ -12,10 +13,15 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  FocusNode fieldNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     bool switch1 = true;
-    return Scaffold(
+    return NetworkIndicator(
+        child: PageContainer(
+            child:Scaffold(
+      key:_drawerKey,
       backgroundColor: whiteColor,
       body: Container(
           height: height(context),
@@ -113,13 +119,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    settingsHeader(context: context),
+                    ScreenAppBar(
+                      onTapCategoryDrawer: () {
+                        _drawerKey.currentState.openDrawer();
+                      },
+                      left_icon: "assets/icons/notifi.png",
+                    ),
                     settingsBottomNavigationBar(context: context)
                   ],
                 ),
               ),
             ],
           )),
-    );
+      drawer: SettingsDrawer(
+        node: fieldNode,
+      ),
+    )));
   }
 }

@@ -1,5 +1,5 @@
 import 'package:almajidoud/custom_widgets/custom_push_named_navigation.dart';
-import 'package:almajidoud/screens/bottob_Navigation_bar/widgets/bottom_navigation_bar_item.dart';
+import 'package:almajidoud/screens/bottom_Navigation_bar/widgets/bottom_navigation_bar_item.dart';
 import 'package:almajidoud/screens/cart/cart_screen.dart';
 import 'package:almajidoud/screens/home/home_screen.dart';
 import 'package:almajidoud/screens/location/location_screen.dart';
@@ -22,8 +22,6 @@ accountBottomNavigationBar({BuildContext context}){
                     boxShape: NeumorphicBoxShape.roundRect(BorderRadius.only(topLeft:
                     Radius.circular(10) , topRight: Radius.circular(10))),
 
-//                                            lightSource: LightSource.topLeft,
-//
                   ),
                   child: Container(height: height(context)*.08, width: width(context),
                     decoration: BoxDecoration(color: whiteColor),)),
@@ -43,14 +41,12 @@ accountBottomNavigationBar({BuildContext context}){
             customBottomBarButton(context: context , isActive: false, icon: "assets/icons/home.png" , onTap: (){
               customPushNamedNavigation(context, HomeScreen());
             } ),
-            customBottomBarButton(context: context , isActive: false ,
-                icon: "assets/icons/settings.png" , onTap: (){
+            customBottomBarButton(context: context , isActive: false , icon: "assets/icons/settings.png" , onTap: (){
                   customPushNamedNavigation(context, SettingsScreen());
 
                 },
             ),
-            customBottomBarButton(context: context , isActive: true ,
-                icon: "assets/icons/profile.png" , title: "Account", onTap: (){
+            customBottomBarButton(context: context , isActive: true , icon: "assets/icons/profile.png" , title: "Account", onTap: (){
                   customPushNamedNavigation(context, MyAccountScreen());
 
                 }),

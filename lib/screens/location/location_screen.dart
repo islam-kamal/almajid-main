@@ -1,9 +1,9 @@
+import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/home/widgets/categories_buttons.dart';
 import 'package:almajidoud/screens/home/widgets/new_arrivals_listview.dart';
 import 'package:almajidoud/screens/home/widgets/title_text.dart';
 import 'package:almajidoud/screens/home/widgets/top_slider.dart';
 import 'package:almajidoud/screens/location/widgets/location_bottom_navigation_bar.dart';
-import 'package:almajidoud/screens/location/widgets/location_header.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -11,9 +11,15 @@ class LocationScreen extends StatefulWidget {
   _LocationScreenState createState() => _LocationScreenState();
 }
 class _LocationScreenState extends State<LocationScreen> {
+  FocusNode fieldNode = FocusNode();
+  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return NetworkIndicator(
+        child: PageContainer(
+            child:Scaffold(
+      key: _drawerKey,
       backgroundColor: whiteColor,
       body: Container(
           height: height(context),
@@ -60,6 +66,8 @@ class _LocationScreenState extends State<LocationScreen> {
                     responsiveSizedBox(
                         context: context, percentageOfHeight: .35),
                     Image.asset("assets/icons/location2.png"),
+                    responsiveSizedBox(
+                        context: context, percentageOfHeight: .05),
                     customDescriptionText(
                         context: context,
                         textColor: whiteColor,
@@ -91,13 +99,22 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    locationHeader(context: context),
+                    ScreenAppBar(
+                      onTapCategoryDrawer: () {
+                        _drawerKey.currentState.openDrawer();
+                      }
+                      ,
+                    ),
+
                     locationBottomNavigationBar(context: context)
                   ],
                 ),
               ),
             ],
           )),
-    );
+      drawer: SettingsDrawer(
+        node: fieldNode,
+      ),
+    )));
   }
 }

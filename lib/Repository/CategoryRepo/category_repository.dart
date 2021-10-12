@@ -10,23 +10,34 @@ class CategoryRepository {
 
   Future<CategoryModel> getCategoriesList() async {
     Map<String, String> headers = {
-      'lang': translator.currentLanguage,
-
+      //'lang': translator.currentLanguage,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
     };
     return NetworkUtil.internal().get(
-        CategoryModel(), Urls.GET_ALL_CATEGORIES, headers: headers);
+        CategoryModel(), Urls.GET_ALL_CATEGORIES, headers: headers  );
   }
 
 
   Future<ProductModel> getCategoryProducts(
       {String category_id, int offset}) async {
     Map<String, String> headers = {
-      'lang': translator.currentLanguage,
-      'category_id': category_id,
-      'offset': offset.toString()
+  /*  'searchCriteria[filterGroups][0][filters][1][field]':'category_id',
+    'searchCriteria[filterGroups][0][filters][1][value]':category_id,
+    'searchCriteria[filterGroups][0][filters][1][conditionType]':'eq',
+    'searchCriteria[sortOrders][0][field]':'position',
+    'searchCriteria[sortOrders][0][direction]':'ASC',
+    'searchCriteria[pageSize]':10.toString(),
+    'searchCriteria[currentPage]':offset.toString(),*/
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
     };
     return NetworkUtil.internal().get(
-        ProductModel(), Urls.GET_CATEGORy_PRODUCTS, headers: headers);
+        ProductModel(),
+        'https://test.almajed4oud.com/${translator.currentLanguage}-sa/rest/V1/products?searchCriteria&searchCriteria[filterGroups][0][filters][1][field]=category_id&searchCriteria[filterGroups][0][filters][1][value]=${category_id}&searchCriteria[filterGroups][0][filters][1][conditionType]=eq&searchCriteria[sortOrders][0][field]=position& searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[pageSize]=10& searchCriteria[currentPage]=${offset}',
+    headers: headers);
   }
 
 

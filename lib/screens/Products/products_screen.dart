@@ -1,21 +1,18 @@
-import 'package:almajidoud/screens/categories/categories_screen.dart';
-import 'package:almajidoud/screens/home/widgets/categories_buttons.dart';
-import 'package:almajidoud/screens/home/widgets/home_bottom_navigation_bar.dart';
-import 'package:almajidoud/screens/home/widgets/new_arrivals_listview.dart';
-import 'package:almajidoud/screens/home/widgets/title_text.dart';
-import 'package:almajidoud/screens/home/widgets/top_slider.dart';
 import 'package:almajidoud/utils/file_export.dart';
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
 
-class _HomeScreenState extends State<HomeScreen> {
+class ProductsScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return ProductsScreenState();
+  }
+
+}
+class ProductsScreenState extends State<ProductsScreen>{
+  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
-    GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-
-    FocusNode fieldNode = FocusNode();
     return NetworkIndicator(
       child: PageContainer(
         child: Scaffold(
@@ -29,15 +26,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                     height: height(context),
                     child: SingleChildScrollView(
-                        child: Column(
+                        child: Container() /*Column(
                           children: [
                             responsiveSizedBox(
-                                context: context, percentageOfHeight: .09),
+                                context: context, percentageOfHeight: .13),
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .01),
                             titleText(context: context, text: "Shop By Category"),
                             responsiveSizedBox(
-                                context: context, percentageOfHeight: .02),
+                                context: context, percentageOfHeight: .01),
                             categoriesButtons(context: context),
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .002),
@@ -54,36 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .11),
                           ],
-                        )),
-                  ),
-                  Container(
-                    height: height(context),
-                    width: width(context),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ScreenAppBar(
-                            onTapCategoryDrawer: () {
-                              _drawerKey.currentState.openDrawer();
-                            },
-                        ),
-                     /*   homeHeader(
-                            context: context,
-                            onTapCategoryDrawer: () {
-                              _drawerKey.currentState.openDrawer();
-                            }),*/
-                        homeBottomNavigationBar(context: context)
-                      ],
-                    ),
+                        )*/),
                   ),
                 ],
               )),
-          drawer: SettingsDrawer(
-            node: fieldNode,
-          ),
-
         ),
       ),
     );
   }
+
 }

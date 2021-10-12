@@ -14,7 +14,9 @@ class _EditCartScreenState extends State<EditCartScreen> {
   @override
   Widget build(BuildContext context) {
     bool checkValue = true;
-    return Scaffold(
+    return NetworkIndicator(
+      child: PageContainer(
+      child:Scaffold(
       backgroundColor: whiteColor,
       body: Container(
           height: height(context),
@@ -64,6 +66,6 @@ class _EditCartScreenState extends State<EditCartScreen> {
               ),
             ],
           )),
-    );
+    ))  );
   }
 }

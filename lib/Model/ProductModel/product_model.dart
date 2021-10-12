@@ -1,691 +1,471 @@
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:intl/intl.dart';
 
-class ProductModel extends BaseMappable {
-  bool status;
-  int code;
-  String msg;
-  Data data;
 
-  ProductModel({this.status, this.code, this.msg, this.data});
-
-  ProductModel.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    code = json['code'];
-    msg = json['msg'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-  }
+class ProductModel extends BaseMappable{
+  List<Items> items;
+  SearchCriteria searchCriteria;
+  var totalCount;
+  var message;
+  Parameters parameters;
+  var trace;
+  ProductModel({this.items, this.searchCriteria, this.totalCount,this.message,this.parameters,this.trace});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['code'] = this.code;
-    data['msg'] = this.msg;
-    if (this.data != null) {
-      data['data'] = this.data.toJson();
+    if (this.items != null) {
+      data['items'] = this.items.map((v) => v.toJson()).toList();
     }
+    if (this.searchCriteria != null) {
+      data['search_criteria'] = this.searchCriteria.toJson();
+    }
+    data['total_count'] = this.totalCount;
+    data['message'] = this.message;
+    if (this.parameters != null) {
+      data['parameters'] = this.parameters.toJson();
+    }
+    data['trace'] = this.trace;
     return data;
   }
 
   @override
   Mappable fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    code = json['code'];
-    msg = json['msg'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-    return ProductModel(status: status,msg: msg,code: code,data: data);
-  }
-}
-
-class Data {
-  List<Products> products;
-  Meta meta;
-
-  Data({this.products, this.meta});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    if (json['products'] != null) {
-      products = new List<Products>();
-      json['products'].forEach((v) {
-        products.add(new Products.fromJson(v));
+    if (json['items'] != null) {
+      items = new List<Items>();
+      json['items'].forEach((v) {
+        items.add(new Items.fromJson(v));
       });
     }
-    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.products != null) {
-      data['products'] = this.products.map((v) => v.toJson()).toList();
-    }
-    if (this.meta != null) {
-      data['meta'] = this.meta.toJson();
-    }
-    return data;
+    searchCriteria = json['search_criteria'] != null
+        ? new SearchCriteria.fromJson(json['search_criteria'])
+        : null;
+    totalCount = json['total_count'];
+    message = json['message'];
+    parameters = json['parameters'] != null
+        ? new Parameters.fromJson(json['parameters'])
+        : null;
+    trace = json['trace'];
+    return ProductModel(totalCount: totalCount,searchCriteria: searchCriteria,items: items,
+      message:message, parameters :parameters , trace : trace
+    );
   }
 }
 
-class Products {
+class Items {
   var id;
+  var sku;
   var name;
-  var description;
-  var unit;
-  var unitPackage;
-  var quantity;
+  var attributeSetId;
   var price;
-  var priceAfterDiscount;
-  var discount;
-  var savedAmount;
-  var flavor;
-  var shape;
-  var unitSize;
-  var overallSize;
-  var unitPrice;
-  var cover;
-  var notes;
-  var sizeId;
-  var brandId;
-  Size size;
-  Brand brand;
-  var code;
-  var mostSelling;
-  var numberArrangementUnitsSameItem;
-  var countRates;
-  var totalRate;
-  var inFavorite;
-  SubCategory subCategory;
-  List<Files> files;
-  List<Rates> rates;
-  CreateDates createDates;
-  UpdateDates updateDates;
-
-  Products(
-      {this.id,
-        this.name,
-        this.description,
-        this.unit,
-        this.unitPackage,
-        this.quantity,
-        this.price,
-        this.priceAfterDiscount,
-        this.discount,
-        this.savedAmount,
-        this.flavor,
-        this.shape,
-        this.unitSize,
-        this.overallSize,
-        this.unitPrice,
-        this.cover,
-        this.notes,
-        this.sizeId,
-        this.brandId,
-        this.size,
-        this.brand,
-        this.code,
-        this.mostSelling,
-        this.numberArrangementUnitsSameItem,
-        this.countRates,
-        this.totalRate,
-        this.inFavorite,
-        this.subCategory,
-        this.files,
-        this.rates,
-        this.createDates,
-        this.updateDates});
-
-  Products.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    description = json['description'];
-    unit = json['unit'];
-    unitPackage = json['unit_package'];
-    quantity = json['quantity'];
-    price = json['price'];
-    priceAfterDiscount = json['price_after_discount'];
-    discount = json['discount'];
-    savedAmount = json['saved_amount'];
-    flavor = json['flavor'];
-    shape = json['shape'];
-    unitSize = json['unit_size'];
-    overallSize = json['overall_size'];
-    unitPrice = json['unit_price'];
-    cover = json['cover'];
-    notes = json['notes'];
-    sizeId = json['size_id'];
-    brandId = json['brand_id'];
-    size = json['size'] != null ? new Size.fromJson(json['size']) : null;
-      brand = json['brand'] != null ? new Brand.fromJson(json['brand']) : null;
-    code = json['code'];
-    mostSelling = json['most_selling'];
-    numberArrangementUnitsSameItem = json['number_arrangement_units_same_item'];
-    countRates = json['count_rates'];
-    totalRate = json['total_rate'];
-    inFavorite = json['in_favorite'];
-    subCategory = json['sub_category'] != null
-        ? new SubCategory.fromJson(json['sub_category'])
-        : null;
-    if (json['files'] != null) {
-      files = new List<Files>();
-      json['files'].forEach((v) {
-        files.add(new Files.fromJson(v));
-      });
-    }
-    if (json['rates'] != null) {
-      rates = new List<Rates>();
-      json['rates'].forEach((v) {
-        rates.add(new Rates.fromJson(v));
-      });
-    }
-    createDates = json['create_dates'] != null
-        ? new CreateDates.fromJson(json['create_dates'])
-        : null;
-    updateDates = json['update_dates'] != null
-        ? new UpdateDates.fromJson(json['update_dates'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['unit'] = this.unit;
-    data['unit_package'] = this.unitPackage;
-    data['quantity'] = this.quantity;
-    data['price'] = this.price;
-    data['price_after_discount'] = this.priceAfterDiscount;
-    data['discount'] = this.discount;
-    data['saved_amount'] = this.savedAmount;
-    data['flavor'] = this.flavor;
-    data['shape'] = this.shape;
-    data['unit_size'] = this.unitSize;
-    data['overall_size'] = this.overallSize;
-    data['unit_price'] = this.unitPrice;
-    data['cover'] = this.cover;
-    data['notes'] = this.notes;
-    data['size_id'] = this.sizeId;
-    data['brand_id'] = this.brandId;
-    if (this.size != null) {
-      data['size'] = this.size.toJson();
-    }
-    if (this.brand != null) {
-      data['brand'] = this.brand.toJson();
-    }
-    data['code'] = this.code;
-    data['most_selling'] = this.mostSelling;
-    data['number_arrangement_units_same_item'] =
-        this.numberArrangementUnitsSameItem;
-    data['count_rates'] = this.countRates;
-    data['total_rate'] = this.totalRate;
-    data['in_favorite'] = this.inFavorite;
-    if (this.subCategory != null) {
-      data['sub_category'] = this.subCategory.toJson();
-    }
-    if (this.files != null) {
-      data['files'] = this.files.map((v) => v.toJson()).toList();
-    }
-    if (this.rates != null) {
-      data['rates'] = this.rates.map((v) => v.toJson()).toList();
-    }
-    if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
-    }
-    if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
-    }
-    return data;
-  }
-}
-
-
-
-
-class Size {
-  int id;
-  String name;
-  int active;
-  String nameAr;
-  String nameEn;
-  CreateDates createDates;
-  UpdateDates updateDates;
-
-  Size(
-      {this.id,
-        this.name,
-        this.active,
-        this.nameAr,
-        this.nameEn,
-        this.createDates,
-        this.updateDates});
-
-  Size.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    active = json['active'];
-    nameAr = json['name_ar'];
-    nameEn = json['name_en'];
-    createDates = json['create_dates'] != null
-        ? new CreateDates.fromJson(json['create_dates'])
-        : null;
-    updateDates = json['update_dates'] != null
-        ? new UpdateDates.fromJson(json['update_dates'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['active'] = this.active;
-    data['name_ar'] = this.nameAr;
-    data['name_en'] = this.nameEn;
-    if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
-    }
-    if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
-    }
-    return data;
-  }
-}
-
-class Brand {
-  int id;
-  String name;
-  int active;
-  String nameAr;
-  String nameEn;
-  CreateDates createDates;
-  UpdateDates updateDates;
-
-  Brand(
-      {this.id,
-        this.name,
-        this.active,
-        this.nameAr,
-        this.nameEn,
-        this.createDates,
-        this.updateDates});
-
-  Brand.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    active = json['active'];
-    nameAr = json['name_ar'];
-    nameEn = json['name_en'];
-    createDates = json['create_dates'] != null
-        ? new CreateDates.fromJson(json['create_dates'])
-        : null;
-    updateDates = json['update_dates'] != null
-        ? new UpdateDates.fromJson(json['update_dates'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['active'] = this.active;
-    data['name_ar'] = this.nameAr;
-    data['name_en'] = this.nameEn;
-    if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
-    }
-    if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
-    }
-    return data;
-  }
-}
-class SubCategory {
-  var id;
-  var name;
-  var cover;
-  Category category;
-  CreateDates createDates;
-  UpdateDates updateDates;
-
-  SubCategory(
-      {this.id,
-        this.name,
-        this.cover,
-        this.category,
-        this.createDates,
-        this.updateDates});
-
-  SubCategory.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    cover = json['cover'];
-    category = json['category'] != null
-        ? new Category.fromJson(json['category'])
-        : null;
-    createDates = json['create_dates'] != null
-        ? new CreateDates.fromJson(json['create_dates'])
-        : null;
-    updateDates = json['update_dates'] != null
-        ? new UpdateDates.fromJson(json['update_dates'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['cover'] = this.cover;
-    if (this.category != null) {
-      data['category'] = this.category.toJson();
-    }
-    if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
-    }
-    if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
-    }
-    return data;
-  }
-}
-
-class Category {
-  var id;
-  var name;
-  var cover;
-  List<CategorySubCategory> subCategory;
-  CreateDates createDates;
-  UpdateDates updateDates;
-
-  Category(
-      {this.id,
-        this.name,
-        this.cover,
-        this.subCategory,
-        this.createDates,
-        this.updateDates});
-
-  Category.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    cover = json['cover'];
-    if (json['sub_category'] != null) {
-      subCategory = new List<CategorySubCategory>();
-      json['sub_category'].forEach((v) {
-        subCategory.add(new CategorySubCategory.fromJson(v));
-      });
-    }
-    createDates = json['create_dates'] != null
-        ? new CreateDates.fromJson(json['create_dates'])
-        : null;
-    updateDates = json['update_dates'] != null
-        ? new UpdateDates.fromJson(json['update_dates'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['cover'] = this.cover;
-    if (this.subCategory != null) {
-      data['sub_category'] = this.subCategory.map((v) => v.toJson()).toList();
-    }
-    if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
-    }
-    if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
-    }
-    return data;
-  }
-}
-
-class CategorySubCategory {
-  var id;
-  var nameAr;
-  var nameEn;
-  var photo;
-  var categoryId;
+  var status;
+  var visibility;
+  var typeId;
   var createdAt;
   var updatedAt;
-  var deletedAt;
-  var icon;
+  var weight;
+  ExtensionAttributes extensionAttributes;
+  List<ProductLinks> productLinks;
+  List<Options> options;
+  List<MediaGalleryEntries> mediaGalleryEntries;
+  List<TierPrices> tierPrices;
+  List<CustomAttributes> customAttributes;
 
-  CategorySubCategory(
+  Items(
       {this.id,
-        this.nameAr,
-        this.nameEn,
-        this.photo,
-        this.categoryId,
+        this.sku,
+        this.name,
+        this.attributeSetId,
+        this.price,
+        this.status,
+        this.visibility,
+        this.typeId,
         this.createdAt,
         this.updatedAt,
-        this.deletedAt,
-        this.icon});
+        this.weight,
+        this.extensionAttributes,
+        this.productLinks,
+        this.options,
+        this.mediaGalleryEntries,
+        this.tierPrices,
+        this.customAttributes});
 
-  CategorySubCategory.fromJson(Map<String, dynamic> json) {
+  Items.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    nameAr = json['name_ar'];
-    nameEn = json['name_en'];
-    photo = json['photo'];
-    categoryId = json['category_id'];
+    sku = json['sku'];
+    name = json['name'];
+    attributeSetId = json['attribute_set_id'];
+    price = json['price'];
+    status = json['status'];
+    visibility = json['visibility'];
+    typeId = json['type_id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    deletedAt = json['deleted_at'];
-    icon = json['icon'];
+    weight = json['weight'];
+    extensionAttributes = json['extension_attributes'] != null
+        ? new ExtensionAttributes.fromJson(json['extension_attributes'])
+        : null;
+    if (json['product_links'] != null) {
+      productLinks = new List<ProductLinks>();
+      json['product_links'].forEach((v) {
+        productLinks.add(new ProductLinks.fromJson(v));
+      });
+    }
+    if (json['options'] != null) {
+      options = new List<Options>();
+      json['options'].forEach((v) {
+        options.add(new Options.fromJson(v));
+      });
+    }
+    if (json['media_gallery_entries'] != null) {
+      mediaGalleryEntries = new List<MediaGalleryEntries>();
+      json['media_gallery_entries'].forEach((v) {
+        mediaGalleryEntries.add(new MediaGalleryEntries.fromJson(v));
+      });
+    }
+    if (json['tier_prices'] != null) {
+      tierPrices = new List<TierPrices>();
+      json['tier_prices'].forEach((v) {
+        tierPrices.add(new TierPrices.fromJson(v));
+      });
+    }
+    if (json['custom_attributes'] != null) {
+      customAttributes = new List<CustomAttributes>();
+      json['custom_attributes'].forEach((v) {
+        customAttributes.add(new CustomAttributes.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['name_ar'] = this.nameAr;
-    data['name_en'] = this.nameEn;
-    data['photo'] = this.photo;
-    data['category_id'] = this.categoryId;
+    data['sku'] = this.sku;
+    data['name'] = this.name;
+    data['attribute_set_id'] = this.attributeSetId;
+    data['price'] = this.price;
+    data['status'] = this.status;
+    data['visibility'] = this.visibility;
+    data['type_id'] = this.typeId;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    data['deleted_at'] = this.deletedAt;
-    data['icon'] = this.icon;
+    data['weight'] = this.weight;
+    if (this.extensionAttributes != null) {
+      data['extension_attributes'] = this.extensionAttributes.toJson();
+    }
+    if (this.productLinks != null) {
+      data['product_links'] = this.productLinks.map((v) => v.toJson()).toList();
+    }
+    if (this.options != null) {
+      data['options'] = this.options.map((v) => v.toJson()).toList();
+    }
+    if (this.mediaGalleryEntries != null) {
+      data['media_gallery_entries'] =
+          this.mediaGalleryEntries.map((v) => v.toJson()).toList();
+    }
+    if (this.tierPrices != null) {
+      data['tier_prices'] = this.tierPrices.map((v) => v.toJson()).toList();
+    }
+    if (this.customAttributes != null) {
+      data['custom_attributes'] =
+          this.customAttributes.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
 
-class CreateDates {
-  String createdAtHuman;
+class ExtensionAttributes {
+  List<int> websiteIds;
+  List<CategoryLinks> categoryLinks;
 
-  CreateDates({this.createdAtHuman});
+  ExtensionAttributes({this.websiteIds, this.categoryLinks});
 
-  CreateDates.fromJson(Map<String, dynamic> json) {
-    createdAtHuman = json['created_at_human'];
+  ExtensionAttributes.fromJson(Map<String, dynamic> json) {
+    websiteIds = json['website_ids'].cast<int>();
+    if (json['category_links'] != null) {
+      categoryLinks = new List<CategoryLinks>();
+      json['category_links'].forEach((v) {
+        categoryLinks.add(new CategoryLinks.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['created_at_human'] = this.createdAtHuman;
+    data['website_ids'] = this.websiteIds;
+    if (this.categoryLinks != null) {
+      data['category_links'] =
+          this.categoryLinks.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
 
-class UpdateDates {
-  String updatedAtHuman;
+class CategoryLinks {
+  var position;
+  var categoryId;
 
-  UpdateDates({this.updatedAtHuman});
+  CategoryLinks({this.position, this.categoryId});
 
-  UpdateDates.fromJson(Map<String, dynamic> json) {
-    updatedAtHuman = json['updated_at_human'];
+  CategoryLinks.fromJson(Map<String, dynamic> json) {
+    position = json['position'];
+    categoryId = json['category_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['updated_at_human'] = this.updatedAtHuman;
+    data['position'] = this.position;
+    data['category_id'] = this.categoryId;
     return data;
   }
 }
 
-class Files {
+class ProductLinks {
+  var sku;
+  var linkType;
+  var linkedProductSku;
+  var linkedProductType;
+  var position;
+
+  ProductLinks(
+      {this.sku,
+        this.linkType,
+        this.linkedProductSku,
+        this.linkedProductType,
+        this.position});
+
+  ProductLinks.fromJson(Map<String, dynamic> json) {
+    sku = json['sku'];
+    linkType = json['link_type'];
+    linkedProductSku = json['linked_product_sku'];
+    linkedProductType = json['linked_product_type'];
+    position = json['position'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['sku'] = this.sku;
+    data['link_type'] = this.linkType;
+    data['linked_product_sku'] = this.linkedProductSku;
+    data['linked_product_type'] = this.linkedProductType;
+    data['position'] = this.position;
+    return data;
+  }
+}
+
+class MediaGalleryEntries {
   var id;
-  var url;
-  CreateDates createDates;
-  UpdateDates updateDates;
+  var mediaType;
+  var label;
+  var position;
+  var disabled;
+  List<String> types;
+  var file;
 
-  Files({this.id, this.url, this.createDates, this.updateDates});
+  MediaGalleryEntries(
+      {this.id,
+        this.mediaType,
+        this.label,
+        this.position,
+        this.disabled,
+        this.types,
+        this.file});
 
-  Files.fromJson(Map<String, dynamic> json) {
+  MediaGalleryEntries.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    url = json['url'];
-    createDates = json['create_dates'] != null
-        ? new CreateDates.fromJson(json['create_dates'])
-        : null;
-    updateDates = json['update_dates'] != null
-        ? new UpdateDates.fromJson(json['update_dates'])
-        : null;
+    mediaType = json['media_type'];
+    label = json['label'];
+    position = json['position'];
+    disabled = json['disabled'];
+    types = json['types'].cast<String>();
+    file = json['file'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['url'] = this.url;
-    if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
-    }
-    if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
-    }
+    data['media_type'] = this.mediaType;
+    data['label'] = this.label;
+    data['position'] = this.position;
+    data['disabled'] = this.disabled;
+    data['types'] = this.types;
+    data['file'] = this.file;
     return data;
   }
 }
 
-class Rates {
-  var id;
+class CustomAttributes {
+  var attributeCode;
   var value;
-  var productQuality;
-  var deliveryTime;
-  var usingExperiences;
-  var comment;
-  var product;
-  var userId;
-  User user;
-  CreateDates createDates;
-  UpdateDates updateDates;
 
-  Rates(
-      {this.id,
-        this.value,
-        this.productQuality,
-        this.deliveryTime,
-        this.usingExperiences,
-        this.comment,
-        this.product,
-        this.userId,
-        this.user,
-        this.createDates,
-        this.updateDates});
+  CustomAttributes({this.attributeCode, this.value});
 
-  Rates.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+  CustomAttributes.fromJson(Map<String, dynamic> json) {
+    attributeCode = json['attribute_code'];
     value = json['value'];
-    productQuality = json['product_quality'];
-    deliveryTime = json['delivery_time'];
-    usingExperiences = json['using_experiences'];
-    comment = json['comment'];
-    product = json['product'];
-    userId = json['user_id'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
-    createDates = json['create_dates'] != null
-        ? new CreateDates.fromJson(json['create_dates'])
-        : null;
-    updateDates = json['update_dates'] != null
-        ? new UpdateDates.fromJson(json['update_dates'])
-        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    data['attribute_code'] = this.attributeCode;
     data['value'] = this.value;
-    data['product_quality'] = this.productQuality;
-    data['delivery_time'] = this.deliveryTime;
-    data['using_experiences'] = this.usingExperiences;
-    data['comment'] = this.comment;
-    data['product'] = this.product;
-    data['user_id'] = this.userId;
-    if (this.user != null) {
-      data['user'] = this.user.toJson();
-    }
-    if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
-    }
-    if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
-    }
     return data;
   }
 }
 
-class User {
-  var id;
-  var name;
-  var email;
-  var phone;
-  var type;
-  var promoCode;
-  var address;
-  var rewardPoint;
-  var walletBalance;
-
-  User(
-      {this.id,
-        this.name,
-        this.email,
-        this.phone,
-        this.type,
-        this.promoCode,
-        this.address,
-        this.rewardPoint,
-        this.walletBalance});
-
-  User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    email = json['email'];
-    phone = json['phone'];
-    type = json['type'];
-    promoCode = json['promo_code'];
-    address = json['address'];
-    rewardPoint = json['reward_point'];
-    walletBalance = json['wallet_balance'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['phone'] = this.phone;
-    data['type'] = this.type;
-    data['promo_code'] = this.promoCode;
-    data['address'] = this.address;
-    data['reward_point'] = this.rewardPoint;
-    data['wallet_balance'] = this.walletBalance;
-    return data;
-  }
-}
-
-class Meta {
-  var total;
+class SearchCriteria {
+  List<FilterGroups> filterGroups;
+  List<SortOrders> sortOrders;
+  var pageSize;
   var currentPage;
-  var lastPage;
 
-  Meta({this.total, this.currentPage, this.lastPage});
+  SearchCriteria(
+      {this.filterGroups, this.sortOrders, this.pageSize, this.currentPage});
 
-  Meta.fromJson(Map<String, dynamic> json) {
-    total = json['total'];
-    currentPage = json['currentPage'];
-    lastPage = json['lastPage'];
+  SearchCriteria.fromJson(Map<String, dynamic> json) {
+    if (json['filter_groups'] != null) {
+      filterGroups = new List<FilterGroups>();
+      json['filter_groups'].forEach((v) {
+        filterGroups.add(new FilterGroups.fromJson(v));
+      });
+    }
+    if (json['sort_orders'] != null) {
+      sortOrders = new List<SortOrders>();
+      json['sort_orders'].forEach((v) {
+        sortOrders.add(new SortOrders.fromJson(v));
+      });
+    }
+    pageSize = json['page_size'];
+    currentPage = json['current_page'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['total'] = this.total;
-    data['currentPage'] = this.currentPage;
-    data['lastPage'] = this.lastPage;
+    if (this.filterGroups != null) {
+      data['filter_groups'] = this.filterGroups.map((v) => v.toJson()).toList();
+    }
+    if (this.sortOrders != null) {
+      data['sort_orders'] = this.sortOrders.map((v) => v.toJson()).toList();
+    }
+    data['page_size'] = this.pageSize;
+    data['current_page'] = this.currentPage;
+    return data;
+  }
+}
+
+class FilterGroups {
+  List<Filters> filters;
+
+  FilterGroups({this.filters});
+
+  FilterGroups.fromJson(Map<String, dynamic> json) {
+    if (json['filters'] != null) {
+      filters = new List<Filters>();
+      json['filters'].forEach((v) {
+        filters.add(new Filters.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.filters != null) {
+      data['filters'] = this.filters.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Filters {
+  var field;
+  var value;
+  var conditionType;
+
+  Filters({this.field, this.value, this.conditionType});
+
+  Filters.fromJson(Map<String, dynamic> json) {
+    field = json['field'];
+    value = json['value'];
+    conditionType = json['condition_type'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['field'] = this.field;
+    data['value'] = this.value;
+    data['condition_type'] = this.conditionType;
+    return data;
+  }
+}
+
+class SortOrders {
+  var field;
+  var direction;
+
+  SortOrders({this.field, this.direction});
+
+  SortOrders.fromJson(Map<String, dynamic> json) {
+    field = json['field'];
+    direction = json['direction'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['field'] = this.field;
+    data['direction'] = this.direction;
+    return data;
+  }
+}
+
+class Options{
+  var field;
+  var direction;
+
+  Options({this.field, this.direction});
+
+  Options.fromJson(Map<String, dynamic> json) {
+    field = json['field'];
+    direction = json['direction'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['field'] = this.field;
+    data['direction'] = this.direction;
+    return data;
+  }
+}
+
+class TierPrices{
+  var field;
+  var direction;
+
+  TierPrices({this.field, this.direction});
+
+  TierPrices.fromJson(Map<String, dynamic> json) {
+    field = json['field'];
+    direction = json['direction'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['field'] = this.field;
+    data['direction'] = this.direction;
+    return data;
+  }
+}
+
+class Parameters {
+  String resources;
+
+  Parameters({this.resources});
+
+  Parameters.fromJson(Map<String, dynamic> json) {
+    resources = json['resources'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['resources'] = this.resources;
     return data;
   }
 }

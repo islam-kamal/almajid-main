@@ -3,9 +3,11 @@ import 'package:almajidoud/screens/notifications/widgets/notifications_header.da
 import 'package:almajidoud/screens/notifications/widgets/single_notification_card.dart';
 import 'package:almajidoud/utils/file_export.dart';
 class NotificationsScreen extends StatelessWidget {
+  bool thereIsNotifications = false  ;
+
+  NotificationsScreen({this.thereIsNotifications});
   @override
   Widget build(BuildContext context) {
-    bool thereIsNotifications = false  ;
     return Scaffold(
       backgroundColor:thereIsNotifications == true ? mainColor :whiteColor,
       body: Container(

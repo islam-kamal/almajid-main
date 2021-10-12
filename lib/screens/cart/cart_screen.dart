@@ -1,8 +1,8 @@
 import 'package:almajidoud/screens/cart/widgets/cart_bottom_navigation_bar.dart';
-import 'package:almajidoud/screens/cart/widgets/cart_header.dart';
 import 'package:almajidoud/screens/cart/widgets/cart_top_slider.dart';
 import 'package:almajidoud/screens/cart/widgets/proceed_to_checkout_button.dart';
 import 'package:almajidoud/screens/cart/widgets/single_cart_item.dart';
+import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 class CartScreen extends StatefulWidget {
@@ -11,10 +11,14 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  FocusNode fieldNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     bool switch1 = true;
-    return Scaffold(
+    return NetworkIndicator(
+        child: PageContainer(
+            child:Scaffold(
       backgroundColor: whiteColor,
       body: Container(
           height: height(context),
@@ -76,13 +80,22 @@ class _CartScreenState extends State<CartScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    cartHeader(context: context),
+                    ScreenAppBar(
+                      onTapCategoryDrawer: () {
+                        _drawerKey.currentState.openDrawer();
+                      },
+                      left_icon: "assets/icons/edit.png",
+                      right_icon: 'cart',
+                    ),
                     cartBottomNavigationBar(context: context)
                   ],
                 ),
               ),
             ],
           )),
-    );
+      drawer: SettingsDrawer(
+        node: fieldNode,
+      ),
+    )));
   }
 }

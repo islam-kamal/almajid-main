@@ -1,5 +1,5 @@
 import 'package:almajidoud/custom_widgets/custom_push_named_navigation.dart';
-import 'package:almajidoud/screens/bottob_Navigation_bar/widgets/bottom_navigation_bar_item.dart';
+import 'package:almajidoud/screens/bottom_Navigation_bar/widgets/bottom_navigation_bar_item.dart';
 import 'package:almajidoud/screens/cart/cart_screen.dart';
 import 'package:almajidoud/screens/location/location_screen.dart';
 import 'package:almajidoud/screens/my_account/my_account_screen.dart';
@@ -43,14 +43,12 @@ homeBottomNavigationBar({BuildContext context}){
              customBottomBarButton(context: context , isActive: true, icon: "assets/icons/home.png" , title: "Home", onTap: (){
                customPushNamedNavigation(context, HomeScreen());
              } ),
-             customBottomBarButton(context: context , isActive: false ,
-                 icon: "assets/icons/settings.png" , onTap: (){
+             customBottomBarButton(context: context , isActive: false , icon: "assets/icons/settings.png" , onTap: (){
                    customPushNamedNavigation(context, SettingsScreen());
 
                  }
              ),
-             customBottomBarButton(context: context , isActive: false,
-                 icon: "assets/icons/profile.png" , onTap: (){
+             customBottomBarButton(context: context , isActive: false, icon: "assets/icons/profile.png" , onTap: (){
                    customPushNamedNavigation(context, MyAccountScreen());
 
                  }),

@@ -1,4 +1,7 @@
+import 'package:almajidoud/utils/file_export.dart';
+
 class Urls {
+  static final String ADMIN_TOKEN = 'tda5h42j6mke2q43da55wckmoeynz1n1';
 
   //Authentication Urls
   static final String BASE_URL = "https://test.almajed4oud.com";
@@ -16,6 +19,11 @@ class Urls {
   static final String CHANGE_PASSWORD = "/index.php/rest/V1/mobilelogin/otp/resetpassword";
 
   static final String SOCIAL_LOGIN = "/api/auth/socialLogin";
+
+  static final String GET_ALL_CATEGORIES =  '/${translator.currentLanguage}-sa/rest/V1/categories';
+
+  static final String GET_CATEGORy_PRODUCTS = '/${translator.currentLanguage}-sa/rest/V1/products';
+
 
 
   static final String LOGOUT = "/api/auth/logout";
@@ -38,11 +46,9 @@ class Urls {
   static final String GET_PURCHASE_LIST= '/api/user/products/sort-products';
   static final String GET_RELEATED_PRODUCTS= '/api/user/products/related/';
 
-  static final String GET_ALL_CATEGORIES = '/api/user/categories/get-categories';
   static final String GET_ALL_BRANDS = '/api/user/brands/index';
   static final String GET_ALL_SIZE = '/api/user/sizes/index';
 
-  static final String GET_CATEGORy_PRODUCTS = '/api/user/categories/products';
   static final String GET_SECOND_LEVEL_SUBCATEGORY_PRODUCTS = '/api/user/products/subCategory';
 
   static final String GET_ALL_NOTIFICATIONS = '/api/user/notification/get';

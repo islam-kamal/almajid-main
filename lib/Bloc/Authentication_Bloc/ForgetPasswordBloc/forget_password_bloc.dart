@@ -63,6 +63,7 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
       var response = await AuthenticationRepository.checkOtpCode(
           user_phone, event.otp_code,event.route);
       if (response.success == "true") {
+        sharedPreferenceManager.writeData(CachingKey.AUTH_TOKEN, response.token);
       yield Done(model: response, indicator: 'checkOtpClick');
       } else {
         yield ErrorLoading(response);

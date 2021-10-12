@@ -1,8 +1,20 @@
 import 'package:almajidoud/utils/file_export.dart';
-
+import 'package:almajidoud/screens/my_account/widgets/logout_dialog.dart';
 logoutButton({BuildContext context }){
   return  Container(width: width(context)*.8,child:
-  GestureDetector(onTap: (){},
+  GestureDetector(onTap: ()async{
+    var user_name ='';
+    await sharedPreferenceManager.readString(CachingKey.USER_NAME).then((value){
+      user_name = value;
+    });
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+       return LogoutDialog(
+        name: user_name,
+      );
+    });
+  },
     child: Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [

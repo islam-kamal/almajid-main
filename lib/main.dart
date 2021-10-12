@@ -1,6 +1,4 @@
 
-import 'package:almajidoud/screens/auth/reset_password_screen.dart';
-import 'package:almajidoud/screens/auth/sing_in_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +28,7 @@ class MyApp extends StatelessWidget {
                 fontFamily: checkDirection(
                     dirArabic: "Almarai", dirEnglish: "Almarai")),
             title: 'Al Majed Oud',
-            home: SignInScreen(),
+            home: SplashScreen(),
             localizationsDelegates:
             translator.delegates, // Android + iOS Delegates
             locale: translator.locale, // Active locale
