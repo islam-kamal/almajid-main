@@ -12,7 +12,7 @@ writeReviewButton({BuildContext context}){
 
           customDescriptionText(
               context: context,
-              text: "Write Review ",
+              text: "Write ReviewModel ",
               percentageOfHeight: .025,
 
               textColor: mainColor) ,

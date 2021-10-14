@@ -1,8 +1,5 @@
-import 'package:almajidoud/Base/Shimmer/list_shimmer.dart';
 import 'package:almajidoud/Bloc/Category_Bloc/category_bloc.dart';
-import 'package:almajidoud/Bloc/Product_Bloc/product_bloc.dart';
 import 'package:almajidoud/Model/CategoryModel/category_model.dart';
-import 'package:almajidoud/screens/categories/widgets/single_category_item.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 class SettingsDrawer extends StatefulWidget {

@@ -39,9 +39,15 @@ class resendOtpClick extends AppEvent{
 }
 
 class changePasswordClick extends AppEvent{}
+
 class UpdateCountryCodeClick extends AppEvent{
   String country_code;
   UpdateCountryCodeClick({this.country_code});
+}
+
+class GetProductReviewsEvent extends AppEvent{
+  final String product_sku;
+  GetProductReviewsEvent({this.product_sku});
 }
 
 class logoutClick extends AppEvent{}

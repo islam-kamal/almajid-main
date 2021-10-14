@@ -23,13 +23,6 @@ class CategoryRepository {
   Future<ProductModel> getCategoryProducts(
       {String category_id, int offset}) async {
     Map<String, String> headers = {
-  /*  'searchCriteria[filterGroups][0][filters][1][field]':'category_id',
-    'searchCriteria[filterGroups][0][filters][1][value]':category_id,
-    'searchCriteria[filterGroups][0][filters][1][conditionType]':'eq',
-    'searchCriteria[sortOrders][0][field]':'position',
-    'searchCriteria[sortOrders][0][direction]':'ASC',
-    'searchCriteria[pageSize]':10.toString(),
-    'searchCriteria[currentPage]':offset.toString(),*/
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'

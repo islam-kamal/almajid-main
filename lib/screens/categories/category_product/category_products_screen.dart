@@ -1,7 +1,6 @@
 import 'package:almajidoud/Bloc/Product_Bloc/product_bloc.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
-import 'package:almajidoud/Model/ProductModel/product_model.dart'
-    as product_model;
+import 'package:almajidoud/Model/ProductModel/product_model.dart' as product_model;
 
 import 'package:almajidoud/utils/file_export.dart';
 
@@ -46,7 +45,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
       body: SingleChildScrollView(
           child: Column(
         children: [
-       //   categoryProductsHeader(context: context, name: widget.category_name),
           ScreenAppBar(
             right_icon: 'cart',
             category_name: widget.category_name,
@@ -100,8 +98,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                     shrinkWrap: true,
                                     itemCount: snapshot.data.length,
                                     itemBuilder: (context, index) {
-                                      print("--------- image ----- : ${ProductImages.getProductImageUrlByName(
-                                      imageName: snapshot.data[index].mediaGalleryEntries[0].file)}");
 
                                       return index >= snapshot.data.length
                                           ? MyLoader(25, 25)
