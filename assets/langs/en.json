@@ -148,7 +148,11 @@
   "Quantity": "Quantity",
   "Add To Cart": "\"Add To Cart",
   "Write A Review": "Write A Review",
-  "Sold by": "Sold by"
+  "Sold by": "Sold by",
+
+  "-------------------- search --------" :"------------------------------" ,
+  "Search Result" :  "Search Result",
+  "No Products Yet !"  : "No Products Yet !"
 }
 
 

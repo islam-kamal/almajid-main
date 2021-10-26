@@ -59,7 +59,7 @@ class ContactUsBloc extends Bloc<AppEvent,AppState> with Validator{
       if(response.status == true){
         yield Done(model:response,indicator: 'make-complain');
       }else if (response.status == false){
-        yield ErrorLoading(response,indicator: 'make-complain');
+        yield ErrorLoading(model: response,indicator: 'make-complain');
       }
 
     }else if(event is getAllComplain){
@@ -75,7 +75,7 @@ class ContactUsBloc extends Bloc<AppEvent,AppState> with Validator{
         yield Done(model: response);
       }else if (response.status == false){
         print("----------- get-com 4");
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
       }
 
     }

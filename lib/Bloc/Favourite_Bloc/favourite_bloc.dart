@@ -43,7 +43,7 @@ class FavouriteBloc extends Bloc<AppEvent,AppState>  {
       if(response.status==true){
         yield Done(model: response ,indicator: 'add_fav');
       }else{
-        yield  ErrorLoading(response ,indicator: 'add_fav');
+        yield  ErrorLoading(model: response ,indicator: 'add_fav');
       }
     }
     else if(event is removeFavourite_click){
@@ -54,7 +54,7 @@ class FavouriteBloc extends Bloc<AppEvent,AppState>  {
       if(response.status==true){
         yield  Done(model: response , indicator: 'remove_fav');
       }else{
-        yield   ErrorLoading(response , indicator: 'remove_fav');
+        yield   ErrorLoading(model: response , indicator: 'remove_fav');
       }
     }else if(event is getAllFavoutites_click){
       print("fav 1");
@@ -68,7 +68,7 @@ class FavouriteBloc extends Bloc<AppEvent,AppState>  {
         print("fav 4");
       }else{
         print("fav 5");
-        yield   ErrorLoading(response ,indicator: 'get_fav');
+        yield   ErrorLoading(model: response ,indicator: 'get_fav');
       }
 
     }

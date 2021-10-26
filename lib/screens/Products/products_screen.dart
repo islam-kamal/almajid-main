@@ -26,7 +26,8 @@ class ProductsScreenState extends State<ProductsScreen>{
                   Container(
                     height: height(context),
                     child: SingleChildScrollView(
-                        child: Container() /*Column(
+                        child: Container()
+                      /*Column(
                           children: [
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .13),

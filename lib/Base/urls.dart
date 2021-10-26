@@ -24,6 +24,11 @@ class Urls {
 
   static final String GET_CATEGORy_PRODUCTS = '/${translator.currentLanguage}-sa/rest/V1/products';
 
+  static final String GET_APP_COUNTRIES = '/rest/V1/directory/countries';
+
+
+  static final String GET_ALL_OFFERS = '/api/user/offers/get-offers';
+
 
 
   static final String LOGOUT = "/api/auth/logout";
@@ -40,7 +45,6 @@ class Urls {
   static final String UPDATE_USER_LOCATION = '/api/user/location/update/';
   static final String EDIT_MY_PROFILE_PASSWORD = '/api/auth/changePassword';
   static final String EDIT_MY_PROFILE = '/api/auth/profile';
-  static final String GET_ALL_OFFERS = '/api/user/offers/get-offers';
   static final String GET_ALL_RECOMMENDED_PRODUCT= '/api/user/products/recommended';
   static final String GET_MOST_SELLING= '/api/user/products/sort-products';
   static final String GET_PURCHASE_LIST= '/api/user/products/sort-products';

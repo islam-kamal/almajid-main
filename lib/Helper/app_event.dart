@@ -72,6 +72,9 @@ class upgradeAccountClick extends AppEvent{}
 //offers
 class getAllOffers extends AppEvent{}
 
+//countries
+class getAllCountries extends AppEvent{}
+
 //category
 class getAllCategories extends AppEvent{}
 class getSecondLevelSubcategoryEvent extends AppEvent{
@@ -135,9 +138,8 @@ class FilterBrandEvent extends AppEvent{}
 class FilterSizeEvent extends AppEvent{}
 // SEARCH
 class SearchProductsEvent extends AppEvent{
-  List<String> columns,  columns_values ,  operand ;
-  final int offset;
-  SearchProductsEvent({this.columns,this.columns_values,this.operand,this.offset});
+  final String search_text;
+  SearchProductsEvent({this.search_text});
 }
 class SortProductsEvent extends AppEvent{
   String price,  most_selling ,  rate ,type ,unit_price;

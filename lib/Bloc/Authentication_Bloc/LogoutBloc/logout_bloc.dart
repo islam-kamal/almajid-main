@@ -49,7 +49,7 @@ class LogoutBloc extends Bloc<AppEvent,AppState> implements BaseBloc{
 
 
       }else{
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
       }
     /*  switch(await sharedPreferenceManager.readString(CachingKey.SOCIAL_LOGIN_TYPE)){
 

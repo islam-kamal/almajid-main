@@ -51,7 +51,7 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
             CachingKey.FORGET_PASSWORD_PHONE, event.phone);
         yield Done(model: response);
       } else {
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
       }
     }
     //check otp Api handle
@@ -66,7 +66,7 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
         sharedPreferenceManager.writeData(CachingKey.AUTH_TOKEN, response.token);
       yield Done(model: response, indicator: 'checkOtpClick');
       } else {
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
       }
     }
     //resend otp Api hamdle
@@ -78,7 +78,7 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
       if (response.success == "true") {
         yield Done(model: response, indicator: 'resendOtpClick');
       } else {
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
       }
     }
 
@@ -91,7 +91,7 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
           .then((value) => user_phone = value);
       var response;
       if(password_controller.value != confirm_password_controller.value){
-        yield ErrorLoading(response,message: translator.translate("Passwords are not identical"));
+        yield ErrorLoading(model: response,message: translator.translate("Passwords are not identical"));
 
       }else{
          response = await AuthenticationRepository.changePassword(user_phone, password_controller.value, );
@@ -100,7 +100,7 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
          if (response.succeess == "true") {
            yield Done(model: response);
          } else {
-           yield ErrorLoading(response);
+           yield ErrorLoading(model: response);
          }
       }
 

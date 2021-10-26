@@ -43,8 +43,8 @@ homeBottomNavigationBar({BuildContext context}){
              customBottomBarButton(context: context , isActive: true, icon: "assets/icons/home.png" , title: "Home", onTap: (){
                customPushNamedNavigation(context, HomeScreen());
              } ),
-             customBottomBarButton(context: context , isActive: false , icon: "assets/icons/settings.png" , onTap: (){
-                   customPushNamedNavigation(context, SettingsScreen());
+             customBottomBarButton(context: context , isActive: false , icon: "assets/icons/notifi.png" , onTap: (){
+                   customPushNamedNavigation(context, NotificationsScreen());
 
                  }
              ),

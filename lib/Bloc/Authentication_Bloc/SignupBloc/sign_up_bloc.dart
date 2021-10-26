@@ -56,7 +56,7 @@ class SignUpBloc extends Bloc<AppEvent,AppState> with Validator{
       }
       else if (response.success == "false"){
         print('signup 4');
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
         print('response status : ${response.success}');
       }
 

@@ -1,4 +1,5 @@
 import 'package:almajidoud/screens/categories/categories_screen.dart';
+import 'package:almajidoud/screens/my_account/widgets/account_navigation_bar.dart';
 import 'package:almajidoud/screens/settings/widgets/app_version.dart';
 import 'package:almajidoud/screens/settings/widgets/connnected_accounts.dart';
 import 'package:almajidoud/screens/settings/widgets/language_button.dart';
@@ -6,7 +7,7 @@ import 'package:almajidoud/screens/settings/widgets/settings_heeader.dart';
 import 'package:almajidoud/screens/settings/widgets/settings_navigation_bar.dart';
 import 'package:almajidoud/screens/settings/widgets/single_settings_item.dart';
 import 'package:almajidoud/utils/file_export.dart';
-
+import 'package:almajidoud/screens/settings/AboutUsScreen/about_us_screen.dart';
 class SettingsScreen extends StatefulWidget {
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -81,11 +82,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         context: context,
                         switchValue: switch1,
                         text: "About Us",isSwitch: false,
-                        onChangeSwitch: () {
-                          setState(() {
-                            switch1 != switch1;
-                          });
-                        }),
+                    onTapArrow: (){
+                      customPushNamedNavigation(context, AboutUsScreen(
+
+                      ));
+                    }),
                     responsiveSizedBox(
                         context: context, percentageOfHeight: .035),
                     languageButton(context: context),
@@ -125,7 +126,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       },
                       left_icon: "assets/icons/notifi.png",
                     ),
-                    settingsBottomNavigationBar(context: context)
+                    accountBottomNavigationBar(context: context)
                   ],
                 ),
               ),

@@ -23,7 +23,8 @@ class Loading extends AppState{
 class Done extends AppState{
   Mappable model;
   final String indicator;
-  Done({this.model , this.indicator});
+  List<dynamic> general_model;
+  Done({this.model , this.indicator,this.general_model});
 
   @override
   String toString() {
@@ -35,9 +36,10 @@ class Done extends AppState{
 
 class ErrorLoading extends AppState{
   Mappable model;
+  List<dynamic> general_model;
   String indicator;
   String message;
-  ErrorLoading(this.model,{this.message,this.indicator});
+  ErrorLoading({this.model,this.message,this.indicator,this.general_model});
   @override
   String toString() {
     // TODO: implement toString

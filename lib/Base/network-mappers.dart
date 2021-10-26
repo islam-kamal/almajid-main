@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 // Handler for the network's request.
 abstract class RequestMappable {
   Map<String, dynamic> toJson();
@@ -10,6 +9,7 @@ abstract class RequestMappable {
 abstract class Mappable<T>  {
   factory Mappable(Mappable type, String data) {
     if (type is BaseMappable) {
+
       Map<String, dynamic> mappingData = json.decode(data);
       return type.fromJson(mappingData);
     } else if (type is ListMappable) {

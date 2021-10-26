@@ -31,23 +31,23 @@ class ProductReviewsState extends State<ProductReviews>{
             child: CircularProgressIndicator(),
           );
         } else if (state is Done) {
-          var data = state.model as ProductReviewModel;
+          var data = state.general_model as List<ProductReviewModel>;
           if (data == null ) {
             return Container();
           } else {
-            return StreamBuilder<ProductReviewModel>(
+            return StreamBuilder<List<ProductReviewModel>>(
               stream: reviewsBloc.product_reviews_subject,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data == null) {
                     return Container();
                   } else {
-                    print("length : ${snapshot.data.ratings.length}");
+                    print("length : ${snapshot.data[0].ratings.length}");
                     List rating_list=[];
-                    snapshot.data.ratings.forEach((element) {
+                    snapshot.data[0].ratings.forEach((element) {
                       rating_list.add(element.value);
                     });
-                    var value = rating_list.reduce((a, b) => a + b) /snapshot.data.ratings.length ;
+                    var value = rating_list.reduce((a, b) => a + b) /snapshot.data[0].ratings.length ;
                     return RatingBar.readOnly(
                       initialRating: value.toDouble(),
                       maxRating: 5,

@@ -19,7 +19,7 @@ class PaymentBloc extends Bloc<AppEvent,AppState> with Validator{
       if (response.status == true) {
         yield Done(model: response,indicator: 'credit_card');
       } else if (response.status == false) {
-        yield ErrorLoading(response,indicator: 'credit_card');
+        yield ErrorLoading(model: response,indicator: 'credit_card');
       }
     }
   }

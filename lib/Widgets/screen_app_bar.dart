@@ -1,3 +1,5 @@
+import 'package:almajidoud/Bloc/Search_Bloc/search_bloc.dart';
+import 'package:almajidoud/screens/SearchScreen/search_screen.dart';
 import 'package:almajidoud/screens/cart/edit_cart_screen.dart';
 import 'package:almajidoud/screens/cart/widgets/promo_code_alert_dialog.dart';
 import 'package:almajidoud/utils/file_export.dart';
@@ -7,11 +9,13 @@ class ScreenAppBar extends StatefulWidget {
   final String left_icon;
   final String right_icon;
   final String category_name;
+  Widget screen;
   ScreenAppBar(
       {this.onTapCategoryDrawer,
       this.left_icon,
       this.right_icon,
-      this.category_name});
+      this.category_name,
+      this.screen});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -20,6 +24,9 @@ class ScreenAppBar extends StatefulWidget {
 }
 
 class ScreenAppBarState extends State<ScreenAppBar> {
+  TextEditingController controller = new TextEditingController();
+  final FocusNode focusNode = new FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -52,7 +59,7 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                     )
                   : GestureDetector(
                       onTap: () {
-                        customPushNamedNavigation(context, HomeScreen());
+                        customPushNamedNavigation(context, widget.screen);
                       },
                       child: Icon(
                         Icons.navigate_before,
@@ -67,12 +74,26 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                           ? 2 * height(context) * .04
                           : height(context) * .04,
                       child: TextFormField(
+                        controller: controller,
+                        focusNode: focusNode,
                         cursorColor: greyColor.withOpacity(.5),
                         decoration: InputDecoration(
                           hintStyle: TextStyle(color: whiteColor, fontSize: 8),
                           hintText: translator.translate("Type here to search"),
-                          prefixIcon:
-                              Icon(Icons.search, size: 20, color: whiteColor),
+                          prefixIcon: IconButton(
+                            icon: Icon(
+                              Icons.search,
+                              size: 20,
+                            ),
+                            color: whiteColor,
+                            onPressed: () {
+                              search_bloc.add(SearchProductsEvent(
+                                  search_text: controller.text));
+
+                              customAnimatedPushNavigation(
+                                  context, SearchScreen());
+                            },
+                          ),
                           filled: false,
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -110,10 +131,7 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                                   context, EditCartScreen());
                             } else {
                               customAnimatedPushNavigation(
-                                  context,
-                                  NotificationsScreen(
-                                    thereIsNotifications: true,
-                                  ));
+                                  context, NotificationsScreen());
                             }
                           },
                           child: Image.asset(

@@ -5,12 +5,14 @@ import 'package:almajidoud/screens/home/widgets/new_arrivals_listview.dart';
 import 'package:almajidoud/screens/home/widgets/title_text.dart';
 import 'package:almajidoud/screens/home/widgets/top_slider.dart';
 import 'package:almajidoud/utils/file_export.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
@@ -63,21 +65,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ScreenAppBar(
-                            onTapCategoryDrawer: () {
-                              _drawerKey.currentState.openDrawer();
-                            },
+                          onTapCategoryDrawer: () {
+                            _drawerKey.currentState.openDrawer();
+                          },
                         ),
-                     /*   homeHeader(
-                            context: context,
-                            onTapCategoryDrawer: () {
-                              _drawerKey.currentState.openDrawer();
-                            }),*/
-                        homeBottomNavigationBar(context: context)
+                       homeBottomNavigationBar(context: context)
                       ],
                     ),
                   ),
                 ],
               )),
+
           drawer: SettingsDrawer(
             node: fieldNode,
           ),
@@ -86,4 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+
 }

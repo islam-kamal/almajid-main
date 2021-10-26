@@ -64,6 +64,7 @@ dependencies:
   rating_bar:
   share:
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -89,6 +90,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/langs/
+    - assets/config_ar.json
   fonts:
       - family: LibreBasker
         fonts:

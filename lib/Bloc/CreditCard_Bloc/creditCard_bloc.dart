@@ -56,7 +56,7 @@ class CreditCardBloc extends Bloc<AppEvent,AppState> with Validator{
       if(response.status ==true){
         yield Done(model:response);
       }else if (response.status == false){
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
       }
     }else if(event is updateCreditCard){
       yield Loading(model: null,indicator: 'update_card');
@@ -71,7 +71,7 @@ class CreditCardBloc extends Bloc<AppEvent,AppState> with Validator{
       if(response.status ==true){
         yield Done(model:response,indicator: 'update_card');
       }else if (response.status == false){
-        yield ErrorLoading(response,indicator: 'update_card');
+        yield ErrorLoading(model: response,indicator: 'update_card');
       }
     }else if(event is getAllCreditCard_click){
       yield Loading();
@@ -81,7 +81,7 @@ class CreditCardBloc extends Bloc<AppEvent,AppState> with Validator{
         yield  Done(model: response);
 
       }else{
-        yield   ErrorLoading(response);
+        yield   ErrorLoading(model: response);
       }
 
     }

@@ -42,7 +42,7 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
       }else{
         print("44444444444444444444444");
 
-        // yield ErrorLoading(response);
+        // yield ErrorLoading(model: response);
         errorDialog(context: event.context,
             text:'he account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later',
         function: (){
@@ -63,7 +63,7 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
         sharedPreferenceManager.writeData(CachingKey.USER_NAME, response.firstname );
         yield Done(model:response);
       }else{
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
       }
     }
   }

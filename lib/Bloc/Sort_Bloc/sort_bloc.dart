@@ -59,7 +59,7 @@ class SortBloc extends Bloc<AppEvent,AppState>{
 
         yield Done(model: response,indicator: 'sort');
       }else{
-        yield ErrorLoading(response,indicator: 'sort');
+        yield ErrorLoading(model: response,indicator: 'sort');
       }
     }
   }

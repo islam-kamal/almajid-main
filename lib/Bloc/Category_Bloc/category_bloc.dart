@@ -47,7 +47,7 @@ class CategoryBloc extends Bloc<AppEvent, AppState> with Validator{
         yield Done(model: response);
       } else if (response.childrenData == null || response.childrenData.isEmpty) {
         print("4");
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
       }
     }
 

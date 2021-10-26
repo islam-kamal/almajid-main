@@ -5,155 +5,6 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/Favourites/custom_favourite.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:share/share.dart';
-/*
-singleCategoryDetailsItem({BuildContext context,var id, var sku, var name, var attributeSetId, var price,
-  var status, var visibility, var typeId, var createdAt, var updatedAt, var weight , List<String> product_image }) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Column(
-        children: [
-          responsiveSizedBox(context: context, percentageOfHeight: .02),
-          Neumorphic(
-              child: Container(
-                  width: width(context) * .9,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: width(context) * .3,
-                        height: isLandscape(context)
-                            ? 2 * height(context) * .2
-                            : height(context) * .2,
-                        decoration: BoxDecoration(
-                            color: backGroundColor,
-                            image: DecorationImage(
-                                image: NetworkImage(
-
-                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Og0-LY1uOs7Z3I_sBLafG8F2IbFwRVprrg&usqp=CAU"
-                                ),
-                                fit: BoxFit.cover)),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(
-                            right: width(context) * .02,
-                            left: width(context) * .02),
-                        width: width(context) * .6,
-                        height: isLandscape(context)
-                            ? 2 * height(context) * .2
-                            : height(context) * .2,
-                        child: Column(
-                          children: [
-                            responsiveSizedBox(
-                                context: context, percentageOfHeight: .01),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [Icon(Icons.favorite_border)],
-                            ),
-                            responsiveSizedBox(
-                                context: context, percentageOfHeight: .01),
-                            customDescriptionText(
-                                context: context,
-                                textColor: mainColor,
-                                maxLines: 2,
-                                text: "Lorim",
-                                textAlign: TextAlign.start),
-                            responsiveSizedBox(
-                                context: context, percentageOfHeight: .01),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  child: customDescriptionText(
-                                      context: context,
-                                      textColor: mainColor,
-                                      text: "200 \$",
-                                      textAlign: TextAlign.start,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.star,
-                                      color: mainColor,
-                                      size: 18,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: mainColor,
-                                      size: 18,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: mainColor,
-                                      size: 18,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: mainColor,
-                                      size: 18,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: mainColor,
-                                      size: 18,
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            responsiveSizedBox(
-                                context: context, percentageOfHeight: .01),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  width: width(context) * .4,
-                                  height: isLandscape(context)
-                                      ? 2 * height(context) * .05
-                                      : height(context) * .05,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: mainColor)),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.shopping_cart_outlined),
-                                      SizedBox(width: width(context) * .02),
-                                      customDescriptionText(
-                                          context: context,
-                                          textColor: mainColor,
-                                          text: "Add to cart",
-                                          textAlign: TextAlign.start),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  width: width(context) * .15,
-                                  height: isLandscape(context)
-                                      ? 2 * height(context) * .05
-                                      : height(context) * .05,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: mainColor)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [Icon(Icons.share_outlined)],
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  decoration: BoxDecoration(color: backGroundColor))),
-        ],
-      ),
-    ],
-  );
-}
-
-*/
 
 class singleCategoryProductItem extends StatelessWidget {
   Items product;
@@ -242,9 +93,14 @@ class singleCategoryProductItem extends StatelessWidget {
                                             ? Colors.yellow.shade700
                                             : Colors.yellow.shade700,
                                   ),*/
-                                  ProductReviews(
-                                    product_sku: product.sku,
-                                  )
+
+                             Container(
+                                width: width(context) * 0.3,
+                                height: 30,
+                                child:     ProductReviews(
+                                  product_sku: product.sku,
+                                ),
+                              )
                                 ],
                               ),
                               responsiveSizedBox(

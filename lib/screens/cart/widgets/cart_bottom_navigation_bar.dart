@@ -44,10 +44,10 @@ cartBottomNavigationBar({BuildContext context}){
               customPushNamedNavigation(context, HomeScreen());
             } ),
             customBottomBarButton(context: context , isActive: false ,
-                icon: "assets/icons/settings.png" , onTap: (){
-                  customPushNamedNavigation(context, SettingsScreen());
+                icon: "assets/icons/notifi.png" , onTap: (){
+                  customPushNamedNavigation(context, NotificationsScreen());
 
-                }, title: "Settings"
+                }, title: "Notifications"
             ),
             customBottomBarButton(context: context , isActive: false,
                 icon: "assets/icons/profile.png" , onTap: (){

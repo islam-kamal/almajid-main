@@ -20,16 +20,14 @@ class SearchBloc extends Bloc<AppEvent,AppState>{
     if(event is SearchProductsEvent){
       yield Loading(indicator: 'search');
       var response = await search_repository.search_products_fun(
-          columns: event.columns,
-          operand: event.operand,
-          column_values: event.columns_values,
+          search_text: event.search_text
       );
-      if(response.status == true){
+      if(response.totalCount != null ){
         _search_products_subject.sink.add(response);
 
         yield Done(model: response,indicator: 'search');
       }else{
-        yield ErrorLoading(response,indicator: 'search');
+        yield ErrorLoading(model: response,indicator: 'search');
       }
     }
   }

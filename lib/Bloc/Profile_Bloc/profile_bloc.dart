@@ -36,7 +36,7 @@ class ProfileBloc extends Bloc<AppEvent,AppState> with Validator{
       if(response.status ==true){
         yield Done(model:response);
       }else if (response.status == false){
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
         print('response status : ${response.status}');
 
       }
@@ -55,7 +55,7 @@ class ProfileBloc extends Bloc<AppEvent,AppState> with Validator{
         sharedPreferenceManager.writeData(CachingKey.EMAIL, response.data.email);
         sharedPreferenceManager.writeData(CachingKey.MOBILE_NUMBER, response.data.phone);
       }else if (response.status == false){
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
         print('response status : ${response.status}');
 
       }

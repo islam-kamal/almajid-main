@@ -28,7 +28,7 @@ class SettingsBloc extends Bloc<AppEvent,AppState> with Validator{
         app_link_controller.sink.add(response.data.email);
         yield Done(model: response);
       } else if (response.status == false) {
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
       }
 
     }

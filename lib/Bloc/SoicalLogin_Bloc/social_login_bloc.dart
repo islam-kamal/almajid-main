@@ -45,7 +45,7 @@ class SocialLoginBloc extends Bloc<AppEvent,AppState> with Validator{
         sharedPreferenceManager.writeData(CachingKey.MOBILE_NUMBER, response.data.phone);
         print("facebook 2");
       }else if (response.status == false){
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
       }
     }
   }

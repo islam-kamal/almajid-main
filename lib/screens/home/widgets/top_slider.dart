@@ -24,7 +24,9 @@ topSlider({BuildContext context}) {
           images: [
             AssetImage("assets/images/scroll.png"),
             AssetImage("assets/images/scroll.png"),
-            AssetImage("assets/images/scroll.png")],),
+            AssetImage("assets/images/scroll.png")
+          ],
+        ),
       )
     ],
   );

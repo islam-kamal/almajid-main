@@ -29,7 +29,7 @@ class CategoryRepository {
     };
     return NetworkUtil.internal().get(
         ProductModel(),
-        'https://test.almajed4oud.com/${translator.currentLanguage}-sa/rest/V1/products?searchCriteria&searchCriteria[filterGroups][0][filters][1][field]=category_id&searchCriteria[filterGroups][0][filters][1][value]=${category_id}&searchCriteria[filterGroups][0][filters][1][conditionType]=eq&searchCriteria[sortOrders][0][field]=position& searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[pageSize]=10& searchCriteria[currentPage]=${offset}',
+        'https://test.almajed4oud.com/index.php/rest/V1/mstore/products?searchCriteria&searchCriteria[filterGroups][0][filters][1][field]=category_id&searchCriteria[filterGroups][0][filters][1][value]=${category_id}&searchCriteria[filterGroups][0][filters][1][conditionType]=eq&searchCriteria[sortOrders][0][field]=position& searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[pageSize]=10',
     headers: headers);
   }
 

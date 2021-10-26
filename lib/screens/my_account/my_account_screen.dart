@@ -7,6 +7,7 @@ import 'package:almajidoud/screens/my_account/widgets/user_image_widget.dart';
 import 'package:almajidoud/screens/my_account/widgets/user_name.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/my_account/register_bottom_sheet.dart';
+import 'package:almajidoud/screens/orders/orders_screen.dart';
 class MyAccountScreen extends StatefulWidget {
   @override
   _MyAccountScreenState createState() => _MyAccountScreenState();
@@ -56,7 +57,14 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                     singleAccountItem(
                         context: context,
                         iconPath: "assets/icons/tracking.png",
-                        text: "My Orders" , isContainMoreIcon: true  , onTap: (){}),
+                        text: "My Orders" , isContainMoreIcon: true  ,
+                        onTap: (){
+
+                          customPushNamedNavigation(
+                          context,
+                              OrdersScreen()
+                          );
+                        }),
                     singleAccountItem(
                         context: context,
                         iconPath: "assets/icons/credit-card.png",
@@ -64,7 +72,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                     singleAccountItem(
                         context: context,
                         iconPath: "assets/icons/settings (3).png",
-                        text: "Settings" , isContainMoreIcon: true  , onTap: (){}),
+                        text: "Settings" , isContainMoreIcon: true  , onTap: (){
+                      customPushNamedNavigation(context, SettingsScreen());
+
+                    }),
                     singleAccountItem(
                         context: context,
                         iconPath: "assets/icons/help.png",

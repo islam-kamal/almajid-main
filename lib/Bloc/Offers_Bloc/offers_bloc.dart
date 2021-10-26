@@ -29,7 +29,7 @@ class OffersBloc extends Bloc<AppEvent, AppState> with Validator{
         _offers_subject.sink.add(response);
         yield Done(model: response);
       } else if (response.status == false) {
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
       }
     }
   }

@@ -45,7 +45,7 @@ class ProductBloc extends Bloc<AppEvent, AppState> {
         yield Done(model: response);
       } else if (response.message != null) {
         print("4");
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
       }
     }
 

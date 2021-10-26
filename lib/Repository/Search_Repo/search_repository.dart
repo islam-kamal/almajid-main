@@ -9,22 +9,17 @@ import 'package:almajidoud/utils/file_export.dart';
 class SearchRepository {
   static SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();
 
-  Future<SearchModel> search_products_fun(
-      {List<String> columns, List<String> operand  , List<String> column_values}) async{
-    print("columns :  ${columns}");
-    print("operand :  ${operand}");
-    print("column_values :  ${column_values}");
-    print("token :  ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}");
+  Future<SearchModel> search_products_fun({String search_text}) async {
+    print("search_text :  ${search_text}");
     Map<String, String> headers = {
-      'token' : await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN),
-      'columns[]' : columns.join(','),
-      "operand[]": operand.join(','),
-      "column_values[]": column_values.join(','),
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
     };
     return NetworkUtil.internal().get(
-        SearchModel(), Urls.SEARCH_URL, headers: headers);
+        SearchModel(),
+        'https://test.almajed4oud.com//rest/V1/mstore/products?searchCriteria[filter_groups][0][filters][0][field]=name&searchCriteria[filter_groups][0][filters][0][value]=${search_text}&searchCriteria[filter_groups][0][filters][0][condition_type]=like&searchCriteria[currentPage]=1&searchCriteria[pageSize]=20&searchCriteria[filter_groups][1][filters][0][field]=visibility&searchCriteria[filter_groups][1][filters][0][value]=4&searchCriteria[filter_groups][0][filters][1][field]=sku&searchCriteria[filter_groups][0][filters][1][value]=Marai%25&searchCriteria[filter_groups][0][filters][1][condition_type]=like',
+        headers: headers);
   }
-
-
 }
 final search_repository = SearchRepository();

@@ -40,7 +40,7 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
         _user_orders_subject.sink.add(response);
         yield Done(model: response);
       } else if (response.status == false) {
-        yield ErrorLoading(response);
+        yield ErrorLoading(model: response);
       }
     }else  if (event is MakeOrderEvent) {
       yield Loading( indicator: 'make_order');
@@ -57,7 +57,7 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
       if (response.status == true) {
         yield Done(model: response, indicator: 'make_order');
       } else if (response.status == false) {
-        yield ErrorLoading(response, indicator: 'make_order');
+        yield ErrorLoading(model: response, indicator: 'make_order');
       }
     }else  if (event is ApplyCouponEvent) {
       yield Loading(indicator: 'apply_coupon');
@@ -71,7 +71,7 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
         _invoice_summery_subject.sink.add(response);
         yield Done(model: response, indicator: 'apply_coupon');
       } else if (response.status == false) {
-        yield ErrorLoading(response, indicator: 'apply_coupon');
+        yield ErrorLoading(model: response, indicator: 'apply_coupon');
       }
     }
 

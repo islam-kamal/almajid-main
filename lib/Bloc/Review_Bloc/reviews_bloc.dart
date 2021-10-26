@@ -4,7 +4,7 @@ import 'package:rxdart/rxdart.dart';
 class ReviewsBloc extends Bloc<AppEvent, AppState> with Validator{
   ReviewsBloc(AppState initialState) : super(initialState);
 
-  BehaviorSubject<ProductReviewModel> _product_reviews_subject = new BehaviorSubject<ProductReviewModel>();
+  BehaviorSubject<List<ProductReviewModel>> _product_reviews_subject = new BehaviorSubject<List<ProductReviewModel>>();
   get product_reviews_subject {
     return _product_reviews_subject;
   }
@@ -28,9 +28,10 @@ class ReviewsBloc extends Bloc<AppEvent, AppState> with Validator{
       print("response : $response");
       if (response != null) {
         _product_reviews_subject.sink.add(response);
-        yield Done(model: response);
+        print("_product_reviews_subject : ${_product_reviews_subject}");
+      yield Done(general_model: response);
       } else if (response == null) {
-        yield ErrorLoading(response);
+      //  yield ErrorLoading(model: response);
       }
     }
   }
