@@ -21,44 +21,54 @@ class ProductDetailsScreen extends StatefulWidget {
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: whiteColor,
-      body: SingleChildScrollView(
-          child: Column(
-        children: [
-          responsiveSizedBox(context: context, percentageOfHeight: .05),
-          productDetailsNameWidget(context: context),
-          responsiveSizedBox(context: context, percentageOfHeight: .03),
-          productDetailsTopSlider(context: context),
-          responsiveSizedBox(context: context, percentageOfHeight: .01),
-          favouriteAndNameRow(context: context),
-          responsiveSizedBox(context: context, percentageOfHeight: .01),
-          descriptionAndShareRow(context: context),
-          responsiveSizedBox(context: context, percentageOfHeight: .01),
-          priceAndRatingRow(context: context),
-          responsiveSizedBox(context: context, percentageOfHeight: .01),
-          vatAndReviewsRow(context: context),
-          divider(context: context),
-          sizeAndQuantityText(context: context , text: "Size") ,
-          responsiveSizedBox(context: context, percentageOfHeight: .01),
-          sizesListView(context: context) ,
-          divider(context: context),
-          sizeAndQuantityText(context: context , text: "Quantity") ,
-          responsiveSizedBox(context: context, percentageOfHeight: .01),
-          quantityButton(context: context),
-          divider(context: context),
-          addToCartButton(context: context) ,
-          responsiveSizedBox(context: context, percentageOfHeight: .01),
-          Container(height: height(context)*.1,color: mainColor,child: Column(children: [
-            responsiveSizedBox(context: context, percentageOfHeight: .01),
-            writeReviewButton(context: context) ,
-            responsiveSizedBox(context: context, percentageOfHeight: .005),
-
-            soldByWidget(context: context)
-
-          ],),),
-        ],
-      )),
+    return NetworkIndicator(
+      child: PageContainer(
+        child: Scaffold(
+          backgroundColor: whiteColor,
+          body: SingleChildScrollView(
+              child: Column(
+            children: [
+           //   responsiveSizedBox(context: context, percentageOfHeight: .05),
+              productDetailsNameWidget(context: context),
+              responsiveSizedBox(context: context, percentageOfHeight: .03),
+              productDetailsTopSlider(context: context),
+              responsiveSizedBox(context: context, percentageOfHeight: .01),
+              favouriteAndNameRow(context: context),
+              responsiveSizedBox(context: context, percentageOfHeight: .01),
+              descriptionAndShareRow(context: context),
+              responsiveSizedBox(context: context, percentageOfHeight: .01),
+              priceAndRatingRow(context: context),
+              responsiveSizedBox(context: context, percentageOfHeight: .01),
+              vatAndReviewsRow(context: context),
+              divider(context: context),
+              sizeAndQuantityText(context: context, text: "Size"),
+              responsiveSizedBox(context: context, percentageOfHeight: .01),
+              sizesListView(context: context),
+              divider(context: context),
+              sizeAndQuantityText(context: context, text: "Quantity"),
+              responsiveSizedBox(context: context, percentageOfHeight: .01),
+              quantityButton(context: context),
+              divider(context: context),
+              addToCartButton(context: context),
+              responsiveSizedBox(context: context, percentageOfHeight: .01),
+              Container(
+                height: height(context) * .1,
+                color: mainColor,
+                child: Column(
+                  children: [
+                    responsiveSizedBox(
+                        context: context, percentageOfHeight: .01),
+                    writeReviewButton(context: context),
+                    responsiveSizedBox(
+                        context: context, percentageOfHeight: .005),
+                    soldByWidget(context: context)
+                  ],
+                ),
+              ),
+            ],
+          )),
+        ),
+      ),
     );
   }
 }
