@@ -11,7 +11,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     return NetworkIndicator(
       child: PageContainer(
         child: Scaffold(
-          backgroundColor: whiteColor,
+
           body: SingleChildScrollView(
               child: Column(
                 children: [

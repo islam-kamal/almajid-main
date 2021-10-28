@@ -28,7 +28,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           body: SingleChildScrollView(
               child: Column(
             children: [
-           //   responsiveSizedBox(context: context, percentageOfHeight: .05),
+              responsiveSizedBox(context: context, percentageOfHeight: .02),
               productDetailsNameWidget(context: context),
               responsiveSizedBox(context: context, percentageOfHeight: .03),
               productDetailsTopSlider(context: context),
@@ -48,7 +48,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               sizeAndQuantityText(context: context, text: "Quantity"),
               responsiveSizedBox(context: context, percentageOfHeight: .01),
               quantityButton(context: context),
-              divider(context: context),
+              //divider(context: context),
+              responsiveSizedBox(context: context, percentageOfHeight: .03),
               addToCartButton(context: context),
               responsiveSizedBox(context: context, percentageOfHeight: .01),
               Container(

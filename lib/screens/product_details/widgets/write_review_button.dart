@@ -1,5 +1,5 @@
 import 'package:almajidoud/utils/file_export.dart';
-import 'package:almajidoud/screens/Reviews/reviews/reviews_screen.dart';
+import 'package:almajidoud/screens/Reviews/reviews_screen.dart';
 writeReviewButton({BuildContext context}) {
   return GestureDetector(
     onTap: (){
@@ -7,17 +7,18 @@ writeReviewButton({BuildContext context}) {
 
     },
     child: Container(
-        width: width(context) * .9,
+        width: width(context) * .95,
         decoration: BoxDecoration(
             color: whiteColor, borderRadius: BorderRadius.circular(8)),
+        padding: EdgeInsets.only(right: width(context)* 0.05 , left: width(context) * 0.05),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Icon(Icons.rate_review_outlined, color: mainColor),
             SizedBox(width: 10),
             customDescriptionText(
                 context: context,
-                text: "Write ReviewModel ",
+                text: "Write A Review",
                 percentageOfHeight: .025,
                 textColor: mainColor),
           ],
