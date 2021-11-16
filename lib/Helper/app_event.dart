@@ -59,6 +59,20 @@ class profileClick extends AppEvent{
   profileClick({this.password});
 }
 
+
+//Home Page
+class GetHomeNewArrivals extends AppEvent{
+  final String category_id;
+  final int offset;
+  GetHomeNewArrivals({this.category_id,this.offset});
+}
+
+class GetHomeBestSeller extends AppEvent{
+  final int offset;
+  final String category_id;
+  GetHomeBestSeller({this.category_id,this.offset});
+}
+
 //SOCIAL LOGIN
 class SocialLoginEvent extends AppEvent{
   var name , email , provider , provider_id ,firebase_token;

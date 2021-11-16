@@ -1,6 +1,7 @@
 import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/home/widgets/categories_buttons.dart';
-import 'package:almajidoud/screens/home/widgets/new_arrivals_listview.dart';
+import 'package:almajidoud/screens/home/widgets/home_list_products.dart';
+import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 import 'package:almajidoud/screens/home/widgets/title_text.dart';
 import 'package:almajidoud/screens/home/widgets/top_slider.dart';
 import 'package:almajidoud/screens/location/widgets/location_bottom_navigation_bar.dart';
@@ -38,19 +39,25 @@ class _LocationScreenState extends State<LocationScreen> {
                     titleText(context: context, text: "Shop By Category"),
                     responsiveSizedBox(
                         context: context, percentageOfHeight: .01),
-                    categoriesButtons(context: context),
+                    CategoriesButtons(),
                     responsiveSizedBox(
                         context: context, percentageOfHeight: .002),
-                    topSlider(context: context),
+                    HomeSlider(
+                        gallery:StaticData.images
+                    ),
                     responsiveSizedBox(
                         context: context, percentageOfHeight: .01),
                     titleText(context: context, text: "New Arrivals"),
                     responsiveSizedBox(
                         context: context, percentageOfHeight: .01),
-                    newArrivalsListView(context: context),
+                    HomeListProducts(
+                      type: "New Arrivals",
+                    ),
                     responsiveSizedBox(
                         context: context, percentageOfHeight: .01),
-                    topSlider(context: context),
+                    HomeSlider(
+                        gallery:StaticData.images
+                    ),
                     responsiveSizedBox(
                         context: context, percentageOfHeight: .11),
                   ],

@@ -12,6 +12,13 @@ class StaticData {
   static int user_wallet_earnings = 0;
   static String user_mobile_number = '';
 
+
+
+  static List<dynamic> gallery = [];
+  static List images = [];
+  static  var data ;
+
+
   static double get_height(BuildContext context) {
     var height = MediaQuery
         .of(context)

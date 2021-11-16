@@ -1,17 +1,68 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:almajidoud/Bloc/Category_Bloc/category_bloc.dart';
+import 'package:almajidoud/Bloc/Home_Bloc/home_bloc.dart';
+import 'package:almajidoud/Model/CategoryModel/category_model.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/home/widgets/categories_buttons.dart';
 import 'package:almajidoud/screens/home/widgets/home_bottom_navigation_bar.dart';
-import 'package:almajidoud/screens/home/widgets/new_arrivals_listview.dart';
+import 'package:almajidoud/screens/home/widgets/home_list_products.dart';
 import 'package:almajidoud/screens/home/widgets/title_text.dart';
 import 'package:almajidoud/screens/home/widgets/top_slider.dart';
 import 'package:almajidoud/utils/file_export.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 class HomeScreen extends StatefulWidget {
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+/*  List<dynamic> gallery = [];
+  List images = [];
+  var data;
+  Future<void> readJson() async {
+    print("1");
+    final  response = await http.get(Uri.parse("https://test.almajed4oud.com/media/mobile/config.json"),
+     );
+     data = await json.decode(response.body);
+  //  gallery =data['slider'];
+
+    if(data != null){
+      home_bloc.add(GetHomeNewArrivals(
+        category_id: data['new-arrival']['id'],
+        offset: 1
+      ));
+      home_bloc.add(GetHomeBestSeller(
+         category_id: data['best-seller']['id'],
+        offset: 1
+      ));
+    }
+    setState(() {
+      gallery = data["slider"];
+
+      print("gallery : ${gallery}");
+      print(gallery[0]['url']);
+      gallery.forEach((element) {
+        images.add(element['url']);
+      });
+    });
+    print("3");
+
+  }*/
+
+  @override
+  void initState() {
+  // readJson();
+    super.initState();
+  }
+  @override
+  void didChangeDependencies()async {
+  // await readJson();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,28 +84,46 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: SingleChildScrollView(
                         child: Column(
                           children: [
+                            responsiveSizedBox(context: context, percentageOfHeight: .1),
+                            titleText(context: context, text: "Shop By Category"),
+                            responsiveSizedBox(context: context, percentageOfHeight: .02),
+                            CategoriesButtons(),
                             responsiveSizedBox(
-                                context: context, percentageOfHeight: .09),
+                                context: context, percentageOfHeight: .009),
+                            HomeSlider(
+                              gallery:StaticData.images
+                            ),
+
+
+                            responsiveSizedBox(context: context, percentageOfHeight: .02),
+                            titleText(context: context,
+                                text: translator.currentLanguage == 'ar' ?  StaticData.data['new-arrival']['arabic-title']
+                                                                                : StaticData.data['new-arrival']['english-title']),
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .01),
-                            titleText(context: context, text: "Shop By Category"),
+
+                            HomeListProducts(
+                              type: "New Arrivals",
+                            ),
+
+
+
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .02),
-                            categoriesButtons(context: context),
-                            responsiveSizedBox(
-                                context: context, percentageOfHeight: .002),
-                            topSlider(context: context),
-                            responsiveSizedBox(
-                                context: context, percentageOfHeight: .01),
-                            titleText(context: context, text: "New Arrivals"),
-                            responsiveSizedBox(
-                                context: context, percentageOfHeight: .01),
-                            newArrivalsListView(context: context),
+                            HomeSlider(
+                                gallery:StaticData.images
+                            ),
+                            responsiveSizedBox(context: context, percentageOfHeight: .02),
+                            titleText(context: context,
+                                text: translator.currentLanguage == 'ar' ? StaticData.data['best-seller']['arabic-title'] :
+                                          StaticData.data['best-seller']['english-title']),
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .01),
-                            topSlider(context: context),
-                            responsiveSizedBox(
-                                context: context, percentageOfHeight: .11),
+
+                            HomeListProducts(
+                              type: "best-seller",
+                            ),
+
                           ],
                         )),
                   ),
@@ -63,6 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: width(context),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                       children: [
                         ScreenAppBar(
                           onTapCategoryDrawer: () {
@@ -84,6 +154,5 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 
 }

@@ -48,6 +48,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
           ScreenAppBar(
             right_icon: 'cart',
             category_name: widget.category_name,
+            screen: HomeScreen(),
           ),
           Container(
             height: height(context),

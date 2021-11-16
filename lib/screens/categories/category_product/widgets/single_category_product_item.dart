@@ -16,6 +16,12 @@ class singleCategoryProductItem extends StatelessWidget {
       gallery
           .add(ProductImages.getProductImageUrlByName(imageName: element.file));
     });
+    //will you use to get product reviews
+    List<int> reviews_values=[];
+    product.extensionAttributes.reviews.forEach((element) {
+      reviews_values.add(element.statusId);
+
+    });
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -79,9 +85,9 @@ class singleCategoryProductItem extends StatelessWidget {
                                         textAlign: TextAlign.start,
                                         fontWeight: FontWeight.bold),
                                   ),
-                               /*   RatingBar.readOnly(
+                                  RatingBar.readOnly(
                                     initialRating:
-                                        product.visibility.toDouble(),
+                                        5.0,
                                     maxRating: 5,
                                     isHalfAllowed: true,
                                     halfFilledIcon: Icons.star_half,
@@ -92,15 +98,9 @@ class singleCategoryProductItem extends StatelessWidget {
                                         (product.visibility.toDouble() >= 1)
                                             ? Colors.yellow.shade700
                                             : Colors.yellow.shade700,
-                                  ),*/
+                                  ),
 
-                             Container(
-                                width: width(context) * 0.3,
-                                height: 30,
-                                child:     ProductReviews(
-                                  product_sku: product.sku,
-                                ),
-                              )
+
                                 ],
                               ),
                               responsiveSizedBox(
@@ -135,7 +135,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                       final RenderBox box =
                                           context.findRenderObject();
                                       Share.share('${product.name}',
-                                          subject: 'Welcome To Ezhyper',
+                                          subject: 'Welcome To Amajed Oud',
                                           sharePositionOrigin:
                                               box.localToGlobal(Offset.zero) &
                                                   box.size);

@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-topSlider({BuildContext context}) {
+topSlider({BuildContext context , List gallery}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -21,11 +21,12 @@ topSlider({BuildContext context}) {
           indicatorBgPadding: 5.0,
           dotBgColor: Colors.transparent,
           boxFit: BoxFit.fill,
-          images: [
+          images: gallery,
+       /*   images: [
             AssetImage("assets/images/scroll.png"),
             AssetImage("assets/images/scroll.png"),
             AssetImage("assets/images/scroll.png")
-          ],
+          ],*/
         ),
       )
     ],

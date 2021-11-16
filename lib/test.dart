@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 
 class Test extends StatelessWidget {
@@ -25,12 +25,16 @@ class _HomePageState extends State<HomePage> {
 
   // Fetch content from the json file
   Future<void> readJson() async {
-    final String response = await rootBundle.loadString('assets/config_ar.json');
-    final data = await json.decode(response);
+    print("1");
+    final  response = await http.get(Uri.parse("https://test.almajed4oud.com/media/mobile/config.json"));
+    final data = await json.decode(response.body);
+    print("2");
+    print("data : ${data}");
     setState(() {
       _items = data["HorizonLayout"];
       print("_items : ${_items}");
     });
+    print("3");
   }
 
   Widget build(BuildContext context) {
