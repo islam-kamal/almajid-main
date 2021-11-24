@@ -3,7 +3,7 @@ import 'package:almajidoud/Bloc/Search_Bloc/search_bloc.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart' as product_model;
 import 'package:almajidoud/Model/SearchModel/search_model.dart';
-import 'package:almajidoud/screens/Favourites/custom_favourite.dart';
+import 'package:almajidoud/screens/WishList/custom_wishlist.dart';
 import 'package:almajidoud/screens/Products/product_slider.dart';
 import 'package:almajidoud/screens/Reviews/product_reviews.dart';
 
@@ -73,7 +73,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
                                   if (data.items == null || data.items.isEmpty) {
                                     print("11111111111");
-                                    return no_search_data_widget();
+                                    return no_data_widget(
+                                        context: context
+                                    );
                                   } else {
                                     return StreamBuilder<SearchModel>(
                                       stream: search_bloc.search_products_subject,
@@ -81,7 +83,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                         if (snapshot.hasData) {
                                           if (snapshot.data == null) {
                                             print("222222");
-                                            return no_search_data_widget();
+                                            return no_data_widget(
+                                              context: context
+                                            );
                                           } else {
                                             print("length : ${snapshot.data.items.length}");
 
@@ -133,7 +137,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                           children: [
                                                                             responsiveSizedBox(
                                                                                 context: context, percentageOfHeight: .01),
-                                                                            CustomFauvourite(
+                                                                            CustomWishList(
                                                                               color: redColor,
                                                                               favourite_status:
                                                                               snapshot.data.items[index].status == 0 ? false : true,
@@ -270,32 +274,7 @@ class _SearchScreenState extends State<SearchScreen> {
             )));
   }
 
-  Widget no_search_data_widget(){
-    return Container(
-      color: whiteColor,
-      child: Column(
-        children: [
-          responsiveSizedBox(context: context , percentageOfHeight: .1),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(width(context) * 0.1),
-              color: backGroundColor
-            ),
-              child: Image.asset("assets/icons/perfume (1).png" , width: width(context)*.7,color: mainColor,),
-          ),
-          responsiveSizedBox(context: context , percentageOfHeight: .04),
-          customDescriptionText(context: context , textColor: mainColor , text: "No Products Yet !" , percentageOfHeight: .03) ,
-          responsiveSizedBox(context: context , percentageOfHeight: .02),
 
-
-
-
-
-
-        ],
-      ),
-    );
-  }
 
 
 

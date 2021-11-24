@@ -126,10 +126,8 @@ class LogoutDialogState extends State<LogoutDialog> {
                           InkWell(
                             onTap: (){
                               sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
-                              customAnimatedPushNavigation(
-                               context,
-                               SignInScreen()
-                              );
+                              StaticData.vistor_value = '';
+                              customAnimatedPushNavigation(context, SignInScreen());
                             },
                             child:Container(
                                     width: width * .3,

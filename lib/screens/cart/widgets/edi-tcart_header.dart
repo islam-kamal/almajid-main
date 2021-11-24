@@ -1,17 +1,19 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-editCartHeader({BuildContext context}) {
+editCartHeader({BuildContext context, var item_id}) {
+
   return Container(
     padding: EdgeInsets.only(
-        right: width(context) * .05,
-        left: width(context) * .05,
+        right: width(context) * .02,
+        left: width(context) * .02,
         bottom: isLandscape(context)
             ? 2 * height(context) * .01
             : height(context) * .01),
     width: width(context),
     color: mainColor,
-    height:
-        isLandscape(context) ? 2 * height(context) * .08 : height(context) * .08,
+    height: isLandscape(context)
+        ? 2 * height(context) * .08
+        : height(context) * .08,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -34,24 +36,33 @@ editCartHeader({BuildContext context}) {
                 textColor: whiteColor,
                 fontWeight: FontWeight.normal,
                 percentageOfHeight: .025),
-
             Row(
               children: [
                 Image.asset(
                   "assets/icons/heart.png",
                   height: isLandscape(context)
-                      ? 2 * height(context) * .05
-                      : height(context) * .05,
+                      ? 2 * height(context) * .035
+                      : height(context) * .035,
                 ),
                 SizedBox(
                   width: width(context) * .02,
                 ),
-                Image.asset(
-                  "assets/icons/delete.png",
-                  height: isLandscape(context)
-                      ? 2 * height(context) * .04
-                      : height(context) * .04,
-                ),
+                InkWell(
+                  onTap: (){
+                    print("------ item id : ${item_id}");
+                    shoppingCartBloc.add(DeleteProductFromCartEvent(
+                      context: context,
+                      item_id: item_id
+                    ));
+                  },
+                  child:  Image.asset(
+                    "assets/icons/delete.png",
+                    height: isLandscape(context)
+                        ? 2 * height(context) * .03
+                        : height(context) * .03,
+                  ),
+                )
+               ,
               ],
             )
           ],

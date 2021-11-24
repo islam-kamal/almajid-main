@@ -72,12 +72,12 @@ class AuthenticationRepository{
 
  static Future<UserInfoModel> get_user_info({String token }){
    return NetworkUtil.internal().get(
-       UserInfoModel(), Urls.USER_INFO_URL, headers:{
+       UserInfoModel(), Urls.USER_INFO_URL, headers:Map<String, String>.from({
      'Content-Type': 'application/json',
      'Accept': 'application/json',
      'Authorization': 'Bearer ${token}'
 
-   });
+   }));
  }
 
 

@@ -8,7 +8,8 @@ cancelButton({BuildContext context}) {
       child: Center(
           child: customDescriptionText(
               context: context,
-              text: "Cancel",percentageOfHeight: .025,
+              text: "Cancel",
+              percentageOfHeight: .025,
               textColor: whiteColor)),
       height: isLandscape(context)
           ? 2 * height(context) * .065

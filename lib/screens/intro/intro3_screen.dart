@@ -1,5 +1,6 @@
 import 'package:almajidoud/custom_widgets/custom_animated_push_navigation.dart';
 import 'package:almajidoud/screens/auth/sing_in_screen.dart';
+import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 class Intro3Screen extends StatelessWidget {
@@ -52,7 +53,7 @@ class Intro3Screen extends StatelessWidget {
                                   GestureDetector(
                                     onTap: () {
                                       customAnimatedPushNavigation(
-                                          context, HomeScreen());
+                                          context, CustomCircleNavigationBar());
                                     },
                                     child: Container(
                                         height: isLandscape(context)

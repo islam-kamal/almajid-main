@@ -32,6 +32,7 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
           email: email_controller.value,
          password:  password_controller.value);
       print("sigin response : ${response}");
+      sharedPreferenceManager.writeData(CachingKey.AUTH_TOKEN,response);
       if(response != null){
         print("3333333333333333");
         customPushNamedNavigation(event.context,GetStartedScreen(

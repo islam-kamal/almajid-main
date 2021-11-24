@@ -69,3 +69,6 @@ export 'package:almajidoud/Widgets/screen_app_bar.dart';
 export 'package:almajidoud/Model/ReviewModel/product_review_model.dart';
 export 'package:almajidoud/Repository/ReviewRepo/review_repository.dart';
 export 'package:almajidoud/Bloc/Review_Bloc/reviews_bloc.dart';
+export 'package:almajidoud/Bloc/Shopping_Cart_Bloc/shopping_cart_bloc.dart';
+export 'package:almajidoud/Widgets/no_data.dart';
+export 'package:almajidoud/screens/cart/widgets/add_product_to_cart_widget.dart';

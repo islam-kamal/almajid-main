@@ -1,7 +1,7 @@
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:rating_bar/rating_bar.dart';
 
-priceAndRatingRow({BuildContext context , double price}) {
+priceAndRatingRow({BuildContext context , var price}) {
   return Container(
     padding: EdgeInsets.only(
         right: width(context) * .05, left: width(context) * .05),

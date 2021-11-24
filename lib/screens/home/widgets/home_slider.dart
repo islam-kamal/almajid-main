@@ -75,7 +75,7 @@ class _HomeSlider_State extends State<HomeSlider> {
                         int index =  widget.gallery.indexOf(url);
                         return Container(
                           width: 16.0,
-                          height: 6.0,
+                          height: 4.0,
                           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
                           decoration: BoxDecoration(
                             shape: BoxShape.rectangle,

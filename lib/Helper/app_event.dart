@@ -112,37 +112,52 @@ class getSecondLevelSubCategoryProducts extends AppEvent{
 class getAllComplain extends AppEvent{}
 
 
-//Favourite
-class addFavourite_click extends AppEvent{
-  final int product_id;
-  addFavourite_click({this.product_id});
+//WishList
+class AddToWishListEvent extends AppEvent{
+  var product_id;
+  var qty;
+  BuildContext context;
+  AddToWishListEvent({this.product_id,this.qty,this.context});
 }
-class removeFavourite_click extends AppEvent{
-  final int product_id;
-  removeFavourite_click({this.product_id});
+class AddToCarFromWishListEvent extends AppEvent{
+  var wishlist_product_id;
+  var qty;
+  BuildContext context;
+  AddToCarFromWishListEvent({this.wishlist_product_id,this.qty,this.context});
 }
-class getAllFavoutites_click extends AppEvent{
+class removeFromWishListEvent extends AppEvent{
+  final int wishlist_item_id;
+  removeFromWishListEvent({this.wishlist_item_id});
+}
+class getAllWishList_click extends AppEvent{
 
 }
 
-//product
-class getRecommendedProduct_click extends AppEvent{
-  final int offset;
-  getRecommendedProduct_click({this.offset});
-}
-class getMostSellingProduct_click extends AppEvent{
-  final int offset;
-  getMostSellingProduct_click({this.offset});
-}
-class getPurchasedProduct_click extends AppEvent{
-  final int offset;
-  getPurchasedProduct_click({this.offset});
-}
-class getRelatedProduct_click extends AppEvent{
-  final int product_id,  offset;
-  getRelatedProduct_click({this.product_id,this.offset});
+
+// Shopping Cart Events
+class AddProductToCartEvent extends AppEvent{
+BuildContext context;
+var product_quantity ;
+var product_sku;
+AddProductToCartEvent({this.context,this.product_sku,this.product_quantity});
 }
 
+class GetCartDetails extends AppEvent{
+
+}
+
+class UpdateProductQuantityCartEvent extends AppEvent{
+  BuildContext context;
+  var product_quantity ;
+  var product_sku;
+  var item_id;
+  UpdateProductQuantityCartEvent({this.context,this.product_sku,this.product_quantity,this.item_id});
+}
+class DeleteProductFromCartEvent extends AppEvent{
+  var item_id;
+  BuildContext context;
+  DeleteProductFromCartEvent({this.item_id,this.context});
+}
 class FilterProductsEvent extends AppEvent{
   double price_from,  price_to ;
   int categories_id , brand_id, size_id,  rate ,offset;

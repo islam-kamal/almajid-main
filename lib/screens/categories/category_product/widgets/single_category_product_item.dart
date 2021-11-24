@@ -2,10 +2,9 @@ import 'package:almajidoud/Model/ProductModel/product_model.dart';
 import 'package:almajidoud/screens/Products/product_slider.dart';
 import 'package:almajidoud/screens/Reviews/product_reviews.dart';
 import 'package:almajidoud/utils/file_export.dart';
-import 'package:almajidoud/screens/Favourites/custom_favourite.dart';
+import 'package:almajidoud/screens/WishList/custom_wishlist.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:share/share.dart';
-
 class singleCategoryProductItem extends StatelessWidget {
   Items product;
   singleCategoryProductItem({this.product});
@@ -16,12 +15,13 @@ class singleCategoryProductItem extends StatelessWidget {
       gallery
           .add(ProductImages.getProductImageUrlByName(imageName: element.file));
     });
-    //will you use to get product reviews
+   /* //will you use to get product reviews
     List<int> reviews_values=[];
     product.extensionAttributes.reviews.forEach((element) {
       reviews_values.add(element.statusId);
-
     });
+
+    */
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -34,16 +34,17 @@ class singleCategoryProductItem extends StatelessWidget {
                     child: Row(
                       children: [
                         Container(
-                          height: StaticData.get_height(context) * .23,
+                          height: StaticData.get_height(context) * .18,
                           width: StaticData.get_width(context) * .3,
-                          child: MyProductSlider(
+                          child: Image.network(product.customAttributes[0].value, fit:BoxFit.cover,)
+                       /*   MyProductSlider(
                             data: gallery,
                             viewportFraction: 1.0,
                             aspect_ratio: 3.0,
                             border_radius: 5.0,
                             indicator: false,
                             motion: true,
-                          ),
+                          ),*/
                         ),
                         Container(
                           padding: EdgeInsets.only(
@@ -51,17 +52,20 @@ class singleCategoryProductItem extends StatelessWidget {
                               left: width(context) * .02),
                           width: width(context) * .6,
                           height: isLandscape(context)
-                              ? 2 * height(context) * .23
-                              : height(context) * .23,
+                              ? 2 * height(context) * .18
+                              : height(context) * .18,
                           child: Column(
                             children: [
-                              responsiveSizedBox(
-                                  context: context, percentageOfHeight: .01),
-                              CustomFauvourite(
+                            /*  responsiveSizedBox(
+                                  context: context, percentageOfHeight: .01),*/
+                              CustomWishList(
                                 color: redColor,
                                 favourite_status:
                                     product.status == 0 ? false : true,
                                 product_id: product.id,
+                                qty: product.id,
+                                context: context,
+
                               ),
                               responsiveSizedBox(
                                   context: context, percentageOfHeight: .01),
@@ -72,7 +76,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                   text: product.name,
                                   textAlign: TextAlign.start),
                               responsiveSizedBox(
-                                  context: context, percentageOfHeight: .012),
+                                  context: context, percentageOfHeight: .01),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -112,8 +116,8 @@ class singleCategoryProductItem extends StatelessWidget {
                                   Container(
                                     width: width(context) * .4,
                                     height: isLandscape(context)
-                                        ? 2 * height(context) * .05
-                                        : height(context) * .05,
+                                        ? 2 * height(context) * .035
+                                        : height(context) * .035,
                                     decoration: BoxDecoration(
                                         border: Border.all(color: mainColor)),
                                     child: Row(
@@ -143,8 +147,8 @@ class singleCategoryProductItem extends StatelessWidget {
                                     child: Container(
                                       width: width(context) * .15,
                                       height: isLandscape(context)
-                                          ? 2 * height(context) * .05
-                                          : height(context) * .05,
+                                          ? 2 * height(context) * .035
+                                          : height(context) * .035,
                                       decoration: BoxDecoration(
                                           border: Border.all(color: mainColor)),
                                       child: Row(

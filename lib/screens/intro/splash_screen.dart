@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:almajidoud/Bloc/Category_Bloc/category_bloc.dart';
 import 'package:almajidoud/Bloc/Home_Bloc/home_bloc.dart';
+import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/intro/intro1_screen.dart';
 import 'package:almajidoud/screens/intro/intro2_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
@@ -24,9 +25,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Timer(Duration(seconds: 0), () async {
       try {
-        print('--- token -- : ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}');
-        //checkAuthentication(await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN));
-        checkAuthentication('tda5h42j6mke2q43da55wckmoeynz1n1');
+        print('--- token -- : ${await sharedPreferenceManager.readString(
+            CachingKey.AUTH_TOKEN)}');
+        checkAuthentication(
+            await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN));
+        //  checkAuthentication('tda5h42j6mke2q43da55wckmoeynz1n1');
       } catch (e) {
         checkAuthentication(null);
       }
@@ -40,13 +43,15 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Scaffold(
             backgroundColor: blackColor,
             body: Center(child: Stack(children: [
-              Container(width: width(context),height: height(context),
-                child: Image.asset("assets/images/back.png" , fit: BoxFit.cover,),),
-              Container(width: width(context),height: height(context),
+              Container(width: width(context), height: height(context),
+                child: Image.asset(
+                  "assets/images/back.png", fit: BoxFit.cover,),),
+              Container(width: width(context), height: height(context),
                 child: Center(
                   child: Container(
-                      width: width(context)*.5,height: height(context)*.5,
-                      child: Image.asset("assets/icons/logo.png" , fit: BoxFit.contain,)),
+                      width: width(context) * .5, height: height(context) * .5,
+                      child: Image.asset(
+                        "assets/icons/logo.png", fit: BoxFit.contain,)),
                 ),),
             ],))),
       ),
@@ -55,35 +60,19 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void checkAuthentication(String token) async {
     if (token.isEmpty) {
-      await Future.delayed(Duration(seconds: 4));
+      readJson();
+      await Future.delayed(Duration(seconds: 3));
       StaticData.vistor_value = 'visitor';
+      await categoryBloc.add(getAllCategories());
+      print("------------------------ bbbbbbbbbbbbbbbbbbbbb --------------");
       isFirstTime().then((isFirstTime) {
-        print("isFirstTime : ${isFirstTime}" );
-/*
-        Navigator.push(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) {
-              return IntroScreen();
-            },
-            transitionsBuilder:
-                (context, animation8, animation15, child) {
-              return FadeTransition(
-                opacity: animation8,
-                child: child,
-              );
-            },
-            transitionDuration: Duration(milliseconds: 10),
-          ),
-        );
-*/
+        print("isFirstTime : ${isFirstTime}");
 
-        readJson();
-        isFirstTime ? Navigator.push(
+        isFirstTime ?   Navigator.push(
           context,
           PageRouteBuilder(
             pageBuilder: (context, animation1, animation2) {
-              return  HomeScreen();
+              return CustomCircleNavigationBar();
             },
             transitionsBuilder:
                 (context, animation8, animation15, child) {
@@ -94,8 +83,7 @@ class _SplashScreenState extends State<SplashScreen> {
             },
             transitionDuration: Duration(milliseconds: 10),
           ),
-        ) :
-        Navigator.push(
+        ) : Navigator.push(
           context,
           PageRouteBuilder(
             pageBuilder: (context, animation1, animation2) {
@@ -110,36 +98,33 @@ class _SplashScreenState extends State<SplashScreen> {
             },
             transitionDuration: Duration(milliseconds: 10),
           ),
-        );
+        )  ;
       });
-
     } else {
       new CircularProgressIndicator();
       print("1111111111");
-      await categoryBloc.add(getAllCategories()); // refresh token
+      await categoryBloc.add(getAllCategories());
 
-      // await offersBloc.add(getAllOffers());
-      //  await recommended_product_bloc.add(getRecommendedProduct_click());
+
       readJson();
       await Future.delayed(Duration(seconds: 3));
 
       Navigator.pushReplacement(
           context, MaterialPageRoute(
-          builder: (context) => HomeScreen()
+          builder: (context) => CustomCircleNavigationBar(page_index: 2,)
       ));
     }
-
-
   }
 
   Future<void> readJson() async {
     print("1");
-    final  response = await http.get(Uri.parse("https://test.almajed4oud.com/media/mobile/config.json"),
+    final response = await http.get(
+      Uri.parse("https://test.almajed4oud.com/media/mobile/config.json"),
     );
     StaticData.data = await json.decode(response.body);
     //  gallery =data['slider'];
 
-    if(StaticData.data != null){
+    if (StaticData.data != null) {
       home_bloc.add(GetHomeNewArrivals(
           category_id: StaticData.data['new-arrival']['id'],
           offset: 1
@@ -149,20 +134,21 @@ class _SplashScreenState extends State<SplashScreen> {
           offset: 1
       ));
     }
-    setState(() {
-      StaticData.gallery = StaticData.data["slider"];
 
-      print("gallery : ${StaticData.gallery}");
-      print(StaticData.gallery[0]['url']);
-      StaticData.gallery.forEach((element) {
-        StaticData.images.add(element['url']);
-      });
+    StaticData.gallery = StaticData.data["slider"];
+
+    print("gallery : ${StaticData.gallery}");
+    print(StaticData.gallery[0]['url']);
+    StaticData.gallery.forEach((element) {
+      StaticData.images.add(element['url']);
     });
-    print("3");
 
+    print("3");
   }
+
   static Future<bool> isFirstTime() async {
-    bool isFirstTime = await sharedPreferenceManager.readBoolean(CachingKey.FRIST_TIME);
+    bool isFirstTime = await sharedPreferenceManager.readBoolean(
+        CachingKey.FRIST_TIME);
     if (isFirstTime != null && !isFirstTime) {
       sharedPreferenceManager.writeData(CachingKey.FRIST_TIME, true);
       return false;

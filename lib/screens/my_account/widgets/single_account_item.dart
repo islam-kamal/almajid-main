@@ -7,7 +7,7 @@ singleAccountItem({BuildContext context , String text , String iconPath , Functi
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
           Row(children: [
-            Image.asset(iconPath , height: isLandscape(context) ?
+            Image.asset(iconPath ,color: mainColor, height: isLandscape(context) ?
             2*height(context)*.03:height(context)*.03,),
             SizedBox(width: width(context)*.02,),
             customDescriptionText(context: context , text: text, percentageOfHeight: .022) ,

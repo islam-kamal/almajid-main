@@ -1,4 +1,5 @@
 import 'package:almajidoud/screens/auth/sign_up_screen.dart';
+import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
@@ -65,7 +66,7 @@ class IntroScreenState extends State<IntroScreen> {
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SignUpScreen()),
+      MaterialPageRoute(builder: (context) => CustomCircleNavigationBar()),
     );
   }
 

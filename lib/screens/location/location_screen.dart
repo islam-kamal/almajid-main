@@ -4,7 +4,6 @@ import 'package:almajidoud/screens/home/widgets/home_list_products.dart';
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 import 'package:almajidoud/screens/home/widgets/title_text.dart';
 import 'package:almajidoud/screens/home/widgets/top_slider.dart';
-import 'package:almajidoud/screens/location/widgets/location_bottom_navigation_bar.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -113,7 +112,6 @@ class _LocationScreenState extends State<LocationScreen> {
                       ,
                     ),
 
-                    locationBottomNavigationBar(context: context)
                   ],
                 ),
               ),

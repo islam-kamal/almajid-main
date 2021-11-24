@@ -30,7 +30,7 @@ logoutButton({BuildContext context }){
          SizedBox()
 
         ], ),
-        Divider(color: mainColor)
+   //     Divider(color: mainColor)
       ],
     ),
   ),);

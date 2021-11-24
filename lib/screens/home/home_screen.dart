@@ -6,7 +6,6 @@ import 'package:almajidoud/Bloc/Home_Bloc/home_bloc.dart';
 import 'package:almajidoud/Model/CategoryModel/category_model.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/home/widgets/categories_buttons.dart';
-import 'package:almajidoud/screens/home/widgets/home_bottom_navigation_bar.dart';
 import 'package:almajidoud/screens/home/widgets/home_list_products.dart';
 import 'package:almajidoud/screens/home/widgets/title_text.dart';
 import 'package:almajidoud/screens/home/widgets/top_slider.dart';
@@ -55,14 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-  // readJson();
     super.initState();
   }
-  @override
-  void didChangeDependencies()async {
-  // await readJson();
-    super.didChangeDependencies();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +133,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             _drawerKey.currentState.openDrawer();
                           },
                         ),
-                       homeBottomNavigationBar(context: context)
                       ],
                     ),
                   ),

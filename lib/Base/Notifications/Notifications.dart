@@ -1,6 +1,7 @@
 
 import 'dart:async';
 import 'package:almajidoud/Base/shared_preference_manger.dart';
+import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -66,7 +67,7 @@ class AppPushNotifications {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('A new onMessageOpenedApp event was published!');
       Navigator.pushReplacement(context, MaterialPageRoute(
-          builder: (context)=>HomeScreen()));
+          builder: (context)=>CustomCircleNavigationBar()));
     });
 
   }

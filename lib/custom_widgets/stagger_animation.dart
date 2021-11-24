@@ -64,17 +64,38 @@ class StaggerAnimation extends StatelessWidget {
           color: Theme.of(context).primaryColor,
           borderRadius: const BorderRadius.all(Radius.circular(15.0)),
         ),
-        child: buttonSqueezeanimation.value > 75.0
+        child:image != null && titleButton != null ?Container(
+            width: width(context) * .9,
+            decoration: BoxDecoration(
+                color: mainColor, borderRadius: BorderRadius.circular(8)),
+            child:  Row(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.shopping_cart , color: whiteColor),
+                SizedBox(width: 10 ) ,
+
+                customDescriptionText(
+                    context: context,
+                    text: "Add To Cart",
+                    percentageOfHeight: .025,
+
+                    textColor: whiteColor) ,
+
+
+              ],),
+            height: isLandscape(context)
+                ? 2 * MediaQuery.of(context).size.height * .065
+                : MediaQuery.of(context).size.height * .065) :
+        buttonSqueezeanimation.value > 75.0
             ? isResetScreen == null
                 ? Container(
                     height: isLandscape(context)
                         ? 2 * StaticData.get_height(context) * .06
                         : StaticData.get_height(context) * .06,
-                    width: width(context) * .3,
+                    width: image != null && titleButton != null ? width(context) * .8 : width(context) * .3,
                     decoration: BoxDecoration(
                         color: blackColor,
                         borderRadius: BorderRadius.circular(30)),
-                    child: Center(
+                    child:  Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -85,9 +106,11 @@ class StaggerAnimation extends StatelessWidget {
                                   : isResetScreen
                                       ? "Done"
                                       : "Send",
-                              textColor: whiteColor) : Center(child: Image.asset(image , height: isLandscape(context)
+                              textColor: whiteColor) :
+                        Center(child: Image.asset(image , height: isLandscape(context)
                             ? 2 * StaticData.get_height(context) * .04
                             : StaticData.get_height(context) * .04),),
+
                           SizedBox(width: width(context) * .03),
                           isResetScreen == null
                               ? Container()

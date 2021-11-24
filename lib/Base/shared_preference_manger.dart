@@ -67,11 +67,12 @@ class   CachingKey extends Enum<String> {
   static const CachingKey USER_ID = const CachingKey('USER_ID');
   static const CachingKey AUTH_TOKEN = const CachingKey('AUTH_TOKEN');
   static const CachingKey FIREBASE_TOKEN = const CachingKey('FIREBASE_TOKEN');
+  static const CachingKey CART_QUOTE = const CachingKey('CART_QUOTE');
 
   static const CachingKey USER_NAME = const CachingKey('USER_NAME');
   static const CachingKey EMAIL = const CachingKey('EMAIL');
   static const CachingKey MOBILE_NUMBER = const CachingKey('MOBILE_NUMBER');
-  static const CachingKey IS_OWNER = const CachingKey('IS_OWNER');
+
   static const CachingKey FORGET_PASSWORD_PHONE = const CachingKey('FORGET_PASSWORD_PHONE');
   static const CachingKey DEFAULT_SHIPPING_ADDRESS = const CachingKey('DEFAULT_SHIPPING_ADDRESS');
   static const CachingKey USER_DEFAULT_LOCATION_ID = const CachingKey('USER_DEFAULT_LOCATION_ID'); //use in payment

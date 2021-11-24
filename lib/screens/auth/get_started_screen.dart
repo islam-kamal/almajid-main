@@ -1,4 +1,5 @@
 import 'package:almajidoud/Bloc/Authentication_Bloc/SigninBloc/sign_in_bloc.dart';
+import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/home/home_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
@@ -102,11 +103,12 @@ class GetStartedScreenState extends State<GetStartedScreen>
                     } else if (state is Done) {
                       print("done");
                       _stopAnimation();
+                      StaticData.vistor_value = null;
                       Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) {
-                            return HomeScreen();
+                            return CustomCircleNavigationBar(page_index: 2,);
                           },
                           transitionsBuilder:
                               (context, animation8, animation15, child) {

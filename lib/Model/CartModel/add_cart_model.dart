@@ -8,7 +8,8 @@ class AddCartModel extends BaseMappable{
   int price;
   String productType;
   String quoteId;
-
+  String message;
+  Parameters parameters;
   AddCartModel(
       {this.itemId,
         this.sku,
@@ -16,7 +17,8 @@ class AddCartModel extends BaseMappable{
         this.name,
         this.price,
         this.productType,
-        this.quoteId});
+        this.quoteId,
+        this.message, this.parameters});
 
   AddCartModel.fromJson(Map<String, dynamic> json) {
     itemId = json['item_id'];
@@ -49,8 +51,31 @@ class AddCartModel extends BaseMappable{
     price = json['price'];
     productType = json['product_type'];
     quoteId = json['quote_id'];
-    return AddCartModel(sku: sku,name: name,price: price,itemId: itemId,productType: productType,qty: qty,quoteId: quoteId);
+    message = json['message'];
+    parameters = json['parameters'] != null
+        ? new Parameters.fromJson(json['parameters'])
+        : null;
+    return AddCartModel(sku: sku,name: name,price: price,itemId: itemId,productType: productType,
+        qty: qty,quoteId: quoteId,message: message,parameters: parameters);
   }
 
 
+}
+class Parameters {
+  String fieldName;
+  String fieldValue;
+
+  Parameters({this.fieldName, this.fieldValue});
+
+  Parameters.fromJson(Map<String, dynamic> json) {
+    fieldName = json['fieldName'];
+    fieldValue = json['fieldValue'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['fieldName'] = this.fieldName;
+    data['fieldValue'] = this.fieldValue;
+    return data;
+  }
 }

@@ -19,6 +19,8 @@
   "Proceed to checkout": "Proceed to checkout",
   "Edit Cart": "Edit Cart",
   "Cancel": "Cancel",
+  "Save" : "Save",
+  "Update" : "Update",
   "-------------------checkout-----------------": "---------------------------------",
   "Checkout": "Checkout",
   "Address": "Address",
@@ -152,7 +154,10 @@
 
   "-------------------- search --------" :"------------------------------" ,
   "Search Result" :  "Search Result",
-  "No Products Yet !"  : "No Products Yet !"
+  "No Products Yet !"  : "No Products Yet !",
+
+  "-------------------- WishList --------" :"------------------------------" ,
+  "My WishList" : "My WishList"
 }
 
 

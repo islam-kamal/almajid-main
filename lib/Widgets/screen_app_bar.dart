@@ -75,16 +75,21 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                           : height(context) * .04,
                       child: TextFormField(
                         controller: controller,
+                        style: TextStyle(color: whiteColor, fontWeight: FontWeight.normal,
+                            fontSize: 12,decoration: TextDecoration.none),
+                        textAlign: TextAlign.right,
+
                         focusNode: focusNode,
                         cursorColor: greyColor.withOpacity(.5),
                         decoration: InputDecoration(
-                          hintStyle: TextStyle(color: whiteColor, fontSize: 8),
+                          hintStyle: TextStyle(color: whiteColor, fontSize: 8,decoration: TextDecoration.none),
                           hintText: translator.translate("Type here to search"),
                           prefixIcon: IconButton(
                             icon: Icon(
                               Icons.search,
                               size: 20,
                             ),
+
                             color: whiteColor,
                             onPressed: () {
                               search_bloc.add(SearchProductsEvent(
@@ -116,7 +121,7 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                           color: whiteColor,
                           fontSize: AlmajedFont.primary_font_size),
                     ),
-              widget.category_name == null
+              widget.category_name != null
                   ? widget.left_icon == null
                       ? Image.asset(
                           "assets/icons/logo.png",
@@ -137,8 +142,8 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                           child: Image.asset(
                             widget.left_icon,
                             height: isLandscape(context)
-                                ? 2 * height(context) * .04
-                                : height(context) * .04,
+                                ? 2 * height(context) * .03
+                                : height(context) * .03,
                           ),
                         )
                   : Container(),

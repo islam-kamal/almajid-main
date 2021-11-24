@@ -29,6 +29,17 @@ class Urls {
 
   static final String GET_ALL_OFFERS = '/api/user/offers/get-offers';
 
+//Shopping cart Urls
+
+  static final String CREATE_Guest_QUOTE = '/index.php/rest/V1/guest-carts/';
+
+  static final String CREATE_Client_QUOTE = '/rest/V1/carts/mine';
+
+  static final String Client_Add_Product_To_Cart = "/rest/V1/carts/mine/items";
+
+  static final String Client_Cart_Details = "/${translator.currentLanguage}-sa/rest/V1/carts/mine/totals";
+
+  static final String GET_ALL_WISHLIST_ITEMS = '/index.php/rest/V1/mstore/me/wishlist';
 
 
   static final String LOGOUT = "/api/auth/logout";
@@ -66,7 +77,6 @@ class Urls {
 
   static final String SEND_COMPLAIN = '/api/user/info/store';
   static final String GET_USER_COMPLAINS = '/api/user/info/my-tickets';
-  static final String GET_ALL_FAVOURITES = '/api/user/products/favorites/listUserFav';
   static final String ADD_TO_FAVOURITE = '/api/user/products/add-fav';
   static final String REMOVE_FROM_FAVOURITE = '/api/user/products/remove';
   static final String RATE_AND_REVIEW = '/api/user/rates/store';

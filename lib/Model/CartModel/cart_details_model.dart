@@ -26,7 +26,8 @@ class CartDetailsModel extends BaseMappable {
   int itemsQty;
   List<Items> items;
   List<TotalSegments> totalSegments;
-
+  String message;
+  Parameters parameters;
   CartDetailsModel(
       {this.grandTotal,
       this.baseGrandTotal,
@@ -52,7 +53,9 @@ class CartDetailsModel extends BaseMappable {
       this.quoteCurrencyCode,
       this.itemsQty,
       this.items,
-      this.totalSegments});
+      this.totalSegments,
+        this.message,
+        this.parameters});
 
   CartDetailsModel.fromJson(Map<String, dynamic> json) {
     grandTotal = json['grand_total'];
@@ -164,6 +167,10 @@ class CartDetailsModel extends BaseMappable {
         totalSegments.add(new TotalSegments.fromJson(v));
       });
     }
+    message = json['message'];
+    parameters = json['parameters'] != null
+        ? new Parameters.fromJson(json['parameters'])
+        : null;
     return CartDetailsModel(
         items: items,
         baseCurrencyCode: baseCurrencyCode,
@@ -189,7 +196,9 @@ class CartDetailsModel extends BaseMappable {
         subtotalWithDiscount: subtotalWithDiscount,
         taxAmount: taxAmount,
         totalSegments: totalSegments,
-        weeeTaxAppliedAmount: weeeTaxAppliedAmount);
+        weeeTaxAppliedAmount: weeeTaxAppliedAmount,
+    message: message,
+    parameters: parameters);
   }
 }
 
@@ -391,6 +400,24 @@ class Rates {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['percent'] = this.percent;
     data['title'] = this.title;
+    return data;
+  }
+}
+class Parameters {
+  String fieldName;
+  String fieldValue;
+
+  Parameters({this.fieldName, this.fieldValue});
+
+  Parameters.fromJson(Map<String, dynamic> json) {
+    fieldName = json['fieldName'];
+    fieldValue = json['fieldValue'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['fieldName'] = this.fieldName;
+    data['fieldValue'] = this.fieldValue;
     return data;
   }
 }

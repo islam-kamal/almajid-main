@@ -22,7 +22,6 @@ class LogoutBloc extends Bloc<AppEvent,AppState> implements BaseBloc{
             sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
             sharedPreferenceManager.removeData(CachingKey.MOBILE_NUMBER);
             sharedPreferenceManager.removeData(CachingKey.EMAIL);
-            sharedPreferenceManager.removeData(CachingKey.IS_OWNER);
             sharedPreferenceManager.removeData(CachingKey.USER_NAME);
             sharedPreferenceManager.removeData(CachingKey.FORGET_PASSWORD_PHONE);
             sharedPreferenceManager.removeData(CachingKey.USER_ID);

@@ -1,7 +1,6 @@
 import 'package:almajidoud/screens/notifications/widgets/no_notifications_widget.dart';
 import 'package:almajidoud/screens/notifications/widgets/notifications_header.dart';
 import 'package:almajidoud/screens/notifications/widgets/single_notification_card.dart';
-import 'package:almajidoud/screens/settings/widgets/settings_navigation_bar.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 class NotificationsScreen extends StatefulWidget{
@@ -101,11 +100,7 @@ class NotificationsScreenState extends State<NotificationsScreen> {
               ),
             ) : no_notifications_widget() ,
           ),),
-          Container(
-           // height: 50,
-            width: double.maxFinite,
-             child:notificationsBottomNavigationBar(context: context)
-           ),
+
 
           ],
         )

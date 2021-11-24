@@ -1,5 +1,4 @@
 import 'package:almajidoud/screens/categories/categories_screen.dart';
-import 'package:almajidoud/screens/my_account/widgets/account_navigation_bar.dart';
 import 'package:almajidoud/screens/my_account/widgets/logout_button.dart';
 import 'package:almajidoud/screens/my_account/widgets/single_account_item.dart';
 import 'package:almajidoud/screens/my_account/widgets/user_email.dart';
@@ -8,6 +7,7 @@ import 'package:almajidoud/screens/my_account/widgets/user_name.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/my_account/register_bottom_sheet.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
+import 'package:almajidoud/screens/WishList/wishlist_screen.dart';
 class MyAccountScreen extends StatefulWidget {
   @override
   _MyAccountScreenState createState() => _MyAccountScreenState();
@@ -35,7 +35,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                     child: Column(
                   children: [
                     responsiveSizedBox(
-                        context: context, percentageOfHeight: .13),
+                        context: context, percentageOfHeight: .10),
                     userImageWidget(
                         context: context,
                         imagePath:
@@ -69,6 +69,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         context: context,
                         iconPath: "assets/icons/credit-card.png",
                         text: "My Cards" , isContainMoreIcon: true  , onTap: (){}),
+                StaticData.vistor_value == "visitor"? Container :    singleAccountItem(
+                        context: context,
+                        iconPath: "assets/icons/heart.png",
+                        text: "My WishList" , isContainMoreIcon: true  , onTap: (){
+                      customPushNamedNavigation(context, WishListScreen());
+                    }),
                     singleAccountItem(
                         context: context,
                         iconPath: "assets/icons/settings (3).png",
@@ -108,7 +114,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       ,
                       left_icon: "assets/icons/notifi.png",
                     ),
-                    accountBottomNavigationBar(context: context)
                   ],
                 ),
               ),

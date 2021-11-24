@@ -1,6 +1,8 @@
 import 'package:almajidoud/Bloc/Product_Bloc/product_bloc.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart' as product_model;
+import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
+import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 
 import 'package:almajidoud/utils/file_export.dart';
 
@@ -48,7 +50,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
           ScreenAppBar(
             right_icon: 'cart',
             category_name: widget.category_name,
-            screen: HomeScreen(),
+            screen: CustomCircleNavigationBar(),
           ),
           Container(
             height: height(context),
@@ -63,11 +65,13 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                         ? 2 * height(context) * .2
                         : height(context) * .2,
                     floating: false,
-                    backgroundColor: mainColor,
+                    backgroundColor: whiteColor,
                     elevation: 0,
                     pinned: false,
                     flexibleSpace: FlexibleSpaceBar(
-                      background: categoryDetailsTopSlider(context: context),
+                      background:     HomeSlider(
+                          gallery:StaticData.images
+                      ),
                     ),
                   )
                 ];
