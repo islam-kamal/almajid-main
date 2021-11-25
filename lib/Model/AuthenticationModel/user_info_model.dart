@@ -49,7 +49,7 @@ class UserInfoModel extends BaseMappable {
     storeId = json['store_id'];
     websiteId = json['website_id'];
     if (json['addresses'] != null) {
-      addresses = new List<Null>();
+      addresses = new List<Addresses>();
       json['addresses'].forEach((v) {
         addresses.add(new Addresses.fromJson(v));
       });
@@ -117,7 +117,7 @@ class UserInfoModel extends BaseMappable {
     storeId = json['store_id'];
     websiteId = json['website_id'];
     if (json['addresses'] != null) {
-      addresses = new List<Null>();
+      addresses = new List<Addresses>();
       json['addresses'].forEach((v) {
         addresses.add(new Addresses.fromJson(v));
       });
