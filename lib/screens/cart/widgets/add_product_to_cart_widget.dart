@@ -1,8 +1,8 @@
 import 'package:almajidoud/utils/file_export.dart';
 
 class AddProductToCartWidget extends StatefulWidget{
-  var product_quantity , product_sku;
-  AddProductToCartWidget({this.product_quantity,this.product_sku});
+  var product_quantity , product_sku , instock_status;
+  AddProductToCartWidget({this.product_quantity,this.product_sku, this.instock_status});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -61,7 +61,7 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget> with Tic
         image: "assets/icons/right-arrow.png",
         titleButton: "Add TO Cart",
         //    isResetScreen:false,
-        onTap: () {
+        onTap: widget.instock_status == false ? (){} : () {
           shoppingCartBloc.add(AddProductToCartEvent(
               context: context,
               product_quantity: widget.product_quantity,

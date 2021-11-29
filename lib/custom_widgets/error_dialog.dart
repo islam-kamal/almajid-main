@@ -20,7 +20,7 @@ void errorDialog({BuildContext context, String text, Function function}) {
                     Text(
                       text ?? "",
                       style: TextStyle(
-                          color: Color(0xFF986667),
+                          color: blackColor,
                           fontFamily: "Cairo",
                           fontSize: AlmajedFont.secondary_font_size),
                     )
@@ -36,7 +36,7 @@ void errorDialog({BuildContext context, String text, Function function}) {
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontFamily: "Cairo",
-                  color: Color(0xFF986667),
+                  color: blackColor,
                 ),
               ),
               onPressed: function ?? () => Navigator.pop(context),

@@ -2,6 +2,7 @@ import 'package:almajidoud/utils/file_export.dart';
 
 editCartHeader({BuildContext context, var item_id}) {
 
+  print("header item_id : ${item_id}");
   return Container(
     padding: EdgeInsets.only(
         right: width(context) * .02,
@@ -35,8 +36,9 @@ editCartHeader({BuildContext context, var item_id}) {
                 text: "Edit Cart",
                 textColor: whiteColor,
                 fontWeight: FontWeight.normal,
-                percentageOfHeight: .025),
-            Row(
+                percentageOfHeight: .025
+            ),
+            item_id==null? Container() :   Row(
               children: [
                 Image.asset(
                   "assets/icons/heart.png",

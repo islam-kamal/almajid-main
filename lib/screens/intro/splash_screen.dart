@@ -119,7 +119,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> readJson() async {
     print("1");
     final response = await http.get(
-      Uri.parse("https://test.almajed4oud.com/media/mobile/config.json"),
+      Uri.parse("${Urls.BASE_URL}/media/mobile/config.json"),
     );
     StaticData.data = await json.decode(response.body);
     //  gallery =data['slider'];

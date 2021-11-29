@@ -23,7 +23,7 @@ class WishListRepository {
     print("product_qty :: ${product_qty}");
     try {
       final response = await dio.put(
-          "https://test.almajed4oud.com/index.php/rest/V1/mstore/me/wishlist/add/${product_id}",
+          "${Urls.BASE_URL}/index.php/rest/V1/mstore/me/wishlist/add/${product_id}",
           data: {
             'buyRequest': {
               'qty': product_qty,
@@ -55,7 +55,7 @@ class WishListRepository {
     print("wishlist_item_id :: ${wishlist_item_id}");
     try {
       final response = await dio.post(
-          "https://test.almajed4oud.com/index.php/rest/V1/mstore/me/wishlist/item/remove/${wishlist_item_id}",
+          "${Urls.BASE_URL}/index.php/rest/V1/mstore/me/wishlist/item/remove/${wishlist_item_id}",
           options: Options(
               headers:  {
                 'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ class WishListRepository {
       if (response.statusCode == 200) {
         sharedPreferenceManager.writeData(CachingKey.CART_QUOTE, response.data.toString());
 
-        final add_response = await dio.post("https://test.almajed4oud.com/index.php/rest/V1/mstore/me/wishlist/addCart/${wishlist_product_id}",
+        final add_response = await dio.post("${Urls.BASE_URL}/index.php/rest/V1/mstore/me/wishlist/addCart/${wishlist_product_id}",
             options: Options(
               headers: {
                 'Content-Type': 'application/json',

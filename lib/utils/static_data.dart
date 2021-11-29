@@ -12,6 +12,7 @@ class StaticData {
   static int user_wallet_earnings = 0;
   static String user_mobile_number = '';
 
+  static int product_qty = 1;
 
 
   static List<dynamic> gallery = [];

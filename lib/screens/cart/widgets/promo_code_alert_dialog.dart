@@ -3,9 +3,10 @@ import 'package:almajidoud/custom_widgets/responsive_sized_box.dart';
 import 'package:almajidoud/custom_widgets/custom_description_text.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-Future promoCodeAlertDialog({BuildContext context}) {
+Future promoCodeAlertDialog({BuildContext base_context}) {
+  TextEditingController controller = new TextEditingController();
   return showDialog<void>(
-    context: context,
+    context: base_context,
     builder: (BuildContext context) {
       return AlertDialog(
         contentPadding: EdgeInsets.zero,
@@ -26,7 +27,13 @@ Future promoCodeAlertDialog({BuildContext context}) {
                     SizedBox(),
                   customDescriptionText(context: context , text: "Promo Code" , percentageOfHeight: .025 , fontWeight: FontWeight.bold)
 ,
-                  Icon(Icons.close) ,
+                  InkWell(
+                    onTap: (){
+                      Navigator.pop(context);
+                    },
+                    child: Icon(Icons.close) ,
+
+                  ),
                 ],),
               ),
           Container(width: width(context),height: 4 ,color: mainColor),
@@ -39,6 +46,7 @@ Future promoCodeAlertDialog({BuildContext context}) {
                   responsiveSizedBox(context: context, percentageOfHeight: .02),
                   Container(width: width(context)*.7,height: height(context)*.06,
                       child: TextField(
+                        controller: controller,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.edit),
                           hintText: translator.translate("Input copoun number"),
@@ -71,6 +79,13 @@ Future promoCodeAlertDialog({BuildContext context}) {
           Container(
             child: Center(
               child: GestureDetector(onTap: (){
+                print("------ prom_code ---- ${controller.value.text}");
+                shoppingCartBloc.add(ApplyPromoCodeEvent(
+                  context: base_context,
+                  prom_code: controller.value.text
+                ));
+                Navigator.pop(context);
+
               },
                 child: Container(
                     width: width(context) * .9,

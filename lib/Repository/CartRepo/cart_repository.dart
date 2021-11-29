@@ -83,7 +83,7 @@ class CartRepository {
     };
     return NetworkUtil.internal().get(
         CartDetailsModel(), StaticData.vistor_value == 'visitor'?
-    'https://test.almajed4oud.com/index.php/rest/V1/guest-carts/${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/totals'
+    '${Urls.BASE_URL}/index.php/rest/V1/guest-carts/${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/totals'
         : Urls.Client_Cart_Details, headers: headers  );
   }
 
@@ -91,8 +91,8 @@ class CartRepository {
 
     return NetworkUtil().put(
         AddCartModel(),
-        StaticData.vistor_value == 'visitor'? "https://test.almajed4oud.com/index.php/rest/V1/guest-carts/${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/items/${item_id}"
-            : "https://test.almajed4oud.com/index.php/rest/V1/carts/mine/items/${item_id}",
+        StaticData.vistor_value == 'visitor'? "${Urls.BASE_URL}/index.php/rest/V1/guest-carts/${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/items/${item_id}"
+            : "${Urls.BASE_URL}/index.php/rest/V1/carts/mine/items/${item_id}",
         body: {
     'cartItem': {
     'item_id': item_id,
@@ -116,8 +116,8 @@ class CartRepository {
 
       print("res 3");
       final response = await dio.delete(
-          StaticData.vistor_value == 'visitor'? "https://test.almajed4oud.com/rest/V1/guest-carts/${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/items/${item_id}"
-          : "https://test.almajed4oud.com/rest/V1/carts/mine/items/${item_id}",
+          StaticData.vistor_value == 'visitor'? "${Urls.BASE_URL}/rest/V1/guest-carts/${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/items/${item_id}"
+          : "${Urls.BASE_URL}/rest/V1/carts/mine/items/${item_id}",
 
           options: Options(
               headers: StaticData.vistor_value == 'visitor'?  Map<String, String>.from({}) : Map<String, String>.from({
@@ -144,5 +144,87 @@ class CartRepository {
     }
 
   }
+
+  Future<bool> apply_promo_code_to_cart({BuildContext context, var promo_code}) async {
+    Dio dio = new Dio();
+    try {
+      print("*** prom_code *** ${promo_code}");
+      StaticData.vistor_value == 'visitor'?
+      print("guest_cart_quote : ${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}")
+      :print("client_cart_quote : ${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}");
+      print("promo 1");
+      final response = await dio.put(
+          StaticData.vistor_value == 'visitor'?
+              "${Urls.BASE_URL}/index.php/rest/V1/guest-carts/${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/coupons/${promo_code}"
+          : "${Urls.BASE_URL}/index.php/rest/V1/carts/${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/coupons/${promo_code}",
+
+          options: Options(
+              headers: StaticData.vistor_value == 'visitor'?  Map<String, String>.from({}) : Map<String, String>.from({
+              'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}',
+              'content-type': 'application/json',
+              'Accept': 'application/json',
+
+              })
+          ));
+      print("promo response : ${response.data}");
+      if (response.statusCode == 200) {
+        print("promo 2");
+        return response.data;
+
+      } else {
+        print("promo 3");
+        Navigator.pop(context);
+        errorDialog(context: context, text: response.data['message']);
+      }
+    } catch (e) {
+      print("promo 4");
+      print("error : ${e.toString()}");
+      Navigator.pop(context);
+      errorDialog(context: context, text: e.toString());
+    }
+
+
+  }
+
+  Future<bool> delete_promo_code_from_cart({BuildContext context}) async {
+    Dio dio = new Dio();
+    try {
+      StaticData.vistor_value == 'visitor'?
+      print("guest_cart_quote : ${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}")
+          :print("client_cart_quote : ${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}");
+      print("promo 1");
+      final response = await dio.delete(
+          StaticData.vistor_value == 'visitor'?
+          "${Urls.BASE_URL}/index.php/rest/V1/guest-carts/${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/coupons"
+              : "${Urls.BASE_URL}/index.php/rest/V1/carts/${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/coupons",
+
+          options: Options(
+              headers: StaticData.vistor_value == 'visitor'?  Map<String, String>.from({}) : Map<String, String>.from({
+                'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}',
+                'content-type': 'application/json',
+                'Accept': 'application/json',
+
+              })
+          ));
+      print("promo response : ${response.data}");
+      if (response.statusCode == 200) {
+        print("promo 2");
+        return response.data;
+
+      } else {
+        print("promo 3");
+        Navigator.pop(context);
+        errorDialog(context: context, text: response.data['message']);
+      }
+    } catch (e) {
+      print("promo 4");
+      print("error : ${e.toString()}");
+      Navigator.pop(context);
+      errorDialog(context: context, text: e.toString());
+    }
+
+
+  }
+
 }
 CartRepository cartRepository = CartRepository();

@@ -1,7 +1,6 @@
 import 'package:almajidoud/Model/CartModel/add_cart_model.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
-import 'package:almajidoud/screens/product_details/widgets/add_to_cart_button.dart';
 import 'package:almajidoud/screens/product_details/widgets/descriptionAndShareRow.dart';
 import 'package:almajidoud/screens/product_details/widgets/divider.dart';
 import 'package:almajidoud/screens/product_details/widgets/favourite_and_name_row.dart';
@@ -31,7 +30,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
   void initState() {
     widget.product.mediaGalleryEntries.forEach((element) {
       product_images.add(
-          "https://test.almajed4oud.com/media/catalog/product/cache/089af6965a318f5bf47750f284c40786" +
+          "${Urls.BASE_URL}/media/catalog/product/cache/089af6965a318f5bf47750f284c40786" +
               element.file);
     });
     _loginButtonController = AnimationController(
@@ -182,13 +181,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                         sizeAndQuantityText(context: context, text: "Quantity"),
                         responsiveSizedBox(
                             context: context, percentageOfHeight: .02),
-                        quantityButton(context: context),
+                        QuantityButton(quantity: widget.product.extensionAttributes.stockItem.qty ),
                         //divider(context: context),
                         responsiveSizedBox(
                             context: context, percentageOfHeight: .03),
                         AddProductToCartWidget(
                             product_sku: widget.product.sku,
-                            product_quantity: 2 // chane to product quantity
+                            product_quantity:  StaticData.product_qty ,
+                           instock_status: widget.product.extensionAttributes.stockItem.isInStock,
                             ),
                         responsiveSizedBox(
                             context: context, percentageOfHeight: .02),

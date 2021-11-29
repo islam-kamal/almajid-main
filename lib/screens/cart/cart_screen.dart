@@ -3,6 +3,7 @@ import 'package:almajidoud/Model/CartModel/cart_details_model.dart' as cart_deta
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 
 import 'package:almajidoud/screens/cart/widgets/proceed_to_checkout_button.dart';
+import 'package:almajidoud/screens/cart/widgets/promo_code_widget.dart';
 import 'package:almajidoud/screens/cart/widgets/single_cart_item.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
@@ -26,7 +27,6 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool switch1 = true;
     return NetworkIndicator(
         child: PageContainer(
             child: Scaffold(
@@ -52,15 +52,17 @@ class _CartScreenState extends State<CartScreen> {
                         if (state is Loading) {
                           if (state.indicator == "UpdateProductQuantity") {
                           } else if (state.indicator == 'DeleteProductFromCart') {
-                          } else {
+                          }  else {
                             return Center(
                               child: CircularProgressIndicator(),
                             );
                           }
                         } else if (state is Done) {
                           if (state.indicator == "UpdateProductQuantity") {
-                          } else if (state.indicator == 'DeleteProductFromCart') {
-                          } else {
+                          }
+                          else if (state.indicator == 'DeleteProductFromCart') {
+                          }
+                          else {
                             var data = state.model as CartDetailsModel;
                             if (data.message?.isEmpty != null) {
                               return no_data_widget(context: context);
@@ -108,11 +110,15 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                   responsiveSizedBox(
                                       context: context,
-                                      percentageOfHeight: .01),
+                                      percentageOfHeight: .0),
+                                  PromoCodeWidget(),
                                   Container(
-                                    width: width(context) * .8,
+                                    width: width(context) * .9,
                                     child: Divider(color: greyColor),
                                   ),
+                                  responsiveSizedBox(
+                                      context: context,
+                                      percentageOfHeight: .01),
                                   customDescriptionText(
                                       context: context,
                                       textColor: greyColor,
@@ -188,4 +194,6 @@ class _CartScreenState extends State<CartScreen> {
       ),
     )));
   }
+
+
 }

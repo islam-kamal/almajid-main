@@ -158,6 +158,17 @@ class DeleteProductFromCartEvent extends AppEvent{
   BuildContext context;
   DeleteProductFromCartEvent({this.item_id,this.context});
 }
+class ApplyPromoCodeEvent extends AppEvent{
+  var prom_code;
+  BuildContext context;
+  ApplyPromoCodeEvent({this.prom_code,this.context});
+}
+
+class DeletePromoCodeEvent extends AppEvent{
+  BuildContext context;
+  DeletePromoCodeEvent({this.context});
+}
+
 class FilterProductsEvent extends AppEvent{
   double price_from,  price_to ;
   int categories_id , brand_id, size_id,  rate ,offset;

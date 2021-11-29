@@ -270,9 +270,7 @@ class _EditCartScreenState extends State<EditCartScreen>
     )));
   }
 
-  updateProductQtyCartButton({
-    BuildContext context,
-  }) {
+  updateProductQtyCartButton({BuildContext context,}) {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.all(10),
@@ -293,11 +291,7 @@ class _EditCartScreenState extends State<EditCartScreen>
     );
   }
 
-  singleEditCartItem(
-      {BuildContext context,
-      bool checkValue: false,
-      cart_details_model.Items item,
-      var index}) {
+  singleEditCartItem({BuildContext context, bool checkValue: false, cart_details_model.Items item, var index}) {
     List<String> qantity_numbers = [];
     for (int i = 1; i < item.qty; i++) {
       qantity_numbers.add(i.toString());

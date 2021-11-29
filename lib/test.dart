@@ -1,3 +1,4 @@
+import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -26,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   // Fetch content from the json file
   Future<void> readJson() async {
     print("1");
-    final  response = await http.get(Uri.parse("https://test.almajed4oud.com/media/mobile/config.json"));
+    final  response = await http.get(Uri.parse("${Urls.BASE_URL}/media/mobile/config.json"));
     final data = await json.decode(response.body);
     print("2");
     print("data : ${data}");
