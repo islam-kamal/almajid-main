@@ -26,7 +26,7 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
   Stream<AppState> mapEventToState(AppEvent event) async* {
     if (event is AddProductToCartEvent) {
       print("1");
-      yield Loading();
+      yield Loading(indicator: event.indictor);
       final response = await cartRepository.add_product_to_cart(
           context: event.context,
           product_sku: event.product_sku,
@@ -35,11 +35,11 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
 
       if (response.message != null) {
         print("AddProductToCart ErrorLoading");
-        yield ErrorLoading(model: response);
+        yield ErrorLoading(model: response,indicator: event.indictor);
       } else {
 
         print("AddProductToCart Done");
-        yield Done(model: response);
+        yield Done(model: response,indicator: event.indictor);
       }
     }
     else if(event is GetCartDetails){
@@ -48,7 +48,7 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
       final response =await cartRepository.get_cart_details();
       print("cart response : ${response}");
       if(response.message != null){
-        yield ErrorLoading();
+        yield ErrorLoading(message: response.message);
 
       }else{
         _cart_details_subject.sink.add(response);

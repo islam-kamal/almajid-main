@@ -1,4 +1,5 @@
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
+import 'package:almajidoud/Model/ShipmentAddressModel/client/saved_addresses_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -13,6 +14,10 @@ class StaticData {
   static String user_mobile_number = '';
 
   static int product_qty = 1;
+ static Future<List<SavedAddressesModel>> saved_addresses;
+ static int saved_addresses_count;
+ static bool new_address_status = false;
+
 
 
   static List<dynamic> gallery = [];

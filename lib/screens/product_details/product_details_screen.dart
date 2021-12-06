@@ -1,4 +1,5 @@
 import 'package:almajidoud/Model/CartModel/add_cart_model.dart';
+import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 import 'package:almajidoud/screens/product_details/widgets/descriptionAndShareRow.dart';
@@ -26,6 +27,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
     with TickerProviderStateMixin {
   List product_images = [];
   var selected_size = 0;
+  var qty=1;
+
   @override
   void initState() {
     widget.product.mediaGalleryEntries.forEach((element) {
@@ -76,6 +79,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
     return NetworkIndicator(
       child: PageContainer(
           child: Scaffold(
+            key: _drawerKey,
         backgroundColor: whiteColor,
         body: SafeArea(
             child: SingleChildScrollView(
@@ -91,27 +95,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                         print("ErrorLoading");
                         _stopAnimation();
                         Flushbar(
-                          messageText: Row(
-                            children: [
-                              Container(
-                                width: StaticData.get_width(context) * 0.7,
-                                child: Wrap(
-                                  children: [
-                                    Text(
-                                      '${"There is Error"}',
-                                      textDirection: TextDirection.rtl,
-                                      style: TextStyle(color: whiteColor),
-                                    ),
-                                  ],
+                          messageText:       Container(
+                            width: StaticData.get_width(context) * 0.7,
+                            child: Wrap(
+                              children: [
+                                Text(
+                                  '${data.message}',
+                                  textDirection: TextDirection.rtl,
+                                  style: TextStyle(color: whiteColor),
                                 ),
-                              ),
-                              Spacer(),
-                              Text(
-                                translator.translate("Try Again"),
-                                textDirection: TextDirection.rtl,
-                                style: TextStyle(color: whiteColor),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           flushbarPosition: FlushbarPosition.BOTTOM,
                           backgroundColor: redColor,
@@ -125,7 +119,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                           context,
                           PageRouteBuilder(
                             pageBuilder: (context, animation1, animation2) {
-                              return CustomCircleNavigationBar(
+
+                              return translator.activeLanguageCode == 'ar' ?  CustomCircleNavigationBar(
+                                page_index: 4,
+                              ): CustomCircleNavigationBar(
                                 page_index: 0,
                               );
                             },
@@ -154,7 +151,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                           gallery: product_images,
                         ),
                         responsiveSizedBox(
-                            context: context, percentageOfHeight: .03),
+                            context: context, percentageOfHeight: .05),
                         favouriteAndNameRow(
                             context: context,
                             product_name: widget.product.name),
@@ -173,67 +170,141 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             context: context, percentageOfHeight: .02),
                         vatAndReviewsRow(context: context),
                         divider(context: context),
-                        sizeAndQuantityText(context: context, text: "Size"),
                         responsiveSizedBox(
                             context: context, percentageOfHeight: .02),
-                        sizesListView(context: context),
-                        divider(context: context),
+                   /*     sizeAndQuantityText(context: context, text: "Size"),
+                        responsiveSizedBox(
+                            context: context, percentageOfHeight: .02),*/
+                  //      sizesListView(context: context),
+                   //     divider(context: context),
                         sizeAndQuantityText(context: context, text: "Quantity"),
                         responsiveSizedBox(
                             context: context, percentageOfHeight: .02),
-                        QuantityButton(quantity: widget.product.extensionAttributes.stockItem.qty ),
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(
+                                  right: width(context) * .05, left: width(context) * .05),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: mainColor, width: 2),
+                                    borderRadius: BorderRadius.circular(8)),
+                                width: width(context) * .4,
+                                height: isLandscape(context)
+                                    ? 2 * height(context) * .06
+                                    : height(context) * .06,
+                                child: Center(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: [
+                                        MaterialButton(
+                                          height: 5,
+                                          minWidth: StaticData.get_width(context) * 0.15,
+                                          onPressed: () {
+                                            setState(() {
+                                              if (qty <= 1) {
+                                                errorDialog(
+                                                  context: context,
+                                                  text:
+                                                  "لقد نفذت الكمية من هذا المنتج",
+                                                );
+                                              } else {
+                                                setState(() {
+                                                  qty--;
+                                                  StaticData.product_qty = qty;
+                                                });
+                                              }
+                                            });
+                                          },
+                                          textColor: Colors.white,
+                                          child: Icon(
+                                            Icons.remove,
+                                            size: 18,
+                                            color: blackColor,
+                                          ),
+
+                                        ),
+                                        quantity(),
+                                        MaterialButton(
+                                          height: 5,
+                                          minWidth:
+                                          StaticData.get_width(context) *
+                                              0.15,
+                                          onPressed: () {
+                                            setState(() {
+                                              print("prod_main_quantity : ${widget.product.extensionAttributes.stockItem.qty}");
+                                              if (qty == widget.product.extensionAttributes.stockItem.qty) {
+                                                errorDialog(
+                                                  context: context,
+                                                  text:
+                                                  "لا يمكنك تخطى الكمية المتاحة",
+                                                );
+                                              } else {
+                                                setState(() {
+                                                  qty++;
+                                                  StaticData.product_qty = qty;
+
+                                                });
+                                              }
+                                            });
+                                          },
+                                          textColor: greyColor,
+                                          child: Icon(
+                                            Icons.add,
+                                            size: 18,
+                                            color: blackColor,
+                                          ),
+
+                                        ),
+
+                                      ],
+                                    )),
+                              ),
+                            ),
+                          ],
+                        ),
                         //divider(context: context),
                         responsiveSizedBox(
-                            context: context, percentageOfHeight: .03),
+                            context: context, percentageOfHeight: .06),
                         AddProductToCartWidget(
                             product_sku: widget.product.sku,
                             product_quantity:  StaticData.product_qty ,
                            instock_status: widget.product.extensionAttributes.stockItem.isInStock,
                             ),
                         responsiveSizedBox(
-                            context: context, percentageOfHeight: .02),
-                        Container(
-                          height: height(context) * .1,
-                          color: mainColor,
-                          child: Column(
-                            children: [
-                              responsiveSizedBox(
-                                  context: context, percentageOfHeight: .01),
-                              writeReviewButton(context: context),
-                              responsiveSizedBox(
-                                  context: context, percentageOfHeight: .005),
-                              soldByWidget(context: context)
-                            ],
-                          ),
-                        ),
+                            context: context, percentageOfHeight: .06),
+                      Container(
+                           height: height(context) * .1,
+                           color: mainColor,
+                           alignment: Alignment.bottomCenter,
+                           child: Column(
+                             children: [
+                               responsiveSizedBox(
+                                   context: context, percentageOfHeight: .01),
+                               writeReviewButton(context: context),
+                               responsiveSizedBox(
+                                   context: context, percentageOfHeight: .005),
+                               soldByWidget(context: context)
+                             ],
+                           ),
+                         ),
+
                       ],
-                    )))),
+                    )
+                ))),
       )),
     );
   }
-/*
-  addToCartButton(
-      {BuildContext context, var product_quantity, var product_sku}) {
-    return Container(
-      alignment: Alignment.center,
-      padding: EdgeInsets.all(10),
-      child: StaggerAnimation(
-        //   titleButton: translator.translate("Send") ,
-        buttonController: _loginButtonController.view,
-        btn_height: width(context) * .13,
-        image: "assets/icons/right-arrow.png",
-        titleButton: "Add TO Cart",
-        //    isResetScreen:false,
-        onTap: () {
-          shoppingCartBloc.add(AddProductToCartEvent(
-              context: context,
-              product_quantity: product_quantity,
-              product_sku: product_sku));
-        },
+  Widget quantity() {
+    return Text(
+      '${qty}',
+      style: TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
       ),
     );
-  }*/
-
+  }
   sizesListView({BuildContext context}) {
     return Container(
       width: width(context),

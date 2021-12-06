@@ -602,7 +602,7 @@ class _OtpState extends State<VerificationCodeScreen>
             }
           },
           child: Directionality(
-              textDirection: translator.currentLanguage == 'ar'
+              textDirection: translator.activeLanguageCode == 'ar'
                   ? TextDirection.rtl
                   : TextDirection.ltr,
               child: Container(

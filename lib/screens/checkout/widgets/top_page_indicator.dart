@@ -13,12 +13,6 @@ topPageIndicator(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: 10,
-          color: mainColor,
-          width: width(context) *indicatorWidth,
-        ),
-        responsiveSizedBox(context: context, percentageOfHeight: .02),
-        Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -28,7 +22,7 @@ topPageIndicator(
                   textColor: isAddress == true ? mainColor : greyColor),
               customDescriptionText(
                   context: context,
-                  text: "Payment",
+                  text:"Payment Method",
                   textColor: isPayment == true ? mainColor : greyColor),
               customDescriptionText(
                   context: context,
@@ -36,7 +30,13 @@ topPageIndicator(
                   textColor: isSummary == true ? mainColor : greyColor),
             ],
           ),
-        )
+        ),
+        responsiveSizedBox(context: context, percentageOfHeight: .02),
+        Container(
+          height: 10,
+          color: mainColor,
+          width: width(context) *indicatorWidth,
+        ),
       ],
     ),
   );

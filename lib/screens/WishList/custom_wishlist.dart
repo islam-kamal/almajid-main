@@ -32,7 +32,7 @@ class CustomFauvourite_State extends State<CustomWishList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        alignment: translator.currentLanguage == 'ar'
+        alignment: translator.activeLanguageCode == 'ar'
             ? Alignment.topLeft
             : Alignment.topRight,
         height: StaticData.get_height(context) * .04,

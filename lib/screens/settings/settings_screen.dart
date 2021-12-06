@@ -1,3 +1,4 @@
+import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/settings/widgets/app_version.dart';
 import 'package:almajidoud/screens/settings/widgets/connnected_accounts.dart';
@@ -119,10 +120,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ScreenAppBar(
-                      onTapCategoryDrawer: () {
-                        _drawerKey.currentState.openDrawer();
-                      },
-                      left_icon: "assets/icons/notifi.png",
+                      right_icon: 'cart',
+                      category_name: translator.translate("Settings"),
+                      screen: CustomCircleNavigationBar(
+                        page_index: 4,
+                      ),
                     ),
                   ],
                 ),

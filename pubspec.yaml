@@ -91,14 +91,17 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/langs/
-    - assets/config_ar.json
   fonts:
-      - family: LibreBasker
+      - family: Cairo
         fonts:
-          - asset: assets/fonts/LibreBaskerville-Regular.ttf
-      - family: Almarai
-        fonts:
-          - asset: assets/fonts/Almarai-Regular.ttf
+            - asset: assets/fonts/Cairo-Black.ttf
+            - asset: assets/fonts/Cairo-Bold.ttf
+            - asset: assets/fonts/Cairo-ExtraBold.ttf
+            - asset: assets/fonts/Cairo-ExtraLight.ttf
+            - asset: assets/fonts/Cairo-Light.ttf
+            - asset: assets/fonts/Cairo-Medium.ttf
+            - asset: assets/fonts/Cairo-Regular.ttf
+            - asset: assets/fonts/Cairo-SemiBold.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

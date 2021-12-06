@@ -132,7 +132,7 @@ print("11111111111111111111111");
                 }
               },
               child: Directionality(
-                textDirection: translator.currentLanguage == 'ar'
+                textDirection: translator.activeLanguageCode == 'ar'
                     ? TextDirection.rtl
                     : TextDirection.ltr,
                 child: Scaffold(

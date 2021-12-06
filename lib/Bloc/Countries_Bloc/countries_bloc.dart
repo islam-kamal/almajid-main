@@ -13,6 +13,16 @@ class CountriesBloc extends Bloc<AppEvent, AppState> with Validator{
   void drainStream() {
     _countries_subject.value = null;
   }
+  void get_countries() async{
+    var response =await countriesRepository.getCountriesList(
+    );
+    print('countries--- response : ${response}');
+    _countries_subject.sink.add(response);
+  }
+
+  //chosse aqar  value from radio button in bottom sheet
+  final country_radio_value = BehaviorSubject<int>();
+  BehaviorSubject<int> get country_radio_choosed_value  => country_radio_value;
 
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {

@@ -10,12 +10,14 @@ class ScreenAppBar extends StatefulWidget {
   final String right_icon;
   final String category_name;
   Widget screen;
+  final bool home_logo;
   ScreenAppBar(
       {this.onTapCategoryDrawer,
       this.left_icon,
       this.right_icon,
       this.category_name,
-      this.screen});
+      this.screen,
+      this.home_logo= false});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -121,7 +123,7 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                           color: whiteColor,
                           fontSize: AlmajedFont.primary_font_size),
                     ),
-              widget.category_name != null
+              widget.category_name != null || widget.home_logo == true
                   ? widget.left_icon == null
                       ? Image.asset(
                           "assets/icons/logo.png",

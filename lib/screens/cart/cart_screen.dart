@@ -8,7 +8,6 @@ import 'package:almajidoud/screens/cart/widgets/single_cart_item.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 import 'package:almajidoud/utils/file_export.dart';
-
 class CartScreen extends StatefulWidget {
   @override
   _CartScreenState createState() => _CartScreenState();
@@ -45,7 +44,7 @@ class _CartScreenState extends State<CartScreen> {
                         context: context, percentageOfHeight: .080),
                     HomeSlider(gallery: StaticData.images),
                     responsiveSizedBox(
-                        context: context, percentageOfHeight: .01),
+                        context: context, percentageOfHeight: .02),
                     BlocBuilder(
                       bloc: shoppingCartBloc,
                       builder: (context, state) {
@@ -61,6 +60,9 @@ class _CartScreenState extends State<CartScreen> {
                           if (state.indicator == "UpdateProductQuantity") {
                           }
                           else if (state.indicator == 'DeleteProductFromCart') {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context)=>translator.activeLanguageCode == 'ar' ? CustomCircleNavigationBar(page_index: 4,) :  CustomCircleNavigationBar(page_index: 0,)
+                            ));
                           }
                           else {
                             var data = state.model as CartDetailsModel;
@@ -79,22 +81,61 @@ class _CartScreenState extends State<CartScreen> {
                                         if (snapshot.data.items.isEmpty ) {
                                           return no_data_widget(context: context);
                                         } else {
-                                          print(
-                                              "length : ${snapshot.data.items.length}");
+                                          print("car length : ${snapshot.data.items.length}");
 
-                                          return ListView.builder(
-                                              shrinkWrap: true,
-                                              physics:
+                                          return Column(
+                                            children: [
+                                              ListView.builder(
+                                                  shrinkWrap: true,
+                                                  physics:
                                                   NeverScrollableScrollPhysics(),
-                                              itemCount:
-                                                  snapshot.data.items.length,
-                                              scrollDirection: Axis.vertical,
-                                              itemBuilder: (context, index) {
-                                                return singleCartItem(
-                                                    context: context,
-                                                    item: snapshot
-                                                        .data.items[index]);
-                                              });
+                                                  itemCount: snapshot.data.items.length,
+                                                  scrollDirection: Axis.vertical,
+                                                  itemBuilder: (context, index) {
+                                                    print("snapshot.data.items.length : ${snapshot.data.items.length}");
+                                                    return singleCartItem(
+                                                        context: context,
+                                                        item: snapshot
+                                                            .data.items[index]);
+                                                  }),
+
+                                              responsiveSizedBox(
+                                                  context: context,
+                                                  percentageOfHeight: .02),
+                                              PromoCodeWidget(),
+                                              Container(
+                                                width: width(context) * .9,
+                                                child: Divider(color: greyColor),
+                                              ),
+
+                                              responsiveSizedBox(
+                                                  context: context,
+                                                  percentageOfHeight: .01),
+                                              customDescriptionText(
+                                                  context: context,
+                                                  textColor: greyColor,
+                                                  text: "Total to pay",
+                                                  percentageOfHeight: .025),
+                                              responsiveSizedBox(
+                                                  context: context,
+                                                  percentageOfHeight: .01),
+                                              customDescriptionText(
+                                                  context: context,
+                                                  textColor: mainColor,
+                                                  text:
+                                                  " ${data.baseGrandTotal.toString()} ${translator.translate("SAR")} ",
+                                                  percentageOfHeight: .03,
+                                                  fontWeight: FontWeight.bold),
+                                              responsiveSizedBox(
+                                                  context: context,
+                                                  percentageOfHeight: .01),
+                                              proceedToCheckoutButton(context: context),
+                                              responsiveSizedBox(
+                                                  context: context,
+                                                  percentageOfHeight: .01),
+                                            ],
+                                          );
+
                                         }
                                       } else if (snapshot.hasError) {
                                         return Container(
@@ -108,39 +149,7 @@ class _CartScreenState extends State<CartScreen> {
                                       }
                                     },
                                   ),
-                                  responsiveSizedBox(
-                                      context: context,
-                                      percentageOfHeight: .0),
-                                  PromoCodeWidget(),
-                                  Container(
-                                    width: width(context) * .9,
-                                    child: Divider(color: greyColor),
-                                  ),
-                                  responsiveSizedBox(
-                                      context: context,
-                                      percentageOfHeight: .01),
-                                  customDescriptionText(
-                                      context: context,
-                                      textColor: greyColor,
-                                      text: "Total to pay",
-                                      percentageOfHeight: .025),
-                                  responsiveSizedBox(
-                                      context: context,
-                                      percentageOfHeight: .01),
-                                  customDescriptionText(
-                                      context: context,
-                                      textColor: mainColor,
-                                      text:
-                                          " ${data.baseGrandTotal.toString()} \$ ",
-                                      percentageOfHeight: .03,
-                                      fontWeight: FontWeight.bold),
-                                  responsiveSizedBox(
-                                      context: context,
-                                      percentageOfHeight: .01),
-                                  proceedToCheckoutButton(context: context),
-                                  responsiveSizedBox(
-                                      context: context,
-                                      percentageOfHeight: .01),
+
                                 ],
                               );
                             }
@@ -153,7 +162,7 @@ class _CartScreenState extends State<CartScreen> {
                             return Column(children: [
                               responsiveSizedBox(
                                   context: context,
-                                  percentageOfHeight: .01),
+                                  percentageOfHeight: .03),
                         no_data_widget(context: context),
                             ],);
 

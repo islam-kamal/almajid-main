@@ -69,7 +69,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         context: context,
                         iconPath: "assets/icons/credit-card.png",
                         text: "My Cards" , isContainMoreIcon: true  , onTap: (){}),
-                StaticData.vistor_value == "visitor"? Container :    singleAccountItem(
+                StaticData.vistor_value == "visitor"? Container() :    singleAccountItem(
                         context: context,
                         iconPath: "assets/icons/heart.png",
                         text: "My WishList" , isContainMoreIcon: true  , onTap: (){

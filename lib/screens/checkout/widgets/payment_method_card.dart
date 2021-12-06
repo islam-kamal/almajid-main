@@ -1,5 +1,6 @@
+import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
 import 'package:almajidoud/utils/file_export.dart';
-paymentMethodCard({BuildContext context}) {
+paymentMethodCard({BuildContext context ,  List<PaymentMethods> paymentMethods}) {
   return Container(
     padding: EdgeInsets.only(
         right: width(context) * .05, left: width(context) * .05),

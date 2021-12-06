@@ -1,5 +1,6 @@
 import 'package:almajidoud/Bloc/Authentication_Bloc/SigninBloc/sign_in_bloc.dart';
 import 'package:almajidoud/Model/AuthenticationModel/authentication_model.dart';
+import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/custom_widgets/stagger_animation.dart';
 import 'package:almajidoud/screens/auth/get_started_screen.dart';
 import 'package:almajidoud/screens/auth/widgets/already_have_an_account.dart';

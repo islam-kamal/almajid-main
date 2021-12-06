@@ -125,7 +125,7 @@ singleOrderItem({BuildContext context}) {
                                   children: [
                                     customDescriptionText(
                                         context: context,
-                                        text: "\$ 600",
+                                        text: "${translator.translate("SAR")} 600",
                                         textColor: Colors.black,
                                         fontWeight: FontWeight.bold),
                                     customDescriptionText(

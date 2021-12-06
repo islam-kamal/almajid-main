@@ -16,7 +16,7 @@ orderBottomButtonsStack({BuildContext context}){
             children: [
               customDescriptionText(context: context , percentageOfHeight: .02 , textColor: mainColor , text: "Total to pay :") ,
               SizedBox(width: 5,) ,
-              customDescriptionText(context: context , percentageOfHeight: .02 , textColor: mainColor , text: "\$ 600" , fontWeight: FontWeight.bold)
+              customDescriptionText(context: context , percentageOfHeight: .02 , textColor: mainColor , text: "${translator.translate("SAR")} 600" , fontWeight: FontWeight.bold)
             ],),),) ,
           Container(
             height: isLandscape(context) ? 2*height(context)*.08 :height(context)*.08 ,

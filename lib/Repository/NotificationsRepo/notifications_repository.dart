@@ -10,7 +10,7 @@ class NotificationsRepository {
   Future<NotificationsModel> getAllNotifications() async{
 print("token ########: ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}");
     Map<String, String> headers = {
-      'lang': translator.currentLanguage,
+      'lang': translator.activeLanguageCode,
          'token' : await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN),
     };
     return NetworkUtil.internal().get(NotificationsModel(), Urls.GET_ALL_NOTIFICATIONS, headers: headers);

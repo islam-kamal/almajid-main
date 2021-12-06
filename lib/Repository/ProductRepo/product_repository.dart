@@ -27,7 +27,7 @@ class ProductRepository{
 
   Future<ProductModel> getRecommendedProductList({var offset}) async{
     Map<String, String> headers = {
-      'lang': translator.currentLanguage,
+      'lang': translator.activeLanguageCode,
       'token' : await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN),
       'offset' : offset.toString()
     };
@@ -37,7 +37,7 @@ class ProductRepository{
 
   Future<ProductModel> getMostSellingList({var offset}) async{
     Map<String, String> headers = {
-      'lang': translator.currentLanguage,
+      'lang': translator.activeLanguageCode,
      // 'token' : await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN),
       'most_selling' : 'desc',
       'offset' : offset.toString()
@@ -47,7 +47,7 @@ class ProductRepository{
 
   Future<ProductModel> get_purchase_list({int offset}) async{
     Map<String, String> headers = {
-      'lang': translator.currentLanguage,
+      'lang': translator.activeLanguageCode,
       'token' : await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN),
       'purchase_list' : '1',
       'offset' : offset.toString()
@@ -57,7 +57,7 @@ class ProductRepository{
 
   Future<ProductModel> get_releated_products({int product_id , int offset}) async{
     Map<String, String> headers = {
-      'lang': translator.currentLanguage,
+      'lang': translator.activeLanguageCode,
       'token' : await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN),
       'offest' : offset.toString()
     };

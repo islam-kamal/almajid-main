@@ -10,7 +10,7 @@ class CategoryRepository {
 
   Future<CategoryModel> getCategoriesList() async {
     Map<String, String> headers = {
-      //'lang': translator.currentLanguage,
+      //'lang': translator.activeLanguageCode,
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
@@ -29,7 +29,7 @@ class CategoryRepository {
     };
     return NetworkUtil.internal().get(
         ProductModel(),
-        '${Urls.BASE_URL}/${translator.currentLanguage}-sa/index.php/rest/V1/mstore/products?searchCriteria&searchCriteria[filterGroups][0][filters][1][field]=category_id&searchCriteria[filterGroups][0][filters][1][value]=${category_id}&searchCriteria[filterGroups][0][filters][1][conditionType]=eq&searchCriteria[sortOrders][0][field]=position& searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[pageSize]=10',
+        '${Urls.BASE_URL}/${translator.activeLanguageCode}-sa/index.php/rest/V1/mstore/products?searchCriteria&searchCriteria[filterGroups][0][filters][1][field]=category_id&searchCriteria[filterGroups][0][filters][1][value]=${category_id}&searchCriteria[filterGroups][0][filters][1][conditionType]=eq&searchCriteria[sortOrders][0][field]=position& searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[pageSize]=10',
     headers: headers);
   }
 
@@ -39,7 +39,7 @@ class CategoryRepository {
   Future<ProductModel> getSecondLevelSubcategoryProducts(
       {String second_level_subcategory_id, int offset}) async {
     Map<String, String> headers = {
-      'lang': translator.currentLanguage,
+      'lang': translator.activeLanguageCode,
       'category_id': second_level_subcategory_id,
       'offset': offset.toString()
     };

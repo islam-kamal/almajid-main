@@ -1,3 +1,4 @@
+import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/orders/widgets/orders_header.dart';
 import 'package:almajidoud/screens/orders/widgets/single_order_item.dart';
 import 'package:almajidoud/utils/file_export.dart';
@@ -18,7 +19,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
                   ScreenAppBar(
                     right_icon: 'cart',
                     category_name: translator.translate("My Orders" ),
-                   screen: OrdersScreen(),
+                   screen: CustomCircleNavigationBar(page_index: 2,),
+
                   ),
 //              noOrdersWidget(context: context)
                   Container(

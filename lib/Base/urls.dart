@@ -20,12 +20,13 @@ class Urls {
 
   static final String SOCIAL_LOGIN = "/api/auth/socialLogin";
 
-  static final String GET_ALL_CATEGORIES =  '/${translator.currentLanguage}-sa/rest/V1/categories';
+  static final String GET_ALL_CATEGORIES =  '/${translator.activeLanguageCode}-sa/rest/V1/categories';
 
-  static final String GET_CATEGORy_PRODUCTS = '/${translator.currentLanguage}-sa/rest/V1/products';
+  static final String GET_CATEGORy_PRODUCTS = '/${translator.activeLanguageCode}-sa/rest/V1/products';
 
   static final String GET_APP_COUNTRIES = '/rest/V1/directory/countries';
 
+  static final String GET_ALL_CITIES = '/index.php/rest/V1/mstore/regions/sa';
 
   static final String GET_ALL_OFFERS = '/api/user/offers/get-offers';
 
@@ -37,9 +38,11 @@ class Urls {
 
   static final String Client_Add_Product_To_Cart = "/rest/V1/carts/mine/items";
 
-  static final String Client_Cart_Details = "/${translator.currentLanguage}-sa/rest/V1/carts/mine/totals";
+  static final String Client_Cart_Details = "/${translator.activeLanguageCode}-sa/rest/V1/carts/mine/totals";
 
   static final String GET_ALL_WISHLIST_ITEMS = '/index.php/rest/V1/mstore/me/wishlist';
+
+  static final String ADD_NEW_ADDRESS = '/index.php/rest/V1/mstore/customers/me/address';
 
 
   static final String LOGOUT = "/api/auth/logout";

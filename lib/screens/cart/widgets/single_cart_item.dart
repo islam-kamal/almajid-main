@@ -1,7 +1,9 @@
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/Model/CartModel/cart_details_model.dart' as cart_details_model;
 singleCartItem({BuildContext context,cart_details_model.Items item}) {
-  return Row(
+  return Directionality(
+      textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl :TextDirection.ltr ,
+      child:Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Column(
@@ -16,8 +18,8 @@ singleCartItem({BuildContext context,cart_details_model.Items item}) {
                         margin: EdgeInsets.only(right: 3,left: 3),
                         width: width(context) * .3,
                         height: isLandscape(context)
-                            ? 2 * height(context) * .13
-                            : height(context) * .13,
+                            ? 2 * height(context) * .15
+                            : height(context) * .15,
                         decoration: BoxDecoration(
                           color: backGroundColor,
                             borderRadius: BorderRadius.circular(15),
@@ -26,46 +28,49 @@ singleCartItem({BuildContext context,cart_details_model.Items item}) {
                                     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Og0-LY1uOs7Z3I_sBLafG8F2IbFwRVprrg&usqp=CAU"),
                                 fit: BoxFit.fill)),
                       ),
-                      Container(
+              Directionality(
+                textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl :TextDirection.ltr,
+                child:  Container(
                         padding: EdgeInsets.only(
                             right: width(context) * .02,
                             left: width(context) * .02),
                         width: width(context) * .6,
                         height: isLandscape(context)
-                            ? 2 * height(context) * .15
-                            : height(context) * .15,
+                            ? 2 * height(context) * .17
+                            : height(context) * .17,
                         child: Column(
+                          crossAxisAlignment: translator.activeLanguageCode == 'ar' ? CrossAxisAlignment.start : CrossAxisAlignment.start,
                           children: [
                             responsiveSizedBox(
-                                context: context, percentageOfHeight: .01),
+                                context: context, percentageOfHeight: .021),
                             customDescriptionText(
                                 context: context,
                                 textColor: mainColor,
                                 maxLines: 2,
                                 text: item.name??'',
-                                textAlign: TextAlign.start),
+                            textAlign: translator.activeLanguageCode == 'ar' ? TextAlign.end :TextAlign.start),
                             responsiveSizedBox(
-                                context: context, percentageOfHeight: .01),
+                                context: context, percentageOfHeight: .02),
                             Row(
                               children: [
                                 Container(
                                   child: customDescriptionText(
                                       context: context,
                                       textColor: mainColor,
-                                      text: "\$ ${item.price} ",
+                                      text: " ${item.price} ${translator.translate("SAR")}",
                                       textAlign: TextAlign.start,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
                             responsiveSizedBox(
-                                context: context, percentageOfHeight: .01),
+                                context: context, percentageOfHeight: .02),
                             Row(
                               children: [
                                 customDescriptionText(
                                     context: context,
                                     textColor: mainColor,
-                                    text: "${translator.translate("Qty")}:",
+                                    text: "${translator.translate("Qty")} : ",
                                     textAlign: TextAlign.start,
                                     fontWeight: FontWeight.bold),
                                 SizedBox(
@@ -95,12 +100,12 @@ singleCartItem({BuildContext context,cart_details_model.Items item}) {
                             )
                           ],
                         ),
-                      )
+                      ))
                     ],
                   ),
                   decoration: BoxDecoration(color: backGroundColor))),
         ],
       ),
     ],
-  );
+  ));
 }

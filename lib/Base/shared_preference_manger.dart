@@ -66,12 +66,21 @@ class   CachingKey extends Enum<String> {
   static const CachingKey FRIST_LOGIN = const CachingKey('FRIST_LOGIN');
   static const CachingKey USER_ID = const CachingKey('USER_ID');
   static const CachingKey AUTH_TOKEN = const CachingKey('AUTH_TOKEN');
+  static const CachingKey CUSTOMER_ID = const CachingKey('CUSTOMER_ID');
+
   static const CachingKey FIREBASE_TOKEN = const CachingKey('FIREBASE_TOKEN');
   static const CachingKey CART_QUOTE = const CachingKey('CART_QUOTE');
 
   static const CachingKey USER_NAME = const CachingKey('USER_NAME');
   static const CachingKey EMAIL = const CachingKey('EMAIL');
   static const CachingKey MOBILE_NUMBER = const CachingKey('MOBILE_NUMBER');
+  static const CachingKey USER_CITY = const CachingKey('USER_CITY');
+  static const CachingKey REGION_ID = const CachingKey('REGION_ID');
+  static const CachingKey REGION_AR = const CachingKey('REGION_AR');
+  static const CachingKey REGION_EN = const CachingKey('REGION_EN');
+  static const CachingKey CHOSSED_ADDRESS_ID = const CachingKey('CHOSSED_ADDRESS_ID');
+  static const CachingKey ORDER_ID = const CachingKey('ORDER_ID');
+
 
   static const CachingKey FORGET_PASSWORD_PHONE = const CachingKey('FORGET_PASSWORD_PHONE');
   static const CachingKey DEFAULT_SHIPPING_ADDRESS = const CachingKey('DEFAULT_SHIPPING_ADDRESS');
@@ -94,7 +103,6 @@ class   CachingKey extends Enum<String> {
   static const CachingKey CARD_ID = const CachingKey('CARD_ID');
   static const CachingKey CVV = const CachingKey('CVV');
   static const CachingKey RECHARGE_AMOUNT = const CachingKey('RECHARGE_AMOUNT');
-  static const CachingKey ORDER_ID = const CachingKey('ORDER_ID');
   static const CachingKey COUPON_IS_FRIST = const CachingKey('COUPON_IS_FRIST');
 
 }

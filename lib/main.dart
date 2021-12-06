@@ -1,4 +1,5 @@
 
+import 'package:almajidoud/screens/checkout/checkout_address_screen.dart';
 import 'package:almajidoud/test.dart';
 import 'package:almajidoud/utils/file_export.dart';
 void main() async {
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
                 accentColor: mainColor,
                 primaryColor: mainColor,
                 fontFamily: checkDirection(
-                    dirArabic: "Almarai", dirEnglish: "Almarai")),
+                    dirArabic: "Cairo", dirEnglish: "Cairo")),
             title: 'Al Majed Oud',
             home: SplashScreen(),
             localizationsDelegates:

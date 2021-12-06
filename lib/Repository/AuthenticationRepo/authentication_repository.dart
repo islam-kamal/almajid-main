@@ -49,13 +49,6 @@ class AuthenticationRepository{
       if (response.statusCode == 200) {
         print("res 4");
        return StaticData.user_token = response.data;
-   /*     return NetworkUtil.internal().get(
-            UserInfoModel(), Urls.USER_INFO_URL, headers:{
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ${response}'
-
-        });*/
       } else {
         print("res 5");
         return null;

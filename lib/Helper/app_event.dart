@@ -80,8 +80,7 @@ class SocialLoginEvent extends AppEvent{
   SocialLoginEvent({this.name,this.email,this.provider,this.provider_id,this.firebase_token});
 }
 
-//upgrade account
-class upgradeAccountClick extends AppEvent{}
+
 
 //offers
 class getAllOffers extends AppEvent{}
@@ -139,7 +138,8 @@ class AddProductToCartEvent extends AppEvent{
 BuildContext context;
 var product_quantity ;
 var product_sku;
-AddProductToCartEvent({this.context,this.product_sku,this.product_quantity});
+var indictor;
+AddProductToCartEvent({this.context,this.product_sku,this.product_quantity,this.indictor});
 }
 
 class GetCartDetails extends AppEvent{
@@ -169,30 +169,28 @@ class DeletePromoCodeEvent extends AppEvent{
   DeletePromoCodeEvent({this.context});
 }
 
-class FilterProductsEvent extends AppEvent{
-  double price_from,  price_to ;
-  int categories_id , brand_id, size_id,  rate ,offset;
-  FilterProductsEvent({this.price_from,this.price_to,this.rate,this.categories_id, this.brand_id,this.size_id,this.offset});
-}
-class FilterBrandEvent extends AppEvent{}
-class FilterSizeEvent extends AppEvent{}
+
 // SEARCH
 class SearchProductsEvent extends AppEvent{
   final String search_text;
   SearchProductsEvent({this.search_text});
 }
-class SortProductsEvent extends AppEvent{
-  String price,  most_selling ,  rate ,type ,unit_price;
-  SortProductsEvent({this.price,this.most_selling,this.rate,this.type,this.unit_price});
-}
-class rateAndReview_click extends AppEvent{
-  var value;
-  var product_quality; var product_id;
-  var delivery_time;
-  var comment ;
-  var using_experiences;
-  rateAndReview_click({this.product_id,this.value,this.using_experiences,this.delivery_time,this.product_quality,this.comment});
 
+// Shipment Address
+
+class GuestAddAdressEvent extends AppEvent{
+  BuildContext context;
+  GuestAddAdressEvent({this.context});
+}
+class AddNewAdressEvent extends AppEvent{
+  BuildContext context;
+  AddNewAdressEvent({this.context});
+}
+
+//Orders
+class CreateOrderEvent extends AppEvent{
+  BuildContext context;
+  CreateOrderEvent({this.context});
 }
 
 // CREDIT CARD

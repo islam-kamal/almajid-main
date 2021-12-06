@@ -369,7 +369,7 @@ class _EditCartScreenState extends State<EditCartScreen>
                                   child: customDescriptionText(
                                       context: context,
                                       textColor: mainColor,
-                                      text: "\$ ${item.price}",
+                                      text: "${translator.translate("SAR")} ${item.price}",
                                       textAlign: TextAlign.start,
                                       fontWeight: FontWeight.bold),
                                 ),

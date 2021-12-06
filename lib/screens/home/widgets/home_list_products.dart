@@ -40,7 +40,7 @@ import 'package:almajidoud/utils/file_export.dart';
                             maxLines: 2 , percentageOfHeight: .017),
                         responsiveSizedBox(context: context , percentageOfHeight: .005),
                         customDescriptionText(context: context , textColor: mainColor
-                            , text: " \$ 2000" ,
+                            , text: " ${translator.translate("SAR")} 2000" ,
                             maxLines:1, percentageOfHeight: .017 , fontWeight: FontWeight.bold) ,
                         responsiveSizedBox(context: context , percentageOfHeight: .0105),
                         Row(mainAxisAlignment: MainAxisAlignment.center,
@@ -197,7 +197,7 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                               textColor:
                                                                   mainColor,
                                                               text:
-                                                                  " \$ ${snapshot.data[index].price}",
+                                                                  " ${translator.translate("SAR")} ${snapshot.data[index].price}",
                                                               maxLines: 1,
                                                               percentageOfHeight:
                                                                   .017,

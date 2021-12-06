@@ -34,7 +34,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
             color: whiteColor,
             child: SingleChildScrollView(
               child: Directionality(
-                textDirection: translator.currentLanguage == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+                textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
                 child:  Column(
                 children: <Widget>[
                   Container(

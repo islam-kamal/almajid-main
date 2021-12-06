@@ -19,38 +19,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-/*  List<dynamic> gallery = [];
-  List images = [];
-  var data;
-  Future<void> readJson() async {
-    print("1");
-    final  response = await http.get(Uri.parse("${Urls.BASE_URL}/media/mobile/config.json"),
-     );
-     data = await json.decode(response.body);
-  //  gallery =data['slider'];
-
-    if(data != null){
-      home_bloc.add(GetHomeNewArrivals(
-        category_id: data['new-arrival']['id'],
-        offset: 1
-      ));
-      home_bloc.add(GetHomeBestSeller(
-         category_id: data['best-seller']['id'],
-        offset: 1
-      ));
-    }
-    setState(() {
-      gallery = data["slider"];
-
-      print("gallery : ${gallery}");
-      print(gallery[0]['url']);
-      gallery.forEach((element) {
-        images.add(element['url']);
-      });
-    });
-    print("3");
-
-  }*/
 
   @override
   void initState() {
@@ -89,12 +57,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
 
 
-                            responsiveSizedBox(context: context, percentageOfHeight: .02),
+                            responsiveSizedBox(context: context, percentageOfHeight: .03),
                             titleText(context: context,
-                                text: translator.currentLanguage == 'ar' ?  StaticData.data['new-arrival']['arabic-title']
+                                text: translator.activeLanguageCode == 'ar' ?  StaticData.data['new-arrival']['arabic-title']
                                                                                 : StaticData.data['new-arrival']['english-title']),
                             responsiveSizedBox(
-                                context: context, percentageOfHeight: .01),
+                                context: context, percentageOfHeight: .02),
 
                             HomeListProducts(
                               type: "New Arrivals",
@@ -102,17 +70,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
-                            responsiveSizedBox(
+                       /*     responsiveSizedBox(
                                 context: context, percentageOfHeight: .02),
                             HomeSlider(
                                 gallery:StaticData.images
-                            ),
-                            responsiveSizedBox(context: context, percentageOfHeight: .02),
+                            ),*/
+                            responsiveSizedBox(context: context, percentageOfHeight: .03),
                             titleText(context: context,
-                                text: translator.currentLanguage == 'ar' ? StaticData.data['best-seller']['arabic-title'] :
+                                text: translator.activeLanguageCode == 'ar' ? StaticData.data['best-seller']['arabic-title'] :
                                           StaticData.data['best-seller']['english-title']),
                             responsiveSizedBox(
-                                context: context, percentageOfHeight: .01),
+                                context: context, percentageOfHeight: .02),
 
                             HomeListProducts(
                               type: "best-seller",
@@ -132,6 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTapCategoryDrawer: () {
                             _drawerKey.currentState.openDrawer();
                           },
+                          home_logo: true,
+
                         ),
                       ],
                     ),

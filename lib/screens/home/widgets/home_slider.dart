@@ -30,7 +30,7 @@ class _HomeSlider_State extends State<HomeSlider> {
     return SafeArea(
       child: SingleChildScrollView(
         child: Directionality(
-          textDirection: translator.currentLanguage == 'ar' ? TextDirection.rtl :TextDirection.ltr,
+          textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl :TextDirection.ltr,
           child:  InkWell(
             onTap: (){
             },

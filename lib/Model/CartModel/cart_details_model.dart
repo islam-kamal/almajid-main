@@ -1,32 +1,32 @@
 import 'package:almajidoud/Base/network-mappers.dart';
 
 class CartDetailsModel extends BaseMappable {
-  int grandTotal;
-  int baseGrandTotal;
-  int subtotal;
-  int baseSubtotal;
-  int discountAmount;
-  int baseDiscountAmount;
-  int subtotalWithDiscount;
-  int baseSubtotalWithDiscount;
-  int shippingAmount;
-  int baseShippingAmount;
-  int shippingDiscountAmount;
-  int baseShippingDiscountAmount;
-  int taxAmount;
-  int baseTaxAmount;
+  var grandTotal;
+  var baseGrandTotal;
+  var subtotal;
+  var baseSubtotal;
+  var discountAmount;
+  var baseDiscountAmount;
+  var subtotalWithDiscount;
+  var baseSubtotalWithDiscount;
+  var shippingAmount;
+  var baseShippingAmount;
+  var shippingDiscountAmount;
+  var baseShippingDiscountAmount;
+  var taxAmount;
+  var baseTaxAmount;
   Null weeeTaxAppliedAmount;
-  int shippingTaxAmount;
-  int baseShippingTaxAmount;
-  int subtotalInclTax;
-  int shippingInclTax;
-  int baseShippingInclTax;
-  String baseCurrencyCode;
-  String quoteCurrencyCode;
-  int itemsQty;
+  var shippingTaxAmount;
+  var baseShippingTaxAmount;
+  var subtotalInclTax;
+  var shippingInclTax;
+  var baseShippingInclTax;
+  var baseCurrencyCode;
+  var quoteCurrencyCode;
+  var itemsQty;
   List<Items> items;
   List<TotalSegments> totalSegments;
-  String message;
+  var message;
   Parameters parameters;
   CartDetailsModel(
       {this.grandTotal,
@@ -203,27 +203,27 @@ class CartDetailsModel extends BaseMappable {
 }
 
 class Items {
-  int itemId;
-  int price;
-  int basePrice;
-  int qty;
-  int rowTotal;
-  int baseRowTotal;
-  int rowTotalWithDiscount;
-  int taxAmount;
-  int baseTaxAmount;
-  int taxPercent;
-  int discountAmount;
-  int baseDiscountAmount;
-  int discountPercent;
-  int priceInclTax;
-  int basePriceInclTax;
-  int rowTotalInclTax;
-  int baseRowTotalInclTax;
-  String options;
+  var itemId;
+  var price;
+  var basePrice;
+  var qty;
+  var rowTotal;
+  var baseRowTotal;
+  var rowTotalWithDiscount;
+  var taxAmount;
+  var baseTaxAmount;
+  var taxPercent;
+  var discountAmount;
+  var baseDiscountAmount;
+  var discountPercent;
+  var priceInclTax;
+  var basePriceInclTax;
+  var rowTotalInclTax;
+  var baseRowTotalInclTax;
+  var options;
   Null weeeTaxAppliedAmount;
   Null weeeTaxApplied;
-  String name;
+  var name;
 
   Items(
       {this.itemId,
@@ -300,11 +300,11 @@ class Items {
 }
 
 class TotalSegments {
-  String code;
-  String title;
-  int value;
+  var code;
+  var title;
+  var value;
   ExtensionAttributes extensionAttributes;
-  String area;
+  var area;
 
   TotalSegments(
       {this.code, this.title, this.value, this.extensionAttributes, this.area});
@@ -357,9 +357,9 @@ class ExtensionAttributes {
 }
 
 class TaxGrandtotalDetails {
-  int amount;
+  var amount;
   List<Rates> rates;
-  int groupId;
+  var groupId;
 
   TaxGrandtotalDetails({this.amount, this.rates, this.groupId});
 
@@ -386,8 +386,8 @@ class TaxGrandtotalDetails {
 }
 
 class Rates {
-  String percent;
-  String title;
+  var percent;
+  var title;
 
   Rates({this.percent, this.title});
 
@@ -404,8 +404,8 @@ class Rates {
   }
 }
 class Parameters {
-  String fieldName;
-  String fieldValue;
+  var fieldName;
+  var fieldValue;
 
   Parameters({this.fieldName, this.fieldValue});
 

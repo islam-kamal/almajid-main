@@ -1,10 +1,15 @@
+import 'package:almajidoud/Repository/ShippmentAdressRepo/shipment_address_repository.dart';
 import 'package:almajidoud/custom_widgets/custom_animated_push_navigation.dart';
 import 'package:almajidoud/screens/checkout/checkout_address_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 proceedToCheckoutButton({BuildContext context}) {
-  return GestureDetector(onTap: (){
-    customAnimatedPushNavigation(context, CheckoutAddressScreen());
+  return GestureDetector(onTap: ()async{
+  await   shipmentAddressRepository.get_all_saved_addresses(context: context);
+      print("addresses length : ${StaticData.saved_addresses_count}");
+
+  customAnimatedPushNavigation(context, CheckoutAddressScreen());
+
   },
     child: Container(
         width: width(context) * .8,
@@ -13,7 +18,7 @@ proceedToCheckoutButton({BuildContext context}) {
         child: Center(
             child: customDescriptionText(
                 context: context,
-                text: "Proceed to chechout",percentageOfHeight: .025,
+                text: translator.translate("Proceed to checkout"),percentageOfHeight: .025,
                 textColor: whiteColor)),
         height: isLandscape(context)
             ? 2 * height(context) * .065

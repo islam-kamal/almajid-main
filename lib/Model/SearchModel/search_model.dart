@@ -1,10 +1,11 @@
 import 'package:almajidoud/utils/file_export.dart';
 
 
+
 class SearchModel extends BaseMappable{
   List<Items> items;
   SearchCriteria searchCriteria;
-  int totalCount;
+  var totalCount;
 
   SearchModel({this.items, this.searchCriteria, this.totalCount});
 
@@ -48,7 +49,6 @@ class SearchModel extends BaseMappable{
     return SearchModel(items: items,searchCriteria: searchCriteria,totalCount: totalCount);
   }
 }
-
 
 class Items {
   var id;
@@ -122,7 +122,7 @@ class Items {
       });
     }
     if (json['tier_prices'] != null) {
-      tierPrices = new List<TierPrices>();
+      tierPrices = new List<Null>();
       json['tier_prices'].forEach((v) {
         tierPrices.add(new TierPrices.fromJson(v));
       });
@@ -175,8 +175,11 @@ class Items {
 class ExtensionAttributes {
   List<int> websiteIds;
   List<CategoryLinks> categoryLinks;
+  StockItem stockItem;
+  List<Reviews> reviews;
 
-  ExtensionAttributes({this.websiteIds, this.categoryLinks});
+  ExtensionAttributes(
+      {this.websiteIds, this.categoryLinks, this.stockItem, this.reviews});
 
   ExtensionAttributes.fromJson(Map<String, dynamic> json) {
     websiteIds = json['website_ids'].cast<int>();
@@ -184,6 +187,15 @@ class ExtensionAttributes {
       categoryLinks = new List<CategoryLinks>();
       json['category_links'].forEach((v) {
         categoryLinks.add(new CategoryLinks.fromJson(v));
+      });
+    }
+    stockItem = json['stock_item'] != null
+        ? new StockItem.fromJson(json['stock_item'])
+        : null;
+    if (json['reviews'] != null) {
+      reviews = new List<Reviews>();
+      json['reviews'].forEach((v) {
+        reviews.add(new Reviews.fromJson(v));
       });
     }
   }
@@ -194,6 +206,12 @@ class ExtensionAttributes {
     if (this.categoryLinks != null) {
       data['category_links'] =
           this.categoryLinks.map((v) => v.toJson()).toList();
+    }
+    if (this.stockItem != null) {
+      data['stock_item'] = this.stockItem.toJson();
+    }
+    if (this.reviews != null) {
+      data['reviews'] = this.reviews.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -214,6 +232,181 @@ class CategoryLinks {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['position'] = this.position;
     data['category_id'] = this.categoryId;
+    return data;
+  }
+}
+
+class StockItem {
+  var itemId;
+  var productId;
+  var stockId;
+  var qty;
+  var isInStock;
+  var isQtyDecimal;
+  var showDefaultNotificationMessage;
+  var useConfigMinQty;
+  var minQty;
+  var useConfigMinSaleQty;
+  var minSaleQty;
+  var useConfigMaxSaleQty;
+  var maxSaleQty;
+  var useConfigBackorders;
+  var backorders;
+  var useConfigNotifyStockQty;
+  var notifyStockQty;
+  var useConfigQtyIncrements;
+  var qtyIncrements;
+  var useConfigEnableQtyInc;
+  var enableQtyIncrements;
+  var useConfigManageStock;
+  var manageStock;
+  var lowStockDate;
+  var isDecimalDivided;
+  var stockStatusChangedAuto;
+
+  StockItem(
+      {this.itemId,
+        this.productId,
+        this.stockId,
+        this.qty,
+        this.isInStock,
+        this.isQtyDecimal,
+        this.showDefaultNotificationMessage,
+        this.useConfigMinQty,
+        this.minQty,
+        this.useConfigMinSaleQty,
+        this.minSaleQty,
+        this.useConfigMaxSaleQty,
+        this.maxSaleQty,
+        this.useConfigBackorders,
+        this.backorders,
+        this.useConfigNotifyStockQty,
+        this.notifyStockQty,
+        this.useConfigQtyIncrements,
+        this.qtyIncrements,
+        this.useConfigEnableQtyInc,
+        this.enableQtyIncrements,
+        this.useConfigManageStock,
+        this.manageStock,
+        this.lowStockDate,
+        this.isDecimalDivided,
+        this.stockStatusChangedAuto});
+
+  StockItem.fromJson(Map<String, dynamic> json) {
+    itemId = json['item_id'];
+    productId = json['product_id'];
+    stockId = json['stock_id'];
+    qty = json['qty'];
+    isInStock = json['is_in_stock'];
+    isQtyDecimal = json['is_qty_decimal'];
+    showDefaultNotificationMessage = json['show_default_notification_message'];
+    useConfigMinQty = json['use_config_min_qty'];
+    minQty = json['min_qty'];
+    useConfigMinSaleQty = json['use_config_min_sale_qty'];
+    minSaleQty = json['min_sale_qty'];
+    useConfigMaxSaleQty = json['use_config_max_sale_qty'];
+    maxSaleQty = json['max_sale_qty'];
+    useConfigBackorders = json['use_config_backorders'];
+    backorders = json['backorders'];
+    useConfigNotifyStockQty = json['use_config_notify_stock_qty'];
+    notifyStockQty = json['notify_stock_qty'];
+    useConfigQtyIncrements = json['use_config_qty_increments'];
+    qtyIncrements = json['qty_increments'];
+    useConfigEnableQtyInc = json['use_config_enable_qty_inc'];
+    enableQtyIncrements = json['enable_qty_increments'];
+    useConfigManageStock = json['use_config_manage_stock'];
+    manageStock = json['manage_stock'];
+    lowStockDate = json['low_stock_date'];
+    isDecimalDivided = json['is_decimal_divided'];
+    stockStatusChangedAuto = json['stock_status_changed_auto'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['item_id'] = this.itemId;
+    data['product_id'] = this.productId;
+    data['stock_id'] = this.stockId;
+    data['qty'] = this.qty;
+    data['is_in_stock'] = this.isInStock;
+    data['is_qty_decimal'] = this.isQtyDecimal;
+    data['show_default_notification_message'] =
+        this.showDefaultNotificationMessage;
+    data['use_config_min_qty'] = this.useConfigMinQty;
+    data['min_qty'] = this.minQty;
+    data['use_config_min_sale_qty'] = this.useConfigMinSaleQty;
+    data['min_sale_qty'] = this.minSaleQty;
+    data['use_config_max_sale_qty'] = this.useConfigMaxSaleQty;
+    data['max_sale_qty'] = this.maxSaleQty;
+    data['use_config_backorders'] = this.useConfigBackorders;
+    data['backorders'] = this.backorders;
+    data['use_config_notify_stock_qty'] = this.useConfigNotifyStockQty;
+    data['notify_stock_qty'] = this.notifyStockQty;
+    data['use_config_qty_increments'] = this.useConfigQtyIncrements;
+    data['qty_increments'] = this.qtyIncrements;
+    data['use_config_enable_qty_inc'] = this.useConfigEnableQtyInc;
+    data['enable_qty_increments'] = this.enableQtyIncrements;
+    data['use_config_manage_stock'] = this.useConfigManageStock;
+    data['manage_stock'] = this.manageStock;
+    data['low_stock_date'] = this.lowStockDate;
+    data['is_decimal_divided'] = this.isDecimalDivided;
+    data['stock_status_changed_auto'] = this.stockStatusChangedAuto;
+    return data;
+  }
+}
+
+class Reviews {
+  var reviewId;
+  var createdAt;
+  var entityId;
+  var entityPkValue;
+  var statusId;
+  var detailId;
+  var title;
+  var detail;
+  var nickname;
+  var customerId;
+  var entityCode;
+
+  Reviews(
+      {this.reviewId,
+        this.createdAt,
+        this.entityId,
+        this.entityPkValue,
+        this.statusId,
+        this.detailId,
+        this.title,
+        this.detail,
+        this.nickname,
+        this.customerId,
+        this.entityCode});
+
+  Reviews.fromJson(Map<String, dynamic> json) {
+    reviewId = json['review_id'];
+    createdAt = json['created_at'];
+    entityId = json['entity_id'];
+    entityPkValue = json['entity_pk_value'];
+    statusId = json['status_id'];
+    detailId = json['detail_id'];
+    title = json['title'];
+    detail = json['detail'];
+    nickname = json['nickname'];
+    customerId = json['customer_id'];
+    entityCode = json['entity_code'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['review_id'] = this.reviewId;
+    data['created_at'] = this.createdAt;
+    data['entity_id'] = this.entityId;
+    data['entity_pk_value'] = this.entityPkValue;
+    data['status_id'] = this.statusId;
+    data['detail_id'] = this.detailId;
+    data['title'] = this.title;
+    data['detail'] = this.detail;
+    data['nickname'] = this.nickname;
+    data['customer_id'] = this.customerId;
+    data['entity_code'] = this.entityCode;
     return data;
   }
 }
@@ -313,12 +506,8 @@ class CustomAttributes {
 
 class SearchCriteria {
   List<FilterGroups> filterGroups;
-  List<SortOrders> sortOrders;
-  var pageSize;
-  var currentPage;
 
-  SearchCriteria(
-      {this.filterGroups, this.sortOrders, this.pageSize, this.currentPage});
+  SearchCriteria({this.filterGroups});
 
   SearchCriteria.fromJson(Map<String, dynamic> json) {
     if (json['filter_groups'] != null) {
@@ -327,14 +516,6 @@ class SearchCriteria {
         filterGroups.add(new FilterGroups.fromJson(v));
       });
     }
-    if (json['sort_orders'] != null) {
-      sortOrders = new List<SortOrders>();
-      json['sort_orders'].forEach((v) {
-        sortOrders.add(new SortOrders.fromJson(v));
-      });
-    }
-    pageSize = json['page_size'];
-    currentPage = json['current_page'];
   }
 
   Map<String, dynamic> toJson() {
@@ -342,11 +523,6 @@ class SearchCriteria {
     if (this.filterGroups != null) {
       data['filter_groups'] = this.filterGroups.map((v) => v.toJson()).toList();
     }
-    if (this.sortOrders != null) {
-      data['sort_orders'] = this.sortOrders.map((v) => v.toJson()).toList();
-    }
-    data['page_size'] = this.pageSize;
-    data['current_page'] = this.currentPage;
     return data;
   }
 }
@@ -395,26 +571,6 @@ class Filters {
     return data;
   }
 }
-
-class SortOrders {
-  var field;
-  var direction;
-
-  SortOrders({this.field, this.direction});
-
-  SortOrders.fromJson(Map<String, dynamic> json) {
-    field = json['field'];
-    direction = json['direction'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['field'] = this.field;
-    data['direction'] = this.direction;
-    return data;
-  }
-}
-
 class Options{
   var field;
   var direction;

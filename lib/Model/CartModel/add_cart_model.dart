@@ -1,14 +1,14 @@
 import 'package:almajidoud/Base/network-mappers.dart';
 
 class AddCartModel extends BaseMappable{
-  int itemId;
-  String sku;
-  int qty;
-  String name;
-  int price;
-  String productType;
-  String quoteId;
-  String message;
+  var itemId;
+  var sku;
+  var qty;
+  var name;
+  var price;
+  var productType;
+  var quoteId;
+  var message;
   Parameters parameters;
   AddCartModel(
       {this.itemId,

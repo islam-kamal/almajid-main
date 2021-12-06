@@ -18,7 +18,7 @@ class ChipDesign extends StatelessWidget {
          )),
         label: Text(
           label,
-          style: TextStyle(color:txtColor, fontFamily: 'Almarai'),
+          style: TextStyle(color:txtColor, fontFamily: 'Cairo'),
         ),
         backgroundColor: color,
         // elevation: 4,

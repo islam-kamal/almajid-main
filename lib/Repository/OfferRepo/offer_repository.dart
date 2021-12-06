@@ -8,7 +8,7 @@ class OfferRepository {
   Future<OfferModel> getOffersList() async{
 
     Map<String, String> headers = {
-      'lang': translator.currentLanguage,
+      'lang': translator.activeLanguageCode,
     };
     return NetworkUtil.internal().get(OfferModel(), Urls.GET_ALL_OFFERS, headers: headers);
   }

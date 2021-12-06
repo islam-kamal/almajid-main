@@ -1,8 +1,9 @@
 import 'package:almajidoud/Model/OffersModel/offer_model.dart';
+import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/Model/CountriesModel/countries_model.dart';
 import 'package:dio/dio.dart';
-
+import 'package:almajidoud/Model/CityModel/city_model.dart';
 class CountriesRepository {
   static SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();
 
@@ -47,6 +48,25 @@ class CountriesRepository {
     };
     return NetworkUtil.internal().get(CountriesModel(), Urls.GET_APP_COUNTRIES, headers: headers);
   }*/
+  }
+
+   Future<List<CityModel>> get_cities({BuildContext context}) async {
+    Dio dio = new Dio();
+    try {
+      final response = await dio.get(Urls.BASE_URL + '/index.php/rest/V1/mstore/regions/sa', );
+      print("cities response : ${response}");
+      if (response.statusCode == 200) {
+        final jsonresponse = response.data;
+        List<CityModel> temp = (jsonresponse as List)
+            .map((f) => CityModel.fromJson(f))
+            .toList();
+        return temp;
+      } else {
+        errorDialog(context: context, text: response.data['msg']);
+      }
+    } catch (e) {
+      errorDialog(context: context, text: e.toString());
+    }
   }
 }
 CountriesRepository countriesRepository = new CountriesRepository();

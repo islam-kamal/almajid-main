@@ -18,7 +18,7 @@ class PageContainer extends StatelessWidget {
               FocusScope.of(context).requestFocus( FocusNode());
             },
             child: Directionality(
-            textDirection: translator.currentLanguage == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+            textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
     child: child,
             )),
         ));

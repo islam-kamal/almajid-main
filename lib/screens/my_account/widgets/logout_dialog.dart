@@ -40,19 +40,9 @@ class LogoutDialogState extends State<LogoutDialog> {
                         Padding(
                           padding: EdgeInsets.only(top: width * 0.06),
                             child: Container(
-                            margin: EdgeInsets.all(width * 0.02),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            margin: EdgeInsets.all(width * 0.0),
+                            child: Wrap(
                               children: [
-
-                                Text(
-                                  translator.translate(
-                                      " for chossing Us "),
-                                  style: TextStyle(
-                                      color: mainColor,
-                                      fontSize: AlmajedFont.primary_font_size),
-                                ),
                                 Text(
                                   translator.translate(
                                       " ${widget.name}"),
@@ -67,6 +57,14 @@ class LogoutDialogState extends State<LogoutDialog> {
                                       color: mainColor,
                                       fontSize: AlmajedFont.primary_font_size),
                                 ),
+
+                                Text(
+                                  translator.translate(translator.translate(" for chossing Us ")    ),
+                                  style: TextStyle(
+                                      color: mainColor,
+                                      fontSize: AlmajedFont.primary_font_size),
+                                ),
+
                               ],
                             )
                           ),
@@ -113,7 +111,7 @@ class LogoutDialogState extends State<LogoutDialog> {
                                          BorderRadius.circular(8)),
                                      child: customDescriptionText(
                                          context: context,
-                                         text: "No,Cancel",
+                                         text: translator.translate("Cancel"),
                                          percentageOfHeight: .025,
                                          textColor: whiteColor),
                                      height: isLandscape(context)

@@ -1,4 +1,5 @@
 import 'package:almajidoud/Bloc/Authentication_Bloc/SigninBloc/sign_in_bloc.dart';
+import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/home/home_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
@@ -104,6 +105,8 @@ class GetStartedScreenState extends State<GetStartedScreen>
                       print("done");
                       _stopAnimation();
                       StaticData.vistor_value = null;
+                      cartRepository.create_quote(context:context);
+
                       Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(

@@ -1,6 +1,8 @@
+import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/auth/sign_up_screen.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/utils/colors.dart';
+import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
@@ -62,7 +64,8 @@ class IntroScreenState extends State<IntroScreen> {
     );
   }
 
-  void onDonePress() {
+  void onDonePress() async{
+    cartRepository.create_quote(context: context);
 
     Navigator.push(
       context,

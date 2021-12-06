@@ -26,7 +26,6 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
   Stream<AppState> mapEventToState(AppEvent event)async*{
     if(event is click){
       yield Loading(model: null);
-      print("res 1");
       var response = await AuthenticationRepository.signIn(
         context: event.context,
           email: email_controller.value,
@@ -34,14 +33,11 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
       print("sigin response : ${response}");
       sharedPreferenceManager.writeData(CachingKey.AUTH_TOKEN,response);
       if(response != null){
-        print("3333333333333333");
         customPushNamedNavigation(event.context,GetStartedScreen(
           token: response,
         ));
-        /*print("sigin response : 11111111111111111");
-        yield Done(model:response);*/
+
       }else{
-        print("44444444444444444444444");
 
         // yield ErrorLoading(model: response);
         errorDialog(context: event.context,
@@ -61,7 +57,8 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
       print("UserInfo response : ${response.firstname}");
       if(response != null){
         print("UserInfo response : 11111111111111111");
-        sharedPreferenceManager.writeData(CachingKey.USER_NAME, response.firstname );
+        sharedPreferenceManager.writeData(CachingKey.USER_NAME, response.firstname +' '+ response.lastname );
+        sharedPreferenceManager.writeData(CachingKey.CUSTOMER_ID, response.id );
         yield Done(model:response);
       }else{
         yield ErrorLoading(model: response);

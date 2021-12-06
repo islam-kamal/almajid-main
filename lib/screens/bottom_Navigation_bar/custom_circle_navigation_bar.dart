@@ -14,16 +14,17 @@ class CustomCircleNavigationBar extends StatefulWidget {
 class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
   int currentPage = 0;
   final List<Widget> _pages = [
-    translator.currentLanguage == 'en' ?  CartScreen() : MyAccountScreen(),
-    translator.currentLanguage == 'en' ? LocationScreen() :  NotificationsScreen(),
+    translator.activeLanguageCode == 'en' ?  CartScreen() : MyAccountScreen(),
+    translator.activeLanguageCode == 'en' ? LocationScreen() :  NotificationsScreen(),
     HomeScreen(),
-    translator.currentLanguage == 'en' ?  NotificationsScreen() : LocationScreen(),
-    translator.currentLanguage == 'en' ?  MyAccountScreen() : CartScreen()
+    translator.activeLanguageCode == 'en' ?  NotificationsScreen() : LocationScreen(),
+    translator.activeLanguageCode == 'en' ?  MyAccountScreen() : CartScreen()
   ];
 
   @override
   void initState() {
     currentPage = widget.page_index;
+    print("  translator.activeLanguageCode : ${  translator.activeLanguageCode}");
     super.initState();
   }
   @override
@@ -35,7 +36,7 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
     double arcHeightWithNotch = 67;
 
     if (size.height > 700) {
-      barHeight = 60;
+      barHeight = size.height * 0.07;
     } else {
       barHeight = size.height * 0.1;
     }
@@ -47,7 +48,7 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
 
     return Scaffold(
       body:  Directionality(
-        textDirection: translator.currentLanguage == 'ar' ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+        textDirection: translator.activeLanguageCode == 'ar' ? ui.TextDirection.rtl : ui.TextDirection.ltr,
         child: _pages[currentPage],
       ),
       bottomNavigationBar: CircleBottomNavigationBar(
@@ -59,6 +60,7 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
         circleOutline: 15.0,
         shadowAllowance: 0.0,
         barBackgroundColor: mainColor,
+        arcWidth: 0.0,
         circleSize: 50.0,
         blurShadowRadius: 50.0,
         circleColor: white_gray_color,
@@ -74,7 +76,7 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
 
 List<TabData> getTabsData() {
   return [
-   translator.currentLanguage == 'en' ? TabData(
+   translator.activeLanguageCode == 'en' ? TabData(
       icon: Icons.shopping_cart,
       iconSize: 25.0,
 
@@ -85,7 +87,7 @@ List<TabData> getTabsData() {
 
 
 
-    translator.currentLanguage == 'en' ? TabData(
+    translator.activeLanguageCode == 'en' ? TabData(
       icon: Icons.location_on,
       iconSize: 25,
 
@@ -103,7 +105,7 @@ List<TabData> getTabsData() {
 
 
 
-   translator.currentLanguage == 'en'? TabData(
+   translator.activeLanguageCode == 'en'? TabData(
       icon: Icons.notifications,
       iconSize: 25,
 
@@ -115,7 +117,7 @@ List<TabData> getTabsData() {
 
 
 
-    translator.currentLanguage == 'en'?  TabData(
+    translator.activeLanguageCode == 'en'?  TabData(
       icon: Icons.menu,
       iconSize: 25,
 

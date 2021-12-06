@@ -99,7 +99,7 @@ class _NetworkIndicatorState extends State<NetworkIndicator> {
               backgroundColor: whiteColor,
               automaticallyImplyLeading: true,
               title: Text(
-            translator.currentLanguage == 'ar' ? 'الماجد عود' : 'Almajid Oud',
+            translator.activeLanguageCode == 'ar' ? 'الماجد عود' : 'Almajid Oud',
                 style: TextStyle(
                     color: blackColor,
                     fontFamily: 'Cairo',
