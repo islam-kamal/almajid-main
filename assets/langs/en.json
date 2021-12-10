@@ -5,7 +5,6 @@
   "Edit Profile": "Edit Profile",
   "My Orders": "My Orders",
   "My Cards": "My Cards",
-  "Settings": "Settings",
   "Help Center": "Help Center",
   "Share With Friends": "Share With Friends",
   "Rate Us On Google Play": "Rate Us On Google Play",
@@ -171,7 +170,29 @@
   "No Products Yet !"  : "No Products Yet !",
 
   "-------------------- WishList --------" :"------------------------------" ,
-  "My WishList" : "My WishList"
+  "My WishList" : "My WishList",
+
+  "-------------------- Orders --------" :"------------------------------",
+
+  "order" : "Order",
+  "order status" : "Order Status",
+  "payment" : "Payment",
+  "Items" : "Items",
+  "price": "price",
+  "Shippment fees" : "Shippment fees",
+  "Coupon discount" : "Coupon discount",
+  "Orders Details" : "Orders Details",
+  "Re-Order" : "Re-Order",
+  "Order ID" : "Order ID",
+  "Ordered On" : "Ordered On",
+  "Shippment Address"  : "Shippment Address",
+  "Payment method" : "Payment method",
+  "There is no orders now" : "There is no orders now",
+  "email is incorrect!" : "email is incorrect!",
+  "phone is incorrect!" : "phone is incorrect!",
+  "Empty menu !" :   "Empty menu !",
+  "Looks like you have not made your orders yet !" :    "Looks like you have not made your orders yet !" ,
+  "Back to Home" :  "Back to Home"
 }
 
 

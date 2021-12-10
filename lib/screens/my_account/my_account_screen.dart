@@ -106,13 +106,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                //    myAccountHeader(context: context),
                     ScreenAppBar(
                       onTapCategoryDrawer: () {
                         _drawerKey.currentState.openDrawer();
-                      }
-                      ,
-                      left_icon: "assets/icons/notifi.png",
+                      },
+                      category_name: translator.translate("My Account"),
+                     left_icon: "",
                     ),
                   ],
                 ),

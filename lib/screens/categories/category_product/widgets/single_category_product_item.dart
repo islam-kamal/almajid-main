@@ -11,7 +11,8 @@ class singleCategoryProductItem extends StatelessWidget {
   TextEditingController qty_controller = new TextEditingController();
   String cvv;
   Items product;
-  singleCategoryProductItem({this.product});
+  GlobalKey<ScaffoldState> scafffoldKey;
+  singleCategoryProductItem({this.product,this.scafffoldKey});
   @override
   Widget build(BuildContext context) {
     List<String> gallery = new List<String>();
@@ -72,12 +73,11 @@ class singleCategoryProductItem extends StatelessWidget {
 
                               CustomWishList(
                                 color: redColor,
-                                favourite_status:
-                                    product.status == 0 ? false : true,
                                 product_id: product.id,
                                 qty: product.extensionAttributes.stockItem.qty,
                                 context: context,
-
+                                screen: CategoryProductsScreen(),
+                                scafffoldKey: scafffoldKey,
                               ),
                               responsiveSizedBox(
                                   context: context, percentageOfHeight: .01),
@@ -119,8 +119,7 @@ class singleCategoryProductItem extends StatelessWidget {
 
                                 ],
                               ),
-                              responsiveSizedBox(
-                                  context: context, percentageOfHeight: .01),
+                              responsiveSizedBox(context: context, percentageOfHeight: .01),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -177,36 +176,80 @@ class singleCategoryProductItem extends StatelessWidget {
                                         print("Loading");
                                       } else if (state is ErrorLoading) {
                                         if(state.indicator == 'category_add_to_cart') {
+                                          var data = state.model as AddCartModel;
                                           print("ErrorLoading");
-                                          errorDialog(
-                                              context: context,
-                                              text: state.message
-                                          );
+                                          if(data.message == "The consumer isn't authorized to access %resources." ||
+                                              data.message == "Current customer does not have an active cart."){
+                                            Flushbar(
+                                              messageText:    Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Container(
+                                                    width: width(context) * 0.70,
+                                                    child: Text(
+                                                      '${data.message}',
+                                                      maxLines: 2,
+                                                      textAlign: TextAlign.end,
+                                                      textDirection: TextDirection.rtl,
+                                                      style: TextStyle(color: whiteColor),
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                      onTap: (){
+                                                        customAnimatedPushNavigation(context, SignInScreen());
+                                                      },
+                                                      child: Container(
+                                                        padding: EdgeInsets.symmetric(horizontal: 15),
+                                                        decoration: BoxDecoration(
+                                                          color: whiteColor,
+                                                          borderRadius: BorderRadius.circular(20),
+
+                                                        ),
+                                                        child:  Text(
+                                                          translator.translate("Sign In") ,
+                                                          textDirection: TextDirection.rtl,
+                                                          style: TextStyle(color: mainColor),
+                                                        ),
+                                                      )
+                                                  )
+                                                ],
+                                              ),
+
+                                              flushbarPosition: FlushbarPosition.BOTTOM,
+                                              backgroundColor: redColor,
+                                              flushbarStyle: FlushbarStyle.FLOATING,
+                                            )..show(scafffoldKey.currentState.context);
+                                          }else{
+                                            Flushbar(
+                                              messageText:       Container(
+                                                width: StaticData.get_width(context) * 0.7,
+                                                child: Wrap(
+                                                  children: [
+                                                    Text(
+                                                      '${data.message}',
+                                                      textDirection: TextDirection.rtl,
+                                                      style: TextStyle(color: whiteColor),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              flushbarPosition: FlushbarPosition.BOTTOM,
+                                              backgroundColor: redColor,
+                                              flushbarStyle: FlushbarStyle.FLOATING,
+                                              duration: Duration(seconds: 3),
+                                            )..show(scafffoldKey.currentState.context);
+
+                                          }
                                           }
 
                                       } else if (state is Done)
                                         if(state.indicator == 'category_add_to_cart') {
                                         print("------------- done-------------------");
-                                        Navigator.pushReplacement(
-                                          context,
-                                          PageRouteBuilder(
-                                            pageBuilder: (context, animation1, animation2) {
-                                              return translator.activeLanguageCode == 'ar' ?  CustomCircleNavigationBar(
-                                                page_index: 4,
-                                              ): CustomCircleNavigationBar(
-                                                page_index: 0,
-                                              );
-                                            },
-                                            transitionsBuilder:
-                                                (context, animation8, animation15, child) {
-                                              return FadeTransition(
-                                                opacity: animation8,
-                                                child: child,
-                                              );
-                                            },
-                                            transitionDuration: Duration(milliseconds: 10),
-                                          ),
-                                        );
+                                        customAnimatedPushNavigation(context,translator.activeLanguageCode == 'ar' ?  CustomCircleNavigationBar(
+                                          page_index: 4,
+                                        ): CustomCircleNavigationBar(
+                                          page_index: 0,
+                                        ));
                                       }
                                     },
                                     child:InkWell(

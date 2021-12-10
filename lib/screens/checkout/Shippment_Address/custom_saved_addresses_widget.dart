@@ -1,9 +1,10 @@
+import 'package:almajidoud/Bloc/ShippmentAddress_Bloc/shippment_address_bloc.dart';
 import 'package:almajidoud/Repository/CountriesRepo/countries_repoistory.dart';
 import 'package:almajidoud/Repository/ShippmentAdressRepo/shipment_address_repository.dart';
 import 'package:almajidoud/screens/checkout/checkout_address_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/material.dart';
-import 'package:almajidoud/Model/ShipmentAddressModel/client/saved_addresses_model.dart';
+import 'package:almajidoud/Model/ShipmentAddressModel/client/address_model.dart';
 
 
 class CustomSavedAddressesWidget extends StatefulWidget {
@@ -17,27 +18,27 @@ class CustomSavedAddressesWidget extends StatefulWidget {
 }
 
 class CustomSavedAddressesWidgetState extends State<CustomSavedAddressesWidget> {
-  var check = true;
-  var _currentIndex = 1;
+  var saved_address_check = true;
+  var saved_address_currentIndex = 1;
 
   var chossed_address_id;
 
-  List<Item> generateItems(int numberOfItems) {
+  List<Item> saved_address_generateItems(int numberOfItems) {
     return List.generate(numberOfItems, (int index) {
       return Item(
-        headerValue: header_item[index],
+        headerValue: saved_address_header_item[index],
       );
     });
   }
 
-  List header_item = [translator.activeLanguageCode == 'ar'? 'اختيار من العناوين المحفوظة' : 'Chosse From Saved Address'];
-  List<Item> _data;
+  List saved_address_header_item = [translator.activeLanguageCode == 'ar'? 'اختيار من العناوين المحفوظة' : 'Chosse From Saved Address'];
+  List<Item> saved_address_data;
 
   @override
   void initState() {
     print("StaticData.saved_addresses : ${StaticData.saved_addresses}");
     super.initState();
-    _data = generateItems(1);
+    saved_address_data = saved_address_generateItems(1);
   }
 
   @override
@@ -49,10 +50,10 @@ class CustomSavedAddressesWidgetState extends State<CustomSavedAddressesWidget> 
         child: ExpansionPanelList(
           expansionCallback: (int index, bool isExpanded) {
             setState(() {
-              _data[index].isExpanded = !isExpanded;
+              saved_address_data[index].isExpanded = !isExpanded;
             });
           },
-          children: _data.map<ExpansionPanel>((Item item) {
+          children: saved_address_data.map<ExpansionPanel>((Item item) {
             return ExpansionPanel(
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
@@ -61,52 +62,25 @@ class CustomSavedAddressesWidgetState extends State<CustomSavedAddressesWidget> 
               },
               body: Container(
                   height: MediaQuery.of(context).size.width / 2.5,
-                  child: FutureBuilder<List<SavedAddressesModel>>(
+                  child: FutureBuilder<List<AddressModel>>(
                     future: shipmentAddressRepository.get_all_saved_addresses(context: context),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
                           if (snapshot.data.length != 0) {
-                            print("snapshot.data. ${snapshot.data[0].region}");
                             return Directionality(
                                 textDirection: translator.activeLanguageCode == 'ar'?TextDirection.rtl : TextDirection.ltr,
                                 child:  Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                InkWell(
-                                  onTap: (){
-                                    StaticData.new_address_status = true;
-                                    customAnimatedPushNavigation(context,CheckoutAddressScreen());
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(vertical: 5,horizontal: 5),
-                                    width: MediaQuery.of(context).size.width * 0.9,
-
-                                    color: greyColor.withOpacity(.5),
-                                    child: Text(translator.translate("Add new Address"),
-                                      style: TextStyle(fontSize: AlmajedFont.secondary_font_size),),
-                                  ),
-                                ),
-                              Expanded(child:  ListView.builder(
+                              Expanded(
+                                  child:  ListView.builder(
                                 scrollDirection: Axis.vertical,
                                 shrinkWrap: true,
                                 itemCount: snapshot.data.length,
                                 itemBuilder:
                                     (BuildContext context, int index) {
-                                  /*     if(snapshot.data.length ==0){
-                                  return InkWell(
-                                    onTap: (){
 
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(vertical: 5,horizontal: 5),
-                                      color: greyColor.withOpacity(.5),
-                                      child: Text(translator.translate("Add new Address"),
-                                        style: TextStyle(fontSize: AlmajedFont.secondary_font_size),),
-                                    ),
-                                  );
-                                }
-*/
                                   return Directionality(
                                     textDirection: TextDirection.ltr,
                                     child: Container(
@@ -115,26 +89,29 @@ class CustomSavedAddressesWidgetState extends State<CustomSavedAddressesWidget> 
                                         child: Column(
                                           children: <Widget>[
                                             RadioListTile(
-                                              groupValue: _currentIndex,
+                                              groupValue: saved_address_currentIndex,
                                               title: Text(
                                                   "${snapshot.data[index].region.region} ,${snapshot.data[index].street[0]}",
-                                                  textDirection: TextDirection.rtl,
                                                   style: TextStyle(fontSize: AlmajedFont.secondary_font_size)
                                               ),
                                               value: snapshot.data[index].id,
                                               onChanged: (val) {
                                                 setState(() {
-                                                  _currentIndex = val;
+                                                  saved_address_currentIndex = val;
                                                   chossed_address_id = snapshot.data[index].id;
+                                                  shipmentAddressBloc.add(AddressDetailsEvent(
+                                                      address_id: snapshot.data[index].id
+                                                  ));
                                                   sharedPreferenceManager.writeData(CachingKey.CHOSSED_ADDRESS_ID, chossed_address_id);
+
 
                                                   item.isExpanded = false;
 
 
-                                                  header_item.add( "${snapshot.data[index].region.region} ,${snapshot.data[index].street[0]}");
+                                                  saved_address_header_item.add( "${snapshot.data[index].region.region} ,${snapshot.data[index].street[0]}");
 
                                                   item.headerValue =
-                                                      header_item.last;
+                                                      saved_address_header_item.last;
                                                 });
                                               },
                                             ),

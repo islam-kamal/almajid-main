@@ -1,7 +1,7 @@
 
 import 'package:almajidoud/Base/network-mappers.dart';
 
-class SavedAddressesModel extends BaseMappable{
+class AddressModel extends BaseMappable{
   var id;
   var customerId;
   Region region;
@@ -15,7 +15,7 @@ class SavedAddressesModel extends BaseMappable{
   var lastname;
   String message;
   Parameters parameters;
-  SavedAddressesModel(
+  AddressModel(
       {this.id,
         this.customerId,
         this.region,
@@ -28,7 +28,7 @@ class SavedAddressesModel extends BaseMappable{
         this.firstname,
         this.lastname,this.message,this.parameters});
 
-  SavedAddressesModel.fromJson(Map<String, dynamic> json) {
+  AddressModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     customerId = json['customer_id'];
     region =
@@ -83,7 +83,7 @@ class SavedAddressesModel extends BaseMappable{
     parameters = json['parameters'] != null
         ? new Parameters.fromJson(json['parameters'])
         : null;
-    return SavedAddressesModel(parameters: parameters,message: message,customerId: customerId,id: id,lastname: lastname,
+    return AddressModel(parameters: parameters,message: message,customerId: customerId,id: id,lastname: lastname,
     firstname: firstname,city: city,countryId: countryId,postcode: postcode,region: region,regionId: regionId,
     street: street,telephone: telephone);
   }

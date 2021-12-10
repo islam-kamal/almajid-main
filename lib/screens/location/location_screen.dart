@@ -108,8 +108,9 @@ class _LocationScreenState extends State<LocationScreen> {
                     ScreenAppBar(
                       onTapCategoryDrawer: () {
                         _drawerKey.currentState.openDrawer();
-                      }
-                      ,
+                      },
+                      home_logo: true,
+
                     ),
 
                   ],

@@ -17,7 +17,6 @@ checkoutHeader({BuildContext context, String title}) {
         GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
-            StaticData.new_address_status = false;
           },
           child: Icon(
             Icons.navigate_before,

@@ -1,19 +1,23 @@
+import 'package:almajidoud/Model/OrderMode/order_model.dart';
 import 'package:almajidoud/custom_widgets/custom_animated_push_navigation.dart';
 import 'package:almajidoud/screens/orders/order_details_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-singleOrderItem({BuildContext context}) {
+singleOrderItem({BuildContext context , OrderItems order}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       GestureDetector(
         onTap: () {
-          customAnimatedPushNavigation(context, OrderDetailsScreen());
+          customAnimatedPushNavigation(context, OrderDetailsScreen(
+            order_details: order,
+          ));
         },
         child: Column(
           children: [
             responsiveSizedBox(context: context, percentageOfHeight: .02),
             Neumorphic(
+
                 child: Container(
                     width: width(context) * .9,
                     child: Column(
@@ -21,7 +25,7 @@ singleOrderItem({BuildContext context}) {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
+                    /*        Container(
                               height: isLandscape(context)
                                   ? 2 * height(context) * .1
                                   : height(context) * .1,
@@ -41,7 +45,7 @@ singleOrderItem({BuildContext context}) {
                                   ),
                                 ],
                               ),
-                            ),
+                            ),*/
                             Container(
                               padding: EdgeInsets.only(
                                   right: width(context) * .02,
@@ -51,11 +55,14 @@ singleOrderItem({BuildContext context}) {
                                   ? 2 * height(context) * .12
                                   : height(context) * .11,
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   responsiveSizedBox(
                                       context: context,
                                       percentageOfHeight: .01),
                                   Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       customDescriptionText(
                                           context: context,
@@ -63,22 +70,30 @@ singleOrderItem({BuildContext context}) {
                                           maxLines: 1,
                                           fontWeight: FontWeight.bold,
                                           percentageOfHeight: .025,
-                                          text: "Product Name",
+                                          text: "${translator.translate("order")}",
+                                          textAlign: TextAlign.start),
+
+                                      customDescriptionText(
+                                          context: context,
+                                          textColor: mainColor,
+                                          maxLines: 1,
+                                          fontWeight: FontWeight.normal,
+                                          percentageOfHeight: .025,
+                                          text: " # ${order.incrementId}",
                                           textAlign: TextAlign.start),
                                     ],
                                   ),
-                                  responsiveSizedBox(
-                                      context: context,
-                                      percentageOfHeight: .01),
-                                  customDescriptionText(
-                                      context: context,
-                                      textColor: mainColor,
-                                      maxLines: 2,
-                                      text: "Lorim",
-                                      textAlign: TextAlign.start),
-                                  responsiveSizedBox(
-                                      context: context,
-                                      percentageOfHeight: .01),
+                                  responsiveSizedBox(context: context, percentageOfHeight: .01),
+
+
+                             customDescriptionText(
+                                    context: context,
+                                    textColor: mainColor,
+                                    maxLines: 1,
+                                    text: "${order.createdAt}",
+                                    textAlign: TextAlign.start),
+
+                                  responsiveSizedBox(context: context, percentageOfHeight: .01),
                                 ],
                               ),
                             )
@@ -100,15 +115,12 @@ singleOrderItem({BuildContext context}) {
                                   children: [
                                     customDescriptionText(
                                         context: context,
-                                        text: "Payment",
+                                        text: translator.translate("payment"),
                                         textColor: greyColor),
+
                                     customDescriptionText(
                                         context: context,
-                                        text: "Qty",
-                                        textColor: greyColor),
-                                    customDescriptionText(
-                                        context: context,
-                                        text: "Order status",
+                                        text: translator.translate( "order status"),
                                         textColor: greyColor)
                                   ],
                                 ),
@@ -125,17 +137,12 @@ singleOrderItem({BuildContext context}) {
                                   children: [
                                     customDescriptionText(
                                         context: context,
-                                        text: "${translator.translate("SAR")} 600",
+                                        text: "${order.orderCurrencyCode} ${order.baseGrandTotal}",
                                         textColor: Colors.black,
                                         fontWeight: FontWeight.bold),
                                     customDescriptionText(
                                         context: context,
-                                        text: "3",
-                                        textColor: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                    customDescriptionText(
-                                        context: context,
-                                        text: "Pending",
+                                        text: "${order.status}",
                                         textColor: Colors.red,
                                         fontWeight: FontWeight.bold)
                                   ],

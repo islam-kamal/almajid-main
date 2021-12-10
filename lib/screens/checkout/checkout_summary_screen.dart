@@ -1,5 +1,7 @@
 import 'package:almajidoud/Bloc/Order_Bloc/order_bloc.dart';
 import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
+import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
+import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/checkout/widgets/checkout_header.dart';
 import 'package:almajidoud/screens/checkout/widgets/done_button.dart';
 import 'package:almajidoud/screens/checkout/widgets/order_summary_widget.dart';
@@ -112,23 +114,44 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
       } else if (state is Done) {
         print("done");
         _stopAnimation();
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) {
-              return OrdersScreen(
-              );
-            },
-            transitionsBuilder:
-                (context, animation8, animation15, child) {
-              return FadeTransition(
-                opacity: animation8,
-                child: child,
-              );
-            },
-            transitionDuration: Duration(milliseconds: 10),
-          ),
-        );
+       if( StaticData.vistor_value == 'visitor') {
+         cartRepository.create_quote(context: context); // used to create new quote for guest
+         Navigator.pushReplacement(
+           context,
+           PageRouteBuilder(
+             pageBuilder: (context, animation1, animation2) {
+               return CustomCircleNavigationBar(
+               );
+             },
+             transitionsBuilder:
+                 (context, animation8, animation15, child) {
+               return FadeTransition(
+                 opacity: animation8,
+                 child: child,
+               );
+             },
+             transitionDuration: Duration(milliseconds: 100),
+           ),
+         );
+       }else{
+         Navigator.pushReplacement(
+           context,
+           PageRouteBuilder(
+             pageBuilder: (context, animation1, animation2) {
+               return OrdersScreen(
+               );
+             },
+             transitionsBuilder:
+                 (context, animation8, animation15, child) {
+               return FadeTransition(
+                 opacity: animation8,
+                 child: child,
+               );
+             },
+             transitionDuration: Duration(milliseconds: 100),
+           ),
+         );
+       }
       }
     },
     child: Column(
@@ -136,10 +159,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
             checkoutHeader(context: context),
             responsiveSizedBox(context: context, percentageOfHeight: .02),
             topPageIndicator(
-                context: context,
-                isPayment: true,
-                isAddress: true,
-                indicatorWidth: 1,
+                context: context, isPayment: true, isAddress: true, indicatorWidth: 1,
                 isSummary: true),
             responsiveSizedBox(context: context, percentageOfHeight: .02),
             Container(
@@ -197,7 +217,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
             subtotal: widget.guestShipmentAddressModel.totals.subtotal,
             vat: widget.guestShipmentAddressModel.totals.baseTaxAmount,
             total: widget.guestShipmentAddressModel.totals.baseGrandTotal) ,
-            responsiveSizedBox(context: context, percentageOfHeight: .01),
+            responsiveSizedBox(context: context, percentageOfHeight: .04),
             doneButton(context: context)
 
           ],

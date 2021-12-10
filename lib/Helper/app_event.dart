@@ -129,7 +129,10 @@ class removeFromWishListEvent extends AppEvent{
   removeFromWishListEvent({this.wishlist_item_id});
 }
 class getAllWishList_click extends AppEvent{
+  BuildContext context;
+  GlobalKey<ScaffoldState> scafffoldKey;
 
+  getAllWishList_click({this.context,this.scafffoldKey});
 }
 
 
@@ -186,11 +189,18 @@ class AddNewAdressEvent extends AppEvent{
   BuildContext context;
   AddNewAdressEvent({this.context});
 }
+class AddressDetailsEvent extends AppEvent{
+  var address_id;
+  AddressDetailsEvent({this.address_id});
+}
 
 //Orders
 class CreateOrderEvent extends AppEvent{
   BuildContext context;
   CreateOrderEvent({this.context});
+}
+class GetAllOrderEvent extends AppEvent{
+  GetAllOrderEvent();
 }
 
 // CREDIT CARD

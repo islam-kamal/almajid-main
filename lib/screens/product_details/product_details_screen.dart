@@ -94,24 +94,68 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                         var data = state.model as AddCartModel;
                         print("ErrorLoading");
                         _stopAnimation();
-                        Flushbar(
-                          messageText:       Container(
-                            width: StaticData.get_width(context) * 0.7,
-                            child: Wrap(
+                        if(data.message == "The consumer isn't authorized to access %resources." ||
+                        data.message == "Current customer does not have an active cart."){
+                          Flushbar(
+                            messageText:    Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  '${data.message}',
-                                  textDirection: TextDirection.rtl,
-                                  style: TextStyle(color: whiteColor),
+                                Container(
+                                  width: width(context) * 0.70,
+                                  child: Text(
+                                    '${data.message}',
+                                    maxLines: 2,
+                                    textAlign: TextAlign.end,
+                                    textDirection: TextDirection.rtl,
+                                    style: TextStyle(color: whiteColor),
+                                  ),
                                 ),
+                                InkWell(
+                                    onTap: (){
+                                      customAnimatedPushNavigation(context, SignInScreen());
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 15),
+                                      decoration: BoxDecoration(
+                                        color: whiteColor,
+                                        borderRadius: BorderRadius.circular(20),
+
+                                      ),
+                                      child:  Text(
+                                        translator.translate("Sign In") ,
+                                        textDirection: TextDirection.rtl,
+                                        style: TextStyle(color: mainColor),
+                                      ),
+                                    )
+                                )
                               ],
                             ),
-                          ),
-                          flushbarPosition: FlushbarPosition.BOTTOM,
-                          backgroundColor: redColor,
-                          flushbarStyle: FlushbarStyle.FLOATING,
-                          duration: Duration(seconds: 3),
-                        )..show(_drawerKey.currentState.context);
+
+                            flushbarPosition: FlushbarPosition.BOTTOM,
+                            backgroundColor: redColor,
+                            flushbarStyle: FlushbarStyle.FLOATING,
+                          )..show(_drawerKey.currentState.context);
+                        }else{
+                          Flushbar(
+                            messageText:       Container(
+                              width: StaticData.get_width(context) * 0.7,
+                              child: Wrap(
+                                children: [
+                                  Text(
+                                    '${data.message}',
+                                    textDirection: TextDirection.rtl,
+                                    style: TextStyle(color: whiteColor),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            flushbarPosition: FlushbarPosition.BOTTOM,
+                            backgroundColor: redColor,
+                            flushbarStyle: FlushbarStyle.FLOATING,
+                            duration: Duration(seconds: 3),
+                          )..show(_drawerKey.currentState.context);
+
+                        }
                       } else if (state is Done) {
                         print("done");
                         _stopAnimation();

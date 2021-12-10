@@ -7,7 +7,7 @@ orderDetailsHeader({BuildContext context}){
       children: [
       GestureDetector(onTap: (){Navigator.of(context).pop();},
           child: Icon(Icons.arrow_back_ios , color: whiteColor,)) ,
-      customDescriptionText(context: context , text: "Orders Details" ,
+      customDescriptionText(context: context , text: translator.translate("Orders Details") ,
           textColor: whiteColor , percentageOfHeight: .025) ,
       SizedBox()
 

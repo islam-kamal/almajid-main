@@ -4,9 +4,10 @@ import 'package:almajidoud/screens/checkout/checkout_address_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 proceedToCheckoutButton({BuildContext context}) {
-  return GestureDetector(onTap: ()async{
-  await   shipmentAddressRepository.get_all_saved_addresses(context: context);
-      print("addresses length : ${StaticData.saved_addresses_count}");
+  return GestureDetector(
+    onTap: ()async{
+      print("  EEE  StaticData.vistor_value  : ${    StaticData.vistor_value }");
+      StaticData.vistor_value == 'visitor' ? null :  await shipmentAddressRepository.get_all_saved_addresses(context: context);
 
   customAnimatedPushNavigation(context, CheckoutAddressScreen());
 

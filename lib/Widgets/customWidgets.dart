@@ -6,11 +6,12 @@ class CustomComponents{
 
   static Future<bool> isFirstTime() async {
     bool isFirstTime = await sharedPreferenceManager.readBoolean(CachingKey.FRIST_TIME);
+    print("-- isFirstTime --- : ${isFirstTime}");
     if (isFirstTime != null && !isFirstTime) {
       sharedPreferenceManager.writeData(CachingKey.FRIST_TIME, true);
       return false;
     } else {
-      sharedPreferenceManager.writeData(CachingKey.FRIST_TIME, false);
+      sharedPreferenceManager.writeData(CachingKey.FRIST_TIME, true);
       return true;
     }
   }

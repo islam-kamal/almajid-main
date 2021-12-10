@@ -1,20 +1,20 @@
+import 'dart:async';
+
 import 'package:almajidoud/Bloc/WishList_Bloc/wishlist_bloc.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomWishList extends StatefulWidget {
-  bool favourite_status;
   final Color color;
   final int product_id;
   var qty;
+  Widget screen;
   BuildContext context;
-  CustomWishList(
-      {this.favourite_status = false,
-      this.color,
-      this.product_id,
-      this.qty,
-      this.context});
+  GlobalKey<ScaffoldState> scafffoldKey;
+
+  CustomWishList({this.color, this.product_id, this.qty, this.context,this.screen,this.scafffoldKey});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -23,21 +23,49 @@ class CustomWishList extends StatefulWidget {
 }
 
 class CustomFauvourite_State extends State<CustomWishList> {
+  List<int> fav_salon_id;
+  List<int> wishlist_id;
+  List<Map> wishlist_items;
   @override
   void initState() {
-    // TODO: implement initState
+    fav_salon_id = [];
+    wishlist_id = [];
+    wishlist_items = [];
+
     super.initState();
   }
 
+  void get_wishlist_ids()async{
+
+    wishlist_items = await sharedPreferenceManager.getListOfMaps('wishlist_data_ids');
+
+
+  }
   @override
   Widget build(BuildContext context) {
-    return Container(
+    if (StaticData.vistor_value == 'visitor') {
+      fav_salon_id = [];
+    } else {
+      wishlist_items.forEach((element) {
+        element.keys.forEach((k) {
+          wishlist_id.add(int.parse(k));
+        });
+
+        element.values.forEach((v) {
+          fav_salon_id.add(v);
+        });
+      });
+
+    }
+
+
+    return  Container(
         alignment: translator.activeLanguageCode == 'ar'
             ? Alignment.topLeft
             : Alignment.topRight,
         height: StaticData.get_height(context) * .04,
         width: StaticData.get_width(context) * .7,
-        child: (widget.favourite_status)
+        child:  fav_salon_id.contains(widget.product_id)
             ? IconButton(
                 icon: Icon(
                   Icons.favorite,
@@ -46,15 +74,24 @@ class CustomFauvourite_State extends State<CustomWishList> {
                 ),
                 onPressed: (StaticData.vistor_value == 'visitor')
                     ? () {
-                  customAnimatedPushNavigation(context,SignInScreen());
-                }
-                    : () async {
-                        await wishlist_bloc.add(removeFromWishListEvent(
-                          wishlist_item_id: widget.product_id,
-                        ));
-                        setState(() {
-                          widget.favourite_status = !widget.favourite_status;
-                          wishlist_bloc.add(getAllWishList_click());
+                        customAnimatedPushNavigation(context, SignInScreen());
+                      }
+                    : () async{
+                var item_id= wishlist_id[fav_salon_id.indexOf(widget.product_id)]  ;
+                print("item_id : :: ${item_id}");
+                  await wishlist_bloc.add(removeFromWishListEvent(
+                    wishlist_item_id: item_id,
+
+                  ));
+                  await wishlist_bloc.add(getAllWishList_click(
+                    context: context,
+                    scafffoldKey: widget.scafffoldKey
+                  ));
+
+
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContextcontext) => widget.screen));
+                 setState(()  {
+
                         });
                       },
               )
@@ -66,15 +103,20 @@ class CustomFauvourite_State extends State<CustomWishList> {
                 ),
                 onPressed: (StaticData.vistor_value == 'visitor')
                     ? () {
-                  customAnimatedPushNavigation(context,SignInScreen());
-                }
-                    : () {
-                        wishlist_bloc.add(AddToWishListEvent(
-                            product_id: widget.product_id,
-                            context: widget.context,
-                            qty: widget.qty));
-                        setState(() {
-                          widget.favourite_status = !widget.favourite_status;
+                        customAnimatedPushNavigation(context, SignInScreen());
+                      }
+                    : ()async {
+                  wishlist_bloc.add(AddToWishListEvent(
+                      product_id: widget.product_id,
+                      context: widget.context,
+                      qty: widget.qty));
+                  await wishlist_bloc.add(getAllWishList_click(
+                      context: context,
+                      scafffoldKey: widget.scafffoldKey
+                  ));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContextcontext) => widget.screen));
+                  setState(()  {
+
                         });
                       },
               ));

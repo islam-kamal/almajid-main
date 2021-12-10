@@ -1,67 +1,11 @@
-import 'package:almajidoud/utils/file_export.dart';
-
-
-class GetAllWishListModel extends BaseMappable{
-  int customerId;
-  String sharingCode;
-  int itemsCount;
-  List<Items> items;
-  String message;
-  Parameters parameters;
-  GetAllWishListModel(
-      {this.customerId, this.sharingCode, this.itemsCount, this.items,this.message, this.parameters});
-
-  GetAllWishListModel.fromJson(Map<String, dynamic> json) {
-    customerId = json['customer_id'];
-    sharingCode = json['sharing_code'];
-    itemsCount = json['items_count'];
-    if (json['items'] != null) {
-      items = new List<Items>();
-      json['items'].forEach((v) {
-        items.add(new Items.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['customer_id'] = this.customerId;
-    data['sharing_code'] = this.sharingCode;
-    data['items_count'] = this.itemsCount;
-    if (this.items != null) {
-      data['items'] = this.items.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-
-  @override
-  Mappable fromJson(Map<String, dynamic> json) {
-    customerId = json['customer_id'];
-    sharingCode = json['sharing_code'];
-    itemsCount = json['items_count'];
-    if (json['items'] != null) {
-      items = new List<Items>();
-      json['items'].forEach((v) {
-        items.add(new Items.fromJson(v));
-      });
-    }
-    message = json['message'];
-    parameters = json['parameters'] != null
-        ? new Parameters.fromJson(json['parameters'])
-        : null;
-    return GetAllWishListModel(message: message,parameters: parameters,itemsCount: itemsCount,items: items,
-    customerId: customerId,sharingCode: sharingCode);
-  }
-}
-
-class Items {
-  int id;
-  int qty;
+class WishlistItemModel {
+  var id;
+  var qty;
   Product product;
 
-  Items({this.id, this.qty, this.product});
+  WishlistItemModel({this.id, this.qty, this.product});
 
-  Items.fromJson(Map<String, dynamic> json) {
+  WishlistItemModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     qty = json['qty'];
     product =
@@ -79,32 +23,17 @@ class Items {
   }
 }
 
-class Parameters {
-  String fieldName;
-
-  Parameters({this.fieldName});
-
-  Parameters.fromJson(Map<String, dynamic> json) {
-    fieldName = json['fieldName'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['fieldName'] = this.fieldName;
-    return data;
-  }
-}
 class Product {
-  int id;
-  String sku;
-  String name;
-  int attributeSetId;
-  double price;
-  int status;
-  int visibility;
-  String typeId;
-  String createdAt;
-  String updatedAt;
+  var id;
+  var sku;
+  var name;
+  var attributeSetId;
+  var price;
+  var status;
+  var visibility;
+  var typeId;
+  var createdAt;
+  var updatedAt;
   List<ProductLinks> productLinks;
   List<TierPrices> tierPrices;
   List<CustomAttributes> customAttributes;
@@ -180,30 +109,13 @@ class Product {
     return data;
   }
 }
-class TierPrices{
-  var field;
-  var direction;
 
-  TierPrices({this.field, this.direction});
-
-  TierPrices.fromJson(Map<String, dynamic> json) {
-    field = json['field'];
-    direction = json['direction'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['field'] = this.field;
-    data['direction'] = this.direction;
-    return data;
-  }
-}
 class ProductLinks {
-  String sku;
-  String linkType;
-  String linkedProductSku;
-  String linkedProductType;
-  int position;
+  var sku;
+  var linkType;
+  var linkedProductSku;
+  var linkedProductType;
+  var position;
 
   ProductLinks(
       {this.sku,
@@ -232,8 +144,8 @@ class ProductLinks {
 }
 
 class CustomAttributes {
-  String attributeCode;
-  String value;
+  var attributeCode;
+  var value;
 
   CustomAttributes({this.attributeCode, this.value});
 
@@ -246,6 +158,24 @@ class CustomAttributes {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['attribute_code'] = this.attributeCode;
     data['value'] = this.value;
+    return data;
+  }
+}
+class TierPrices{
+  var field;
+  var direction;
+
+  TierPrices({this.field, this.direction});
+
+  TierPrices.fromJson(Map<String, dynamic> json) {
+    field = json['field'];
+    direction = json['direction'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['field'] = this.field;
+    data['direction'] = this.direction;
     return data;
   }
 }

@@ -22,8 +22,16 @@ class CheckoutPaymentScreen extends StatefulWidget{
 
 
 class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with TickerProviderStateMixin {
+  var _currentIndex ;
+
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   FocusNode fieldNode = FocusNode();
+
+  @override
+  void initState() {
+    _currentIndex = widget.guestShipmentAddressModel.paymentMethods[0].code;
+  }
+
   @override
   Widget build(BuildContext context) {
     return NetworkIndicator(
@@ -59,10 +67,10 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                 paymentTitle(context: context , title: "CVV"),
                 responsiveSizedBox(context: context, percentageOfHeight: .01),
                 paymentTextFields(context: context , hint: "*****"),
-                responsiveSizedBox(context: context, percentageOfHeight: .01),
-                saveCardDetails(context: context),
-                responsiveSizedBox(context: context, percentageOfHeight: .01),
-                nextButtonInPayment(context: context , isAddress: false,guestShipmentAddressModel: widget.guestShipmentAddressModel)
+                responsiveSizedBox(context: context, percentageOfHeight: .05),
+                nextButtonInPayment(context: context ,
+                    isAddress: false,
+                    guestShipmentAddressModel: widget.guestShipmentAddressModel)
               ],
             ),
 
@@ -72,4 +80,96 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
       ),
     );
   }
+  paymentMethodCard({BuildContext context ,  List<PaymentMethods> paymentMethods}) {
+
+    return Container(
+        padding: EdgeInsets.only(
+            right: width(context) * .05, left: width(context) * .05),
+        width: width(context) * .9,
+        height: width(context) * .3,
+        decoration: BoxDecoration(color: mainColor, borderRadius: BorderRadius.circular(20)),
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          itemCount: paymentMethods.length,
+          itemBuilder:
+              (BuildContext context, int index) {
+
+            return Directionality(
+              textDirection: TextDirection.ltr,
+              child: Container(
+                padding: EdgeInsets.only(right: 10, left: 10),
+                width: 150,
+                height: 50,
+
+                child: Theme(
+                    data: Theme.of(context).copyWith(
+                        unselectedWidgetColor: whiteColor,
+                        disabledColor: whiteColor
+                    ),
+                    child:RadioListTile(
+                      groupValue: _currentIndex,
+                      contentPadding: const EdgeInsets.all(16.0),
+                      title: Text(
+                          "${paymentMethods[index].title} ",
+                          style: TextStyle(fontSize: AlmajedFont.secondary_font_size,color: whiteColor)
+                      ),
+                      value: paymentMethods[index].code,
+                      activeColor: Colors.blue,
+                      onChanged: (val) {
+                        setState(() {
+                          _currentIndex = val;
+                          sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, paymentMethods[index].code);
+
+                        });
+
+
+
+                      },
+                    )),
+              ),
+            );
+          },
+        )
+
+
+      /* Column(
+      children: [
+        responsiveSizedBox(context: context, percentageOfHeight: .005),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                singleSmallCard(context: context , title: "Cash" , image: "assets/icons/cash icon.png"),
+                singleRadioButton(context: context)
+              ],
+            ),
+            Row(
+              children: [
+                singleSmallCard(context: context , title: "Credit Card" , image:  "assets/icons/credit cards.png"),
+                singleRadioButton(context: context , )
+              ],
+            )
+          ],
+        ),
+        responsiveSizedBox(context: context, percentageOfHeight: .005),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                singleSmallCard(context: context , title: "Pay" , image: "assets/icons/apple pay.png" ),
+                singleRadioButton(context: context)
+              ],
+            ),
+           SizedBox()
+          ],
+        ),
+        responsiveSizedBox(context: context, percentageOfHeight: .005),
+      ],
+    ),*/
+    );
+  }
+
 }

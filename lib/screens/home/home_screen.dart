@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:almajidoud/Bloc/Category_Bloc/category_bloc.dart';
 import 'package:almajidoud/Bloc/Home_Bloc/home_bloc.dart';
+import 'package:almajidoud/Bloc/Search_Bloc/search_bloc.dart';
 import 'package:almajidoud/Model/CategoryModel/category_model.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/home/widgets/categories_buttons.dart';
@@ -22,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+
     super.initState();
   }
 
@@ -36,7 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           backgroundColor: whiteColor,
           key: _drawerKey,
-          body: Container(
+          body: GestureDetector(
+          onTap: (){
+      FocusScopeNode currentFocus = FocusScope.of(context);
+      if (!currentFocus.hasPrimaryFocus) {
+        currentFocus.unfocus();
+      }
+    },
+    child: Container(
               height: height(context),
               width: width(context),
               child: Stack(
@@ -107,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ],
-              )),
+              ) )),
 
           drawer: SettingsDrawer(
             node: fieldNode,

@@ -59,6 +59,7 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
         print("UserInfo response : 11111111111111111");
         sharedPreferenceManager.writeData(CachingKey.USER_NAME, response.firstname +' '+ response.lastname );
         sharedPreferenceManager.writeData(CachingKey.CUSTOMER_ID, response.id );
+        sharedPreferenceManager.writeData(CachingKey.EMAIL, response.email );
         yield Done(model:response);
       }else{
         yield ErrorLoading(model: response);

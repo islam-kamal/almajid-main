@@ -159,12 +159,25 @@ class _CartScreenState extends State<CartScreen> {
                           } else if (state.indicator ==
                               'DeleteProductFromCart') {
                           } else {
-                            return Column(children: [
-                              responsiveSizedBox(
-                                  context: context,
-                                  percentageOfHeight: .03),
-                        no_data_widget(context: context),
-                            ],);
+                            if(state.message == "The consumer isn't authorized to access %resources." ||
+                                state.message == "Current customer does not have an active cart."){
+                              return Column(children: [
+                                responsiveSizedBox(
+                                    context: context,
+                                    percentageOfHeight: .03),
+                                no_data_widget(context: context,
+                                message: state.message,
+                                token_status: 'token_expire'),
+                              ],);
+                            }else{
+                              return Column(children: [
+                                responsiveSizedBox(
+                                    context: context,
+                                    percentageOfHeight: .03),
+                                no_data_widget(context: context),
+                              ],);
+                            }
+
 
 
                           }

@@ -5,8 +5,8 @@ import 'package:almajidoud/Model/CityModel/city_model.dart';
 
 
 class CustomCitiesWidget extends StatefulWidget {
-
-  CustomCitiesWidget();
+  var city_name;
+  CustomCitiesWidget({this.city_name});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -34,8 +34,9 @@ class CustomCitiesWidgetState extends State<CustomCitiesWidget> {
   @override
   void initState() {
     cities_list= countriesRepository.get_cities(context: context);
-    super.initState();
     _data = generateItems(1);
+    super.initState();
+
   }
 
   @override
@@ -71,48 +72,99 @@ class CustomCitiesWidgetState extends State<CustomCitiesWidget> {
                               itemCount: snapshot.data.length,
                               itemBuilder:
                                   (BuildContext context, int index) {
+
                                 if(index ==0){
                                   return Container();
-                                }
-                                return Directionality(
-                                  textDirection: TextDirection.ltr,
-                                  child: Container(
-                                      padding: EdgeInsets.only(
-                                          right: 10, left: 10),
-                                      child: Column(
-                                        children: <Widget>[
-                                          RadioListTile(
-                                            groupValue: _currentIndex,
-                                            title: Text(
-                                              "${translator.activeLanguageCode == 'ar'? snapshot.data[index].label :snapshot.data[index].title}",
-                                              textDirection:
-                                              TextDirection.rtl,
+                                }else if(widget.city_name != null){
+                                  snapshot.data.forEach((element) {
+                                    if(element.title == widget.city_name || element.label == widget.city_name){
+                                      city_id = element.value;
+                                      _currentIndex = int.parse(city_id);
+                                    }
+                                  });
+                                  print("*********1 *****");
+                                  return Directionality(
+                                    textDirection: TextDirection.ltr,
+                                    child: Container(
+                                        padding: EdgeInsets.only(
+                                            right: 10, left: 10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            RadioListTile(
+                                              groupValue:  _currentIndex,
+                                              title: Text(
+                                                "${translator.activeLanguageCode == 'ar'? snapshot.data[index].label :snapshot.data[index].title}",
+                                                textDirection:
+                                                TextDirection.rtl,
+                                              ),
+                                              value: snapshot.data[index].value,
+                                              onChanged: (val) {
+                                                setState(() {
+                                                  _currentIndex = int.parse(val);
+                                                  city_id = snapshot.data[index].value;
+                                                  sharedPreferenceManager.writeData(CachingKey.REGION_ID, city_id);
+                                                  sharedPreferenceManager.writeData(CachingKey.REGION_EN,  snapshot.data[index].title);
+                                                  sharedPreferenceManager.writeData(CachingKey.REGION_AR,  snapshot.data[index].label);
+
+                                                  item.isExpanded = false;
+
+
+                                                  header_item.add(translator.activeLanguageCode == 'ar'? snapshot.data[index].label :snapshot.data[index].title);
+
+                                                  item.headerValue =
+                                                      header_item.last;
+                                                });
+                                              },
                                             ),
-                                            value: snapshot.data[index].value,
-                                            onChanged: (val) {
-                                              setState(() {
-                                                _currentIndex = int.parse(val);
-                                                city_id = snapshot.data[index].value;
-                                                sharedPreferenceManager.writeData(CachingKey.REGION_ID, city_id);
-                                                sharedPreferenceManager.writeData(CachingKey.REGION_EN,  snapshot.data[index].title);
-                                                sharedPreferenceManager.writeData(CachingKey.REGION_AR,  snapshot.data[index].label);
+                                            Divider(
+                                              color: Color(0xFFDADADA),
+                                            )
+                                          ],
+                                        )),
+                                  );
+                                }else{
+                                  print("*********2 *****");
+                                  return Directionality(
+                                    textDirection: TextDirection.ltr,
+                                    child: Container(
+                                        padding: EdgeInsets.only(
+                                            right: 10, left: 10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            RadioListTile(
+                                              groupValue:  _currentIndex,
+                                              title: Text(
+                                                "${translator.activeLanguageCode == 'ar'? snapshot.data[index].label :snapshot.data[index].title}",
+                                                textDirection:
+                                                TextDirection.rtl,
+                                              ),
+                                              value: snapshot.data[index].value,
+                                              onChanged: (val) {
+                                                setState(() {
+                                                  _currentIndex = int.parse(val);
+                                                  city_id = snapshot.data[index].value;
+                                                  sharedPreferenceManager.writeData(CachingKey.REGION_ID, city_id);
+                                                  sharedPreferenceManager.writeData(CachingKey.REGION_EN,  snapshot.data[index].title);
+                                                  sharedPreferenceManager.writeData(CachingKey.REGION_AR,  snapshot.data[index].label);
 
-                                                item.isExpanded = false;
+                                                  item.isExpanded = false;
 
 
-                                                header_item.add(translator.activeLanguageCode == 'ar'? snapshot.data[index].label :snapshot.data[index].title);
+                                                  header_item.add(translator.activeLanguageCode == 'ar'? snapshot.data[index].label :snapshot.data[index].title);
 
-                                                item.headerValue =
-                                                    header_item.last;
-                                              });
-                                            },
-                                          ),
-                                          Divider(
-                                            color: Color(0xFFDADADA),
-                                          )
-                                        ],
-                                      )),
-                                );
+                                                  item.headerValue =
+                                                      header_item.last;
+                                                });
+                                              },
+                                            ),
+                                            Divider(
+                                              color: Color(0xFFDADADA),
+                                            )
+                                          ],
+                                        )),
+                                  );
+                                }
+
                               },
                             );
                           } else {

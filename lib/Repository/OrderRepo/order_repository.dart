@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:almajidoud/utils/file_export.dart';
-
+import 'package:almajidoud/Model/OrderMode/order_model.dart';
+import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 class OrderRepository {
   Future<String> create_guest_order({BuildContext context}) async {
     Dio dio = new Dio();
@@ -11,7 +13,9 @@ class OrderRepository {
       final response = await dio.put(
           "${Urls.BASE_URL}/index.php/rest/V1/guest-carts/${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/order",
           data: {
-            "paymentMethod": {"method": "cashondelivery"}
+            "paymentMethod": {
+              "method": await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD),
+            }
           },
           options: Options(headers: Map<String, String>.from({})));
       print("create_guest_order  response : ${response.data}");
@@ -34,7 +38,7 @@ class OrderRepository {
           "${Urls.BASE_URL}/index.php/rest/V1/carts/mine/payment-information",
           data: {
             "paymentMethod": {
-              "method": "payfort_fort_cc"
+              "method": await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD),
             }
           },
           options: Options(headers: Map<String, String>.from({
@@ -55,6 +59,40 @@ class OrderRepository {
     }
   }
 
+
+  Future<AllOrdersModel> get_all_orders({var user_email}) async{
+    return NetworkUtil.internal().get(
+        AllOrdersModel(),
+        Urls.BASE_URL + "/index.php/rest/V1/orders?searchCriteria[filter_groups][0][filters][0][field]=customer_email&searchCriteria[filter_groups][0][filters][0][value]=${user_email}&searchCriteria[filter_groups][0][filters][0][condition_type]=eq&searchCriteria[currentPage]=1&searchCriteria[pageSize]=20",
+        headers:Map<String, String>.from({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
+
+    })
+    );
+  }
+
+/*
+  Future<http.Response> getPayFortSettings() async {
+    // final url = '${ORDER_DATA['website_domain']}/rest/V1/mstore/update-order-type';
+    final url = 'https://test.almajed4oud.com/index.php/rest/V1/mstore/update-order-type';
+    try {
+      final Map<String,dynamic> data = {
+        "orderId": 3499,
+        "type": "mobile_android"
+      };
+      final serializedData = json.encode(data);
+      final response = await http.post(Uri.parse(url), headers: {
+        "content-type": "application/json",
+        "Authorization": "Bearer tda5h42j6mke2q43da55wckmoeynz1n1"
+      }, body: serializedData);
+      print("response-- : ${response.body}");
+      return response;
+    } catch (error) {
+      throw (error);
+    }
+  }*/
 }
 
 OrderRepository orderRepository = new OrderRepository();

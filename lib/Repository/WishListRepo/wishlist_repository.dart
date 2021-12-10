@@ -1,9 +1,9 @@
-import 'package:almajidoud/Model/FavouriteModel/get_all_wishlist_model.dart';
-import 'package:almajidoud/Model/FavouriteModel/favourite_model.dart';
+import 'package:almajidoud/Model/WishListModel/get_all_wishlist_model.dart';
+import 'package:almajidoud/Model/WishListModel/wishlist_item_model.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:almajidoud/utils/file_export.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class WishListRepository {
 
   Future<GetAllWishListModel> getAllWishListItems()async{
@@ -15,6 +15,44 @@ class WishListRepository {
     return NetworkUtil.internal().get(
         GetAllWishListModel(), Urls.GET_ALL_WISHLIST_ITEMS,
         headers: headers);
+  }
+
+  Future<List<WishlistItemModel>> getWishListIDS(BuildContext context)async{
+    print("********** 1");
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Dio dio = new Dio();
+    try {
+      print("********** 1");
+      final response = await dio.get(
+          Urls.BASE_URL+ Urls.GET_ALL_WISHLIST_ITEMS,
+          options: Options(
+              headers:  Map<String, String>.from({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}',
+              },)
+          ));
+      print("wishlist response : ${response}");
+      if (response.statusCode == 200) {
+        final jsonresponse = response.data['items'];
+        List<WishlistItemModel> temp = (jsonresponse as List)
+            .map((f) => WishlistItemModel.fromJson(f))
+            .toList();
+        List<Map> wishlist_data = [];
+        temp.forEach((i) {
+          wishlist_data.add({i.id.toString():i.product.id});
+        });
+       await sharedPreferenceManager.setListOfMaps(wishlist_data, 'wishlist_data_ids');
+
+        print("sharedPreferences : ${sharedPreferences.getStringList('WISHLIST_IDS')}");
+        return temp;
+      } else {
+       // errorDialog(context: context, text: response.data['message']);
+      }
+    } catch (e) {
+      print("@@@@@@"+e.toString());
+    //  errorDialog(context: context, text: "The consumer isn't authorized to access %resources.");
+    }
   }
 
   Future<bool> addProudctToWishList({BuildContext context ,var product_id, var product_qty})async {
@@ -63,7 +101,7 @@ class WishListRepository {
                 'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}'
               }
           ));
-      print("response : ${response.data}");
+      print("remove response : ${response.data}");
       if (response.statusCode == 200) {
         print("res 4");
         return response.data;
@@ -129,3 +167,4 @@ class WishListRepository {
 
   }
 }
+WishListRepository wishListRepository = new WishListRepository();

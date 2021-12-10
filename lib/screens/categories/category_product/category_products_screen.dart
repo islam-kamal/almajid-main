@@ -17,6 +17,7 @@ class CategoryProductsScreen extends StatefulWidget {
 class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   var offset = 1;
   ScrollController _controller;
+  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
   @override
   void initState() {
@@ -43,6 +44,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
     return NetworkIndicator(
         child: PageContainer(
             child: Scaffold(
+              key: _drawerKey,
       backgroundColor: whiteColor,
       body: SingleChildScrollView(
           child: Column(
@@ -110,6 +112,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                               ? Container()
                                               : singleCategoryProductItem(
                                         product: snapshot.data[index] ,
+                                        scafffoldKey: _drawerKey,
                                       );
 
                                     });

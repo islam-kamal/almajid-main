@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:almajidoud/Base/enumeration.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -54,11 +56,39 @@ class SharedPreferenceManager {
     sharedPreferences = await SharedPreferences.getInstance();
     return Future.value(sharedPreferences.getString(key.value) ?? "");
   }
+
+
+   Future setListOfMaps(List<Map> messages , String key) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    List<String> messagesString = [];
+    messages.forEach((element) {
+      messagesString.add(json.encode(element));
+    });
+    await sharedPreferences.setStringList(key, messagesString);
+  }
+
+   Future<List<Map>> getListOfMaps(String key) async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    List<String> messagesString =
+        sharedPreferences.getStringList(key) ?? [];
+    List<Map> messages = [];
+    if (messagesString.isNotEmpty) {
+      messagesString.forEach((element) {
+        messages.add(json.decode(element));
+      });
+    }
+    return messages;
+  }
+
 }
 
 class NotValidCacheTypeException implements Exception {
   String message() => "Not a valid cahing type";
 }
+
+
 
 class   CachingKey extends Enum<String> {
   const CachingKey(String val) : super(val);
@@ -74,12 +104,15 @@ class   CachingKey extends Enum<String> {
   static const CachingKey USER_NAME = const CachingKey('USER_NAME');
   static const CachingKey EMAIL = const CachingKey('EMAIL');
   static const CachingKey MOBILE_NUMBER = const CachingKey('MOBILE_NUMBER');
+  static const CachingKey USER_COUNTRY_CODE = const CachingKey('USER_COUNTRY_CODE');
+
   static const CachingKey USER_CITY = const CachingKey('USER_CITY');
   static const CachingKey REGION_ID = const CachingKey('REGION_ID');
   static const CachingKey REGION_AR = const CachingKey('REGION_AR');
   static const CachingKey REGION_EN = const CachingKey('REGION_EN');
   static const CachingKey CHOSSED_ADDRESS_ID = const CachingKey('CHOSSED_ADDRESS_ID');
   static const CachingKey ORDER_ID = const CachingKey('ORDER_ID');
+  static const CachingKey CHOSSED_PAYMENT_METHOD = const CachingKey('CHOSSED_PAYMENT_METHOD');
 
 
   static const CachingKey FORGET_PASSWORD_PHONE = const CachingKey('FORGET_PASSWORD_PHONE');

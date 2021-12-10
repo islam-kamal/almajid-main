@@ -8,7 +8,8 @@ nextButtonInPayment({BuildContext context, bool isAddress: true , GuestShipmentA
     onTap: () {
       customAnimatedPushNavigation(context , CheckoutSummaryScreen(
         guestShipmentAddressModel: guestShipmentAddressModel,
-      ));
+      )
+      );
     },
     child: Container(
         width: width(context) * .8,

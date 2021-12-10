@@ -33,12 +33,12 @@ class CartRepository {
         sharedPreferenceManager.writeData(CachingKey.CART_QUOTE, response.data.toString());
       } else {
         print("create_quote 5");
-        errorDialog(context: context, text: response.data['message']);
+        //errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
       print("create_quote 6");
       print("error : ${e.toString()}");
-      errorDialog(context: context, text: e.toString());
+   //   errorDialog(context: context, text: e.toString());
     }
 
   }

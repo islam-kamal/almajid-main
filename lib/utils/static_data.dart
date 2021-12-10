@@ -1,5 +1,5 @@
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
-import 'package:almajidoud/Model/ShipmentAddressModel/client/saved_addresses_model.dart';
+import 'package:almajidoud/Model/ShipmentAddressModel/client/address_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -12,11 +12,12 @@ class StaticData {
   static String order_status = 'accepted';
   static int user_wallet_earnings = 0;
   static String user_mobile_number = '';
+  static int saved_addresses_count;
+  static bool chosse_address_status = false;
 
   static int product_qty = 1;
- static Future<List<SavedAddressesModel>> saved_addresses;
- static int saved_addresses_count;
- static bool new_address_status = false;
+ static Future<List<AddressModel>> saved_addresses;
+
 
 
 

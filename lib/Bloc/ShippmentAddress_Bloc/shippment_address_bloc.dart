@@ -1,5 +1,6 @@
 import 'package:rxdart/rxdart.dart';
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:almajidoud/Model/ShipmentAddressModel/client/address_model.dart';
 import 'package:almajidoud/Repository/ShippmentAdressRepo/shipment_address_repository.dart';
 class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
   ShipmentAddressBloc(AppState initialState) : super(initialState);
@@ -19,39 +20,32 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
 
   Stream<String> get frist_name => frist_name_controller.stream.transform(input_text_validator);
   Stream<String> get last_name => last_name_controller.stream.transform(input_text_validator);
-  Stream<String> get  email =>  email_controller.stream.transform(input_text_validator);
-  Stream<String> get  phone =>  phone_controller.stream.transform(input_number_validator);
+  Stream<String> get  email =>  email_controller.stream.transform(email_validator);
+  Stream<String> get  phone =>  phone_controller.stream.transform(phone_validator);
   Stream<String> get  street =>  street_controller.stream.transform(input_text_validator);
 
 
-
-
-
-
-
-
-  /* void get_addresses_list() async{
-    var response =await address_repository.getAddressList();
-    print('------------(response)---- : ${response}');
-    _address_list_subject.sink.add(response);
-  }*/
+  BehaviorSubject<AddressModel> _address_details_subject = new BehaviorSubject<AddressModel>();
+  get address_details_subject{
+    return _address_details_subject;
+  }
 
   @override
   Stream<AppState> mapEventToState(AppEvent event) async*{
     if(event is GuestAddAdressEvent){
-      yield Loading(model: null);
+      yield Loading(model: null,indicator: 'GuestAddAdress');
       var response = await shipmentAddressRepository.add_addresses(
         context: event.context
       );
       print("shippment response : $response");
       if(response.message == null){
-        yield Done(model:response);
+        yield Done(model:response,indicator: 'GuestAddAdress');
       }else {
-        yield ErrorLoading(model: response);
+        yield ErrorLoading(model: response,indicator: 'GuestAddAdress');
       }
     }
     else if(event is AddNewAdressEvent){
-      yield Loading(model: null);
+      yield Loading(model: null,indicator: 'AddNewAdress');
       var response = await shipmentAddressRepository.add_new_address(
           context: event.context
       );
@@ -60,6 +54,18 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
         yield Done(model:response,indicator: 'AddNewAdress');
       }else {
         yield ErrorLoading(model: response,indicator: 'AddNewAdress');
+      }
+    }
+    else if(event is AddressDetailsEvent){
+      yield Loading();
+      var response = await shipmentAddressRepository.get_addresss_details(
+        address_id: event.address_id
+      );
+      if(response.message == null){
+        _address_details_subject.sink.add(response);
+        yield Done(model: response, indicator: 'address_detials');
+      }else{
+        yield ErrorLoading(model: response, indicator: 'address_detials');
       }
     }
   }

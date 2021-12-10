@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'dart:math';
 
+import 'package:almajidoud/Repository/AuthenticationRepo/authentication_repository.dart';
+import 'package:almajidoud/utils/file_export.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
 
@@ -18,11 +20,23 @@ mixin Validator {
   );
 
   var phone_validator = StreamTransformer<String,String>.fromHandlers(
-      handleData: (phone,sink){
-        if (phone.length <10) {
-          sink.addError(translator.translate("mobile number is incorrect!"));
-        } else {
-          sink.add(phone);
+      handleData: (phone,sink)async{
+        var user_phone;
+        //    Pattern pattern = r'^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$';
+        Pattern pattern = r'^(05)(0|3|4|5|6|7|8|9)([0-9]{7})?$';
+
+        RegExp regex = new RegExp(pattern);
+        if (!regex.hasMatch(phone))
+          sink.addError(translator.translate("phone is incorrect!"));
+       else {
+         if(await sharedPreferenceManager.readString(CachingKey.USER_COUNTRY_CODE) == "SA"){
+           user_phone =  phone.substring(1);
+           sink.add("00966"+phone);
+         }else{
+           sink.add("00965"+phone);
+         }
+
+
         }
       }
   );
