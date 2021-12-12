@@ -901,8 +901,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       buttonController: _loginButtonController.view,
       btn_width: width(context) * .7,
       onTap: () {
+        StaticData.order_address = addres_city_name + " , " //use this to show address in CheckoutSummaryScreen
+            "${shipmentAddressBloc.street_controller.value == null? street : shipmentAddressBloc.street_controller.value }" ;
         shipmentAddressBloc.add(
-          /*  StaticData.vistor_value != 'visitor' ? AddNewAdressEvent(context: context) : */
             GuestAddAdressEvent(context: context)
         );
       },

@@ -3,11 +3,13 @@ import 'package:almajidoud/custom_widgets/custom_animated_push_navigation.dart';
 import 'package:almajidoud/screens/checkout/checkout_summary_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-nextButtonInPayment({BuildContext context, bool isAddress: true , GuestShipmentAddressModel guestShipmentAddressModel}) {
+nextButtonInPayment({BuildContext context, bool isAddress: true ,
+  GuestShipmentAddressModel guestShipmentAddressModel , var pay_method}) {
   return GestureDetector(
     onTap: () {
       customAnimatedPushNavigation(context , CheckoutSummaryScreen(
         guestShipmentAddressModel: guestShipmentAddressModel,
+        payment_method: pay_method,
       )
       );
     },

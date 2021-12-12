@@ -31,7 +31,7 @@ singleOrderSummaryItem(
                   ) : Icon(Icons.location_on , color: mainColor),
 
                   SizedBox(width: width(context)*.02,),
-                 Container(width: width(context)*.35,
+                 Container(width: width(context)*.55,
                      child:  customDescriptionText(
                    context: context,
                    textAlign: TextAlign.start,

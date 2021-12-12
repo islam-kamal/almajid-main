@@ -70,6 +70,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                 responsiveSizedBox(context: context, percentageOfHeight: .05),
                 nextButtonInPayment(context: context ,
                     isAddress: false,
+                    pay_method: _currentIndex,
                     guestShipmentAddressModel: widget.guestShipmentAddressModel)
               ],
             ),
@@ -94,7 +95,9 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
           itemCount: paymentMethods.length,
           itemBuilder:
               (BuildContext context, int index) {
-
+            if(index == 0){
+              sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, paymentMethods[index].code);
+            }
             return Directionality(
               textDirection: TextDirection.ltr,
               child: Container(

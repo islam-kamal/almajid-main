@@ -194,5 +194,8 @@
   "phone is incorrect!" : "رقم الهاتف غير صحيح",
   "Empty menu !" : "قائمة فارغة!",
   "Looks like you have not made your orders yet !" :    "يبدو أنك لم تصدر أوامرك بعد!",
-  "Back to Home" :  "العودة إلى الصفحة الرئيسية"
+  "Back to Home" :  "العودة إلى الصفحة الرئيسية",
+  "Back to Sign In Page" : "العودة إلى صفحة تسجيل الدخول",
+  "your order created successfully with this number" :"تم إنشاء طلبك بنجاح بهذا الرقم",
+  "Ok" : "حسنا"
 }

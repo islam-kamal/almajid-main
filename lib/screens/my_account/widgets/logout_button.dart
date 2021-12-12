@@ -1,5 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/my_account/widgets/logout_dialog.dart';
+import 'package:almajidoud/screens/orders/order_sucessful_dialog.dart';
 logoutButton({BuildContext context }){
   return  Container(width: width(context)*.8,child:
   GestureDetector(onTap: ()async{
@@ -7,13 +8,10 @@ logoutButton({BuildContext context }){
     await sharedPreferenceManager.readString(CachingKey.USER_NAME).then((value){
       user_name = value;
     });
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
        return LogoutDialog(
         name: user_name,
       );
-    });
+
   },
     child: Column(
       children: [

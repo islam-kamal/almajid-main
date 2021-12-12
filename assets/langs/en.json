@@ -192,7 +192,10 @@
   "phone is incorrect!" : "phone is incorrect!",
   "Empty menu !" :   "Empty menu !",
   "Looks like you have not made your orders yet !" :    "Looks like you have not made your orders yet !" ,
-  "Back to Home" :  "Back to Home"
+  "Back to Home" :  "Back to Home",
+  "Back to Sign In Page" : "Back to Sign In Page",
+  "your order created successfully with this number" : "your order created successfully with this number",
+  "Ok" : "Ok"
 }
 
 

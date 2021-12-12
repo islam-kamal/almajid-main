@@ -1,4 +1,5 @@
 import 'package:almajidoud/Bloc/Order_Bloc/order_bloc.dart';
+import 'package:almajidoud/Bloc/ShippmentAddress_Bloc/shippment_address_bloc.dart';
 import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
@@ -10,10 +11,11 @@ import 'package:almajidoud/screens/checkout/widgets/single_product_summary_card.
 import 'package:almajidoud/screens/checkout/widgets/top_page_indicator.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
-
+import 'package:almajidoud/screens/orders/order_sucessful_dialog.dart';
 class CheckoutSummaryScreen extends StatefulWidget{
   GuestShipmentAddressModel guestShipmentAddressModel;
-  CheckoutSummaryScreen({this.guestShipmentAddressModel});
+  var payment_method ;
+  CheckoutSummaryScreen({this.guestShipmentAddressModel,this.payment_method = ''});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -27,13 +29,12 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
 
   AnimationController _loginButtonController;
   bool isLoading = false;
-
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     _loginButtonController = AnimationController(
         duration: const Duration(milliseconds: 3000), vsync: this);
+    super.initState();
+
   }
 
   Future<Null> _playAnimation() async {
@@ -60,7 +61,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
 
   @override
   void dispose() {
-    // TODO: implement dispose
+
     _loginButtonController.dispose();
     super.dispose();
   }
@@ -77,81 +78,57 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
         bloc: orderBloc,
         listener: (context,state){
       if (state is Loading) {
-        print("Loading");
-        _playAnimation();
-      } else if (state is ErrorLoading) {
-        print("ErrorLoading");
-        _stopAnimation();
+        if(state.indicator == 'CreateOrder'){
+          print("Loading");
+          _playAnimation();
+        }
 
-        Flushbar(
-          messageText: Row(
-            children: [
-              Container(
-                width: StaticData.get_width(context) * 0.7,
-                child: Wrap(
-                  children: [
-                    Text(
-                      'There is Error',
-                      textDirection: TextDirection.rtl,
-                      style: TextStyle(color: whiteColor),
-                    ),
-                  ],
-                ),
+      } else if (state is ErrorLoading) {
+    if(state.indicator == 'CreateOrder') {
+      print("ErrorLoading");
+      _stopAnimation();
+
+      Flushbar(
+        messageText: Row(
+          children: [
+            Container(
+              width: StaticData.get_width(context) * 0.7,
+              child: Wrap(
+                children: [
+                  Text(
+                    'There is Error',
+                    textDirection: TextDirection.rtl,
+                    style: TextStyle(color: whiteColor),
+                  ),
+                ],
               ),
-              Spacer(),
-              Text(
-                translator.translate("Try Again"),
-                textDirection: TextDirection.rtl,
-                style: TextStyle(color: whiteColor),
-              ),
-            ],
-          ),
-          flushbarPosition: FlushbarPosition.BOTTOM,
-          backgroundColor: redColor,
-          flushbarStyle: FlushbarStyle.FLOATING,
-          duration: Duration(seconds: 6),
-        )..show(_drawerKey.currentState.context);
+            ),
+            Spacer(),
+            Text(
+              translator.translate("Try Again"),
+              textDirection: TextDirection.rtl,
+              style: TextStyle(color: whiteColor),
+            ),
+          ],
+        ),
+        flushbarPosition: FlushbarPosition.BOTTOM,
+        backgroundColor: redColor,
+        flushbarStyle: FlushbarStyle.FLOATING,
+        duration: Duration(seconds: 6),
+      )
+        ..show(_drawerKey.currentState.context);
+    }
       } else if (state is Done) {
-        print("done");
-        _stopAnimation();
-       if( StaticData.vistor_value == 'visitor') {
-         cartRepository.create_quote(context: context); // used to create new quote for guest
-         Navigator.pushReplacement(
-           context,
-           PageRouteBuilder(
-             pageBuilder: (context, animation1, animation2) {
-               return CustomCircleNavigationBar(
-               );
-             },
-             transitionsBuilder:
-                 (context, animation8, animation15, child) {
-               return FadeTransition(
-                 opacity: animation8,
-                 child: child,
-               );
-             },
-             transitionDuration: Duration(milliseconds: 100),
-           ),
-         );
-       }else{
-         Navigator.pushReplacement(
-           context,
-           PageRouteBuilder(
-             pageBuilder: (context, animation1, animation2) {
-               return OrdersScreen(
-               );
-             },
-             transitionsBuilder:
-                 (context, animation8, animation15, child) {
-               return FadeTransition(
-                 opacity: animation8,
-                 child: child,
-               );
-             },
-             transitionDuration: Duration(milliseconds: 100),
-           ),
-         );
-       }
+    if(state.indicator == 'CreateOrder') {
+      print("done");
+      _stopAnimation();
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return OrderSuccessfulDialog(
+            );
+          });
+    }
       }
     },
     child: Column(
@@ -197,7 +174,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
                 context: context,
                 isAddress: true,
                 title: "Address",
-                details: "Lorim"),
+                details: StaticData.order_address),
             Container(
                 width: width(context) * .9,
                 child: Divider(
@@ -206,7 +183,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
             singleOrderSummaryItem(
                 context: context,
                 title: "Payment",
-                details: "Credit Card \n *******"),
+                details: "${widget.payment_method} "),
             Container(
                 width: width(context) * .9,
                 child: Divider(
@@ -239,5 +216,6 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
       },
     );
   }
+
 
 }

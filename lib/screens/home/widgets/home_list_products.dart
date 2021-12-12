@@ -8,7 +8,6 @@ import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigatio
 import 'package:almajidoud/screens/product_details/product_details_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-
 class HomeListProducts extends StatefulWidget {
   final String type;
   HomeListProducts({this.type});
@@ -34,8 +33,7 @@ class HomeListProductsState extends State<HomeListProducts> {
             var data = state.model as ProductModel;
             if (data.items == null || data.items.isEmpty) {
               return Container();
-            }
-            else {
+            } else {
               print("111111111111111");
 
               return StreamBuilder<List<product_model.Items>>(
@@ -66,9 +64,10 @@ class HomeListProductsState extends State<HomeListProducts> {
                                   child: GestureDetector(
                                     onTap: () {
                                       customAnimatedPushNavigation(
-                                          context, ProductDetailsScreen(
-                                         product: snapshot.data[index],
-                                      ));
+                                          context,
+                                          ProductDetailsScreen(
+                                            product: snapshot.data[index],
+                                          ));
                                     },
                                     child: Neumorphic(
                                       style: NeumorphicStyle(
@@ -103,7 +102,9 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                             image: NetworkImage(
                                                                 snapshot
                                                                     .data[index]
-                                                                    .customAttributes[0].value),
+                                                                    .customAttributes[
+                                                                        0]
+                                                                    .value),
                                                             fit: BoxFit.cover)),
                                                   ),
                                                   Container(
@@ -118,7 +119,9 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                               context: context,
                                                               textColor:
                                                                   mainColor,
-                                                              text: snapshot.data[index].name,
+                                                              text: snapshot
+                                                                  .data[index]
+                                                                  .name,
                                                               maxLines: 2,
                                                               percentageOfHeight:
                                                                   .017),
@@ -181,14 +184,18 @@ class HomeListProductsState extends State<HomeListProducts> {
                                               ),
 
                                               // ------------------ here ----------------------
-                                             CustomWishList(
+                                              CustomWishList(
                                                 color: redColor,
-                                                product_id: snapshot
-                                                    .data[index].id,
-                                                qty: snapshot.data[index].extensionAttributes.stockItem.qty,
+                                                product_id:
+                                                    snapshot.data[index].id,
+                                                qty: snapshot
+                                                    .data[index]
+                                                    .extensionAttributes
+                                                    .stockItem
+                                                    .qty,
                                                 context: context,
-                                               screen: CustomCircleNavigationBar(),
-
+                                                screen:
+                                                    CustomCircleNavigationBar(),
                                               ),
                                             ],
                                           ),

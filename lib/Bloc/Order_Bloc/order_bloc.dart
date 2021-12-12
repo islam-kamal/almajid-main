@@ -16,7 +16,7 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
   Stream<AppState> mapEventToState(AppEvent event) async* {
     if (event is CreateOrderEvent) {
       print("vistor type : ${StaticData.vistor_value }");
-      yield Loading();
+      yield Loading(indicator: 'CreateOrder');
      final response = await StaticData.vistor_value == 'visitor'?   orderRepository.create_guest_order(
         context: event.context,
       ) : orderRepository.create_client_order(
@@ -26,10 +26,10 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
 
       if (response == null) {
         print("create_order ErrorLoading");
-        yield ErrorLoading();
+        yield ErrorLoading(indicator: 'CreateOrder');
       } else {
         print("create_order Done");
-        yield Done();
+        yield Done(indicator: 'CreateOrder');
       }
     }
     else if (event is GetAllOrderEvent) {

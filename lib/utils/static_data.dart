@@ -14,6 +14,7 @@ class StaticData {
   static String user_mobile_number = '';
   static int saved_addresses_count;
   static bool chosse_address_status = false;
+  static String order_address = '';
 
   static int product_qty = 1;
  static Future<List<AddressModel>> saved_addresses;
