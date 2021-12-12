@@ -123,7 +123,6 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                         setState(() {
                           _currentIndex = val;
                           sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, paymentMethods[index].code);
-
                         });
 
 
