@@ -28,8 +28,12 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
         print("create_order ErrorLoading");
         yield ErrorLoading(indicator: 'CreateOrder');
       } else {
-        print("create_order Done");
-        yield Done(indicator: 'CreateOrder');
+        var order_id;
+      await  response.then((value){
+        order_id = value;
+        });
+      print("create_order Done");
+      yield Done(indicator: 'CreateOrder',general_value: order_id);
       }
     }
     else if (event is GetAllOrderEvent) {

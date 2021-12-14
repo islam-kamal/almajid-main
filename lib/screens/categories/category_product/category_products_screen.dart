@@ -1,3 +1,4 @@
+import 'package:almajidoud/Base/Shimmer/shimmer_notification.dart';
 import 'package:almajidoud/Bloc/Product_Bloc/product_bloc.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart' as product_model;
@@ -85,7 +86,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                   builder: (context, state) {
                     if (state is Loading) {
                       return Center(
-                        child: CircularProgressIndicator(),
+                        child: ShimmerNotification(),
                       );
                     } else if (state is Done) {
                       var data = state.model as ProductModel;
@@ -124,7 +125,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                               );
                             } else {
                               return Center(
-                                child: CircularProgressIndicator(),
+                                child: ShimmerNotification(),
                               );
                               ;
                             }

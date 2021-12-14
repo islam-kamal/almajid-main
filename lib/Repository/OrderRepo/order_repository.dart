@@ -14,7 +14,8 @@ class OrderRepository {
           "${Urls.BASE_URL}/index.php/rest/V1/guest-carts/${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/order",
           data: {
             "paymentMethod": {
-              "method": await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD),
+              //     "method": await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD),
+             "method":  'aps_fort_cc'
             }
           },
           options: Options(headers: Map<String, String>.from({})));
@@ -38,7 +39,8 @@ class OrderRepository {
           "${Urls.BASE_URL}/index.php/rest/V1/carts/mine/payment-information",
           data: {
             "paymentMethod": {
-              "method": await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD),
+              //    "method": await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD),
+            "method" : "aps_fort_cc"
             }
           },
           options: Options(headers: Map<String, String>.from({
@@ -63,7 +65,7 @@ class OrderRepository {
   Future<AllOrdersModel> get_all_orders({var user_email}) async{
     return NetworkUtil.internal().get(
         AllOrdersModel(),
-        Urls.BASE_URL + "/index.php/rest/V1/orders?searchCriteria[filter_groups][0][filters][0][field]=customer_email&searchCriteria[filter_groups][0][filters][0][value]=${user_email}&searchCriteria[filter_groups][0][filters][0][condition_type]=eq&searchCriteria[currentPage]=1&searchCriteria[pageSize]=20",
+        Urls.BASE_URL + "/index.php/rest/V1/orders?searchCriteria[filter_groups][0][filters][0][field]=customer_email&searchCriteria[filter_groups][0][filters][0][value]=${user_email}&searchCriteria[filter_groups][0][filters][0][condition_type]=eq&searchCriteria[currentPage]=1&searchCriteria[pageSize]=20&searchCriteria[sortOrders][0][field]=created_at&searchCriteria[sortOrders][0][direction]=DESC",
         headers:Map<String, String>.from({
       'Content-Type': 'application/json',
       'Accept': 'application/json',

@@ -16,6 +16,13 @@ class StaticData {
   static bool chosse_address_status = false;
   static String order_address = '';
 
+  //order payment
+  static String card_number = "";
+  static String card_holder_name =  "";
+  static String card_security_code = "";
+  static String expiry_date = "";
+
+
   static int product_qty = 1;
  static Future<List<AddressModel>> saved_addresses;
 

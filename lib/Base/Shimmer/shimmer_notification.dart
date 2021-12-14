@@ -4,7 +4,7 @@ import 'package:shimmer/shimmer.dart';
 
 class ShimmerNotification extends StatelessWidget {
 final int length;
-ShimmerNotification({this.length=3});
+ShimmerNotification({this.length=5});
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -16,12 +16,12 @@ ShimmerNotification({this.length=3});
           return Container(
             padding: EdgeInsets.all(StaticData.get_width(context) * 0.03),
             child: Shimmer.fromColors(
-                baseColor: greyColor,
+                baseColor: white_gray_color,
                 highlightColor: Colors.grey[350],
                 child
                     : Container(
                   decoration: BoxDecoration(
-                      color: greyColor,
+                      color: white_gray_color,
                       borderRadius: BorderRadius.circular(5.0)),
 
                   height: 100,

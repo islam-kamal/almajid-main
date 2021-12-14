@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:almajidoud/Bloc/Order_Bloc/order_bloc.dart';
 import 'package:almajidoud/Bloc/ShippmentAddress_Bloc/shippment_address_bloc.dart';
 import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
+import 'package:almajidoud/screens/checkout/Payment/Constants.dart';
+import 'package:almajidoud/screens/checkout/Payment/PaymentScreen.dart';
 import 'package:almajidoud/screens/checkout/widgets/checkout_header.dart';
 import 'package:almajidoud/screens/checkout/widgets/done_button.dart';
 import 'package:almajidoud/screens/checkout/widgets/order_summary_widget.dart';
@@ -12,6 +16,10 @@ import 'package:almajidoud/screens/checkout/widgets/top_page_indicator.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/orders/order_sucessful_dialog.dart';
+import 'package:http/http.dart' as http;
+import 'dart:io' show Platform;
+
+
 class CheckoutSummaryScreen extends StatefulWidget{
   GuestShipmentAddressModel guestShipmentAddressModel;
   var payment_method ;
@@ -83,9 +91,10 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
           _playAnimation();
         }
 
-      } else if (state is ErrorLoading) {
-    if(state.indicator == 'CreateOrder') {
-      print("ErrorLoading");
+      }
+      else if (state is ErrorLoading) {
+        if(state.indicator == 'CreateOrder') {
+          print("ErrorLoading");
       _stopAnimation();
 
       Flushbar(
@@ -118,16 +127,64 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
       )
         ..show(_drawerKey.currentState.context);
     }
-      } else if (state is Done) {
-    if(state.indicator == 'CreateOrder') {
+      }
+
+      else if (state is Done) {
+        if(state.indicator == 'CreateOrder') {
       print("done");
-      _stopAnimation();
-      showDialog(
+
+      var data = state.general_value;
+      final Future<http.Response> response = getPayFortSettings(
+        orderId: data
+      );
+      response.then((response) {
+               print(response.body);
+        final extractedData =
+        json.decode(response.body) as Map<String, dynamic>;
+        // if (extractedData["success"] && extractedData["payment_config"].length !=0) {
+        if (extractedData["success"]) {
+          final merchantIdentifier = extractedData["payment_config"]
+          ["params"]["merchant_identifier"];
+          final accessCode =
+          extractedData["payment_config"]["params"]["access_code"];
+          final merchantReference = extractedData["payment_config"]
+          ["params"]["merchant_reference"];
+          final language =
+          extractedData["payment_config"]["params"]["language"];
+          final serviceCommand = extractedData["payment_config"]
+          ["params"]["service_command"];
+          final returnUrl =
+          extractedData["payment_config"]["params"]["return_url"];
+          final signature =
+          extractedData["payment_config"]["params"]["signature"];
+          final url = extractedData["payment_config"]["url"];
+          final order_number = extractedData["increment_id"];
+          _stopAnimation();
+
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => PaymentScreen(
+                amount: widget.guestShipmentAddressModel.totals.baseGrandTotal.toString(),
+                merchantIdentifier: merchantIdentifier,
+                accessCode: accessCode,
+                merchantReference: merchantReference,
+                language: language,
+                serviceCommand: serviceCommand,
+                returnUrl: returnUrl,
+                signature: signature,
+                url: url,
+                order_number: order_number,
+              )));
+        } else {
+          print('order not found');
+        }
+      });
+
+     /* showDialog(
           context: context,
           builder: (BuildContext context) {
             return OrderSuccessfulDialog(
             );
-          });
+          });*/
     }
       }
     },
@@ -217,5 +274,25 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
     );
   }
 
+  Future<http.Response> getPayFortSettings({var orderId}) async {
+    //final url = '${ORDER_DATA['website_domain']}/rest/V1/mstore/update-order-type';
+    print("-----------------------orderId : ${orderId}");
+    try {
+      final Map<String, dynamic> data = {
+        "orderId": int.parse(orderId),
+        "type": Platform.isAndroid ? "mobile_android" : "mobile_ios"
+      };
+      final serializedData = json.encode(data);
+      final response = await http.post(Uri.parse(Urls.BASE_URL+"/index.php/rest/V1/mstore/update-order-type"),
+          headers: {
+            "content-type": "application/json",
+            "Authorization": 'Bearer ${Urls.ADMIN_TOKEN}'
+          },
+          body: serializedData);
+      return response;
+    } catch (error) {
+      throw (error);
+    }
+  }
 
 }

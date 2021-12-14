@@ -124,50 +124,6 @@ class singleCategoryProductItem extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                              /*    BlocListener(
-                                      bloc: shoppingCartBloc,
-                                      listener: (context,state){
-                                        if(state is Done){
-                                          customAnimatedPushNavigation(
-                                            context,
-                                            CustomCircleNavigationBar(page_index: 0,)
-                                          );
-                                        }else if( state is ErrorLoading ){
-                                          errorDialog(
-                                            context: context,
-                                            text: state.message
-                                          );
-                                        }
-                                      },
-                                  child: InkWell(
-                                    onTap: product.extensionAttributes.stockItem.isInStock == false ? (){} : () {
-                                      shoppingCartBloc.add(AddProductToCartEvent(
-                                          context: context,
-                                          product_quantity: product.extensionAttributes.stockItem.qty,
-                                          product_sku: product.sku));
-                                    },
-                                    child: Container(
-                                      width: width(context) * .4,
-                                      height: isLandscape(context)
-                                          ? 2 * height(context) * .035
-                                          : height(context) * .035,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(color: mainColor)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.shopping_cart_outlined),
-                                          SizedBox(width: width(context) * .02),
-                                          customDescriptionText(
-                                              context: context,
-                                              textColor: mainColor,
-                                              text: "Add to cart",
-                                              textAlign: TextAlign.start),
-                                        ],
-                                      ),
-                                    ),
-                                  ),),*/
                                   BlocListener<ShoppingCartBloc, AppState>(
                                     bloc: shoppingCartBloc,
                                     listener: (context, state) {

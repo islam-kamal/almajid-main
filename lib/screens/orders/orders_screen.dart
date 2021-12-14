@@ -1,4 +1,5 @@
 import 'package:almajidoud/Base/Shimmer/list_shimmer.dart';
+import 'package:almajidoud/Base/Shimmer/shimmer_notification.dart';
 import 'package:almajidoud/Bloc/Order_Bloc/order_bloc.dart';
 import 'package:almajidoud/Model/OrderMode/order_model.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
@@ -46,8 +47,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                             bloc: orderBloc,
                             builder: (context,state){
                               if(state is Loading){
-                                return ListShimmer(
-                                  type: 'horizontal',
+                                return ShimmerNotification(
                                 );
                               }else if(state is Done){
                                 return StreamBuilder<AllOrdersModel>(
@@ -56,16 +56,14 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                       switch (snapshot.connectionState) {
                                         case ConnectionState.none:
                                           print("1");
-                                          return ListShimmer(
-                                            type: 'horizontal',
+                                          return ShimmerNotification(
                                           );
                                         case ConnectionState.done:
                                           print("1");
                                           return Text('');
                                         case ConnectionState.waiting:
                                           print("2");
-                                          return ListShimmer(
-                                            type: 'horizontal',
+                                          return ShimmerNotification(
                                           );
                                         case ConnectionState.active:
                                           print("3");

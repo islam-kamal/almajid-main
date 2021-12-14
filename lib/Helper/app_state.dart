@@ -24,7 +24,8 @@ class Done extends AppState{
   Mappable model;
   final String indicator;
   List<dynamic> general_model;
-  Done({this.model , this.indicator,this.general_model});
+  var general_value;
+  Done({this.model , this.indicator,this.general_model, this.general_value});
 
   @override
   String toString() {

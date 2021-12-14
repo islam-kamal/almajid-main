@@ -65,6 +65,8 @@ dependencies:
   rating_bar:
   share:
   flutter_html:
+  flutter_credit_card: ^3.0.1
+  webview_flutter: ^2.0.13
 
 
 dev_dependencies:

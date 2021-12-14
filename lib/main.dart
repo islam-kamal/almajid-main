@@ -1,6 +1,8 @@
 
 import 'package:almajidoud/Base/Shimmer/list_shimmer.dart';
+import 'package:almajidoud/screens/checkout/Payment/main.dart';
 import 'package:almajidoud/screens/checkout/checkout_address_screen.dart';
+import 'package:almajidoud/screens/checkout/checkout_payment_screen.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 void main() async {

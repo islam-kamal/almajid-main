@@ -75,6 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             HomeListProducts(
                               type: "New Arrivals",
+                              homeScaffoldKey: _drawerKey,
                             ),
 
 
@@ -93,6 +94,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             HomeListProducts(
                               type: "best-seller",
+                              homeScaffoldKey: _drawerKey,
+
                             ),
 
                           ],
