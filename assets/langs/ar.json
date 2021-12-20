@@ -59,6 +59,7 @@
   "Total To Pay": "إجمالي ما سيتم دفعه",
   "Done": "تم",
   "new address added sucessfuly" : "تم اضافة العنوان الجديد بنجاح",
+  "Please enter" : "برجاء ادخال",
   "-------------------Location-----------------": "---------------------------------",
   "Location": "الموقع",
   "Type here to search": "اكتب هنا للبحث",
@@ -79,11 +80,12 @@
   "Re_type The New Password": "أعد كتابة كلمة المرور الجيدة",
   "Sign In": "تسجيل الدخول",
   "Sign Up": "التسجيل",
+  "!Continue Using Phone Number" : "! تسجيل الدخول باستخدام رقم الهاتف",
   "Email": "البريد الإلكتروني",
   "Password": "كلمة المرور",
   "Forget Password ?": "نسيت كلمة المرور",
-  "Don't have an account": "ليس لديك حساب",
-  "Already have an account": "لديك حساباً بالفعل",
+  "Don't have an account ?": "ليس لديك حساب؟",
+  "Already have an account?": "لديك حساباً بالفعل؟",
   "First Name": "الإسم الأول",
   "Last Name": "اسم العائلة",
   "Phone": "رقم الجوال",
@@ -120,6 +122,7 @@
   "No Notifications Yet": "لا يوجد إشعارات بعد !",
   "Tap the button to refresh and check again": "إضغط على الزر لإعادة التحميل وحاول مرة أخرى ",
   "Refresh": "تحديث",
+  "Frist Name" : "الأسم الاول",
   "-------------------Settings-----------------": "---------------------------------",
   "Enable Location": "تفعيل الموقع",
   "Enable Notifications": "تفعيل الإشعارات",
@@ -197,5 +200,6 @@
   "Back to Home" :  "العودة إلى الصفحة الرئيسية",
   "Back to Sign In Page" : "العودة إلى صفحة تسجيل الدخول",
   "your order created successfully with this number" :"تم إنشاء طلبك بنجاح بهذا الرقم",
-  "Ok" : "حسنا"
+  "Ok" : "حسنا",
+  "input is incorrect" : "البيانات المدخلة غير صحيح"
 }

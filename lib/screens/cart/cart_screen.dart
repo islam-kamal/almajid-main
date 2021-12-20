@@ -41,10 +41,10 @@ class _CartScreenState extends State<CartScreen> {
                     child: Column(
                   children: [
                     responsiveSizedBox(
-                        context: context, percentageOfHeight: .080),
+                        context: context, percentageOfHeight: .055),
                     HomeSlider(gallery: StaticData.images),
                     responsiveSizedBox(
-                        context: context, percentageOfHeight: .02),
+                        context: context, percentageOfHeight: .04),
                     BlocBuilder(
                       bloc: shoppingCartBloc,
                       builder: (context, state) {
@@ -123,7 +123,7 @@ class _CartScreenState extends State<CartScreen> {
                                                   context: context,
                                                   textColor: mainColor,
                                                   text:
-                                                  " ${data.baseGrandTotal.toString()} ${translator.translate("SAR")} ",
+                                                  " ${snapshot.data.baseGrandTotal.toString()} ${translator.translate("SAR")} ",
                                                   percentageOfHeight: .03,
                                                   fontWeight: FontWeight.bold),
                                               responsiveSizedBox(

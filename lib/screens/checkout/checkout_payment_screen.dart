@@ -1,6 +1,6 @@
 import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
-import 'package:almajidoud/screens/checkout/Payment/Constants.dart';
+import 'package:almajidoud/screens/Payment/Constants.dart';
 import 'package:almajidoud/screens/checkout/checkout_summary_screen.dart';
 import 'package:almajidoud/screens/checkout/widgets/checkout_header.dart';
 import 'package:almajidoud/screens/checkout/widgets/next_button_in_payment.dart';
@@ -42,6 +42,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
   @override
   void initState() {
     _currentIndex = widget.guestShipmentAddressModel.paymentMethods[0].code;
+    sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, _currentIndex);
     border = OutlineInputBorder(
       borderSide: BorderSide(
         color: Colors.grey.withOpacity(0.7),
@@ -69,99 +70,112 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                 paymentMethodCard(
                     context: context,
                 paymentMethods: widget.guestShipmentAddressModel.paymentMethods) ,
-                CreditCardWidget(
-                  glassmorphismConfig:
-                  useGlassMorphism ? Glassmorphism.defaultConfig() : null,
-                  cardNumber: cardNumber,
-                  expiryDate: expiryDate,
-                  cardHolderName: cardHolderName,
-                  cvvCode: cvvCode,
-                  showBackView: isCvvFocused,
-                  height: width(context) * 0.5,
-                  obscureCardNumber: false,
-                  obscureCardCvv: true,
-                  isHolderNameVisible: false,
-                  cardBgColor: greyColor,
-                  backgroundImage:
-                  useBackgroundImage ? 'assets/card_bg.png' : null,
-                  isSwipeGestureEnabled: true,
-                  onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
-                  customCardTypeIcons: <CustomCardTypeIcon>[
-                    CustomCardTypeIcon(
-                      cardType: CardType.mastercard,
-                      cardImage: Image.asset(
-                        'assets/mastercard.png',
-                        height: 48,
-                        width: 48,
+                _currentIndex == "stc_pay" ? Container() :     Column(
+                  children: [
+                    CreditCardWidget(
+                      glassmorphismConfig:
+                      useGlassMorphism ? Glassmorphism.defaultConfig() : null,
+                      cardNumber: cardNumber,
+                      expiryDate: expiryDate,
+                      cardHolderName: cardHolderName,
+                      cvvCode: cvvCode,
+                      showBackView: isCvvFocused,
+                      height: width(context) * 0.5,
+                      obscureCardNumber: false,
+                      obscureCardCvv: true,
+                      isHolderNameVisible: false,
+                      cardBgColor: greyColor,
+                      backgroundImage:
+                      useBackgroundImage ? 'assets/card_bg.png' : null,
+                      isSwipeGestureEnabled: true,
+                      onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
+                      customCardTypeIcons: <CustomCardTypeIcon>[
+                        CustomCardTypeIcon(
+                          cardType: CardType.mastercard,
+                          cardImage: Image.asset(
+                            'assets/mastercard.png',
+                            height: 48,
+                            width: 48,
+                          ),
+                        ),
+                      ],
+                    ),
+                    CreditCardForm(
+                      formKey: formKey,
+                      obscureCvv: true,
+                      obscureNumber: true,
+                      cardNumber: cardNumber,
+                      cvvCode: cvvCode,
+                      isHolderNameVisible: true,
+                      isCardNumberVisible: true,
+                      isExpiryDateVisible: true,
+                      cardHolderName: cardHolderName,
+                      expiryDate: expiryDate,
+                      themeColor: Colors.blue,
+                      textColor: mainColor,
+                      cardNumberDecoration: InputDecoration(
+                        labelText: 'Number',
+                        hintText: 'XXXX XXXX XXXX XXXX',
+                        hintStyle: const TextStyle(color: greyColor),
+                        labelStyle: const TextStyle(color: mainColor),
+                        focusedBorder: border,
+                        enabledBorder: border,
                       ),
+                      expiryDateDecoration: InputDecoration(
+                        hintStyle: const TextStyle(color: greyColor),
+                        labelStyle: const TextStyle(color: mainColor),
+                        focusedBorder: border,
+                        enabledBorder: border,
+                        labelText: 'Expired Date',
+                        hintText: 'XX/XX',
+                      ),
+                      cvvCodeDecoration: InputDecoration(
+                        hintStyle: const TextStyle(color: greyColor),
+                        labelStyle: const TextStyle(color: mainColor),
+                        focusedBorder: border,
+                        enabledBorder: border,
+                        labelText: 'CVV',
+                        hintText: 'XXX',
+                      ),
+                      cardHolderDecoration: InputDecoration(
+                        hintStyle: const TextStyle(color: greyColor),
+                        labelStyle: const TextStyle(color: mainColor),
+                        focusedBorder: border,
+                        enabledBorder: border,
+                        labelText: 'Card Holder',
+                      ),
+                      onCreditCardModelChange: onCreditCardModelChange,
                     ),
                   ],
                 ),
-                CreditCardForm(
-                  formKey: formKey,
-                  obscureCvv: true,
-                  obscureNumber: true,
-                  cardNumber: cardNumber,
-                  cvvCode: cvvCode,
-                  isHolderNameVisible: true,
-                  isCardNumberVisible: true,
-                  isExpiryDateVisible: true,
-                  cardHolderName: cardHolderName,
-                  expiryDate: expiryDate,
-                  themeColor: Colors.blue,
-                  textColor: mainColor,
-                  cardNumberDecoration: InputDecoration(
-                    labelText: 'Number',
-                    hintText: 'XXXX XXXX XXXX XXXX',
-                    hintStyle: const TextStyle(color: greyColor),
-                    labelStyle: const TextStyle(color: mainColor),
-                    focusedBorder: border,
-                    enabledBorder: border,
-                  ),
-                  expiryDateDecoration: InputDecoration(
-                    hintStyle: const TextStyle(color: greyColor),
-                    labelStyle: const TextStyle(color: mainColor),
-                    focusedBorder: border,
-                    enabledBorder: border,
-                    labelText: 'Expired Date',
-                    hintText: 'XX/XX',
-                  ),
-                  cvvCodeDecoration: InputDecoration(
-                    hintStyle: const TextStyle(color: greyColor),
-                    labelStyle: const TextStyle(color: mainColor),
-                    focusedBorder: border,
-                    enabledBorder: border,
-                    labelText: 'CVV',
-                    hintText: 'XXX',
-                  ),
-                  cardHolderDecoration: InputDecoration(
-                    hintStyle: const TextStyle(color: greyColor),
-                    labelStyle: const TextStyle(color: mainColor),
-                    focusedBorder: border,
-                    enabledBorder: border,
-                    labelText: 'Card Holder',
-                  ),
-                  onCreditCardModelChange: onCreditCardModelChange,
-                ),
 
 
-                responsiveSizedBox(context: context, percentageOfHeight: .05),
+
+                responsiveSizedBox(context: context, percentageOfHeight:_currentIndex == "stc_pay" ? 0.3 : .05),
                 GestureDetector(
                   onTap: () {
+                  if(_currentIndex == "stc_pay") {
+                      customAnimatedPushNavigation(context , CheckoutSummaryScreen(
+                        guestShipmentAddressModel: widget.guestShipmentAddressModel,
+                        payment_method: _currentIndex,
+                      ));
+                    }else{
                     if (formKey.currentState.validate()) {
                       print('valid!');
-                      StaticData.card_number = cardNumber;
+                      StaticData.card_number = cardNumber.replaceAll(' ', '');
                       StaticData.card_holder_name = cardHolderName;
                       StaticData.card_security_code = cvvCode;
-                      StaticData.expiry_date = expiryDate;
+                      StaticData.expiry_date = expiryDate[3] + expiryDate[4] + expiryDate[0] + expiryDate[1];
                       customAnimatedPushNavigation(context , CheckoutSummaryScreen(
                         guestShipmentAddressModel: widget.guestShipmentAddressModel,
                         payment_method: _currentIndex,
                       )
                       );
 
-                    } else {
+                    }else{
                       print('invalid!');
+                    }
+
                     }
 
                   },
@@ -203,7 +217,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
         padding: EdgeInsets.only(
             right: width(context) * .05, left: width(context) * .05),
         width: width(context) * .95,
-        height: width(context) * .4,
+        height: width(context) * .5,
         decoration: BoxDecoration(color: mainColor, borderRadius: BorderRadius.circular(20)),
         child: GridView.builder(
           //scrollDirection: Axis.vertical,
@@ -215,9 +229,6 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
           ),
           itemBuilder:
               (BuildContext context, int index) {
-            if(index == 0){
-              sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, paymentMethods[index].code);
-            }
             return Directionality(
               textDirection: TextDirection.ltr,
               child: Container(
@@ -243,7 +254,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                               "${paymentMethods[index].title} ",
                               maxLines: 2,
                               style: TextStyle(
-                                fontSize: AlmajedFont.secondary_font_size,color: mainColor,
+                                fontSize: AlmajedFont.secondary_font_size,color: mainColor,fontWeight: FontWeight.w300
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -256,8 +267,10 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       activeColor: Colors.blue,
                       onChanged: (val) {
                         setState(() {
-                          _currentIndex = val;
                           sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, paymentMethods[index].code);
+
+                          _currentIndex = val;
+                          print("_currentIndex : ${_currentIndex}");
                         });
 
 

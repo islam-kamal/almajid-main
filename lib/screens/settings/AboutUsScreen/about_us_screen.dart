@@ -15,7 +15,7 @@ class AboutUsScreen extends StatelessWidget {
                 children: [
                   ScreenAppBar(
                     right_icon: 'cart',
-                    category_name: translator.translate("My Orders" ),
+                    category_name: translator.translate("About Us" ),
                     screen: SettingsScreen(),
                   ),
                   Expanded(child: Container(

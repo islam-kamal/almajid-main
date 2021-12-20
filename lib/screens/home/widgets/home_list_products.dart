@@ -169,7 +169,7 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                               ),
                                                               BlocListener<ShoppingCartBloc, AppState>(
                                                                   bloc: shoppingCartBloc,
-                                                                  listener: (context, state) {
+                                                                  listener: (context, state) async {
                                                                     if (state is Loading) {
                                                                       if(state.indicator == 'home_add_to_cart')
                                                                         print("Loading");
@@ -243,7 +243,7 @@ class HomeListProductsState extends State<HomeListProducts> {
 
                                                                     } else if (state is Done)
                                                                       if(state.indicator == 'home_add_to_cart') {
-                                                                        print("------------- done-------------------");
+                                                                        var data = state.model as AddCartModel;
                                                                         customAnimatedPushNavigation(context,translator.activeLanguageCode == 'ar' ?  CustomCircleNavigationBar(
                                                                           page_index: 4,
                                                                         ): CustomCircleNavigationBar(
@@ -253,18 +253,10 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                   },
                                                                   child:InkWell(
                                                                     onTap: snapshot.data[index].extensionAttributes.stockItem.isInStock == false ? (){} : () {
-                                                             /*         showDialog(
-                                                                        context: context,
-                                                                        builder: (BuildContext context) {
-                                                                          return chosse_product_quantity(
-                                                                            prod_sku: snapshot.data[index].sku
-                                                                          );
-
-                                                                        },
-                                                                      );*/
                                                                       shoppingCartBloc.add(AddProductToCartEvent(
                                                                           context: context,
                                                                           product_quantity: 1,
+
                                                                           product_sku: snapshot.data[index].sku,
                                                                           indictor: 'home_add_to_cart'));
 
@@ -510,32 +502,4 @@ class MyShareButton extends StatelessWidget {
   }
 }
 
-class MyCarButton extends StatelessWidget {
-  final String data ;
-  const MyCarButton({
-    Key key,
-    this.data
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      child:   Icon(
-        Icons
-            .shopping_cart_outlined,
-        color:
-        mainColor,
-      ),
-      onTap: () {
-        final RenderBox box =
-        context.findRenderObject();
-        Share.share('${data}',
-            subject: 'Welcome To Amajed Oud',
-            sharePositionOrigin:
-            box.localToGlobal(Offset.zero) &
-            box.size);
-      },
-    );
-  }
-
-}

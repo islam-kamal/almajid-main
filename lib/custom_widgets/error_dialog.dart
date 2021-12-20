@@ -10,7 +10,7 @@ void errorDialog({BuildContext context, String text, Function function}) {
         return CupertinoAlertDialog(
           content: SingleChildScrollView(
             child: Container(
-              height: MediaQuery.of(context).size.width / 1.8,
+              height: MediaQuery.of(context).size.width / 1.5,
               width: MediaQuery.of(context).size.width / 2,
               child: Center(
                 child: Column(
@@ -19,6 +19,7 @@ void errorDialog({BuildContext context, String text, Function function}) {
                   children: <Widget>[
                     Text(
                       text ?? "",
+                      maxLines:3 ,
                       style: TextStyle(
                           color: blackColor,
                           fontFamily: "Cairo",

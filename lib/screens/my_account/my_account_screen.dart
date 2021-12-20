@@ -94,7 +94,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         context: context,
                         iconPath: "assets/icons/star solid.png",
                         text: "Rate Us On Google Play"),
-                    logoutButton(context: context),
+               StaticData.vistor_value == 'visitor' ? logButton(context: context, type: "Sign In")
+                   :     logButton(context: context, type: "Logout"),
                     responsiveSizedBox(
                         context: context, percentageOfHeight: .11),
                   ],

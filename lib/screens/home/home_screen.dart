@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            responsiveSizedBox(context: context, percentageOfHeight: .1),
+                            responsiveSizedBox(context: context, percentageOfHeight: .11),
                             titleText(context: context, text: "Shop By Category"),
                             responsiveSizedBox(context: context, percentageOfHeight: .02),
                             CategoriesButtons(),
@@ -78,13 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               homeScaffoldKey: _drawerKey,
                             ),
 
-
-
-                       /*     responsiveSizedBox(
-                                context: context, percentageOfHeight: .02),
-                            HomeSlider(
-                                gallery:StaticData.images
-                            ),*/
                             responsiveSizedBox(context: context, percentageOfHeight: .03),
                             titleText(context: context,
                                 text: translator.activeLanguageCode == 'ar' ? StaticData.data['best-seller']['arabic-title'] :

@@ -1,6 +1,6 @@
 import 'package:almajidoud/Base/network-mappers.dart';
 import 'package:almajidoud/Base/shared_preference_manger.dart';
-import 'package:almajidoud/Base/urls.dart';
+import 'package:almajidoud/utils/urls.dart';
 import 'package:dio/dio.dart';
 
 class NetworkUtil {

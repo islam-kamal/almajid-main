@@ -29,7 +29,7 @@ mixin Validator {
         if (!regex.hasMatch(phone))
           sink.addError(translator.translate("phone is incorrect!"));
        else {
-         if(await sharedPreferenceManager.readString(CachingKey.USER_COUNTRY_CODE) == "SA"){
+         if(await sharedPreferenceManager.readString(CachingKey.USER_COUNTRY_CODE) == "sa"){
            user_phone =  phone.substring(1);
            sink.add("00966"+phone);
          }else{
@@ -101,7 +101,7 @@ mixin Validator {
   var input_text_validator = StreamTransformer<String,String>.fromHandlers(
       handleData: (text,sink){
         if(text.length < 3){
-          sink.addError('البيانات المدخلة غير صحيح');
+          sink.addError(translator.translate("input is incorrect"));
         }else{
           sink.add(text);
         }

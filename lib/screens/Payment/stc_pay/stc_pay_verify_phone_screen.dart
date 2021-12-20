@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:almajidoud/Bloc/Order_Bloc/order_bloc.dart';
+import 'package:almajidoud/Repository/PaymentRepo/stc_pay_repository.dart';
 import 'package:almajidoud/custom_widgets/custom_push_named_navigation.dart';
 import 'package:almajidoud/screens/auth/get_started_screen.dart';
 import 'package:almajidoud/screens/auth/reset_password_screen.dart';
@@ -15,28 +16,26 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:http/http.dart' as http;
 
-class VerificationCodeScreen extends StatefulWidget {
-  final String email;
-  final String newEmail;
-  final bool isGuestCheckOut;
+class StcVerificationCodeScreen extends StatefulWidget {
   final String user_phone;
   final String route;
-
-  const VerificationCodeScreen({
-    Key key,
-    @required this.email,
-    this.newEmail = "",
-    this.isGuestCheckOut,
-    this.user_phone,
-    this.route,
-  }) : super(key: key);
+  final String OtpReference;
+  final String paymentReference;
+  const StcVerificationCodeScreen(
+      {Key key,
+      this.user_phone,
+      this.route,
+      this.OtpReference,
+      this.paymentReference})
+      : super(key: key);
 
   @override
   _OtpState createState() => new _OtpState();
 }
 
-class _OtpState extends State<VerificationCodeScreen>
+class _OtpState extends State<StcVerificationCodeScreen>
     with SingleTickerProviderStateMixin {
   // Constants
   var otp_code;
@@ -531,63 +530,64 @@ class _OtpState extends State<VerificationCodeScreen>
       onTap: otp_code == null
           ? () {}
           : () {
-              forgetPassword_bloc
-                  .add(checkOtpClick(otp_code: otp_code, route: widget.route));
-            },
-      child: BlocListener(
-          bloc: widget.route == 'StcPayPhoneScreen'
-              ? orderBloc
-              : forgetPassword_bloc,
-          listener: (context, state) async {
-            var data = state.model as AuthenticationModel;
-            if (state is Loading) {
-              if (state.indicator == 'checkOtpClick') {
-                _playAnimation();
-              } else if (state.indicator == 'resendOtpClick') {}
-            } else if (state is Done) {
-              var data = state.model as AuthenticationModel;
+              final Future<http.Response> response = payment_repository.stc_pay_validate_otp(
+                      context: context,
+                      phone_number: widget.user_phone,
+                      otp: otp_code,
+                      otpReference: widget.OtpReference,
+                      paymentReference: widget.paymentReference);
 
-              _stopAnimation();
-
-              if (state.indicator == 'checkOtpClick') {
-                print("------- Done ---------");
-                switch (widget.route) {
-                  case 'SignUpScreen':
-                    customPushNamedNavigation(
-                        context,
-                        GetStartedScreen(
-                          token: data.token,
-                        ));
-                    break;
-                  case 'ForgetPasswordScreen':
-                    customPushNamedNavigation(context, ResetPasswordScreen());
-                    break;
-                  case 'LoginWithPhoneScreen':
-                    customPushNamedNavigation(
-                        context,
-                        GetStartedScreen(
-                          token: data.token,
-                        ));
-                    break;
+              response.then((response) {
+                print(response.body);
+                final extractedData =
+                    json.decode(response.body) as Map<String, dynamic>;
+                if (extractedData["status"]) {
+                  orderBloc.add(CreateOrderEvent(context: context));
                 }
-              } else if (state.indicator == 'resendOtpClick') {
-                customAnimatedPushNavigation(context, VerificationCodeScreen());
+              });
+            },
+      child: BlocListener<OrderBloc, AppState>(
+          bloc: orderBloc,
+          listener: (context, state) async {
+            if (state is Loading) {
+              if (state.indicator == 'CreateOrder') {
+                _playAnimation();
+              }
+            } else if (state is Done) {
+              if (state.indicator == 'CreateOrder') {
+                var data = state.general_value;
+                print("### data ### : ${data}");
+                final Future<http.Response> response = payment_repository.getPayFortSettings(orderId: data);
+                response.then((response) {
+                  print(response.body);
+                  final extractedData = json.decode(response.body) as Map<String, dynamic>;
+                  // if (extractedData["success"] && extractedData["payment_config"].length !=0) {
+                  if (extractedData["success"]) {
+                    _stopAnimation();
+
+                    customAnimatedPushNavigation(context, OrdersScreen());
+                  }
+                });
               }
             } else if (state is ErrorLoading) {
-              print('login ErrorLoading');
-              if (state.indicator == 'checkOtpClick') {
-                var data = state.model as AuthenticationModel;
-
+              if (state.indicator == 'CreateOrder') {
+                print("ErrorLoading");
                 _stopAnimation();
-                print('login ErrorLoading 111111111');
 
                 Flushbar(
                   messageText: Row(
                     children: [
-                      Text(
-                        '${data.errormsg}',
-                        textDirection: TextDirection.rtl,
-                        style: TextStyle(color: whiteColor),
+                      Container(
+                        width: StaticData.get_width(context) * 0.7,
+                        child: Wrap(
+                          children: [
+                            Text(
+                              'There is Error',
+                              textDirection: TextDirection.rtl,
+                              style: TextStyle(color: whiteColor),
+                            ),
+                          ],
+                        ),
                       ),
                       Spacer(),
                       Text(
@@ -600,14 +600,11 @@ class _OtpState extends State<VerificationCodeScreen>
                   flushbarPosition: FlushbarPosition.BOTTOM,
                   backgroundColor: redColor,
                   flushbarStyle: FlushbarStyle.FLOATING,
-                  duration: Duration(seconds: 3),
-                )..show(context);
-                setState(() {
-                  _hideResendButton = false;
-                });
-
-                //   customAnimatedPushNavigation(context, GetStartedScreen());
+                  duration: Duration(seconds: 6),
+                )..show(_drawerKey.currentState.context);
               }
+
+              //   customAnimatedPushNavigation(context, GetStartedScreen());
             }
           },
           child: Directionality(

@@ -4,7 +4,9 @@ import 'package:almajidoud/Bloc/Category_Bloc/category_bloc.dart';
 import 'package:almajidoud/Bloc/Home_Bloc/home_bloc.dart';
 import 'package:almajidoud/Bloc/Search_Bloc/search_bloc.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
+import 'package:almajidoud/Repository/PaymentRepo/stc_pay_repository.dart';
 import 'package:almajidoud/Repository/WishListRepo/wishlist_repository.dart';
+import 'package:almajidoud/main.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/intro/intro1_screen.dart';
 import 'package:almajidoud/screens/intro/intro2_screen.dart';
@@ -40,6 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.didChangeDependencies();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return NetworkIndicator(
@@ -66,8 +69,9 @@ class _SplashScreenState extends State<SplashScreen> {
     if (token.isEmpty) {
       StaticData.vistor_value = 'visitor';
     }
+
+
     new CircularProgressIndicator();
-    await search_bloc.add(SearchProductsEvent(search_text: ''));
     await categoryBloc.add(getAllCategories());
     readJson(token);
     await Future.delayed(Duration(seconds: 3));
@@ -97,13 +101,23 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     if(token.isEmpty){
-      CustomComponents.isFirstTime().then((isFirstTime) {
-        isFirstTime ?  customAnimatedPushNavigation(context, CustomCircleNavigationBar(page_index: 2,))
-          : customAnimatedPushNavigation(context, IntroScreen());
+      CustomComponents.isFirstTime().then((isFirstTime) async {
+        if(isFirstTime){
+          await search_bloc.add(SearchProductsEvent(search_text: ''));
+
+          customAnimatedPushNavigation(context, CustomCircleNavigationBar(page_index: 2,));
+        }else{
+          sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, "sa");
+          await search_bloc.add(SearchProductsEvent(search_text: ''));
+
+          customAnimatedPushNavigation(context, IntroScreen());
+        }
+
 
       });
     }else{
       wishListRepository.getWishListIDS(context);
+      await search_bloc.add(SearchProductsEvent(search_text: ''));
       print("*******######*****8888");
       customAnimatedPushNavigation(context, CustomCircleNavigationBar(page_index: 2,));
     }

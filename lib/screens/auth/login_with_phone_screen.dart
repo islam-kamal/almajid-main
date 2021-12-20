@@ -72,7 +72,8 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                 if (state is Loading) {
                   print("Loading");
                   _playAnimation();
-                } else if (state is ErrorLoading) {
+                }
+                else if (state is ErrorLoading) {
                   var data = state.model as AuthenticationModel;
                   print("ErrorLoading");
                   _stopAnimation();
@@ -105,7 +106,8 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                     duration: Duration(seconds: 3),
                   )..show(_drawerKey.currentState.context);
 
-                } else if (state is Done) {
+                }
+                else if (state is Done) {
                   print("done");
                   _stopAnimation();
                   Navigator.pushReplacement(
@@ -333,12 +335,10 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
       alignment: Alignment.center,
       padding: EdgeInsets.all(10),
       child: StaggerAnimation(
-     //   titleButton: translator.translate("Send") ,
         buttonController: _loginButtonController.view,
         btn_width: width(context) * .15,
         btn_height:  width(context) * .15,
         image: "assets/icons/right-arrow.png",
-    //    isResetScreen:false,
         onTap: () {
           StaticData.user_mobile_number = StaticData.country_code + forgetPassword_bloc.mobile_controller.value;
           forgetPassword_bloc.add(sendOtpClick(

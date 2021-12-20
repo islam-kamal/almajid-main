@@ -1,4 +1,4 @@
-import 'package:almajidoud/Base/urls.dart';
+import 'package:almajidoud/utils/urls.dart';
 
 class ProductImages{
   static String getProductImageUrlByName({ imageName}) {

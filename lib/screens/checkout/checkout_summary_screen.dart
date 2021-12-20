@@ -4,9 +4,11 @@ import 'package:almajidoud/Bloc/Order_Bloc/order_bloc.dart';
 import 'package:almajidoud/Bloc/ShippmentAddress_Bloc/shippment_address_bloc.dart';
 import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
+import 'package:almajidoud/Repository/PaymentRepo/stc_pay_repository.dart';
+import 'package:almajidoud/screens/Payment/stc_pay/stc_pay_phone_screen.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
-import 'package:almajidoud/screens/checkout/Payment/Constants.dart';
-import 'package:almajidoud/screens/checkout/Payment/PaymentScreen.dart';
+import 'package:almajidoud/screens/Payment/Constants.dart';
+import 'package:almajidoud/screens/Payment/payfort/payfort_payment_screen.dart';
 import 'package:almajidoud/screens/checkout/widgets/checkout_header.dart';
 import 'package:almajidoud/screens/checkout/widgets/done_button.dart';
 import 'package:almajidoud/screens/checkout/widgets/order_summary_widget.dart';
@@ -134,7 +136,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
       print("done");
 
       var data = state.general_value;
-      final Future<http.Response> response = getPayFortSettings(
+      final Future<http.Response> response = payment_repository.getPayFortSettings(
         orderId: data
       );
       response.then((response) {
@@ -162,7 +164,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
           _stopAnimation();
 
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => PaymentScreen(
+              builder: (context) => PayfortPaymentScreen(
                 amount: widget.guestShipmentAddressModel.totals.baseGrandTotal.toString(),
                 merchantIdentifier: merchantIdentifier,
                 accessCode: accessCode,
@@ -174,6 +176,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
                 url: url,
                 order_number: order_number,
               )));
+
         } else {
           print('order not found');
         }
@@ -231,7 +234,8 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
                 context: context,
                 isAddress: true,
                 title: "Address",
-                details: StaticData.order_address),
+                details: StaticData.order_address
+            ),
             Container(
                 width: width(context) * .9,
                 child: Divider(
@@ -263,36 +267,24 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
 
   doneButton({BuildContext context,}) {
     return StaggerAnimation(
-      titleButton: translator.translate("Next"),
+      titleButton: translator.translate("Done"),
       buttonController: _loginButtonController.view,
       btn_width: width(context) * .7,
-      onTap: () {
-        orderBloc.add(CreateOrderEvent(
-            context: context
-        ));
+      onTap: ()async {
+      await  sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD).then((value){
+        print("value : ${value}");
+          if(value=='stc_pay'){
+            customAnimatedPushNavigation(context, StcPayPhoneScreen());
+          }else{
+            orderBloc.add(CreateOrderEvent(
+                context: context
+            ));
+          }
+        });
+
       },
     );
   }
 
-  Future<http.Response> getPayFortSettings({var orderId}) async {
-    //final url = '${ORDER_DATA['website_domain']}/rest/V1/mstore/update-order-type';
-    print("-----------------------orderId : ${orderId}");
-    try {
-      final Map<String, dynamic> data = {
-        "orderId": int.parse(orderId),
-        "type": Platform.isAndroid ? "mobile_android" : "mobile_ios"
-      };
-      final serializedData = json.encode(data);
-      final response = await http.post(Uri.parse(Urls.BASE_URL+"/index.php/rest/V1/mstore/update-order-type"),
-          headers: {
-            "content-type": "application/json",
-            "Authorization": 'Bearer ${Urls.ADMIN_TOKEN}'
-          },
-          body: serializedData);
-      return response;
-    } catch (error) {
-      throw (error);
-    }
-  }
 
 }

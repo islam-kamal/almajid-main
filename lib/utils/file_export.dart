@@ -24,7 +24,7 @@ export 'package:almajidoud/Base/shared_preference_manger.dart';
 
 export 'package:almajidoud/Base/network-mappers.dart';
 export 'package:almajidoud/Base/network_util.dart';
-export 'package:almajidoud/Base/urls.dart';
+export 'package:almajidoud/utils/urls.dart';
 export 'package:almajidoud/Base/validator.dart';
 
 export 'package:almajidoud/Bloc/Authentication_Bloc/ForgetPasswordBloc/forget_password_bloc.dart';
@@ -72,3 +72,4 @@ export 'package:almajidoud/Bloc/Review_Bloc/reviews_bloc.dart';
 export 'package:almajidoud/Bloc/Shopping_Cart_Bloc/shopping_cart_bloc.dart';
 export 'package:almajidoud/Widgets/no_data.dart';
 export 'package:almajidoud/screens/cart/widgets/add_product_to_cart_widget.dart';
+export 'package:almajidoud/main.dart';

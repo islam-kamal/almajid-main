@@ -140,23 +140,12 @@ class NoItemsFound extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("search 5");
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Icon(
-          Icons.shop,
-          size: 24,
-          color: greyColor,
-        ),
-        const SizedBox(width: 10),
-        Text(
-          translator.translate("There is no products"),
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey[900].withOpacity(0.7),
-          ),
-        ),
-      ],
+    return  Text(
+      translator.translate("There is no products"),
+      style: TextStyle(
+        fontSize: 16,
+        color: Colors.grey[900].withOpacity(0.7),
+      ),
     );
   }
 }

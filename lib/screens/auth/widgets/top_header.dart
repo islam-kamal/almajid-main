@@ -1,3 +1,4 @@
+import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 topHeader({BuildContext context}) {
@@ -13,7 +14,7 @@ topHeader({BuildContext context}) {
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.of(context).pop();
+            customAnimatedPushNavigation(context, CustomCircleNavigationBar());
           },
           child: Icon(
             Icons.navigate_before,

@@ -1,6 +1,5 @@
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
 import 'package:almajidoud/Repository/CategoryRepo/category_repository.dart';
-import 'package:almajidoud/Repository/ProductRepo/product_repository.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:rxdart/rxdart.dart';
 class HomeBloc extends Bloc<AppEvent, AppState> {

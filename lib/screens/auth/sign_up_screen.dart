@@ -191,7 +191,7 @@ class _SignUpScreenState extends State<SignUpScreen>
 
   signButton({BuildContext context, bool isSignUp: true}) {
     return StaggerAnimation(
-      titleButton: isSignUp == true ?   translator.translate("SING UP") : translator.translate("Sign In"),
+      titleButton: isSignUp == true ?   translator.translate("Sign Up") : translator.translate("Sign In"),
       buttonController: _loginButtonController.view,
       btn_width: width(context) * .7,
       onTap: () {

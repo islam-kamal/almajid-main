@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/orders/order_sucessful_dialog.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
@@ -7,10 +8,10 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import 'Constants.dart';
+import '../Constants.dart';
 import 'dart:io' show Platform;
 
-class PaymentScreen extends StatefulWidget {
+class PayfortPaymentScreen extends StatefulWidget {
   final String amount;
   final String merchantIdentifier;
   final String accessCode;
@@ -21,7 +22,7 @@ class PaymentScreen extends StatefulWidget {
   final String signature;
   final String url;
   final String order_number;
-  PaymentScreen(
+  PayfortPaymentScreen(
       {this.amount,
       this.merchantIdentifier,
       this.accessCode,
@@ -34,10 +35,10 @@ class PaymentScreen extends StatefulWidget {
       this.order_number});
 
   @override
-  _PaymentScreenState createState() => _PaymentScreenState();
+  _PayfortPaymentScreenState createState() => _PayfortPaymentScreenState();
 }
 
-class _PaymentScreenState extends State<PaymentScreen> {
+class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
   WebViewController _webController;
   bool _loadingPayment = true;
   String _responseStatus = STATUS_LOADING;
@@ -47,7 +48,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             "<input type='hidden' name='card_number' value='${ StaticData.card_number}' />" +
         "<input type='hidden' name='card_holder_name' value='${ StaticData.card_holder_name}' />" +
         "<input type='hidden' name='card_security_code' value='${ StaticData.card_security_code}' />" +
-        "<input type='hidden' name='expiry_date' value='${ 2505}' />" +
+        "<input type='hidden' name='expiry_date' value='${StaticData.expiry_date}' />" +
         "<input type='hidden' name='merchant_identifier' value='${widget.merchantIdentifier}' />" +
         "<input type='hidden' name='access_code' value='${widget.accessCode}' />" +
         "<input type='hidden' name='merchant_reference' value='${widget.merchantReference}' />" +
@@ -241,8 +242,14 @@ class PaymentSuccessfulScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-             //       Navigator.popUntil(context, ModalRoute.withName("/"));
-                    customPushNamedNavigation(context, OrdersScreen());
+                    if( StaticData.vistor_value == 'visitor') {
+                      cartRepository.create_quote(context: context); // used to create new quote for guest
+                      customPushNamedNavigation(context, CustomCircleNavigationBar());
+                    }
+                    else{
+                      customPushNamedNavigation(context, OrdersScreen());
+                    }
+
 
                   })
             ],
@@ -295,7 +302,8 @@ class PaymentFailedScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                  //  Navigator.popUntil(context, ModalRoute.withName("/"));
+                    cartRepository.create_quote(context: context); // used to create new quote for guest
+
                     customPushNamedNavigation(context, CustomCircleNavigationBar());
 
                   })
@@ -349,7 +357,7 @@ class CheckSumFailedScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-          //          Navigator.popUntil(context, ModalRoute.withName("/"));
+                    cartRepository.create_quote(context: context); // used to create new quote for guest
                     customPushNamedNavigation(context, CustomCircleNavigationBar());
                   })
             ],

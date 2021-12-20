@@ -7,7 +7,7 @@ class ReviewsRepository {
 
   Future<List<ProductReviewModel>> getProductReviews({BuildContext context , var product_sku}) async{
 
-    String Review_Url = Urls.BASE_URL + '/rest/V1/products/${2128}/reviews/';
+    String Review_Url = Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/products/${2128}/reviews/';
     Dio dio = new Dio();
     try {
       Map<String, String> headers = {
@@ -41,14 +41,7 @@ class ReviewsRepository {
       print("response error  : ${e.toString() }");
     }
 
- /*   Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
-    };
-    print("product_sku : ${product_sku}");
-    return NetworkUtil.internal().get(ProductReviewModel(),'/rest/V1/products/${2128}/reviews/', headers: headers);
-*/
+
   }
 }
 ReviewsRepository reviewsRepository = new ReviewsRepository();

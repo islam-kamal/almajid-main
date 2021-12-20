@@ -115,6 +115,8 @@ class _SignInScreenState extends State<SignInScreen>
 
         print("done");
         _stopAnimation();
+        sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
+
         Navigator.pushReplacement(
           context,
           PageRouteBuilder(
@@ -163,7 +165,7 @@ class _SignInScreenState extends State<SignInScreen>
               signButton(context: context, isSignUp: false),
               responsiveSizedBox(context: context, percentageOfHeight: .02),
               loginUsingPhoneText,
-              responsiveSizedBox(context: context, percentageOfHeight: .13),
+              responsiveSizedBox(context: context, percentageOfHeight: .083),
               alreadyHaveAnAccount(context: context, isSignUp: false),
             ],
           ),
@@ -225,20 +227,6 @@ class _SignInScreenState extends State<SignInScreen>
           );
         });
 
-
-    return Container(
-        width: width(context) * .8,
-        child: TextField(
-            decoration: InputDecoration(
-                prefixIcon: containPrefixIcon == false ? null : Icon(prefixIcon),
-                hintText: translator.translate(hint),
-                suffixIcon: isPasswordField == true
-                    ? Icon(
-                  MdiIcons.eyeOff,
-                  size: 18,
-                  color: mainColor,
-                )
-                    : null)));
   }
 
 
@@ -261,7 +249,7 @@ class _SignInScreenState extends State<SignInScreen>
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("OR",style: TextStyle(color: Colors.grey,),),
+        Text(translator.translate("OR"),style: TextStyle(color: Colors.grey,),),
         responsiveSizedBox(context: context, percentageOfHeight: .03),
 
         InkWell(
@@ -271,7 +259,7 @@ class _SignInScreenState extends State<SignInScreen>
               context,LoginWithPhoneScreen());
           },
           child: Text(
-            "Continue Using Phone Number!",
+            translator.translate("!Continue Using Phone Number"),
             style: TextStyle(
               decoration: TextDecoration.underline,
               fontSize:AlmajedFont.primary_font_size

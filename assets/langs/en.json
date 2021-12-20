@@ -57,6 +57,8 @@
   "Total To Pay": "Total To Pay",
   "Done": "Done",
   "new address added sucessfuly" : "new address added sucessfuly",
+  "Please enter" : "Please enter",
+  "Frist Name" : "Frist Name",
   "-------------------Location-----------------": "---------------------------------",
   "Location": "Location",
   "Type here to search": "Type here to search",
@@ -79,8 +81,9 @@
   "Sign Up": "Sign Up",
   "Email": "Email",
   "Password": "Password",
-  "Don't have an account": "Don't have an account",
-  "Already have an account": "Already have an account",
+  "!Continue Using Phone Number" : "!Continue Using Phone Number",
+  "Don't have an account ?": "Don't have an account ?",
+  "Already have an account?": "Already have an account?",
   "First Name": "First Name",
   "Last Name": "Last Name",
   "Phone": "Phone",
@@ -108,6 +111,7 @@
   "Shop By Category": "Shop By Category",
   "Perfumes": "Perfumes",
   "New Arrivals": "New Arrivals",
+
   "-------------------Notifications-----------------": "---------------------------------",
   "Notifications": "Notifications",
   "Today": "Today",
@@ -195,7 +199,11 @@
   "Back to Home" :  "Back to Home",
   "Back to Sign In Page" : "Back to Sign In Page",
   "your order created successfully with this number" : "your order created successfully with this number",
-  "Ok" : "Ok"
+  "Ok" : "Ok",
+  "input is incorrect" : "input is incorrect"
+
+
+
 }
 
 

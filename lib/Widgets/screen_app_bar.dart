@@ -4,6 +4,7 @@ import 'package:almajidoud/screens/SearchScreen/search_screen.dart';
 import 'package:almajidoud/screens/cart/edit_cart_screen.dart';
 import 'package:almajidoud/screens/cart/widgets/promo_code_alert_dialog.dart';
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:flutter/scheduler.dart';
 
 class ScreenAppBar extends StatefulWidget {
   Function onTapCategoryDrawer;
@@ -88,8 +89,10 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                     : GestureDetector(
                   onTap: () {
                     if (widget.left_icon == "assets/icons/edit.png") {
-                      customAnimatedPushNavigation(
-                          context, EditCartScreen());
+                      Future.delayed(Duration.zero, () {
+                        customAnimatedPushNavigation(context, EditCartScreen());
+                      });
+
                     } else {
                       customAnimatedPushNavigation(
                           context, NotificationsScreen());

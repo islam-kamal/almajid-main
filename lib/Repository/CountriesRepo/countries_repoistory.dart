@@ -53,8 +53,7 @@ class CountriesRepository {
    Future<List<CityModel>> get_cities({BuildContext context}) async {
     Dio dio = new Dio();
     try {
-      final response = await dio.get(Urls.BASE_URL + '/index.php/rest/V1/mstore/regions/sa', );
-      print("cities response : ${response}");
+      final response = await dio.get(Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/regions/sa', );
       if (response.statusCode == 200) {
         final jsonresponse = response.data;
         List<CityModel> temp = (jsonresponse as List)

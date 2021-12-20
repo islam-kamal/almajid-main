@@ -11,8 +11,11 @@ class LogoutDialog extends StatefulWidget {
 }
 
 class LogoutDialogState extends State<LogoutDialog> {
+
   @override
   Widget build(BuildContext context) {
+    print("logout 1 ------------");
+
     return StatefulBuilder(
       builder: (context, setState) {
         var height = MediaQuery.of(context).size.height;
@@ -44,8 +47,7 @@ class LogoutDialogState extends State<LogoutDialog> {
                             child: Wrap(
                               children: [
                                 Text(
-                                  translator.translate(
-                                      " ${widget.name}"),
+                                  widget.name??'',
                                   style: TextStyle(
                                       color: mainColor,
                                       fontWeight: FontWeight.bold,

@@ -1,6 +1,6 @@
 
 import 'package:almajidoud/Base/network_util.dart';
-import 'package:almajidoud/Base/urls.dart';
+import 'package:almajidoud/utils/urls.dart';
 import 'package:almajidoud/Model/AuthenticationModel/authentication_model.dart';
 import 'package:almajidoud/Model/AuthenticationModel/user_info_model.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
@@ -24,15 +24,6 @@ class AuthenticationRepository{
     return NetworkUtil.internal().post(AuthenticationModel(), Urls.SIGN_UP,body: formData);
   }
 
-/* static Future<AuthenticationModel> signIn({BuildContext context,String email, String password})async{
-   FormData formData=FormData.fromMap({'username': email, 'password': password});
-
-   return NetworkUtil.internal().post(AuthenticationModel(), Urls.SIGN_IN,body: formData);
-
-
- }*/
-
-
 
   static Future<String> signIn({BuildContext context,String email, String password})async{
 
@@ -41,7 +32,7 @@ class AuthenticationRepository{
     try {
 
       print("res 3");
-      final response = await dio.post(Urls.BASE_URL+Urls.SIGN_IN,
+      final response = await dio.post(Urls.BASE_URL+ Urls.SIGN_IN,
           data: convert.jsonEncode({'username': email, 'password': password}) , options: Options(
               headers: {'content-type': 'application/json'}
           ));
@@ -114,16 +105,7 @@ class AuthenticationRepository{
     return NetworkUtil.internal().post(ResetPasswordModel(), Urls.CHANGE_PASSWORD,body: formData);
   }
 
-  static Future<AuthenticationModel> editProfile(String token, String username, String mobile, String email, String password ){
-    FormData formData = FormData.fromMap({
-      "token" : token,
-      "username" : username,
-      "mobile" : mobile,
-      "email" : email,
-      "password" : password
-    });
-    return NetworkUtil.internal().post(AuthenticationModel(), Urls.UPDATE_PROFILE, body: formData);
-  }
+
 
   static Future<AuthenticationModel> logout(String token){
 

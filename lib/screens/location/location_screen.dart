@@ -1,3 +1,4 @@
+import 'package:almajidoud/main.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/home/widgets/categories_buttons.dart';
 import 'package:almajidoud/screens/home/widgets/home_list_products.dart';
@@ -13,7 +14,7 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   FocusNode fieldNode = FocusNode();
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-
+  var dropdownCountryValue = MyApp.app_langauge == 'sa' ?      'Saudi Arabia' : 'kuwait';
   @override
   Widget build(BuildContext context) {
     return NetworkIndicator(
@@ -31,34 +32,42 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: SingleChildScrollView(
                     child: Column(
                   children: [
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .13),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .01),
+                    responsiveSizedBox(context: context, percentageOfHeight: .11),
                     titleText(context: context, text: "Shop By Category"),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .01),
+                    responsiveSizedBox(context: context, percentageOfHeight: .02),
                     CategoriesButtons(),
                     responsiveSizedBox(
-                        context: context, percentageOfHeight: .002),
+                        context: context, percentageOfHeight: .009),
                     HomeSlider(
                         gallery:StaticData.images
                     ),
+
+
+                    responsiveSizedBox(context: context, percentageOfHeight: .03),
+                    titleText(context: context,
+                        text: translator.activeLanguageCode == 'ar' ?  StaticData.data['new-arrival']['arabic-title']
+                            : StaticData.data['new-arrival']['english-title']),
                     responsiveSizedBox(
-                        context: context, percentageOfHeight: .01),
-                    titleText(context: context, text: "New Arrivals"),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .01),
+                        context: context, percentageOfHeight: .02),
+
                     HomeListProducts(
                       type: "New Arrivals",
+                      homeScaffoldKey: _drawerKey,
                     ),
+
+                    responsiveSizedBox(context: context, percentageOfHeight: .03),
+                    titleText(context: context,
+                        text: translator.activeLanguageCode == 'ar' ? StaticData.data['best-seller']['arabic-title'] :
+                        StaticData.data['best-seller']['english-title']),
                     responsiveSizedBox(
-                        context: context, percentageOfHeight: .01),
-                    HomeSlider(
-                        gallery:StaticData.images
+                        context: context, percentageOfHeight: .02),
+
+                    HomeListProducts(
+                      type: "best-seller",
+                      homeScaffoldKey: _drawerKey,
+
                     ),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .11),
+
                   ],
                 )),
               ),
@@ -81,20 +90,52 @@ class _LocationScreenState extends State<LocationScreen> {
                         percentageOfHeight: .03),
                     responsiveSizedBox(
                         context: context, percentageOfHeight: .05),
-                    Container(width: width(context)*.7,height: isLandscape(context) ? 2*height(context)*.08: height(context)*.08,
-                    decoration: BoxDecoration(border: Border.all(color: whiteColor) ),child: Row(
+
+                    Container(
+                      width: width(context)*.7,
+                      height: isLandscape(context) ? 2*height(context)*.08: height(context)*.08,
+                    decoration: BoxDecoration(border: Border.all(color: greyColor) ),
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                      Container(width: width(context)*.1,height: isLandscape(context) ? 2*height(context)*.03: height(context)*.03,
-                        child: Image.network(
-                            "https://www.almrsal.com/wp-content/uploads/2019/03/%D8%B9%D9%84%D9%85-%D8%A7%D9%84%D9%85%D9%85%D9%84%D9%83%D8%A9-%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9-%D8%AD%D8%A7%D9%84%D9%8A%D8%A7.png"),
+                      Container(
+                        width: width(context)*.1,
+                        height: isLandscape(context) ? 2*height(context)*.03: height(context)*.03,
+                        child: Image.asset(
+                            dropdownCountryValue == 'Saudi Arabia'?    "assets/flag/saudi.png"  : "assets/flag/kuwait.png"),
                       ) ,
                         SizedBox(width: width(context)*.02,),
-                        customDescriptionText(context: context , text: "Saudi Arabia" , textColor: whiteColor
-                            , percentageOfHeight: .025 , ) ,
-                        SizedBox(width: width(context)*.02,),
-                        Icon(Icons.keyboard_arrow_down , color: whiteColor , size:
-                        isLandscape(context) ? 2*height(context)*.06: height(context)*.06,)
+                          DropdownButton<String>(
+                              value: dropdownCountryValue,
+                              dropdownColor: mainColor.withOpacity(.3),
+                              icon: Icon(Icons.keyboard_arrow_down , color: whiteColor , size:
+                              isLandscape(context) ? 2*height(context)*.06: height(context)*.06,),
+                              iconSize: 42,
+
+                              underline: SizedBox(),
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  dropdownCountryValue = newValue;
+                                  MyApp.app_location = newValue == 'Saudi Arabia' ? 'sa' : 'kw';
+                                  sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location );
+                                  print("dropdownCountryValue : ${dropdownCountryValue}");
+
+                                });
+                              },
+                              items: <String>[
+                                'Saudi Arabia',
+                                'kuwait',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value:  value,
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text(value,
+                                      style: TextStyle(color: whiteColor),),
+                                  )
+                                );
+                              }).toList()),
+
                       ],),)
                   ],
                 )),

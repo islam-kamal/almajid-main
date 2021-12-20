@@ -11,7 +11,7 @@ alreadyHaveAnAccount({BuildContext context, bool isSignUp: true}) {
      child:  customDescriptionText(
        context: context,
        text: isSignUp == true
-           ? "Already have an account ?"
+           ? "Already have an account?"
            : "Don't have an account ?",
      ),),
       GestureDetector(
