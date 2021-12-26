@@ -259,7 +259,29 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                   if (state.indicator == 'home_add_to_cart') {
                                                                     var data = state
                                                                         .model as AddCartModel;
-                                                                    customAnimatedPushNavigation(
+                                                                    Flushbar(
+                                                                      messageText:
+                                                                      Container(
+                                                                        child: Text(
+                                                                          translator.translate("product added suceesfully to cart"),
+                                                                          maxLines: 2,
+                                                                          textAlign: TextAlign.end,
+                                                                          textDirection: TextDirection.rtl,
+                                                                          style: TextStyle(color: whiteColor),
+                                                                        ),
+                                                                      ),
+                                                                      flushbarPosition:
+                                                                      FlushbarPosition.BOTTOM,
+                                                                      backgroundColor:
+                                                                      greenColor,
+                                                                      duration: Duration(seconds: 2),
+                                                                      flushbarStyle:
+                                                                      FlushbarStyle.FLOATING,
+                                                                    )..show(widget
+                                                                        .homeScaffoldKey
+                                                                        .currentState
+                                                                        .context);
+                                                             /*       customAnimatedPushNavigation(
                                                                         context,
                                                                         translator
                                                                             .activeLanguageCode ==
@@ -269,7 +291,7 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                         )
                                                                             : CustomCircleNavigationBar(
                                                                           page_index: 0,
-                                                                        ));
+                                                                        ));*/
                                                                   }
                                                                 }
                                                               },

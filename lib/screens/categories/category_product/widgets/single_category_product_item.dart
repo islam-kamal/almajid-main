@@ -192,11 +192,31 @@ class singleCategoryProductItem extends StatelessWidget {
                                       } else if (state is Done)
                                         if(state.indicator == 'category_add_to_cart') {
                                         print("------------- done-------------------");
-                                        customAnimatedPushNavigation(context,translator.activeLanguageCode == 'ar' ?  CustomCircleNavigationBar(
+
+                                        Flushbar(
+                                          messageText:
+                                          Container(
+                                            child: Text(
+                                              translator.translate("product added suceesfully to cart"),
+                                              maxLines: 2,
+                                              textAlign: TextAlign.end,
+                                              textDirection: TextDirection.rtl,
+                                              style: TextStyle(color: whiteColor),
+                                            ),
+                                          ),
+                                          flushbarPosition:
+                                          FlushbarPosition.BOTTOM,
+                                          backgroundColor:
+                                          greenColor,
+                                          duration: Duration(seconds: 2),
+                                          flushbarStyle:
+                                          FlushbarStyle.FLOATING,
+                                        )..show(scafffoldKey.currentState.context);
+                                /*        customAnimatedPushNavigation(context,translator.activeLanguageCode == 'ar' ?  CustomCircleNavigationBar(
                                           page_index: 4,
                                         ): CustomCircleNavigationBar(
                                           page_index: 0,
-                                        ));
+                                        ));*/
                                       }
                                     },
                                     child:InkWell(
