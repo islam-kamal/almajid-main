@@ -89,7 +89,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                     child: customDescriptionText(
                                         context: context,
                                         textColor: mainColor,
-                                        text: "${product.price} \$",
+                                        text: "${product.price} ${MyApp.country_currency}",
                                         textAlign: TextAlign.start,
                                         fontWeight: FontWeight.bold),
                                   ),
