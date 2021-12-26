@@ -160,7 +160,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ScreenAppBar(
                                   right_icon: 'cart',
                                   category_name: translator.translate("Settings"),
-                                  screen: CustomCircleNavigationBar(
+                                  screen:translator.activeLanguageCode=='ar' ? CustomCircleNavigationBar(
+                                    page_index: 0,
+                                  ): CustomCircleNavigationBar(
                                     page_index: 4,
                                   ),
                                 ),
