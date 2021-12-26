@@ -243,7 +243,19 @@ class PaymentSuccessfulScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     if( StaticData.vistor_value == 'visitor') {
-                      cartRepository.create_quote(context: context); // used to create new quote for guest
+                      cartRepository.check_quote_status().then((value){
+                        final extractedData = json.decode(value.body) as Map<String, dynamic>;
+                        if (extractedData["status"]) {
+                          print("cart quote is active");
+                        }else if(extractedData["message"] != null){
+                          print("cart quote is  not found");
+                          cartRepository.create_quote(context: context); // used to create new quote for guest
+                        }
+                        else{
+                          print("cart quote is not active");
+                          cartRepository.create_quote(context: context); // used to create new quote for guest
+                        }
+                      });
                       customPushNamedNavigation(context, CustomCircleNavigationBar());
                     }
                     else{
@@ -302,7 +314,17 @@ class PaymentFailedScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    cartRepository.create_quote(context: context); // used to create new quote for guest
+                    cartRepository.check_quote_status().then((value){
+                      final extractedData = json.decode(value.body) as Map<String, dynamic>;
+                      if (extractedData["status"]) {
+
+                      }else if(extractedData["message"] != null){
+                        cartRepository.create_quote(context: context); // used to create new quote for guest
+                      }
+                      else{
+                        cartRepository.create_quote(context: context); // used to create new quote for guest
+                      }
+                    });
 
                     customPushNamedNavigation(context, CustomCircleNavigationBar());
 
@@ -357,7 +379,19 @@ class CheckSumFailedScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    cartRepository.create_quote(context: context); // used to create new quote for guest
+                    cartRepository.check_quote_status().then((value){
+                      final extractedData = json.decode(value.body) as Map<String, dynamic>;
+                      if (extractedData["status"]) {
+                        print("cart quote is active");
+                      }else if(extractedData["message"] != null){
+                        print("cart quote is  not found");
+                        cartRepository.create_quote(context: context); // used to create new quote for guest
+                      }
+                      else{
+                        print("cart quote is not active");
+                        cartRepository.create_quote(context: context); // used to create new quote for guest
+                      }
+                    });
                     customPushNamedNavigation(context, CustomCircleNavigationBar());
                   })
             ],

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:almajidoud/Bloc/Order_Bloc/order_bloc.dart';
 import 'package:almajidoud/Repository/PaymentRepo/payment_repository.dart';
 import 'package:almajidoud/custom_widgets/custom_push_named_navigation.dart';
+import 'package:almajidoud/screens/Payment/stc_pay/stc_pay_phone_screen.dart';
 import 'package:almajidoud/screens/auth/get_started_screen.dart';
 import 'package:almajidoud/screens/auth/reset_password_screen.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
@@ -272,17 +273,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
           size: 20,
         ),
         onTap: () {
-          switch (widget.route) {
-            case 'SignUpScreen':
-              customPushNamedNavigation(context, SignUpScreen());
-              break;
-            case 'ForgetPasswordScreen':
-              customPushNamedNavigation(context, ForgetPasswordScreen());
-              break;
-            case 'LoginWithPhoneScreen':
-              customPushNamedNavigation(context, LoginWithPhoneScreen());
-              break;
-          }
+          customPushNamedNavigation(context, StcPayPhoneScreen());
         },
       ),
       centerTitle: true,

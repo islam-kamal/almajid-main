@@ -16,7 +16,7 @@ class PaymentRepository {
   static SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();
   Dio dio = new Dio();
 
-  Future<void> stc_pay_genertate_otp({BuildContext context , var phone_number}) async {
+  Future<void> stc_pay_genertate_otp({BuildContext context , String phone_number}) async {
     Map<String, String> headers = StaticData.vistor_value == 'visitor'? {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -30,7 +30,7 @@ class PaymentRepository {
       final response = await dio.post(
           Urls.BASE_URL+Urls.STC_PAY_GENERATE_OTP,
           data: {
-            "mobile": "0591826195",
+            "mobile": phone_number.substring(4,14) , //"0591826195",
             "quoteId": await sharedPreferenceManager.readString(CachingKey.CART_QUOTE),
            "isMask": StaticData.vistor_value == 'visitor'? true : false
           },

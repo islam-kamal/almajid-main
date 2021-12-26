@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/custom_widgets/custom_animated_push_navigation.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
@@ -233,6 +234,20 @@ class PaymentSuccessfulScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
+                    cartRepository.check_quote_status().then((value){
+                      final extractedData = json.decode(value.body) as Map<String, dynamic>;
+                      if (extractedData["status"]) {
+                        print("cart quote is active");
+                      }else if(extractedData["message"] != null){
+                        print("cart quote is  not found");
+                        cartRepository.create_quote(context: context); // used to create new quote for guest
+                      }
+                      else{
+                        print("cart quote is not active");
+                        cartRepository.create_quote(context: context); // used to create new quote for guest
+                      }
+                    });
+
                     customAnimatedPushNavigation(context, OrdersScreen());
                   })
             ],
@@ -287,6 +302,20 @@ class PaymentFailedScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
+                    cartRepository.check_quote_status().then((value){
+                      final extractedData = json.decode(value.body) as Map<String, dynamic>;
+                      if (extractedData["status"]) {
+                        print("cart quote is active");
+                      }else if(extractedData["message"] != null){
+                        print("cart quote is  not found");
+                        cartRepository.create_quote(context: context); // used to create new quote for guest
+                      }
+                      else{
+                        print("cart quote is not active");
+                        cartRepository.create_quote(context: context); // used to create new quote for guest
+                      }
+                    });
+
                     customAnimatedPushNavigation(context, CustomCircleNavigationBar());
                   })
             ],
@@ -339,6 +368,20 @@ class CheckSumFailedScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
+                    cartRepository.check_quote_status().then((value){
+                      final extractedData = json.decode(value.body) as Map<String, dynamic>;
+                      if (extractedData["status"]) {
+                        print("cart quote is active");
+                      }else if(extractedData["message"] != null){
+                        print("cart quote is  not found");
+                        cartRepository.create_quote(context: context); // used to create new quote for guest
+                      }
+                      else{
+                        print("cart quote is not active");
+                        cartRepository.create_quote(context: context); // used to create new quote for guest
+                      }
+                    });
+
                     customAnimatedPushNavigation(context, CustomCircleNavigationBar());
                   })
             ],

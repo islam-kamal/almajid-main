@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:almajidoud/Bloc/Search_Bloc/search_bloc.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/auth/sign_up_screen.dart';
@@ -65,7 +67,20 @@ class IntroScreenState extends State<IntroScreen> {
   }
 
   void onDonePress() async{
-    cartRepository.create_quote(context: context);
+    cartRepository.check_quote_status().then((value){
+      final extractedData = json.decode(value.body) as Map<String, dynamic>;
+      if (extractedData["status"] == null) {
+        print("cart quote is  not found");
+        cartRepository.create_quote(context: context); // used to create new quote for guest
+
+      }else if(extractedData["status"] ){
+        print("cart quote is active");
+      }
+      else{
+        print("cart quote is not active");
+        cartRepository.create_quote(context: context); // used to create new quote for guest
+      }
+    });
 
     Navigator.push(
       context,

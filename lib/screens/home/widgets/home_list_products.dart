@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:almajidoud/Base/Shimmer/list_shimmer.dart';
 import 'package:almajidoud/Bloc/Home_Bloc/home_bloc.dart';
 import 'package:almajidoud/Model/CartModel/add_cart_model.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart'
     as product_model;
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
+import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/custom_widgets/custom_animated_push_navigation.dart';
 import 'package:almajidoud/screens/WishList/custom_wishlist.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
@@ -275,14 +278,13 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                     .isInStock == false
                                                                     ? () {}
                                                                     : () {
-                                                                        shoppingCartBloc.add(AddProductToCartEvent(
-                                                                            context:
-                                                                                context,
-                                                                            product_quantity:
-                                                                                1,
-                                                                            product_sku:
-                                                                                snapshot.data[index].sku,
-                                                                            indictor: 'home_add_to_cart'));
+
+
+                                                                  shoppingCartBloc.add(AddProductToCartEvent(
+                                                                      context: context,
+                                                                      product_quantity: 1,
+                                                                      product_sku: snapshot.data[index].sku,
+                                                                      indictor: 'home_add_to_cart'));
                                                                       },
                                                                 child: Icon(
                                                                   Icons

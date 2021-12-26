@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:almajidoud/Model/CartModel/add_cart_model.dart';
 import 'package:almajidoud/Model/CartModel/cart_details_model.dart';
 import 'package:almajidoud/Model/CartModel/guest_cart_details_model.dart';
@@ -5,6 +7,7 @@ import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
 
 class CartRepository {
 
@@ -38,11 +41,29 @@ class CartRepository {
 
   }
 
+
+  Future<http.Response> check_quote_status() async {
+    try {
+
+      final response = await http.get(
+        Uri.parse(Urls.BASE_URL+"/${MyApp.app_langauge}-${MyApp.app_location}"
+            "/index.php/rest/V1/mstore/quote/is_active/${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/${StaticData.vistor_value == 'visitor'? 1 : 0}"),
+          headers: {
+            "content-type": "application/json",
+            "Authorization": 'Bearer ${Urls.ADMIN_TOKEN}'
+          },
+          );
+
+      return response;
+    } catch (error) {
+      throw (error);
+    }
+  }
+
   Future<AddCartModel> add_product_to_cart({BuildContext context, var product_quantity ,
     var product_sku})async{
     print("1");
     try {
-
         final params = {
           'cartItem': {
             'sku': product_sku,
