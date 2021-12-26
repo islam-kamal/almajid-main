@@ -95,8 +95,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                         var data = state.model as AddCartModel;
                         print("ErrorLoading");
                         _stopAnimation();
-                        if(data.message == "The consumer isn't authorized to access %resources." ||
-                        data.message == "Current customer does not have an active cart."){
+                        if(data.message == "The consumer isn't authorized to access %resources." ){
                           Flushbar(
                             messageText:    Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

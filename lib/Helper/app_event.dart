@@ -134,7 +134,7 @@ var indictor;
 AddProductToCartEvent({this.context,this.product_sku,this.product_quantity,this.indictor});
 }
 
-class GetCartDetails extends AppEvent{
+class GetCartDetailsEvent extends AppEvent{
 
 }
 

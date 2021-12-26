@@ -1,5 +1,5 @@
 import 'package:almajidoud/utils/file_export.dart';
-void FlushbarWidget({ BuildContext context , var text ,  GlobalKey<ScaffoldState> scaffoldKey}){
+void FlushbarWidget({ BuildContext context ,  GlobalKey<ScaffoldState> scaffoldKey , var text }){
   Flushbar(
     messageText: Row(
       children: [

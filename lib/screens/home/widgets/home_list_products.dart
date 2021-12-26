@@ -170,34 +170,17 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                 width(context) *
                                                                     .03,
                                                           ),
-                                                          BlocListener<
-                                                                  ShoppingCartBloc,
-                                                                  AppState>(
-                                                              bloc:
-                                                                  shoppingCartBloc,
-                                                              listener: (context,
-                                                                  state) async {
-                                                                if (state
-                                                                    is Loading) {
-                                                                  if (state
-                                                                          .indicator ==
-                                                                      'home_add_to_cart')
-                                                                    print(
-                                                                        "Loading");
-                                                                } else if (state
-                                                                    is ErrorLoading) {
-                                                                  if (state
-                                                                          .indicator ==
-                                                                      'home_add_to_cart') {
-                                                                    var data = state
-                                                                            .model
-                                                                        as AddCartModel;
-                                                                    print(
-                                                                        "ErrorLoading");
-                                                                    if (data.message ==
-                                                                            "The consumer isn't authorized to access %resources." ||
-                                                                        data.message ==
-                                                                            "Current customer does not have an active cart.") {
+                                                          BlocListener<ShoppingCartBloc, AppState>(
+                                                              bloc: shoppingCartBloc,
+                                                              listener: (context,state) async {
+                                                                if (state is Loading) {
+                                                                  if (state.indicator == 'home_add_to_cart')
+                                                                    print("Loading");
+                                                                } else if (state is ErrorLoading) {
+                                                                  if (state.indicator == 'home_add_to_cart') {
+                                                                    var data = state.model as AddCartModel;
+                                                                    print("ErrorLoading");
+                                                                    if (data.message == "The consumer isn't authorized to access %resources.") {
                                                                       Flushbar(
                                                                         messageText:
                                                                             Row(
@@ -243,11 +226,7 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                           .currentState
                                                                           .context);
                                                                     } else {
-                                                                      Flushbar(
-                                                                        messageText:
-                                                                            Container(
-                                                                          width:
-                                                                              StaticData.get_width(context) * 0.7,
+                                                                      Flushbar(messageText: Container(width: StaticData.get_width(context) * 0.7,
                                                                           child:
                                                                               Wrap(
                                                                             children: [
@@ -273,32 +252,27 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                           .context);
                                                                     }
                                                                   }
-                                                                } else if (state
-                                                                    is Done) if (state
-                                                                        .indicator ==
-                                                                    'home_add_to_cart') {
-                                                                  var data = state
-                                                                          .model
-                                                                      as AddCartModel;
-                                                                  customAnimatedPushNavigation(
-                                                                      context,
-                                                                      translator.activeLanguageCode ==
-                                                                              'ar'
-                                                                          ? CustomCircleNavigationBar(
-                                                                              page_index: 4,
-                                                                            )
-                                                                          : CustomCircleNavigationBar(
-                                                                              page_index: 0,
-                                                                            ));
+                                                                } else if (state is Done) {
+                                                                  if (state.indicator == 'home_add_to_cart') {
+                                                                    var data = state
+                                                                        .model as AddCartModel;
+                                                                    customAnimatedPushNavigation(
+                                                                        context,
+                                                                        translator
+                                                                            .activeLanguageCode ==
+                                                                            'ar'
+                                                                            ? CustomCircleNavigationBar(
+                                                                          page_index: 4,
+                                                                        )
+                                                                            : CustomCircleNavigationBar(
+                                                                          page_index: 0,
+                                                                        ));
+                                                                  }
                                                                 }
                                                               },
                                                               child: InkWell(
-                                                                onTap: snapshot
-                                                                            .data[index]
-                                                                            .extensionAttributes
-                                                                            .stockItem
-                                                                            .isInStock ==
-                                                                        false
+                                                                onTap: snapshot.data[index].extensionAttributes.stockItem
+                                                                    .isInStock == false
                                                                     ? () {}
                                                                     : () {
                                                                         shoppingCartBloc.add(AddProductToCartEvent(
@@ -373,166 +347,6 @@ class HomeListProductsState extends State<HomeListProducts> {
     );
   }
 
-  Widget chosse_product_quantity({var prod_sku}) {
-    return StatefulBuilder(
-      builder: (context, setState) {
-        var height = MediaQuery.of(context).size.height;
-        var width = MediaQuery.of(context).size.width;
-        return Container(
-          width: width,
-          height: height / 2.5,
-          decoration:
-              BoxDecoration(borderRadius: BorderRadius.circular(height * .1)),
-          child: AlertDialog(
-            contentPadding: EdgeInsets.all(0.0),
-            content: SafeArea(
-              child: SingleChildScrollView(
-                child: Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: Container(
-                    width: width,
-                    height: height / 4,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(width * 0.1)),
-                    child: new Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(width * 0.01),
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(10),
-                                child: cvvTextField(context),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(top: width * 0.05),
-                                    child: InkWell(
-                                      onTap: () {
-                                        print(
-                                            "qty_controller.text : ${qty_controller.text}");
-                                        shoppingCartBloc.add(
-                                            AddProductToCartEvent(
-                                                context: context,
-                                                product_quantity: 1,
-                                                product_sku: prod_sku,
-                                                indictor:
-                                                    'category_add_to_cart'));
-                                      },
-                                      child: Container(
-                                        width: width * .3,
-                                        alignment: Alignment.center,
-                                        height: isLandscape(context)
-                                            ? 2 * height * .035
-                                            : height * .035,
-                                        decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: mainColor)),
-                                        child: customDescriptionText(
-                                            context: context,
-                                            textColor: mainColor,
-                                            text: "Apply",
-                                            textAlign: TextAlign.center),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: width * 0.02,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: width * 0.05),
-                                    child: InkWell(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Container(
-                                        width: width * .3,
-                                        alignment: Alignment.center,
-                                        height: isLandscape(context)
-                                            ? 2 * height * .035
-                                            : height * .035,
-                                        decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: mainColor)),
-                                        child: customDescriptionText(
-                                            context: context,
-                                            textColor: mainColor,
-                                            text: "Discard",
-                                            textAlign: TextAlign.center),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget cvvTextField(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          height: height * .07,
-          width: width * .65,
-          decoration:
-              BoxDecoration(borderRadius: BorderRadius.circular(height * .1)),
-          child: TextFormField(
-            controller: qty_controller,
-            keyboardType: TextInputType.number,
-            style: TextStyle(
-                color: greyColor, fontSize: AlmajedFont.primary_font_size),
-            obscureText: false,
-            textAlign: translator.activeLanguageCode == 'ar'
-                ? TextAlign.right
-                : TextAlign.left,
-            cursorColor: greyColor,
-            decoration: InputDecoration(
-              hintText: translator.translate("Enter Quantity *"),
-              hintStyle: TextStyle(
-                color: Color(0xffA0AEC0).withOpacity(
-                  .8,
-                ),
-                fontSize: height * .018,
-              ),
-              filled: true,
-              fillColor: Colors.white,
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(height * .01),
-                  borderSide:
-                      BorderSide(color: greyColor, width: height * .002)),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(height * .01),
-                  borderSide:
-                      BorderSide(color: greyColor, width: height * .002)),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(height * .01),
-                  borderSide:
-                      BorderSide(color: greenColor, width: height * .002)),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }
 
 class MyShareButton extends StatelessWidget {
