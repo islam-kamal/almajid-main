@@ -123,7 +123,7 @@ class _CartScreenState extends State<CartScreen> {
                                                   context: context,
                                                   textColor: mainColor,
                                                   text:
-                                                  " ${snapshot.data.baseGrandTotal.toString()} ${translator.translate("SAR")} ",
+                                                  " ${snapshot.data.baseGrandTotal.toString()} ${MyApp.country_currency} ",
                                                   percentageOfHeight: .03,
                                                   fontWeight: FontWeight.bold),
                                               responsiveSizedBox(

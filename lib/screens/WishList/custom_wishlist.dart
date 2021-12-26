@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:almajidoud/Bloc/WishList_Bloc/wishlist_bloc.dart';
+import 'package:almajidoud/Repository/WishListRepo/wishlist_repository.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,40 +24,40 @@ class CustomWishList extends StatefulWidget {
 }
 
 class CustomFauvourite_State extends State<CustomWishList> {
-  List<int> fav_salon_id;
+  List<int> wishlist_elements_list;
   List<int> wishlist_id;
-  List<Map> wishlist_items;
+  bool wishlist_status = false;
   @override
   void initState() {
-    fav_salon_id = [];
+    wishlist_elements_list = [];
     wishlist_id = [];
-    wishlist_items = [];
-
-    super.initState();
-  }
-
-  void get_wishlist_ids()async{
-
-    wishlist_items = await sharedPreferenceManager.getListOfMaps('wishlist_data_ids');
-
-
-  }
-  @override
-  Widget build(BuildContext context) {
     if (StaticData.vistor_value == 'visitor') {
-      fav_salon_id = [];
+      wishlist_elements_list = [];
     } else {
-      wishlist_items.forEach((element) {
+      StaticData.wishlist_items.forEach((element) {
         element.keys.forEach((k) {
           wishlist_id.add(int.parse(k));
         });
 
         element.values.forEach((v) {
-          fav_salon_id.add(v);
+          wishlist_elements_list.add(v);
         });
       });
+      wishlist_status =wishlist_elements_list.contains(widget.product_id);
 
     }
+    super.initState();
+  }
+  void get_wishlist_ids()async {
+    await sharedPreferenceManager.getListOfMaps('wishlist_data_ids').then((
+        value) {
+      StaticData.wishlist_items = value;
+      print("wishlist_items ****: ${ StaticData.wishlist_items}");
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+
 
 
     return  Container(
@@ -65,7 +66,7 @@ class CustomFauvourite_State extends State<CustomWishList> {
             : Alignment.topRight,
         height: StaticData.get_height(context) * .04,
         width: StaticData.get_width(context) * .7,
-        child:  fav_salon_id.contains(widget.product_id)
+        child:  wishlist_status
             ? IconButton(
                 icon: Icon(
                   Icons.favorite,
@@ -77,22 +78,19 @@ class CustomFauvourite_State extends State<CustomWishList> {
                         customAnimatedPushNavigation(context, SignInScreen());
                       }
                     : () async{
-                var item_id= wishlist_id[fav_salon_id.indexOf(widget.product_id)]  ;
-                print("item_id : :: ${item_id}");
+                  setState(() {
+                    wishlist_status = !wishlist_status;
+                  });
+                var item_id= wishlist_id[wishlist_elements_list.indexOf(widget.product_id)]  ;
+
                   await wishlist_bloc.add(removeFromWishListEvent(
                     wishlist_item_id: item_id,
-
                   ));
                   await wishlist_bloc.add(getAllWishList_click(
                     context: context,
                     scafffoldKey: widget.scafffoldKey
                   ));
 
-
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContextcontext) => widget.screen));
-                 setState(()  {
-
-                        });
                       },
               )
             : IconButton(
@@ -103,9 +101,11 @@ class CustomFauvourite_State extends State<CustomWishList> {
                 ),
                 onPressed: (StaticData.vistor_value == 'visitor')
                     ? () {
-                        customAnimatedPushNavigation(context, SignInScreen());
-                      }
+                  customAnimatedPushNavigation(context, SignInScreen());}
                     : ()async {
+                  setState(() {
+                    wishlist_status = !wishlist_status;
+                  });
                   wishlist_bloc.add(AddToWishListEvent(
                       product_id: widget.product_id,
                       context: widget.context,
@@ -114,10 +114,7 @@ class CustomFauvourite_State extends State<CustomWishList> {
                       context: context,
                       scafffoldKey: widget.scafffoldKey
                   ));
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContextcontext) => widget.screen));
-                  setState(()  {
 
-                        });
                       },
               ));
   }

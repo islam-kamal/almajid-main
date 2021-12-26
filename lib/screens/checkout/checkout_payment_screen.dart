@@ -3,7 +3,6 @@ import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigatio
 import 'package:almajidoud/screens/Payment/Constants.dart';
 import 'package:almajidoud/screens/checkout/checkout_summary_screen.dart';
 import 'package:almajidoud/screens/checkout/widgets/checkout_header.dart';
-import 'package:almajidoud/screens/checkout/widgets/next_button_in_payment.dart';
 import 'package:almajidoud/screens/checkout/widgets/page_title.dart';
 import 'package:almajidoud/screens/checkout/widgets/payment_method_card.dart';
 import 'package:almajidoud/screens/checkout/widgets/payment_text_field.dart';
@@ -37,12 +36,14 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
   bool isCvvFocused = false;
   bool useGlassMorphism = false;
   bool useBackgroundImage = false;
+  var payment_method_name;
   OutlineInputBorder border;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   void initState() {
     _currentIndex = widget.guestShipmentAddressModel.paymentMethods[0].code;
     sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, _currentIndex);
+    payment_method_name = widget.guestShipmentAddressModel.paymentMethods[0].title;
     border = OutlineInputBorder(
       borderSide: BorderSide(
         color: Colors.grey.withOpacity(0.7),
@@ -70,7 +71,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                 paymentMethodCard(
                     context: context,
                 paymentMethods: widget.guestShipmentAddressModel.paymentMethods) ,
-                _currentIndex == "stc_pay" ? Container() :     Column(
+                _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments' ?
+                Container() :     Column(
                   children: [
                     CreditCardWidget(
                       glassmorphismConfig:
@@ -90,14 +92,14 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       isSwipeGestureEnabled: true,
                       onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
                       customCardTypeIcons: <CustomCardTypeIcon>[
-                        CustomCardTypeIcon(
+                      /*  CustomCardTypeIcon(
                           cardType: CardType.mastercard,
                           cardImage: Image.asset(
                             'assets/mastercard.png',
                             height: 48,
                             width: 48,
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                     CreditCardForm(
@@ -154,10 +156,10 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                 responsiveSizedBox(context: context, percentageOfHeight:_currentIndex == "stc_pay" ? 0.3 : .05),
                 GestureDetector(
                   onTap: () {
-                  if(_currentIndex == "stc_pay") {
+                  if(_currentIndex == "stc_pay" || _currentIndex == 'tamara_pay_by_instalments') {
                       customAnimatedPushNavigation(context , CheckoutSummaryScreen(
                         guestShipmentAddressModel: widget.guestShipmentAddressModel,
-                        payment_method: _currentIndex,
+                        payment_method: payment_method_name,
                       ));
                     }else{
                     if (formKey.currentState.validate()) {
@@ -168,7 +170,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       StaticData.expiry_date = expiryDate[3] + expiryDate[4] + expiryDate[0] + expiryDate[1];
                       customAnimatedPushNavigation(context , CheckoutSummaryScreen(
                         guestShipmentAddressModel: widget.guestShipmentAddressModel,
-                        payment_method: _currentIndex,
+                        payment_method: payment_method_name,
                       )
                       );
 
@@ -268,6 +270,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       onChanged: (val) {
                         setState(() {
                           sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, paymentMethods[index].code);
+                          payment_method_name =   paymentMethods[index].title;
 
                           _currentIndex = val;
                           print("_currentIndex : ${_currentIndex}");

@@ -25,7 +25,7 @@ orderSummaryWidget({BuildContext context , var subtotal , var vat,var total}) {
                   percentageOfHeight: .022),
               customDescriptionText(
                   context: context,
-                  text: " ${translator.translate("SAR")} ${subtotal} ",
+                  text: " ${MyApp.country_currency} ${subtotal} ",
                   textAlign: TextAlign.start,
                   percentageOfHeight: .022),
             ],
@@ -42,7 +42,7 @@ orderSummaryWidget({BuildContext context , var subtotal , var vat,var total}) {
                   percentageOfHeight: .022),
               customDescriptionText(
                   context: context,
-                  text: " ${translator.translate("SAR")} ${vat} ",
+                  text: " ${MyApp.country_currency} ${vat} ",
                   textAlign: TextAlign.start,
                   percentageOfHeight: .022),
             ],
@@ -61,7 +61,7 @@ orderSummaryWidget({BuildContext context , var subtotal , var vat,var total}) {
                   percentageOfHeight: .022),
               customDescriptionText(
                   context: context,
-                  text: "${translator.translate("SAR")} $total",
+                  text: "${MyApp.country_currency} $total",
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
                   percentageOfHeight: .022),

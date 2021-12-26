@@ -60,11 +60,11 @@ class SharedPreferenceManager {
 
    Future setListOfMaps(List<Map> messages , String key) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-print("messages : ${messages}");
     List<String> messagesString = [];
     messages.forEach((element) {
       messagesString.add(json.encode(element));
     });
+    print("set_list_of_wishlist : ${messagesString}");
     await sharedPreferences.setStringList(key, messagesString);
   }
 
@@ -79,6 +79,8 @@ print("messages : ${messages}");
         messages.add(json.decode(element));
       });
     }
+    print("get_list_of_wishlist************: ${messagesString}");
+
     return messages;
   }
 
@@ -114,6 +116,10 @@ class   CachingKey extends Enum<String> {
   static const CachingKey CHOSSED_ADDRESS_ID = const CachingKey('CHOSSED_ADDRESS_ID');
   static const CachingKey ORDER_ID = const CachingKey('ORDER_ID');
   static const CachingKey CHOSSED_PAYMENT_METHOD = const CachingKey('CHOSSED_PAYMENT_METHOD');
+
+  static const CachingKey ORDER_INCREMENTAL_ID= const CachingKey('ORDER_INCREMENTAL_ID');
+  static const CachingKey TAP_PUBLIC_KEY = const CachingKey('TAP_PUBLIC_KEY');
+  static const CachingKey TAP_TOKEN = const CachingKey('TAP_TOKEN');
 
 
   static const CachingKey FORGET_PASSWORD_PHONE = const CachingKey('FORGET_PASSWORD_PHONE');

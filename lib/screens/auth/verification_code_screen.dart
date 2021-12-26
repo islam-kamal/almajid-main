@@ -5,7 +5,6 @@ import 'package:almajidoud/Bloc/Order_Bloc/order_bloc.dart';
 import 'package:almajidoud/custom_widgets/custom_push_named_navigation.dart';
 import 'package:almajidoud/screens/auth/get_started_screen.dart';
 import 'package:almajidoud/screens/auth/reset_password_screen.dart';
-import 'package:almajidoud/screens/auth/widgets/confirm_button_in_verificationCode.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/utils/static_data.dart';
@@ -531,8 +530,7 @@ class _OtpState extends State<VerificationCodeScreen>
       onTap: otp_code == null
           ? () {}
           : () {
-              forgetPassword_bloc
-                  .add(checkOtpClick(otp_code: otp_code, route: widget.route));
+              forgetPassword_bloc.add(checkOtpClick(otp_code: otp_code, route: widget.route));
             },
       child: BlocListener(
           bloc: widget.route == 'StcPayPhoneScreen'
@@ -557,6 +555,7 @@ class _OtpState extends State<VerificationCodeScreen>
                         context,
                         GetStartedScreen(
                           token: data.token,
+                          route: 'VerificationCodeScreen',
                         ));
                     break;
                   case 'ForgetPasswordScreen':
@@ -567,6 +566,7 @@ class _OtpState extends State<VerificationCodeScreen>
                         context,
                         GetStartedScreen(
                           token: data.token,
+                          route: 'VerificationCodeScreen',
                         ));
                     break;
                 }

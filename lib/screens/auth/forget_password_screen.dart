@@ -2,9 +2,7 @@ import 'package:almajidoud/Bloc/Authentication_Bloc/SignupBloc/sign_up_bloc.dart
 
 import 'package:almajidoud/screens/auth/widgets/forget_password_button.dart';
 import 'package:almajidoud/screens/auth/widgets/forget_password_top_header.dart';
-import 'package:almajidoud/screens/auth/widgets/resend_message_button.dart';
-import 'package:almajidoud/screens/auth/widgets/reset_password_text_fields.dart';
-import 'package:almajidoud/screens/auth/widgets/send_or_done_button.dart';
+
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/utils/static_data.dart';
 import 'package:country_list_pick/country_list_pick.dart';

@@ -2,11 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:almajidoud/Bloc/Order_Bloc/order_bloc.dart';
-import 'package:almajidoud/Repository/PaymentRepo/stc_pay_repository.dart';
+import 'package:almajidoud/Repository/PaymentRepo/payment_repository.dart';
 import 'package:almajidoud/custom_widgets/custom_push_named_navigation.dart';
 import 'package:almajidoud/screens/auth/get_started_screen.dart';
 import 'package:almajidoud/screens/auth/reset_password_screen.dart';
-import 'package:almajidoud/screens/auth/widgets/confirm_button_in_verificationCode.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/utils/static_data.dart';
@@ -564,6 +563,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
                   // if (extractedData["success"] && extractedData["payment_config"].length !=0) {
                   if (extractedData["success"]) {
                     _stopAnimation();
+                    sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);//remove quote_id after order created successfully
 
                     customAnimatedPushNavigation(context, OrdersScreen());
                   }

@@ -77,10 +77,13 @@ class AuthenticationRepository{
   }
 
   static Future<AuthenticationModel> checkOtpCode(String phone , String code, String route){
+    print("phone : ${phone}");
+    print("code : ${code}");
+    print("route : ${route}");
     FormData formData =FormData.fromMap({
       'mobilenumber' : phone,
       'otpcode' : code,
-      'otptype' : route == 'login'? 'login' : route== 'ForgetPasswordScreen' ? 'forgot' : 'register',
+      'otptype' : route == 'login' || route == 'LoginWithPhoneScreen'? 'login' : route== 'ForgetPasswordScreen' ? 'forgot' : 'register',
       'oldmobile' : '',
     });
     return NetworkUtil.internal().post(AuthenticationModel(), Urls.CHECK_OTP, body: formData);

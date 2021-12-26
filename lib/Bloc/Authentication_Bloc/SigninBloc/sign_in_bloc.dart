@@ -35,6 +35,7 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
       if(response != null){
         customPushNamedNavigation(event.context,GetStartedScreen(
           token: response,
+          route: 'SignInScreen',
         ));
 
       }else{

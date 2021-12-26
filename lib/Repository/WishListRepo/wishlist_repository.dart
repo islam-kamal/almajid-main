@@ -80,6 +80,7 @@ class WishListRepository {
   }
 
   Future<bool> removeProudctToWishList({BuildContext context ,var wishlist_item_id})async {
+    print("remove wishlist_item_id : ${wishlist_item_id}");
     Dio dio = new Dio();
     try {
       final response = await dio.post(
@@ -91,12 +92,16 @@ class WishListRepository {
                 'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}'
               }
           ));
+      print("remove wishlist_item_id 1 : ${response}");
       if (response.statusCode == 200) {
+        print("remove wishlist_item_id 2");
         return response.data;
       } else {
+        print("remove wishlist_item_id 3");
         errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
+      print("remove wishlist_item_id 4");
       print("error : ${e.toString()}");
       errorDialog(context: context, text: e.toString());
     }

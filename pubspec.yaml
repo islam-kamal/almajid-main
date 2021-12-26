@@ -67,6 +67,8 @@ dependencies:
   flutter_html:
   flutter_credit_card: ^3.0.1
   webview_flutter: ^2.0.13
+  network_info_plus: ^2.1.2
+  flutter_spinkit:
 
 
 dev_dependencies:

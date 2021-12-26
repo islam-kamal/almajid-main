@@ -4,9 +4,6 @@ import 'package:almajidoud/Model/AuthenticationModel/authentication_model.dart';
 import 'package:almajidoud/custom_widgets/custom_animated_push_navigation.dart';
 import 'package:almajidoud/custom_widgets/flushbar_widget.dart';
 import 'package:almajidoud/screens/auth/widgets/already_have_an_account.dart';
-import 'package:almajidoud/screens/auth/widgets/sign_button.dart';
-import 'package:almajidoud/screens/auth/widgets/social_media_widget.dart';
-import 'package:almajidoud/screens/auth/widgets/auth_text_field.dart';
 import 'package:almajidoud/screens/auth/widgets/phone_textfield.dart';
 
 import 'package:almajidoud/screens/auth/widgets/top_auth_buttons.dart';

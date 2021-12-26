@@ -69,7 +69,7 @@ singleEditCartItem({BuildContext context, bool checkValue: false,cart_details_mo
                                   child: customDescriptionText(
                                       context: context,
                                       textColor: mainColor,
-                                      text: "${translator.translate("SAR")} ${item.price}",
+                                      text: "${MyApp.country_currency} ${item.price}",
                                       textAlign: TextAlign.start,
                                       fontWeight: FontWeight.bold),
                                 ),

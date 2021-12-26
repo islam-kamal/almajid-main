@@ -117,8 +117,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                 setState(() {
                                   dropdownCountryValue = newValue;
                                   MyApp.app_location = newValue == 'Saudi Arabia' ? 'sa' : 'kw';
+                                  MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR") : translator.translate("KWD");
                                   sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location );
-                                  print("dropdownCountryValue : ${dropdownCountryValue}");
 
                                 });
                               },

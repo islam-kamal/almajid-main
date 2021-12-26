@@ -10,6 +10,7 @@ class StaggerAnimation extends StatelessWidget {
   final double btn_height;
   final bool isResetScreen;
   final String image;
+  Widget widget;
   StaggerAnimation(
       {Key key,
       this.buttonController,
@@ -18,6 +19,7 @@ class StaggerAnimation extends StatelessWidget {
       this.btn_width,
       this.btn_height,
       this.image,
+      this.widget,
       this.isResetScreen})
       : buttonSqueezeanimation = Tween(
           begin: 240.0,
@@ -64,7 +66,13 @@ class StaggerAnimation extends StatelessWidget {
           color: Theme.of(context).primaryColor,
           borderRadius: const BorderRadius.all(Radius.circular(15.0)),
         ),
-        child:image != null && titleButton != null ?Container(
+        child: widget != null ? buttonSqueezeanimation.value > 75.0 ? widget  : const CircularProgressIndicator(
+          value: null,
+          strokeWidth: 1.0,
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        )
+
+            : image != null && titleButton != null ?Container(
             width: width(context) * .9,
             decoration: BoxDecoration(
                 color: mainColor, borderRadius: BorderRadius.circular(8)),
@@ -197,7 +205,7 @@ class StaggerAnimation extends StatelessWidget {
                 value: null,
                 strokeWidth: 1.0,
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-              ),
+              ) ,
       ),
     );
   }

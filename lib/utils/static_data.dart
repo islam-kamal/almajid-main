@@ -4,18 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class StaticData {
+  static List<Map> wishlist_items;
 
   static String country_code ='+966';
   static String vistor_value;
   static String user_token = '';
-
+  static int product_id ;
   static String order_status = 'accepted';
   static int user_wallet_earnings = 0;
   static String user_mobile_number = '';
   static int saved_addresses_count;
   static bool chosse_address_status = false;
   static String order_address = '';
-
+  static String order_payment_refused_reason = '';
   //order payment
   static String card_number = "";
   static String card_holder_name =  "";

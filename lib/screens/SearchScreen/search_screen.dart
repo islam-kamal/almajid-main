@@ -5,7 +5,6 @@ import 'package:almajidoud/Model/ProductModel/product_model.dart' as product_mod
 import 'package:almajidoud/Model/SearchModel/search_model.dart';
 import 'package:almajidoud/screens/WishList/custom_wishlist.dart';
 import 'package:almajidoud/screens/Products/product_slider.dart';
-import 'package:almajidoud/screens/Reviews/product_reviews.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 

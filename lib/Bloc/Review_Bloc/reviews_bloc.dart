@@ -20,8 +20,24 @@ class ReviewsBloc extends Bloc<AppEvent, AppState> with Validator{
 
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
-    if (event is GetProductReviewsEvent) {
-      yield Loading();
+
+   if(event is CreateReviewEvent){
+     yield Loading(indicator: "CreateReview");
+     final response = await reviewsRepository.create_product_review(
+      nickname: event.nickname,
+      detail: event.detail,
+      title:  event.title,
+      product_id: event.product_id
+     );
+     if (response.message == null) {
+       yield Done(model: response,indicator: "CreateReview");
+     }else{
+       yield ErrorLoading(model: response,indicator: "CreateReview");
+     }
+   }
+
+    else if (event is GetProductReviewsEvent) {
+      yield Loading(indicator: 'GetProductReviews');
       final response = await reviewsRepository.getProductReviews(
         product_sku: event.product_sku
       );
@@ -29,9 +45,9 @@ class ReviewsBloc extends Bloc<AppEvent, AppState> with Validator{
       if (response != null) {
         _product_reviews_subject.sink.add(response);
         print("_product_reviews_subject : ${_product_reviews_subject}");
-      yield Done(general_model: response);
+      yield Done(general_model: response , indicator: 'GetProductReviews');
       } else if (response == null) {
-      //  yield ErrorLoading(model: response);
+        yield ErrorLoading(indicator: 'GetProductReviews');
       }
     }
   }

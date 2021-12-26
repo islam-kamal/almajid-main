@@ -57,7 +57,7 @@ singleCartItem({BuildContext context,cart_details_model.Items item}) {
                                   child: customDescriptionText(
                                       context: context,
                                       textColor: mainColor,
-                                      text: " ${item.price} ${translator.translate("SAR")}",
+                                      text: " ${item.price} ${MyApp.country_currency}",
                                       textAlign: TextAlign.start,
                                       fontWeight: FontWeight.bold),
                                 ),

@@ -21,6 +21,7 @@ void main() async {
 class MyApp extends StatefulWidget{
   static var app_langauge;
   static var app_location;
+  static var country_currency ;
   @override
   _MyAppState createState() => _MyAppState();
 
@@ -45,8 +46,10 @@ class _MyAppState extends State<MyApp> {
     await sharedPreferenceManager.readString(CachingKey.USER_COUNTRY_CODE).then((value){
       if(value == ''){
         MyApp.app_location = 'sa';
+        MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR") : translator.translate("KWD");
       }else{
         MyApp.app_location = value;
+        MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR") : translator.translate("KWD");
       }
       print("app_location : ${MyApp.app_location}");
 

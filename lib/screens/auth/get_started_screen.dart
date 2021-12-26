@@ -6,7 +6,8 @@ import 'package:almajidoud/utils/file_export.dart';
 
 class GetStartedScreen extends StatefulWidget {
   final String token;
-  GetStartedScreen({this.token});
+  final String route;
+  GetStartedScreen({this.token,this.route});
   @override
   GetStartedScreenState createState() => new GetStartedScreenState();
 }
@@ -139,15 +140,15 @@ class GetStartedScreenState extends State<GetStartedScreen>
                         customDescriptionText(
                             context: context,
                             textColor: mainColor,
-                            text: "Awesome !",
+                            text: translator.translate("Awesome !"),
                             percentageOfHeight: .03),
                         responsiveSizedBox(
                             context: context, percentageOfHeight: .02),
                         customDescriptionText(
                             context: context,
                             textColor: greyColor,
-                            text:
-                                "Your phone number has been verified sucessfully",
+                            text: widget.route == 'SignInScreen' ?translator.translate("Your Account has been verified sucessfully")
+                              : translator.translate("Your phone number has been verified sucessfully"),
                             percentageOfHeight: .025,
                             maxLines: 3),
                         responsiveSizedBox(
@@ -156,22 +157,6 @@ class GetStartedScreenState extends State<GetStartedScreen>
                         getStartedButton(
                             context:context
                         ),
-/*
-                        Container(
-                            width: width(context) * .8,
-                            decoration: BoxDecoration(
-                                color: mainColor,
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Center(
-                                child: customDescriptionText(
-                                    context: context,
-                                    text: "Get Started",
-                                    percentageOfHeight: .025,
-                                    textColor: whiteColor)),
-                            height: isLandscape(context)
-                                ? 2 * height(context) * .065
-                                : height(context) * .065),
-*/
                       ],
                     ),
                   )))),

@@ -4,7 +4,7 @@ import 'package:almajidoud/Bloc/Category_Bloc/category_bloc.dart';
 import 'package:almajidoud/Bloc/Home_Bloc/home_bloc.dart';
 import 'package:almajidoud/Bloc/Search_Bloc/search_bloc.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
-import 'package:almajidoud/Repository/PaymentRepo/stc_pay_repository.dart';
+import 'package:almajidoud/Repository/PaymentRepo/payment_repository.dart';
 import 'package:almajidoud/Repository/WishListRepo/wishlist_repository.dart';
 import 'package:almajidoud/main.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     StaticData.vistor_value = null; // clear vistor state
-
+    StaticData.wishlist_items = [];
     Timer(Duration(seconds: 0), () async {
       try {
         print('--- token -- : ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}');
@@ -35,6 +35,13 @@ class _SplashScreenState extends State<SplashScreen> {
       } catch (e) {
         checkAuthentication(null);
       }
+    });
+  }
+  void get_wishlist_ids()async {
+    await sharedPreferenceManager.getListOfMaps('wishlist_data_ids').then((
+        value) {
+      StaticData.wishlist_items = value;
+      print("wishlist_items ****: ${ StaticData.wishlist_items}");
     });
   }
   @override
@@ -75,6 +82,8 @@ class _SplashScreenState extends State<SplashScreen> {
     await categoryBloc.add(getAllCategories());
     readJson(token);
     await Future.delayed(Duration(seconds: 3));
+    get_wishlist_ids();
+
   }
 
   Future<void> readJson(String token) async {

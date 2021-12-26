@@ -73,17 +73,10 @@ class GetHomeBestSeller extends AppEvent{
   GetHomeBestSeller({this.category_id,this.offset});
 }
 
-//SOCIAL LOGIN
-class SocialLoginEvent extends AppEvent{
-  var name , email , provider , provider_id ,firebase_token;
-
-  SocialLoginEvent({this.name,this.email,this.provider,this.provider_id,this.firebase_token});
-}
 
 
 
-//offers
-class getAllOffers extends AppEvent{}
+
 
 //countries
 class getAllCountries extends AppEvent{}
@@ -102,13 +95,8 @@ class getCategoryProducts extends AppEvent{
   final int offset;
   getCategoryProducts({this.category_id,this.offset});
 }
-class getSecondLevelSubCategoryProducts extends AppEvent{
-  final String secon_level_subcategory_id;
-  final int offset;
-  getSecondLevelSubCategoryProducts({this.secon_level_subcategory_id,this.offset});
-}
-//complain
-class getAllComplain extends AppEvent{}
+
+
 
 
 //WishList
@@ -204,84 +192,21 @@ class GetAllOrderEvent extends AppEvent{
   GetAllOrderEvent();
 }
 
-// CREDIT CARD
-class updateCreditCard extends AppEvent{
-  final String card_id;
-  updateCreditCard({this.card_id});
-}
-class getAllCreditCard_click extends AppEvent{
-}
 
-//Locations
-class addNewLocation extends AppEvent{
-
-}
-class updateLocation extends AppEvent{
-  final String location_id;
-  updateLocation({this.location_id});
-}
-class getAllAddresses_click extends AppEvent{
-}
-
-//Notifications
-class GetAllNotificationEvent extends AppEvent{
-}
-class RemoveNotificationEvent extends AppEvent{
-  List<int> id;
-  RemoveNotificationEvent({this.id});
-}
-
-//Loyalty System
-class LoyaltySystemEvent extends AppEvent{
+//Reviews
+class CreateReviewEvent extends AppEvent{
+  var title,  detail, nickname, product_id ;
+  CreateReviewEvent({this.product_id , this.nickname,this.detail,this.title});
 }
 
 
-//ORDERS
-class UserOrdersEvent extends AppEvent{}
-class MakeOrderEvent extends AppEvent{
-  String selected_delivery_time, selected_delivery_date, cupon;
-  int payment_method_id, location_id;
-  List<int> product_ids, products_quantity;
-
-  MakeOrderEvent({this.selected_delivery_time,this.selected_delivery_date,this.cupon,this.payment_method_id,this.location_id,
-                   this.products_quantity,this.product_ids});
-}
-class ApplyCouponEvent extends AppEvent{
-  String  cupon;
-  List<int> product_ids, products_quantity;
-
-  ApplyCouponEvent({this.cupon, this.products_quantity,this.product_ids});
-}
-//wallet
-class getWalletHistoryOrdersEvent extends AppEvent{}
-class ChargeWalletEvent extends AppEvent{
-  int card_id;
-  String amount;
-  String cvv;
-  ChargeWalletEvent({this.card_id,this.amount,this.cvv});
-}
 
 
-class cashoutDeliveryEvent extends AppEvent{
-  final String delivery_id;
-  cashoutDeliveryEvent({this.delivery_id});
-}
-
-//Settings
-class AppSettingsEvent extends AppEvent{}
 
 
-//PAYMENT
-class PayByCreditCardEvent extends AppEvent{
-   int order_id;
-   int card_id;
-   String amount;
-   String cvv;
-  PayByCreditCardEvent({this.order_id,this.card_id,this.amount,this.cvv});
-}
 
-class PayByWalletEvent extends AppEvent{
-  int order_id;
-  String amount;
-  PayByWalletEvent({this.order_id,this.amount});
-}
+
+
+
+
+

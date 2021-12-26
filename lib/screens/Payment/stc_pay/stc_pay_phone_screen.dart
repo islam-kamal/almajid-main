@@ -1,4 +1,4 @@
-import 'package:almajidoud/Repository/PaymentRepo/stc_pay_repository.dart';
+import 'package:almajidoud/Repository/PaymentRepo/payment_repository.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:country_list_pick/country_list_pick.dart';
 

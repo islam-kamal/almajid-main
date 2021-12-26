@@ -362,7 +362,7 @@ class _EditCartScreenState extends State<EditCartScreen>
                                   context: context,
                                   textColor: mainColor,
                                   text:
-                                      "${translator.translate("SAR")} ${item.price}",
+                                      "${MyApp.country_currency}${item.price}",
                                   textAlign: TextAlign.start,
                                   fontWeight: FontWeight.bold),
                             ),
