@@ -116,6 +116,47 @@ class AuthenticationRepository{
   }
 
 
+ static Future<bool> updateUserProfile(
+     {
+       String firstName,
+       String lastName,
+       String email,
+       String phone,
+       String token
+     })async{
+
+    final payload = convert.jsonEncode(
+      {
+        "customer": {
+          "email": email,
+          "firstname": firstName,
+          "lastname": lastName,
+          "custom_attributes": [
+            {
+              "attribute_code": "mobile_number",
+              "value": phone
+            }
+          ]
+        }
+      }
+    );
+   Dio dio = new Dio();
+   try {
+     final response = await dio.put(Urls.BASE_URL+ Urls.UPDATE_PROFILE,
+         data: payload , options: Options(
+             headers: {'content-type': 'application/json','Authorization': 'Bearer ${token}'}
+         ));
+     if (response.statusCode == 200) {
+       return true;
+     } else {
+       return false;
+     }
+   } catch (e) {
+     return false;
+   }
+
+ }
+
 
 
 }

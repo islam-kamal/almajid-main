@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:almajidoud/screens/categories/categories_screen.dart';
+import 'package:almajidoud/screens/my_account/update_profile.dart';
 import 'package:almajidoud/screens/my_account/widgets/logout_button.dart';
 import 'package:almajidoud/screens/my_account/widgets/single_account_item.dart';
 import 'package:almajidoud/screens/my_account/widgets/user_email.dart';
@@ -172,7 +173,17 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         iconPath: "assets/icons/share.png",
                         text: "Edit Profile",
                         isContainMoreIcon: true,
-                        onTap: () {}),
+                        onTap: () async {
+                          final _token = await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN);
+                          if(_token !=''){
+                            final result = await Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => UpdateProfile()));
+                            print('result-->'+  result['full_name']);
+                            _userName = result['full_name'];
+                            setState(() {});
+                          }else{
+                            customAnimatedPushNavigation(context, SignInScreen());
+                          }
+                        }),
                     singleAccountItem(
                         context: context,
                         iconPath: "assets/icons/tracking.png",
@@ -181,12 +192,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         onTap: () {
                           customPushNamedNavigation(context, OrdersScreen());
                         }),
-                    singleAccountItem(
-                        context: context,
-                        iconPath: "assets/icons/credit-card.png",
-                        text: "My Cards",
-                        isContainMoreIcon: true,
-                        onTap: () {}),
                     StaticData.vistor_value == "visitor"
                         ? Container()
                         : singleAccountItem(

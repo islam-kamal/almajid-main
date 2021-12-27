@@ -54,12 +54,15 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
       var response = await AuthenticationRepository.get_user_info(
           token: event.token,
       );
-      print("UserInfo response : ${response.firstname}");
+      print("UserInfo response attributes: ${event.token}");
       if(response != null){
         print("UserInfo response : 11111111111111111");
         sharedPreferenceManager.writeData(CachingKey.USER_NAME, response.firstname +' '+ response.lastname );
         sharedPreferenceManager.writeData(CachingKey.CUSTOMER_ID, response.id );
         sharedPreferenceManager.writeData(CachingKey.EMAIL, response.email );
+        final mobileElement = response.customAttributes.firstWhere((element) => element.attributeCode == 'mobile_number');
+        print('you number is ' + mobileElement.value.toString());
+        sharedPreferenceManager.writeData(CachingKey.MOBILE_NUMBER, mobileElement.value );
         yield Done(model:response);
       }else{
         yield ErrorLoading(model: response);

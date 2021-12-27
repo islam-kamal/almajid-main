@@ -12,6 +12,7 @@ class Urls {
   static final String USER_INFO_URL = "/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/customers/me";
 
   static final String SIGN_IN =   "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/integration/customer/token";
+  static final String UPDATE_PROFILE =   "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/customers/me";
 
   static final String FORGET_PASSWORD= "/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/mobilelogin/otp/send";
 

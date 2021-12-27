@@ -20,7 +20,6 @@ logButton({BuildContext context ,var type}){
         });
     }else{
       customAnimatedPushNavigation(context, SignInScreen());
-
     }
 
 
