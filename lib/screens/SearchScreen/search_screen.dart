@@ -180,7 +180,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                         child: customDescriptionText(
                                                                                             context: context,
                                                                                             textColor: mainColor,
-                                                                                            text: "${snapshot.data.items[index].price} \$",
+                                                                                            text: "${snapshot.data.items[index].price} ${MyApp.country_currency}",
                                                                                             textAlign: TextAlign.start,
                                                                                             fontWeight: FontWeight.bold),
                                                                                       ),
@@ -357,7 +357,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                   child: customDescriptionText(
                                                                                       context: context,
                                                                                       textColor: mainColor,
-                                                                                      text: "${snapshot.data.items[index].price} \$",
+                                                                                      text: "${snapshot.data.items[index].price} ${MyApp.country_currency}",
                                                                                       textAlign: TextAlign.start,
                                                                                       fontWeight: FontWeight.bold),
                                                                                 ),

@@ -1,4 +1,5 @@
 import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
+import 'package:almajidoud/main.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/Payment/Constants.dart';
 import 'package:almajidoud/screens/checkout/checkout_summary_screen.dart';
@@ -215,7 +216,20 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
   }
 
   paymentMethodCard({BuildContext context ,  List<PaymentMethods> paymentMethods}) {
+    var toRemove = [];
+    paymentMethods.forEach((element) {
+      if(element.title =="APS Payment Method"){
+        toRemove.add(element);
+      }else if(element.title =="Tap"){
+        if(MyApp.app_location == 'kw'){
 
+        }else{
+          toRemove.add(element);
+        }
+
+      }
+    });
+    paymentMethods.removeWhere( (e) => toRemove.contains(e));
     return Container(
         padding: EdgeInsets.only(
             right: width(context) * .05, left: width(context) * .05),
@@ -232,57 +246,57 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
           ),
           itemBuilder:
               (BuildContext context, int index) {
-            return Directionality(
-              textDirection: TextDirection.ltr,
-              child: Container(
-                child: Theme(
-                    data: Theme.of(context).copyWith(
-                        unselectedWidgetColor: whiteColor,
-                        disabledColor: whiteColor
-                    ),
-                    child:RadioListTile(
-                      groupValue: _currentIndex,
-                      contentPadding: const EdgeInsets.all(5.0),
+              return Directionality(
+                textDirection: TextDirection.ltr,
+                child: Container(
+                  child: Theme(
+                      data: Theme.of(context).copyWith(
+                          unselectedWidgetColor: whiteColor,
+                          disabledColor: whiteColor
+                      ),
+                      child:RadioListTile(
+                        groupValue: _currentIndex,
+                        contentPadding: const EdgeInsets.all(5.0),
 
-                      title: Container(
-                decoration: BoxDecoration(
-                color: whiteColor,
-                borderRadius: BorderRadius.circular(15)
-                ),
-                child:Row(
-                        children: [
-                          Expanded(
-                            flex: 7,
-                              child:  Text(
-                              "${paymentMethods[index].title} ",
-                              maxLines: 2,
-                              style: TextStyle(
-                                fontSize: AlmajedFont.secondary_font_size,color: mainColor,fontWeight: FontWeight.w300
-                              ),
-                              textAlign: TextAlign.center,
+                        title: Container(
+                            decoration: BoxDecoration(
+                                color: whiteColor,
+                                borderRadius: BorderRadius.circular(15)
                             ),
-                          ),
+                            child:Row(
+                              children: [
+                                Expanded(
+                                  flex: 7,
+                                  child:  Text(
+                                    "${paymentMethods[index].title} ",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: AlmajedFont.secondary_font_size,color: mainColor,fontWeight: FontWeight.w300
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
 
-                        ],
-                ) ),
+                              ],
+                            ) ),
 
-                      value: paymentMethods[index].code,
-                      activeColor: Colors.blue,
-                      onChanged: (val) {
-                        setState(() {
-                          sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, paymentMethods[index].code);
-                          payment_method_name =   paymentMethods[index].title;
+                        value: paymentMethods[index].code,
+                        activeColor: Colors.blue,
+                        onChanged: (val) {
+                          setState(() {
+                            sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, paymentMethods[index].code);
+                            payment_method_name =   paymentMethods[index].title;
 
-                          _currentIndex = val;
-                          print("_currentIndex : ${_currentIndex}");
-                        });
+                            _currentIndex = val;
+                            print("_currentIndex : ${_currentIndex}");
+                          });
 
 
 
-                      },
-                    )),
-              ),
-            );
+                        },
+                      )),
+                ),
+              );
           },
         )
 

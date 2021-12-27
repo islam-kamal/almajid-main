@@ -183,7 +183,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                             textColor:
                                                                                 mainColor,
                                                                             text:
-                                                                                "${snapshot.data.items[index].product.price} \$",
+                                                                                "${snapshot.data.items[index].product.price} ${MyApp.country_currency}",
                                                                             textAlign:
                                                                                 TextAlign.start,
                                                                             fontWeight: FontWeight.bold),

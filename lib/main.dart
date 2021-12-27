@@ -32,12 +32,20 @@ class MyApp extends StatefulWidget{
     print("app_langauge : ${app_langauge}");
     state.setState(() => state.local = newLocale);
   }
+
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_MyAppState>().restartApp();
+  }
 }
 
 class _MyAppState extends State<MyApp> {
   Locale local;
-
-
+  Key key = UniqueKey();
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
+  }
   @override
   void initState() {
     get_Static_data();
@@ -69,22 +77,25 @@ class _MyAppState extends State<MyApp> {
     return LayoutBuilder(
       builder: (context, constraints) {
         return OrientationBuilder(builder: (context, orientation) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-                accentColor: mainColor,
-                primaryColor: mainColor,
-                fontFamily: checkDirection(
-                    dirArabic: "Cairo", dirEnglish: "Cairo")
-            ),
-            title: 'Al Majed Oud',
-            home: SplashScreen(),
-            localizationsDelegates:
-            translator.delegates, //
-            locale: local,
+          return KeyedSubtree(
+            key:key ,
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                  accentColor: mainColor,
+                  primaryColor: mainColor,
+                  fontFamily: checkDirection(
+                      dirArabic: "Cairo", dirEnglish: "Cairo")
+              ),
+              title: 'Al Majed Oud',
+              home: SplashScreen(),
+              localizationsDelegates:
+              translator.delegates,
+              locale: local,
 // Android + iOS Delegates
-           // locale: translator.locale, // Active locale
-            supportedLocales: translator.locals(),
+              // locale: translator.locale, // Active locale
+              supportedLocales: translator.locals(),
+            ),
           );
         });
       },

@@ -96,6 +96,7 @@ class PaymentRepository {
   Future<http.Response> getPayFortSettings({var orderId}) async {
     //final url = '${ORDER_DATA['website_domain']}/rest/V1/mstore/update-order-type';
     print("-----------------------orderId : ${orderId}");
+    print("PayFortSettings url ${Urls.BASE_URL+"/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/update-order-type"}");
     try {
       final Map<String, dynamic> data = {
         "orderId": int.parse(orderId),
