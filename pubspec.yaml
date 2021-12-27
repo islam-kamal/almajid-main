@@ -67,6 +67,9 @@ dependencies:
   flutter_html:
   flutter_credit_card: ^3.0.1
   webview_flutter: ^2.0.13
+  image_picker: ^0.8.4+1
+  path_provider: ^2.0.4
+  path:
 
 
 dev_dependencies:
@@ -96,16 +99,16 @@ flutter:
     - assets/langs/
     - assets/flag/
   fonts:
-      - family: Cairo
-        fonts:
-            - asset: assets/fonts/Cairo-Black.ttf
-            - asset: assets/fonts/Cairo-Bold.ttf
-            - asset: assets/fonts/Cairo-ExtraBold.ttf
-            - asset: assets/fonts/Cairo-ExtraLight.ttf
-            - asset: assets/fonts/Cairo-Light.ttf
-            - asset: assets/fonts/Cairo-Medium.ttf
-            - asset: assets/fonts/Cairo-Regular.ttf
-            - asset: assets/fonts/Cairo-SemiBold.ttf
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/Cairo-Black.ttf
+        - asset: assets/fonts/Cairo-Bold.ttf
+        - asset: assets/fonts/Cairo-ExtraBold.ttf
+        - asset: assets/fonts/Cairo-ExtraLight.ttf
+        - asset: assets/fonts/Cairo-Light.ttf
+        - asset: assets/fonts/Cairo-Medium.ttf
+        - asset: assets/fonts/Cairo-Regular.ttf
+        - asset: assets/fonts/Cairo-SemiBold.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

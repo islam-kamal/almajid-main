@@ -58,7 +58,7 @@ class SharedPreferenceManager {
   }
 
 
-   Future setListOfMaps(List<Map> messages , String key) async {
+  Future setListOfMaps(List<Map> messages , String key) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 print("messages : ${messages}");
     List<String> messagesString = [];
@@ -97,6 +97,7 @@ class   CachingKey extends Enum<String> {
   static const CachingKey USER_ID = const CachingKey('USER_ID');
   static const CachingKey AUTH_TOKEN = const CachingKey('AUTH_TOKEN');
   static const CachingKey CUSTOMER_ID = const CachingKey('CUSTOMER_ID');
+  static const CachingKey PROFILE_IMAGE= const CachingKey('PROFILE_IMAGE');
 
   static const CachingKey FIREBASE_TOKEN = const CachingKey('FIREBASE_TOKEN');
   static const CachingKey CART_QUOTE = const CachingKey('CART_QUOTE');
