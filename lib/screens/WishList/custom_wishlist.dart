@@ -52,7 +52,6 @@ class CustomFauvourite_State extends State<CustomWishList> {
     await sharedPreferenceManager.getListOfMaps('wishlist_data_ids').then((
         value) {
       StaticData.wishlist_items = value;
-      print("wishlist_items ****: ${ StaticData.wishlist_items}");
     });
   }
   @override

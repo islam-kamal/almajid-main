@@ -79,13 +79,17 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
   Widget getResponseScreen() {
     switch (_responseStatus) {
       case STATUS_SUCCESSFUL:
-        return PaymentSuccessfulScreen();
+        return PaymentSuccessfulScreen(
+          order_id: widget.order_number,
+        );
       case STATUS_CHECKSUM_FAILED:
         return CheckSumFailedScreen();
       case STATUS_FAILED:
         return PaymentFailedScreen();
     }
-    return PaymentSuccessfulScreen();
+    return PaymentSuccessfulScreen(
+      order_id: widget.order_number,
+    );
   }
 
   @override
@@ -153,9 +157,11 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
                   if (Platform.isAndroid) {
                     print("pay 8");
                     responseJSON = jsonDecode(decodedJSON);
+                    print("android responseJSON : ${responseJSON}");
                   } else if (Platform.isIOS) {
                     print("pay 9");
-                    responseJSON = decodedJSON;
+                    responseJSON = jsonDecode(decodedJSON);
+                    print("ios responseJSON : ${responseJSON}");
                   }
 
                   final responseCode = responseJSON["response_code"];
@@ -200,7 +206,8 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
 }
 
 class PaymentSuccessfulScreen extends StatelessWidget {
-
+  var order_id;
+  PaymentSuccessfulScreen({this.order_id});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -243,23 +250,13 @@ class PaymentSuccessfulScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     if( StaticData.vistor_value == 'visitor') {
-                  /*    cartRepository.check_quote_status().then((value){
-                        final extractedData = json.decode(value.body) as Map<String, dynamic>;
-                        if (extractedData["status"]) {
-                          print("cart quote is active");
-                        }else if(extractedData["message"] != null){
-                          print("cart quote is  not found");
-                          cartRepository.create_quote(context: context); // used to create new quote for guest
-                        }
-                        else{
-                          print("cart quote is not active");
-                          cartRepository.create_quote(context: context); // used to create new quote for guest
-                        }
-                      });*/
+
                       customPushNamedNavigation(context, CustomCircleNavigationBar());
                     }
                     else{
-                      customPushNamedNavigation(context, OrdersScreen());
+                      customPushNamedNavigation(context, OrdersScreen(
+                        increment_id: order_id,
+                      ));
                     }
 
 
@@ -314,18 +311,6 @@ class PaymentFailedScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                  /*  cartRepository.check_quote_status().then((value){
-                      final extractedData = json.decode(value.body) as Map<String, dynamic>;
-                      if (extractedData["status"]) {
-
-                      }else if(extractedData["message"] != null){
-                        cartRepository.create_quote(context: context); // used to create new quote for guest
-                      }
-                      else{
-                        cartRepository.create_quote(context: context); // used to create new quote for guest
-                      }
-                    });*/
-
                     customPushNamedNavigation(context, CustomCircleNavigationBar());
 
                   })

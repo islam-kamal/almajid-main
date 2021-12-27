@@ -16,7 +16,7 @@ class CategoryRepository {
       'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
     };
     return NetworkUtil.internal().get(
-        CategoryModel(), Urls.GET_ALL_CATEGORIES, headers: headers  );
+        CategoryModel(), '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/categories', headers: headers  );
   }
 
 
@@ -28,7 +28,6 @@ class CategoryRepository {
       'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
     };
     print("MyApp.app_langauge : ${MyApp.app_langauge}");
-    print("####### getCategoryProducts  : ${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}");
     return NetworkUtil.internal().get(
         ProductModel(),
         '${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/products?searchCriteria&searchCriteria[filterGroups][0][filters][1][field]=category_id&searchCriteria[filterGroups][0][filters][1][value]=${category_id}&searchCriteria[filterGroups][0][filters][1][conditionType]=eq&searchCriteria[sortOrders][0][field]=position& searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[pageSize]=10',

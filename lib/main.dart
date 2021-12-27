@@ -1,5 +1,6 @@
 
 import 'package:almajidoud/Base/Shimmer/list_shimmer.dart';
+import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/Payment/stc_pay/stc_pay_phone_screen.dart';
 import 'package:almajidoud/screens/checkout/checkout_address_screen.dart';
 import 'package:almajidoud/screens/checkout/checkout_payment_screen.dart';
@@ -34,7 +35,9 @@ class MyApp extends StatefulWidget{
   }
 
   static void restartApp(BuildContext context) {
+
     context.findAncestorStateOfType<_MyAppState>().restartApp();
+
   }
 }
 
@@ -43,6 +46,8 @@ class _MyAppState extends State<MyApp> {
   Key key = UniqueKey();
   void restartApp() {
     setState(() {
+      get_Static_data();
+      cartRepository.create_quote(context: context);
       key = UniqueKey();
     });
   }

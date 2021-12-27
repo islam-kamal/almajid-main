@@ -222,11 +222,9 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
         toRemove.add(element);
       }else if(element.title =="Tap"){
         if(MyApp.app_location == 'kw'){
-
         }else{
           toRemove.add(element);
         }
-
       }
     });
     paymentMethods.removeWhere( (e) => toRemove.contains(e));

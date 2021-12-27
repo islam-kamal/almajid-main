@@ -18,8 +18,8 @@ class CartRepository {
     try {
       final response = await dio.post(
           StaticData.vistor_value == 'visitor'
-              ? Urls.BASE_URL + Urls.CREATE_Guest_QUOTE
-              : Urls.BASE_URL + Urls.CREATE_Client_QUOTE,
+              ? Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/'
+              : Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/carts/mine',
           options: Options(
             headers: {
               'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ class CartRepository {
             AddCartModel(),
             StaticData.vistor_value == 'visitor'
                 ? "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${StaticData.vistor_value == 'visitor' ? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE) : await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/items"
-                : Urls.Client_Add_Product_To_Cart,
+                : "/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/carts/mine/items",
             body: formData,
             headers: StaticData.vistor_value == 'visitor'
                 ? Map<String, String>.from({})
@@ -117,8 +117,8 @@ class CartRepository {
         //create_quote
         final response = await dio.post(
             StaticData.vistor_value == 'visitor'
-                ? Urls.BASE_URL + Urls.CREATE_Guest_QUOTE
-                : Urls.BASE_URL + Urls.CREATE_Client_QUOTE,
+                ? Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/'
+                : Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/carts/mine',
             options: Options(
               headers: {
                 'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ class CartRepository {
                 AddCartModel(),
                 StaticData.vistor_value == 'visitor'
                     ? "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${StaticData.vistor_value == 'visitor' ? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE) : await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/items"
-                    : Urls.Client_Add_Product_To_Cart,
+                    : "/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/carts/mine/items",
                 body: formData,
                 headers: StaticData.vistor_value == 'visitor'
                     ? Map<String, String>.from({})
@@ -178,8 +178,8 @@ class CartRepository {
         //create_quote
         final response = await dio.post(
             Urls.BASE_URL + StaticData.vistor_value == 'visitor'
-                ? Urls.BASE_URL + Urls.CREATE_Guest_QUOTE
-                : Urls.BASE_URL + Urls.CREATE_Client_QUOTE,
+                ? Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/'
+                : Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/carts/mine',
             options: Options(
               headers: {
                 'Content-Type': 'application/json',
@@ -213,7 +213,7 @@ class CartRepository {
                 AddCartModel(),
                 StaticData.vistor_value == 'visitor'
                     ? "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${StaticData.vistor_value == 'visitor' ? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE) : await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/items"
-                    : Urls.Client_Add_Product_To_Cart,
+                    : "/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/carts/mine/items",
                 body: formData,
                 headers: StaticData.vistor_value == 'visitor'
                     ? Map<String, String>.from({})
@@ -257,7 +257,7 @@ class CartRepository {
           AddCartModel(),
           StaticData.vistor_value == 'visitor'
               ? "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${StaticData.vistor_value == 'visitor' ? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE) : await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/items"
-              : Urls.Client_Add_Product_To_Cart,
+              : "/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/carts/mine/items",
           body: formData,
           headers: StaticData.vistor_value == 'visitor'
               ? Map<String, String>.from({})
@@ -288,7 +288,7 @@ class CartRepository {
         CartDetailsModel(),
         StaticData.vistor_value == 'visitor'
             ? '${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${StaticData.vistor_value == 'visitor' ? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE) : await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/totals'
-            : Urls.Client_Cart_Details,
+            : "/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/carts/mine/totals",
         headers: headers);
   }
 
@@ -327,7 +327,7 @@ class CartRepository {
       final response = await dio.delete(
           StaticData.vistor_value == 'visitor'
               ? "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/guest-carts/${StaticData.vistor_value == 'visitor' ? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE) : await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/items/${item_id}"
-              : "${Urls.BASE_URL}/rest/V1/carts/mine/items/${item_id}",
+              : "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/carts/mine/items/${item_id}",
           options: Options(
               headers: StaticData.vistor_value == 'visitor'
                   ? Map<String, String>.from({})

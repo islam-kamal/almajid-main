@@ -79,7 +79,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                   print("data : ${data}");
 
                                   if (data.items == null || data.items.isEmpty) {
-                                    print("11111111111");
                                     return no_data_widget(
                                         context: context
                                     );
@@ -89,13 +88,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                       builder: (context, snapshot) {
                                         if (snapshot.hasData) {
                                           if (snapshot.data == null) {
-                                            print("222222");
                                             return no_data_widget(
                                               context: context
                                             );
                                           } else {
-                                            print("length : ${snapshot.data.items.length}");
-
                                             return ListView.builder(
                                                 shrinkWrap: true,
                                                 itemCount: snapshot.data.items.length,

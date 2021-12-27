@@ -28,7 +28,7 @@ class PaymentRepository {
     };
     try {
       final response = await dio.post(
-          Urls.BASE_URL+Urls.STC_PAY_GENERATE_OTP,
+          Urls.BASE_URL+'/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/stc-pay/get-otp',
           data: {
             "mobile": phone_number.substring(4,14) , //"0591826195",
             "quoteId": StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
@@ -70,7 +70,7 @@ class PaymentRepository {
           :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}");
       print("otp type : ${otp.runtimeType}");
       final response = await http.post(
-          Uri.parse(Urls.BASE_URL+Urls.STC_PAY_VALIDATE_OTP),
+          Uri.parse(Urls.BASE_URL+'/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/stc-pay/verify-otp'),
           body:jsonEncode( {
             "otp": otp,
             "otpReference": otpReference,
@@ -141,7 +141,7 @@ class PaymentRepository {
         "client_ip": "192.168.1.20"
       };
       final serializedData = json.encode(data);
-      final response = await http.post(Uri.parse(Urls.CREATE_TOKEN_TAP_PAYMENT),
+      final response = await http.post(Uri.parse('https://api.tap.company/v2/tokens'),
           headers: {
             "content-type": "application/json",
             "Authorization": 'Bearer ${public_key}'

@@ -43,8 +43,6 @@ class HomeListProductsState extends State<HomeListProducts> {
             if (data.items == null || data.items.isEmpty) {
               return Container();
             } else {
-              print("111111111111111");
-
               return StreamBuilder<List<product_model.Items>>(
                 stream: widget.type == 'best-seller'
                     ? home_bloc.best_seller_products_subject

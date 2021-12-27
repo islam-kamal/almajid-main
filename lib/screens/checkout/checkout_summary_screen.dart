@@ -240,6 +240,11 @@ print(" PayFortSettings     response  : ${response}");
                   increment_id: extractedData["increment_id"],
                 ));
                 break;
+              case 'mestores_applepay':
+                customAnimatedPushNavigation(context, StaticData.vistor_value == 'visitor'? CustomCircleNavigationBar(): OrdersScreen(
+                  increment_id: extractedData["increment_id"],
+                ));
+                break;
             }
           });
 

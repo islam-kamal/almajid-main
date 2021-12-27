@@ -579,7 +579,6 @@ class _OtpState extends State<VerificationCodeScreen>
                 var data = state.model as AuthenticationModel;
 
                 _stopAnimation();
-                print('login ErrorLoading 111111111');
 
                 Flushbar(
                   messageText: Row(

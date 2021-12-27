@@ -13,7 +13,7 @@ class WishListRepository {
       'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}'
     };
     return NetworkUtil.internal().get(
-        GetAllWishListModel(), Urls.GET_ALL_WISHLIST_ITEMS,
+        GetAllWishListModel(), '/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/me/wishlist',
         headers: headers);
   }
 
@@ -22,7 +22,7 @@ class WishListRepository {
     Dio dio = new Dio();
     try {
       final response = await dio.get(
-          Urls.BASE_URL+ Urls.GET_ALL_WISHLIST_ITEMS,
+          Urls.BASE_URL+ '/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/me/wishlist',
           options: Options(
               headers:  Map<String, String>.from({
                 'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ class WishListRepository {
     Dio dio = new Dio();
     try {
       //create_quote
-      final response = await dio.post( Urls.BASE_URL +Urls.CREATE_Client_QUOTE,
+      final response = await dio.post( Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/carts/mine',
           options: Options(
             headers: {
 

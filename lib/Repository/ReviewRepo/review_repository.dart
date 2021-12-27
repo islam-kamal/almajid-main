@@ -35,7 +35,7 @@ class ReviewsRepository {
       'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
     };
     return NetworkUtil.internal().post(ProductReviewModel(),
-        Urls.CREATE_PRODUCT_REVIEW,
+        '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/reviews/',
         body: formData,
     headers: headers);
   }
