@@ -26,7 +26,7 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
   Stream<AppState> mapEventToState(AppEvent event) async* {
     if (event is AddProductToCartEvent) {
       yield Loading(indicator: event.indictor);
-      final response = await cartRepository.add_product_to_cart(
+      final response = await cartRepository.add_product_to_cart_FUN(
           context: event.context,
           product_sku: event.product_sku,
           product_quantity: event.product_quantity);
@@ -65,7 +65,7 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
       if (response != true) {
         errorDialog(
             context: event.context,
-            text: "There is error Occured"
+            text: "The coupon code isn't valid. Verify the code and try again."
         );
 
       } else {

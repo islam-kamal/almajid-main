@@ -354,7 +354,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             responsiveSizedBox(
                 context: context, percentageOfHeight: .01),
             phone_addressTextFields(
-                context: context, hint: "Phone"),
+                context: context, hint: "Ex: 0591826195"),
             responsiveSizedBox(
                 context: context, percentageOfHeight: .01),
 
@@ -816,7 +816,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
         return Container(
           padding: EdgeInsets.only(
               right: width(context) * .05, left: width(context) * .05),
-          //   height: isLandscape(context) ? 2 * height(context) * .065 : height(context) * .065,
           child: TextFormField(
             initialValue: initialValue??'',
             keyboardType: TextInputType.number,
@@ -827,7 +826,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     : height(context) * .02),
             cursorColor: greyColor.withOpacity(.5),
             decoration: InputDecoration(
-              hintText: translator.translate(hint??"Phone"),
+              hintText: translator.translate(hint??"Ex: 0591826195"),
               hintStyle: TextStyle(
                   color: greyColor.withOpacity(.5),
                   fontWeight: FontWeight.bold,
@@ -915,7 +914,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
 
   addressNextButton({BuildContext context,}) {
-    print("chossed_address_id______________ : ${chossed_address_id}");
     return StaggerAnimation(
       titleButton: translator.translate("Next"),
       buttonController: _loginButtonController.view,

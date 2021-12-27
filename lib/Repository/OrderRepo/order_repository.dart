@@ -11,7 +11,8 @@ class OrderRepository {
     Dio dio = new Dio();
     try {
       final response = await dio.put(
-          "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/order",
+          "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
+              :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/order",
           data: {
             "paymentMethod": {
                  "method": await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD),

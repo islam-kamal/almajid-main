@@ -14,7 +14,7 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   FocusNode fieldNode = FocusNode();
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-  var dropdownCountryValue = MyApp.app_langauge == 'sa' ?      'Saudi Arabia' : 'kuwait';
+  var dropdownCountryValue = MyApp.app_location == 'sa' ?      'Saudi Arabia' : 'kuwait';
   @override
   Widget build(BuildContext context) {
     return NetworkIndicator(

@@ -3,7 +3,7 @@ import 'package:almajidoud/custom_widgets/custom_animated_push_navigation.dart';
 import 'package:almajidoud/screens/orders/order_details_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-singleOrderItem({BuildContext context , OrderItems order}) {
+singleOrderItem({BuildContext context , OrderItems order ,var order_increment_id}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -20,6 +20,7 @@ singleOrderItem({BuildContext context , OrderItems order}) {
 
                 child: Container(
                     width: width(context) * .9,
+
                     child: Column(
                       children: [
                         Row(
@@ -155,7 +156,8 @@ singleOrderItem({BuildContext context , OrderItems order}) {
                         )
                       ],
                     ),
-                    decoration: BoxDecoration(color: Colors.white))),
+                    decoration: BoxDecoration(
+                        color: order_increment_id == order.incrementId  ? Colors.grey : Colors.white))),
           ],
         ),
       ),

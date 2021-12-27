@@ -414,82 +414,79 @@ class _CartScreenState extends State<CartScreen> {
                                                   );
                                                 },
                                               ).toList(),
-                                              onChanged: (val) {
-                                                setState(
-                                                  () async {
-                                                    _dropDownValue = val;
-                                                    final response = await cartRepository
-                                                        .update_product_quantity_cart(
-                                                            item_id:
-                                                                item.itemId,
-                                                            product_quantity:
-                                                                _dropDownValue);
-                                                    if (response.message !=
-                                                        null) {
-                                                      Flushbar(
-                                                        messageText: Row(
-                                                          children: [
-                                                            Container(
-                                                              width: StaticData
-                                                                      .get_width(
-                                                                          context) *
-                                                                  0.7,
-                                                              child: Wrap(
-                                                                children: [
-                                                                  Text(
-                                                                    '${"There is Error"}',
-                                                                    textDirection:
-                                                                        TextDirection
-                                                                            .rtl,
-                                                                    style: TextStyle(
-                                                                        color:
-                                                                            whiteColor),
-                                                                  ),
-                                                                ],
+                                              onChanged: (val) async{
+                                                _dropDownValue = val;
+                                                final response = await cartRepository
+                                                    .update_product_quantity_cart(
+                                                    item_id:
+                                                    item.itemId,
+                                                    product_quantity:
+                                                    _dropDownValue);
+                                                if (response.message != null) {
+                                                  Flushbar(
+                                                    messageText: Row(
+                                                      children: [
+                                                        Container(
+                                                          width: StaticData
+                                                              .get_width(
+                                                              context) *
+                                                              0.7,
+                                                          child: Wrap(
+                                                            children: [
+                                                              Text(
+                                                                '${"There is Error"}',
+                                                                textDirection:
+                                                                TextDirection
+                                                                    .rtl,
+                                                                style: TextStyle(
+                                                                    color:
+                                                                    whiteColor),
                                                               ),
-                                                            ),
-                                                            Spacer(),
-                                                            Text(
-                                                              translator.translate(
-                                                                  "Try Again"),
-                                                              textDirection:
-                                                                  TextDirection
-                                                                      .rtl,
-                                                              style: TextStyle(
-                                                                  color:
-                                                                      whiteColor),
-                                                            ),
-                                                          ],
+                                                            ],
+                                                          ),
                                                         ),
-                                                        flushbarPosition:
-                                                            FlushbarPosition
-                                                                .BOTTOM,
-                                                        backgroundColor:
-                                                            redColor,
-                                                        flushbarStyle:
-                                                            FlushbarStyle
-                                                                .FLOATING,
-                                                        duration: Duration(
-                                                            seconds: 3),
-                                                      )..show(_drawerKey
-                                                          .currentState
-                                                          .context);
-                                                    } else {
-                                                      print(
-                                                          "UpdateProductQuantityCart Done");
-                                                      customAnimatedPushNavigation(
-                                                          context,
-                                                          translator.activeLanguageCode ==
-                                                                  'ar'
-                                                              ? CustomCircleNavigationBar(
-                                                                  page_index: 4,
-                                                                )
-                                                              : CustomCircleNavigationBar(
-                                                                  page_index: 0,
-                                                                ));
-                                                    }
-                                                  },
-                                                );
+                                                        Spacer(),
+                                                        Text(
+                                                          translator.translate(
+                                                              "Try Again"),
+                                                          textDirection:
+                                                          TextDirection
+                                                              .rtl,
+                                                          style: TextStyle(
+                                                              color:
+                                                              whiteColor),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    flushbarPosition:
+                                                    FlushbarPosition
+                                                        .BOTTOM,
+                                                    backgroundColor:
+                                                    redColor,
+                                                    flushbarStyle:
+                                                    FlushbarStyle
+                                                        .FLOATING,
+                                                    duration: Duration(
+                                                        seconds: 3),
+                                                  )..show(_drawerKey
+                                                      .currentState
+                                                      .context);
+                                                } else {
+                                                  print(
+                                                      "UpdateProductQuantityCart Done");
+                                                  customAnimatedPushNavigation(
+                                                      context,
+                                                      translator.activeLanguageCode ==
+                                                          'ar'
+                                                          ? CustomCircleNavigationBar(
+                                                        page_index: 4,
+                                                      )
+                                                          : CustomCircleNavigationBar(
+                                                        page_index: 0,
+                                                      ));
+                                                }
+
+
                                               },
                                             ),
                                           )

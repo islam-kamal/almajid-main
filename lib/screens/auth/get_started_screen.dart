@@ -108,19 +108,19 @@ class GetStartedScreenState extends State<GetStartedScreen>
                       print("done");
                       _stopAnimation();
                       StaticData.vistor_value = null;
-
                       cartRepository.check_quote_status().then((value){
                         final extractedData = json.decode(value.body) as Map<String, dynamic>;
-                        if (extractedData["status"]) {
+                         if (extractedData["status"] == null){
+                        print("cart quote is not active");
+                        cartRepository.create_quote(context: context); // used to create new quote for guest
+                        }
+                        else if (extractedData["status"]) {
                           print("cart quote is active");
                         }else if(extractedData["message"] != null){
                           print("cart quote is  not found");
                           cartRepository.create_quote(context: context); // used to create new quote for guest
                         }
-                        else{
-                          print("cart quote is not active");
-                          cartRepository.create_quote(context: context); // used to create new quote for guest
-                        }
+
                       });
                       Navigator.pushReplacement(
                         context,

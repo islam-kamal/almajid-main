@@ -24,7 +24,8 @@ class ShipmentAddressRepository{
     try {
       final response = await dio.post(
           StaticData.vistor_value == 'visitor' ?
-          "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/shipping-information"
+          "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
+              :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/shipping-information"
            :  "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/carts/mine/shipping-information",
 
         data: {

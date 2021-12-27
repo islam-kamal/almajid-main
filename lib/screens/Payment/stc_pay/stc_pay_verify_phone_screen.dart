@@ -7,6 +7,7 @@ import 'package:almajidoud/custom_widgets/custom_push_named_navigation.dart';
 import 'package:almajidoud/screens/Payment/stc_pay/stc_pay_phone_screen.dart';
 import 'package:almajidoud/screens/auth/get_started_screen.dart';
 import 'package:almajidoud/screens/auth/reset_password_screen.dart';
+import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/utils/static_data.dart';
@@ -556,7 +557,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
                     _stopAnimation();
                     sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);//remove quote_id after order created successfully
 
-                    customAnimatedPushNavigation(context, OrdersScreen());
+                    customAnimatedPushNavigation(context, CustomCircleNavigationBar());
                   }
                 });
               }

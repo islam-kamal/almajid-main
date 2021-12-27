@@ -67,11 +67,11 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                 topPageIndicator(context: context , isPayment: true  , indicatorWidth: .66),
                 responsiveSizedBox(context: context, percentageOfHeight: .02),
                 pageTitle(context: context, title: "Payment Method"),
-                responsiveSizedBox(context: context, percentageOfHeight: .01),
+                responsiveSizedBox(context: context, percentageOfHeight: .02),
                 paymentMethodCard(
                     context: context,
                 paymentMethods: widget.guestShipmentAddressModel.paymentMethods) ,
-                _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments' ?
+                _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments'  ||   _currentIndex ==  'cashondelivery'?
                 Container() :     Column(
                   children: [
                     CreditCardWidget(
@@ -153,10 +153,11 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
 
 
 
-                responsiveSizedBox(context: context, percentageOfHeight:_currentIndex == "stc_pay" ? 0.3 : .05),
+                responsiveSizedBox(context: context, percentageOfHeight: _currentIndex == "stc_pay" ||
+                    _currentIndex == 'tamara_pay_by_instalments' ||   _currentIndex ==  'cashondelivery'? 0.1: .05),
                 GestureDetector(
                   onTap: () {
-                  if(_currentIndex == "stc_pay" || _currentIndex == 'tamara_pay_by_instalments') {
+                  if(_currentIndex == "stc_pay" || _currentIndex == 'tamara_pay_by_instalments' ||   _currentIndex ==  'cashondelivery') {
                       customAnimatedPushNavigation(context , CheckoutSummaryScreen(
                         guestShipmentAddressModel: widget.guestShipmentAddressModel,
                         payment_method: payment_method_name,
@@ -219,7 +220,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
         padding: EdgeInsets.only(
             right: width(context) * .05, left: width(context) * .05),
         width: width(context) * .95,
-        height: width(context) * .5,
+        height:    _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments' ||   _currentIndex ==  'cashondelivery' ? width(context)  :  width(context) * .5,
         decoration: BoxDecoration(color: mainColor, borderRadius: BorderRadius.circular(20)),
         child: GridView.builder(
           //scrollDirection: Axis.vertical,

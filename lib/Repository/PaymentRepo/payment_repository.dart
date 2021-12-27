@@ -31,7 +31,8 @@ class PaymentRepository {
           Urls.BASE_URL+Urls.STC_PAY_GENERATE_OTP,
           data: {
             "mobile": phone_number.substring(4,14) , //"0591826195",
-            "quoteId": await sharedPreferenceManager.readString(CachingKey.CART_QUOTE),
+            "quoteId": StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
+                :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE),
            "isMask": StaticData.vistor_value == 'visitor'? true : false
           },
           options: Options(headers: headers));
@@ -65,7 +66,8 @@ class PaymentRepository {
       'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}'
     };
     try {
-      print("stc_pay_verify_quote : ${await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}");
+      print("stc_pay_verify_quote : ${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
+          :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}");
       print("otp type : ${otp.runtimeType}");
       final response = await http.post(
           Uri.parse(Urls.BASE_URL+Urls.STC_PAY_VALIDATE_OTP),
@@ -74,7 +76,8 @@ class PaymentRepository {
             "otpReference": otpReference,
             "paymentReference": paymentReference,
             "mobile":"0591826195",
-            "quoteId": await sharedPreferenceManager.readString(CachingKey.CART_QUOTE),
+            "quoteId": StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
+                :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE),
             "isMask": StaticData.vistor_value == 'visitor'? true : false
           }),
          headers: headers);

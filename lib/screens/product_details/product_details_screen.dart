@@ -314,6 +314,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             product_sku: widget.product.sku,
                             product_quantity:  StaticData.product_qty ,
                            instock_status: widget.product.extensionAttributes.stockItem.isInStock,
+                          scaffoldKey: _drawerKey,
                             ),
                         responsiveSizedBox(
                             context: context, percentageOfHeight: .06),

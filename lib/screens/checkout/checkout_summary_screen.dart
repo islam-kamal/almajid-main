@@ -140,12 +140,18 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
       final Future<http.Response> response = payment_repository.getPayFortSettings(
         orderId: data
       );
+print(" PayFortSettings     response  : ${response}");
       response.then((response) {
                print(response.body);
         final extractedData = json.decode(response.body) as Map<String, dynamic>;
         if (extractedData["success"]) {
           sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD).then((value){
             switch(value){
+              case 'cashondelivery':
+                customAnimatedPushNavigation(context, StaticData.vistor_value == 'visitor'? CustomCircleNavigationBar(): OrdersScreen(
+                  increment_id: extractedData["increment_id"],
+                ));
+                break;
               case "aps_fort_cc" :
                 final merchantIdentifier = extractedData["payment_config"]
                 ["params"]["merchant_identifier"];
@@ -192,6 +198,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
                     customAnimatedPushNavigation(context, TapPaymentScreen(
                       order_incremental_id: extractedData["increment_id"],
                       public_key: tap_extractedData["id"],
+                      order_id: extractedData["increment_id"],
                     ));
                   }else{
                     _stopAnimation();
@@ -230,6 +237,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
               case 'tamara_pay_by_instalments':
                 customAnimatedPushNavigation(context, TamaraPaymentScreen(
                   redirect_url: extractedData["payment_config"]["redirect_url"],
+                  increment_id: extractedData["increment_id"],
                 ));
                 break;
             }

@@ -102,6 +102,7 @@ class   CachingKey extends Enum<String> {
 
   static const CachingKey FIREBASE_TOKEN = const CachingKey('FIREBASE_TOKEN');
   static const CachingKey CART_QUOTE = const CachingKey('CART_QUOTE');
+  static const CachingKey GUEST_CART_QUOTE = const CachingKey('GUEST_CART_QUOTE');
 
   static const CachingKey USER_NAME = const CachingKey('USER_NAME');
   static const CachingKey EMAIL = const CachingKey('EMAIL');

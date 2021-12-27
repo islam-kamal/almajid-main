@@ -298,7 +298,32 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                               child: InkWell(
                                                                 onTap: snapshot.data[index].extensionAttributes.stockItem
                                                                     .isInStock == false
-                                                                    ? () {}
+                                                                    ? () {
+                                                                  Flushbar(messageText: Container(width: StaticData.get_width(context) * 0.7,
+                                                                    child:
+                                                                    Wrap(
+                                                                      children: [
+                                                                        Text(
+                                                                          'There is no quantity of this product in stock',
+                                                                          textDirection: TextDirection.rtl,
+                                                                          style: TextStyle(color: whiteColor),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                    flushbarPosition:
+                                                                    FlushbarPosition.BOTTOM,
+                                                                    backgroundColor:
+                                                                    redColor,
+                                                                    flushbarStyle:
+                                                                    FlushbarStyle.FLOATING,
+                                                                    duration:
+                                                                    Duration(seconds: 3),
+                                                                  )..show(widget
+                                                                      .homeScaffoldKey
+                                                                      .currentState
+                                                                      .context);
+                                                                }
                                                                     : () {
 
 

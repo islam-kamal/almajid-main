@@ -87,7 +87,7 @@ class OrderSuccessfulDialogState extends State<OrderSuccessfulDialog> {
                               child:   InkWell(
                                 onTap: (){
                                   if( StaticData.vistor_value == 'visitor') {
-                                    cartRepository.check_quote_status().then((value){
+                             /*       cartRepository.check_quote_status().then((value){
                                       final extractedData = json.decode(value.body) as Map<String, dynamic>;
                                       if (extractedData["status"]) {
                                         print("cart quote is active");
@@ -99,7 +99,7 @@ class OrderSuccessfulDialogState extends State<OrderSuccessfulDialog> {
                                         print("cart quote is not active");
                                         cartRepository.create_quote(context: context); // used to create new quote for guest
                                       }
-                                    });
+                                    });*/
                                     Navigator.pushReplacement(
                                       context,
                                       PageRouteBuilder(

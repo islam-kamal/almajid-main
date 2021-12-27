@@ -243,7 +243,7 @@ class PaymentSuccessfulScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     if( StaticData.vistor_value == 'visitor') {
-                      cartRepository.check_quote_status().then((value){
+                  /*    cartRepository.check_quote_status().then((value){
                         final extractedData = json.decode(value.body) as Map<String, dynamic>;
                         if (extractedData["status"]) {
                           print("cart quote is active");
@@ -255,7 +255,7 @@ class PaymentSuccessfulScreen extends StatelessWidget {
                           print("cart quote is not active");
                           cartRepository.create_quote(context: context); // used to create new quote for guest
                         }
-                      });
+                      });*/
                       customPushNamedNavigation(context, CustomCircleNavigationBar());
                     }
                     else{
@@ -314,7 +314,7 @@ class PaymentFailedScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    cartRepository.check_quote_status().then((value){
+                  /*  cartRepository.check_quote_status().then((value){
                       final extractedData = json.decode(value.body) as Map<String, dynamic>;
                       if (extractedData["status"]) {
 
@@ -324,7 +324,7 @@ class PaymentFailedScreen extends StatelessWidget {
                       else{
                         cartRepository.create_quote(context: context); // used to create new quote for guest
                       }
-                    });
+                    });*/
 
                     customPushNamedNavigation(context, CustomCircleNavigationBar());
 
@@ -379,7 +379,7 @@ class CheckSumFailedScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    cartRepository.check_quote_status().then((value){
+                   /* cartRepository.check_quote_status().then((value){
                       final extractedData = json.decode(value.body) as Map<String, dynamic>;
                       if (extractedData["status"]) {
                         print("cart quote is active");
@@ -391,7 +391,7 @@ class CheckSumFailedScreen extends StatelessWidget {
                         print("cart quote is not active");
                         cartRepository.create_quote(context: context); // used to create new quote for guest
                       }
-                    });
+                    });*/
                     customPushNamedNavigation(context, CustomCircleNavigationBar());
                   })
             ],

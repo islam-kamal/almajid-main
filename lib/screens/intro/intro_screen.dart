@@ -67,7 +67,7 @@ class IntroScreenState extends State<IntroScreen> {
   }
 
   void onDonePress() async{
-    cartRepository.check_quote_status().then((value){
+/*    cartRepository.check_quote_status().then((value){
       final extractedData = json.decode(value.body) as Map<String, dynamic>;
       if (extractedData["status"] == null) {
         print("cart quote is  not found");
@@ -80,7 +80,8 @@ class IntroScreenState extends State<IntroScreen> {
         print("cart quote is not active");
         cartRepository.create_quote(context: context); // used to create new quote for guest
       }
-    });
+    });*/
+    cartRepository.create_quote(context: context);
 
     Navigator.push(
       context,

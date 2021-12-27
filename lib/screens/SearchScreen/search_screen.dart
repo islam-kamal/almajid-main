@@ -20,6 +20,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
 
+  GlobalKey<ScaffoldState> scaffold_key = GlobalKey();
 
   @override
   void initState() {
@@ -31,6 +32,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return NetworkIndicator(
         child: PageContainer(
             child: Scaffold(
+              key: scaffold_key,
               backgroundColor: whiteColor,
               body: SingleChildScrollView(
                   child: Column(
@@ -207,7 +209,31 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                     MainAxisAlignment.spaceBetween,
                                                                                     children: [
                                                                                       InkWell(
-                                                                                        onTap:  snapshot.data.items[index].extensionAttributes.stockItem.isInStock == false ? (){} : () {
+                                                                                        onTap:  snapshot.data.items[index].extensionAttributes.stockItem.isInStock == false ? (){
+                                                                                          Flushbar(messageText: Container(width: StaticData.get_width(context) * 0.7,
+                                                                                            child:
+                                                                                            Wrap(
+                                                                                              children: [
+                                                                                                Text(
+                                                                                                  'There is no quantity of this product in stock',
+                                                                                                  textDirection: TextDirection.rtl,
+                                                                                                  style: TextStyle(color: whiteColor),
+                                                                                                ),
+                                                                                              ],
+                                                                                            ),
+                                                                                          ),
+                                                                                            flushbarPosition:
+                                                                                            FlushbarPosition.BOTTOM,
+                                                                                            backgroundColor:
+                                                                                            redColor,
+                                                                                            flushbarStyle:
+                                                                                            FlushbarStyle.FLOATING,
+                                                                                            duration:
+                                                                                            Duration(seconds: 3),
+                                                                                          )..show(scaffold_key
+                                                                                              .currentState
+                                                                                              .context);
+                                                                                        } : () {
                                                                                           shoppingCartBloc.add(AddProductToCartEvent(
                                                                                               context: context,
                                                                                               product_quantity: snapshot.data.items[index].extensionAttributes.stockItem.qty,

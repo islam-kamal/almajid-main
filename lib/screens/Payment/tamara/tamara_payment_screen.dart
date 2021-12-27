@@ -11,7 +11,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class TamaraPaymentScreen extends StatefulWidget {
   var redirect_url;
-  TamaraPaymentScreen({this.redirect_url});
+  var increment_id;
+  TamaraPaymentScreen({this.redirect_url,this.increment_id});
   @override
   _TamaraPaymentScreenState createState() => _TamaraPaymentScreenState();
 }
@@ -46,7 +47,9 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
   Widget getResponseScreen() {
     switch (_responseStatus) {
       case STATUS_SUCCESSFUL:
-        return PaymentSuccessfulScreen();
+        return PaymentSuccessfulScreen(
+          order_id: widget.increment_id,
+        );
       case STATUS_CHECKSUM_FAILED:
         return CheckSumFailedScreen();
       case STATUS_FAILED:
@@ -54,7 +57,9 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
           reason: StaticData.order_payment_refused_reason,
         );
     }
-    return PaymentSuccessfulScreen();
+    return PaymentSuccessfulScreen(
+      order_id: widget.increment_id,
+    );
   }
 
   @override
@@ -162,6 +167,8 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
 }
 
 class PaymentSuccessfulScreen extends StatelessWidget {
+  var order_id;
+  PaymentSuccessfulScreen({this.order_id});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -203,7 +210,9 @@ class PaymentSuccessfulScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    customAnimatedPushNavigation(context, OrdersScreen());
+                    customAnimatedPushNavigation(context, OrdersScreen(
+                      increment_id: order_id,
+                    ));
 
                   })
             ],
@@ -312,7 +321,7 @@ class CheckSumFailedScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    Navigator.popUntil(context, ModalRoute.withName("/"));
+                    customAnimatedPushNavigation(context, CustomCircleNavigationBar());
                   })
             ],
           ),

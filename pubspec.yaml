@@ -40,7 +40,7 @@ dependencies:
   flutter_share:
   flutter_email_sender:
   flutter_offline:
-  circle_bottom_navigation_bar:
+  circle_bottom_navigation_bar: 0.4.0
   spincircle_bottom_bar:
   #country_code_picker:
   country_list_pick:

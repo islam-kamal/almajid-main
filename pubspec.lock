@@ -84,7 +84,7 @@ packages:
       name: circle_bottom_navigation_bar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "0.4.0"
   cli_util:
     dependency: transitive
     description:

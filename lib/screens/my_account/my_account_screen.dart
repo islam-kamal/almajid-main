@@ -49,32 +49,38 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                     responsiveSizedBox(
                         context: context, percentageOfHeight: .03),
 
-                    singleAccountItem(
-                        context: context,
-                        iconPath: "assets/icons/share.png",
-                        text: "Edit Profile",
-                        isContainMoreIcon: true , onTap: (){}),
-                    singleAccountItem(
-                        context: context,
-                        iconPath: "assets/icons/tracking.png",
-                        text: "My Orders" , isContainMoreIcon: true  ,
-                        onTap: (){
+                    StaticData.vistor_value == "visitor"? Container() :     Column(
+                      children: [
+                        singleAccountItem(
+                            context: context,
+                            iconPath: "assets/icons/share.png",
+                            text: "Edit Profile",
+                            isContainMoreIcon: true , onTap: (){}),
+                        singleAccountItem(
+                            context: context,
+                            iconPath: "assets/icons/tracking.png",
+                            text: "My Orders" , isContainMoreIcon: true  ,
+                            onTap: (){
 
-                          customPushNamedNavigation(
-                          context,
-                              OrdersScreen()
-                          );
+                              customPushNamedNavigation(
+                                  context,
+                                  OrdersScreen()
+                              );
+                            }),
+                        singleAccountItem(
+                            context: context,
+                            iconPath: "assets/icons/credit-card.png",
+                            text: "My Cards" , isContainMoreIcon: true  , onTap: (){}),
+                       singleAccountItem(
+                            context: context,
+                            iconPath: "assets/icons/heart.png",
+                            text: "My WishList" , isContainMoreIcon: true  , onTap: (){
+                          customPushNamedNavigation(context, WishListScreen());
                         }),
-                    singleAccountItem(
-                        context: context,
-                        iconPath: "assets/icons/credit-card.png",
-                        text: "My Cards" , isContainMoreIcon: true  , onTap: (){}),
-                StaticData.vistor_value == "visitor"? Container() :    singleAccountItem(
-                        context: context,
-                        iconPath: "assets/icons/heart.png",
-                        text: "My WishList" , isContainMoreIcon: true  , onTap: (){
-                      customPushNamedNavigation(context, WishListScreen());
-                    }),
+
+                      ],
+                    ),
+
                     singleAccountItem(
                         context: context,
                         iconPath: "assets/icons/settings (3).png",
