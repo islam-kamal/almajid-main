@@ -71,7 +71,7 @@ dependencies:
   path_provider: ^2.0.4
   path:
   flutter_icons: ^1.1.0
-  nb_utils: ^4.4.10
+#  nb_utils: ^4.4.10
 
 
 dev_dependencies:

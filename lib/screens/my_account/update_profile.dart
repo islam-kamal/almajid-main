@@ -6,7 +6,7 @@ import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class UpdateProfile extends StatefulWidget {
 
@@ -69,12 +69,28 @@ class _UpdateProfileState extends State<UpdateProfile> {
           // save the new info
           await sharedPreferenceManager.writeData(CachingKey.USER_NAME, _firstName +' '+ _lastName);
           await sharedPreferenceManager.writeData(CachingKey.MOBILE_NUMBER, _phoneNumber);
-          toasty(context, "account updated successfully ", bgColor:  Colors.green, textColor: Colors.white, gravity: ToastGravity.BOTTOM);
+          Fluttertoast.showToast(
+              msg: "account updated successfully",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+              fontSize: 16.0
+          );
         }else{
           List<String> fullName = _userName.split(' ');
           _firstName = fullName[0];
           _lastName = fullName[1];
-          toasty(context, "something went wrong ", bgColor:  Colors.redAccent, textColor: Colors.white, gravity: ToastGravity.BOTTOM);
+          Fluttertoast.showToast(
+              msg: "something went wrong",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.redAccent,
+              textColor: Colors.white,
+              fontSize: 16.0
+          );
         }
         Navigator.of(context).pop({'full_name':_firstName + ' ' +  _lastName});
 
