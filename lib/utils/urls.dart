@@ -58,6 +58,12 @@ class Urls {
 
   static final String EDIT_MY_PROFILE = '/${MyApp.app_langauge}-${MyApp.app_location}/api/auth/profile';
 
+  static final String CONTACT_US_URL = '$BASE_URL/${MyApp.app_langauge}-${MyApp.app_location}/ticket';
+  static final String ABOUT_US_URL = '$BASE_URL/${MyApp.app_langauge}-${MyApp.app_location}/about-us';
+  static final String PTIVACY_URL = '$BASE_URL/${MyApp.app_langauge}-${MyApp.app_location}/privacy-policy-cookie-restriction-mode';
+  static final String FAQS_URL = '$BASE_URL/${MyApp.app_langauge}-${MyApp.app_location}/help-faqs';
+
+
 
 
 

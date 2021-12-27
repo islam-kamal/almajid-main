@@ -7,6 +7,7 @@ import 'package:almajidoud/screens/my_account/widgets/single_account_item.dart';
 import 'package:almajidoud/screens/my_account/widgets/user_email.dart';
 import 'package:almajidoud/screens/my_account/widgets/user_image_widget.dart';
 import 'package:almajidoud/screens/my_account/widgets/user_name.dart';
+import 'package:almajidoud/screens/web_view/webview.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/my_account/register_bottom_sheet.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
@@ -216,16 +217,36 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         iconPath: "assets/icons/help.png",
                         text: "Help Center",
                         isContainMoreIcon: true,
-                        onTap: () {}),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'Contact us',url: Urls.CONTACT_US_URL,)));
+                        }),
+
                     singleAccountItem(
                         context: context,
-                        iconPath: "assets/icons/share.png",
-                        text: "Share With Friends",
-                        onTap: () {}),
+                        iconPath: "assets/icons/help.png",
+                        text: "About US",
+                        isContainMoreIcon: true,
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'About us',url: Urls.ABOUT_US_URL,)));
+                        }),
+
                     singleAccountItem(
                         context: context,
-                        iconPath: "assets/icons/star-solid.png",
-                        text: "Rate Us On Google Play"),
+                        iconPath: "assets/icons/help.png",
+                        text: "Privacy And Policy",
+                        isContainMoreIcon: true,
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'Privacy And Policy',url: Urls.PTIVACY_URL,)));
+                        }),
+
+                    singleAccountItem(
+                        context: context,
+                        iconPath: "assets/icons/help.png",
+                        text: "FAQs",
+                        isContainMoreIcon: true,
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'FAQs',url: Urls.FAQS_URL,)));
+                        }),
                     StaticData.vistor_value == 'visitor'
                         ? logButton(context: context, type: "Sign In")
                         : logButton(context: context, type: "Logout"),
