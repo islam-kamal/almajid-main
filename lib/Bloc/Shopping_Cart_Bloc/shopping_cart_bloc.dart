@@ -25,9 +25,8 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
     if (event is AddProductToCartEvent) {
-      print("1");
       yield Loading(indicator: event.indictor);
-      final response = await cartRepository.add_product_to_cart(
+      final response = await cartRepository.add_product_to_cart_FUN(
           context: event.context,
           product_sku: event.product_sku,
           product_quantity: event.product_quantity);
@@ -42,56 +41,21 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
         yield Done(model: response,indicator: event.indictor);
       }
     }
-    else if(event is GetCartDetails){
-      yield Loading();
+    else if(event is GetCartDetailsEvent){
+      yield Loading(indicator: 'GetCartDetails');
 
       final response =await cartRepository.get_cart_details();
       print("cart response : ${response}");
       if(response.message != null){
-        yield ErrorLoading(message: response.message);
+        yield ErrorLoading(message: response.message,indicator: 'GetCartDetails');
 
       }else{
         _cart_details_subject.sink.add(response);
-        yield Done(model: response);
-      }
-    }
-   else if (event is UpdateProductQuantityCartEvent) {
-      print("1");
-      yield Loading(indicator: 'UpdateProductQuantity');
-      final response = await cartRepository.update_product_quantity_cart(
-          item_id: event.item_id,
-          product_quantity: event.product_quantity);
-      print("UpdateProductQuantityCart response : ${response}");
-
-      if (response.message != null) {
-        print("UpdateProductQuantityCart ErrorLoading");
-        yield ErrorLoading(model: response,indicator: 'UpdateProductQuantity');
-
-      } else {
-        print("UpdateProductQuantityCart Done");
-        yield Done(model: response,indicator: 'UpdateProductQuantity');
-      }
-    }
-   else if(event is DeleteProductFromCartEvent){
-      print("1");
-      yield Loading(indicator: 'UpdateProductQuantity');
-      final response = await cartRepository.delete_product_from_cart(
-          item_id: event.item_id,
-         );
-      print("DeleteProductFromCart response : ${response}");
-
-      if (response != true) {
-        print("DeleteProductFromCart ErrorLoading");
-        yield ErrorLoading(indicator: 'DeleteProductFromCart');
-
-      } else {
-        print("DeleteProductFromCart Done");
-        yield Done(indicator: 'DeleteProductFromCart');
+        yield Done(model: response,indicator: 'GetCartDetails');
       }
     }
 
    else if(event is ApplyPromoCodeEvent){
-      print("1");
       final response = await cartRepository.apply_promo_code_to_cart(
         promo_code: event.prom_code,
         context: event.context
@@ -99,14 +63,12 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
       print("apply_promo_code response : ${response}");
 
       if (response != true) {
-        print("apply_promo_code ErrorLoading");
         errorDialog(
             context: event.context,
-            text: "There is error Occured"
+            text: "The coupon code isn't valid. Verify the code and try again."
         );
 
       } else {
-        print("apply_promo_code Done");
         errorDialog(
             context: event.context,
             text: "Promo Code Applied Sucessfully"
@@ -115,21 +77,18 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
     }
 
     else if(event is DeletePromoCodeEvent){
-      print("1");
       final response = await cartRepository.delete_promo_code_from_cart(
           context: event.context
       );
       print("apply_promo_code response : ${response}");
 
       if (response != true) {
-        print("apply_promo_code ErrorLoading");
         errorDialog(
             context: event.context,
             text: "There is error Occured"
         );
 
       } else {
-        print("apply_promo_code Done");
         errorDialog(
             context: event.context,
             text: "Promo Code deleted Sucessfully"

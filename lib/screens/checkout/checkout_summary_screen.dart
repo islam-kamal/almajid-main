@@ -4,7 +4,7 @@ import 'package:almajidoud/Bloc/Order_Bloc/order_bloc.dart';
 import 'package:almajidoud/Bloc/ShippmentAddress_Bloc/shippment_address_bloc.dart';
 import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
-import 'package:almajidoud/Repository/PaymentRepo/stc_pay_repository.dart';
+import 'package:almajidoud/Repository/PaymentRepo/payment_repository.dart';
 import 'package:almajidoud/screens/Payment/stc_pay/stc_pay_phone_screen.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/Payment/Constants.dart';
@@ -17,7 +17,8 @@ import 'package:almajidoud/screens/checkout/widgets/single_product_summary_card.
 import 'package:almajidoud/screens/checkout/widgets/top_page_indicator.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
-import 'package:almajidoud/screens/orders/order_sucessful_dialog.dart';
+import 'package:almajidoud/screens/Payment/tap/tap_payment_screen.dart';
+import 'package:almajidoud/screens/Payment/tamara/tamara_payment_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io' show Platform;
 
@@ -139,55 +140,120 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
       final Future<http.Response> response = payment_repository.getPayFortSettings(
         orderId: data
       );
+print(" PayFortSettings     response  : ${response}");
       response.then((response) {
                print(response.body);
-        final extractedData =
-        json.decode(response.body) as Map<String, dynamic>;
-        // if (extractedData["success"] && extractedData["payment_config"].length !=0) {
+        final extractedData = json.decode(response.body) as Map<String, dynamic>;
         if (extractedData["success"]) {
-          final merchantIdentifier = extractedData["payment_config"]
-          ["params"]["merchant_identifier"];
-          final accessCode =
-          extractedData["payment_config"]["params"]["access_code"];
-          final merchantReference = extractedData["payment_config"]
-          ["params"]["merchant_reference"];
-          final language =
-          extractedData["payment_config"]["params"]["language"];
-          final serviceCommand = extractedData["payment_config"]
-          ["params"]["service_command"];
-          final returnUrl =
-          extractedData["payment_config"]["params"]["return_url"];
-          final signature =
-          extractedData["payment_config"]["params"]["signature"];
-          final url = extractedData["payment_config"]["url"];
-          final order_number = extractedData["increment_id"];
-          _stopAnimation();
+          sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD).then((value){
+            switch(value){
+              case 'cashondelivery':
+                customAnimatedPushNavigation(context, StaticData.vistor_value == 'visitor'? CustomCircleNavigationBar(): OrdersScreen(
+                  increment_id: extractedData["increment_id"],
+                ));
+                break;
+              case "aps_fort_cc" :
+                final merchantIdentifier = extractedData["payment_config"]
+                ["params"]["merchant_identifier"];
+                final accessCode =
+                extractedData["payment_config"]["params"]["access_code"];
+                final merchantReference = extractedData["payment_config"]
+                ["params"]["merchant_reference"];
+                final language =
+                extractedData["payment_config"]["params"]["language"];
+                final serviceCommand = extractedData["payment_config"]
+                ["params"]["service_command"];
+                final returnUrl =
+                extractedData["payment_config"]["params"]["return_url"];
+                final signature =
+                extractedData["payment_config"]["params"]["signature"];
+                final url = extractedData["payment_config"]["url"];
+                final order_number = extractedData["increment_id"];
+                _stopAnimation();
 
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => PayfortPaymentScreen(
-                amount: widget.guestShipmentAddressModel.totals.baseGrandTotal.toString(),
-                merchantIdentifier: merchantIdentifier,
-                accessCode: accessCode,
-                merchantReference: merchantReference,
-                language: language,
-                serviceCommand: serviceCommand,
-                returnUrl: returnUrl,
-                signature: signature,
-                url: url,
-                order_number: order_number,
-              )));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => PayfortPaymentScreen(
+                      amount: widget.guestShipmentAddressModel.totals.baseGrandTotal.toString(),
+                      merchantIdentifier: merchantIdentifier,
+                      accessCode: accessCode,
+                      merchantReference: merchantReference,
+                      language: language,
+                      serviceCommand: serviceCommand,
+                      returnUrl: returnUrl,
+                      signature: signature,
+                      url: url,
+                      order_number: order_number,
+                    )));
+                break;
+              case  "tap":
+                sharedPreferenceManager.writeData(CachingKey.ORDER_INCREMENTAL_ID,extractedData["increment_id"]);
+                sharedPreferenceManager.writeData(CachingKey.TAP_PUBLIC_KEY,extractedData["payment_config"]["public_key"]);
+                final Future<http.Response> tap_response =  payment_repository.create_token_for_Tap(
+                  public_key: extractedData["payment_config"]["public_key"]
+                );
+                tap_response.then((result) {
+                  print(result.body);
+                  final tap_extractedData = json.decode(result.body) as Map<String, dynamic>;
+                  if (tap_extractedData[ "errors"] == null) {
+                    customAnimatedPushNavigation(context, TapPaymentScreen(
+                      order_incremental_id: extractedData["increment_id"],
+                      public_key: tap_extractedData["id"],
+                      order_id: extractedData["increment_id"],
+                    ));
+                  }else{
+                    _stopAnimation();
+                    Flushbar(
+                      messageText: Row(
+                        children: [
+                          Container(
+                            width: StaticData.get_width(context) * 0.7,
+                            child: Wrap(
+                              children: [
+                                Text(
+                                  '${tap_extractedData[ "errors"][0]["description"]}',
+                                  textDirection: TextDirection.rtl,
+                                  style: TextStyle(color: whiteColor),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Spacer(),
+                          Text(
+                            translator.translate("Try Again"),
+                            textDirection: TextDirection.rtl,
+                            style: TextStyle(color: whiteColor),
+                          ),
+                        ],
+                      ),
+                      flushbarPosition: FlushbarPosition.BOTTOM,
+                      backgroundColor: redColor,
+                      flushbarStyle: FlushbarStyle.FLOATING,
+                      duration: Duration(seconds: 6),
+                    )..show(_drawerKey.currentState.context);
+
+                  }
+                  });
+                break;
+              case 'tamara_pay_by_instalments':
+                customAnimatedPushNavigation(context, TamaraPaymentScreen(
+                  redirect_url: extractedData["payment_config"]["redirect_url"],
+                  increment_id: extractedData["increment_id"],
+                ));
+                break;
+              case 'mestores_applepay':
+                customAnimatedPushNavigation(context, StaticData.vistor_value == 'visitor'? CustomCircleNavigationBar(): OrdersScreen(
+                  increment_id: extractedData["increment_id"],
+                ));
+                break;
+            }
+          });
+
 
         } else {
           print('order not found');
         }
       });
 
-     /* showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return OrderSuccessfulDialog(
-            );
-          });*/
     }
       }
     },
@@ -267,7 +333,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
 
   doneButton({BuildContext context,}) {
     return StaggerAnimation(
-      titleButton: translator.translate("Done"),
+      titleButton: translator.translate("Place Order"),
       buttonController: _loginButtonController.view,
       btn_width: width(context) * .7,
       onTap: ()async {

@@ -44,7 +44,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 //--------------------------------------------------------------
 
   //------------------------ get saved address --------------------------
-  var saved_address_check = true;
   var saved_address_currentIndex = 1;
   var chossed_address_id;
   List<Item> saved_address_generateItems(int numberOfItems) {
@@ -355,7 +354,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             responsiveSizedBox(
                 context: context, percentageOfHeight: .01),
             phone_addressTextFields(
-                context: context, hint: "Phone"),
+                context: context, hint: "Ex: 0591826195"),
             responsiveSizedBox(
                 context: context, percentageOfHeight: .01),
 
@@ -694,7 +693,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               errorText: snapshot.error,
 
             ),
-            validator: (value) {
+            validator: chossed_address_id != null ? null :(value) {
               if (value == null || value.isEmpty) {
                 return '${translator.translate("Please enter")} ${translator.translate("Frist Name")}';
               }
@@ -745,7 +744,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               errorText: snapshot.error,
 
             ),
-            validator: (value) {
+            validator: chossed_address_id != null ? null :(value) {
               if (value == null || value.isEmpty) {
                 return '${translator.translate("Please enter")} ${translator.translate("Last Name")}';
               }
@@ -797,7 +796,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               errorText: snapshot.error,
 
             ),
-            validator: (value) {
+            validator: chossed_address_id != null ? null :(value) {
               if (value == null || value.isEmpty) {
                 return '${translator.translate("Please enter")} ${translator.translate("Email")}';
               }
@@ -817,7 +816,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
         return Container(
           padding: EdgeInsets.only(
               right: width(context) * .05, left: width(context) * .05),
-          //   height: isLandscape(context) ? 2 * height(context) * .065 : height(context) * .065,
           child: TextFormField(
             initialValue: initialValue??'',
             keyboardType: TextInputType.number,
@@ -828,7 +826,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     : height(context) * .02),
             cursorColor: greyColor.withOpacity(.5),
             decoration: InputDecoration(
-              hintText: translator.translate(hint??"Phone"),
+              hintText: translator.translate(hint??"Ex: 0591826195"),
               hintStyle: TextStyle(
                   color: greyColor.withOpacity(.5),
                   fontWeight: FontWeight.bold,
@@ -849,7 +847,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               errorText: snapshot.error,
 
             ),
-            validator: (value) {
+            validator: chossed_address_id != null ? null :(value) {
               if (value == null || value.isEmpty) {
                 return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
               }
@@ -901,7 +899,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               errorText: snapshot.error,
 
             ),
-            validator: (value) {
+            validator:chossed_address_id != null ? null : (value) {
               if (value == null || value.isEmpty) {
                 return '${translator.translate("Please enter")} ${translator.translate("Shippment Address")}';
               }
@@ -921,7 +919,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       buttonController: _loginButtonController.view,
       btn_width: width(context) * .7,
       onTap: () {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState.validate() ) {
       StaticData.order_address = addres_city_name +
           " , " //use this to show address in CheckoutSummaryScreen
               "${shipmentAddressBloc.street_controller.value == null
@@ -941,6 +939,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       );
 
     }else{
+
       print("form validation error -------------------");
     }
       },

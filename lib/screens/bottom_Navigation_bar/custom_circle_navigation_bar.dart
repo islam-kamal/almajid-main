@@ -67,7 +67,7 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
         // barHeight: viewPadding.bottom > 0 ? barHeightWithNotch : barHeight,
         // arcHeight: viewPadding.bottom > 0 ? arcHeightWithNotch : barHeight,
         // arcHeight: viewPadding.bottom > 0 ? arcHeightWithNotch : barHeight,
-        barHeight: Platform.isAndroid?40:70,
+        barHeight: Platform.isAndroid?50:70,
         itemTextOff: viewPadding.bottom > 0 ? 0 : 1,
         itemTextOn: viewPadding.bottom > 0 ? 0 : 1,
         circleOutline: 0.0,

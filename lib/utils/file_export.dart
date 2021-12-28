@@ -73,3 +73,4 @@ export 'package:almajidoud/Bloc/Shopping_Cart_Bloc/shopping_cart_bloc.dart';
 export 'package:almajidoud/Widgets/no_data.dart';
 export 'package:almajidoud/screens/cart/widgets/add_product_to_cart_widget.dart';
 export 'package:almajidoud/main.dart';
+import 'package:almajidoud/Base/Flushbar_Widget.dart';

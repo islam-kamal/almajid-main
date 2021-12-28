@@ -26,7 +26,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   String _email = "";
   String _userName = "";
-  String _currentLang = "";
   String _imagePath;
   File _pickedImage;
 
@@ -37,7 +36,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
 
   void _getUseData() async {
-    _currentLang =  MyApp.app_langauge;
     _email = await sharedPreferenceManager.readString(CachingKey.EMAIL);
     _userName = await sharedPreferenceManager.readString(CachingKey.USER_NAME);
     _imagePath = await sharedPreferenceManager.readString(CachingKey.PROFILE_IMAGE);
@@ -52,242 +50,233 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     return NetworkIndicator(
         child: PageContainer(
             child: Scaffold(
-      backgroundColor: whiteColor,
-      key: _drawerKey,
-      body: Container(
-          height: height(context),
-          width: width(context),
-          child: Stack(
-            children: [
-              Container(
-                height: height(context),
-                child: SingleChildScrollView(
-                    child: Column(
-                  children: [
-                    responsiveSizedBox(
-                      context: context,
-                      percentageOfHeight: .10,
-                    ),
-                    userImageWidget(
-                      context: context,
-                      imagePath: _pickedImage,
-                      onTapAddImage: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text(
-                                  'Choose option',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: greenColor),
+              backgroundColor: whiteColor,
+              key: _drawerKey,
+              body: Container(
+                  height: height(context),
+                  width: width(context),
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: height(context),
+                        child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                responsiveSizedBox(
+                                  context: context,
+                                  percentageOfHeight: .10,
                                 ),
-                                content: SingleChildScrollView(
-                                  child: ListBody(
-                                    children: [
-                                      InkWell(
-                                        onTap: _pickImageCamera,
-                                        splashColor: Colors.purpleAccent,
-                                        child: Row(
-                                          children: [
-                                            Padding(
-                                              padding:
-                                              const EdgeInsets.all(8.0),
-                                              child: Icon(
-                                                Icons.camera,
-                                                color: Colors.purpleAccent,
+                                userImageWidget(
+                                  context: context,
+                                  imagePath: _pickedImage,
+                                  onTapAddImage: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text(
+                                              'Choose option',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: greenColor),
+                                            ),
+                                            content: SingleChildScrollView(
+                                              child: ListBody(
+                                                children: [
+                                                  InkWell(
+                                                    onTap: _pickImageCamera,
+                                                    splashColor: Colors.purpleAccent,
+                                                    child: Row(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                          const EdgeInsets.all(8.0),
+                                                          child: Icon(
+                                                            Icons.camera,
+                                                            color: Colors.purpleAccent,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          'Camera',
+                                                          style: TextStyle(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                              FontWeight.w500,
+                                                              color:
+                                                              mainColor),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: _pickImageGallery,
+                                                    splashColor: Colors.purpleAccent,
+                                                    child: Row(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                          const EdgeInsets.all(8.0),
+                                                          child: Icon(
+                                                            Icons.image,
+                                                            color: Colors.purpleAccent,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          'Gallery',
+                                                          style: TextStyle(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                              FontWeight.w500,
+                                                              color:
+                                                              mainColor),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: _remove,
+                                                    splashColor: Colors.purpleAccent,
+                                                    child: Row(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                          const EdgeInsets.all(8.0),
+                                                          child: Icon(
+                                                            Icons.remove_circle,
+                                                            color: Colors.red,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          'Remove',
+                                                          style: TextStyle(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                              FontWeight.w500,
+                                                              color: Colors.red),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                            Text(
-                                              'Camera',
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight:
-                                                  FontWeight.w500,
-                                                  color:
-                                                  mainColor),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: _pickImageGallery,
-                                        splashColor: Colors.purpleAccent,
-                                        child: Row(
-                                          children: [
-                                            Padding(
-                                              padding:
-                                              const EdgeInsets.all(8.0),
-                                              child: Icon(
-                                                Icons.image,
-                                                color: Colors.purpleAccent,
-                                              ),
-                                            ),
-                                            Text(
-                                              'Gallery',
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight:
-                                                  FontWeight.w500,
-                                                  color:
-                                                  mainColor),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: _remove,
-                                        splashColor: Colors.purpleAccent,
-                                        child: Row(
-                                          children: [
-                                            Padding(
-                                              padding:
-                                              const EdgeInsets.all(8.0),
-                                              child: Icon(
-                                                Icons.remove_circle,
-                                                color: Colors.red,
-                                              ),
-                                            ),
-                                            Text(
-                                              'Remove',
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight:
-                                                  FontWeight.w500,
-                                                  color: Colors.red),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                          );
+                                        });
+                                    print("add image tapped ");
+                                  },
                                 ),
-                              );
-                            });
-                        print("add image tapped ");
-                      },
-                    ),
-                    userName(context: context, name: _userName),
-                    userEmail(context: context, email: _email),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .03),
-                    singleAccountItem(
-                        context: context,
-                        iconPath: "assets/icons/share.png",
-                        text: "Edit Profile",
-                        isContainMoreIcon: true,
-                        onTap: () async {
-                          final _token = await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN);
-                          if(_token !=''){
-                            final result = await Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => UpdateProfile()));
-                            print('result-->'+  result['full_name']);
-                            _userName = result['full_name'];
-                            setState(() {});
-                          }else{
-                            customAnimatedPushNavigation(context, SignInScreen());
-                          }
-                        }),
-                    singleAccountItem(
-                        context: context,
-                        iconPath: "assets/icons/tracking.png",
-                        text: "My Orders",
-                        isContainMoreIcon: true,
-                        onTap: () {
-                          customPushNamedNavigation(context, OrdersScreen());
-                        }),
-                    StaticData.vistor_value == "visitor"
-                        ? Container()
-                        : singleAccountItem(
-                            context: context,
-                            iconPath: "assets/icons/heart.png",
-                            text: "My WishList",
-                            isContainMoreIcon: true,
-                            onTap: () {
-                              customPushNamedNavigation(
-                                  context, WishListScreen());
-                            }),
-                    // singleAccountItem(
-                    //     context: context,
-                    //     iconPath: "assets/icons/settings3.png",
-                    //     text: "Settings",
-                    //     isContainMoreIcon: true,
-                    //     onTap: () {
-                    //       customPushNamedNavigation(context, SettingsScreen());
-                    //     }),
-                    singleAccountItem(
-                        context: context,
-                        iconPath: "assets/icons/settings3.png",
-                        text: _currentLang == 'en'?'العربية':'English',
-                        isContainMoreIcon: true,
-                        onTap: () {
-                          final newLang = _currentLang == 'en'?'ar':'en';
-                          _changeLang(lang: newLang);
-                        }),
-                    singleAccountItem(
-                        context: context,
-                        iconPath: "assets/icons/help.png",
-                        text: "Help Center",
-                        isContainMoreIcon: true,
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'Contact us',url: Urls.CONTACT_US_URL,)));
-                        }),
+                                userName(context: context, name: _userName),
+                                userEmail(context: context, email: _email),
+                                responsiveSizedBox(
+                                    context: context, percentageOfHeight: .03),
+                                singleAccountItem(
+                                    context: context,
+                                    iconPath: "assets/icons/share.png",
+                                    text: "Edit Profile",
+                                    isContainMoreIcon: true,
+                                    onTap: () async {
+                                      final _token = await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN);
+                                      if(_token !=''){
+                                        final result = await Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => UpdateProfile()));
+                                        print('result-->'+  result['full_name']);
+                                        _userName = result['full_name'];
+                                        setState(() {});
+                                      }else{
+                                        customAnimatedPushNavigation(context, SignInScreen());
+                                      }
+                                    }),
+                                singleAccountItem(
+                                    context: context,
+                                    iconPath: "assets/icons/tracking.png",
+                                    text: "My Orders",
+                                    isContainMoreIcon: true,
+                                    onTap: () {
+                                      customPushNamedNavigation(context, OrdersScreen());
+                                    }),
+                                StaticData.vistor_value == "visitor"
+                                    ? Container()
+                                    : singleAccountItem(
+                                    context: context,
+                                    iconPath: "assets/icons/heart.png",
+                                    text: "My WishList",
+                                    isContainMoreIcon: true,
+                                    onTap: () {
+                                      customPushNamedNavigation(
+                                          context, WishListScreen());
+                                    }),
+                                singleAccountItem(
+                                    context: context,
+                                    iconPath: "assets/icons/settings3.png",
+                                    text: "Settings",
+                                    isContainMoreIcon: true,
+                                    onTap: () {
+                                      customPushNamedNavigation(context, SettingsScreen());
+                                    }),
+                                singleAccountItem(
+                                    context: context,
+                                    iconPath: "assets/icons/help.png",
+                                    text: "Help Center",
+                                    isContainMoreIcon: true,
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'Contact us',url: Urls.CONTACT_US_URL,)));
+                                    }),
 
-                    singleAccountItem(
-                        context: context,
-                        iconPath: "assets/icons/help.png",
-                        text: "About US",
-                        isContainMoreIcon: true,
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'About us',url: Urls.ABOUT_US_URL,)));
-                        }),
+                                singleAccountItem(
+                                    context: context,
+                                    iconPath: "assets/icons/help.png",
+                                    text: "About US",
+                                    isContainMoreIcon: true,
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'About us',url: Urls.ABOUT_US_URL,)));
+                                    }),
 
-                    singleAccountItem(
-                        context: context,
-                        iconPath: "assets/icons/help.png",
-                        text: "Privacy And Policy",
-                        isContainMoreIcon: true,
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'Privacy And Policy',url: Urls.PTIVACY_URL,)));
-                        }),
+                                singleAccountItem(
+                                    context: context,
+                                    iconPath: "assets/icons/help.png",
+                                    text: "Privacy And Policy",
+                                    isContainMoreIcon: true,
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'Privacy And Policy',url: Urls.PTIVACY_URL,)));
+                                    }),
 
-                    singleAccountItem(
-                        context: context,
-                        iconPath: "assets/icons/help.png",
-                        text: "FAQs",
-                        isContainMoreIcon: true,
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'FAQs',url: Urls.FAQS_URL,)));
-                        }),
-                    StaticData.vistor_value == 'visitor'
-                        ? logButton(context: context, type: "Sign In")
-                        : logButton(context: context, type: "Logout"),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .11),
-                  ],
-                )),
+                                singleAccountItem(
+                                    context: context,
+                                    iconPath: "assets/icons/help.png",
+                                    text: "FAQs",
+                                    isContainMoreIcon: true,
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'FAQs',url: Urls.FAQS_URL,)));
+                                    }),
+                                StaticData.vistor_value == 'visitor'
+                                    ? logButton(context: context, type: "Sign In")
+                                    : logButton(context: context, type: "Logout"),
+                                responsiveSizedBox(
+                                    context: context, percentageOfHeight: .11),
+                              ],
+                            )),
+                      ),
+                      Container(
+                        height: height(context),
+                        width: width(context),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ScreenAppBar(
+                              onTapCategoryDrawer: () {
+                                _drawerKey.currentState.openDrawer();
+                              },
+                              category_name: translator.translate("My Account"),
+                              // left_icon: "",
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )),
+              drawer: SettingsDrawer(
+                node: fieldNode,
               ),
-              Container(
-                height: height(context),
-                width: width(context),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ScreenAppBar(
-                      onTapCategoryDrawer: () {
-                        _drawerKey.currentState.openDrawer();
-                      },
-                      category_name: translator.translate("My Account"),
-                      // left_icon: "",
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          )),
-      drawer: SettingsDrawer(
-        node: fieldNode,
-      ),
-    )));
+            )));
   }
 
   void _pickImageCamera() async {
@@ -339,19 +328,5 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       _pickedImage = null;
     });
     Navigator.pop(context);
-  }
-
-  void _changeLang({String lang}) async {
-    setState(() {
-      translator.setNewLanguage(
-        context,
-        newLanguage: '${lang}',
-        remember: true,
-        restart: true,
-      );
-
-    });
-    MyApp.setLocale(context, Locale('${lang}'));
-    sharedPreferenceManager.writeData(CachingKey.APP_LANGUAGE, lang);
   }
 }

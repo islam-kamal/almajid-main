@@ -29,7 +29,7 @@ mixin Validator {
         if (!regex.hasMatch(phone))
           sink.addError(translator.translate("phone is incorrect!"));
        else {
-         if(await sharedPreferenceManager.readString(CachingKey.USER_COUNTRY_CODE) == "sa"){
+         if(MyApp.app_location == "sa"){
            user_phone =  phone.substring(1);
            sink.add("00966"+phone);
          }else{

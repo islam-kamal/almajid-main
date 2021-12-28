@@ -39,7 +39,7 @@ singleProductSummaryCard({BuildContext context,var prod_name,var prod_image, var
                   context: context,
                   textAlign: TextAlign.start,
                   fontWeight: FontWeight.bold,
-                  text: "${translator.translate("SAR")} ${prod_price}"),
+                  text: "${MyApp.country_currency} ${prod_price}"),
               Container(
                 decoration: BoxDecoration(border: Border.all(color: mainColor)),
                 width: width(context) * .08,

@@ -18,9 +18,7 @@ SharedPreferenceManager sharedPreferenceManager =SharedPreferenceManager();
     var response;
     print("headers : $headers");
     try {
-      print("111");
       dio.options.baseUrl = Urls.BASE_URL;
-      print("222");
       response = await dio.get(
           url,
    //       queryParameters:Map<String, dynamic>.from(headers),

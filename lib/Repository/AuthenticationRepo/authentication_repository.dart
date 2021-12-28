@@ -21,32 +21,30 @@ class AuthenticationRepository{
    //   "firebase_token" : await  sharedPreferenceManager.readString(CachingKey.FIREBASE_TOKEN)
     });
 
-    return NetworkUtil.internal().post(AuthenticationModel(), Urls.SIGN_UP,body: formData);
+    return NetworkUtil.internal().post(
+        AuthenticationModel(),
+        "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mobilelogin/account/create",
+        body: formData);
   }
 
 
   static Future<String> signIn({BuildContext context,String email, String password})async{
 
-    print("res 2");
     Dio dio = new Dio();
     try {
 
-      print("res 3");
-      final response = await dio.post(Urls.BASE_URL+ Urls.SIGN_IN,
+      final response = await dio.post(Urls.BASE_URL+ "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/integration/customer/token",
           data: convert.jsonEncode({'username': email, 'password': password}) , options: Options(
               headers: {'content-type': 'application/json'}
           ));
       print("response : ${response.data}");
       if (response.statusCode == 200) {
-        print("res 4");
        return StaticData.user_token = response.data;
       } else {
-        print("res 5");
         return null;
         //errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      print("res 6");
       print("error : ${e.toString()}");
       errorDialog(context: context, text: e.toString());
     }
@@ -56,7 +54,7 @@ class AuthenticationRepository{
 
  static Future<UserInfoModel> get_user_info({String token }){
    return NetworkUtil.internal().get(
-       UserInfoModel(), Urls.USER_INFO_URL, headers:Map<String, String>.from({
+       UserInfoModel(), "/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/customers/me", headers:Map<String, String>.from({
      'Content-Type': 'application/json',
      'Accept': 'application/json',
      'Authorization': 'Bearer ${token}'
@@ -73,17 +71,20 @@ class AuthenticationRepository{
       'resendotp' : '',
       'oldmobile' : '',
     });
-    return NetworkUtil.internal().post(AuthenticationModel(), Urls.FORGET_PASSWORD, body: formData);
+    return NetworkUtil.internal().post(AuthenticationModel(), "/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/mobilelogin/otp/send", body: formData);
   }
 
   static Future<AuthenticationModel> checkOtpCode(String phone , String code, String route){
+    print("phone : ${phone}");
+    print("code : ${code}");
+    print("route : ${route}");
     FormData formData =FormData.fromMap({
       'mobilenumber' : phone,
       'otpcode' : code,
-      'otptype' : route == 'login'? 'login' : route== 'ForgetPasswordScreen' ? 'forgot' : 'register',
+      'otptype' : route == 'login' || route == 'LoginWithPhoneScreen'? 'login' : route== 'ForgetPasswordScreen' ? 'forgot' : 'register',
       'oldmobile' : '',
     });
-    return NetworkUtil.internal().post(AuthenticationModel(), Urls.CHECK_OTP, body: formData);
+    return NetworkUtil.internal().post(AuthenticationModel(), "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mobilelogin/otp/verify", body: formData);
   }
 
   static Future<AuthenticationModel> resendOtp(String phone , String route){
@@ -94,7 +95,7 @@ class AuthenticationRepository{
       'resendotp' : '',
       'oldmobile' : '',
     });
-    return NetworkUtil.internal().post(AuthenticationModel(), Urls.FORGET_PASSWORD ,body: formData);
+    return NetworkUtil.internal().post(AuthenticationModel(),"/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/mobilelogin/otp/send" ,body: formData);
   }
 
   static Future<ResetPasswordModel> changePassword(String phone, String password){
@@ -102,7 +103,7 @@ class AuthenticationRepository{
       'mobilenumber' : phone,
       'password' :password,
     });
-    return NetworkUtil.internal().post(ResetPasswordModel(), Urls.CHANGE_PASSWORD,body: formData);
+    return NetworkUtil.internal().post(ResetPasswordModel(), "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mobilelogin/otp/resetpassword",body: formData);
   }
 
 
@@ -112,7 +113,8 @@ class AuthenticationRepository{
     FormData formData = FormData.fromMap({
       'token' : token,
     });
-    return NetworkUtil.internal().post(AuthenticationModel(), Urls.LOGOUT, body: formData);
+    return NetworkUtil.internal().post(AuthenticationModel(),
+        "/${MyApp.app_langauge}-${MyApp.app_location}/api/auth/logout", body: formData);
   }
 
 

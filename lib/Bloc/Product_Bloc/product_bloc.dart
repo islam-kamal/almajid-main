@@ -30,8 +30,6 @@ class ProductBloc extends Bloc<AppEvent, AppState> {
      if (event is getCategoryProducts) {
       print("1");
       yield Loading();
-      print("category_id : ${event.category_id}");
-      print("offset : ${event.offset}");
 
       final response = await categoryRepository.getCategoryProducts(
           category_id: event.category_id,

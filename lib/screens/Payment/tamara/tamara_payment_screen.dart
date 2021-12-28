@@ -1,61 +1,29 @@
 import 'dart:convert';
 
-import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
-import 'package:almajidoud/screens/orders/order_sucessful_dialog.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../Constants.dart';
-import 'dart:io' show Platform;
+import 'Constants.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class PayfortPaymentScreen extends StatefulWidget {
-  final String amount;
-  final String merchantIdentifier;
-  final String accessCode;
-  final String merchantReference;
-  final String language;
-  final String serviceCommand;
-  final String returnUrl;
-  final String signature;
-  final String url;
-  final String order_number;
-  PayfortPaymentScreen(
-      {this.amount,
-      this.merchantIdentifier,
-      this.accessCode,
-      this.merchantReference,
-      this.language,
-      this.serviceCommand,
-      this.returnUrl,
-      this.signature,
-      this.url,
-      this.order_number});
-
+class TamaraPaymentScreen extends StatefulWidget {
+  var redirect_url;
+  var increment_id;
+  TamaraPaymentScreen({this.redirect_url,this.increment_id});
   @override
-  _PayfortPaymentScreenState createState() => _PayfortPaymentScreenState();
+  _TamaraPaymentScreenState createState() => _TamaraPaymentScreenState();
 }
 
-class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
+class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
   WebViewController _webController;
   bool _loadingPayment = true;
   String _responseStatus = STATUS_LOADING;
 
   String _loadHTML() {
-    return "<html> <body onload='document.f.submit();'> <form id='f' name='f' method='post' action='${widget.url}'>"
-            "<input type='hidden' name='card_number' value='${ StaticData.card_number}' />" +
-        "<input type='hidden' name='card_holder_name' value='${ StaticData.card_holder_name}' />" +
-        "<input type='hidden' name='card_security_code' value='${ StaticData.card_security_code}' />" +
-        "<input type='hidden' name='expiry_date' value='${StaticData.expiry_date}' />" +
-        "<input type='hidden' name='merchant_identifier' value='${widget.merchantIdentifier}' />" +
-        "<input type='hidden' name='access_code' value='${widget.accessCode}' />" +
-        "<input type='hidden' name='merchant_reference' value='${widget.merchantReference}' />" +
-        "<input type='hidden' name='language' value='${widget.language}' />" +
-        "<input type='hidden' name='service_command' value='${widget.serviceCommand}' />" +
-        "<input type='hidden' name='return_url' value='${widget.returnUrl}' />" +
-        "<input type='hidden' name='signature' value='${widget.signature}' />" +
+    return "<html> <body onload='document.f.submit();'> <form id='f' name='f' method='get' action='${widget.redirect_url}'>"
         "</form> </body> </html>";
   }
 
@@ -80,15 +48,17 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
     switch (_responseStatus) {
       case STATUS_SUCCESSFUL:
         return PaymentSuccessfulScreen(
-          order_id: widget.order_number,
+          order_id: widget.increment_id,
         );
       case STATUS_CHECKSUM_FAILED:
         return CheckSumFailedScreen();
       case STATUS_FAILED:
-        return PaymentFailedScreen();
+        return PaymentFailedScreen(
+          reason: StaticData.order_payment_refused_reason,
+        );
     }
     return PaymentSuccessfulScreen(
-      order_id: widget.order_number,
+      order_id: widget.increment_id,
     );
   }
 
@@ -100,12 +70,6 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("card name : ${StaticData.card_holder_name}");
-    print("card number : ${StaticData.card_number}");
-    print("card expire : ${StaticData.expiry_date}");
-    print("card cvv : ${StaticData.card_security_code}");
-    print("order_number  : ${widget.order_number}");
-    print("amount  : ${widget.amount}");
     print('html: ' + _loadHTML());
     return SafeArea(
       child: Scaffold(
@@ -124,76 +88,73 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
                         .toString());
               },
               onPageFinished: (page) async {
-                print("pay 1");
-              if (page.contains("/checkout/cart")) {
-                  print("pay 2");
+                _loadingPayment = false;
+                if (page.contains("/checkout/cart")) {
                   print('am in cart page');
                   _responseStatus = STATUS_CHECKSUM_FAILED;
                   this.setState(() {
                     _loadingPayment = false;
                   });
-                  print("pay 3");
                 }
-                if (page.contains("authenticat") || page.contains("secure") || page.contains("3d") || page.contains("Cancel")) {
+                if (page.contains("tamara")) {
                   setState(() {
                     _loadingPayment = false;
                   });
-                  print("pay 4");
                 }
-                if (page.contains("/flutterresponseonline")) {
-                  print("pay 5");
+                if (page.contains("/success")) {
                   setState(() {
                     _loadingPayment = true;
                   });
                   var data = await _webController
                       .evaluateJavascript("document.body.innerText");
-                  print("pay 6");
                   var decodedJSON = jsonDecode(data);
-
                   print("result: " + decodedJSON.toString());
-                  // Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
-                  Map<String, dynamic> responseJSON = {};
-                  print("pay 7");
-                  if (Platform.isAndroid) {
-                    print("pay 8");
-                    responseJSON = jsonDecode(decodedJSON);
-                    print("android responseJSON : ${responseJSON}");
-                  } else if (Platform.isIOS) {
-                    print("pay 9");
-                    responseJSON = jsonDecode(decodedJSON);
-                    print("ios responseJSON : ${responseJSON}");
-                  }
-
-                  final responseCode = responseJSON["response_code"];
-                  print('response code' + responseCode.toString());
-                  print('success code' + responseCode.substring(2).toString());
+                  var responseCode = decodedJSON.toString().substring(10,14) ;
+                  print('response code:  ${responseCode}  ,, ${responseCode.runtimeType}');
+                  print("status--- : ${responseCode == "true"}");
+                  StaticData.order_payment_refused_reason =  decodedJSON.toString().substring(24);
+                  print('response code: ' + responseCode.toString());
                   _loadingPayment = false;
-                  if (responseCode.substring(2) == '000') {
-                    print("pay 10");
-                    final merchantReference =
-                        responseJSON["merchant_reference"];
-                    print("merchantReference: " + merchantReference);
+                  if (responseCode == "true") {
                     _responseStatus = STATUS_SUCCESSFUL;
-                    print("pay 11");
                   } else {
-                    print("pay 12");
                     _responseStatus = STATUS_FAILED;
                   }
                   setState(() {
                     _loadingPayment = false;
                   });
-                  // if (page.contains("/flutterresponseonline")) {
-                  //   print('success page');
-                  //   getData();
-                  // }
                 }
               },
             ),
           ),
-
           (_loadingPayment)
-              ? Center(
-                  child: CircularProgressIndicator(),
+              ? Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 20.0),
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  color: Colors.blueGrey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'please wait while we are processing your order 😉',
+                        style: TextStyle(fontSize: 22, color: Colors.black54),
+                      ),
+                      const SizedBox(
+                        height: 50.0,
+                      ),
+                      Container(
+                        height: 100,
+                        child: Center(
+                          child: SpinKitFadingCube(
+                            color: Theme.of(context).primaryColor,
+                            size: 30.0,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 )
               : Center(),
           (_responseStatus != STATUS_LOADING)
@@ -249,16 +210,9 @@ class PaymentSuccessfulScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    if( StaticData.vistor_value == 'visitor') {
-
-                      customPushNamedNavigation(context, CustomCircleNavigationBar());
-                    }
-                    else{
-                      customPushNamedNavigation(context, OrdersScreen(
-                        increment_id: order_id,
-                      ));
-                    }
-
+                    customAnimatedPushNavigation(context, OrdersScreen(
+                      increment_id: order_id,
+                    ));
 
                   })
             ],
@@ -270,6 +224,8 @@ class PaymentSuccessfulScreen extends StatelessWidget {
 }
 
 class PaymentFailedScreen extends StatelessWidget {
+  var reason;
+  PaymentFailedScreen({this.reason});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -279,43 +235,44 @@ class PaymentFailedScreen extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "OOPS!",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Payment was not successful, Please try again Later!",
-                style: TextStyle(fontSize: 30),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              MaterialButton(
-                  color: Colors.black,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "Close",
-                    style: TextStyle(color: Colors.white),
+                    "OOPS!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25),
                   ),
-                  onPressed: () {
-                    customPushNamedNavigation(context, CustomCircleNavigationBar());
-
-                  })
-            ],
-          ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Payment was not successful because ${reason} Please try again Later!",
+                  style: TextStyle(fontSize: 30),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                MaterialButton(
+                    color: Colors.black,
+                    child: Text(
+                      "Close",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      customAnimatedPushNavigation(context, CustomCircleNavigationBar());
+                    })
+              ],
+            ),
+          )
         ),
       ),
     );
@@ -364,20 +321,7 @@ class CheckSumFailedScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                   /* cartRepository.check_quote_status().then((value){
-                      final extractedData = json.decode(value.body) as Map<String, dynamic>;
-                      if (extractedData["status"]) {
-                        print("cart quote is active");
-                      }else if(extractedData["message"] != null){
-                        print("cart quote is  not found");
-                        cartRepository.create_quote(context: context); // used to create new quote for guest
-                      }
-                      else{
-                        print("cart quote is not active");
-                        cartRepository.create_quote(context: context); // used to create new quote for guest
-                      }
-                    });*/
-                    customPushNamedNavigation(context, CustomCircleNavigationBar());
+                    customAnimatedPushNavigation(context, CustomCircleNavigationBar());
                   })
             ],
           ),

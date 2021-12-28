@@ -9,7 +9,6 @@ import 'package:rating_bar/rating_bar.dart';
 import 'package:share/share.dart';
 class singleCategoryProductItem extends StatelessWidget {
   TextEditingController qty_controller = new TextEditingController();
-  String cvv;
   Items product;
   GlobalKey<ScaffoldState> scafffoldKey;
   singleCategoryProductItem({this.product,this.scafffoldKey});
@@ -20,13 +19,6 @@ class singleCategoryProductItem extends StatelessWidget {
       gallery
           .add(ProductImages.getProductImageUrlByName(imageName: element.file));
     });
-   /* //will you use to get product reviews
-    List<int> reviews_values=[];
-    product.extensionAttributes.reviews.forEach((element) {
-      reviews_values.add(element.statusId);
-    });
-
-    */
     return  Directionality(
         textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl :TextDirection.ltr ,
         child:Row(
@@ -97,7 +89,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                     child: customDescriptionText(
                                         context: context,
                                         textColor: mainColor,
-                                        text: "${product.price} \$",
+                                        text: "${product.price} ${MyApp.country_currency}",
                                         textAlign: TextAlign.start,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -134,8 +126,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                         if(state.indicator == 'category_add_to_cart') {
                                           var data = state.model as AddCartModel;
                                           print("ErrorLoading");
-                                          if(data.message == "The consumer isn't authorized to access %resources." ||
-                                              data.message == "Current customer does not have an active cart."){
+                                          if(data.message == "The consumer isn't authorized to access %resources." ){
                                             Flushbar(
                                               messageText:    Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -201,22 +192,64 @@ class singleCategoryProductItem extends StatelessWidget {
                                       } else if (state is Done)
                                         if(state.indicator == 'category_add_to_cart') {
                                         print("------------- done-------------------");
-                                        customAnimatedPushNavigation(context,translator.activeLanguageCode == 'ar' ?  CustomCircleNavigationBar(
+
+                                        Flushbar(
+                                          messageText:
+                                          Container(
+                                            child: Text(
+                                              translator.translate("product added suceesfully to cart"),
+                                              maxLines: 2,
+                                              textAlign: TextAlign.end,
+                                              textDirection: TextDirection.rtl,
+                                              style: TextStyle(color: whiteColor),
+                                            ),
+                                          ),
+                                          flushbarPosition:
+                                          FlushbarPosition.BOTTOM,
+                                          backgroundColor:
+                                          greenColor,
+                                          duration: Duration(seconds: 2),
+                                          flushbarStyle:
+                                          FlushbarStyle.FLOATING,
+                                        )..show(scafffoldKey.currentState.context);
+                                /*        customAnimatedPushNavigation(context,translator.activeLanguageCode == 'ar' ?  CustomCircleNavigationBar(
                                           page_index: 4,
                                         ): CustomCircleNavigationBar(
                                           page_index: 0,
-                                        ));
+                                        ));*/
                                       }
                                     },
                                     child:InkWell(
-                                      onTap: product.extensionAttributes.stockItem.isInStock == false ? (){} : () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                        return chosse_product_quantity();
-
-                                          },
-                                        );
+                                      onTap: product.extensionAttributes.stockItem.isInStock == false ? (){
+                                        Flushbar(messageText: Container(width: StaticData.get_width(context) * 0.7,
+                                          child:
+                                          Wrap(
+                                            children: [
+                                              Text(
+                                               translator.translate( "There is no quantity of this product in stock"),
+                                                textDirection: TextDirection.rtl,
+                                                style: TextStyle(color: whiteColor),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                          flushbarPosition:
+                                          FlushbarPosition.BOTTOM,
+                                          backgroundColor:
+                                          redColor,
+                                          flushbarStyle:
+                                          FlushbarStyle.FLOATING,
+                                          duration:
+                                          Duration(seconds: 3),
+                                        )..show(scafffoldKey
+                                            .currentState
+                                            .context);
+                                      } : () {
+                                        shoppingCartBloc.add(AddProductToCartEvent(
+                                            context: context,
+                                            product_quantity: 1,
+                                            product_sku: product.sku,
+                                            indictor: 'category_add_to_cart'));
 
                                       },
                                       child: Container(
@@ -280,149 +313,4 @@ class singleCategoryProductItem extends StatelessWidget {
     ));
   }
 
-  Widget chosse_product_quantity(){
-    return StatefulBuilder(
-      builder: (context, setState) {
-        var height = MediaQuery.of(context).size.height;
-        var width = MediaQuery.of(context).size.width;
-        return Container(
-          width: width,
-          height: height / 2.5,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(height*.1)
-          ),
-          child: AlertDialog(
-            contentPadding: EdgeInsets.all(0.0),
-            content:  SafeArea(
-              child: SingleChildScrollView(
-                child: Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: Container(
-                    width: width,
-                    height: height / 4,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(width * 0.1)
-                    ),
-                    child: new Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(width * 0.01),
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(10),
-                                child: cvvTextField(context),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(top: width * 0.05),
-                                    child:  InkWell(
-                                      onTap:  () {
-                                        print("qty_controller.text : ${qty_controller.text}");
-                                        shoppingCartBloc.add(AddProductToCartEvent(
-                                            context: context,
-                                            product_quantity: qty_controller.text,
-                                            product_sku: product.sku,
-                                        indictor: 'category_add_to_cart'));
-                                      },
-                                      child: Container(
-                                        width: width * .3,
-                                        alignment: Alignment.center,
-                                        height: isLandscape(context)
-                                            ? 2 * height * .035
-                                            : height * .035,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: mainColor)),
-                                        child:       customDescriptionText(
-                                            context: context,
-                                            textColor: mainColor,
-                                            text: "Apply",
-                                            textAlign: TextAlign.center),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: width * 0.02,),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: width * 0.05),
-                                    child: InkWell(
-                                      onTap: (){
-                                        Navigator.pop(context);
-                                      },
-                                      child: Container(
-                                          width: width * .3,
-                                          alignment: Alignment.center,
-                                          height: isLandscape(context)
-                                              ? 2 * height * .035
-                                              : height * .035,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: mainColor)),
-                                          child:  customDescriptionText(
-                                              context: context,
-                                              textColor: mainColor,
-                                              text: "Discard",
-                                              textAlign: TextAlign.center),
-
-
-                                        ),
-                                      ),
-                                    ),
-
-
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-        );
-      },
-    );
-  }
-  Widget cvvTextField(BuildContext context){
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
-    return Row(mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          height: height*.07,
-          width: width*.65,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(height*.1)
-          ),
-          child: TextFormField(
-            controller: qty_controller,
-            keyboardType: TextInputType.number,
-            style: TextStyle(color:greyColor,fontSize: AlmajedFont.primary_font_size),
-            obscureText: false,
-            textAlign: translator.activeLanguageCode=='ar'? TextAlign.right : TextAlign.left,
-            cursorColor: greyColor,
-            decoration: InputDecoration(
-              hintText: translator.translate("Enter Quantity *"),
-              hintStyle: TextStyle(color: Color(0xffA0AEC0).withOpacity(.8,),fontSize: height*.018,),
-              filled: true,
-              fillColor: Colors.white,
-              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(height*.01),
-                  borderSide: BorderSide(color: greyColor,width: height*.002)),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(height*.01),
-                  borderSide: BorderSide(color:greyColor,width: height*.002)),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(height*.01),
-                  borderSide: BorderSide(color: greenColor,width:height*.002)),),),),
-      ],
-    );
-  }
 }

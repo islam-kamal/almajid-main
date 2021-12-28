@@ -113,7 +113,7 @@ class NotificationsScreenState extends State<NotificationsScreen> {
       color: whiteColor,
       child: Column(
         children: [
-          responsiveSizedBox(context: context , percentageOfHeight: .25),
+          responsiveSizedBox(context: context , percentageOfHeight: .15),
           Image.asset("assets/icons/Group 10.png" , width: width(context)*.7,),
           responsiveSizedBox(context: context , percentageOfHeight: .02),
           customDescriptionText(context: context , textColor: mainColor , text: "No Notifications Yet !" , percentageOfHeight: .03) ,

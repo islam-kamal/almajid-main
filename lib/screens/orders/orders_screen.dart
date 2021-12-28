@@ -8,6 +8,8 @@ import 'package:almajidoud/screens/orders/widgets/orders_header.dart';
 import 'package:almajidoud/screens/orders/widgets/single_order_item.dart';
 import 'package:almajidoud/utils/file_export.dart';
 class OrdersScreen extends StatefulWidget {
+  var increment_id;
+  OrdersScreen({this.increment_id});
   @override
   _OrdersScreenState createState() => _OrdersScreenState();
 }
@@ -55,27 +57,21 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                     builder: (context,snapshot){
                                       switch (snapshot.connectionState) {
                                         case ConnectionState.none:
-                                          print("1");
                                           return ShimmerNotification(
                                           );
                                         case ConnectionState.done:
-                                          print("1");
                                           return Text('');
                                         case ConnectionState.waiting:
-                                          print("2");
                                           return ShimmerNotification(
                                           );
                                         case ConnectionState.active:
-                                          print("3");
                                           if (snapshot.hasError) {
-                                            print("4");
                                             print(snapshot.error.toString());
                                             return Center(
                                               child: Text(snapshot.error.toString()),
                                             );
                                           }
                                           else if (snapshot.data.items.length > 0) {
-                                            print("5");
                                             return  ListView.builder(
                                               padding: EdgeInsets.zero,
                                               itemCount: snapshot.data.items.length ,
@@ -84,7 +80,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                               itemBuilder: (context, index) {
                                                 return singleOrderItem(
                                                     context: context,
-                                                    order: snapshot.data.items[index]);
+                                                    order: snapshot.data.items[index],
+                                                order_increment_id: widget.increment_id);
                                               },
                                             );
                                           }

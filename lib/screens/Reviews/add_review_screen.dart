@@ -1,96 +1,210 @@
 import 'package:almajidoud/custom_widgets/custom_animated_push_navigation.dart';
 import 'package:almajidoud/custom_widgets/custom_button.dart';
+import 'package:almajidoud/screens/Reviews/product_reviews_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/Reviews/thanks_for_review_screen.dart';
+import 'package:flutter/cupertino.dart';
 
 class AddReviewScreen extends StatefulWidget {
   @override
   _AddReviewScreenState createState() => _AddReviewScreenState();
 }
 
-class _AddReviewScreenState extends State<AddReviewScreen> {
-  double ratingSmell = 5.0;
-  double ratingLongLast = 5.0;
-  double ratingPrice = 5.0;
+class _AddReviewScreenState extends State<AddReviewScreen>
+    with TickerProviderStateMixin {
+  double ratingSmell = 0.0;
+  double ratingLongLast = 0.0;
+  double ratingPrice = 0.0;
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController nickname = new TextEditingController();
+  TextEditingController summary = new TextEditingController();
+  TextEditingController review = new TextEditingController();
+
+  @override
+  void initState() {
+    _loginButtonController = AnimationController(
+        duration: const Duration(milliseconds: 3000), vsync: this);
+    super.initState();
+  }
+
+  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+
+  AnimationController _loginButtonController;
+  bool isLoading = false;
+
+  Future<Null> _playAnimation() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      await _loginButtonController.forward();
+    } on TickerCanceled {
+      print('[_playAnimation] error');
+    }
+  }
+
+  Future<Null> _stopAnimation() async {
+    try {
+      await _loginButtonController.reverse();
+      setState(() {
+        isLoading = false;
+      });
+    } on TickerCanceled {
+      print('[_stopAnimation] error');
+    }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _loginButtonController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
       height: isLandscape(context) ? 2 * height(context) : height(context),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            addReviewsHeader(context: context),
-            Container(
-              height: isLandscape(context)
-                  ? 2 * height(context) * .88
-                  : height(context) * .88,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                        height: isLandscape(context)
-                            ? 2 * height(context) * .88
-                            : height(context) * .88,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              responsiveSizedBox(
-                                  context: context, percentageOfHeight: .02),
-                              textRateYourExperience(context: context),
-                              responsiveSizedBox(
-                                  context: context, percentageOfHeight: .05),
-                              reviewText(context: context),
-                              responsiveSizedBox(
-                                  context: context, percentageOfHeight: .01),
-                              singleReviewItem(
-                                  context: context,
-                                  rating: ratingSmell,
-                                  text: "Smell"),
-                              responsiveSizedBox(
-                                  context: context, percentageOfHeight: .01),
-                              singleReviewItem(
-                                  context: context,
-                                  rating: ratingLongLast,
-                                  text: "Long Last"),
-                              responsiveSizedBox(
-                                  context: context, percentageOfHeight: .01),
-                              singleReviewItem(
-                                  context: context,
-                                  rating: ratingPrice,
-                                  text: "Price"),
-                              responsiveSizedBox(
-                                  context: context, percentageOfHeight: .1),
-                              reviewTextField(
-                                  context: context, hint: "NickMame"),
-                              responsiveSizedBox(
-                                  context: context, percentageOfHeight: .01),
-                              reviewTextField(
-                                  context: context, hint: "Summary"),
-                              responsiveSizedBox(
-                                  context: context, percentageOfHeight: .01),
-                              reviewTextField(context: context, hint: "Review"),
-                              responsiveSizedBox(
-                                  context: context, percentageOfHeight: .1),
-                              CustomButton(
-                                  text: "Submit",
-                                  onTapButton: () {
-                                    customAnimatedPushNavigation(
-                                        context, ThanksForRatingScreen());
+      child: BlocListener<ReviewsBloc, AppState>(
+          bloc: reviewsBloc,
+          listener: (context, state) {
+            if (state is Loading) {
+              if(state.indicator ==  "CreateReview")
+              _playAnimation();
+            } else if (state is ErrorLoading) {
+              if(state.indicator ==  "CreateReview"){
+                var data = state.model as ProductReviewModel;
+                print("ErrorLoading");
+                _stopAnimation();
+
+                Flushbar(
+                  messageText: Container(
+                    width: StaticData.get_width(context) * 0.7,
+                    child: Wrap(
+                      children: [
+                        Text(
+                          '${data.message}',
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(color: whiteColor),
+                        ),
+                      ],
+                    ),
+                  ),
+                  flushbarPosition: FlushbarPosition.BOTTOM,
+                  backgroundColor: redColor,
+                  flushbarStyle: FlushbarStyle.FLOATING,
+                  duration: Duration(seconds: 3),
+                )..show(_drawerKey.currentState.context);
+              }
+
+            } else if (state is Done) {
+              if(state.indicator ==  "CreateReview") {
+                _stopAnimation();
+                customAnimatedPushNavigation(context, ThanksForRatingScreen());
+              }
+            }
+          },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                addReviewsHeader(context: context),
+                Container(
+                  height: isLandscape(context)
+                      ? 2 * height(context) * .88
+                      : height(context) * .88,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                            height: isLandscape(context)
+                                ? 2 * height(context) * .88
+                                : height(context) * .88,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  responsiveSizedBox(
+                                      context: context,
+                                      percentageOfHeight: .02),
+                                  textRateYourExperience(context: context),
+                                  responsiveSizedBox(
+                                      context: context,
+                                      percentageOfHeight: .05),
+                                  reviewText(context: context),
+                                  responsiveSizedBox(
+                                      context: context,
+                                      percentageOfHeight: .01),
+                                  singleReviewItem(
+                                      context: context,
+                                      rating: ratingSmell,
+                                      text: translator.translate("Stability")),
+                                  responsiveSizedBox(
+                                      context: context,
+                                      percentageOfHeight: .01),
+                                  singleReviewItem(
+                                      context: context,
+                                      rating: ratingLongLast,
+                                      text: translator.translate("Smell")),
+                                  responsiveSizedBox(
+                                      context: context,
+                                      percentageOfHeight: .01),
+                                  singleReviewItem(
+                                      context: context,
+                                      rating: ratingPrice,
+                                      text: translator.translate("Price")),
+                                  responsiveSizedBox(
+                                      context: context,
+                                      percentageOfHeight: .05),
+                                  Form(
+                                    key: _formKey,
+                                    child: Column(
+                                      children: [
+                                        nickNameTextField(
+                                          context: context,
+                                        ),
+                                        responsiveSizedBox(
+                                            context: context,
+                                            percentageOfHeight: .01),
+                                        summaryTextField(context: context),
+                                        responsiveSizedBox(
+                                            context: context,
+                                            percentageOfHeight: .01),
+                                        reviewTextField(
+                                          context: context,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  responsiveSizedBox(
+                                      context: context,
+                                      percentageOfHeight: .03),
+                                StaggerAnimation(
+                                  titleButton: "Submit",
+                                  buttonController: _loginButtonController.view,
+                                  btn_width: width(context) * .7,
+                                  onTap: () {
+                                    if (_formKey.currentState.validate()) {
+                                      reviewsBloc.add(CreateReviewEvent(
+                                          product_id: StaticData.product_id,
+                                          nickname: nickname.text,
+                                          title: summary.text,
+                                          detail: review.text));
+                                    } else {
+                                      print("empty fields");
+                                    }
                                   },
-                                  radius: 10)
-                            ],
-                          ),
-                        )),
-//            ----------------------------------- top part
-                  ],
+                                )
+
+                                ],
+                              ),
+                            )),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
+          )),
     ));
   }
 
@@ -112,7 +226,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.of(context).pop();
+              customAnimatedPushNavigation(context, ProductReviewsScreen());
             },
             child: Icon(
               Icons.navigate_before,
@@ -135,7 +249,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
     return customDescriptionText(
         context: context,
         textColor: mainColor,
-        text: "Rate your your experience !",
+        text: "Rate your experience !",
         fontWeight: FontWeight.bold,
         percentageOfHeight: .03);
   }
@@ -151,7 +265,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
           customDescriptionText(
               context: context,
               textColor: mainColor,
-              text: "Rate your your experience !",
+              text: "Rate your experience !",
               percentageOfHeight: .025)
         ],
       ),
@@ -199,14 +313,14 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
     );
   }
 
-  reviewTextField({BuildContext context, String hint}) {
+  nickNameTextField({
+    BuildContext context,
+  }) {
     return Container(
       padding: EdgeInsets.only(
           right: width(context) * .05, left: width(context) * .05),
-      height: isLandscape(context)
-          ? 2 * height(context) * .08
-          : height(context) * .08,
       child: TextFormField(
+        controller: nickname,
         style: TextStyle(
             color: greyColor.withOpacity(.5),
             fontSize: isLandscape(context)
@@ -214,7 +328,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                 : height(context) * .02),
         cursorColor: greyColor.withOpacity(.5),
         decoration: InputDecoration(
-          hintText: translator.translate(hint),
+          hintText: translator.translate("nickName"),
           hintStyle: TextStyle(
               color: greyColor.withOpacity(.5),
               fontWeight: FontWeight.bold,
@@ -233,6 +347,100 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(color: blackColor)),
         ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return '${translator.translate("Please enter")} ${translator.translate("NickName")}';
+          }
+          return null;
+        },
+      ),
+    );
+  }
+
+  summaryTextField({
+    BuildContext context,
+  }) {
+    return Container(
+      padding: EdgeInsets.only(
+          right: width(context) * .05, left: width(context) * .05),
+      child: TextFormField(
+        controller: summary,
+        style: TextStyle(
+            color: greyColor.withOpacity(.5),
+            fontSize: isLandscape(context)
+                ? 2 * height(context) * .02
+                : height(context) * .02),
+        cursorColor: greyColor.withOpacity(.5),
+        decoration: InputDecoration(
+          hintText: translator.translate("summary"),
+          hintStyle: TextStyle(
+              color: greyColor.withOpacity(.5),
+              fontWeight: FontWeight.bold,
+              fontSize: isLandscape(context)
+                  ? 2 * height(context) * .018
+                  : height(context) * .018),
+          filled: true,
+          fillColor: whiteColor,
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: blackColor)),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: blackColor)),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: blackColor)),
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return '${translator.translate("Please enter")} ${translator.translate("Summary")}';
+          }
+          return null;
+        },
+      ),
+    );
+  }
+
+  reviewTextField({
+    BuildContext context,
+  }) {
+    return Container(
+      padding: EdgeInsets.only(
+          right: width(context) * .05, left: width(context) * .05),
+      child: TextFormField(
+        controller: review,
+        style: TextStyle(
+            color: greyColor.withOpacity(.5),
+            fontSize: isLandscape(context)
+                ? 2 * height(context) * .02
+                : height(context) * .02),
+        cursorColor: greyColor.withOpacity(.5),
+        decoration: InputDecoration(
+          hintText: translator.translate("Review"),
+          hintStyle: TextStyle(
+              color: greyColor.withOpacity(.5),
+              fontWeight: FontWeight.bold,
+              fontSize: isLandscape(context)
+                  ? 2 * height(context) * .018
+                  : height(context) * .018),
+          filled: true,
+          fillColor: whiteColor,
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: blackColor)),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: blackColor)),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: blackColor)),
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return '${translator.translate("Please enter")} ${translator.translate("Review")}';
+          }
+          return null;
+        },
       ),
     );
   }

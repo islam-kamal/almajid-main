@@ -1,9 +1,9 @@
 import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
+import 'package:almajidoud/main.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/Payment/Constants.dart';
 import 'package:almajidoud/screens/checkout/checkout_summary_screen.dart';
 import 'package:almajidoud/screens/checkout/widgets/checkout_header.dart';
-import 'package:almajidoud/screens/checkout/widgets/next_button_in_payment.dart';
 import 'package:almajidoud/screens/checkout/widgets/page_title.dart';
 import 'package:almajidoud/screens/checkout/widgets/payment_method_card.dart';
 import 'package:almajidoud/screens/checkout/widgets/payment_text_field.dart';
@@ -37,12 +37,14 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
   bool isCvvFocused = false;
   bool useGlassMorphism = false;
   bool useBackgroundImage = false;
+  var payment_method_name;
   OutlineInputBorder border;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   void initState() {
     _currentIndex = widget.guestShipmentAddressModel.paymentMethods[0].code;
     sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, _currentIndex);
+    payment_method_name = widget.guestShipmentAddressModel.paymentMethods[0].title;
     border = OutlineInputBorder(
       borderSide: BorderSide(
         color: Colors.grey.withOpacity(0.7),
@@ -66,11 +68,12 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                 topPageIndicator(context: context , isPayment: true  , indicatorWidth: .66),
                 responsiveSizedBox(context: context, percentageOfHeight: .02),
                 pageTitle(context: context, title: "Payment Method"),
-                responsiveSizedBox(context: context, percentageOfHeight: .01),
+                responsiveSizedBox(context: context, percentageOfHeight: .02),
                 paymentMethodCard(
                     context: context,
                 paymentMethods: widget.guestShipmentAddressModel.paymentMethods) ,
-                _currentIndex == "stc_pay" ? Container() :     Column(
+                _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments'  ||   _currentIndex ==  'cashondelivery'?
+                Container() :     Column(
                   children: [
                     CreditCardWidget(
                       glassmorphismConfig:
@@ -90,14 +93,14 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       isSwipeGestureEnabled: true,
                       onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
                       customCardTypeIcons: <CustomCardTypeIcon>[
-                        CustomCardTypeIcon(
+                      /*  CustomCardTypeIcon(
                           cardType: CardType.mastercard,
                           cardImage: Image.asset(
                             'assets/mastercard.png',
                             height: 48,
                             width: 48,
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                     CreditCardForm(
@@ -151,13 +154,14 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
 
 
 
-                responsiveSizedBox(context: context, percentageOfHeight:_currentIndex == "stc_pay" ? 0.3 : .05),
+                responsiveSizedBox(context: context, percentageOfHeight: _currentIndex == "stc_pay" ||
+                    _currentIndex == 'tamara_pay_by_instalments' ||   _currentIndex ==  'cashondelivery'? 0.1: .05),
                 GestureDetector(
                   onTap: () {
-                  if(_currentIndex == "stc_pay") {
+                  if(_currentIndex == "stc_pay" || _currentIndex == 'tamara_pay_by_instalments' ||   _currentIndex ==  'cashondelivery') {
                       customAnimatedPushNavigation(context , CheckoutSummaryScreen(
                         guestShipmentAddressModel: widget.guestShipmentAddressModel,
-                        payment_method: _currentIndex,
+                        payment_method: payment_method_name,
                       ));
                     }else{
                     if (formKey.currentState.validate()) {
@@ -168,7 +172,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       StaticData.expiry_date = expiryDate[3] + expiryDate[4] + expiryDate[0] + expiryDate[1];
                       customAnimatedPushNavigation(context , CheckoutSummaryScreen(
                         guestShipmentAddressModel: widget.guestShipmentAddressModel,
-                        payment_method: _currentIndex,
+                        payment_method: payment_method_name,
                       )
                       );
 
@@ -212,12 +216,23 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
   }
 
   paymentMethodCard({BuildContext context ,  List<PaymentMethods> paymentMethods}) {
-
+    var toRemove = [];
+    paymentMethods.forEach((element) {
+      if(element.title =="APS Payment Method"){
+        toRemove.add(element);
+      }else if(element.title =="Tap"){
+        if(MyApp.app_location == 'kw'){
+        }else{
+          toRemove.add(element);
+        }
+      }
+    });
+    paymentMethods.removeWhere( (e) => toRemove.contains(e));
     return Container(
         padding: EdgeInsets.only(
             right: width(context) * .05, left: width(context) * .05),
         width: width(context) * .95,
-        height: width(context) * .5,
+        height:    _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments' ||   _currentIndex ==  'cashondelivery' ? width(context)  :  width(context) * .5,
         decoration: BoxDecoration(color: mainColor, borderRadius: BorderRadius.circular(20)),
         child: GridView.builder(
           //scrollDirection: Axis.vertical,
@@ -229,56 +244,57 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
           ),
           itemBuilder:
               (BuildContext context, int index) {
-            return Directionality(
-              textDirection: TextDirection.ltr,
-              child: Container(
-                child: Theme(
-                    data: Theme.of(context).copyWith(
-                        unselectedWidgetColor: whiteColor,
-                        disabledColor: whiteColor
-                    ),
-                    child:RadioListTile(
-                      groupValue: _currentIndex,
-                      contentPadding: const EdgeInsets.all(5.0),
+              return Directionality(
+                textDirection: TextDirection.ltr,
+                child: Container(
+                  child: Theme(
+                      data: Theme.of(context).copyWith(
+                          unselectedWidgetColor: whiteColor,
+                          disabledColor: whiteColor
+                      ),
+                      child:RadioListTile(
+                        groupValue: _currentIndex,
+                        contentPadding: const EdgeInsets.all(5.0),
 
-                      title: Container(
-                decoration: BoxDecoration(
-                color: whiteColor,
-                borderRadius: BorderRadius.circular(15)
-                ),
-                child:Row(
-                        children: [
-                          Expanded(
-                            flex: 7,
-                              child:  Text(
-                              "${paymentMethods[index].title} ",
-                              maxLines: 2,
-                              style: TextStyle(
-                                fontSize: AlmajedFont.secondary_font_size,color: mainColor,fontWeight: FontWeight.w300
-                              ),
-                              textAlign: TextAlign.center,
+                        title: Container(
+                            decoration: BoxDecoration(
+                                color: whiteColor,
+                                borderRadius: BorderRadius.circular(15)
                             ),
-                          ),
+                            child:Row(
+                              children: [
+                                Expanded(
+                                  flex: 7,
+                                  child:  Text(
+                                    "${paymentMethods[index].title} ",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: AlmajedFont.secondary_font_size,color: mainColor,fontWeight: FontWeight.w300
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
 
-                        ],
-                ) ),
+                              ],
+                            ) ),
 
-                      value: paymentMethods[index].code,
-                      activeColor: Colors.blue,
-                      onChanged: (val) {
-                        setState(() {
-                          sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, paymentMethods[index].code);
+                        value: paymentMethods[index].code,
+                        activeColor: Colors.blue,
+                        onChanged: (val) {
+                          setState(() {
+                            sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, paymentMethods[index].code);
+                            payment_method_name =   paymentMethods[index].title;
 
-                          _currentIndex = val;
-                          print("_currentIndex : ${_currentIndex}");
-                        });
+                            _currentIndex = val;
+                            print("_currentIndex : ${_currentIndex}");
+                          });
 
 
 
-                      },
-                    )),
-              ),
-            );
+                        },
+                      )),
+                ),
+              );
           },
         )
 

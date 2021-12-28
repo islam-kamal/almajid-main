@@ -27,7 +27,7 @@ class Urls {
 
   static final String GET_APP_COUNTRIES = '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/directory/countries';
 
-  static final String GET_ALL_CITIES = '/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/regions/sa';
+  static final String GET_ALL_CITIES = '/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/regions/${MyApp.app_location}';
 
   static final String GET_ALL_OFFERS = '/${MyApp.app_langauge}-${MyApp.app_location}/api/user/offers/get-offers';
 
@@ -50,7 +50,7 @@ class Urls {
 
   static final String STC_PAY_VALIDATE_OTP = '/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/stc-pay/verify-otp';
 
-
+  static final String CREATE_TOKEN_TAP_PAYMENT = 'https://api.tap.company/v2/tokens';
 
 
   static final String LOGOUT = "/${MyApp.app_langauge}-${MyApp.app_location}/api/auth/logout";
@@ -64,7 +64,7 @@ class Urls {
   static final String FAQS_URL = '$BASE_URL/${MyApp.app_langauge}-${MyApp.app_location}/help-faqs';
 
 
-
+  static final String CREATE_PRODUCT_REVIEW = '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/reviews/';
 
 
 }

@@ -4,7 +4,7 @@ import 'package:almajidoud/Bloc/Category_Bloc/category_bloc.dart';
 import 'package:almajidoud/Bloc/Home_Bloc/home_bloc.dart';
 import 'package:almajidoud/Bloc/Search_Bloc/search_bloc.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
-import 'package:almajidoud/Repository/PaymentRepo/stc_pay_repository.dart';
+import 'package:almajidoud/Repository/PaymentRepo/payment_repository.dart';
 import 'package:almajidoud/Repository/WishListRepo/wishlist_repository.dart';
 import 'package:almajidoud/main.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     StaticData.vistor_value = null; // clear vistor state
-
+    StaticData.wishlist_items = [];
     Timer(Duration(seconds: 0), () async {
       try {
         print('--- token -- : ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}');
@@ -35,6 +35,12 @@ class _SplashScreenState extends State<SplashScreen> {
       } catch (e) {
         checkAuthentication(null);
       }
+    });
+  }
+  void get_wishlist_ids()async {
+    await sharedPreferenceManager.getListOfMaps('wishlist_data_ids').then((
+        value) {
+      StaticData.wishlist_items = value;
     });
   }
   @override
@@ -75,6 +81,8 @@ class _SplashScreenState extends State<SplashScreen> {
     await categoryBloc.add(getAllCategories());
     readJson(token);
     await Future.delayed(Duration(seconds: 3));
+    get_wishlist_ids();
+
   }
 
   Future<void> readJson(String token) async {
@@ -95,7 +103,7 @@ class _SplashScreenState extends State<SplashScreen> {
       ));
     }
     StaticData.gallery = StaticData.data["slider"];
-    print(StaticData.gallery[0]['url']);
+
     StaticData.gallery.forEach((element) {
       StaticData.images.add(element['url']);
     });
@@ -118,10 +126,8 @@ class _SplashScreenState extends State<SplashScreen> {
     }else{
       wishListRepository.getWishListIDS(context);
       await search_bloc.add(SearchProductsEvent(search_text: ''));
-      print("*******######*****8888");
       customAnimatedPushNavigation(context, CustomCircleNavigationBar(page_index: 2,));
     }
-    print("3");
   }
 
 }

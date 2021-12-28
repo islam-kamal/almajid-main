@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:almajidoud/Bloc/Authentication_Bloc/SigninBloc/sign_in_bloc.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
@@ -6,7 +8,8 @@ import 'package:almajidoud/utils/file_export.dart';
 
 class GetStartedScreen extends StatefulWidget {
   final String token;
-  GetStartedScreen({this.token});
+  final String route;
+  GetStartedScreen({this.token,this.route});
   @override
   GetStartedScreenState createState() => new GetStartedScreenState();
 }
@@ -105,8 +108,20 @@ class GetStartedScreenState extends State<GetStartedScreen>
                       print("done");
                       _stopAnimation();
                       StaticData.vistor_value = null;
-                      cartRepository.create_quote(context:context);
+                      cartRepository.check_quote_status().then((value){
+                        final extractedData = json.decode(value.body) as Map<String, dynamic>;
+                         if (extractedData["status"] == null){
+                        print("cart quote is not active");
+                        cartRepository.create_quote(context: context); // used to create new quote for guest
+                        }
+                        else if (extractedData["status"]) {
+                          print("cart quote is active");
+                        }else if(extractedData["message"] != null){
+                          print("cart quote is  not found");
+                          cartRepository.create_quote(context: context); // used to create new quote for guest
+                        }
 
+                      });
                       Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(
@@ -139,15 +154,15 @@ class GetStartedScreenState extends State<GetStartedScreen>
                         customDescriptionText(
                             context: context,
                             textColor: mainColor,
-                            text: "Awesome !",
+                            text: translator.translate("Awesome !"),
                             percentageOfHeight: .03),
                         responsiveSizedBox(
                             context: context, percentageOfHeight: .02),
                         customDescriptionText(
                             context: context,
                             textColor: greyColor,
-                            text:
-                                "Your phone number has been verified sucessfully",
+                            text: widget.route == 'SignInScreen' ?translator.translate("Your Account has been verified sucessfully")
+                              : translator.translate("Your phone number has been verified sucessfully"),
                             percentageOfHeight: .025,
                             maxLines: 3),
                         responsiveSizedBox(
@@ -156,22 +171,6 @@ class GetStartedScreenState extends State<GetStartedScreen>
                         getStartedButton(
                             context:context
                         ),
-/*
-                        Container(
-                            width: width(context) * .8,
-                            decoration: BoxDecoration(
-                                color: mainColor,
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Center(
-                                child: customDescriptionText(
-                                    context: context,
-                                    text: "Get Started",
-                                    percentageOfHeight: .025,
-                                    textColor: whiteColor)),
-                            height: isLandscape(context)
-                                ? 2 * height(context) * .065
-                                : height(context) * .065),
-*/
                       ],
                     ),
                   )))),

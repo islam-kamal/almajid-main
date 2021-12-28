@@ -1,7 +1,4 @@
 import 'package:almajidoud/screens/auth/widgets/already_have_an_account.dart';
-import 'package:almajidoud/screens/auth/widgets/choose_country_widget_in_reset_password.dart';
-import 'package:almajidoud/screens/auth/widgets/phone_number_widget_in_reset_password.dart';
-import 'package:almajidoud/screens/auth/widgets/send_button_in_reset_password.dart';
 import 'package:almajidoud/screens/auth/widgets/send_code_top_header.dart';
 import 'package:almajidoud/screens/auth/widgets/send_code_top_icon.dart';
 import 'package:almajidoud/screens/auth/widgets/we_will_send_you_code_text.dart';
@@ -164,7 +161,7 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                                 weWillSendYouCode(context: context),
                                 responsiveSizedBox(
                                     context: context, percentageOfHeight: .04),
-                                //  sendButtonInResetPassword(context: context)
+                            //     sendButtonInResetPassword(context: context)
                                 LoginUsingPhoneButton(context: context),
                                 responsiveSizedBox(context: context, percentageOfHeight: .010),
 
@@ -212,7 +209,6 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                           backgroundColor: Colors.black,
                           title: Text(translator.translate('country_code')),
                         ),
-
                         // if you need custome picker use this
                         pickerBuilder: (context, CountryCode countryCode) {
                           return Neumorphic(
@@ -336,9 +332,17 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
       padding: EdgeInsets.all(10),
       child: StaggerAnimation(
         buttonController: _loginButtonController.view,
-        btn_width: width(context) * .15,
-        btn_height:  width(context) * .15,
-        image: "assets/icons/right-arrow.png",
+        btn_width:  width(context) * .2,
+        btn_height:  isLandscape(context) ? 2 * height(context) * .08 : height(context) * .08,
+        widget:  Container(
+          decoration: BoxDecoration(color: blackColor, shape: BoxShape.circle),
+          child: Center(
+            child: Image.asset("assets/icons/right-arrow.png",
+                height: isLandscape(context)
+                    ? 2 * height(context) * .04
+                    : height(context) * .04),
+          ),
+        ),
         onTap: () {
           StaticData.user_mobile_number = StaticData.country_code + forgetPassword_bloc.mobile_controller.value;
           forgetPassword_bloc.add(sendOtpClick(

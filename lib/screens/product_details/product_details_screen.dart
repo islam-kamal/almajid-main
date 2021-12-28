@@ -38,6 +38,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
     });
     _loginButtonController = AnimationController(
         duration: const Duration(milliseconds: 3000), vsync: this);
+    StaticData.product_id = widget.product.id;
     super.initState();
   }
 
@@ -94,8 +95,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                         var data = state.model as AddCartModel;
                         print("ErrorLoading");
                         _stopAnimation();
-                        if(data.message == "The consumer isn't authorized to access %resources." ||
-                        data.message == "Current customer does not have an active cart."){
+                        if(data.message == "The consumer isn't authorized to access %resources." ){
                           Flushbar(
                             messageText:    Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -314,6 +314,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             product_sku: widget.product.sku,
                             product_quantity:  StaticData.product_qty ,
                            instock_status: widget.product.extensionAttributes.stockItem.isInStock,
+                          scaffoldKey: _drawerKey,
                             ),
                         responsiveSizedBox(
                             context: context, percentageOfHeight: .06),
@@ -325,7 +326,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                              children: [
                                responsiveSizedBox(
                                    context: context, percentageOfHeight: .01),
-                               writeReviewButton(context: context),
+                               writeReviewButton(
+                                   context: context,
+                                 product_suk: widget.product.sku
+                              ),
                                responsiveSizedBox(
                                    context: context, percentageOfHeight: .005),
                                soldByWidget(context: context)

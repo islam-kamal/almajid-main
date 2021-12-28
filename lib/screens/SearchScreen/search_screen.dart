@@ -5,7 +5,6 @@ import 'package:almajidoud/Model/ProductModel/product_model.dart' as product_mod
 import 'package:almajidoud/Model/SearchModel/search_model.dart';
 import 'package:almajidoud/screens/WishList/custom_wishlist.dart';
 import 'package:almajidoud/screens/Products/product_slider.dart';
-import 'package:almajidoud/screens/Reviews/product_reviews.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 
@@ -21,6 +20,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
 
+  GlobalKey<ScaffoldState> scaffold_key = GlobalKey();
 
   @override
   void initState() {
@@ -32,6 +32,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return NetworkIndicator(
         child: PageContainer(
             child: Scaffold(
+              key: scaffold_key,
               backgroundColor: whiteColor,
               body: SingleChildScrollView(
                   child: Column(
@@ -78,7 +79,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                   print("data : ${data}");
 
                                   if (data.items == null || data.items.isEmpty) {
-                                    print("11111111111");
                                     return no_data_widget(
                                         context: context
                                     );
@@ -88,13 +88,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                       builder: (context, snapshot) {
                                         if (snapshot.hasData) {
                                           if (snapshot.data == null) {
-                                            print("222222");
                                             return no_data_widget(
                                               context: context
                                             );
                                           } else {
-                                            print("length : ${snapshot.data.items.length}");
-
                                             return ListView.builder(
                                                 shrinkWrap: true,
                                                 itemCount: snapshot.data.items.length,
@@ -179,7 +176,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                         child: customDescriptionText(
                                                                                             context: context,
                                                                                             textColor: mainColor,
-                                                                                            text: "${snapshot.data.items[index].price} \$",
+                                                                                            text: "${snapshot.data.items[index].price} ${MyApp.country_currency}",
                                                                                             textAlign: TextAlign.start,
                                                                                             fontWeight: FontWeight.bold),
                                                                                       ),
@@ -208,7 +205,31 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                     MainAxisAlignment.spaceBetween,
                                                                                     children: [
                                                                                       InkWell(
-                                                                                        onTap:  snapshot.data.items[index].extensionAttributes.stockItem.isInStock == false ? (){} : () {
+                                                                                        onTap:  snapshot.data.items[index].extensionAttributes.stockItem.isInStock == false ? (){
+                                                                                          Flushbar(messageText: Container(width: StaticData.get_width(context) * 0.7,
+                                                                                            child:
+                                                                                            Wrap(
+                                                                                              children: [
+                                                                                                Text(
+                                                                                                  translator.translate( "There is no quantity of this product in stock"),
+                                                                                                  textDirection: TextDirection.rtl,
+                                                                                                  style: TextStyle(color: whiteColor),
+                                                                                                ),
+                                                                                              ],
+                                                                                            ),
+                                                                                          ),
+                                                                                            flushbarPosition:
+                                                                                            FlushbarPosition.BOTTOM,
+                                                                                            backgroundColor:
+                                                                                            redColor,
+                                                                                            flushbarStyle:
+                                                                                            FlushbarStyle.FLOATING,
+                                                                                            duration:
+                                                                                            Duration(seconds: 3),
+                                                                                          )..show(scaffold_key
+                                                                                              .currentState
+                                                                                              .context);
+                                                                                        } : () {
                                                                                           shoppingCartBloc.add(AddProductToCartEvent(
                                                                                               context: context,
                                                                                               product_quantity: snapshot.data.items[index].extensionAttributes.stockItem.qty,
@@ -332,7 +353,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                   child: customDescriptionText(
                                                                                       context: context,
                                                                                       textColor: mainColor,
-                                                                                      text: "${snapshot.data.items[index].price} \$",
+                                                                                      text: "${snapshot.data.items[index].price} ${MyApp.country_currency}",
                                                                                       textAlign: TextAlign.start,
                                                                                       fontWeight: FontWeight.bold),
                                                                                 ),

@@ -14,7 +14,7 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   FocusNode fieldNode = FocusNode();
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-  var dropdownCountryValue = MyApp.app_langauge == 'sa' ?      'Saudi Arabia' : 'kuwait';
+  var dropdownCountryValue = MyApp.app_location == 'sa' ?      'Saudi Arabia' : 'kuwait';
   @override
   Widget build(BuildContext context) {
     return NetworkIndicator(
@@ -117,8 +117,17 @@ class _LocationScreenState extends State<LocationScreen> {
                                 setState(() {
                                   dropdownCountryValue = newValue;
                                   MyApp.app_location = newValue == 'Saudi Arabia' ? 'sa' : 'kw';
+                                  MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR") : translator.translate("KWD");
                                   sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location );
-                                  print("dropdownCountryValue : ${dropdownCountryValue}");
+                                  if(StaticData.vistor_value == 'visitor'){
+                                    MyApp.restartApp(context);
+                                  }else{
+                                    sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
+                                    sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
+                                    sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
+                                    sharedPreferenceManager.removeData(CachingKey.CUSTOMER_ID);
+                                    customAnimatedPushNavigation(context, SignInScreen());
+                                  }
 
                                 });
                               },

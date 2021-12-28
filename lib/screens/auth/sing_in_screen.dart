@@ -5,13 +5,11 @@ import 'package:almajidoud/custom_widgets/stagger_animation.dart';
 import 'package:almajidoud/screens/auth/get_started_screen.dart';
 import 'package:almajidoud/screens/auth/widgets/already_have_an_account.dart';
 import 'package:almajidoud/screens/auth/widgets/forget_password_button.dart';
-import 'package:almajidoud/screens/auth/widgets/auth_text_field.dart';
 import 'package:almajidoud/screens/auth/widgets/top_auth_buttons.dart';
 import 'package:almajidoud/screens/auth/widgets/top_header.dart';
 import 'package:almajidoud/screens/home/home_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-import 'package:almajidoud/custom_widgets/flushbar_widget.dart';
 class SignInScreen extends StatefulWidget {
   @override
   _SignInScreenState createState() => _SignInScreenState();
@@ -123,6 +121,7 @@ class _SignInScreenState extends State<SignInScreen>
             pageBuilder: (context, animation1, animation2) {
               return GetStartedScreen(
                 token: data.token,
+                route: 'SignInScreen',
               );
             },
             transitionsBuilder:

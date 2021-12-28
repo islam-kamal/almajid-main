@@ -1,8 +1,6 @@
 import 'package:almajidoud/screens/auth/sing_in_screen.dart';
 import 'package:almajidoud/screens/auth/widgets/forget_password_top_header.dart';
-import 'package:almajidoud/screens/auth/widgets/resend_message_button.dart';
-import 'package:almajidoud/screens/auth/widgets/reset_password_text_fields.dart';
-import 'package:almajidoud/screens/auth/widgets/send_or_done_button.dart';
+
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/utils/static_data.dart';
 import 'package:flushbar/flushbar.dart';
@@ -94,7 +92,6 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
 
                   print("done");
                   _stopAnimation();
-print("11111111111111111111111");
                   Flushbar(
                     messageText: Row(
                       children: [
