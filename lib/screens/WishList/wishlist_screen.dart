@@ -85,7 +85,8 @@ class _WishListScreenState extends State<WishListScreen> {
                               child: CircularProgressIndicator(),
                             );
                           } else if (state is Done) {
-                            if (state.indicator == 'get_fav') {
+                            if (state.indicator == 'get_fav')
+                            {
                               var data = state.model as GetAllWishListModel;
                               if (data.items == null || data.items.isEmpty) {
                                 return Container();
@@ -244,7 +245,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                       wishlist_bloc.add(AddToCarFromWishListEvent(
                                                                                           context: context,
                                                                                           qty: snapshot.data.items[index].qty,
-                                                                                          wishlist_product_id: snapshot.data.items[index].product.id));
+                                                                                          wishlist_product_id: snapshot.data.items[index].id));
                                                                                     },
                                                                                     child:
                                                                                     Container(
@@ -544,17 +545,56 @@ class _WishListScreenState extends State<WishListScreen> {
                               }
                             } else if (state.indicator == 'remove_fav') {
                             } else if (state.indicator == 'add_cart') {
-                              customAnimatedPushNavigation(
+                     /*         customAnimatedPushNavigation(
                                   context,
                                   CustomCircleNavigationBar(
                                     page_index: 0,
-                                  ));
+                                  ));*/
+                              Flushbar(
+                                messageText:
+                                Container(
+                                  child: Text(
+                                    translator.translate("product added suceesfully to cart"),
+                                    maxLines: 2,
+                                    textAlign: TextAlign.end,
+                                    textDirection: TextDirection.rtl,
+                                    style: TextStyle(color: whiteColor),
+                                  ),
+                                ),
+                                flushbarPosition:
+                                FlushbarPosition.BOTTOM,
+                                backgroundColor:
+                                greenColor,
+                                duration: Duration(seconds: 2),
+                                flushbarStyle:
+                                FlushbarStyle.FLOATING,
+                              )..show(_scaffoldKey.currentState.context);
                             }
                           } else if (state is ErrorLoading) {
                             if (state.indicator == 'get_fav') {
                               return no_data_widget(context: context);
                             } else if (state.indicator == 'remove_fav') {
-                            } else if (state.indicator == 'add_cart') {}
+                            } else if (state.indicator == 'add_cart') {
+                              Flushbar(
+                                messageText:
+                                Container(
+                                  child: Text(
+                                    translator.translate("The wishlist item does not exist."),
+                                    maxLines: 2,
+                                    textAlign: TextAlign.end,
+                                    textDirection: TextDirection.rtl,
+                                    style: TextStyle(color: whiteColor),
+                                  ),
+                                ),
+                                flushbarPosition:
+                                FlushbarPosition.BOTTOM,
+                                backgroundColor:
+                                greenColor,
+                                duration: Duration(seconds: 2),
+                                flushbarStyle:
+                                FlushbarStyle.FLOATING,
+                              )..show(_scaffoldKey.currentState.context);
+                            }
                           } else {
                             return Center(
                               child: CircularProgressIndicator(),

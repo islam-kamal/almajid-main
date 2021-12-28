@@ -164,8 +164,6 @@ class WishListRepository {
 
     if (check_quote_response.data['status']) {
       try {
-        print("wishlist url  :"+             "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/me/wishlist/addCart/${wishlist_product_id}",
-        );
         final add_response = await dio.post(
             "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/me/wishlist/addCart/${wishlist_product_id}",
             options: Options(
