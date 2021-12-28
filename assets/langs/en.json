@@ -30,6 +30,7 @@
   "swipe": "Swipe Left To Remove Product",
   "product added suceesfully to cart" : "product added suceesfully to cart",
   "There is no quantity of this product in stock" :  "There is no quantity of this product in stock",
+  "The wishlist item does not exist." : "The wishlist item does not exist.",
   "-------------------checkout-----------------": "---------------------------------",
   "Checkout": "Checkout",
   "Address": "Address",
