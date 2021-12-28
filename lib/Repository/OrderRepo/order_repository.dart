@@ -9,22 +9,26 @@ import 'package:dio/dio.dart';
 class OrderRepository {
   Future<String> create_guest_order({BuildContext context}) async {
     Dio dio = new Dio();
+    print("create order url : ${     "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
+        :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/order"}");
+
     try {
       final response = await dio.put(
-          "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
-              :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/order",
+          "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)}/order",
           data: {
             "paymentMethod": {
                  "method": await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD),
-          //   "method":  'aps_fort_cc'
             }
           },
           options: Options(headers: Map<String, String>.from({})));
+      print("^^^^order response ^^^^^ : ${response}");
       if (response.statusCode == 200) {
+        print("^^^^order response.data ^^^^^ : ${response.data}");
         sharedPreferenceManager.writeData(CachingKey.ORDER_ID, response.data);
         return response.data;
       } else {
         Navigator.pop(context);
+        print("^^^^order response.data['message'] ^^^^^ : ${response.data['message']}");
         errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {

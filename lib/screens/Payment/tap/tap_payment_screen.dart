@@ -240,20 +240,8 @@ class PaymentSuccessfulScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                /*    cartRepository.check_quote_status().then((value){
-                      final extractedData = json.decode(value.body) as Map<String, dynamic>;
-                      if (extractedData["status"]) {
-                        print("cart quote is active");
-                      }else if(extractedData["message"] != null){
-                        print("cart quote is  not found");
-                        cartRepository.create_quote(context: context); // used to create new quote for guest
-                      }
-                      else{
-                        print("cart quote is not active");
-                        cartRepository.create_quote(context: context); // used to create new quote for guest
-                      }
-                    });*/
-
+                    StaticData.vistor_value == 'visitor'
+                        ? customAnimatedPushNavigation(context, CustomCircleNavigationBar()):
                     customAnimatedPushNavigation(context, OrdersScreen(
                       increment_id: order_id,
                     ));

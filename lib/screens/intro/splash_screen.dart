@@ -41,7 +41,6 @@ class _SplashScreenState extends State<SplashScreen> {
     await sharedPreferenceManager.getListOfMaps('wishlist_data_ids').then((
         value) {
       StaticData.wishlist_items = value;
-      print("wishlist_items ****: ${ StaticData.wishlist_items}");
     });
   }
   @override
@@ -104,7 +103,7 @@ class _SplashScreenState extends State<SplashScreen> {
       ));
     }
     StaticData.gallery = StaticData.data["slider"];
-    print(StaticData.gallery[0]['url']);
+
     StaticData.gallery.forEach((element) {
       StaticData.images.add(element['url']);
     });
@@ -127,10 +126,8 @@ class _SplashScreenState extends State<SplashScreen> {
     }else{
       wishListRepository.getWishListIDS(context);
       await search_bloc.add(SearchProductsEvent(search_text: ''));
-      print("*******######*****8888");
       customAnimatedPushNavigation(context, CustomCircleNavigationBar(page_index: 2,));
     }
-    print("3");
   }
 
 }

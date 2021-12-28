@@ -79,7 +79,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                   print("data : ${data}");
 
                                   if (data.items == null || data.items.isEmpty) {
-                                    print("11111111111");
                                     return no_data_widget(
                                         context: context
                                     );
@@ -89,13 +88,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                       builder: (context, snapshot) {
                                         if (snapshot.hasData) {
                                           if (snapshot.data == null) {
-                                            print("222222");
                                             return no_data_widget(
                                               context: context
                                             );
                                           } else {
-                                            print("length : ${snapshot.data.items.length}");
-
                                             return ListView.builder(
                                                 shrinkWrap: true,
                                                 itemCount: snapshot.data.items.length,
@@ -180,7 +176,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                         child: customDescriptionText(
                                                                                             context: context,
                                                                                             textColor: mainColor,
-                                                                                            text: "${snapshot.data.items[index].price} \$",
+                                                                                            text: "${snapshot.data.items[index].price} ${MyApp.country_currency}",
                                                                                             textAlign: TextAlign.start,
                                                                                             fontWeight: FontWeight.bold),
                                                                                       ),
@@ -215,7 +211,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                             Wrap(
                                                                                               children: [
                                                                                                 Text(
-                                                                                                  'There is no quantity of this product in stock',
+                                                                                                  translator.translate( "There is no quantity of this product in stock"),
                                                                                                   textDirection: TextDirection.rtl,
                                                                                                   style: TextStyle(color: whiteColor),
                                                                                                 ),
@@ -357,7 +353,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                   child: customDescriptionText(
                                                                                       context: context,
                                                                                       textColor: mainColor,
-                                                                                      text: "${snapshot.data.items[index].price} \$",
+                                                                                      text: "${snapshot.data.items[index].price} ${MyApp.country_currency}",
                                                                                       textAlign: TextAlign.start,
                                                                                       fontWeight: FontWeight.bold),
                                                                                 ),

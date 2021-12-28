@@ -55,9 +55,7 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
       var response = await AuthenticationRepository.get_user_info(
           token: event.token,
       );
-      print("UserInfo response : ${response.firstname}");
       if(response != null){
-        print("UserInfo response : 11111111111111111");
         sharedPreferenceManager.writeData(CachingKey.USER_NAME, response.firstname +' '+ response.lastname );
         sharedPreferenceManager.writeData(CachingKey.CUSTOMER_ID, response.id );
         sharedPreferenceManager.writeData(CachingKey.EMAIL, response.email );

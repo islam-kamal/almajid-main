@@ -15,7 +15,8 @@ class CountriesRepository {
         'Accept': 'application/json',
         'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
       };
-      final response = await dio.get(Urls.BASE_URL+ Urls.GET_APP_COUNTRIES, options: Options(
+      final response = await dio.get(Urls.BASE_URL+ '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/directory/countries',
+          options: Options(
           headers: headers
       ));
       if (response.statusCode == 200) {
@@ -54,7 +55,7 @@ class CountriesRepository {
     Dio dio = new Dio();
     try {
       final response = await dio.get(
-        Urls.BASE_URL + Urls.GET_ALL_CITIES, );
+        Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/regions/${MyApp.app_location}', );
       if (response.statusCode == 200) {
         final jsonresponse = response.data;
         List<CityModel> temp = (jsonresponse as List)

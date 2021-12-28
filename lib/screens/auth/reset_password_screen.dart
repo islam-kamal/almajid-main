@@ -92,7 +92,6 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
 
                   print("done");
                   _stopAnimation();
-print("11111111111111111111111");
                   Flushbar(
                     messageText: Row(
                       children: [

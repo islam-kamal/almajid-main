@@ -31,8 +31,6 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
     if (event is GetHomeNewArrivals) {
       print("1");
       yield Loading();
-      print("category_id : ${event.category_id}");
-      print("offset : ${event.offset}");
 
       final response = await categoryRepository.getCategoryProducts(
           category_id: event.category_id,
@@ -41,19 +39,14 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
       if (response.message == null) {
         response.items.isEmpty?_new_arrivals_products_subject : _newArrivalsProducts_list.addAll(response.items);
         _new_arrivals_products_subject.sink.add(_newArrivalsProducts_list);
-        print("_new_arrivals_products_subject: ${_new_arrivals_products_subject}");
         yield Done(model: response);
       } else if (response.message != null) {
-        print("4");
         yield ErrorLoading(model: response);
       }
     }
 
     else  if (event is GetHomeBestSeller) {
-      print("1");
       yield Loading();
-      print("category_id : ${event.category_id}");
-      print("offset : ${event.offset}");
 
       final response = await categoryRepository.getCategoryProducts(
           category_id: event.category_id,
@@ -62,10 +55,8 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
       if (response.message == null) {
         response.items.isEmpty?_best_seller_products_subject : _bestSellerProducts_list.addAll(response.items);
         _best_seller_products_subject.sink.add(_bestSellerProducts_list);
-        print("_best_seller_products_subject: ${_best_seller_products_subject}");
         yield Done(model: response);
       } else if (response.message != null) {
-        print("4");
         yield ErrorLoading(model: response);
       }
     }

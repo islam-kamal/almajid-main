@@ -21,7 +21,6 @@ class _HomePageState extends State<AutoSearchClass> {
   @override
   void initState() {
     // TODO: implement initState
-    print("search 11111");
     super.initState();
   }
 

@@ -31,7 +31,6 @@ class categoriesButtonsSate extends State<CategoriesButtons>{
             if (data.childrenData == null || data.childrenData.isEmpty) {
               return Container();
             } else {
-              print("111111111111111");
 
               return StreamBuilder<CategoryModel>(
                 stream: categoryBloc.categories_subject,

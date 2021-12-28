@@ -68,7 +68,7 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget> with Tic
             Wrap(
               children: [
                 Text(
-                  'There is no quantity of this product in stock',
+                  translator.translate( "There is no quantity of this product in stock"),
                   textDirection: TextDirection.rtl,
                   style: TextStyle(color: whiteColor),
                 ),

@@ -279,7 +279,29 @@ class _CartScreenState extends State<CartScreen> {
       print("item can't be deleted");
     }
   }
-
+  Widget textSwipeLeft() {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return Container(
+      padding: EdgeInsets.only(left: width * .075),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Image.asset(
+            "assets/images/swipe.png",
+            height: height * .03,
+          ),
+          Text(
+            translator.translate("swipe"),
+            style: TextStyle(
+                fontSize: height * .015,
+                fontWeight: FontWeight.bold,
+                color: mainColor),
+          ),
+        ],
+      ),
+    );
+  }
   singleCartItem({BuildContext context, cart_details_model.Items item}) {
     List<String> qantity_numbers = [];
     for (int i = 1; i < 20; i++) {
@@ -525,27 +547,5 @@ class _CartScreenState extends State<CartScreen> {
         ));
   }
 
-  Widget textSwipeLeft() {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    return Container(
-      padding: EdgeInsets.only(left: width * .075),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Image.asset(
-            "assets/images/swipe.png",
-            height: height * .03,
-          ),
-          Text(
-            translator.translate("swipe"),
-            style: TextStyle(
-                fontSize: height * .015,
-                fontWeight: FontWeight.bold,
-                color: mainColor),
-          ),
-        ],
-      ),
-    );
-  }
+
 }

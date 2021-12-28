@@ -119,6 +119,15 @@ class _LocationScreenState extends State<LocationScreen> {
                                   MyApp.app_location = newValue == 'Saudi Arabia' ? 'sa' : 'kw';
                                   MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR") : translator.translate("KWD");
                                   sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location );
+                                  if(StaticData.vistor_value == 'visitor'){
+                                    MyApp.restartApp(context);
+                                  }else{
+                                    sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
+                                    sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
+                                    sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
+                                    sharedPreferenceManager.removeData(CachingKey.CUSTOMER_ID);
+                                    customAnimatedPushNavigation(context, SignInScreen());
+                                  }
 
                                 });
                               },

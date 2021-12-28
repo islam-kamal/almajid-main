@@ -79,7 +79,6 @@ class SharedPreferenceManager {
         messages.add(json.decode(element));
       });
     }
-    print("get_list_of_wishlist************: ${messagesString}");
 
     return messages;
   }

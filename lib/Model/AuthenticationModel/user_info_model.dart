@@ -137,9 +137,7 @@ class UserInfoModel extends BaseMappable {
         ? new Parameters.fromJson(json['parameters'])
         : null;
     trace = json['trace'];
-    print("11111111-1111111111111111");
     if(message == null){
-      print("2222222-222222222");
 
       return UserInfoModel(
           storeId: storeId,
