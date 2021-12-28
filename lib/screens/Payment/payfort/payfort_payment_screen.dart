@@ -153,15 +153,10 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
                   print("result: " + decodedJSON.toString());
                   // Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
                   Map<String, dynamic> responseJSON = {};
-                  print("pay 7");
                   if (Platform.isAndroid) {
-                    print("pay 8");
                     responseJSON = jsonDecode(decodedJSON);
-                    print("android responseJSON : ${responseJSON}");
                   } else if (Platform.isIOS) {
-                    print("pay 9");
-                    responseJSON = jsonDecode(decodedJSON);
-                    print("ios responseJSON : ${responseJSON}");
+                    responseJSON = decodedJSON;
                   }
 
                   final responseCode = responseJSON["response_code"];
