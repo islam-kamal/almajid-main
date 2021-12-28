@@ -71,7 +71,6 @@ class CartRepository {
         "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/quote/is_active/"
         "${StaticData.vistor_value == 'visitor' ? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE) : await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/${StaticData.vistor_value == 'visitor' ? 1 : 0}";
 
-    print("add_product_to_cart_FUN : ${url}");
     final check_quote_response = await dio.get(url,
         options: Options(
           headers: {
@@ -112,7 +111,8 @@ class CartRepository {
         print("error : ${e.toString()}");
         errorDialog(context: context, text: e.toString());
       }
-    } else if (check_quote_response.data['status'] == false) {
+    }
+    else if (check_quote_response.data['status'] == false) {
       try {
         //create_quote
         final response = await dio.post(
@@ -173,7 +173,8 @@ class CartRepository {
         print("error : ${e.toString()}");
         errorDialog(context: context, text: e.toString());
       }
-    } else {
+    }
+    else {
       try {
         //create_quote
         final response = await dio.post(
@@ -236,7 +237,7 @@ class CartRepository {
       }
     }
   }
-
+/*
   Future<AddCartModel> add_product_to_cart(
       {BuildContext context, var product_quantity, var product_sku}) async {
     print("1");
@@ -270,7 +271,7 @@ class CartRepository {
       print("error : ${e.toString()}");
       errorDialog(context: context, text: e.toString());
     }
-  }
+  }*/
 
   Future<CartDetailsModel> get_cart_details() async {
     Map<String, String> headers = StaticData.vistor_value == 'visitor'

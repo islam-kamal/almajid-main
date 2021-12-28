@@ -31,6 +31,7 @@
   "Delete": "حذف",
   "swipe" : "اسحب لليسار لحذف المنتج ",
   "product added suceesfully to cart" : "تمت إضافة المنتج بنجاح إلى سلة التسوق" ,
+  "There is no quantity of this product in stock" : "لا توجد كمية من هذا المنتج في المخزون",
   "-------------------checkout-----------------": "---------------------------------",
   "Checkout": "الدفع",
   "Address": "العنوان",
