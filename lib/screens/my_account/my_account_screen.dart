@@ -26,6 +26,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   String _email = "";
   String _userName = "";
+  String _currentLang = "";
   String _imagePath;
   File _pickedImage;
 
@@ -36,6 +37,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
 
   void _getUseData() async {
+    _currentLang =  MyApp.app_langauge;
     _email = await sharedPreferenceManager.readString(CachingKey.EMAIL);
     _userName = await sharedPreferenceManager.readString(CachingKey.USER_NAME);
     _imagePath = await sharedPreferenceManager.readString(CachingKey.PROFILE_IMAGE);
@@ -204,13 +206,22 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                       customPushNamedNavigation(
                                           context, WishListScreen());
                                     }),
+                                // singleAccountItem(
+                                //     context: context,
+                                //     iconPath: "assets/icons/settings3.png",
+                                //     text: "Settings",
+                                //     isContainMoreIcon: true,
+                                //     onTap: () {
+                                //       customPushNamedNavigation(context, SettingsScreen());
+                                //     }),
                                 singleAccountItem(
                                     context: context,
                                     iconPath: "assets/icons/settings3.png",
-                                    text: "Settings",
+                                    text: _currentLang == 'en'?'العربية':'English',
                                     isContainMoreIcon: true,
                                     onTap: () {
-                                      customPushNamedNavigation(context, SettingsScreen());
+                                      final newLang = _currentLang == 'en'?'ar':'en';
+                                      _changeLang(lang: newLang);
                                     }),
                                 singleAccountItem(
                                     context: context,
@@ -328,5 +339,19 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       _pickedImage = null;
     });
     Navigator.pop(context);
+  }
+
+  void _changeLang({String lang}) async {
+    setState(() {
+      translator.setNewLanguage(
+        context,
+        newLanguage: '${lang}',
+        remember: true,
+        restart: true,
+      );
+
+    });
+    MyApp.setLocale(context, Locale('${lang}'));
+    sharedPreferenceManager.writeData(CachingKey.APP_LANGUAGE, lang);
   }
 }
