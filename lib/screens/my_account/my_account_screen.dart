@@ -234,7 +234,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
                                 singleAccountItem(
                                     context: context,
-                                    iconPath: "assets/icons/help.png",
+                                    iconPath: "assets/icons/about_us.png",
                                     text: "About US",
                                     isContainMoreIcon: true,
                                     onTap: () {
@@ -243,7 +243,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
                                 singleAccountItem(
                                     context: context,
-                                    iconPath: "assets/icons/help.png",
+                                    iconPath: "assets/icons/privacy.png",
                                     text: "Privacy And Policy",
                                     isContainMoreIcon: true,
                                     onTap: () {
@@ -252,7 +252,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
                                 singleAccountItem(
                                     context: context,
-                                    iconPath: "assets/icons/help.png",
+                                    iconPath: "assets/icons/faqs.png",
                                     text: "FAQs",
                                     isContainMoreIcon: true,
                                     onTap: () {
