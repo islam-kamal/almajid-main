@@ -11,17 +11,16 @@ import 'package:almajidoud/utils/file_export.dart';
 class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
   ShoppingCartBloc(AppState initialState) : super(initialState);
 
-  BehaviorSubject<CartDetailsModel> _cart_details_subject =
-      new BehaviorSubject<CartDetailsModel>();
+  BehaviorSubject<CartDetailsModel> _cart_details_subject = new BehaviorSubject<CartDetailsModel>();
+
   get cart_details_subject {
     return _cart_details_subject;
   }
 
-
-
   void drainStream() {}
 
   void dispose() {}
+
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
     if (event is AddProductToCartEvent) {
@@ -34,65 +33,46 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
 
       if (response.message != null) {
         print("AddProductToCart ErrorLoading");
-        yield ErrorLoading(model: response,indicator: event.indictor);
+        yield ErrorLoading(model: response, indicator: event.indictor);
       } else {
-
         print("AddProductToCart Done");
-        yield Done(model: response,indicator: event.indictor);
+        yield Done(model: response, indicator: event.indictor);
       }
-    }
-    else if(event is GetCartDetailsEvent){
+    } else if (event is GetCartDetailsEvent) {
       yield Loading(indicator: 'GetCartDetails');
 
-      final response =await cartRepository.get_cart_details();
+      final response = await cartRepository.get_cart_details();
       print("cart response : ${response}");
-      if(response.message != null){
-        yield ErrorLoading(message: response.message,indicator: 'GetCartDetails');
-
-      }else{
-        _cart_details_subject.sink.add(response);
-        yield Done(model: response,indicator: 'GetCartDetails');
+      if (response.message != null) {
+        yield ErrorLoading(
+            message: response.message, indicator: 'GetCartDetails');
+      } else {
+        yield Done(model: response, indicator: 'GetCartDetails');
       }
-    }
-
-   else if(event is ApplyPromoCodeEvent){
+    } else if (event is ApplyPromoCodeEvent) {
       final response = await cartRepository.apply_promo_code_to_cart(
-        promo_code: event.prom_code,
-        context: event.context
-      );
+          promo_code: event.prom_code, context: event.context);
       print("apply_promo_code response : ${response}");
 
       if (response != true) {
         errorDialog(
             context: event.context,
-            text: "The coupon code isn't valid. Verify the code and try again."
-        );
-
+            text:
+                "The coupon code isn't valid. Verify the code and try again.");
       } else {
         errorDialog(
-            context: event.context,
-            text: "Promo Code Applied Sucessfully"
-        );
+            context: event.context, text: "Promo Code Applied Sucessfully");
       }
-    }
-
-    else if(event is DeletePromoCodeEvent){
+    } else if (event is DeletePromoCodeEvent) {
       final response = await cartRepository.delete_promo_code_from_cart(
-          context: event.context
-      );
+          context: event.context);
       print("apply_promo_code response : ${response}");
 
       if (response != true) {
-        errorDialog(
-            context: event.context,
-            text: "There is error Occured"
-        );
-
+        errorDialog(context: event.context, text: "There is error Occured");
       } else {
         errorDialog(
-            context: event.context,
-            text: "Promo Code deleted Sucessfully"
-        );
+            context: event.context, text: "Promo Code deleted Sucessfully");
       }
     }
   }

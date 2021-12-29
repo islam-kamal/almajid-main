@@ -7,7 +7,6 @@ import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigatio
 import 'package:almajidoud/screens/cart/widgets/proceed_to_checkout_button.dart';
 import 'package:almajidoud/screens/cart/widgets/promo_code_widget.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
-import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 import 'package:almajidoud/screens/product_details/widgets/divider.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -47,155 +46,158 @@ class _CartScreenState extends State<CartScreen> {
                     child: Column(
                   children: [
                     responsiveSizedBox(
-                        context: context, percentageOfHeight: .055),
-                    HomeSlider(gallery: StaticData.images),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .04),
+                        context: context, percentageOfHeight: .09),
                     BlocBuilder(
                       bloc: shoppingCartBloc,
                       builder: (context, state) {
                         if (state is Loading) {
-                          if (state.indicator == 'GetCartDetails') {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
                         } else if (state is Done) {
-                          if (state.indicator == 'GetCartDetails') {
-                            var data = state.model as CartDetailsModel;
-                            if (data.message?.isEmpty != null) {
-                              return no_data_widget(context: context);
-                            } else {
-                              return Column(
-                                children: [
-                                  StreamBuilder<CartDetailsModel>(
-                                    stream:
-                                        shoppingCartBloc.cart_details_subject,
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData) {
-                                        if (snapshot.data.items.isEmpty) {
-                                          return no_data_widget(
-                                              context: context);
-                                        } else {
-                                          print("cart length : ${snapshot.data.items.length}");
-
-                                          return Column(
-                                            children: [
-                                              Container(
-                                                padding: EdgeInsets.only(
-                                                  right: width(context) * .05,
-                                                  left: width(context) * .05,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                    color: whiteColor),
-                                                child: Column(
-                                                  children: [
-                                                    textSwipeLeft(),
-                                                    divider(context: context),
-                                                  ],
-                                                ),
+                          var data = state.model as CartDetailsModel;
+                          if (data.message?.isEmpty != null ||
+                              data.items.length == 0) {
+                            return no_data_widget(context: context);
+                          } else {
+                            return Column(
+                              children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: data.items.length,
+                                    scrollDirection: Axis.vertical,
+                                    itemBuilder: (context, index) {
+                                      return Stack(
+                                        children: [
+                                          Slidable(
+                                            actionPane:
+                                                SlidableDrawerActionPane(),
+                                            actionExtentRatio: 0.25,
+                                            child: Column(children: [
+                                              SizedBox(
+                                                height: width(context) * .002,
                                               ),
-                                              ListView.builder(
-                                                  shrinkWrap: true,
-                                                  physics:
-                                                      NeverScrollableScrollPhysics(),
-                                                  itemCount: snapshot
-                                                      .data.items.length,
-                                                  scrollDirection:
-                                                      Axis.vertical,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return Slidable(
-                                                      actionPane:
-                                                          SlidableDrawerActionPane(),
-                                                      actionExtentRatio: 0.25,
-                                                      child: Column(children: [
-                                                        SizedBox(
-                                                          height:
-                                                              width(context) *
-                                                                  .002,
-                                                        ),
-                                                        singleCartItem(
-                                                            context: context,
-                                                            item: snapshot.data
-                                                                .items[index]),
-                                                        SizedBox(
-                                                          height:
-                                                              width(context) *
-                                                                  .002,
-                                                        ),
-                                                      ]),
-                                                      secondaryActions: [
-                                                        IconSlideAction(
-                                                          caption: translator
-                                                              .translate(
-                                                                  "Delete"),
-                                                          color: Colors.red,
-                                                          icon: Icons.delete,
-                                                          onTap: () => delete_cart_item(
-                                                              cart_item_id:
-                                                                  snapshot
-                                                                      .data
-                                                                      .items[
-                                                                          index]
-                                                                      .itemId),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  }),
-                                              responsiveSizedBox(
+                                              singleCartItem(
                                                   context: context,
-                                                  percentageOfHeight: .02),
-                                              divider(context: context),
-                                              PromoCodeWidget(),
-                                              responsiveSizedBox(
-                                                  context: context,
-                                                  percentageOfHeight: .02),
-                                              divider(context: context),
-                                              responsiveSizedBox(
-                                                  context: context,
-                                                  percentageOfHeight: .01),
-                                              customDescriptionText(
-                                                  context: context,
-                                                  textColor: greyColor,
-                                                  text: "Total to pay",
-                                                  percentageOfHeight: .025),
-                                              responsiveSizedBox(
-                                                  context: context,
-                                                  percentageOfHeight: .01),
-                                              customDescriptionText(
-                                                  context: context,
-                                                  textColor: mainColor,
-                                                  text:
-                                                      " ${snapshot.data.baseGrandTotal.toString()} ${MyApp.country_currency} ",
-                                                  percentageOfHeight: .03,
-                                                  fontWeight: FontWeight.bold),
-                                              responsiveSizedBox(
-                                                  context: context,
-                                                  percentageOfHeight: .02),
-                                              proceedToCheckoutButton(
-                                                  context: context),
-                                              responsiveSizedBox(
-                                                  context: context,
-                                                  percentageOfHeight: .01),
+                                                  item: data.items[index]),
+                                              SizedBox(
+                                                height: width(context) * .002,
+                                              ),
+                                            ]),
+                                            secondaryActions: [
+                                              IconSlideAction(
+                                                caption: translator
+                                                    .translate("Delete"),
+                                                color: Colors.red,
+                                                icon: Icons.delete,
+                                                onTap: () => delete_cart_item(
+                                                    cart_item_id: data
+                                                        .items[index].itemId),
+                                              ),
                                             ],
-                                          );
-                                        }
-                                      } else if (snapshot.hasError) {
-                                        return Container(
-                                          child: Text('${snapshot.error}'),
-                                        );
-                                      } else {
-                                        return Center(
-                                          child: CircularProgressIndicator(),
-                                        );
-                                        ;
-                                      }
-                                    },
+                                          ),
+                                          positionedRemove(
+                                              itemId: data.items[index].itemId),
+                                        ],
+                                      );
+                                    }),
+                                responsiveSizedBox(
+                                    context: context, percentageOfHeight: .02),
+                                divider(context: context),
+                                PromoCodeWidget(),
+                                responsiveSizedBox(context: context, percentageOfHeight: .02),
+                                divider(context: context),
+                                responsiveSizedBox(
+                                    context: context, percentageOfHeight: .01),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      customDescriptionText(
+                                          context: context,
+                                          textColor: greyColor,
+                                          text: "Sub Total",
+                                          percentageOfHeight: .018),
+                                      Spacer(),
+                                      customDescriptionText(
+                                          context: context,
+                                          textColor: mainColor,
+                                          text: " ${data.subtotal.toString()} ${MyApp.country_currency} ",
+                                          percentageOfHeight: .018,
+                                          fontWeight: FontWeight.bold),
+                                    ],
                                   ),
-                                ],
-                              );
-                            }
+                                ),
+                                data.discountAmount>0?Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      customDescriptionText(
+                                          context: context,
+                                          textColor: greyColor,
+                                          text: "Discount",
+                                          percentageOfHeight: .018),
+                                      Spacer(),
+                                      customDescriptionText(
+                                          context: context,
+                                          textColor: mainColor,
+                                          text: " -${data.discountAmount.toString()} ${MyApp.country_currency} ",
+                                          percentageOfHeight: .018,
+                                          fontWeight: FontWeight.bold),
+                                    ],
+                                  ),
+                                ):Container(),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      customDescriptionText(
+                                          context: context,
+                                          textColor: greyColor,
+                                          text: "TAX(15%)",
+                                          percentageOfHeight: .018),
+                                      Spacer(),
+                                      customDescriptionText(
+                                          context: context,
+                                          textColor: mainColor,
+                                          text: " ${data.taxAmount.toString()} ${MyApp.country_currency} ",
+                                          percentageOfHeight: .018,
+                                          fontWeight: FontWeight.bold),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      customDescriptionText(
+                                          context: context,
+                                          textColor: greyColor,
+                                          text: "Grand Total",
+                                          percentageOfHeight: .022),
+                                      Spacer(),
+                                      customDescriptionText(
+                                          context: context,
+                                          textColor: mainColor,
+                                          text: " ${data.baseGrandTotal.toString()} ${MyApp.country_currency} ",
+                                          percentageOfHeight: .022,
+                                          fontWeight: FontWeight.bold),
+                                    ],
+                                  ),
+                                ),
+
+                                responsiveSizedBox(
+                                    context: context, percentageOfHeight: .02),
+                                proceedToCheckoutButton(context: context),
+                                responsiveSizedBox(
+                                    context: context, percentageOfHeight: .01),
+                              ],
+                            );
                           }
                         } else if (state is ErrorLoading) {
                           if (state.indicator == 'GetCartDetails') {
@@ -228,6 +230,8 @@ class _CartScreenState extends State<CartScreen> {
                             child: CircularProgressIndicator(),
                           );
                         }
+
+                        return no_data_widget(context: context);
                       },
                     ),
                   ],
@@ -279,6 +283,7 @@ class _CartScreenState extends State<CartScreen> {
       print("item can't be deleted");
     }
   }
+
   Widget textSwipeLeft() {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -302,6 +307,7 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
+
   singleCartItem({BuildContext context, cart_details_model.Items item}) {
     List<String> qantity_numbers = [];
     for (int i = 1; i < 20; i++) {
@@ -436,33 +442,34 @@ class _CartScreenState extends State<CartScreen> {
                                                   );
                                                 },
                                               ).toList(),
-                                              onChanged: (val) async{
+                                              onChanged: (val) async {
                                                 _dropDownValue = val;
-                                                final response = await cartRepository
-                                                    .update_product_quantity_cart(
-                                                    item_id:
-                                                    item.itemId,
-                                                    product_quantity:
-                                                    _dropDownValue);
+                                                final response =
+                                                    await cartRepository
+                                                        .update_product_quantity_cart(
+                                                            item_id:
+                                                                item.itemId,
+                                                            product_quantity:
+                                                                _dropDownValue);
                                                 if (response.message != null) {
                                                   Flushbar(
                                                     messageText: Row(
                                                       children: [
                                                         Container(
                                                           width: StaticData
-                                                              .get_width(
-                                                              context) *
+                                                                  .get_width(
+                                                                      context) *
                                                               0.7,
                                                           child: Wrap(
                                                             children: [
                                                               Text(
                                                                 '${"There is Error"}',
                                                                 textDirection:
-                                                                TextDirection
-                                                                    .rtl,
+                                                                    TextDirection
+                                                                        .rtl,
                                                                 style: TextStyle(
                                                                     color:
-                                                                    whiteColor),
+                                                                        whiteColor),
                                                               ),
                                                             ],
                                                           ),
@@ -472,43 +479,34 @@ class _CartScreenState extends State<CartScreen> {
                                                           translator.translate(
                                                               "Try Again"),
                                                           textDirection:
-                                                          TextDirection
-                                                              .rtl,
+                                                              TextDirection.rtl,
                                                           style: TextStyle(
                                                               color:
-                                                              whiteColor),
+                                                                  whiteColor),
                                                         ),
                                                       ],
                                                     ),
                                                     flushbarPosition:
-                                                    FlushbarPosition
-                                                        .BOTTOM,
-                                                    backgroundColor:
-                                                    redColor,
+                                                        FlushbarPosition.BOTTOM,
+                                                    backgroundColor: redColor,
                                                     flushbarStyle:
-                                                    FlushbarStyle
-                                                        .FLOATING,
-                                                    duration: Duration(
-                                                        seconds: 3),
+                                                        FlushbarStyle.FLOATING,
+                                                    duration:
+                                                        Duration(seconds: 3),
                                                   )..show(_drawerKey
-                                                      .currentState
-                                                      .context);
+                                                      .currentState.context);
                                                 } else {
-                                                  print(
-                                                      "UpdateProductQuantityCart Done");
                                                   customAnimatedPushNavigation(
                                                       context,
                                                       translator.activeLanguageCode ==
-                                                          'ar'
+                                                              'ar'
                                                           ? CustomCircleNavigationBar(
-                                                        page_index: 4,
-                                                      )
+                                                              page_index: 4,
+                                                            )
                                                           : CustomCircleNavigationBar(
-                                                        page_index: 0,
-                                                      ));
+                                                              page_index: 0,
+                                                            ));
                                                 }
-
-
                                               },
                                             ),
                                           )
@@ -547,5 +545,26 @@ class _CartScreenState extends State<CartScreen> {
         ));
   }
 
-
+  Widget positionedRemove({int itemId}) {
+    return Positioned(
+      top: 80,
+      right: 0,
+      child: Container(
+        height: 30,
+        width: 30,
+        child: MaterialButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0)),
+            padding: EdgeInsets.all(0.0),
+            color: mainColor,
+            child: Icon(
+              Icons.clear,
+              color: Colors.white,
+            ),
+            onPressed: () => {
+                  delete_cart_item(cart_item_id: itemId),
+                }),
+      ),
+    );
+  }
 }

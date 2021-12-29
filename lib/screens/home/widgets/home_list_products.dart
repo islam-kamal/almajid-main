@@ -17,7 +17,9 @@ import 'package:share/share.dart';
 class HomeListProducts extends StatefulWidget {
   final String type;
   GlobalKey<ScaffoldState> homeScaffoldKey;
+
   HomeListProducts({this.type, this.homeScaffoldKey});
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -28,6 +30,7 @@ class HomeListProducts extends StatefulWidget {
 class HomeListProductsState extends State<HomeListProducts> {
   TextEditingController qty_controller = new TextEditingController();
   String cvv;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -171,16 +174,30 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                 width(context) *
                                                                     .03,
                                                           ),
-                                                          BlocListener<ShoppingCartBloc, AppState>(
-                                                              bloc: shoppingCartBloc,
-                                                              listener: (context,state) async {
-                                                                if (state is Loading) {
-                                                                  if (state.indicator == 'home_add_to_cart')
-                                                                    print("Loading");
-                                                                } else if (state is ErrorLoading) {
-                                                                  if (state.indicator == 'home_add_to_cart') {
-                                                                    var data = state.model as AddCartModel;
-                                                                    print("ErrorLoading");
+                                                          BlocListener<
+                                                                  ShoppingCartBloc,
+                                                                  AppState>(
+                                                              bloc:
+                                                                  shoppingCartBloc,
+                                                              listener: (context,
+                                                                  state) async {
+                                                                if (state
+                                                                    is Loading) {
+                                                                  if (state
+                                                                          .indicator ==
+                                                                      'home_add_to_cart')
+                                                                    print(
+                                                                        "Loading");
+                                                                } else if (state
+                                                                    is ErrorLoading) {
+                                                                  if (state
+                                                                          .indicator ==
+                                                                      'home_add_to_cart') {
+                                                                    var data = state
+                                                                            .model
+                                                                        as AddCartModel;
+                                                                    print(
+                                                                        "ErrorLoading");
                                                                     if (data.message == "The consumer isn't authorized to access %resources.") {
                                                                       Flushbar(
                                                                         messageText:
@@ -227,7 +244,11 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                           .currentState
                                                                           .context);
                                                                     } else {
-                                                                      Flushbar(messageText: Container(width: StaticData.get_width(context) * 0.7,
+                                                                      Flushbar(
+                                                                        messageText:
+                                                                            Container(
+                                                                          width:
+                                                                              StaticData.get_width(context) * 0.7,
                                                                           child:
                                                                               Wrap(
                                                                             children: [
@@ -253,83 +274,89 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                           .context);
                                                                     }
                                                                   }
-                                                                } else if (state is Done) {
-                                                                  if (state.indicator == 'home_add_to_cart') {
-                                                                    var data = state
-                                                                        .model as AddCartModel;
+                                                                } else if (state
+                                                                    is Done) {
+                                                                  if (state
+                                                                          .indicator ==
+                                                                      'home_add_to_cart') {
                                                                     Flushbar(
                                                                       messageText:
-                                                                      Container(
-                                                                        child: Text(
-                                                                          translator.translate("product added suceesfully to cart"),
-                                                                          maxLines: 2,
-                                                                          textAlign: TextAlign.end,
-                                                                          textDirection: TextDirection.rtl,
-                                                                          style: TextStyle(color: whiteColor),
+                                                                          Container(
+                                                                        child:
+                                                                            Text(
+                                                                          translator
+                                                                              .translate("product added successfully to cart"),
+                                                                          maxLines:
+                                                                              2,
+                                                                          textAlign:
+                                                                              TextAlign.end,
+                                                                          textDirection:
+                                                                              TextDirection.rtl,
+                                                                          style:
+                                                                              TextStyle(color: whiteColor),
                                                                         ),
                                                                       ),
                                                                       flushbarPosition:
-                                                                      FlushbarPosition.BOTTOM,
-                                                                      backgroundColor:
-                                                                      greenColor,
+                                                                          FlushbarPosition
+                                                                              .TOP,
+                                                                      backgroundColor: greenColor,
                                                                       duration: Duration(seconds: 2),
                                                                       flushbarStyle:
-                                                                      FlushbarStyle.FLOATING,
+                                                                          FlushbarStyle
+                                                                              .FLOATING,
                                                                     )..show(widget
                                                                         .homeScaffoldKey
                                                                         .currentState
                                                                         .context);
-                                                             /*       customAnimatedPushNavigation(
-                                                                        context,
-                                                                        translator
-                                                                            .activeLanguageCode ==
-                                                                            'ar'
-                                                                            ? CustomCircleNavigationBar(
-                                                                          page_index: 4,
-                                                                        )
-                                                                            : CustomCircleNavigationBar(
-                                                                          page_index: 0,
-                                                                        ));*/
                                                                   }
                                                                 }
                                                               },
                                                               child: InkWell(
-                                                                onTap: snapshot.data[index].extensionAttributes.stockItem
-                                                                    .isInStock == false
+                                                                onTap: snapshot
+                                                                            .data[index]
+                                                                            .extensionAttributes
+                                                                            .stockItem
+                                                                            .isInStock ==
+                                                                        false
                                                                     ? () {
-                                                                  Flushbar(messageText: Container(width: StaticData.get_width(context) * 0.7,
-                                                                    child:
-                                                                    Wrap(
-                                                                      children: [
-                                                                        Text(
-                                                                          translator.translate( "There is no quantity of this product in stock"),
-                                                                          textDirection: TextDirection.rtl,
-                                                                          style: TextStyle(color: whiteColor),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                    flushbarPosition:
-                                                                    FlushbarPosition.BOTTOM,
-                                                                    backgroundColor:
-                                                                    redColor,
-                                                                    flushbarStyle:
-                                                                    FlushbarStyle.FLOATING,
-                                                                    duration:
-                                                                    Duration(seconds: 3),
-                                                                  )..show(widget
-                                                                      .homeScaffoldKey
-                                                                      .currentState
-                                                                      .context);
-                                                                }
+                                                                        Flushbar(
+                                                                          messageText:
+                                                                              Container(
+                                                                            width:
+                                                                                StaticData.get_width(context) * 0.7,
+                                                                            child:
+                                                                                Wrap(
+                                                                              children: [
+                                                                                Text(
+                                                                                  translator.translate("There is no quantity of this product in stock"),
+                                                                                  textDirection: TextDirection.rtl,
+                                                                                  style: TextStyle(color: whiteColor),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                          flushbarPosition:
+                                                                              FlushbarPosition.BOTTOM,
+                                                                          backgroundColor:
+                                                                              redColor,
+                                                                          flushbarStyle:
+                                                                              FlushbarStyle.FLOATING,
+                                                                          duration:
+                                                                              Duration(seconds: 3),
+                                                                        )..show(widget
+                                                                            .homeScaffoldKey
+                                                                            .currentState
+                                                                            .context);
+                                                                      }
                                                                     : () {
-
-
-                                                                  shoppingCartBloc.add(AddProductToCartEvent(
-                                                                      context: context,
-                                                                      product_quantity: 1,
-                                                                      product_sku: snapshot.data[index].sku,
-                                                                      indictor: 'home_add_to_cart'));
+                                                                        shoppingCartBloc.add(AddProductToCartEvent(
+                                                                            context:
+                                                                                context,
+                                                                            product_quantity:
+                                                                                1,
+                                                                            product_sku:
+                                                                                snapshot.data[index].sku,
+                                                                            indictor: 'home_add_to_cart'));
                                                                       },
                                                                 child: Icon(
                                                                   Icons
@@ -393,11 +420,11 @@ class HomeListProductsState extends State<HomeListProducts> {
       ),
     );
   }
-
 }
 
 class MyShareButton extends StatelessWidget {
   final String data;
+
   const MyShareButton({Key key, this.data}) : super(key: key);
 
   @override
