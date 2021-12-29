@@ -2,6 +2,7 @@ import 'package:almajidoud/Model/CartModel/cart_details_model.dart';
 import 'package:almajidoud/Model/CartModel/cart_details_model.dart'
     as cart_details_model;
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
+import 'package:almajidoud/Widgets/cart_screen_app_bar.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 
 import 'package:almajidoud/screens/cart/widgets/proceed_to_checkout_button.dart';
@@ -244,7 +245,7 @@ class _CartScreenState extends State<CartScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ScreenAppBar(
+                    CartScreenAppBar(
                       onTapCategoryDrawer: () {
                         _drawerKey.currentState.openDrawer();
                       },
@@ -270,16 +271,17 @@ class _CartScreenState extends State<CartScreen> {
       item_id: cart_item_id,
     );
     if (response) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => translator.activeLanguageCode == 'ar'
-                  ? CustomCircleNavigationBar(
-                      page_index: 4,
-                    )
-                  : CustomCircleNavigationBar(
-                      page_index: 0,
-                    )));
+      shoppingCartBloc.add(GetCartDetailsEvent());
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => translator.activeLanguageCode == 'ar'
+      //             ? CustomCircleNavigationBar(
+      //                 page_index: 4,
+      //               )
+      //             : CustomCircleNavigationBar(
+      //                 page_index: 0,
+      //               )));
     } else {
       print("item can't be deleted");
     }

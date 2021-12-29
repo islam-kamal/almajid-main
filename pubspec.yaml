@@ -75,6 +75,7 @@ dependencies:
   network_info_plus: ^2.1.2
   flutter_spinkit:
   flutter_slidable: 0.6.0
+  badges: ^2.0.2
 
 
 dev_dependencies:

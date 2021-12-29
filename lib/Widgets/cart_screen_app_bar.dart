@@ -6,14 +6,14 @@ import 'package:almajidoud/screens/cart/widgets/promo_code_alert_dialog.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/scheduler.dart';
 
-class ScreenAppBar extends StatefulWidget {
+class CartScreenAppBar extends StatefulWidget {
   Function onTapCategoryDrawer;
   final String left_icon;
   final String right_icon;
   final String category_name;
   Widget screen;
   final bool home_logo;
-  ScreenAppBar(
+  CartScreenAppBar(
       {this.onTapCategoryDrawer,
       this.left_icon,
       this.right_icon,
@@ -23,11 +23,11 @@ class ScreenAppBar extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return ScreenAppBarState();
+    return CartScreenAppBarState();
   }
 }
 
-class ScreenAppBarState extends State<ScreenAppBar> {
+class CartScreenAppBarState extends State<CartScreenAppBar> {
   TextEditingController controller = new TextEditingController();
   final FocusNode focusNode = new FocusNode();
 
@@ -81,7 +81,13 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                 widget.category_name != null || widget.home_logo == true
                     ? widget.left_icon == null
                     ?
-                CartBadge()
+                Image.asset(
+                  "assets/icons/logo.png",
+                  height: isLandscape(context)
+                      ? 2 * height(context) * .05
+                      : height(context) * .05,
+                )
+                // CartBadge()
                     : GestureDetector(
                   onTap: () {
                       customAnimatedPushNavigation(

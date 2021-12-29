@@ -38,6 +38,15 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
       } else {
         print("AddProductToCart Done");
         yield DoneProductAdded(sku: event.product_sku, model: response, indicator: event.indictor);
+
+        //update the car badge
+        final cartResponse = await cartRepository.get_cart_details();
+        if (cartResponse.message != null) {
+          yield ErrorLoading(message: cartResponse.message, indicator: 'GetCartDetails');
+        } else {
+          yield Done(model: cartResponse, indicator: 'GetCartDetails');
+        }
+
       }
     } else if (event is GetCartDetailsEvent) {
       yield Loading(indicator: 'GetCartDetails');
