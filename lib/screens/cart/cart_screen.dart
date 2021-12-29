@@ -9,6 +9,7 @@ import 'package:almajidoud/screens/cart/widgets/promo_code_widget.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/product_details/widgets/divider.dart';
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class CartScreen extends StatefulWidget {

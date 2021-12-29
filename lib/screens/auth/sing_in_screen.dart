@@ -9,6 +9,7 @@ import 'package:almajidoud/screens/auth/widgets/top_auth_buttons.dart';
 import 'package:almajidoud/screens/auth/widgets/top_header.dart';
 import 'package:almajidoud/screens/home/home_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:another_flushbar/flushbar.dart';
 
 class SignInScreen extends StatefulWidget {
   @override

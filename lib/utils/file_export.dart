@@ -51,7 +51,6 @@ export 'package:almajidoud/custom_widgets/custom_push_named_navigation.dart';
 export 'package:almajidoud/Model/AuthenticationModel/reset_password_model.dart';
 export 'package:almajidoud/utils/fonts.dart';
 export 'package:almajidoud/utils/static_data.dart';
-export 'package:flushbar/flushbar.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:almajidoud/screens/auth/reset_password_screen.dart';
 export 'package:almajidoud/screens/auth/sing_in_screen.dart';

@@ -11,6 +11,7 @@ import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 import 'package:almajidoud/screens/product_details/widgets/divider.dart';
 
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:rating_bar/rating_bar.dart';

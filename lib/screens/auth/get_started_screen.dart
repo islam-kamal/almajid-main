@@ -5,6 +5,7 @@ import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/home/home_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:another_flushbar/flushbar.dart';
 
 class GetStartedScreen extends StatefulWidget {
   final String token;

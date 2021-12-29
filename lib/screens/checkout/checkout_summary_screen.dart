@@ -19,6 +19,7 @@ import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/Payment/tap/tap_payment_screen.dart';
 import 'package:almajidoud/screens/Payment/tamara/tamara_payment_screen.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io' show Platform;
 

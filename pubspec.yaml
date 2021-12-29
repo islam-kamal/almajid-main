@@ -44,7 +44,8 @@ dependencies:
   spincircle_bottom_bar:
   #country_code_picker:
   country_list_pick:
-  flushbar:
+#  flushbar:
+  another_flushbar: ^1.10.28
   shimmer:
   search_widget: ^1.0.2
 

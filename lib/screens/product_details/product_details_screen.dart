@@ -16,6 +16,7 @@ import 'package:almajidoud/screens/product_details/widgets/vat_and_reviews_row.d
 import 'package:almajidoud/screens/product_details/widgets/write_review_button.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
+import 'package:another_flushbar/flushbar.dart';
 class ProductDetailsScreen extends StatefulWidget {
   Items product;
   ProductDetailsScreen({this.product});

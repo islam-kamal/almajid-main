@@ -17,15 +17,39 @@ class Loading extends AppState{
     // TODO: implement toString
     print('Loading');
   }
-
 }
+class ProductLoading extends AppState{
+  final String indicator;
+  final String sku;
+  Mappable model;
+  ProductLoading( {this.sku='',this.model , this.indicator});
 
+  @override
+  String toString() {
+    print('Loading...');
+  }
+}
 class Done extends AppState{
   Mappable model;
   final String indicator;
   List<dynamic> general_model;
   var general_value;
   Done({this.model , this.indicator,this.general_model, this.general_value});
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    print('Done');
+  }
+
+}
+class DoneProductAdded extends AppState{
+  Mappable model;
+  final String indicator;
+  List<dynamic> general_model;
+  final String sku;
+  var general_value;
+  DoneProductAdded({this.sku='',this.model , this.indicator,this.general_model, this.general_value});
 
   @override
   String toString() {
@@ -41,6 +65,20 @@ class ErrorLoading extends AppState{
   String indicator;
   String message;
   ErrorLoading({this.model,this.message,this.indicator,this.general_model});
+  @override
+  String toString() {
+    // TODO: implement toString
+    print('ErrorLoading');
+  }
+
+}
+class ErrorLoadingProduct extends AppState{
+  Mappable model;
+  List<dynamic> general_model;
+  final String sku;
+  String indicator;
+  String message;
+  ErrorLoadingProduct({this.sku='',this.model,this.message,this.indicator,this.general_model});
   @override
   String toString() {
     // TODO: implement toString
@@ -73,4 +111,3 @@ class RadioSelection extends AppState{
 
 
 }
-

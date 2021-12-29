@@ -1,5 +1,6 @@
 import 'package:almajidoud/Bloc/Product_Bloc/product_bloc.dart';
 import 'package:almajidoud/Bloc/Search_Bloc/search_bloc.dart';
+import 'package:almajidoud/Model/CartModel/add_cart_model.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart' as product_model;
 import 'package:almajidoud/Model/SearchModel/search_model.dart';
@@ -9,6 +10,8 @@ import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigatio
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:another_flushbar/flushbar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:share/share.dart';
 
@@ -21,12 +24,12 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
 
   GlobalKey<ScaffoldState> scaffold_key = GlobalKey();
-
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return NetworkIndicator(
@@ -200,11 +203,54 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                   ),
                                                                                   responsiveSizedBox(
                                                                                       context: context, percentageOfHeight: .01),
-                                                                                  Row(
-                                                                                    mainAxisAlignment:
-                                                                                    MainAxisAlignment.spaceBetween,
-                                                                                    children: [
-                                                                                      InkWell(
+
+
+
+
+
+
+
+                                                                                  BlocBuilder<ShoppingCartBloc, AppState>(
+                                                                                    bloc: shoppingCartBloc,
+                                                                                    builder: (context, state) {
+                                                                                      if (state is ProductLoading &&
+                                                                                          state.indicator == 'search_add_to_cart') {
+                                                                                        if (snapshot.data.items[index].sku == state.sku) {
+                                                                                          _isLoading = true;
+                                                                                        } else {
+                                                                                          _isLoading = false;
+                                                                                        }
+                                                                                      } else if (state is ErrorLoadingProduct &&
+                                                                                          state.indicator == 'search_add_to_cart' &&
+                                                                                          snapshot.data.items[index].sku == state.sku) {
+                                                                                        _isLoading = false;
+                                                                                        var data = state.model as AddCartModel;
+                                                                                        Fluttertoast.showToast(
+                                                                                            msg: '${data.message}',
+                                                                                            toastLength: Toast.LENGTH_SHORT,
+                                                                                            gravity: ToastGravity.TOP,
+                                                                                            timeInSecForIosWeb: 1,
+                                                                                            backgroundColor: Colors.redAccent,
+                                                                                            textColor: Colors.white,
+                                                                                            fontSize: 16.0);
+                                                                                        state = null;
+                                                                                      } else if (state is DoneProductAdded &&
+                                                                                          state.indicator == 'search_add_to_cart' &&
+                                                                                          snapshot.data.items[index].sku == state.sku) {
+                                                                                        _isLoading = false;
+                                                                                        Fluttertoast.showToast(
+                                                                                            msg: 'product added successfully to cart',
+                                                                                            toastLength: Toast.LENGTH_SHORT,
+                                                                                            gravity: ToastGravity.TOP,
+                                                                                            timeInSecForIosWeb: 1,
+                                                                                            backgroundColor: Colors.green,
+                                                                                            textColor: Colors.white,
+                                                                                            fontSize: 16.0);
+                                                                                      }
+
+                                                                                      return _isLoading
+                                                                                          ? CircularProgressIndicator()
+                                                                                          : InkWell(
                                                                                         onTap:  snapshot.data.items[index].extensionAttributes.stockItem.isInStock == false ? (){
                                                                                           Flushbar(messageText: Container(width: StaticData.get_width(context) * 0.7,
                                                                                             child:
@@ -233,7 +279,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                           shoppingCartBloc.add(AddProductToCartEvent(
                                                                                               context: context,
                                                                                               product_quantity: snapshot.data.items[index].extensionAttributes.stockItem.qty,
-                                                                                              product_sku: snapshot.data.items[index].sku));
+                                                                                              product_sku: snapshot.data.items[index].sku,
+                                                                                          indictor: 'search_add_to_cart'));
                                                                                         },
                                                                                         child:  Container(
                                                                                           width: width(context) * .4,
@@ -256,33 +303,21 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                             ],
                                                                                           ),
                                                                                         ),
-                                                                                      ),
-                                                                                      InkWell(
-                                                                                        onTap: () {
-                                                                                          final RenderBox box =
-                                                                                          context.findRenderObject();
-                                                                                          Share.share('${snapshot.data.items[index].name}',
-                                                                                              subject: 'Welcome To Amajed Oud',
-                                                                                              sharePositionOrigin:
-                                                                                              box.localToGlobal(Offset.zero) &
-                                                                                              box.size);
-                                                                                        },
-                                                                                        child: Container(
-                                                                                          width: width(context) * .15,
-                                                                                          height: isLandscape(context)
-                                                                                              ? 2 * height(context) * .035
-                                                                                              : height(context) * .035,
-                                                                                          decoration: BoxDecoration(
-                                                                                              border: Border.all(color: mainColor)),
-                                                                                          child: Row(
-                                                                                            mainAxisAlignment:
-                                                                                            MainAxisAlignment.spaceAround,
-                                                                                            children: [Icon(Icons.share_outlined)],
-                                                                                          ),
-                                                                                        ),
-                                                                                      )
-                                                                                    ],
-                                                                                  )
+                                                                                      );
+                                                                                    },
+                                                                                  ),
+
+
+
+
+
+
+
+
+
+
+
+
                                                                                 ],
                                                                               ),
                                                                             )

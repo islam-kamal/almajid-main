@@ -11,7 +11,8 @@ import 'package:almajidoud/utils/file_export.dart';
 class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
   ShoppingCartBloc(AppState initialState) : super(initialState);
 
-  BehaviorSubject<CartDetailsModel> _cart_details_subject = new BehaviorSubject<CartDetailsModel>();
+  BehaviorSubject<CartDetailsModel> _cart_details_subject =
+      new BehaviorSubject<CartDetailsModel>();
 
   get cart_details_subject {
     return _cart_details_subject;
@@ -24,7 +25,7 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
     if (event is AddProductToCartEvent) {
-      yield Loading(indicator: event.indictor);
+      yield ProductLoading(sku: event.product_sku, indicator: event.indictor);
       final response = await cartRepository.add_product_to_cart_FUN(
           context: event.context,
           product_sku: event.product_sku,
@@ -33,10 +34,10 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
 
       if (response.message != null) {
         print("AddProductToCart ErrorLoading");
-        yield ErrorLoading(model: response, indicator: event.indictor);
+        yield ErrorLoadingProduct(sku: event.product_sku, model: response, indicator: event.indictor);
       } else {
         print("AddProductToCart Done");
-        yield Done(model: response, indicator: event.indictor);
+        yield DoneProductAdded(sku: event.product_sku, model: response, indicator: event.indictor);
       }
     } else if (event is GetCartDetailsEvent) {
       yield Loading(indicator: 'GetCartDetails');
