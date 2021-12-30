@@ -355,7 +355,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             responsiveSizedBox(
                 context: context, percentageOfHeight: .01),
             phone_addressTextFields(
-                context: context, hint: "Ex: 0591826195"),
+                context: context, hint: "Ex: 0096659xxxxxxx"),
             responsiveSizedBox(
                 context: context, percentageOfHeight: .01),
 
@@ -827,7 +827,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     : height(context) * .02),
             cursorColor: greyColor.withOpacity(.5),
             decoration: InputDecoration(
-              hintText: translator.translate(hint??"Ex: 0591826195"),
+              hintText: translator.translate(hint??"Ex: 009665xxxxxxxx"),
               hintStyle: TextStyle(
                   color: greyColor.withOpacity(.5),
                   fontWeight: FontWeight.bold,
