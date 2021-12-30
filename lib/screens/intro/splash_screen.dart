@@ -103,6 +103,7 @@ class _SplashScreenState extends State<SplashScreen> {
       ));
     }
     StaticData.gallery = StaticData.data["slider"];
+    StaticData.staticBanner = StaticData.data["static-banner"];
 
     StaticData.gallery.forEach((element) {
       StaticData.images.add(element['url']);

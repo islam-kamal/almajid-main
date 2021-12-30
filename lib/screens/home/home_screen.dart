@@ -78,11 +78,35 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
 
                             responsiveSizedBox(context: context, percentageOfHeight: .03),
+
+                            InkWell(
+                              onTap: (){
+                                final _catName = translator.activeLanguageCode == 'en'?StaticData.staticBanner['english_name']:StaticData.staticBanner['arabic_name'];
+                                customAnimatedPushNavigation(
+                                    context, CategoryProductsScreen(
+                                  category_id: StaticData.staticBanner['id'].toString(),
+                                  category_name: _catName,
+                                ));
+                              },
+                              child: Container(
+                                width: width(context) * .95,
+                                height: isLandscape(context)
+                                    ? 2 * height(context) * .13
+                                    : height(context) * .13,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(StaticData.staticBanner['url']),
+                                        fit: BoxFit.cover)),
+                              ),
+                            ),
+
+                            responsiveSizedBox(context: context, percentageOfHeight: .03),
                             titleText(context: context,
                                 text: translator.activeLanguageCode == 'ar' ? StaticData.data['best-seller']['arabic-title'] :
                                           StaticData.data['best-seller']['english-title']),
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .02),
+
 
                             HomeListProducts(
                               type: "best-seller",

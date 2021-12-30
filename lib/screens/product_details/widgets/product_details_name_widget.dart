@@ -1,3 +1,4 @@
+import 'package:almajidoud/custom_widgets/cart_badge.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 productDetailsNameWidget({BuildContext context , String product_name}) {
@@ -25,7 +26,7 @@ productDetailsNameWidget({BuildContext context , String product_name}) {
             )
           ],
         ),
-        Icon(Icons.shopping_cart)
+        CartBadge(iconColor: Colors.black,)
       ],
     ),
   );

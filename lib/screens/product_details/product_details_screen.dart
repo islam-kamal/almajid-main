@@ -88,7 +88,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                 child: BlocListener<ShoppingCartBloc, AppState>(
                     bloc: shoppingCartBloc,
                     listener: (context, state) {
-                      var data = state.model as AddCartModel;
+                      // var data = state.model as AddCartModel;
                       if (state is Loading) {
                         print("Loading");
                         _playAnimation();
@@ -157,31 +157,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                           )..show(_drawerKey.currentState.context);
 
                         }
-                      } else if (state is Done) {
-                        print("done");
-                        _stopAnimation();
-                        Navigator.pushReplacement(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) {
-
-                              return translator.activeLanguageCode == 'ar' ?  CustomCircleNavigationBar(
-                                page_index: 4,
-                              ): CustomCircleNavigationBar(
-                                page_index: 0,
-                              );
-                            },
-                            transitionsBuilder:
-                                (context, animation8, animation15, child) {
-                              return FadeTransition(
-                                opacity: animation8,
-                                child: child,
-                              );
-                            },
-                            transitionDuration: Duration(milliseconds: 10),
-                          ),
-                        );
                       }
+
                     },
                     child: Column(
                       children: [

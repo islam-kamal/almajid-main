@@ -7,7 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class CartBadge extends StatefulWidget {
-  CartBadge({Key key}) : super(key: key);
+  final Color iconColor;
+
+  CartBadge({this.iconColor=Colors.white});
 
   @override
   _CartBadgeState createState() => _CartBadgeState();
@@ -50,7 +52,7 @@ class _CartBadgeState extends State<CartBadge> {
                   child: IconButton(
                     icon: Icon(
                       MaterialCommunityIcons.cart,
-                      color: Colors.white,
+                      color: widget.iconColor,
                     ),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(

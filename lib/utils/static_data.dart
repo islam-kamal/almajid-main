@@ -28,11 +28,11 @@ class StaticData {
  static Future<List<AddressModel>> saved_addresses;
 
 
-
-
   static List<dynamic> gallery = [];
   static List images = [];
   static  var data ;
+
+  static Map<String,dynamic> staticBanner;
 
 
   static double get_height(BuildContext context) {

@@ -57,29 +57,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
           ),
           Container(
             height: height(context),
-            child: NestedScrollView(
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  SliverAppBar(
-                    automaticallyImplyLeading: false,
-                    leading: null,
-                    expandedHeight: isLandscape(context)
-                        ? 2 * height(context) * .2
-                        : height(context) * .2,
-                    floating: false,
-                    backgroundColor: whiteColor,
-                    elevation: 0,
-                    pinned: false,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background:     HomeSlider(
-                          gallery:StaticData.images
-                      ),
-                    ),
-                  )
-                ];
-              },
-              body: Container(
+              child: Container(
                 // height: isLandscape(context) ? 2 * height(context) * .65 : height(context) * .65,
                 child: BlocBuilder(
                   bloc: product_bloc,
@@ -142,7 +120,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                   },
                 ),
               ),
-            ),
           )
         ],
       )),
