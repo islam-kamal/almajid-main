@@ -29,6 +29,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
   List product_images = [];
   var selected_size = 0;
   var qty=1;
+  var description;
 
   @override
   void initState() {
@@ -37,13 +38,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
           "${Urls.BASE_URL}/media/catalog/product/cache/089af6965a318f5bf47750f284c40786" +
               element.file);
     });
+    widget.product.customAttributes.forEach((element) {
+      if(element.attributeCode ==  "description"){
+        description = element.value;
+      }
+    });
     _loginButtonController = AnimationController(
         duration: const Duration(milliseconds: 3000), vsync: this);
     StaticData.product_id = widget.product.id;
     super.initState();
   }
 
-  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   AnimationController _loginButtonController;
   bool isLoading = false;
@@ -81,7 +87,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
     return NetworkIndicator(
       child: PageContainer(
           child: Scaffold(
-            key: _drawerKey,
+            key: _scaffoldKey,
         backgroundColor: whiteColor,
         body: SafeArea(
             child: SingleChildScrollView(
@@ -92,7 +98,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                       if (state is Loading) {
                         print("Loading");
                         _playAnimation();
-                      } else if (state is ErrorLoading) {
+                      }
+                      else if (state is ErrorLoading) {
                         var data = state.model as AddCartModel;
                         print("ErrorLoading");
                         _stopAnimation();
@@ -135,7 +142,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             flushbarPosition: FlushbarPosition.BOTTOM,
                             backgroundColor: redColor,
                             flushbarStyle: FlushbarStyle.FLOATING,
-                          )..show(_drawerKey.currentState.context);
+                          )..show(_scaffoldKey.currentState.context);
                         }else{
                           Flushbar(
                             messageText:       Container(
@@ -154,9 +161,34 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             backgroundColor: redColor,
                             flushbarStyle: FlushbarStyle.FLOATING,
                             duration: Duration(seconds: 3),
-                          )..show(_drawerKey.currentState.context);
+                          )..show(_scaffoldKey.currentState.context);
 
                         }
+                      }
+                      else if (state is Done) {
+                        print("done");
+                        _stopAnimation();
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) {
+
+                              return translator.activeLanguageCode == 'ar' ?  CustomCircleNavigationBar(
+                                page_index: 4,
+                              ): CustomCircleNavigationBar(
+                                page_index: 0,
+                              );
+                            },
+                            transitionsBuilder:
+                                (context, animation8, animation15, child) {
+                              return FadeTransition(
+                                opacity: animation8,
+                                child: child,
+                              );
+                            },
+                            transitionDuration: Duration(milliseconds: 10),
+                          ),
+                        );
                       }
 
                     },
@@ -181,8 +213,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             context: context, percentageOfHeight: .02),
                         descriptionAndShareRow(
                             context: context,
-                            description:
-                                widget.product.customAttributes[5].value,
+                            description:description??'',
                             product_name: widget.product.name),
                         responsiveSizedBox(
                             context: context, percentageOfHeight: .02),
@@ -190,15 +221,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             context: context, price: widget.product.price),
                         responsiveSizedBox(
                             context: context, percentageOfHeight: .02),
-                        vatAndReviewsRow(context: context),
+                        vatAndReviewsRow(
+                            context: context,
+                        product_sku: widget.product.sku),
                         divider(context: context),
                         responsiveSizedBox(
                             context: context, percentageOfHeight: .02),
-                   /*     sizeAndQuantityText(context: context, text: "Size"),
-                        responsiveSizedBox(
-                            context: context, percentageOfHeight: .02),*/
-                  //      sizesListView(context: context),
-                   //     divider(context: context),
                         sizeAndQuantityText(context: context, text: "Quantity"),
                         responsiveSizedBox(
                             context: context, percentageOfHeight: .02),
@@ -287,15 +315,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                         ),
                         //divider(context: context),
                         responsiveSizedBox(
-                            context: context, percentageOfHeight: .06),
+                            context: context, percentageOfHeight: .03),
                         AddProductToCartWidget(
                             product_sku: widget.product.sku,
                             product_quantity:  StaticData.product_qty ,
                            instock_status: widget.product.extensionAttributes.stockItem.isInStock,
-                          scaffoldKey: _drawerKey,
+                          scaffoldKey: _scaffoldKey,
                             ),
                         responsiveSizedBox(
-                            context: context, percentageOfHeight: .06),
+                            context: context, percentageOfHeight: .03),
                       Container(
                            height: height(context) * .1,
                            color: mainColor,

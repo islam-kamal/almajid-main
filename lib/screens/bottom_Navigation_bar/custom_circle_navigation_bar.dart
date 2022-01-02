@@ -1,3 +1,4 @@
+import 'package:almajidoud/screens/SearchScreen/search_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/material.dart';
 import 'package:circle_bottom_navigation_bar/circle_bottom_navigation_bar.dart';
@@ -21,10 +22,10 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
     translator.activeLanguageCode == 'en' ? CartScreen() : MyAccountScreen(),
     translator.activeLanguageCode == 'en'
         ? LocationScreen()
-        : NotificationsScreen(),
+        : SearchScreen(),
     HomeScreen(),
     translator.activeLanguageCode == 'en'
-        ? NotificationsScreen()
+        ? SearchScreen()
         : LocationScreen(),
     translator.activeLanguageCode == 'en' ? MyAccountScreen() : CartScreen()
   ];
@@ -103,7 +104,7 @@ List<TabData> getTabsData() {
       iconSize: 25,
     )
         : TabData(
-      icon: Icons.notifications,
+      icon: Icons.search,
       iconSize: 25,
     ),
     TabData(

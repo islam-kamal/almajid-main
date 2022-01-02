@@ -43,8 +43,6 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                         right: width(context) * .01, left: width(context) * .01),
                     child: Column(
                       children: [
-
-
                         BlocBuilder(
                           bloc: categoryBloc,
                           builder: (context, state) {
@@ -98,7 +96,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                           customDescriptionText(
                                                               context: context,
                                                               text: snapshot.data.childrenData[index].name),
-                                                          Icon(
+                                                          snapshot.data.childrenData[index].childrenData.isEmpty ? Container():    Icon(
                                                             Icons.keyboard_arrow_down,
                                                             size: 30,
                                                           )
@@ -154,7 +152,16 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                         })
                                                         : null,
                                                     onTap: () {
-                                                      setState(() {
+                                                      snapshot.data.childrenData[index].childrenData.isEmpty ?    customAnimatedPushNavigation(
+                                                          context,
+                                                          CategoryProductsScreen(
+                                                            category_id: snapshot.data.childrenData[index].id.toString(),
+                                                            category_name: snapshot.data.childrenData[index].name,
+
+                                                          )
+
+                                                      ):
+                                                         setState(() {
                                                         finance_status = !finance_status;
                                                       });
                                                     },

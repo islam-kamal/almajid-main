@@ -120,7 +120,7 @@ class Items {
       });
     }
     if (json['options'] != null) {
-      options = new List<Null>();
+      options = new List<Options>();
       json['options'].forEach((v) {
         options.add(new Options.fromJson(v));
       });
@@ -132,7 +132,7 @@ class Items {
       });
     }
     if (json['tier_prices'] != null) {
-      tierPrices = new List<Null>();
+      tierPrices = new List<TierPrices>();
       json['tier_prices'].forEach((v) {
         tierPrices.add(new TierPrices.fromJson(v));
       });

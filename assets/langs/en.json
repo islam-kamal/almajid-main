@@ -196,10 +196,13 @@
   "Thanks For Your Review !" : "Thanks For Your Review !",
   "Tell Us More" : "Tell Us More",
   "No thanks" : "No thanks",
+  "this price includes VAT" : "this price includes VAT",
   "-------------------- search --------" :"------------------------------" ,
   "Search Result" :  "Search Result",
   "No Products Yet !"  : "No Products Yet !",
-
+  "What Are You Loking For ? " : "What Are You Loking For ? ",
+  "Search for items" : "Search for items",
+  "Search" : "Search",
   "-------------------- WishList --------" :"------------------------------" ,
   "My WishList" : "My WishList",
 
@@ -227,9 +230,12 @@
   "Back to Sign In Page" : "Back to Sign In Page",
   "your order created successfully with this number" : "your order created successfully with this number",
   "Ok" : "Ok",
-  "input is incorrect" : "input is incorrect"
-
-
+  "input is incorrect" : "input is incorrect",
+  "Continue" :   "Continue",
+  "Success" : "Success",
+  "Your order created successfully" : "Your order created successfully",
+  "Confirmation Screen" :  "Confirmation Screen",
+  "Your order Number": "Your order Number"
 
 }
 

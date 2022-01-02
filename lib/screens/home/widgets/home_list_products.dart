@@ -4,7 +4,7 @@ import 'package:almajidoud/Base/Shimmer/list_shimmer.dart';
 import 'package:almajidoud/Bloc/Home_Bloc/home_bloc.dart';
 import 'package:almajidoud/Model/CartModel/add_cart_model.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart'
-    as product_model;
+as product_model;
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/custom_widgets/custom_animated_push_navigation.dart';
@@ -75,7 +75,7 @@ class HomeListProductsState extends State<HomeListProducts> {
                                   child: Neumorphic(
                                     style: NeumorphicStyle(
                                       border:
-                                          NeumorphicBorder(color: mainColor),
+                                      NeumorphicBorder(color: mainColor),
                                       shape: NeumorphicShape.flat,
                                       color: whiteColor,
                                       depth: 5,
@@ -86,9 +86,9 @@ class HomeListProductsState extends State<HomeListProducts> {
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                                 color:
-                                                    mainColor.withOpacity(.2)),
+                                                mainColor.withOpacity(.2)),
                                             borderRadius:
-                                                BorderRadius.circular(0)),
+                                            BorderRadius.circular(0)),
                                         child: Stack(
                                           children: [
                                             Column(
@@ -106,8 +106,8 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                     width: width(context) * .32,
                                                     height: isLandscape(context)
                                                         ? 2 *
-                                                            height(context) *
-                                                            .12
+                                                        height(context) *
+                                                        .12
                                                         : height(context) * .12,
                                                     decoration: BoxDecoration(
                                                         image: DecorationImage(
@@ -115,7 +115,7 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                 snapshot
                                                                     .data[index]
                                                                     .customAttributes[
-                                                                        0]
+                                                                0]
                                                                     .value),
                                                             fit: BoxFit.cover)),
                                                   ),
@@ -124,8 +124,8 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                   width: width(context) * .32,
                                                   height: isLandscape(context)
                                                       ? 2 *
-                                                          height(context) *
-                                                          .12
+                                                      height(context) *
+                                                      .12
                                                       : height(context) * .12,
                                                   color: whiteColor,
                                                   child: Column(
@@ -133,7 +133,7 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                       responsiveSizedBox(
                                                           context: context,
                                                           percentageOfHeight:
-                                                              .005),
+                                                          .005),
                                                       customDescriptionText(
                                                           context: context,
                                                           textColor: mainColor,
@@ -141,29 +141,29 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                               .data[index].name,
                                                           maxLines: 2,
                                                           percentageOfHeight:
-                                                              .017),
+                                                          .017),
                                                       responsiveSizedBox(
                                                           context: context,
                                                           percentageOfHeight:
-                                                              .005),
+                                                          .005),
                                                       customDescriptionText(
                                                           context: context,
                                                           textColor: mainColor,
                                                           text:
-                                                              " ${MyApp.country_currency} ${snapshot.data[index].price}",
+                                                          " ${MyApp.country_currency} ${snapshot.data[index].price}",
                                                           maxLines: 1,
                                                           percentageOfHeight:
-                                                              .017,
+                                                          .017,
                                                           fontWeight:
-                                                              FontWeight.bold),
+                                                          FontWeight.bold),
                                                       responsiveSizedBox(
                                                           context: context,
                                                           percentageOfHeight:
-                                                              .0105),
+                                                          .0105),
                                                       Row(
                                                         mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
+                                                        MainAxisAlignment
+                                                            .center,
                                                         children: [
                                                           MyShareButton(
                                                             data: snapshot
@@ -172,12 +172,12 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                           ),
                                                           SizedBox(
                                                             width:
-                                                                width(context) *
-                                                                    .03,
+                                                            width(context) *
+                                                                .03,
                                                           ),
                                                           BlocBuilder(
                                                             bloc:
-                                                                shoppingCartBloc,
+                                                            shoppingCartBloc,
                                                             builder: (context, state) {
                                                               if (state is ProductLoading &&state.indicator == 'home_add_to_cart') {
                                                                 if (snapshot.data[index].sku == state.sku) {
@@ -186,108 +186,108 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                   _isLoading = false;
                                                                 }
                                                               } else if (state
-                                                                      is ErrorLoadingProduct &&
+                                                              is ErrorLoadingProduct &&
                                                                   state.indicator ==
                                                                       'home_add_to_cart' &&
                                                                   snapshot
-                                                                          .data[
-                                                                              index]
-                                                                          .sku ==
+                                                                      .data[
+                                                                  index]
+                                                                      .sku ==
                                                                       state
                                                                           .sku) {
                                                                 _isLoading =
-                                                                    false;
+                                                                false;
                                                                 var data = state
-                                                                        .model
-                                                                    as AddCartModel;
+                                                                    .model
+                                                                as AddCartModel;
                                                                 Fluttertoast.showToast(
                                                                     msg:
-                                                                        '${data.message}',
+                                                                    '${data.message}',
                                                                     toastLength:
-                                                                        Toast
-                                                                            .LENGTH_SHORT,
+                                                                    Toast
+                                                                        .LENGTH_SHORT,
                                                                     gravity:
-                                                                        ToastGravity
-                                                                            .TOP,
+                                                                    ToastGravity
+                                                                        .TOP,
                                                                     timeInSecForIosWeb:
-                                                                        1,
+                                                                    1,
                                                                     backgroundColor:
-                                                                        Colors
-                                                                            .redAccent,
+                                                                    Colors
+                                                                        .redAccent,
                                                                     textColor:
-                                                                        Colors
-                                                                            .white,
+                                                                    Colors
+                                                                        .white,
                                                                     fontSize:
-                                                                        16.0);
+                                                                    16.0);
                                                                 state = null;
                                                               } else if (state
-                                                                      is DoneProductAdded &&
+                                                              is DoneProductAdded &&
                                                                   state.indicator ==
                                                                       'home_add_to_cart' &&
                                                                   snapshot
-                                                                          .data[
-                                                                              index]
-                                                                          .sku ==
+                                                                      .data[
+                                                                  index]
+                                                                      .sku ==
                                                                       state
                                                                           .sku) {
                                                                 _isLoading =
-                                                                    false;
+                                                                false;
                                                                 Fluttertoast.showToast(
                                                                     msg:
-                                                                        'product added successfully to cart',
+                                                                    'product added successfully to cart',
                                                                     toastLength:
-                                                                        Toast
-                                                                            .LENGTH_SHORT,
+                                                                    Toast
+                                                                        .LENGTH_SHORT,
                                                                     gravity:
-                                                                        ToastGravity
-                                                                            .TOP,
+                                                                    ToastGravity
+                                                                        .TOP,
                                                                     timeInSecForIosWeb:
-                                                                        1,
+                                                                    1,
                                                                     backgroundColor:
-                                                                        Colors
-                                                                            .green,
+                                                                    Colors
+                                                                        .green,
                                                                     textColor:
-                                                                        Colors
-                                                                            .white,
+                                                                    Colors
+                                                                        .white,
                                                                     fontSize:
-                                                                        16.0);
+                                                                    16.0);
                                                               }
                                                               return _isLoading
                                                                   ? CircularProgressIndicator()
                                                                   : InkWell(
-                                                                      onTap: snapshot.data[index].extensionAttributes.stockItem.isInStock ==
-                                                                              false
-                                                                          ? () {
-                                                                              Flushbar(
-                                                                                messageText: Container(
-                                                                                  width: StaticData.get_width(context) * 0.7,
-                                                                                  child: Wrap(
-                                                                                    children: [
-                                                                                      Text(
-                                                                                        translator.translate("There is no quantity of this product in stock"),
-                                                                                        textDirection: TextDirection.rtl,
-                                                                                        style: TextStyle(color: whiteColor),
-                                                                                      ),
-                                                                                    ],
-                                                                                  ),
-                                                                                ),
-                                                                                flushbarPosition: FlushbarPosition.TOP,
-                                                                                backgroundColor: redColor,
-                                                                                flushbarStyle: FlushbarStyle.FLOATING,
-                                                                                duration: Duration(seconds: 3),
-                                                                              )..show(widget.homeScaffoldKey.currentState.context);
-                                                                            }
-                                                                          : () {
-                                                                              shoppingCartBloc.add(AddProductToCartEvent(context: context, product_quantity: 1, product_sku: snapshot.data[index].sku, indictor: 'home_add_to_cart'));
-                                                                            },
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .shopping_cart_outlined,
-                                                                        color:
-                                                                            mainColor,
+                                                                onTap: snapshot.data[index].extensionAttributes.stockItem.isInStock ==
+                                                                    false
+                                                                    ? () {
+                                                                  Flushbar(
+                                                                    messageText: Container(
+                                                                      width: StaticData.get_width(context) * 0.7,
+                                                                      child: Wrap(
+                                                                        children: [
+                                                                          Text(
+                                                                            translator.translate("There is no quantity of this product in stock"),
+                                                                            textDirection: TextDirection.rtl,
+                                                                            style: TextStyle(color: whiteColor),
+                                                                          ),
+                                                                        ],
                                                                       ),
-                                                                    );
+                                                                    ),
+                                                                    flushbarPosition: FlushbarPosition.TOP,
+                                                                    backgroundColor: redColor,
+                                                                    flushbarStyle: FlushbarStyle.FLOATING,
+                                                                    duration: Duration(seconds: 3),
+                                                                  )..show(widget.homeScaffoldKey.currentState.context);
+                                                                }
+                                                                    : () {
+                                                                  shoppingCartBloc.add(AddProductToCartEvent(context: context, product_quantity: 1, product_sku: snapshot.data[index].sku, indictor: 'home_add_to_cart'));
+                                                                },
+                                                                child:
+                                                                Icon(
+                                                                  Icons
+                                                                      .shopping_cart_outlined,
+                                                                  color:
+                                                                  mainColor,
+                                                                ),
+                                                              );
                                                             },
                                                           ),
                                                         ],
@@ -302,7 +302,7 @@ class HomeListProductsState extends State<HomeListProducts> {
                                             CustomWishList(
                                               color: redColor,
                                               product_id:
-                                                  snapshot.data[index].id,
+                                              snapshot.data[index].id,
                                               qty: snapshot
                                                   .data[index]
                                                   .extensionAttributes
@@ -310,7 +310,7 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                   .qty,
                                               context: context,
                                               screen:
-                                                  CustomCircleNavigationBar(),
+                                              CustomCircleNavigationBar(),
                                             ),
                                           ],
                                         ),

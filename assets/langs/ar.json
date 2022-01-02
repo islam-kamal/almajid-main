@@ -178,7 +178,7 @@
   "This price includes VAT": "هذا السعر يشمل ضريبة القيمة المضافة",
   "Size": "المقاس",
   "ml": "مل",
-  "Quantity": "الكمبة",
+  "Quantity": "الكمية",
   "Add To Cart": "إضافة للسلة",
   "Write A Review": "كتابة مراجعة",
   "Sold by": "يتم بيعه بواسطة",
@@ -201,10 +201,12 @@
   "Thanks For Your Review !": "شكرا لمراجعتك!",
   "Tell Us More" : "إخبرنا المزيد",
   "No thanks" : "لا شكرا",
+  "this price includes VAT" : "هذا السعر يشمل ضريبة القيمة المضافة",
   "-------------------- search --------" :"------------------------------" ,
   "Search Result" : "نتائج البحث",
   "No Products Yet !" : "لا توجد منتجات حاليا",
-
+  "What Are You Loking For ? " : "عن ماذا تريد البحث ؟",
+  "Search" : "البحث",
   "-------------------- WishList --------" :"------------------------------" ,
   "My WishList" : "مفضلتى",
 
@@ -231,5 +233,10 @@
   "Back to Sign In Page" : "العودة إلى صفحة تسجيل الدخول",
   "your order created successfully with this number" :"تم إنشاء طلبك بنجاح بهذا الرقم",
   "Ok" : "حسنا",
-  "input is incorrect" : "البيانات المدخلة غير صحيح"
+  "input is incorrect" : "البيانات المدخلة غير صحيح",
+  "Continue" : "استمرار",
+  "Success" : "نجاح",
+  "Your order created successfully" : "تم إنشاء طلبك بنجاح",
+  "Confirmation Screen" :  "شاشة التأكيد",
+  "Your order Number": "رقم طلبك"
 }

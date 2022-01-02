@@ -10,7 +10,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import '../Constants.dart';
 import 'dart:io' show Platform;
-
 class PayfortPaymentScreen extends StatefulWidget {
   final String amount;
   final String merchantIdentifier;
@@ -199,13 +198,142 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
     );
   }
 }
-
-class PaymentSuccessfulScreen extends StatelessWidget {
+/*class PaymentSuccessfulScreen extends StatefulWidget{
   var order_id;
   PaymentSuccessfulScreen({this.order_id});
   @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return PaymentSuccessfulScreenState();
+  }
+
+}
+class PaymentSuccessfulScreenState extends State<PaymentSuccessfulScreen> with TickerProviderStateMixin{
+  AnimationController _loginButtonController ;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    _loginButtonController =AnimationController(
+        duration: const Duration(milliseconds: 3000), vsync: this);
+    super.initState();
+  }
+
+  Future<Null> _playAnimation() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      await _loginButtonController.forward();
+    } on TickerCanceled {
+      print('[_playAnimation] error');
+    }
+  }
+
+  Future<Null> _stopAnimation() async {
+    try {
+      await _loginButtonController.reverse();
+      setState(() {
+        isLoading = false;
+      });
+    } on TickerCanceled {
+      print('[_stopAnimation] error');
+    }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _loginButtonController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
+    return NetworkIndicator(
+      child: PageContainer(
+        child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                "Submit Success",
+              ),
+              automaticallyImplyLeading: false,
+            ),
+            body:Center(
+              child: Container(
+                padding:  EdgeInsets.symmetric(horizontal: width(context) * 0.05,vertical: width(context) * 0.15),
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+
+                        const SizedBox(height: 8),
+                        Text('Success',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Your order created successfully',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Your order Number #934354532435',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                        SizedBox(height: width(context) * 0.15),
+                        Container(
+                          width: 90,
+                          height: 90,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                              border: Border.all(color: Colors.green)
+                          ),
+                          child: const Icon(
+                            Icons.check,
+                            color: Colors.green,
+                            size: 32,
+                          ),
+                        ),
+                        SizedBox(height: width(context) * 0.2),
+
+                      ],
+                    ),
+
+                    StaggerAnimation(
+                      titleButton: translator.translate("Continue").toUpperCase(),
+                      buttonController: _loginButtonController.view,
+
+                      onTap: () {
+                        if( StaticData.vistor_value == 'visitor') {
+
+                          customPushNamedNavigation(context, CustomCircleNavigationBar());
+                        }
+                        else{
+                          customPushNamedNavigation(context, OrdersScreen(
+                            increment_id: widget.order_id,
+                          ));
+                        }
+
+                      },
+                    )
+                  ],
+                ),
+              ),
+            )),
+      ),
+    );
+*//*    return Container(
       color: Colors.white,
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
@@ -260,9 +388,9 @@ class PaymentSuccessfulScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
+    );*//*
   }
-}
+}*/
 
 class PaymentFailedScreen extends StatelessWidget {
   @override
