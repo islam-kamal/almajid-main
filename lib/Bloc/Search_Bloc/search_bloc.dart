@@ -22,6 +22,7 @@ class SearchBloc extends Bloc<AppEvent,AppState>{
       var response = await search_repository.search_products_fun(
           search_text: event.search_text
       );
+      print("search response : ${response}");
       if(response.totalCount != null ){
         _search_products_subject.sink.add(response);
 

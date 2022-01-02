@@ -8,16 +8,31 @@ priceAndRatingRow({BuildContext context , var price}) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Container(
-          child: customDescriptionText(
-              context: context,
-              text: "$price \$",
-              textAlign: TextAlign.start,
-              maxLines: 2,
-              textColor: mainColor,
-              percentageOfHeight: .03,
-              fontWeight: FontWeight.bold),
+        Row(
+          children: [
+            Container(
+              child: customDescriptionText(
+                  context: context,
+                  text: "$price ",
+                  textAlign: TextAlign.start,
+                  maxLines: 2,
+                  textColor: mainColor,
+                  percentageOfHeight: .03,
+                  fontWeight: FontWeight.bold),
+            ),
+            Container(
+              child: customDescriptionText(
+                  context: context,
+                  text: "${MyApp.country_currency}",
+                  textAlign: TextAlign.start,
+                  maxLines: 2,
+                  textColor: mainColor,
+                  percentageOfHeight: .02,
+                  fontWeight: FontWeight.normal),
+            ),
+          ],
         ),
+
         RatingBar.readOnly(
           initialRating: 5.0,
           maxRating: 5,

@@ -10,7 +10,7 @@ class WishListRepository {
     Map<String, String> headers =  {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}'
+      'Authorization': 'Bearer 110|dmP9vC9VLUQgWP2Ad2xXEHhJRmQfJsp2eJDEnYrP'
     };
     return NetworkUtil.internal().get(
         GetAllWishListModel(), '/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/me/wishlist',

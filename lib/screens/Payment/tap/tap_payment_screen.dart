@@ -196,7 +196,7 @@ class PaymentResult {
   }
 }
 
-class PaymentSuccessfulScreen extends StatelessWidget {
+/*class PaymentSuccessfulScreen extends StatelessWidget {
   var order_id;
   PaymentSuccessfulScreen({this.order_id});
   @override
@@ -252,7 +252,7 @@ class PaymentSuccessfulScreen extends StatelessWidget {
       ),
     );
   }
-}
+}*/
 
 class PaymentFailedScreen extends StatelessWidget {
   var reason;

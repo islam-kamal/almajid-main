@@ -3,22 +3,23 @@ import 'package:html/parser.dart' show parse;
 import 'package:share/share.dart';
 descriptionAndShareRow({BuildContext context , String description ,String product_name}) {
   return Container(
-    padding: EdgeInsets.only(
-        right: width(context) * .05, left: width(context) * .05),
+  //  padding: EdgeInsets.only(right: width(context) * .05, left: width(context) * .05),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          width: width(context) * .7,
+          padding: EdgeInsets.only(
+              right: width(context) * .05, left: width(context) * .05),
+          width: width(context) ,
           child: customDescriptionText(
               context: context,
               text: _parseHtmlString(description),
               textAlign: TextAlign.start,
-              maxLines: 2,
+              maxLines: 10,
               textColor: greyColor,
-              percentageOfHeight: .023),
+              percentageOfHeight: .020),
         ),
-        InkWell(
+      /*  InkWell(
           onTap: () {
             final RenderBox box =
             context.findRenderObject();
@@ -40,7 +41,7 @@ descriptionAndShareRow({BuildContext context , String description ,String produc
               children: [Icon(Icons.share_outlined)],
             ),
           ),
-        )
+        )*/
       ],
     ),
   );

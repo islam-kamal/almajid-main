@@ -562,7 +562,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                   ),
                                 ),
                                 flushbarPosition:
-                                FlushbarPosition.BOTTOM,
+                                FlushbarPosition.TOP,
                                 backgroundColor:
                                 greenColor,
                                 duration: Duration(seconds: 2),
@@ -620,13 +620,7 @@ class _WishListScreenState extends State<WishListScreen> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => translator.activeLanguageCode == 'ar'
-                  ? CustomCircleNavigationBar(
-                page_index: 4,
-              )
-                  : CustomCircleNavigationBar(
-                page_index: 0,
-              )));
+              builder: (context) => super.widget));
     } else {
       print("item can't be deleted");
     }

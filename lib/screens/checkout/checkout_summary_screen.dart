@@ -148,8 +148,8 @@ print(" PayFortSettings     response  : ${response}");
           sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD).then((value){
             switch(value){
               case 'cashondelivery':
-                customAnimatedPushNavigation(context, StaticData.vistor_value == 'visitor'? CustomCircleNavigationBar(): OrdersScreen(
-                  increment_id: extractedData["increment_id"],
+                customAnimatedPushNavigation(context, PaymentSuccessfulScreen(
+                  order_id: extractedData["increment_id"],
                 ));
                 break;
               case "aps_fort_cc" :

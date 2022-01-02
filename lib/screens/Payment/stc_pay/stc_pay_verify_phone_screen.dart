@@ -552,12 +552,16 @@ class _OtpState extends State<StcVerificationCodeScreen>
                 response.then((response) {
                   print(response.body);
                   final extractedData = json.decode(response.body) as Map<String, dynamic>;
-                  // if (extractedData["success"] && extractedData["payment_config"].length !=0) {
                   if (extractedData["success"]) {
                     _stopAnimation();
-                    sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);//remove quote_id after order created successfully
-
-                    customAnimatedPushNavigation(context, CustomCircleNavigationBar());
+                    customAnimatedPushNavigation(context, PaymentSuccessfulScreen(
+                      order_id: extractedData["increment_id"],
+                    ));
+                /*    StaticData.vistor_value == 'visitor'
+                        ?   customAnimatedPushNavigation(context, CustomCircleNavigationBar())
+                        : customAnimatedPushNavigation(context, OrdersScreen(
+                      increment_id: extractedData["increment_id"],
+                    ));*/
                   }
                 });
               }
@@ -679,3 +683,5 @@ class OtpTimer extends StatelessWidget {
         });
   }
 }
+
+

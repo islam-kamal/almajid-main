@@ -49,7 +49,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                   fit: BoxFit.fill)),
                         ) ,
                         Directionality(
-                            textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl :TextDirection.ltr,
+                            textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.ltr :TextDirection.rtl,
                             child:  Container(
                           padding: EdgeInsets.only(
                               right: width(context) * .02,
@@ -89,7 +89,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                     child: customDescriptionText(
                                         context: context,
                                         textColor: mainColor,
-                                        text: "${product.price} ${MyApp.country_currency}",
+                                        text: "${MyApp.country_currency} ${product.price}",
                                         textAlign: TextAlign.start,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -205,7 +205,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                             ),
                                           ),
                                           flushbarPosition:
-                                          FlushbarPosition.BOTTOM,
+                                          FlushbarPosition.TOP,
                                           backgroundColor:
                                           greenColor,
                                           duration: Duration(seconds: 2),

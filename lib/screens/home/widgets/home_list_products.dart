@@ -13,6 +13,8 @@ import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigatio
 import 'package:almajidoud/screens/product_details/product_details_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:share/share.dart';
+import 'package:almajidoud/Widgets/customText.dart';
+import 'package:http/http.dart' as http;
 
 class HomeListProducts extends StatefulWidget {
   final String type;
@@ -25,9 +27,77 @@ class HomeListProducts extends StatefulWidget {
   }
 }
 
-class HomeListProductsState extends State<HomeListProducts> {
+class HomeListProductsState extends State<HomeListProducts> with TickerProviderStateMixin{
   TextEditingController qty_controller = new TextEditingController();
   String cvv;
+  var sku;
+
+  AnimationController _loginButtonController;
+  bool isLoading = false;
+  final home_bloc = HomeBloc(null);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loginButtonController = AnimationController(
+        duration: const Duration(milliseconds: 3000), vsync: this);
+    readJson();
+  }
+
+  Future<Null> _playAnimation() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      await _loginButtonController.forward();
+    } on TickerCanceled {
+      print('[_playAnimation] error');
+    }
+  }
+
+  Future<Null> _stopAnimation() async {
+    try {
+      await _loginButtonController.reverse();
+      setState(() {
+        isLoading = false;
+      });
+    } on TickerCanceled {
+      print('[_stopAnimation] error');
+    }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _loginButtonController.dispose();
+    super.dispose();
+  }
+
+
+  Future<void> readJson() async {
+/*    final response = await http.get(
+        Uri.parse("${Urls.BASE_URL}/media/mobile/config.json"
+        ),
+        headers: {"charset": "utf-8", "Accept-Charset": "utf-8"}
+    );
+    StaticData.data = await json.decode(utf8.decode(response.bodyBytes));*/
+    if (StaticData.data != null) {
+      home_bloc.add(GetHomeNewArrivals(
+          category_id: StaticData.data['new-arrival']['id'],
+          offset: 1
+      ));
+      home_bloc.add(GetHomeBestSeller(
+          category_id: StaticData.data['best-seller']['id'],
+          offset: 1
+      ));
+    }
+/*    StaticData.gallery = StaticData.data["slider"];
+
+    StaticData.gallery.forEach((element) {
+      StaticData.images.add(element['url']);
+    });*/
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,12 +127,26 @@ class HomeListProductsState extends State<HomeListProducts> {
                       return Container(
                           width: width(context),
                           height: isLandscape(context)
-                              ? 2 * height(context) * .25
-                              : height(context) * .25,
+                              ? 2 * height(context) * .23
+                              : height(context) * .23,
                           child: ListView.builder(
                               itemCount: snapshot.data.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
+                                String special_price;
+                                var percentage;
+                                snapshot.data[index].customAttributes.forEach((element) {
+                                  if(element.attributeCode == 'special_price'){
+                                    special_price = element.value;
+                                  }
+                                });
+
+                                if(special_price != null){
+                                  print("aaa : ${snapshot.data[index].price.runtimeType}");
+                                  print("aaa : ${double.parse(special_price).runtimeType}");
+                                   percentage =
+                                      (1 - (double.parse(special_price)  / snapshot.data[index].price) )* 100;
+                                }
                                 return Padding(
                                   padding: EdgeInsets.only(
                                     left: 5,
@@ -121,15 +205,14 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                   height: isLandscape(context)
                                                       ? 2 *
                                                           height(context) *
-                                                          .12
-                                                      : height(context) * .12,
+                                                          .1
+                                                      : height(context) * .1,
                                                   color: whiteColor,
                                                   child: Column(
                                                     children: [
                                                       responsiveSizedBox(
                                                           context: context,
-                                                          percentageOfHeight:
-                                                              .005),
+                                                          percentageOfHeight: .005),
                                                       customDescriptionText(
                                                           context: context,
                                                           textColor: mainColor,
@@ -138,55 +221,74 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                           maxLines: 2,
                                                           percentageOfHeight:
                                                               .017),
-                                                      responsiveSizedBox(
-                                                          context: context,
-                                                          percentageOfHeight:
-                                                              .005),
-                                                      customDescriptionText(
-                                                          context: context,
-                                                          textColor: mainColor,
-                                                          text:
-                                                              " ${MyApp.country_currency} ${snapshot.data[index].price}",
-                                                          maxLines: 1,
-                                                          percentageOfHeight:
-                                                              .017,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                      responsiveSizedBox(
-                                                          context: context,
-                                                          percentageOfHeight:
-                                                              .0105),
+
                                                       Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: [
-                                                          MyShareButton(
-                                                            data: snapshot
-                                                                .data[index]
-                                                                .name,
-                                                          ),
-                                                          SizedBox(
-                                                            width:
-                                                                width(context) *
-                                                                    .03,
+                                                          Column(
+                                                            children: [
+                                                              Wrap(
+                                                                children: [
+                                                                  Row(
+                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                    children: [
+                                                                      MyText(
+                                                                        text: "${snapshot.data[index].price}",
+                                                                        size: StaticData.get_height(context) * .017,
+                                                                        color: blackColor,
+                                                                        maxLines: 2,
+                                                                        weight: FontWeight.normal,
+                                                                      ),
+                                                                      MyText(
+                                                                        text: " ${translator.translate("SAR")}",
+                                                                        size: StaticData.get_height(context) * .011,
+                                                                        color: blackColor,
+                                                                        maxLines: 2,
+                                                                        weight: FontWeight.normal,
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              special_price == null ?  Container()   :  Row(
+                                                                children: [
+                                                                  Text(
+                                                                    "${double.parse(special_price) } ${translator.translate("SAR")}",
+                                                                    style: TextStyle(
+                                                                        decoration: TextDecoration.lineThrough,
+                                                                        fontSize: StaticData.get_height(context)  * .011,
+                                                                        color: greyColor),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: StaticData.get_width(context) * .02,
+                                                                  ),
+                                                                  MyText(
+                                                                      text: "${percentage}%",
+                                                                      size: StaticData.get_height(context)  * .011,
+                                                                      color: greenColor),
+                                                                ],
+                                                              )  ,
+                                                            ],
                                                           ),
                                                           BlocListener<ShoppingCartBloc, AppState>(
                                                               bloc: shoppingCartBloc,
                                                               listener: (context,state) async {
                                                                 if (state is Loading) {
-                                                                  if (state.indicator == 'home_add_to_cart')
-                                                                    print("Loading");
+                                                                    if (state.indicator == 'home_add_to_cart'){
+                                                                      _playAnimation();
+                                                                    }
+
                                                                 } else if (state is ErrorLoading) {
+                                                                  _stopAnimation();
                                                                   if (state.indicator == 'home_add_to_cart') {
                                                                     var data = state.model as AddCartModel;
                                                                     print("ErrorLoading");
                                                                     if (data.message == "The consumer isn't authorized to access %resources.") {
                                                                       Flushbar(
                                                                         messageText:
-                                                                            Row(
+                                                                        Row(
                                                                           mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceBetween,
+                                                                          MainAxisAlignment.spaceBetween,
                                                                           children: [
                                                                             Container(
                                                                               width: width(context) * 0.70,
@@ -217,46 +319,47 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                           ],
                                                                         ),
                                                                         flushbarPosition:
-                                                                            FlushbarPosition.BOTTOM,
+                                                                        FlushbarPosition.TOP,
                                                                         backgroundColor:
-                                                                            redColor,
+                                                                        redColor,
                                                                         flushbarStyle:
-                                                                            FlushbarStyle.FLOATING,
+                                                                        FlushbarStyle.FLOATING,
                                                                       )..show(widget
                                                                           .homeScaffoldKey
                                                                           .currentState
                                                                           .context);
                                                                     } else {
                                                                       Flushbar(messageText: Container(width: StaticData.get_width(context) * 0.7,
-                                                                          child:
-                                                                              Wrap(
-                                                                            children: [
-                                                                              Text(
-                                                                                '${data.message}',
-                                                                                textDirection: TextDirection.rtl,
-                                                                                style: TextStyle(color: whiteColor),
-                                                                              ),
-                                                                            ],
-                                                                          ),
+                                                                        child:
+                                                                        Wrap(
+                                                                          children: [
+                                                                            Text(
+                                                                              '${data.message}',
+                                                                              textDirection: TextDirection.rtl,
+                                                                              style: TextStyle(color: whiteColor),
+                                                                            ),
+                                                                          ],
                                                                         ),
+                                                                      ),
                                                                         flushbarPosition:
-                                                                            FlushbarPosition.BOTTOM,
+                                                                        FlushbarPosition.TOP,
                                                                         backgroundColor:
-                                                                            redColor,
+                                                                        redColor,
                                                                         flushbarStyle:
-                                                                            FlushbarStyle.FLOATING,
+                                                                        FlushbarStyle.FLOATING,
                                                                         duration:
-                                                                            Duration(seconds: 3),
+                                                                        Duration(seconds: 3),
                                                                       )..show(widget
                                                                           .homeScaffoldKey
                                                                           .currentState
                                                                           .context);
                                                                     }
                                                                   }
-                                                                } else if (state is Done) {
+                                                                }
+                                                                else if (state is Done) {
+                                                                  _stopAnimation();
                                                                   if (state.indicator == 'home_add_to_cart') {
-                                                                    var data = state
-                                                                        .model as AddCartModel;
+                                                                    var data = state.model as AddCartModel;
                                                                     Flushbar(
                                                                       messageText:
                                                                       Container(
@@ -269,7 +372,7 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                         ),
                                                                       ),
                                                                       flushbarPosition:
-                                                                      FlushbarPosition.BOTTOM,
+                                                                      FlushbarPosition.TOP,
                                                                       backgroundColor:
                                                                       greenColor,
                                                                       duration: Duration(seconds: 2),
@@ -279,21 +382,70 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                         .homeScaffoldKey
                                                                         .currentState
                                                                         .context);
-                                                             /*       customAnimatedPushNavigation(
-                                                                        context,
-                                                                        translator
-                                                                            .activeLanguageCode ==
-                                                                            'ar'
-                                                                            ? CustomCircleNavigationBar(
-                                                                          page_index: 4,
-                                                                        )
-                                                                            : CustomCircleNavigationBar(
-                                                                          page_index: 0,
-                                                                        ));*/
                                                                   }
                                                                 }
                                                               },
-                                                              child: InkWell(
+
+                                                              child:Container(
+                                                                alignment: Alignment.center,
+                                                               padding: EdgeInsets.all(5),
+                                                                child: StaggerAnimation(
+                                                                  buttonController: _loginButtonController.view,
+                                                                  btn_width:  width(context) * .09,
+                                                                  btn_height:  isLandscape(context) ? 2 * height(context) * .04 : height(context) * .04,
+                                                                  widget:  Container(
+                                                                    decoration: BoxDecoration(color: blackColor,
+                                                                        borderRadius: BorderRadius.circular(5),
+                                                                        shape: BoxShape.rectangle),
+                                                                    child: Center(
+                                                                      child: Icon(
+                                                                        Icons
+                                                                            .shopping_cart_outlined,
+                                                                        color: whiteColor,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  onTap:  snapshot.data[index].extensionAttributes.stockItem
+                                                                      .isInStock == false
+                                                                      ? () {
+                                                                    Flushbar(
+                                                                      messageText: Container(
+                                                                        width: StaticData.get_width(context) * 0.7,
+                                                                      child:
+                                                                      Wrap(
+                                                                        children: [
+                                                                          Text(
+                                                                            translator.translate( "There is no quantity of this product in stock"),
+                                                                            textDirection: TextDirection.rtl,
+                                                                            style: TextStyle(color: whiteColor),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                      flushbarPosition:
+                                                                      FlushbarPosition.TOP,
+                                                                      backgroundColor:
+                                                                      redColor,
+                                                                      flushbarStyle:
+                                                                      FlushbarStyle.FLOATING,
+                                                                      duration:
+                                                                      Duration(seconds: 3),
+                                                                    )..show(widget
+                                                                        .homeScaffoldKey
+                                                                        .currentState
+                                                                        .context);
+                                                                  }
+                                                                      : () {
+                                                                    shoppingCartBloc.add(AddProductToCartEvent(
+                                                                        context: context,
+                                                                        product_quantity: 1,
+                                                                        product_sku: snapshot.data[index].sku,
+                                                                        indictor: 'home_add_to_cart'));
+                                                                  },
+                                                                ),
+                                                              )
+
+                                                              /*InkWell(
                                                                 onTap: snapshot.data[index].extensionAttributes.stockItem
                                                                     .isInStock == false
                                                                     ? () {
@@ -330,16 +482,19 @@ class HomeListProductsState extends State<HomeListProducts> {
                                                                       product_quantity: 1,
                                                                       product_sku: snapshot.data[index].sku,
                                                                       indictor: 'home_add_to_cart'));
-                                                                      },
+                                                                },
                                                                 child: Icon(
                                                                   Icons
                                                                       .shopping_cart_outlined,
                                                                   color:
-                                                                      mainColor,
+                                                                  mainColor,
                                                                 ),
-                                                              )),
+                                                              )*/
+
+                                                          ),
                                                         ],
                                                       )
+
                                                     ],
                                                   ),
                                                 )

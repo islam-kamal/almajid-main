@@ -113,8 +113,7 @@ class MyTextField extends StatelessWidget {
             ),
             color: whiteColor,
             onPressed: () {
-              search_bloc
-                  .add(SearchProductsEvent(search_text: controller.text));
+           //   search_bloc.add(SearchProductsEvent(search_text: controller.text));
 
               customAnimatedPushNavigation(context, SearchScreen());
             },
