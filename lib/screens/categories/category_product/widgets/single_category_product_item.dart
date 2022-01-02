@@ -5,6 +5,7 @@ import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigatio
 
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/WishList/custom_wishlist.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:share/share.dart';
 class singleCategoryProductItem extends StatelessWidget {
