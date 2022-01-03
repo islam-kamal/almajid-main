@@ -1,3 +1,4 @@
+import 'package:almajidoud/Base/Shimmer/shimmer_notification.dart';
 import 'package:almajidoud/Model/CartModel/cart_details_model.dart';
 import 'package:almajidoud/Model/CartModel/cart_details_model.dart'
     as cart_details_model;
@@ -12,7 +13,7 @@ import 'package:almajidoud/screens/product_details/widgets/divider.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class CartScreen extends StatefulWidget {
   @override
   _CartScreenState createState() => _CartScreenState();
@@ -22,15 +23,28 @@ class _CartScreenState extends State<CartScreen> {
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   FocusNode fieldNode = FocusNode();
   String _dropDownValue;
-
+  var product_image;
   var edit_cart_status = false;
-
+  List<int> prod_image_key;
+  List<String> prod_image_value;
+  SharedPreferences sharedPreferences;
   @override
   void initState() {
+
+    prod_image_key = [];
+    prod_image_value = [];
+    get_wishlist_ids();
     shoppingCartBloc.add(GetCartDetailsEvent());
     super.initState();
   }
-
+  void get_wishlist_ids()async {
+   // sharedPreferences = await SharedPreferences.getInstance();
+    // sharedPreferences.remove('product_images_map');
+    await sharedPreferenceManager.getListOfMaps('product_images_map').then((
+        value) {
+      StaticData.product_images_list = value;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return NetworkIndicator(
@@ -54,7 +68,7 @@ class _CartScreenState extends State<CartScreen> {
                       builder: (context, state) {
                         if (state is Loading) {
                           return Center(
-                            child: CircularProgressIndicator(),
+                            child: ShimmerNotification(),
                           );
                         } else if (state is Done) {
                           var data = state.model as CartDetailsModel;
@@ -70,35 +84,22 @@ class _CartScreenState extends State<CartScreen> {
                                     itemCount: data.items.length,
                                     scrollDirection: Axis.vertical,
                                     itemBuilder: (context, index) {
+
                                       return Stack(
                                         children: [
-                                          Slidable(
-                                            actionPane:
-                                                SlidableDrawerActionPane(),
-                                            actionExtentRatio: 0.25,
-                                            child: Column(children: [
-                                              SizedBox(
-                                                height: width(context) * .002,
-                                              ),
-                                              singleCartItem(
-                                                  context: context,
-                                                  item: data.items[index]),
-                                              SizedBox(
-                                                height: width(context) * .002,
-                                              ),
-                                            ]),
-                                            secondaryActions: [
-                                              IconSlideAction(
-                                                caption: translator
-                                                    .translate("Delete"),
-                                                color: Colors.red,
-                                                icon: Icons.delete,
-                                                onTap: () => delete_cart_item(
-                                                    cart_item_id: data
-                                                        .items[index].itemId),
-                                              ),
-                                            ],
-                                          ),
+                                          Column(children: [
+                                            SizedBox(
+                                              height: width(context) * .002,
+                                            ),
+                                            singleCartItem(
+                                                context: context,
+                                                item: data.items[index],
+                                                image: "${Urls.BASE_URL}/media/catalog/product/cache/089af6965a318f5bf47750f284c40786"+data.items[index].extensionAttributes.productImage
+                                            ),
+                                            SizedBox(
+                                              height: width(context) * .002,
+                                            ),
+                                          ]),
                                           positionedRemove(
                                               itemId: data.items[index].itemId),
                                         ],
@@ -272,16 +273,6 @@ class _CartScreenState extends State<CartScreen> {
     );
     if (response) {
       shoppingCartBloc.add(GetCartDetailsEvent());
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => translator.activeLanguageCode == 'ar'
-      //             ? CustomCircleNavigationBar(
-      //                 page_index: 4,
-      //               )
-      //             : CustomCircleNavigationBar(
-      //                 page_index: 0,
-      //               )));
     } else {
       print("item can't be deleted");
     }
@@ -311,11 +302,12 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  singleCartItem({BuildContext context, cart_details_model.Items item}) {
+  singleCartItem({BuildContext context, cart_details_model.Items item,String image}) {
     List<String> qantity_numbers = [];
     for (int i = 1; i < 20; i++) {
       qantity_numbers.add(i.toString());
     }
+
     return Directionality(
         textDirection: translator.activeLanguageCode == 'ar'
             ? TextDirection.rtl
@@ -342,7 +334,7 @@ class _CartScreenState extends State<CartScreen> {
                                   borderRadius: BorderRadius.circular(15),
                                   image: DecorationImage(
                                       image: NetworkImage(
-                                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Og0-LY1uOs7Z3I_sBLafG8F2IbFwRVprrg&usqp=CAU"),
+                                          image??   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Og0-LY1uOs7Z3I_sBLafG8F2IbFwRVprrg&usqp=CAU"),
                                       fit: BoxFit.fill)),
                             ),
                             Directionality(
@@ -514,26 +506,6 @@ class _CartScreenState extends State<CartScreen> {
                                             ),
                                           )
 
-                                          /* Container(
-                                  width: width(context) * .15,
-                                  height: isLandscape(context)
-                                      ? 2 * height(context) * .035
-                                      : height(context) * .035,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: mainColor)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      customDescriptionText(
-                                          context: context,
-                                          textColor: mainColor,
-                                          text: "${item.qty}",
-                                          textAlign: TextAlign.start),
-                                      Icon(Icons.keyboard_arrow_down)
-                                    ],
-                                  ),
-                                )*/
                                         ],
                                       )
                                     ],
@@ -570,4 +542,6 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
+
+
 }

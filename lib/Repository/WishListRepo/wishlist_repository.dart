@@ -10,7 +10,7 @@ class WishListRepository {
     Map<String, String> headers =  {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'Bearer 110|dmP9vC9VLUQgWP2Ad2xXEHhJRmQfJsp2eJDEnYrP'
+      'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}'
     };
     return NetworkUtil.internal().get(
         GetAllWishListModel(), '/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/me/wishlist',
@@ -108,47 +108,6 @@ class WishListRepository {
   }
 
   Future<bool> add_product_from_wishlist_to_cart({BuildContext context, var wishlist_product_id , var product_qty})async{
-   /* Dio dio = new Dio();
-    try {
-      //create_quote
-      final response = await dio.post( Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/carts/mine',
-          options: Options(
-            headers: {
-
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'Authorization':'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}'
-            },
-
-          ));
-      if (response.statusCode == 200) {
-      //  sharedPreferenceManager.writeData(CachingKey.CART_QUOTE, response.data.toString());
-
-        final add_response = await dio.post("${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/me/wishlist/addCart/${wishlist_product_id}",
-            options: Options(
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization':'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}'
-              },
-            )
-        );
-        if(add_response.statusCode == 200){
-          return add_response.data;
-        }else{
-          errorDialog(context: context, text: response.data['message']);
-          return null;
-        }
-
-      } else {
-        errorDialog(context: context, text: response.data['message']);
-        return null;
-      }
-    } catch (e) {
-      print("error : ${e.toString()}");
-      errorDialog(context: context, text: e.toString());
-    }*/
-
     Dio dio = new Dio();
     String url =
         "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/quote/is_active/"
@@ -166,17 +125,23 @@ class WishListRepository {
       try {
         final add_response = await dio.post(
             "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/me/wishlist/addCart/${wishlist_product_id}",
+          data: {
+            "qty": 1
+          },
             options: Options(
               headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
                 'Authorization':'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}'
               },
+
             )
         );
         if(add_response.statusCode == 200){
+          print("add_response : ${add_response}");
           return add_response.data;
         }else{
+          print("else add_response : ${add_response.data['message']}");
           errorDialog(context: context, text: add_response.data['message']);
           return null;
         }

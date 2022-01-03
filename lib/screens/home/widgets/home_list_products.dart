@@ -36,7 +36,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
   AnimationController _loginButtonController;
   bool isLoading = false;
   final home_bloc = HomeBloc(null);
-
+  var product_image;
   @override
   void initState() {
     // TODO: implement initState
@@ -77,12 +77,6 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
 
 
   Future<void> readJson() async {
-/*    final response = await http.get(
-        Uri.parse("${Urls.BASE_URL}/media/mobile/config.json"
-        ),
-        headers: {"charset": "utf-8", "Accept-Charset": "utf-8"}
-    );
-    StaticData.data = await json.decode(utf8.decode(response.bodyBytes));*/
     if (StaticData.data != null) {
       home_bloc.add(GetHomeNewArrivals(
           category_id: StaticData.data['new-arrival']['id'],
@@ -93,453 +87,200 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
           offset: 1
       ));
     }
-/*    StaticData.gallery = StaticData.data["slider"];
-
-    StaticData.gallery.forEach((element) {
-      StaticData.images.add(element['url']);
-    });*/
   }
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: BlocBuilder(
-        bloc: home_bloc,
-        builder: (context, state) {
-          if (state is Loading) {
-            return ListShimmer(
-              type: 'horizontal',
-            );
-          } else if (state is Done) {
-            var data = state.model as ProductModel;
-            if (data.items == null || data.items.isEmpty) {
+      child:StreamBuilder<List<product_model.Items>>(
+        stream: widget.type == 'best-seller'
+            ? home_bloc.best_seller_products_subject
+            : home_bloc.new_arrivals_products_subject,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data == null) {
               return Container();
             } else {
-              return StreamBuilder<List<product_model.Items>>(
-                stream: widget.type == 'best-seller'
-                    ? home_bloc.best_seller_products_subject
-                    : home_bloc.new_arrivals_products_subject,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    if (snapshot.data == null) {
-                      return Container();
-                    } else {
-                      print("length : ${snapshot.data.length}");
+              return Container(
+                  width: width(context),
+                  height: isLandscape(context) ? 2 * height(context) * .26 : height(context) * .26,
+                  child: ListView.builder(
+                      itemCount: snapshot.data.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        String special_price;
+                        var percentage;
+                        snapshot.data[index].customAttributes.forEach((element) {
+                          if(element.attributeCode == 'special_price'){
+                            special_price = element.value;
+                          }
+                        });
 
-                      return Container(
-                          width: width(context),
-                          height: isLandscape(context)
-                              ? 2 * height(context) * .23
-                              : height(context) * .23,
-                          child: ListView.builder(
-                              itemCount: snapshot.data.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                String special_price;
-                                var percentage;
-                                snapshot.data[index].customAttributes.forEach((element) {
-                                  if(element.attributeCode == 'special_price'){
-                                    special_price = element.value;
-                                  }
-                                });
-
-                                if(special_price != null){
-                                  print("aaa : ${snapshot.data[index].price.runtimeType}");
-                                  print("aaa : ${double.parse(special_price).runtimeType}");
-                                  percentage =
-                                      (1 - (double.parse(special_price)  / snapshot.data[index].price) )* 100;
-                                }
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 5,
-                                    right: 5,
-                                  ),
-                                  child: Neumorphic(
-                                    style: NeumorphicStyle(
-                                      border:
-                                      NeumorphicBorder(color: mainColor),
-                                      shape: NeumorphicShape.flat,
-                                      color: whiteColor,
-                                      depth: 5,
-                                      shadowDarkColor: greyColor,
-                                      lightSource: LightSource.left,
-                                    ),
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color:
-                                                mainColor.withOpacity(.2)),
-                                            borderRadius:
-                                            BorderRadius.circular(0)),
-                                        child: Stack(
+                        snapshot.data[index].customAttributes.forEach((element) {
+                          if(element.attributeCode == "thumbnail")
+                            product_image = element.value;
+                        });
+                        if(special_price != null){
+                          percentage = (1 - (double.parse(special_price)  / snapshot.data[index].price) )* 100;
+                        }
+                        return Padding(
+                          padding: EdgeInsets.only(left: 5, right: 5,),
+                          child: Neumorphic(
+                            style: NeumorphicStyle(
+                              border:
+                              NeumorphicBorder(color: mainColor),
+                              shape: NeumorphicShape.flat,
+                              color: whiteColor,
+                              depth: 5,
+                              shadowDarkColor: greyColor,
+                              lightSource: LightSource.left,
+                            ),
+                            child: Container(
+                              width: width(context) * .35,
+                              height: isLandscape(context)
+                                  ? 2 * height(context) * .35
+                                  : height(context) * .35,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: mainColor.withOpacity(.2)),
+                                  borderRadius: BorderRadius.circular(0)),
+                              child: Stack(
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          customAnimatedPushNavigation(
+                                              context,
+                                              ProductDetailsScreen(
+                                                product: snapshot
+                                                    .data[index],
+                                              ));
+                                        },
+                                        child: Container(
+                                          width: width(context) * .32,
+                                          height: isLandscape(context)
+                                              ? 2 *
+                                              height(context) *
+                                              .12
+                                              : height(context) * .12,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      product_image??''),
+                                                  fit: BoxFit.cover)),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: width(context) * .32,
+                                        height: isLandscape(context) ? 2 * height(context) * .15 : height(context) * .08,
+                                        color: whiteColor,
+                                        child: Column(
                                           children: [
+                                            responsiveSizedBox(context: context, percentageOfHeight: .008),
+                                            customDescriptionText(
+                                                context: context,
+                                                textColor: mainColor,
+                                                text: snapshot.data[index].name,
+                                                maxLines: 2,
+                                                percentageOfHeight: .017),
+
                                             Column(
                                               children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    customAnimatedPushNavigation(
-                                                        context,
-                                                        ProductDetailsScreen(
-                                                          product: snapshot
-                                                              .data[index],
-                                                        ));
-                                                  },
-                                                  child: Container(
-                                                    width: width(context) * .32,
-                                                    height: isLandscape(context)
-                                                        ? 2 *
-                                                        height(context) *
-                                                        .12
-                                                        : height(context) * .12,
-                                                    decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                            image: NetworkImage(
-                                                                snapshot
-                                                                    .data[index]
-                                                                    .customAttributes[
-                                                                0]
-                                                                    .value),
-                                                            fit: BoxFit.cover)),
-                                                  ),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Wrap(
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                          children: [
+                                                            MyText(
+                                                              text: " ${snapshot.data[index].price} ",
+                                                              size: StaticData.get_height(context) * .017,
+                                                              color: blackColor,
+                                                              maxLines: 2,
+                                                              weight: FontWeight.normal,
+                                                            ),
+                                                            MyText(
+                                                              text: " ${translator.translate("SAR")}",
+                                                              size: StaticData.get_height(context) * .011,
+                                                              color: blackColor,
+                                                              maxLines: 2,
+                                                              weight: FontWeight.normal,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    special_price == null ?  Container()   :  Row(
+                                                      children: [
+                                                        Text(
+                                                          "${double.parse(special_price) } ${translator.translate("SAR")}",
+                                                          style: TextStyle(
+                                                              decoration: TextDecoration.lineThrough,
+                                                              fontSize: StaticData.get_height(context)  * .011,
+                                                              color: greyColor),
+                                                        ),
+                                                        SizedBox(
+                                                          width: StaticData.get_width(context) * .02,
+                                                        ),
+                                                        MyText(
+                                                            text: "${percentage}%",
+                                                            size: StaticData.get_height(context)  * .011,
+                                                            color: greenColor),
+                                                      ],
+                                                    )  ,
+                                                  ],
                                                 ),
-                                                Container(
-                                                  width: width(context) * .32,
-                                                  height: isLandscape(context)
-                                                      ? 2 *
-                                                      height(context) *
-                                                      .1
-                                                      : height(context) * .1,
-                                                  color: whiteColor,
-                                                  child: Column(
-                                                    children: [
-                                                      responsiveSizedBox(
-                                                          context: context,
-                                                          percentageOfHeight: .005),
-                                                      customDescriptionText(
-                                                          context: context,
-                                                          textColor: mainColor,
-                                                          text: snapshot
-                                                              .data[index].name,
-                                                          maxLines: 2,
-                                                          percentageOfHeight:
-                                                          .017),
 
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: [
-                                                          Column(
-                                                            children: [
-                                                              Wrap(
-                                                                children: [
-                                                                  Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                                    children: [
-                                                                      MyText(
-                                                                        text: "${snapshot.data[index].price}",
-                                                                        size: StaticData.get_height(context) * .017,
-                                                                        color: blackColor,
-                                                                        maxLines: 2,
-                                                                        weight: FontWeight.normal,
-                                                                      ),
-                                                                      MyText(
-                                                                        text: " ${translator.translate("SAR")}",
-                                                                        size: StaticData.get_height(context) * .011,
-                                                                        color: blackColor,
-                                                                        maxLines: 2,
-                                                                        weight: FontWeight.normal,
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              special_price == null ?  Container()   :  Row(
-                                                                children: [
-                                                                  Text(
-                                                                    "${double.parse(special_price) } ${translator.translate("SAR")}",
-                                                                    style: TextStyle(
-                                                                        decoration: TextDecoration.lineThrough,
-                                                                        fontSize: StaticData.get_height(context)  * .011,
-                                                                        color: greyColor),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: StaticData.get_width(context) * .02,
-                                                                  ),
-                                                                  MyText(
-                                                                      text: "${percentage}%",
-                                                                      size: StaticData.get_height(context)  * .011,
-                                                                      color: greenColor),
-                                                                ],
-                                                              )  ,
-                                                            ],
-                                                          ),
-                                                          BlocListener<ShoppingCartBloc, AppState>(
-                                                              bloc: shoppingCartBloc,
-                                                              listener: (context,state) async {
-                                                                if (state is Loading) {
-                                                                  if (state.indicator == 'home_add_to_cart'){
-                                                                    _playAnimation();
-                                                                  }
-
-                                                                } else if (state is ErrorLoading) {
-                                                                  _stopAnimation();
-                                                                  if (state.indicator == 'home_add_to_cart') {
-                                                                    var data = state.model as AddCartModel;
-                                                                    print("ErrorLoading");
-                                                                    if (data.message == "The consumer isn't authorized to access %resources.") {
-                                                                      Flushbar(
-                                                                        messageText:
-                                                                        Row(
-                                                                          mainAxisAlignment:
-                                                                          MainAxisAlignment.spaceBetween,
-                                                                          children: [
-                                                                            Container(
-                                                                              width: width(context) * 0.70,
-                                                                              child: Text(
-                                                                                '${data.message}',
-                                                                                maxLines: 2,
-                                                                                textAlign: TextAlign.end,
-                                                                                textDirection: TextDirection.rtl,
-                                                                                style: TextStyle(color: whiteColor),
-                                                                              ),
-                                                                            ),
-                                                                            InkWell(
-                                                                                onTap: () {
-                                                                                  customAnimatedPushNavigation(context, SignInScreen());
-                                                                                },
-                                                                                child: Container(
-                                                                                  padding: EdgeInsets.symmetric(horizontal: 15),
-                                                                                  decoration: BoxDecoration(
-                                                                                    color: whiteColor,
-                                                                                    borderRadius: BorderRadius.circular(20),
-                                                                                  ),
-                                                                                  child: Text(
-                                                                                    translator.translate("Sign In"),
-                                                                                    textDirection: TextDirection.rtl,
-                                                                                    style: TextStyle(color: mainColor),
-                                                                                  ),
-                                                                                ))
-                                                                          ],
-                                                                        ),
-                                                                        flushbarPosition:
-                                                                        FlushbarPosition.TOP,
-                                                                        backgroundColor:
-                                                                        redColor,
-                                                                        flushbarStyle:
-                                                                        FlushbarStyle.FLOATING,
-                                                                      )..show(widget
-                                                                          .homeScaffoldKey
-                                                                          .currentState
-                                                                          .context);
-                                                                    } else {
-                                                                      Flushbar(messageText: Container(width: StaticData.get_width(context) * 0.7,
-                                                                        child:
-                                                                        Wrap(
-                                                                          children: [
-                                                                            Text(
-                                                                              '${data.message}',
-                                                                              textDirection: TextDirection.rtl,
-                                                                              style: TextStyle(color: whiteColor),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                        flushbarPosition:
-                                                                        FlushbarPosition.TOP,
-                                                                        backgroundColor:
-                                                                        redColor,
-                                                                        flushbarStyle:
-                                                                        FlushbarStyle.FLOATING,
-                                                                        duration:
-                                                                        Duration(seconds: 3),
-                                                                      )..show(widget
-                                                                          .homeScaffoldKey
-                                                                          .currentState
-                                                                          .context);
-                                                                    }
-                                                                  }
-                                                                }
-                                                                else if (state is Done) {
-                                                                  _stopAnimation();
-                                                                  if (state.indicator == 'home_add_to_cart') {
-                                                                    var data = state.model as AddCartModel;
-                                                                    Flushbar(
-                                                                      messageText:
-                                                                      Container(
-                                                                        child: Text(
-                                                                          translator.translate("product added suceesfully to cart"),
-                                                                          maxLines: 2,
-                                                                          textAlign: TextAlign.end,
-                                                                          textDirection: TextDirection.rtl,
-                                                                          style: TextStyle(color: whiteColor),
-                                                                        ),
-                                                                      ),
-                                                                      flushbarPosition:
-                                                                      FlushbarPosition.TOP,
-                                                                      backgroundColor:
-                                                                      greenColor,
-                                                                      duration: Duration(seconds: 2),
-                                                                      flushbarStyle:
-                                                                      FlushbarStyle.FLOATING,
-                                                                    )..show(widget
-                                                                        .homeScaffoldKey
-                                                                        .currentState
-                                                                        .context);
-                                                                  }
-                                                                }
-                                                              },
-
-                                                              child:Container(
-                                                                alignment: Alignment.center,
-                                                                padding: EdgeInsets.all(5),
-                                                                child: StaggerAnimation(
-                                                                  buttonController: _loginButtonController.view,
-                                                                  btn_width:  width(context) * .09,
-                                                                  btn_height:  isLandscape(context) ? 2 * height(context) * .04 : height(context) * .04,
-                                                                  widget:  Container(
-                                                                    decoration: BoxDecoration(color: blackColor,
-                                                                        borderRadius: BorderRadius.circular(5),
-                                                                        shape: BoxShape.rectangle),
-                                                                    child: Center(
-                                                                      child: Icon(
-                                                                        Icons
-                                                                            .shopping_cart_outlined,
-                                                                        color: whiteColor,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  onTap:  snapshot.data[index].extensionAttributes.stockItem
-                                                                      .isInStock == false
-                                                                      ? () {
-                                                                    Flushbar(
-                                                                      messageText: Container(
-                                                                        width: StaticData.get_width(context) * 0.7,
-                                                                        child:
-                                                                        Wrap(
-                                                                          children: [
-                                                                            Text(
-                                                                              translator.translate( "There is no quantity of this product in stock"),
-                                                                              textDirection: TextDirection.rtl,
-                                                                              style: TextStyle(color: whiteColor),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                      flushbarPosition:
-                                                                      FlushbarPosition.TOP,
-                                                                      backgroundColor:
-                                                                      redColor,
-                                                                      flushbarStyle:
-                                                                      FlushbarStyle.FLOATING,
-                                                                      duration:
-                                                                      Duration(seconds: 3),
-                                                                    )..show(widget
-                                                                        .homeScaffoldKey
-                                                                        .currentState
-                                                                        .context);
-                                                                  }
-                                                                      : () {
-                                                                    shoppingCartBloc.add(AddProductToCartEvent(
-                                                                        context: context,
-                                                                        product_quantity: 1,
-                                                                        product_sku: snapshot.data[index].sku,
-                                                                        indictor: 'home_add_to_cart'));
-                                                                  },
-                                                                ),
-                                                              )
-
-                                                            /*InkWell(
-                                                                onTap: snapshot.data[index].extensionAttributes.stockItem
-                                                                    .isInStock == false
-                                                                    ? () {
-                                                                  Flushbar(messageText: Container(width: StaticData.get_width(context) * 0.7,
-                                                                    child:
-                                                                    Wrap(
-                                                                      children: [
-                                                                        Text(
-                                                                          translator.translate( "There is no quantity of this product in stock"),
-                                                                          textDirection: TextDirection.rtl,
-                                                                          style: TextStyle(color: whiteColor),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                    flushbarPosition:
-                                                                    FlushbarPosition.BOTTOM,
-                                                                    backgroundColor:
-                                                                    redColor,
-                                                                    flushbarStyle:
-                                                                    FlushbarStyle.FLOATING,
-                                                                    duration:
-                                                                    Duration(seconds: 3),
-                                                                  )..show(widget
-                                                                      .homeScaffoldKey
-                                                                      .currentState
-                                                                      .context);
-                                                                }
-                                                                    : () {
-
-
-                                                                  shoppingCartBloc.add(AddProductToCartEvent(
-                                                                      context: context,
-                                                                      product_quantity: 1,
-                                                                      product_sku: snapshot.data[index].sku,
-                                                                      indictor: 'home_add_to_cart'));
-                                                                },
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .shopping_cart_outlined,
-                                                                  color:
-                                                                  mainColor,
-                                                                ),
-                                                              )*/
-
-                                                          ),
-                                                        ],
-                                                      )
-
-                                                    ],
-                                                  ),
-                                                )
                                               ],
-                                            ),
+                                            )
 
-                                            // ------------------ here ----------------------
-                                            CustomWishList(
-                                              color: redColor,
-                                              product_id:
-                                              snapshot.data[index].id,
-                                              qty: snapshot
-                                                  .data[index]
-                                                  .extensionAttributes
-                                                  .stockItem
-                                                  .qty,
-                                              context: context,
-                                              screen:
-                                              CustomCircleNavigationBar(),
-                                            ),
                                           ],
                                         ),
-                                        width: width(context) * .32,
-                                        height: isLandscape(context)
-                                            ? 2 * height(context) * .3
-                                            : height(context) * .3),
+                                      ),
+                                      AddProductToCartWidget(
+                                        product_sku: snapshot.data[index].sku,
+                                        product_quantity:   1,
+                                        instock_status: snapshot.data[index].extensionAttributes.stockItem.isInStock,
+                                        scaffoldKey: widget.homeScaffoldKey,
+                                        btn_height: width(context) * .08,
+                                        btn_width: width(context) * .35,
+                                        text_size: 0.017,
+                                        home_shape: true,
+                                        product_image: product_image,
+                                        product_id:  snapshot.data[index].id,
+
+                                      )
+                                    ],
                                   ),
-                                );
-                              }));
-                    }
-                  } else if (snapshot.hasError) {
-                    return Container(
-                      child: Text('${snapshot.error}'),
-                    );
-                  } else {
-                    return ListShimmer(
-                      type: 'horizontal',
-                    );
-                  }
-                },
-              );
+
+                                  // ------------------ here ----------------------
+                                  CustomWishList(
+                                    color: redColor,
+                                    product_id:
+                                    snapshot.data[index].id,
+                                    qty: snapshot
+                                        .data[index]
+                                        .extensionAttributes
+                                        .stockItem
+                                        .qty,
+                                    context: context,
+                                    screen:
+                                    CustomCircleNavigationBar(),
+                                  ),
+                                ],
+                              ),
+
+                            ),
+                          ),
+                        );
+                      }));
             }
-          } else if (state is ErrorLoading) {
-            return Container();
+          } else if (snapshot.hasError) {
+            return Container(
+              child: Text('${snapshot.error}'),
+            );
           } else {
             return ListShimmer(
               type: 'horizontal',

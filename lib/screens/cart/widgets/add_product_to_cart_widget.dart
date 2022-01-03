@@ -4,14 +4,22 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AddProductToCartWidget extends StatefulWidget {
-  var product_quantity, product_sku, instock_status;
+  var product_quantity, product_sku, instock_status,btn_width,btn_height,text_size ,
+      home_shape , product_image , product_id;
   GlobalKey<ScaffoldState> scaffoldKey;
 
   AddProductToCartWidget(
       {this.product_quantity,
       this.product_sku,
       this.instock_status,
-      this.scaffoldKey});
+      this.scaffoldKey,
+      this.btn_width,
+      this.btn_height,
+        this.text_size,
+        this.home_shape = true,
+        this.product_image,
+        this.product_id
+      });
 
   @override
   State<StatefulWidget> createState() {
@@ -87,6 +95,7 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
               backgroundColor: Colors.redAccent,
               textColor: Colors.white,
               fontSize: 16.0);
+
           state = null;
         } else if (state is DoneProductAdded &&
             state.indicator == 'detail_add_to_cart' &&
@@ -106,13 +115,16 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
             ? CircularProgressIndicator()
             : Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(5),
                 child: StaggerAnimation(
-                  //   titleButton: translator.translate("Send") ,
                   buttonController: _loginButtonController.view,
-                  btn_height: width(context) * .13,
+                  btn_height: widget.btn_height,
+                  btn_width: widget.btn_width,
+                  text_size: widget.text_size,
                   image: "assets/icons/right-arrow.png",
                   titleButton: "Add TO Cart",
+                  home_shape: widget.home_shape,
+
                   //    isResetScreen:false,
                   onTap: widget.instock_status == false
                       ? () {
@@ -136,7 +148,12 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
                             duration: Duration(seconds: 3),
                           )..show(widget.scaffoldKey.currentState.context);
                         }
-                      : () {
+                      : ()async {
+                    print("product_images_map 1");
+                    StaticData.product_images_map.add({widget.product_id.toString() : widget.product_image});
+                    print("product_images_map 2");
+                  await  sharedPreferenceManager.setListOfMaps(StaticData.product_images_map, 'product_images_map');
+                    print("product_images_map 3");
                           shoppingCartBloc.add(AddProductToCartEvent(
                               context: context,
                               product_quantity: widget.product_quantity,

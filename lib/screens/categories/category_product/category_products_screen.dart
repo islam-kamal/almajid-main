@@ -58,7 +58,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
           Container(
             height: height(context),
               child: Container(
-                // height: isLandscape(context) ? 2 * height(context) * .65 : height(context) * .65,
                 child: BlocBuilder(
                   bloc: product_bloc,
                   builder: (context, state) {
@@ -81,6 +80,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                 print("length : ${snapshot.data.length}");
 
                                 return ListView.builder(
+                                    controller: _controller,
                                     shrinkWrap: true,
                                     itemCount: snapshot.data.length,
                                     itemBuilder: (context, index) {

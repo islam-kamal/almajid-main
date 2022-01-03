@@ -1,8 +1,11 @@
+import 'package:almajidoud/Model/PaymentModel/stc_pay_model.dart';
 import 'package:almajidoud/Repository/PaymentRepo/payment_repository.dart';
+import 'package:almajidoud/custom_widgets/error_dialog.dart';
+import 'package:almajidoud/screens/Payment/stc_pay/stc_pay_verify_phone_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:country_list_pick/country_list_pick.dart';
-
+import 'package:almajidoud/Bloc/Payment_bloc/payment_bloc.dart';
 class StcPayPhoneScreen extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -14,6 +17,7 @@ class StcPayPhoneScreen extends StatefulWidget{
 class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProviderStateMixin {
   String _countryCode = "+966";
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  final _formKey = GlobalKey<FormState>();
 
   AnimationController _loginButtonController;
   bool isLoading = false;
@@ -50,7 +54,7 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    forgetPassword_bloc.mobile_controller.value = null;
     _loginButtonController.dispose();
     super.dispose();
   }
@@ -62,15 +66,14 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
         child: Scaffold(
           key: _drawerKey,
           backgroundColor: backGroundColor,
-          body:  BlocListener<ForgetPasswordBloc, AppState>(
-              bloc: forgetPassword_bloc,
+          body:  BlocListener<PaymentBloc, AppState>(
+              bloc: paymentBloc,
               listener: (context, state) {
-                var data = state.model as AuthenticationModel;
                 if (state is Loading) {
                   print("Loading");
                   _playAnimation();
                 } else if (state is ErrorLoading) {
-                  var data = state.model as AuthenticationModel;
+                  var data = state.model as StcPayModel;
                   print("ErrorLoading");
                   _stopAnimation();
                   Flushbar(
@@ -81,7 +84,7 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
                           child: Wrap(
                             children: [
                               Text(
-                                '${data.errormsg}',
+                                '${data.message}',
                                 textDirection: TextDirection.rtl,
                                 style: TextStyle(color: whiteColor),
                               ),
@@ -103,26 +106,15 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
                   )..show(_drawerKey.currentState.context);
 
                 } else if (state is Done) {
+                  var data = state.model as StcPayModel;
                   print("done");
                   _stopAnimation();
-              /*    Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) {
-                        return StcVerificationCodeScreen(
-                          user_phone:  StaticData.country_code + forgetPassword_bloc.mobile_controller.value,
-                        );
-                      },
-                      transitionsBuilder:
-                          (context, animation8, animation15, child) {
-                        return FadeTransition(
-                          opacity: animation8,
-                          child: child,
-                        );
-                      },
-                      transitionDuration: Duration(milliseconds: 10),
-                    ),
-                  );*/
+                  //   go to otp verification
+        customAnimatedPushNavigation(context, StcVerificationCodeScreen(
+          user_phone: StaticData.user_mobile_number,
+          OtpReference: data.result.otpReference,
+          paymentReference: data.result.paymentReference,
+        ));
                 }
               },
               child:Container(
@@ -159,7 +151,11 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
                               context: context, percentageOfHeight: .045),
 
                           // resetPasswordTextFields(context: context, hint: "Type Your Email"),
-                          mobile_textfield(),
+                          Form(
+                            key: _formKey,
+                            child: mobile_textfield(),
+                          )
+                          ,
                           responsiveSizedBox(context: context, percentageOfHeight: .01),
                           // resendMessageButton(context: context),
                           responsiveSizedBox(context: context, percentageOfHeight: .15),
@@ -173,64 +169,42 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
       ),
     );
   }
-  mobile_textfield() {
-    return StreamBuilder<String>(
+  mobile_textfield(){
+    return  StreamBuilder<String>(
         stream: forgetPassword_bloc.mobile,
         builder: (context, snapshot) {
           return Container(
-              width: width(context) * .9,
+              width: width(context) * .8,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                      width: MediaQuery.of(context).size.width * 0.25,
-                      child: CountryListPick(
+                      width: MediaQuery.of(context).size.width *0.25,
+                      child:  CountryListPick(
                         appBar: AppBar(
                           backgroundColor: Colors.black,
                           title: Text(translator.translate('country_code')),
                         ),
 
                         // if you need custome picker use this
-                        pickerBuilder: (context, CountryCode countryCode) {
-                          return Container(
-                            height: StaticData.get_width(context) * 0.13,
-                            decoration: BoxDecoration(
-                              border: Border(
-                                right: BorderSide(
-                                  color: blackColor,
-                                ),
-                                left: BorderSide(color: blackColor),
-                                top: BorderSide(color: blackColor),
-                                bottom: BorderSide(color: blackColor),
+                        pickerBuilder: (context, CountryCode countryCode){
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(countryCode.dialCode,style: TextStyle(color: Colors.black),),
+                              SizedBox(width: MediaQuery.of(context).size.width * 0.02,),
+                              Image.asset(
+                                countryCode.flagUri,
+                                package: 'country_list_pick',width: 30,height: 20,
                               ),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.arrow_drop_down,
-                                  size: 25,
-                                  color: blackColor,
-                                ),
-                                SizedBox(
-                                  width:
-                                  MediaQuery.of(context).size.width * 0.02,
-                                ),
-                                Image.asset(
-                                  countryCode.flagUri,
-                                  package: 'country_list_pick',
-                                  width: StaticData.get_width(context) * 0.1,
-                                  height: StaticData.get_width(context) * 0.1,
 
-                                ),
-                              ],
-                            ),
+                            ],
                           );
                         },
+
 
                         // To disable option set to false
                         theme: CountryTheme(
@@ -239,6 +213,8 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
                           isShowCode: true,
                           isDownIcon: true,
                           showEnglishName: true,
+
+
                         ),
                         // Set default value
                         initialSelection: '+966',
@@ -254,63 +230,33 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
                         useUiOverlay: true,
                         // Whether the country list should be wrapped in a SafeArea
                         useSafeArea: false,
-                      )),
+
+                      ) ),
                   Expanded(
-                      child: Container(
-                          height: StaticData.get_width(context) * 0.13,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                right: BorderSide(color: blackColor),
-                                left: BorderSide(color: blackColor),
-                                top: BorderSide(color: blackColor),
-                                bottom: BorderSide(color: blackColor),
-                              )),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child:  Padding(
-                                  padding: EdgeInsets.all(5),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        StaticData.country_code,
-                                        style: TextStyle(
-                                            color: blackColor,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Container(
-                                        height: 30,
-                                        width: 2,
-                                        color: blackColor,
-                                      )
-                                    ],
-                                  ),
-                                ),
+                      child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: translator.translate("Phone"),
+                            errorText: snapshot.error,
+                            contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
-                              ),
-                              Expanded(
-                                flex: 3,
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                    hintText: translator.translate("Type Your Mobile Number" ),
-                                    border: InputBorder.none,
-                                    hintStyle: TextStyle(fontSize: 12),
-                                  ),
-
-                                  onChanged: forgetPassword_bloc.mobile_change,
-                                  keyboardType: TextInputType.number,
-                                ),)
-                            ],
-                          ))
+                          ),
+                          onChanged:  forgetPassword_bloc.mobile_change,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number
+                      )
                   ),
+
                 ],
-              ));
+              )
+
+
+
+          );
         });
   }
 
@@ -325,11 +271,13 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
         btn_height:  width(context) * .1,
         isResetScreen:false,
         onTap: () {
-          StaticData.user_mobile_number = StaticData.country_code + forgetPassword_bloc.mobile_controller.value;
-          payment_repository.stc_pay_genertate_otp(
-            context: context,
-            phone_number: StaticData.user_mobile_number
-          );
+          if (_formKey.currentState.validate() ) {
+            StaticData.user_mobile_number = StaticData.country_code + forgetPassword_bloc.mobile_controller.value;
+            paymentBloc.add(StcSendVerificationCodeEvent(
+                context :context
+            ));
+          }
+
         },
       ),
     );
@@ -365,7 +313,7 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
               context: context,
               textColor: whiteColor,
               fontWeight: FontWeight.bold,
-              text: "Stc Payment")
+              text: "")
 
 
         ],

@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            responsiveSizedBox(context: context, percentageOfHeight: .08),
+                            responsiveSizedBox(context: context, percentageOfHeight: .11),
                             titleText(context: context, text: "Shop By Category"),
                             responsiveSizedBox(context: context, percentageOfHeight: .02),
                             CategoriesButtons(),

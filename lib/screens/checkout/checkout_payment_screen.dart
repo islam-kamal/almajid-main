@@ -123,6 +123,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                         labelStyle: const TextStyle(color: mainColor),
                         focusedBorder: border,
                         enabledBorder: border,
+                        contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
                       ),
                       expiryDateDecoration: InputDecoration(
                         hintStyle: const TextStyle(color: greyColor),
@@ -131,6 +133,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                         enabledBorder: border,
                         labelText: 'Expired Date',
                         hintText: 'XX/XX',
+                        contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
                       ),
                       cvvCodeDecoration: InputDecoration(
                         hintStyle: const TextStyle(color: greyColor),
@@ -139,6 +143,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                         enabledBorder: border,
                         labelText: 'CVV',
                         hintText: 'XXX',
+                        contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
                       ),
                       cardHolderDecoration: InputDecoration(
                         hintStyle: const TextStyle(color: greyColor),
@@ -146,6 +152,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                         focusedBorder: border,
                         enabledBorder: border,
                         labelText: 'Card Holder',
+                        contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
                       ),
                       onCreditCardModelChange: onCreditCardModelChange,
                     ),
@@ -200,11 +208,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                           ? 2 * height(context) * .065
                           : height(context) * .065),
                 ),
-  /*              nextButtonInPayment(
-                    context: context ,
-                    isAddress: false,
-                    pay_method: _currentIndex,
-                    guestShipmentAddressModel: widget.guestShipmentAddressModel)*/
+
               ],
             ),
 
@@ -218,7 +222,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
   paymentMethodCard({BuildContext context ,  List<PaymentMethods> paymentMethods}) {
     var toRemove = [];
     paymentMethods.forEach((element) {
-      if(element.title =="APS Payment Method"){
+      if(element.title =="APS Payment Method" || element.title == " باي"){
         toRemove.add(element);
       }else if(element.title =="Tap"){
         if(MyApp.app_location == 'kw'){
@@ -232,18 +236,21 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
         padding: EdgeInsets.only(
             right: width(context) * .05, left: width(context) * .05),
         width: width(context) * .95,
-        height:    _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments' ||   _currentIndex ==  'cashondelivery' ? width(context)  :  width(context) * .5,
+        height:    _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments' ||   _currentIndex ==  'cashondelivery' ? width(context) * 0.7  :  width(context) * .5,
         decoration: BoxDecoration(color: mainColor, borderRadius: BorderRadius.circular(20)),
-        child: GridView.builder(
-          //scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: paymentMethods.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-           childAspectRatio: 16/9,
-          ),
-          itemBuilder:
-              (BuildContext context, int index) {
+        child: Center(
+          child: GridView.builder(
+            //scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: paymentMethods.length,
+
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 16/9,
+
+            ),
+            itemBuilder:
+                (BuildContext context, int index) {
               return Directionality(
                 textDirection: TextDirection.ltr,
                 child: Container(
@@ -295,7 +302,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       )),
                 ),
               );
-          },
+            },
+          ),
         )
 
 

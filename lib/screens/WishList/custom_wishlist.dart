@@ -14,8 +14,8 @@ class CustomWishList extends StatefulWidget {
   Widget screen;
   BuildContext context;
   GlobalKey<ScaffoldState> scafffoldKey;
-
-  CustomWishList({this.color, this.product_id, this.qty, this.context,this.screen,this.scafffoldKey});
+  bool in_wishlist;
+  CustomWishList({this.color, this.product_id, this.qty, this.context,this.screen,this.scafffoldKey,this.in_wishlist = false});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -43,7 +43,12 @@ class CustomFauvourite_State extends State<CustomWishList> {
           wishlist_elements_list.add(v);
         });
       });
-      wishlist_status =wishlist_elements_list.contains(widget.product_id);
+      if( widget.in_wishlist == true){
+        wishlist_status = true;
+      }else{
+        wishlist_status =wishlist_elements_list.contains(widget.product_id);
+      }
+
 
     }
     super.initState();

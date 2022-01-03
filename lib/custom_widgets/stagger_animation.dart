@@ -10,6 +10,8 @@ class StaggerAnimation extends StatelessWidget {
   final double btn_height;
   final bool isResetScreen;
   final String image;
+  final double text_size;
+  final bool home_shape;
   Widget widget;
   StaggerAnimation(
       {Key key,
@@ -20,6 +22,8 @@ class StaggerAnimation extends StatelessWidget {
       this.btn_height,
       this.image,
       this.widget,
+        this.text_size,
+        this.home_shape= true,
       this.isResetScreen})
       : buttonSqueezeanimation = Tween(
           begin: 240.0,
@@ -63,8 +67,9 @@ class StaggerAnimation extends StatelessWidget {
             ? FractionalOffset.center
             : FractionalOffset.bottomRight,
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+          color: home_shape? Theme.of(context).primaryColor : null,
+            border: home_shape ? null: Border.all(color: mainColor),
+        borderRadius: home_shape? const BorderRadius.all(Radius.circular(15.0)) :const BorderRadius.all(Radius.circular(0.0)),
         ),
         child: widget != null ? buttonSqueezeanimation.value > 75.0 ? widget  : const CircularProgressIndicator(
           value: null,
@@ -75,18 +80,20 @@ class StaggerAnimation extends StatelessWidget {
             : image != null && titleButton != null ?Container(
             width: width(context) * .9,
             decoration: BoxDecoration(
-                color: mainColor, borderRadius: BorderRadius.circular(8)),
-            child:  Row(mainAxisAlignment: MainAxisAlignment.center,
+                color: home_shape ?mainColor : null,
+                borderRadius: BorderRadius.circular(8)),
+            child:  Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.shopping_cart , color: whiteColor),
+                Icon(Icons.shopping_cart , color: home_shape ?whiteColor : mainColor),
                 SizedBox(width: 10 ) ,
 
                 customDescriptionText(
                     context: context,
                     text: "Add To Cart",
-                    percentageOfHeight: .025,
+                    percentageOfHeight: text_size,
 
-                    textColor: whiteColor) ,
+                    textColor: home_shape ?whiteColor : mainColor) ,
 
 
               ],),

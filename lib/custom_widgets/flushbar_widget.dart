@@ -5,7 +5,8 @@ import 'package:another_flushbar/flushbar.dart';
 class FlushbarWidget extends StatelessWidget{
   final String message;
   BuildContext context;
-  FlushbarWidget({this.message,this.context});
+  GlobalKey<ScaffoldState> scaffoldKey;
+  FlushbarWidget({this.message,this.context,this.scaffoldKey});
   @override
   Widget build(BuildContext context) {
     return Flushbar(

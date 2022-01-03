@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:almajidoud/Model/SearchModel/search_model.dart' as search_model;
 import 'package:search_widget/search_widget.dart';
 import 'package:almajidoud/utils/file_export.dart';
-
+import 'package:almajidoud/screens/SearchScreen/auto_search_screen.dart';
 class AutoSearchClass extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -94,6 +94,9 @@ class MyTextField extends StatelessWidget {
           : height(context) * .04,
       child: TextFormField(
         controller: controller,
+        onChanged: (value){
+          search_bloc.add(SearchProductsEvent(search_text: value));
+        },
         style: TextStyle(
             color: whiteColor,
             fontWeight: FontWeight.normal,
@@ -115,7 +118,7 @@ class MyTextField extends StatelessWidget {
             onPressed: () {
            //   search_bloc.add(SearchProductsEvent(search_text: controller.text));
 
-              customAnimatedPushNavigation(context, SearchScreen());
+              customAnimatedPushNavigation(context, AutoSearchScreen());
             },
           ),
           filled: false,
@@ -169,7 +172,7 @@ class PopupListItemWidget extends StatelessWidget {
           ),
           onTap: () {
             search_bloc.add(SearchProductsEvent(search_text: item.name));
-            customAnimatedPushNavigation(context, SearchScreen());
+            customAnimatedPushNavigation(context, AutoSearchScreen());
 
           },
         ));

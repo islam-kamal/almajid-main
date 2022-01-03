@@ -42,7 +42,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
   var otp_code;
   final int time = 30;
   AnimationController _controller;
-
+ bool _isLoading = false;
   // Variables
   Size _screenSize;
   int _currentDigit;
@@ -517,6 +517,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
   }
 
   get _getOtpConfirmationButton {
+
     return GestureDetector(
       onTap: otp_code == null
           ? () {}
@@ -542,6 +543,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
           listener: (context, state) async {
             if (state is Loading) {
               if (state.indicator == 'CreateOrder') {
+                _isLoading = true;
                 _playAnimation();
               }
             } else if (state is Done) {
@@ -557,19 +559,15 @@ class _OtpState extends State<StcVerificationCodeScreen>
                     customAnimatedPushNavigation(context, PaymentSuccessfulScreen(
                       order_id: extractedData["increment_id"],
                     ));
-                /*    StaticData.vistor_value == 'visitor'
-                        ?   customAnimatedPushNavigation(context, CustomCircleNavigationBar())
-                        : customAnimatedPushNavigation(context, OrdersScreen(
-                      increment_id: extractedData["increment_id"],
-                    ));*/
                   }
                 });
               }
+              _isLoading = false;
             } else if (state is ErrorLoading) {
               if (state.indicator == 'CreateOrder') {
                 print("ErrorLoading");
                 _stopAnimation();
-
+                _isLoading = false;
                 Flushbar(
                   messageText: Row(
                     children: [
@@ -603,7 +601,11 @@ class _OtpState extends State<StcVerificationCodeScreen>
               //   customAnimatedPushNavigation(context, GetStartedScreen());
             }
           },
-          child: Directionality(
+          child:_isLoading
+              ? CircularProgressIndicator(
+            backgroundColor: whiteColor,
+          )
+              : Directionality(
               textDirection: translator.activeLanguageCode == 'ar'
                   ? TextDirection.rtl
                   : TextDirection.ltr,
@@ -643,7 +645,8 @@ class _OtpState extends State<StcVerificationCodeScreen>
                 height: isLandscape(context)
                     ? 2 * height(context) * .06
                     : height(context) * .06,
-              ))),
+              ))
+      ),
     );
   }
 }

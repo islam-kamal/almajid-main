@@ -199,8 +199,12 @@ class CreateReviewEvent extends AppEvent{
   CreateReviewEvent({this.product_id , this.nickname,this.detail,this.title});
 }
 
+//Payment
 
-
+class StcSendVerificationCodeEvent extends AppEvent{
+  BuildContext context;
+  StcSendVerificationCodeEvent({this.context});
+}
 
 
 

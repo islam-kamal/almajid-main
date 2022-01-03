@@ -202,8 +202,7 @@ class CartRepository {
                 'sku': product_sku,
                 'qty': product_quantity,
                 'quote_id': StaticData.vistor_value == 'visitor'
-                    ? await sharedPreferenceManager
-                        .readString(CachingKey.GUEST_CART_QUOTE)
+                    ? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
                     : await sharedPreferenceManager
                         .readString(CachingKey.CART_QUOTE),
               }

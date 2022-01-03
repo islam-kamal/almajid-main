@@ -1,6 +1,7 @@
 import 'package:almajidoud/Bloc/Authentication_Bloc/SigninBloc/sign_in_bloc.dart';
 import 'package:almajidoud/Model/AuthenticationModel/authentication_model.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
+import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/custom_widgets/stagger_animation.dart';
 import 'package:almajidoud/screens/auth/get_started_screen.dart';
 import 'package:almajidoud/screens/auth/widgets/already_have_an_account.dart';
@@ -21,6 +22,7 @@ class _SignInScreenState extends State<SignInScreen>
   bool _passwordVisible;
 
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  final _formKey = GlobalKey<FormState>();
 
   AnimationController _loginButtonController;
   bool isLoading = false;
@@ -76,7 +78,8 @@ class _SignInScreenState extends State<SignInScreen>
       if (state is Loading) {
         print("Loading");
         _playAnimation();
-      } else if (state is ErrorLoading) {
+      }
+      else if (state is ErrorLoading) {
         var data = state.model as AuthenticationModel;
         print("ErrorLoading");
         _stopAnimation();
@@ -109,7 +112,8 @@ class _SignInScreenState extends State<SignInScreen>
           flushbarStyle: FlushbarStyle.FLOATING,
           duration: Duration(seconds: 6),
         )..show(_drawerKey.currentState.context);
-      } else if (state is Done) {
+      }
+      else if (state is Done) {
         var data = state.model as AuthenticationModel;
 
         print("done");
@@ -148,24 +152,32 @@ class _SignInScreenState extends State<SignInScreen>
               topAuthButtons(context: context, isSignUp: false),
               responsiveSizedBox(context: context, percentageOfHeight: .1),
               responsiveSizedBox(context: context, percentageOfHeight: .06),
-              emailTextField(
-                context: context,
-                hint: "Email",
-              ),
-              responsiveSizedBox(context: context, percentageOfHeight: .02),
-              passwordTextField(
+          Form(
+            key: _formKey,
+            child:Column(
+              children: [
+                emailTextField(
                   context: context,
-                  hint: "Password",
-                  isPasswordField: true,
-                  containPrefixIcon: true,
-                  prefixIcon: Icons.lock_outline),
+                  hint: "Email",
+                ),
+                responsiveSizedBox(context: context, percentageOfHeight: .02),
+                passwordTextField(
+                    context: context,
+                    hint: "Password",
+                    isPasswordField: true,
+                    containPrefixIcon: true,
+                    prefixIcon: Icons.lock_outline),
+              ],
+            ),
+          ),
+
               responsiveSizedBox(context: context, percentageOfHeight: .02),
               forgetPasswordButton(context: context),
-              responsiveSizedBox(context: context, percentageOfHeight: .13),
+              responsiveSizedBox(context: context, percentageOfHeight: .05),
               signButton(context: context, isSignUp: false),
-              responsiveSizedBox(context: context, percentageOfHeight: .02),
+              responsiveSizedBox(context: context, percentageOfHeight: .01),
               loginUsingPhoneText,
-              responsiveSizedBox(context: context, percentageOfHeight: .083),
+              responsiveSizedBox(context: context, percentageOfHeight: .03),
               alreadyHaveAnAccount(context: context, isSignUp: false),
             ],
           ),
@@ -180,13 +192,20 @@ class _SignInScreenState extends State<SignInScreen>
       builder: (context, snapshot) {
         return Container(
             width: width(context) * .8,
-            child: TextField(
+            child: TextFormField(
               decoration: InputDecoration(
                 hintText: translator.translate(hint),
-                prefixIcon: Icon(Icons.email_outlined)
+                prefixIcon: Icon(Icons.email_outlined),
+                contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                errorText: snapshot.error,
               ),
               onChanged:  signIn_bloc.email_change,
-
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return '${translator.translate("Please enter")} ${translator.translate("Email")}';
+                }
+                return null;
+              },
             )
         );
 
@@ -203,11 +222,12 @@ class _SignInScreenState extends State<SignInScreen>
         builder: (context, snapshot) {
           return Container(
               width: width(context) * .8,
-              child: TextField(
+              child: TextFormField(
                 obscureText:!_passwordVisible,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.lock_outline),
-
+                  contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                  errorText: snapshot.error,
                   hintText: translator.translate(hint),
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -223,6 +243,12 @@ class _SignInScreenState extends State<SignInScreen>
                   ),
                 ),
                 onChanged: signIn_bloc.password_change,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '${translator.translate("Please enter")} ${translator.translate("Password")}';
+                  }
+                  return null;
+                },
               )
           );
         });
@@ -231,19 +257,23 @@ class _SignInScreenState extends State<SignInScreen>
 
 
   signButton({BuildContext context, bool isSignUp: true}) {
-    return StaggerAnimation(
-      titleButton: isSignUp == true
-          ? translator.translate("SING UP")
-          : translator.translate("Sign In"),
-      buttonController: _loginButtonController.view,
-      btn_width: width(context) * .7,
-      onTap: () {
-        signIn_bloc.add(click(
+
+      return StaggerAnimation(
+        titleButton: isSignUp == true
+            ? translator.translate("SING UP")
+            : translator.translate("Sign In"),
+        buttonController: _loginButtonController.view,
+        btn_width: width(context) * .7,
+        onTap: () {
+    if (_formKey.currentState.validate() ) {
+      signIn_bloc.add(click(
           context: context
-        ));
-      },
-    );
-  }
+      ));
+    }
+        },
+      );
+    }
+
 
   get loginUsingPhoneText {
     return Column(

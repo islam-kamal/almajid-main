@@ -113,7 +113,7 @@ List<TabData> getTabsData() {
     ),
     translator.activeLanguageCode == 'en'
         ? TabData(
-      icon: Icons.notifications,
+      icon: Icons.search,
       iconSize: 25,
     )
         : TabData(

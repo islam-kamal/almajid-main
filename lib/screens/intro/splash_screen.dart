@@ -114,12 +114,12 @@ class _SplashScreenState extends State<SplashScreen> {
     if(token.isEmpty){
       CustomComponents.isFirstTime().then((isFirstTime) async {
         if(isFirstTime){
-      //    await search_bloc.add(SearchProductsEvent(search_text: ''));
+          await search_bloc.add(SearchProductsEvent(search_text: ''));
 
           customAnimatedPushNavigation(context, CustomCircleNavigationBar(page_index: 2,));
         }else{
           sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, "sa");
-       //   await search_bloc.add(SearchProductsEvent(search_text: ''));
+          await search_bloc.add(SearchProductsEvent(search_text: ''));
 
           customAnimatedPushNavigation(context, IntroScreen());
         }
@@ -128,7 +128,7 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     }else{
       wishListRepository.getWishListIDS(context);
-    //  await search_bloc.add(SearchProductsEvent(search_text: ''));
+      await search_bloc.add(SearchProductsEvent(search_text: ''));
       customAnimatedPushNavigation(context, CustomCircleNavigationBar(page_index: 2,));
     }
   }

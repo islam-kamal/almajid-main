@@ -16,7 +16,8 @@ class PaymentRepository {
   static SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();
   Dio dio = new Dio();
 
-  Future<void> stc_pay_genertate_otp({BuildContext context , String phone_number}) async {
+  Future<StcPayModel> stc_pay_genertate_otp({BuildContext context , String phone_number}) async {
+
     Map<String, String> headers = StaticData.vistor_value == 'visitor'? {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -38,14 +39,17 @@ class PaymentRepository {
           options: Options(headers: headers));
       if (response.statusCode == 200) {
         print("response.data : ${response.data} :\n ${response.data['message']}");
+        return StcPayModel.fromJson(response.data);
+
 
      //   go to otp verification
-        customAnimatedPushNavigation(context, StcVerificationCodeScreen(
+/*        customAnimatedPushNavigation(context, StcVerificationCodeScreen(
           user_phone: phone_number,
           OtpReference: response.data['result']['OtpReference'],
           paymentReference: response.data['result']['paymentReference'],
-        ));
+        ));*/
       } else {
+        return response.data;
         Navigator.pop(context);
         errorDialog(context: context, text: response.data['message']);
       }
@@ -68,14 +72,14 @@ class PaymentRepository {
     try {
       print("stc_pay_verify_quote : ${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
           :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}");
-      print("otp type : ${otp.runtimeType}");
+      print("_____________phone_number : ${phone_number}");
       final response = await http.post(
           Uri.parse(Urls.BASE_URL+'/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/stc-pay/verify-otp'),
           body:jsonEncode( {
             "otp": otp,
             "otpReference": otpReference,
             "paymentReference": paymentReference,
-            "mobile":"0591826195",
+            "mobile":phone_number ,
             "quoteId": StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
                 :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE),
             "isMask": StaticData.vistor_value == 'visitor'? true : false

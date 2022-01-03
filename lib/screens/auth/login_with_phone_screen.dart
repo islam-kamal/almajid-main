@@ -15,6 +15,7 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
     with TickerProviderStateMixin {
   String _countryCode = "+966";
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  final _formKey = GlobalKey<FormState>();
 
   AnimationController _loginButtonController;
   bool isLoading = false;
@@ -155,14 +156,17 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                                 //  chooseCountryWidgetInResetPassword(context: context) ,
                                 //  responsiveSizedBox(context: context, percentageOfHeight: .02) ,
                                 // phoneNumberWidgetInResetPassword(context: context) ,
-                                mobile_textfield(),
+                            Form(
+                              key: _formKey,
+                              child: mobile_textfield(),
+
+                            ),
 
                                 responsiveSizedBox(
-                                    context: context, percentageOfHeight: .02),
+                                    context: context, percentageOfHeight: .05),
                                 weWillSendYouCode(context: context),
                                 responsiveSizedBox(
-                                    context: context, percentageOfHeight: .04),
-                            //     sendButtonInResetPassword(context: context)
+                                    context: context, percentageOfHeight: .05),
                                 LoginUsingPhoneButton(context: context),
                                 responsiveSizedBox(context: context, percentageOfHeight: .010),
 
@@ -190,59 +194,42 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
     );
   }
 
-  mobile_textfield() {
-    return StreamBuilder<String>(
+  mobile_textfield(){
+    return  StreamBuilder<String>(
         stream: forgetPassword_bloc.mobile,
         builder: (context, snapshot) {
           return Container(
-              width: width(context) * .9,
-              height: width(context) * .42,
+              width: width(context) * .8,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Row(
                 children: [
                   Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: CountryListPick(
+                      width: MediaQuery.of(context).size.width *0.25,
+                      child:  CountryListPick(
                         appBar: AppBar(
                           backgroundColor: Colors.black,
                           title: Text(translator.translate('country_code')),
                         ),
+
                         // if you need custome picker use this
-                        pickerBuilder: (context, CountryCode countryCode) {
-                          return Neumorphic(
-                            child: Container(
-                              height: StaticData.get_width(context) * 0.13,
-                              padding: EdgeInsets.only(
-                                  right: width(context) * .02,
-                                  left: width(context) * .02),
-                              color: whiteColor,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                    countryCode.flagUri,
-                                    package: 'country_list_pick',
-                                    width: StaticData.get_width(context) * 0.15,
-                                    height: StaticData.get_width(context) * 0.1,
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.45,
-                                  ),
-                                  Icon(
-                                    Icons.arrow_drop_down,
-                                    size: 25,
-                                    color: blackColor,
-                                  ),
-                                ],
+                        pickerBuilder: (context, CountryCode countryCode){
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(countryCode.dialCode,style: TextStyle(color: Colors.black),),
+                              SizedBox(width: MediaQuery.of(context).size.width * 0.02,),
+                              Image.asset(
+                                countryCode.flagUri,
+                                package: 'country_list_pick',width: 30,height: 20,
                               ),
-                            ),
+
+                            ],
                           );
                         },
+
 
                         // To disable option set to false
                         theme: CountryTheme(
@@ -251,6 +238,8 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                           isShowCode: true,
                           isDownIcon: true,
                           showEnglishName: true,
+
+
                         ),
                         // Set default value
                         initialSelection: '+966',
@@ -266,67 +255,35 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                         useUiOverlay: true,
                         // Whether the country list should be wrapped in a SafeArea
                         useSafeArea: false,
-                      )),
+
+                      ) ),
                   Expanded(
-                      child: Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                            height: StaticData.get_width(context) * 0.1,
-                            decoration: BoxDecoration(
-                                border: Border(
-                              right: BorderSide(color: blackColor),
-                              left: BorderSide(color: blackColor),
-                              top: BorderSide(color: blackColor),
-                              bottom: BorderSide(color: blackColor),
-                            ),
-                            ),
-                            child: TextField(
-                              textAlign: TextAlign.center,
-                              decoration: InputDecoration(
-                                  hintText: StaticData.country_code,
-                                  border: InputBorder.none,
-                                  enabled: false,
-                                  hintStyle: TextStyle(fontSize: 12,)),
+                      child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: translator.translate("Phone"),
+                            errorText: snapshot.error,
+                            contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
-                            )),
-                      ),
-                      Expanded(
-                          flex: 1,
-                          child: Container()),
-                      Expanded(
-                        flex: 6,
-                        child: Container(
-                            height: StaticData.get_width(context) * 0.1,
-                            decoration: BoxDecoration(
-                                border: Border(
-                              right: BorderSide(color: blackColor),
-                              left: BorderSide(color: blackColor),
-                              top: BorderSide(color: blackColor),
-                              bottom: BorderSide(color: blackColor),
-                            )),
-                            child: TextField(
-                              textAlign: TextAlign.start,
-                                decoration: InputDecoration(
-                                    hintText: translator
-                                        .translate("Type Your Mobile Number"),
-                                    border: InputBorder.none,
-                                    hintStyle: TextStyle(fontSize: 12)),
-                                onChanged: forgetPassword_bloc.mobile_change,
-                                keyboardType: TextInputType.number,
-                              ),
-
-                        ),
+                          ),
+                          onChanged:  forgetPassword_bloc.mobile_change,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number
                       )
-                    ],
-                  )),
+                  ),
 
                 ],
-              ));
+              )
+
+
+
+          );
         });
   }
-
   LoginUsingPhoneButton({BuildContext context,}) {
     return Container(
       alignment: Alignment.center,
@@ -345,11 +302,14 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
           ),
         ),
         onTap: () {
-          StaticData.user_mobile_number = StaticData.country_code + forgetPassword_bloc.mobile_controller.value;
-          forgetPassword_bloc.add(sendOtpClick(
-              phone: StaticData.user_mobile_number,
-              route: 'login'
-          ));
+          if (_formKey.currentState.validate() ) {
+            StaticData.user_mobile_number = StaticData.country_code + forgetPassword_bloc.mobile_controller.value;
+            forgetPassword_bloc.add(sendOtpClick(
+                phone: StaticData.user_mobile_number,
+                route: 'login'
+            ));
+          }
+
         },
       ),
     );

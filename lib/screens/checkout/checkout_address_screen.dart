@@ -315,9 +315,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
         decoration: BoxDecoration(
             color: whiteColor,
             borderRadius: BorderRadius.circular(8)),
-        width: width(context) * .9,
+        width: MediaQuery.of(context).size.width * 0.9,
         child: Form(
         key: _formKey,
+
         child: Column(
           children: [
             responsiveSizedBox(context: context, percentageOfHeight: .01),
@@ -661,9 +662,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       stream: shipmentAddressBloc.frist_name,
       builder: (context, snapshot) {
         return Container(
-          padding: EdgeInsets.only(
-              right: width(context) * .05, left: width(context) * .05),
-          //  height: isLandscape(context) ? 2 * height(context) * .065 : height(context) * .065,
+          padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
+          width: MediaQuery.of(context).size.width * 0.9,
           child: TextFormField(
             initialValue: initialValue??'',
             style: TextStyle(
@@ -674,6 +674,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             cursorColor: greyColor.withOpacity(.5),
             decoration: InputDecoration(
               hintText: translator.translate(hint??"Frist Name"),
+              contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
               hintStyle: TextStyle(
                   color: greyColor.withOpacity(.5),
                   fontWeight: FontWeight.bold,
@@ -712,9 +713,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       stream: shipmentAddressBloc.last_name,
       builder: (context, snapshot) {
         return Container(
-          padding: EdgeInsets.only(
-              right: width(context) * .05, left: width(context) * .05),
-          //   height: isLandscape(context) ? 2 * height(context) * .065 : height(context) * .065,
+          padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
+
           child: TextFormField(
             initialValue: initialValue??'',
             style: TextStyle(
@@ -725,6 +725,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             cursorColor: greyColor.withOpacity(.5),
             decoration: InputDecoration(
               hintText: translator.translate(hint??"Last Name"),
+              contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
               hintStyle: TextStyle(
                   color: greyColor.withOpacity(.5),
                   fontWeight: FontWeight.bold,
@@ -763,9 +765,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       stream: shipmentAddressBloc.email,
       builder: (context, snapshot) {
         return Container(
-          padding: EdgeInsets.only(
-              right: width(context) * .05, left: width(context) * .05),
-          //   height: isLandscape(context) ? 2 * height(context) * .065 : height(context) * .065,
+          padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
           child: TextFormField(
 
             keyboardType: TextInputType.emailAddress,
@@ -777,6 +777,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             cursorColor: greyColor.withOpacity(.5),
             decoration: InputDecoration(
               hintText: translator.translate(hint??"Email"),
+              contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
               hintStyle: TextStyle(
                   color: greyColor.withOpacity(.5),
                   fontWeight: FontWeight.bold,
@@ -815,8 +817,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       stream: shipmentAddressBloc.phone,
       builder: (context, snapshot) {
         return Container(
-          padding: EdgeInsets.only(
-              right: width(context) * .05, left: width(context) * .05),
+          padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
+
           child: TextFormField(
             initialValue: initialValue??'',
             keyboardType: TextInputType.number,
@@ -828,6 +830,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             cursorColor: greyColor.withOpacity(.5),
             decoration: InputDecoration(
               hintText: translator.translate(hint??"Ex: 009665xxxxxxxx"),
+              contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
               hintStyle: TextStyle(
                   color: greyColor.withOpacity(.5),
                   fontWeight: FontWeight.bold,
@@ -866,9 +870,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       stream: shipmentAddressBloc.street,
       builder: (context, snapshot) {
         return Container(
-          padding: EdgeInsets.only(
-              right: width(context) * .05, left: width(context) * .05),
-          //   height: isLandscape(context) ? 2 * height(context) * .065 : height(context) * .065,
+          padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
+
           child: TextFormField(
             initialValue: initialValue??'',
             keyboardType: TextInputType.streetAddress,
@@ -880,6 +883,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             cursorColor: greyColor.withOpacity(.5),
             decoration: InputDecoration(
               hintText: translator.translate(hint??"Shippment Address"),
+              contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
               hintStyle: TextStyle(
                   color: greyColor.withOpacity(.5),
                   fontWeight: FontWeight.bold,

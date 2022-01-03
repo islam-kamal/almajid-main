@@ -30,6 +30,7 @@ class _SignUpScreenState extends State<SignUpScreen>
   bool _passwordVisible;
 
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  final _formKey = GlobalKey<FormState>();
 
   AnimationController _loginButtonController;
   bool isLoading = false;
@@ -158,25 +159,33 @@ class _SignUpScreenState extends State<SignUpScreen>
               responsiveSizedBox(context: context, percentageOfHeight: .002),
               topAuthButtons(context: context),
               responsiveSizedBox(context: context, percentageOfHeight: .1),
-              frist_nameTextField(context: context, hint: "First Name"),
+          Form(
+            key: _formKey,
+            child:Column(
+              children: [
+                frist_nameTextField(context: context, hint: "First Name"),
 
-              responsiveSizedBox(context: context, percentageOfHeight: .02),
-              last_nameTextField(context: context, hint: "Last Name"),
+                responsiveSizedBox(context: context, percentageOfHeight: .02),
+                last_nameTextField(context: context, hint: "Last Name"),
 
-              responsiveSizedBox(context: context, percentageOfHeight: .01),
-              mobile_textfield(),
+                responsiveSizedBox(context: context, percentageOfHeight: .01),
+                mobile_textfield(),
 
-              responsiveSizedBox(context: context, percentageOfHeight: .01),
+                responsiveSizedBox(context: context, percentageOfHeight: .01),
 
-              emailTextField(context: context, hint: "Email"),
+                emailTextField(context: context, hint: "Email"),
 
-              responsiveSizedBox(context: context, percentageOfHeight: .01),
+                responsiveSizedBox(context: context, percentageOfHeight: .01),
 
-              passwordTextField(context: context, hint: "Password", isPasswordField: true),
+                passwordTextField(context: context, hint: "Password", isPasswordField: true),
+              ],
+            )
+          ),
+
 
               responsiveSizedBox(context: context, percentageOfHeight: .05),
               signButton(context: context),
-              responsiveSizedBox(context: context, percentageOfHeight: .05),
+              responsiveSizedBox(context: context, percentageOfHeight: .03),
               alreadyHaveAnAccount(context: context),
               responsiveSizedBox(context: context, percentageOfHeight: .03),
             ],
@@ -192,46 +201,12 @@ class _SignUpScreenState extends State<SignUpScreen>
       buttonController: _loginButtonController.view,
       btn_width: width(context) * .7,
       onTap: () {
-        if(signUpBloc.fristname_controller.valueOrNull != null &&
-            signUpBloc.lastname_controller.valueOrNull != null &&
-            signUpBloc.mobile_controller.valueOrNull != null &&
-            signUpBloc.email_controller.valueOrNull != null &&
-            signUpBloc.password_controller.valueOrNull != null
-        ){
+        if (_formKey.currentState.validate() ) {
           signUpBloc.add(click());
-
-        }else{
-          Flushbar(
-            messageText: Row(
-              children: [
-                Container(
-                  width: StaticData.get_width(context) * 0.7,
-                  child: Wrap(
-                    children: [
-                      Text(
-                        'You Must Fill All Fields',
-                        textDirection: TextDirection.rtl,
-                        style: TextStyle(color: whiteColor),
-                      ),
-                    ],
-                  ),
-                ),
-                Spacer(),
-                Text(
-                  translator.translate("Try Again" ),
-                  textDirection: TextDirection.rtl,
-                  style: TextStyle(color: whiteColor),
-                ),
-              ],
-            ),
-            flushbarPosition: FlushbarPosition.BOTTOM,
-            backgroundColor: redColor,
-            flushbarStyle: FlushbarStyle.FLOATING,
-            duration: Duration(seconds: 6),
-          )..show(_drawerKey.currentState.context);
         }
 
-      },
+
+      }
     );
   }
 
@@ -242,12 +217,20 @@ class _SignUpScreenState extends State<SignUpScreen>
       builder: (context, snapshot) {
         return Container(
             width: width(context) * .8,
-            child: TextField(
+            child: TextFormField(
                 decoration: InputDecoration(
                   hintText: translator.translate(hint),
+                  errorText: snapshot.error,
+                  contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
                 ),
             onChanged:  signUpBloc.fristname_change,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return '${translator.translate("Please enter")} ${translator.translate("First Name")}';
+                }
+                return null;
+              },
             )
         );
 
@@ -262,12 +245,20 @@ class _SignUpScreenState extends State<SignUpScreen>
       builder: (context, snapshot) {
         return Container(
             width: width(context) * .8,
-            child: TextField(
+            child: TextFormField(
               decoration: InputDecoration(
                 hintText: translator.translate(hint),
+                errorText: snapshot.error,
+                contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
               ),
               onChanged:  signUpBloc.lastname_change,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return '${translator.translate("Please enter")} ${translator.translate("Last Name")}';
+                }
+                return null;
+              },
             )
         );
 
@@ -282,12 +273,20 @@ class _SignUpScreenState extends State<SignUpScreen>
       builder: (context, snapshot) {
         return Container(
             width: width(context) * .8,
-            child: TextField(
+            child: TextFormField(
               decoration: InputDecoration(
                 hintText: translator.translate(hint),
+                errorText: snapshot.error,
+                contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
               ),
               onChanged:  signUpBloc.email_change,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return '${translator.translate("Please enter")} ${translator.translate("Email")}';
+                }
+                return null;
+              },
             )
         );
 
@@ -307,13 +306,21 @@ class _SignUpScreenState extends State<SignUpScreen>
             ),
             child: Row(
                   children: [
-
                     Expanded(
-                        child: TextField(
+                        child: TextFormField(
                           decoration: InputDecoration(
                             hintText: translator.translate("Phone"),
+                            errorText: snapshot.error,
+                            contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
                           ),
                           onChanged:  signUpBloc.mobile_change,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
+                              }
+                              return null;
+                            },
                             keyboardType: TextInputType.number
                         )
                     ),
@@ -386,12 +393,14 @@ class _SignUpScreenState extends State<SignUpScreen>
         builder: (context, snapshot) {
           return Container(
               width: width(context) * .8,
-              child: TextField(
+              child: TextFormField(
                   obscureText:!_passwordVisible,
                   decoration: InputDecoration(
                       prefixIcon: containPrefixIcon == false ? null : Icon(prefixIcon),
+                    errorText: snapshot.error,
+                    contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
-                      hintText: translator.translate(hint),
+                    hintText: translator.translate(hint),
           suffixIcon: IconButton(
           icon: Icon(
           // Based on passwordVisible state choose the icon
@@ -406,23 +415,17 @@ class _SignUpScreenState extends State<SignUpScreen>
           ),
           ),
           onChanged: signUpBloc.password_change,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '${translator.translate("Please enter")} ${translator.translate("Password")}';
+                  }
+                  return null;
+                },
               )
           );
         });
 
 
-    return Container(
-        width: width(context) * .8,
-        child: TextField(
-            decoration: InputDecoration(
-                prefixIcon: containPrefixIcon == false ? null : Icon(prefixIcon),
-                hintText: translator.translate(hint),
-                suffixIcon: isPasswordField == true
-                    ? Icon(
-                  MdiIcons.eyeOff,
-                  size: 18,
-                  color: mainColor,
-                )
-                    : null)));
+
   }
 }

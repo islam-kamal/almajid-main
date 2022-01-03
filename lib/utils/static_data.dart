@@ -5,7 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class StaticData {
   static List<Map> wishlist_items;
-
+  static List<Map> product_images_list;
+  static List<Map> product_images_map  = [];
   static String country_code ='+966';
   static String vistor_value;
   static String user_token = '';
