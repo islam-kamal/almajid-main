@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.almajidoud">
+    package="com.IT.Almajed4Oud">
    <application
         android:label="almajidoud Oud"
         android:icon="@mipmap/ic_launcher">

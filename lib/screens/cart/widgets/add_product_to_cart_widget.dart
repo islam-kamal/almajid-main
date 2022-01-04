@@ -115,7 +115,7 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
             ? CircularProgressIndicator()
             : Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.all(5),
+                padding: EdgeInsets.all(4),
                 child: StaggerAnimation(
                   buttonController: _loginButtonController.view,
                   btn_height: widget.btn_height,
