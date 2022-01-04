@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mobile.Almajed4Oud">
    <application
-        android:label="almajidoud Oud"
+        android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
