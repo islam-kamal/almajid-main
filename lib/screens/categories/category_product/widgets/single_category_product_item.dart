@@ -76,7 +76,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                     width: width(context) * .6,
                                     height: isLandscape(context)
                                         ? 2 * height(context) * .17
-                                        : height(context) * .17,
+                                        : height(context) * .19,
                                     child: Column(
                                       crossAxisAlignment:
                                       translator.activeLanguageCode == 'en'
@@ -109,8 +109,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                             context: context,
                                             percentageOfHeight: .01),
                                         Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
                                               child: customDescriptionText(

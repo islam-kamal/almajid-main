@@ -1,4 +1,4 @@
-package com.IT.Almajed4Oud
+package com.mobile.Almajed4Oud
 
 import io.flutter.embedding.android.FlutterActivity
 
