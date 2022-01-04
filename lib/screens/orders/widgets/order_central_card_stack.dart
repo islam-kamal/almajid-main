@@ -277,8 +277,7 @@ orderCentralCardStack({BuildContext context, OrderItems order_details}) {
                                   height: isLandscape(context) ? 2 * height(context) * .08 : height(context) * .08,
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
-                                          image: NetworkImage(
-                                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Og0-LY1uOs7Z3I_sBLafG8F2IbFwRVprrg&usqp=CAU"),
+                                          image: NetworkImage("${Urls.BASE_URL}/pub/media/catalog/product/${order_details.items[index].extensionAttributes['product_image']}"),
                                           fit: BoxFit.cover)),
                                 ),
 

@@ -222,13 +222,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
   paymentMethodCard({BuildContext context ,  List<PaymentMethods> paymentMethods}) {
     var toRemove = [];
     paymentMethods.forEach((element) {
-      if(element.title =="APS Payment Method" || element.title == " باي"){
+      if(element.code =="aps_fort_vault" || element.code == "mestores_applepay"){
         toRemove.add(element);
-      }else if(element.title =="Tap"){
-        if(MyApp.app_location == 'kw'){
-        }else{
-          toRemove.add(element);
-        }
       }
     });
     paymentMethods.removeWhere( (e) => toRemove.contains(e));

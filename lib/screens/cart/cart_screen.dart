@@ -73,7 +73,7 @@ class _CartScreenState extends State<CartScreen> {
                         } else if (state is Done) {
                           var data = state.model as CartDetailsModel;
                           if (data.message?.isEmpty != null ||
-                              data.items.length == 0) {
+                              data.items == null || data.items.length == 0) {
                             return no_data_widget(context: context);
                           } else {
                             return Column(

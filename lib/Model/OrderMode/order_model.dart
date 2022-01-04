@@ -393,6 +393,7 @@ class Items {
   var taxPercent;
   var updatedAt;
   var weight;
+  var extensionAttributes;
 
   Items(
       {this.amountRefunded,
@@ -441,7 +442,8 @@ class Items {
         this.taxInvoiced,
         this.taxPercent,
         this.updatedAt,
-        this.weight});
+        this.weight,
+      this.extensionAttributes});
 
   Items.fromJson(Map<String, dynamic> json) {
     amountRefunded = json['amount_refunded'];
@@ -492,6 +494,7 @@ class Items {
     taxPercent = json['tax_percent'];
     updatedAt = json['updated_at'];
     weight = json['weight'];
+    extensionAttributes = json['extension_attributes'];
   }
 
   Map<String, dynamic> toJson() {

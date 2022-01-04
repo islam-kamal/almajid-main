@@ -9,7 +9,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 class CartBadge extends StatefulWidget {
   final Color iconColor;
 
-  CartBadge({this.iconColor=Colors.white});
+  CartBadge({this.iconColor = Colors.white});
 
   @override
   _CartBadgeState createState() => _CartBadgeState();
@@ -28,7 +28,7 @@ class _CartBadgeState extends State<CartBadge> {
           _isLoading = true;
         } else if (state is Done) {
           var data = state.model as CartDetailsModel;
-          if (data.message?.isEmpty != null) {
+          if (data.message?.isEmpty != null || data.items ==null) {
             _count = 0;
           } else {
             _count = data.items.length;
@@ -38,9 +38,11 @@ class _CartBadgeState extends State<CartBadge> {
         return _isLoading
             ? CircularProgressIndicator()
             : InkWell(
-          onTap: (){  Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => CartScreen()));} ,
-              child: Badge(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => CartScreen()));
+                },
+                child: Badge(
                   badgeColor: cartBadgeColor,
                   animationType: BadgeAnimationType.slide,
                   toAnimate: true,
@@ -60,7 +62,7 @@ class _CartBadgeState extends State<CartBadge> {
                     },
                   ),
                 ),
-            );
+              );
       },
     );
   }

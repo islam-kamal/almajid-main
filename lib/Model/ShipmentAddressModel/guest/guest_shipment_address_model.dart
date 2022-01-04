@@ -222,6 +222,7 @@ class Items {
   var weeeTaxAppliedAmount;
   var weeeTaxApplied;
   var name;
+  var extensionAttributes;
 
   Items(
       {this.itemId,
@@ -244,7 +245,8 @@ class Items {
         this.options,
         this.weeeTaxAppliedAmount,
         this.weeeTaxApplied,
-        this.name});
+        this.name,
+      this.extensionAttributes});
 
   Items.fromJson(Map<String, dynamic> json) {
     itemId = json['item_id'];
@@ -268,6 +270,7 @@ class Items {
     weeeTaxAppliedAmount = json['weee_tax_applied_amount'];
     weeeTaxApplied = json['weee_tax_applied'];
     name = json['name'];
+    extensionAttributes = json['extension_attributes'];
   }
 
   Map<String, dynamic> toJson() {
