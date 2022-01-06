@@ -19,7 +19,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   var offset = 1;
   ScrollController _controller;
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-
+  final product_bloc = ProductBloc(null);
   @override
   void initState() {
     _controller = ScrollController()..addListener(_scrollListener);
