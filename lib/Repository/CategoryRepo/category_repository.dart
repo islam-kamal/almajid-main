@@ -30,7 +30,7 @@ class CategoryRepository {
     print("MyApp.app_langauge : ${MyApp.app_langauge}");
     return NetworkUtil.internal().get(
         ProductModel(),
-        '${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/products?searchCriteria&searchCriteria[filterGroups][0][filters][1][field]=category_id&searchCriteria[filterGroups][0][filters][1][value]=${category_id}&searchCriteria[filterGroups][0][filters][1][conditionType]=eq&searchCriteria[sortOrders][0][field]=position& searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[pageSize]=10',
+        '${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/products?searchCriteria&searchCriteria[filterGroups][0][filters][1][field]=category_id&searchCriteria[filterGroups][0][filters][1][value]=${category_id}&searchCriteria[filterGroups][0][filters][1][conditionType]=eq&searchCriteria[sortOrders][0][field]=position&searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[pageSize]=10&searchCriteria[currentPage]=1',
     headers: headers);
   }
 
