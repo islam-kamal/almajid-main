@@ -58,7 +58,46 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
           Container(
             height: height(context),
               child: Container(
-                child: BlocBuilder(
+                child: StreamBuilder<List<product_model.Items>>(
+                  stream: product_bloc.cat_products_subject,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data == null) {
+                        return Container();
+                      } else {
+                        print("length : ${snapshot.data.length}");
+
+                        return ListView.builder(
+                            controller: _controller,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, index) {
+
+                              return index >= snapshot.data.length
+                                  ? MyLoader(25, 25)
+                                  : snapshot.data[index] == null
+                                  ? Container()
+                                  : singleCategoryProductItem(
+                                product: snapshot.data[index] ,
+                                scafffoldKey: _drawerKey,
+                              );
+
+                            });
+
+                      }
+                    } else if (snapshot.hasError) {
+                      return Container(
+                        child: Text('${snapshot.error}'),
+                      );
+                    } else {
+                      return Center(
+                        child: ShimmerNotification(),
+                      );
+                      ;
+                    }
+                  },
+                )
+                /* BlocBuilder(
                   bloc: product_bloc,
                   builder: (context, state) {
                     if (state is Loading) {
@@ -118,7 +157,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                       );
                     }
                   },
-                ),
+                ),*/
               ),
           )
         ],
