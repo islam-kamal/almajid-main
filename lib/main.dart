@@ -6,13 +6,30 @@ import 'package:almajidoud/screens/checkout/checkout_address_screen.dart';
 import 'package:almajidoud/screens/checkout/checkout_payment_screen.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+import 'notification/local_notification_service.dart';
+
+/// receive message when app is in background without clicking on the notification
+Future<void> _backgroundHandler(RemoteMessage message) async{
+  print(message.data.toString());
+  print(message.notification.title);
+
+}
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await translator.init(
     localeType: LocalizationDefaultType.device,
     languagesList: <String>['ar', 'en'],
     assetsDirectory: 'assets/langs/',
   );
+
+  await Firebase.initializeApp();
+  /// maintain the push message if the application is closed
+  FirebaseMessaging.onBackgroundMessage(_backgroundHandler);
+
   runApp(
     LocalizedApp(
       child: MyApp(),
@@ -54,6 +71,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     get_Static_data();
+    _fcmConfigure(context);
   }
   void get_Static_data()async{
     await sharedPreferenceManager.readString(CachingKey.USER_COUNTRY_CODE).then((value){
@@ -106,4 +124,50 @@ class _MyAppState extends State<MyApp> {
       },
     );
   }
+
+  Future<void> _fcmConfigure(BuildContext context) async{
+    LocalNotificationService.initialize(context);
+
+    ///required by IOS permissions
+    FirebaseMessaging.instance.requestPermission().then((value) {
+      print(value);});
+    FirebaseMessaging.instance.getToken().then((token){
+      print(token);});
+    FirebaseMessaging.instance.getAPNSToken().then((APNStoken){
+      print(APNStoken);});
+
+    //get the current device token
+    _getCustomerNotification();
+
+    ///gives you the message on which use taps
+    ///and it opened from the terminated state
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      if(message !=null){
+        final routeMessage = message.data['route'];
+        Navigator.of(context).pushNamed(routeMessage);
+      }
+    });
+
+
+    ///app open on ForeGround. notification will not be visibile but you will receive the data
+    FirebaseMessaging.onMessage.listen((message) {
+      if(message.notification !=null){
+        print(message.notification.title);
+        print(message.notification.body);
+        LocalNotificationService.display(message);
+      }
+    });
+
+    ///app in background and not terminated when you click on the notification this should be triggered
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      final routeMessage = message.data['route'];
+      Navigator.of(context).pushNamed(routeMessage);
+    });
+  }
+  void _getCustomerNotification() async{
+    FirebaseMessaging.instance.getToken().then((token) {
+      print("token: " + token);
+    } );
+  }
+
 }
