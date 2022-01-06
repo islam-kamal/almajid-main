@@ -142,38 +142,40 @@ class GetStartedScreenState extends State<GetStartedScreen>
                     }
                   },
                   child: Center(
-                    child: Column(
-                      children: [
-                        responsiveSizedBox(
-                            context: context, percentageOfHeight: .25),
-                        Image.asset(
-                          "assets/icons/Group 10.png",
-                          width: width(context) * .7,
-                        ),
-                        responsiveSizedBox(
-                            context: context, percentageOfHeight: .02),
-                        customDescriptionText(
-                            context: context,
-                            textColor: mainColor,
-                            text: translator.translate("Awesome !"),
-                            percentageOfHeight: .03),
-                        responsiveSizedBox(
-                            context: context, percentageOfHeight: .02),
-                        customDescriptionText(
-                            context: context,
-                            textColor: greyColor,
-                            text: widget.route == 'SignInScreen' ?translator.translate("Your Account has been verified sucessfully")
-                              : translator.translate("Your phone number has been verified sucessfully"),
-                            percentageOfHeight: .025,
-                            maxLines: 3),
-                        responsiveSizedBox(
-                            context: context, percentageOfHeight: .1),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          responsiveSizedBox(
+                              context: context, percentageOfHeight: .25),
+                          Image.asset(
+                            "assets/icons/Group 10.png",
+                            width: width(context) * .7,
+                          ),
+                          responsiveSizedBox(
+                              context: context, percentageOfHeight: .02),
+                          customDescriptionText(
+                              context: context,
+                              textColor: mainColor,
+                              text: translator.translate("Awesome !"),
+                              percentageOfHeight: .03),
+                          responsiveSizedBox(
+                              context: context, percentageOfHeight: .02),
+                          customDescriptionText(
+                              context: context,
+                              textColor: greyColor,
+                              text: widget.route == 'SignInScreen' ?translator.translate("Your Account has been verified sucessfully")
+                                  : translator.translate("Your phone number has been verified sucessfully"),
+                              percentageOfHeight: .025,
+                              maxLines: 3),
+                          responsiveSizedBox(
+                              context: context, percentageOfHeight: .1),
 
-                        getStartedButton(
-                            context:context
-                        ),
-                      ],
-                    ),
+                          getStartedButton(
+                              context:context
+                          ),
+                        ],
+                      ),
+                    )
                   )))),
     );
   }

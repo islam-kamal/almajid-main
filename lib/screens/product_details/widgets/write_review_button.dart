@@ -1,14 +1,10 @@
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/Reviews/product_reviews_screen.dart';
-writeReviewButton({BuildContext context , var product_suk}) {
+writeReviewButton({BuildContext context , var product_suk , var product_id}) {
   return GestureDetector(
     onTap: (){
-
-      print("product_suk : ${product_suk}");
-      reviewsBloc.add(GetProductReviewsEvent(
-        product_sku: product_suk
-      ));
       customPushNamedNavigation(context,ProductReviewsScreen(
+        product_id: product_id,
       ));
 
     },

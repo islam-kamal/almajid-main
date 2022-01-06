@@ -16,7 +16,6 @@ abstract class Mappable<T>  {
       Iterable iterableData = json.decode(data);
       return type.fromJsonList(iterableData);
     }
-    print("I Couldn't Parser");
     return null;
   }
 }

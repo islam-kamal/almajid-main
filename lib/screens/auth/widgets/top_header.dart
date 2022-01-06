@@ -1,3 +1,4 @@
+import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
@@ -14,6 +15,8 @@ topHeader({BuildContext context}) {
       children: [
         GestureDetector(
           onTap: () {
+            StaticData.vistor_value = "visitor";
+            cartRepository.create_quote(context: context);
             customAnimatedPushNavigation(context, CustomCircleNavigationBar());
           },
           child: Icon(

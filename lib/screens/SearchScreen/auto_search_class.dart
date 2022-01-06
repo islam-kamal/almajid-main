@@ -1,4 +1,6 @@
 import 'package:almajidoud/Bloc/Search_Bloc/search_bloc.dart';
+import 'package:almajidoud/Model/ProductModel/product_model.dart' as product_model;
+import 'package:almajidoud/Model/ProductModel/product_model.dart';
 import 'package:almajidoud/Model/SearchModel/search_model.dart';
 import 'package:almajidoud/screens/SearchScreen/search_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +18,7 @@ class AutoSearchClass extends StatefulWidget {
 }
 
 class _HomePageState extends State<AutoSearchClass> {
-  search_model.Items _selectedItem;
+  product_model.Items _selectedItem;
 
   @override
   void initState() {
@@ -28,7 +30,7 @@ class _HomePageState extends State<AutoSearchClass> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         padding: const EdgeInsets.symmetric(vertical: 16),
-        child: StreamBuilder<SearchModel>(
+        child: StreamBuilder<ProductModel>(
           stream: search_bloc.search_products_subject,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -36,7 +38,7 @@ class _HomePageState extends State<AutoSearchClass> {
                 print("search 1");
                 return Container();
               } else {
-                return SearchWidget<search_model.Items>(
+                return SearchWidget<product_model.Items>(
                   dataList: snapshot.data.items,
                   hideSearchBoxWhenItemSelected: true,
                   listContainerHeight: MediaQuery.of(context).size.height / 4,
@@ -152,7 +154,7 @@ class NoItemsFound extends StatelessWidget {
 }
 
 class PopupListItemWidget extends StatelessWidget {
-  final search_model.Items item;
+  final product_model.Items item;
   const PopupListItemWidget(this.item);
 
   @override

@@ -2,7 +2,8 @@ import 'package:almajidoud/Model/ProductModel/product_model.dart';
 import 'package:almajidoud/Model/ShipmentAddressModel/client/address_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:almajidoud/Model/ProductModel/product_model.dart'
+as product_model;
 class StaticData {
   static List<Map> wishlist_items;
   static List<Map> product_images_list;
@@ -18,15 +19,20 @@ class StaticData {
   static bool chosse_address_status = false;
   static String order_address = '';
   static String order_payment_refused_reason = '';
+
+
   //order payment
   static String card_number = "";
   static String card_holder_name =  "";
   static String card_security_code = "";
   static String expiry_date = "";
 
-
+//reviews
+  static var review_product_sku;
   static int product_qty = 1;
  static Future<List<AddressModel>> saved_addresses;
+
+
 
 
   static List<dynamic> gallery = [];

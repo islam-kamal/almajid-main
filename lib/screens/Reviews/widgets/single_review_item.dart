@@ -17,7 +17,7 @@ singleRatingWidget({
         CircleAvatar(
           radius: 30,
           backgroundImage: NetworkImage(
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWo-eLdiDxfz7kkYOtnP76O_qBbuzHDQa_ygame4yxhKuYWIsiFFV9s_RonZrVip7Hag0&usqp=CAU"),
+              "https://cdn1.vectorstock.com/i/thumb-large/62/60/default-avatar-photo-placeholder-profile-image-vector-21666260.jpg"),
         ),
         SizedBox(width: 5),
         Column(

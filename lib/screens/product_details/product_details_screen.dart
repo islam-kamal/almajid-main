@@ -1,4 +1,7 @@
+import 'package:almajidoud/Bloc/Home_Bloc/home_bloc.dart';
+import 'package:almajidoud/Repository/CategoryRepo/category_repository.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
+import 'package:almajidoud/screens/home/widgets/home_list_products.dart';
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 import 'package:almajidoud/screens/product_details/widgets/descriptionAndShareRow.dart';
 import 'package:almajidoud/screens/product_details/widgets/divider.dart';
@@ -10,13 +13,11 @@ import 'package:almajidoud/screens/product_details/widgets/sold_by_widget.dart';
 import 'package:almajidoud/screens/product_details/widgets/vat_and_reviews_row.dart';
 import 'package:almajidoud/screens/product_details/widgets/write_review_button.dart';
 import 'package:almajidoud/utils/file_export.dart';
-import 'package:almajidoud/Model/ProductModel/product_model.dart';
-import 'package:another_flushbar/flushbar.dart';
-import 'package:almajidoud/Model/WishListModel/get_all_wishlist_model.dart' as wishlist_model;
-
+import 'package:almajidoud/Model/ProductModel/product_model.dart'
+as product_model;
 class ProductDetailsScreen extends StatefulWidget {
-  Items product;
-  ProductDetailsScreen({this.product});
+  var product_id;
+  ProductDetailsScreen({this.product_id});
   @override
   _ProductDetailsScreenState createState() => _ProductDetailsScreenState();
 }
@@ -30,23 +31,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
   var product_image;
   @override
   void initState() {
+    print("widget.product_id : ${widget.product_id}");
+    home_bloc.add(ProductDetailsEvent(
+      product_id: widget.product_id
+    ));
 
-    widget.product.mediaGalleryEntries.forEach((element) {
-      product_images.add(
-          "${Urls.BASE_URL}/media/catalog/product/cache/089af6965a318f5bf47750f284c40786" +
-              element.file);
-    });
-    widget.product.customAttributes.forEach((element) {
-      if(element.attributeCode ==  "description"){
-        description = element.value;
-      }
-    });
-
-    widget.product.customAttributes.forEach((element) {
-      if(element.attributeCode == "thumbnail")
-        product_image = element.value;
-    });
-    StaticData.product_id = widget.product.id;
     super.initState();
   }
 
@@ -61,163 +50,209 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
         backgroundColor: whiteColor,
         body: SafeArea(
             child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .02),
-                    productDetailsNameWidget(
-                        context: context,
-                        product_name: widget.product.name),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .03),
-                    HomeSlider(
-                      gallery: product_images,
-                    ),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .05),
-                    favouriteAndNameRow(
-                        context: context,
-                        product_name: widget.product.name),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .02),
-                    descriptionAndShareRow(
-                        context: context,
-                        description:description??'',
-                        product_name: widget.product.name),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .02),
-                    priceAndRatingRow(
-                        context: context, price: widget.product.price),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .02),
-                    vatAndReviewsRow(
-                        context: context,
-                        product_sku: widget.product.sku),
-                    divider(context: context),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .02),
-                    sizeAndQuantityText(context: context, text: "Quantity"),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .02),
-                    Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(
-                              right: width(context) * .05, left: width(context) * .05),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(color: mainColor, width: 2),
-                                borderRadius: BorderRadius.circular(8)),
-                            width: width(context) * .4,
-                            height: isLandscape(context)
-                                ? 2 * height(context) * .06
-                                : height(context) * .06,
-                            child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    MaterialButton(
-                                      height: 5,
-                                      minWidth: StaticData.get_width(context) * 0.15,
-                                      onPressed: () {
-                                        setState(() {
-                                          if (qty <= 1) {
-                                            errorDialog(
-                                              context: context,
-                                              text:
-                                              "لقد نفذت الكمية من هذا المنتج",
-                                            );
-                                          } else {
-                                            setState(() {
-                                              qty--;
-                                              StaticData.product_qty = qty;
-                                            });
-                                          }
-                                        });
-                                      },
-                                      textColor: Colors.white,
-                                      child: Icon(
-                                        Icons.remove,
-                                        size: 18,
-                                        color: blackColor,
-                                      ),
+                child: StreamBuilder<List<product_model.Items>>(
+                  stream: home_bloc.products_details_subject,
+                  builder: (context , snapshot){
+                    if (snapshot.hasData) {
+                      if (snapshot.data == null) {
+                        return no_data_widget(context: context);
+                      } else {
+                        snapshot.data[0].mediaGalleryEntries.forEach((element) {
+                          product_images.add(
+                              "${Urls.BASE_URL}/media/catalog/product" + element.file);
+                        });
+                        print("product_images : ${product_images.length}");
+                        snapshot.data[0]..customAttributes.forEach((element) {
+                          if(element.attributeCode ==  "description"){
+                            description = element.value;
+                          }
+                        });
 
-                                    ),
-                                    quantity(),
-                                    MaterialButton(
-                                      height: 5,
-                                      minWidth:
-                                      StaticData.get_width(context) *
-                                          0.15,
-                                      onPressed: () {
-                                        setState(() {
-                                          print("prod_main_quantity : ${widget.product.extensionAttributes.stockItem.qty}");
-                                          if (qty == widget.product.extensionAttributes.stockItem.qty) {
-                                            errorDialog(
-                                              context: context,
-                                              text:
-                                              "لا يمكنك تخطى الكمية المتاحة",
-                                            );
-                                          } else {
-                                            setState(() {
-                                              qty++;
-                                              StaticData.product_qty = qty;
+                        snapshot.data[0].customAttributes.forEach((element) {
+                          if(element.attributeCode == "thumbnail")
+                            product_image = element.value;
+                        });
+                        return Column(
+                          children: [
+                            responsiveSizedBox(
+                                context: context, percentageOfHeight: .02),
+                            productDetailsNameWidget(
+                                context: context,
+                                product_name: snapshot.data[0].name),
+                            responsiveSizedBox(
+                                context: context, percentageOfHeight: .03),
+                            HomeSlider(
+                              gallery: product_images,
+                            ),
+                            responsiveSizedBox(
+                                context: context, percentageOfHeight: .05),
+                            favouriteAndNameRow(
+                                context: context,
+                                product_name: snapshot.data[0].name),
+                            responsiveSizedBox(
+                                context: context, percentageOfHeight: .02),
+                            descriptionAndShareRow(
+                                context: context,
+                                description:description??'',
+                                product_name: snapshot.data[0].name),
+                            responsiveSizedBox(
+                                context: context, percentageOfHeight: .02),
+                            priceAndRatingRow(
+                                context: context, price: snapshot.data[0].price),
+                            responsiveSizedBox(
+                                context: context, percentageOfHeight: .02),
+                            vatAndReviewsRow(
+                                context: context,
+                                product_sku: snapshot.data[0].sku,
+                              product_id: snapshot.data[0].id,
+                            ),
+                            divider(context: context),
+                            responsiveSizedBox(
+                                context: context, percentageOfHeight: .02),
+                            titleText(context: context, text: "Quantity"),
+                            responsiveSizedBox(
+                                context: context, percentageOfHeight: .02),
+                            Row(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.only(
+                                      right: width(context) * .05, left: width(context) * .05),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: mainColor, width: 2),
+                                        borderRadius: BorderRadius.circular(8)),
+                                    width: width(context) * .4,
+                                    height: isLandscape(context)
+                                        ? 2 * height(context) * .06
+                                        : height(context) * .06,
+                                    child: Center(
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          children: [
+                                            MaterialButton(
+                                              height: 5,
+                                              minWidth: StaticData.get_width(context) * 0.15,
+                                              onPressed: () {
+                                                setState(() {
+                                                  if (qty <= 1) {
+                                                    errorDialog(
+                                                      context: context,
+                                                      text:
+                                                      "لقد نفذت الكمية من هذا المنتج",
+                                                    );
+                                                  } else {
+                                                    setState(() {
+                                                      qty--;
+                                                      StaticData.product_qty = qty;
+                                                    });
+                                                  }
+                                                });
+                                              },
+                                              textColor: Colors.white,
+                                              child: Icon(
+                                                Icons.remove,
+                                                size: 18,
+                                                color: blackColor,
+                                              ),
 
-                                            });
-                                          }
-                                        });
-                                      },
-                                      textColor: greyColor,
-                                      child: Icon(
-                                        Icons.add,
-                                        size: 18,
-                                        color: blackColor,
-                                      ),
+                                            ),
+                                            quantity(),
+                                            MaterialButton(
+                                              height: 5,
+                                              minWidth:
+                                              StaticData.get_width(context) *
+                                                  0.15,
+                                              onPressed: () {
+                                                setState(() {
+                                                  print("prod_main_quantity : ${snapshot.data[0].extensionAttributes.stockItem.qty}");
+                                                  if (qty == snapshot.data[0].extensionAttributes.stockItem.qty) {
+                                                    errorDialog(
+                                                      context: context,
+                                                      text:
+                                                      "لا يمكنك تخطى الكمية المتاحة",
+                                                    );
+                                                  } else {
+                                                    setState(() {
+                                                      qty++;
+                                                      StaticData.product_qty = qty;
 
-                                    ),
+                                                    });
+                                                  }
+                                                });
+                                              },
+                                              textColor: greyColor,
+                                              child: Icon(
+                                                Icons.add,
+                                                size: 18,
+                                                color: blackColor,
+                                              ),
 
-                                  ],
-                                )),
-                          ),
-                        ),
-                      ],
-                    ),
-                    //divider(context: context),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .03),
-                    AddProductToCartWidget(
-                      product_sku: widget.product.sku,
-                      product_quantity:  StaticData.product_qty ,
-                      instock_status: widget.product.extensionAttributes.stockItem.isInStock,
-                      scaffoldKey: _scaffoldKey,
-                      btn_height: width(context) * .13,
-                      btn_width: width(context) * .7,
-                      text_size: .025,
-                      product_image: product_image,
-                      product_id: widget.product.id,
-                    ),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .03),
-                    Container(
-                      height: height(context) * .1,
-                      color: mainColor,
-                      alignment: Alignment.bottomCenter,
-                      child: Column(
-                        children: [
-                          responsiveSizedBox(
-                              context: context, percentageOfHeight: .01),
-                          writeReviewButton(
-                              context: context,
-                              product_suk: widget.product.sku
-                          ),
-                          responsiveSizedBox(
-                              context: context, percentageOfHeight: .005),
-                          soldByWidget(context: context)
-                        ],
-                      ),
-                    ),
+                                            ),
 
-                  ],
+                                          ],
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            //divider(context: context),
+                            responsiveSizedBox(
+                                context: context, percentageOfHeight: .03),
+                            AddProductToCartWidget(
+                              product_sku: snapshot.data[0].sku,
+                              product_quantity:  StaticData.product_qty ,
+                              instock_status: snapshot.data[0].extensionAttributes.stockItem.isInStock,
+                              scaffoldKey: _scaffoldKey,
+                              btn_height: width(context) * .13,
+                              btn_width: width(context) * .7,
+                              text_size: .025,
+                              product_image: product_image,
+                              product_id: snapshot.data[0].id,
+                            ),
+                            responsiveSizedBox(context: context, percentageOfHeight: .03),
+                            Container(
+                              height: height(context) * .1,
+                              color: mainColor,
+                              alignment: Alignment.bottomCenter,
+                              child: Column(
+                                children: [
+                                  responsiveSizedBox(
+                                      context: context, percentageOfHeight: .015),
+                                  writeReviewButton(
+                                      context: context,
+                                      product_suk: snapshot.data[0].sku,
+                                    product_id: snapshot.data[0].id,
+                                  ),
+                                  responsiveSizedBox(
+                                      context: context, percentageOfHeight: .005),
+                                ],
+                              ),
+                            ),
+                            responsiveSizedBox(context: context, percentageOfHeight: .03),
+                            titleText(context: context, text: "Related Products"),
+                            responsiveSizedBox(context: context, percentageOfHeight: .02),
+
+                            HomeListProducts(
+                              type: 'related products',
+                              homeScaffoldKey: _scaffoldKey,
+                              items: snapshot.data[0],
+                            ),
+                            responsiveSizedBox(context: context, percentageOfHeight: .02),
+                          ],
+                        );
+                      }
+                    } else if (snapshot.hasError) {
+                      return Container(
+                        child: Text('${snapshot.error}'),
+                      );
+                    } else {
+                      return  Center(
+                          child: CircularProgressIndicator(),
+                      );
+
+                    }
+
+                  },
                 )
 
             )),

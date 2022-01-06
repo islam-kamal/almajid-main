@@ -8,6 +8,7 @@ import 'package:almajidoud/Model/SearchModel/search_model.dart';
 import 'package:almajidoud/screens/WishList/custom_wishlist.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
+import 'package:almajidoud/screens/product_details/product_details_screen.dart';
 
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
@@ -81,13 +82,13 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                         child: CircularProgressIndicator(),
                       );
                     } else if (state is Done) {
-                      var data = state.model as SearchModel;
+                      var data = state.model as ProductModel;
                       print("data : ${data}");
 
                       if (data.items == null || data.items.isEmpty) {
                         return no_data_widget(context: context);
                       } else {
-                        return StreamBuilder<SearchModel>(
+                        return StreamBuilder<ProductModel>(
                           stream: search_bloc.search_products_subject,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
@@ -112,7 +113,14 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                         return snapshot.data.items[index] ==
                                                 null
                                             ? Container()
-                                            : Directionality(
+                                            : InkWell(
+                                            onTap: (){
+                                          customAnimatedPushNavigation(context,ProductDetailsScreen(
+                                            product_id: snapshot.data.items[index].id,
+                                          )
+                                          );
+                                        },
+                                      child:Directionality(
                                                 textDirection: translator
                                                             .activeLanguageCode ==
                                                         'ar'
@@ -419,7 +427,7 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                     ],
                                                   )*/
 
-                                                );
+                                      ) );
                                       }
                                     });
                               }

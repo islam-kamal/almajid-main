@@ -31,7 +31,7 @@ class singleCategoryProductItem extends StatelessWidget {
     return InkWell(
       onTap: (){
         customAnimatedPushNavigation(context, ProductDetailsScreen(
-          product:product
+            product_id:product.id
         ));
       },
       child: Directionality(
@@ -191,7 +191,8 @@ class singleCategoryProductItem extends StatelessWidget {
                                         )
                                       ],
                                     ),
-                                  )),
+                                  )
+                              ),
                             ],
                           ),
                           decoration: BoxDecoration(color: backGroundColor))),

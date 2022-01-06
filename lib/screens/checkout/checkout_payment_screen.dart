@@ -221,12 +221,15 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
 
   paymentMethodCard({BuildContext context ,  List<PaymentMethods> paymentMethods}) {
     var toRemove = [];
+    var image;
     paymentMethods.forEach((element) {
       if(element.code =="aps_fort_vault" || element.code == "mestores_applepay"){
         toRemove.add(element);
       }
     });
     paymentMethods.removeWhere( (e) => toRemove.contains(e));
+
+
     return Container(
         padding: EdgeInsets.only(
             right: width(context) * .05, left: width(context) * .05),
@@ -241,23 +244,40 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
 
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 16/9,
-
+              childAspectRatio: 20/9,
             ),
-            itemBuilder:
-                (BuildContext context, int index) {
+            itemBuilder: (BuildContext context, int index) {
+
+                switch(paymentMethods[index].code){
+                  case 'stc_pay':
+                    image = "stc pay.png";
+                    break;
+                  case 'tamara_pay_by_instalments':
+                    image = "tamara.png";
+                    break;
+                  case 'cashondelivery':
+                    image = "cash icon.png";
+                    break;
+                  case 'aps_fort_cc':
+                    image = "credit card.png";
+                    break;
+                  case 'tap':
+                    image = "credit card.png";
+                    break;
+                }
+
               return Directionality(
                 textDirection: TextDirection.ltr,
                 child: Container(
                   child: Theme(
                       data: Theme.of(context).copyWith(
                           unselectedWidgetColor: whiteColor,
-                          disabledColor: whiteColor
+                          disabledColor: whiteColor,
                       ),
                       child:RadioListTile(
                         groupValue: _currentIndex,
                         contentPadding: const EdgeInsets.all(5.0),
-
+                        dense: true,
                         title: Container(
                             decoration: BoxDecoration(
                                 color: whiteColor,
@@ -265,16 +285,26 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                             ),
                             child:Row(
                               children: [
-                                Expanded(
-                                  flex: 7,
-                                  child:  Text(
-                                    "${paymentMethods[index].title} ",
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                        fontSize: AlmajedFont.secondary_font_size,color: mainColor,fontWeight: FontWeight.w300
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
+                                Row(
+                                    children: [
+                                      Padding(padding: EdgeInsets.all(3),
+                                      child: Image.asset('assets/icons/$image',
+                                        width: width(context) * 0.05,
+                                      ),
+                                      ),
+                                   Container(
+                                    width: width(context) * 0.15,
+                                     child:    Text(
+                                       "${paymentMethods[index].title} ",
+                                       maxLines: 2,
+                                       style: TextStyle(
+                                           fontSize: AlmajedFont.secondary_font_size,color: mainColor,fontWeight: FontWeight.w300
+                                       ),
+                                       textAlign: TextAlign.center,
+                                     ),
+                                   )
+                                    ],
+
                                 ),
 
                               ],

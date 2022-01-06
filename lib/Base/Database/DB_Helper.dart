@@ -33,7 +33,6 @@ class DB_Helper {
       product.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    print(" cart inseration Done");
   }
 
 // function that get products from the database

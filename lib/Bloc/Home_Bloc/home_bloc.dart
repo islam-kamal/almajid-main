@@ -15,9 +15,15 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
     return _best_seller_products_subject;
   }
 
+  BehaviorSubject<List<Items>> _products_details_subject = new BehaviorSubject<List<Items>>();
+  get products_details_subject {
+    return _products_details_subject;
+  }
 
-
-
+    BehaviorSubject<List<Items>> _related_products_subject = new BehaviorSubject<List<Items>>();
+  get related_products_subject {
+    return _related_products_subject;
+  }
   @override
   void dispose() {
 
@@ -57,6 +63,25 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
         _best_seller_products_subject.sink.add(_bestSellerProducts_list);
         yield Done(model: response);
       } else if (response.message != null) {
+        yield ErrorLoading(model: response);
+      }
+    }
+    else if(event is ProductDetailsEvent){
+      var response;
+      if(event.product_id == null){
+         response = await categoryRepository.getProduct(
+            sku: event.product_sku
+        );
+      }else{
+         response = await categoryRepository.getProduct(
+        id: event.product_id
+        );
+      }
+
+      if(response.message == null){
+        _products_details_subject.sink.add(response.items);
+        yield Done(model: response);
+      }else{
         yield ErrorLoading(model: response);
       }
     }

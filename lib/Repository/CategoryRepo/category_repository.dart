@@ -35,7 +35,32 @@ class CategoryRepository {
   }
 
 
+  @override
+  Future<ProductModel> getProduct({id, sku}) async {
+    print("id___ : ${id}");
+    print("sku___ : ${sku}");
+    var endPoint ;
+if(id== null){
+  endPoint =
+  '?searchCriteria[filterGroups][0][filters][1][field]=sku&searchCriteria[filterGroups][0][filters][1][condition_type]=eq';
+  endPoint += '&searchCriteria[filterGroups][0][filters][1][value]=$sku';
+}else{
+  endPoint =
+  '?searchCriteria[filterGroups][0][filters][0][field]=entity_id&searchCriteria[filterGroups][0][filters][0][condition_type]=eq';
+  endPoint += '&searchCriteria[filterGroups][0][filters][0][value]=$id';
+}
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
+    };
+    print("MyApp.app_langauge : ${MyApp.app_langauge}");
+    return NetworkUtil.internal().get(
+        ProductModel(),
+        '${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/products${endPoint}',
+        headers: headers);
 
+  }
 
 
 

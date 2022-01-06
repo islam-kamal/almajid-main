@@ -5,7 +5,26 @@ import 'package:almajidoud/screens/Reviews/widgets/reviews_chart.dart';
 import 'package:almajidoud/screens/Reviews/widgets/reviews_header.dart';
 import 'package:almajidoud/screens/Reviews/widgets/single_review_item.dart';
 
-class ProductReviewsScreen extends StatelessWidget {
+class ProductReviewsScreen extends StatefulWidget{
+  var product_suk;
+  var product_id;
+  ProductReviewsScreen({this.product_suk,this.product_id});
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return ProductReviewsScreenState();
+  }
+
+}
+class ProductReviewsScreenState extends State<ProductReviewsScreen> {
+  @override
+  void initState() {
+    print("product_suk : ${widget.product_suk}");
+    reviewsBloc.add(GetProductReviewsEvent(
+        product_sku: widget.product_suk
+    ));
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return NetworkIndicator(
@@ -16,7 +35,8 @@ class ProductReviewsScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                reviewsHeader(context: context),
+                reviewsHeader(context: context,
+                product_id: widget.product_id),
                 BlocBuilder(
                   bloc: reviewsBloc,
                   builder: (context, state) {
@@ -50,10 +70,7 @@ class ProductReviewsScreen extends StatelessWidget {
                                               leading: null,
                                               expandedHeight:
                                                   isLandscape(context)
-                                                      ? 2 *
-                                                          height(context) *
-                                                          .42
-                                                      : height(context) * .42,
+                                                      ? 2 * height(context) * .2 : height(context) * .2,
                                               floating: false,
                                               backgroundColor: whiteColor,
                                               elevation: 0,
@@ -121,62 +138,6 @@ class ProductReviewsScreen extends StatelessWidget {
                                                         percentageOfHeight:
                                                             .01),
 
-//                --------------------------------------------------------- chart part
-                                                    Container(
-                                                      child: Column(
-                                                        children: [
-                                                          singleChartWidget(
-                                                              context: context,
-                                                              color:
-                                                                  Colors.green,
-                                                              lineWidth: .5,
-                                                              text: translator.translate("Excellent")),
-                                                          responsiveSizedBox(
-                                                              context: context,
-                                                              percentageOfHeight:
-                                                                  .02),
-                                                          singleChartWidget(
-                                                              context: context,
-                                                              color: Colors
-                                                                  .lightGreen,
-                                                              lineWidth: .45,
-                                                              text: translator.translate("Good")),
-                                                          responsiveSizedBox(
-                                                              context: context,
-                                                              percentageOfHeight:
-                                                                  .02),
-                                                          singleChartWidget(
-                                                              context: context,
-                                                              color: Colors
-                                                                  .yellowAccent,
-                                                              lineWidth: .4,
-                                                              text: translator.translate("Average")),
-                                                          responsiveSizedBox(
-                                                              context: context,
-                                                              percentageOfHeight:
-                                                                  .02),
-                                                          singleChartWidget(
-                                                              context: context,
-                                                              color: Colors
-                                                                  .orangeAccent,
-                                                              lineWidth: .3,
-                                                              text: translator.translate("Below Averge")),
-                                                          responsiveSizedBox(
-                                                              context: context,
-                                                              percentageOfHeight:
-                                                                  .02),
-                                                          singleChartWidget(
-                                                              context: context,
-                                                              color: Colors.red,
-                                                              lineWidth: .1,
-                                                              text: translator.translate("Bad")),
-                                                          responsiveSizedBox(
-                                                              context: context,
-                                                              percentageOfHeight:
-                                                                  .02),
-                                                        ],
-                                                      ),
-                                                    )
                                                   ],
                                                 ),
                                               )),
@@ -184,7 +145,7 @@ class ProductReviewsScreen extends StatelessWidget {
                                           ];
                                         },
                                         body: Container(
-                                          color: backGroundColor,
+                                          color: snapshot.data.isEmpty ? whiteColor :backGroundColor,
                                           height: height(context) * .7,
                                           padding: EdgeInsets.only(
                                               top: width(context) * .05,
@@ -214,22 +175,11 @@ class ProductReviewsScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-//            ----------------------------------- top part
                                   ],
                                 ),
                               ),
                             );
-                            /*   if (snapshot.data == null || snapshot.data.isEmpty) {
-                                print("____________");
-                                return Center(
-                                  child: no_data_widget(
-                                      context: context,
-                                    message: translator.translate("No Reviews Yet!")
-                                  ),
-                                );
-                              } else {
-                                print("length ______________: ${snapshot.data.length}");
-                              }*/
+
                           } else if (snapshot.hasError) {
                             return Container(
                               child: Text('${snapshot.error}'),

@@ -73,6 +73,10 @@ class GetHomeBestSeller extends AppEvent{
   GetHomeBestSeller({this.category_id,this.offset});
 }
 
+class ProductDetailsEvent extends AppEvent{
+   var product_id , product_sku;
+  ProductDetailsEvent({this.product_id,this.product_sku});
+}
 
 
 

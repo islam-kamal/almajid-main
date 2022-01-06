@@ -15,7 +15,6 @@ class Loading extends AppState{
   @override
   String toString() {
     // TODO: implement toString
-    print('Loading');
   }
 }
 class ProductLoading extends AppState{
@@ -26,7 +25,6 @@ class ProductLoading extends AppState{
 
   @override
   String toString() {
-    print('Loading...');
   }
 }
 class Done extends AppState{
@@ -39,7 +37,6 @@ class Done extends AppState{
   @override
   String toString() {
     // TODO: implement toString
-    print('Done');
   }
 
 }
@@ -54,7 +51,6 @@ class DoneProductAdded extends AppState{
   @override
   String toString() {
     // TODO: implement toString
-    print('Done');
   }
 
 }
@@ -68,7 +64,6 @@ class ErrorLoading extends AppState{
   @override
   String toString() {
     // TODO: implement toString
-    print('ErrorLoading');
   }
 
 }
@@ -82,7 +77,6 @@ class ErrorLoadingProduct extends AppState{
   @override
   String toString() {
     // TODO: implement toString
-    print('ErrorLoading');
   }
 
 }
@@ -93,7 +87,6 @@ class EmptyField extends AppState{
   @override
   String toString() {
     // TODO: implement toString
-    print('RadioSelection : ${value}');
   }
 
 
@@ -106,7 +99,6 @@ class RadioSelection extends AppState{
   @override
   String toString() {
     // TODO: implement toString
-    print('RadioSelection : ${value}');
   }
 
 

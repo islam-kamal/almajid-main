@@ -1,12 +1,15 @@
 import 'package:almajidoud/custom_widgets/custom_animated_push_navigation.dart';
 import 'package:almajidoud/custom_widgets/custom_button.dart';
 import 'package:almajidoud/screens/Reviews/product_reviews_screen.dart';
+import 'package:almajidoud/screens/my_account/widgets/logout_dialog.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/Reviews/thanks_for_review_screen.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 
 class AddReviewScreen extends StatefulWidget {
+  var product_id;
+  AddReviewScreen({this.product_id});
   @override
   _AddReviewScreenState createState() => _AddReviewScreenState();
 }
@@ -101,115 +104,128 @@ class _AddReviewScreenState extends State<AddReviewScreen>
 
             } else if (state is Done) {
               if(state.indicator ==  "CreateReview") {
+                var data = state.model as ProductReviewModel;
                 _stopAnimation();
-                customAnimatedPushNavigation(context, ThanksForRatingScreen());
+                showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context){
+                      return ThanksForRatingScreen(
+                        product_id: data.entityPkValue,
+                      );
+                    });
               }
             }
           },
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                addReviewsHeader(context: context),
-                Container(
-                  height: isLandscape(context)
-                      ? 2 * height(context) * .88
-                      : height(context) * .88,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Container(
-                            height: isLandscape(context)
-                                ? 2 * height(context) * .88
-                                : height(context) * .88,
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  responsiveSizedBox(
-                                      context: context,
-                                      percentageOfHeight: .02),
-                                  textRateYourExperience(context: context),
-                                  responsiveSizedBox(
-                                      context: context,
-                                      percentageOfHeight: .05),
-                                  reviewText(context: context),
-                                  responsiveSizedBox(
-                                      context: context,
-                                      percentageOfHeight: .01),
-                                  singleReviewItem(
-                                      context: context,
-                                      rating: ratingSmell,
-                                      text: translator.translate("Stability")),
-                                  responsiveSizedBox(
-                                      context: context,
-                                      percentageOfHeight: .01),
-                                  singleReviewItem(
-                                      context: context,
-                                      rating: ratingLongLast,
-                                      text: translator.translate("Smell")),
-                                  responsiveSizedBox(
-                                      context: context,
-                                      percentageOfHeight: .01),
-                                  singleReviewItem(
-                                      context: context,
-                                      rating: ratingPrice,
-                                      text: translator.translate("Price")),
-                                  responsiveSizedBox(
-                                      context: context,
-                                      percentageOfHeight: .05),
-                                  Form(
-                                    key: _formKey,
-                                    child: Column(
-                                      children: [
-                                        nickNameTextField(
-                                          context: context,
-                                        ),
-                                        responsiveSizedBox(
+          child: Directionality(
+            textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  addReviewsHeader(context: context,
+                  product_id: widget.product_id),
+                  Container(
+                    height: isLandscape(context)
+                        ? 2 * height(context) * .88
+                        : height(context) * .88,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Container(
+                              height: isLandscape(context)
+                                  ? 2 * height(context) * .88
+                                  : height(context) * .88,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    responsiveSizedBox(
+                                        context: context,
+                                        percentageOfHeight: .02),
+                                    textRateYourExperience(context: context),
+                                    responsiveSizedBox(
+                                        context: context,
+                                        percentageOfHeight: .05),
+                                    reviewText(context: context),
+                                    responsiveSizedBox(
+                                        context: context,
+                                        percentageOfHeight: .01),
+                                    singleReviewItem(
+                                        context: context,
+                                        rating: ratingSmell,
+                                        text: translator.translate("Stability")),
+                                    responsiveSizedBox(
+                                        context: context,
+                                        percentageOfHeight: .01),
+                                    singleReviewItem(
+                                        context: context,
+                                        rating: ratingLongLast,
+                                        text: translator.translate("Smell")),
+                                    responsiveSizedBox(
+                                        context: context,
+                                        percentageOfHeight: .01),
+                                    singleReviewItem(
+                                        context: context,
+                                        rating: ratingPrice,
+                                        text: translator.translate("Price")),
+                                    responsiveSizedBox(
+                                        context: context,
+                                        percentageOfHeight: .05),
+                                    Form(
+                                      key: _formKey,
+                                      child: Column(
+                                        children: [
+                                          nickNameTextField(
                                             context: context,
-                                            percentageOfHeight: .01),
-                                        summaryTextField(context: context),
-                                        responsiveSizedBox(
+                                          ),
+                                          responsiveSizedBox(
+                                              context: context,
+                                              percentageOfHeight: .01),
+                                          summaryTextField(context: context),
+                                          responsiveSizedBox(
+                                              context: context,
+                                              percentageOfHeight: .01),
+                                          reviewTextField(
                                             context: context,
-                                            percentageOfHeight: .01),
-                                        reviewTextField(
-                                          context: context,
-                                        ),
-                                      ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  responsiveSizedBox(
-                                      context: context,
-                                      percentageOfHeight: .03),
-                                StaggerAnimation(
-                                  titleButton: "Submit",
-                                  buttonController: _loginButtonController.view,
-                                  btn_width: width(context) * .7,
-                                  onTap: () {
-                                    if (_formKey.currentState.validate()) {
-                                      reviewsBloc.add(CreateReviewEvent(
-                                          product_id: StaticData.product_id,
-                                          nickname: nickname.text,
-                                          title: summary.text,
-                                          detail: review.text));
-                                    } else {
-                                      print("empty fields");
-                                    }
-                                  },
-                                )
+                                    responsiveSizedBox(
+                                        context: context,
+                                        percentageOfHeight: .03),
+                                    StaggerAnimation(
+                                      titleButton: "Submit",
+                                      buttonController: _loginButtonController.view,
+                                      btn_width: width(context) * .7,
+                                      onTap: () {
+                                        if (_formKey.currentState.validate()) {
+                                          reviewsBloc.add(CreateReviewEvent(
+                                              product_id: widget.product_id,
+                                              nickname: nickname.text,
+                                              title: summary.text,
+                                              detail: review.text));
+                                        } else {
+                                          print("empty fields");
+                                        }
+                                      },
+                                    )
 
-                                ],
-                              ),
-                            )),
-                      ],
+                                  ],
+                                ),
+                              )),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          )),
+          )
+      ),
     ));
   }
 
-  addReviewsHeader({BuildContext context}) {
+  addReviewsHeader({BuildContext context , var product_id}) {
     return Container(
       padding: EdgeInsets.only(
           right: width(context) * .05,
@@ -227,7 +243,9 @@ class _AddReviewScreenState extends State<AddReviewScreen>
         children: [
           GestureDetector(
             onTap: () {
-              customAnimatedPushNavigation(context, ProductReviewsScreen());
+              customAnimatedPushNavigation(context, ProductReviewsScreen(
+                product_id: product_id,
+              ));
             },
             child: Icon(
               Icons.navigate_before,

@@ -104,6 +104,7 @@ flutter:
     - assets/icons/
     - assets/langs/
     - assets/flag/
+
   fonts:
     - family: Cairo
       fonts:

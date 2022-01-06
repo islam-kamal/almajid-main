@@ -1,3 +1,4 @@
+import 'package:almajidoud/Model/ProductModel/product_model.dart';
 import 'package:almajidoud/Model/SearchModel/search_model.dart';
 import 'package:almajidoud/Repository/Search_Repo/search_repository.dart';
 import 'package:almajidoud/utils/file_export.dart';
@@ -5,7 +6,7 @@ import 'package:rxdart/rxdart.dart';
 
 class SearchBloc extends Bloc<AppEvent,AppState>{
   SearchBloc(AppState initialState) : super(initialState);
-  BehaviorSubject<SearchModel> _search_products_subject = new BehaviorSubject<SearchModel>();
+  BehaviorSubject<ProductModel> _search_products_subject = new BehaviorSubject<ProductModel>();
   get search_products_subject {
     return _search_products_subject;
   }
@@ -22,7 +23,6 @@ class SearchBloc extends Bloc<AppEvent,AppState>{
       var response = await search_repository.search_products_fun(
           search_text: event.search_text
       );
-      print("search response : ${response}");
       if(response.totalCount != null ){
         _search_products_subject.sink.add(response);
 
