@@ -36,7 +36,6 @@ class CategoryBloc extends Bloc<AppEvent, AppState> with Validator{
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
     if (event is getAllCategories) {
-      print("1");
       yield Loading();
       final response = await categoryRepository.getCategoriesList();
       if (response.childrenData != null || response.childrenData.isNotEmpty) {

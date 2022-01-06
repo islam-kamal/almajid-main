@@ -39,25 +39,20 @@ SharedPreferenceManager sharedPreferenceManager =SharedPreferenceManager();
 
   Future<ResponseType> post<ResponseType extends Mappable>(ResponseType responseType, String url,
       {Map headers, FormData body, encoding}) async {
-    print('1');
     var response;
     dio.options.baseUrl = Urls.BASE_URL;
-    print('2');
     try {
       print(headers);
       print(body.fields);
       print(body.files);
-      print('3');
       response = await dio.post(url,
           data: body,
           options: Options(headers: headers, requestEncoder: encoding ,
               followRedirects: false,  validateStatus: (status) { return status < 500; }));
-      print('4');
       print("response card : $response");
 
     } on DioError catch (e) {
       if (e.response != null) {
-        print('5');
         response = e.response;
       }
     }

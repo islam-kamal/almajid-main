@@ -7,6 +7,7 @@ import 'package:almajidoud/Model/ProductModel/product_model.dart'
 as product_model;
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
+import 'package:almajidoud/Repository/CategoryRepo/category_repository.dart';
 import 'package:almajidoud/custom_widgets/custom_animated_push_navigation.dart';
 import 'package:almajidoud/screens/WishList/custom_wishlist.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
@@ -20,7 +21,8 @@ import 'package:http/http.dart' as http;
 class HomeListProducts extends StatefulWidget {
   final String type;
   GlobalKey<ScaffoldState> homeScaffoldKey;
-  HomeListProducts({this.type, this.homeScaffoldKey});
+  Items items;
+  HomeListProducts({this.type, this.homeScaffoldKey,this.items});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -37,6 +39,8 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
   bool isLoading = false;
   final home_bloc = HomeBloc(null);
   var product_image;
+  var _subject;
+  List<product_model.Items> related_product_list = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -44,6 +48,24 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
     _loginButtonController = AnimationController(
         duration: const Duration(milliseconds: 3000), vsync: this);
     readJson();
+    switch(widget.type){
+      case 'best-seller':
+        _subject = home_bloc.best_seller_products_subject;
+        break;
+      case "New Arrivals":
+        _subject = home_bloc.new_arrivals_products_subject;
+        break;
+      case 'related products':
+        widget.items.productLinks.forEach((element) async {
+          print("element.linkedProductSku : ${element.linkedProductSku}");
+          var response = await categoryRepository.getProduct(sku: element.linkedProductSku);
+          related_product_list.add(response.items[0]);
+          home_bloc.related_products_subject.sink.add(response.items);
+        });
+        _subject = home_bloc.related_products_subject;
+        print("_subject : ${_subject}");
+        break;
+    }
   }
 
   Future<Null> _playAnimation() async {
@@ -92,23 +114,30 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
   Widget build(BuildContext context) {
     return Container(
       child:StreamBuilder<List<product_model.Items>>(
-        stream: widget.type == 'best-seller'
-            ? home_bloc.best_seller_products_subject
-            : home_bloc.new_arrivals_products_subject,
+        stream: _subject,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data == null) {
               return Container();
             } else {
+              print("snapshot.data : ${snapshot.data}");
+             if(widget.type ==  'related products'){
+               print("      #### snapshot.data : ${snapshot.data[0].name}");
+               snapshot.data.clear();
+               related_product_list.forEach((element) {
+                 snapshot.data.add(element) ;
+               });
+             }
               return Container(
                   width: width(context),
-                  height: isLandscape(context) ? 2 * height(context) * .26 : height(context) * .26,
+                  height: isLandscape(context) ? 2 * height(context) * .27 : height(context) * .27,
                   child: ListView.builder(
                       itemCount: snapshot.data.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         String special_price;
                         var percentage;
+
                         snapshot.data[index].customAttributes.forEach((element) {
                           if(element.attributeCode == 'special_price'){
                             special_price = element.value;
@@ -152,17 +181,12 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                           customAnimatedPushNavigation(
                                               context,
                                               ProductDetailsScreen(
-                                                product: snapshot
-                                                    .data[index],
+                                                product_id: snapshot.data[index].id,
                                               ));
                                         },
                                         child: Container(
                                           width: width(context) * .32,
-                                          height: isLandscape(context)
-                                              ? 2 *
-                                              height(context) *
-                                              .12
-                                              : height(context) * .12,
+                                          height: isLandscape(context) ? 2 * height(context) * .12 : height(context) * .12,
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
                                                   image: NetworkImage(
@@ -275,7 +299,8 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                             ),
                           ),
                         );
-                      }));
+                      })
+              );
             }
           } else if (snapshot.hasError) {
             return Container(

@@ -15,22 +15,16 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
     if (event is CreateOrderEvent) {
-      print("vistor type : ${StaticData.vistor_value }");
       yield Loading(indicator: 'CreateOrder');
      final response = await StaticData.vistor_value == 'visitor'?   orderRepository.create_guest_order(
         context: event.context,
       ) : orderRepository.create_client_order(
         context: event.context,
       );
-      print("create_order response : ${response.then((value){
-        print(" create_order value : ${value}");
-      })}");
 
       if (response == null) {
-        print("create_order ErrorLoading");
         yield ErrorLoading(indicator: 'CreateOrder');
       } else {
-        print("********** response : ${response}");
         var order_id;
       await  response.then((value){order_id = value;});
       yield Done(indicator: 'CreateOrder',general_value: order_id);
@@ -43,12 +37,9 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
       );
      // final response = await orderRepository.getPayFortSettings();
 
-      print("GetAllOrder response : ${response}");
      if (response.message != null) {
-        print("GetAllOrder ErrorLoading");
         yield ErrorLoading();
       } else {
-        print("GetAllOrder Done");
         _all_orders_subject.sink.add(response);
         yield Done();
       }

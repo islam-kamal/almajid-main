@@ -7,6 +7,7 @@ import 'package:almajidoud/Model/SearchModel/search_model.dart';
 import 'package:almajidoud/screens/WishList/custom_wishlist.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
+import 'package:almajidoud/screens/product_details/product_details_screen.dart';
 
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
@@ -85,7 +86,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 ],
                               ),
                           ) : Container(
-                            child: StreamBuilder<SearchModel>(
+                            child: StreamBuilder<ProductModel>(
                               stream: search_bloc.search_products_subject,
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
@@ -115,153 +116,161 @@ class _SearchScreenState extends State<SearchScreen> {
                                           } else {
                                             return snapshot.data.items[index] == null
                                                 ? Container()
-                                                :   Directionality(
-                                                textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl :TextDirection.ltr ,
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    Column(
-                                                      children: [
-                                                        responsiveSizedBox(context: context, percentageOfHeight: .02),
-                                                        Neumorphic(
-                                                            child: Container(
-                                                                width: width(context) * .95,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Container(
-                                                                      margin: EdgeInsets.only(right: 3,left: 3),
-                                                                      width: width(context) * .3,
-                                                                      height: isLandscape(context)
-                                                                          ? 2 * height(context) * .15
-                                                                          : height(context) * .15,
-                                                                      decoration: BoxDecoration(
-                                                                          color: backGroundColor,
-                                                                          borderRadius: BorderRadius.circular(15),
-                                                                          image: DecorationImage(
-                                                                              image: NetworkImage(
-                                                                                product_image??'',
-                                                                              ),
-                                                                              fit: BoxFit.fill)),
-                                                                    ) ,
-
-                                                                    Directionality(
-                                                                        textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.ltr :TextDirection.rtl,
-                                                                        child: Container(
-                                                                            padding: EdgeInsets.only(
-                                                                                right: width(context) * .02,
-                                                                                left: width(context) * .02),
-                                                                            width: width(context) * .6,
-                                                                            height: isLandscape(context)
-                                                                                ? 2 * height(context) * .17
-                                                                                : height(context) * .17,
-                                                                            child: SingleChildScrollView(
-                                                                              child: Column(
-                                                                                crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-                                                                                children: [
-                                                                                  CustomWishList(
-                                                                                    color: redColor,
-                                                                                    product_id: snapshot.data.items[index].id,
-                                                                                    qty: snapshot.data.items[index].extensionAttributes.stockItem.qty,
-                                                                                    context: context,
-                                                                                    screen: SearchScreen(),
-
-                                                                                  ),
-                                                                                  responsiveSizedBox(
-                                                                                      context: context, percentageOfHeight: .01),
-                                                                                  Padding(padding: EdgeInsets.only(right: 5,left: 5),
-                                                                                    child:  customDescriptionText(
-                                                                                        context: context,
-                                                                                        textColor: mainColor,
-                                                                                        maxLines: 2,
-                                                                                        text: snapshot.data.items[index].name,
-                                                                                        textAlign: translator.activeLanguageCode == 'ar' ? TextAlign.start :TextAlign.end),),
-                                                                                  responsiveSizedBox(
-                                                                                      context: context, percentageOfHeight: .01),
-                                                                                  Row(
-                                                                                    mainAxisAlignment:
-                                                                                    MainAxisAlignment.spaceBetween,
-                                                                                    children: [
-                                                                                      Container(
-                                                                                        child: customDescriptionText(
-                                                                                            context: context,
-                                                                                            textColor: mainColor,
-                                                                                            text: "${snapshot.data.items[index].price} ${MyApp.country_currency}",
-                                                                                            textAlign: TextAlign.start,
-                                                                                            fontWeight: FontWeight.bold),
-                                                                                      ),
-                                                                                      RatingBar.readOnly(
-                                                                                        initialRating:
-                                                                                        5.0,
-                                                                                        maxRating: 5,
-                                                                                        isHalfAllowed: true,
-                                                                                        halfFilledIcon: Icons.star_half,
-                                                                                        filledIcon: Icons.star,
-                                                                                        emptyIcon: Icons.star_border,
-                                                                                        size: StaticData.get_width(context) * 0.03,
-                                                                                        filledColor:
-                                                                                        (snapshot.data.items[index].visibility.toDouble() >= 1)
-                                                                                            ? Colors.yellow.shade700
-                                                                                            : Colors.yellow.shade700,
-                                                                                      ),
-
-
-                                                                                    ],
-                                                                                  ),
-                                                                                  responsiveSizedBox(
-                                                                                      context: context, percentageOfHeight: .01),
-                                                                                  Row(
-                                                                                    mainAxisAlignment:
-                                                                                    MainAxisAlignment.spaceBetween,
-                                                                                    children: [
-                                                                                      AddProductToCartWidget(
-                                                                                        product_sku: snapshot.data.items[index].sku,
-                                                                                        product_quantity:   1,
-                                                                                        instock_status: snapshot.data.items[index].extensionAttributes.stockItem.isInStock,
-                                                                                        scaffoldKey: scaffold_key,
-                                                                                        btn_height: width(context) * .08,
-                                                                                        btn_width: width(context) * .35,
-                                                                                        text_size: 0.017,
-                                                                                        home_shape: false,
-                                                                                        product_image: product_image,
-                                                                                        product_id:  snapshot.data.items[index].id,
-                                                                                      ),
-                                                                                      InkWell(
-                                                                                        onTap: () {
-                                                                                          final RenderBox box =
-                                                                                          context.findRenderObject();
-                                                                                          Share.share('${snapshot.data.items[index].name}',
-                                                                                              subject: 'Welcome To Amajed Oud',
-                                                                                              sharePositionOrigin:
-                                                                                              box.localToGlobal(Offset.zero) &
-                                                                                              box.size);
-                                                                                        },
-                                                                                        child: Container(
-                                                                                          width: width(context) * .15,
-                                                                                          height: isLandscape(context)
-                                                                                              ? 2 * height(context) * .035
-                                                                                              : height(context) * .035,
-                                                                                          decoration: BoxDecoration(
-                                                                                              border: Border.all(color: mainColor)),
-                                                                                          child: Row(
-                                                                                            mainAxisAlignment:
-                                                                                            MainAxisAlignment.spaceAround,
-                                                                                            children: [Icon(Icons.share_outlined)],
-                                                                                          ),
-                                                                                        ),
-                                                                                      )
-                                                                                    ],
-                                                                                  )
-                                                                                ],
-                                                                              ),
-                                                                            )
-                                                                        )),
-                                                                  ],
-                                                                ),
-                                                                decoration: BoxDecoration(color: backGroundColor))),
-                                                      ],
-                                                    ),
-                                                  ],
+                                                :   InkWell(
+                                              onTap: (){
+                                                customAnimatedPushNavigation(context,ProductDetailsScreen(
+                                                  product_id: snapshot.data.items[index].id,
                                                 )
+                                                    );
+                                              },
+                                              child: Directionality(
+                                                  textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl :TextDirection.ltr ,
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Column(
+                                                        children: [
+                                                          responsiveSizedBox(context: context, percentageOfHeight: .02),
+                                                          Neumorphic(
+                                                              child: Container(
+                                                                  width: width(context) * .95,
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: EdgeInsets.only(right: 3,left: 3),
+                                                                        width: width(context) * .3,
+                                                                        height: isLandscape(context)
+                                                                            ? 2 * height(context) * .15
+                                                                            : height(context) * .15,
+                                                                        decoration: BoxDecoration(
+                                                                            color: backGroundColor,
+                                                                            borderRadius: BorderRadius.circular(15),
+                                                                            image: DecorationImage(
+                                                                                image: NetworkImage(
+                                                                                  product_image??'',
+                                                                                ),
+                                                                                fit: BoxFit.fill)),
+                                                                      ) ,
+
+                                                                      Directionality(
+                                                                          textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.ltr :TextDirection.rtl,
+                                                                          child: Container(
+                                                                              padding: EdgeInsets.only(
+                                                                                  right: width(context) * .02,
+                                                                                  left: width(context) * .02),
+                                                                              width: width(context) * .6,
+                                                                              height: isLandscape(context)
+                                                                                  ? 2 * height(context) * .17
+                                                                                  : height(context) * .17,
+                                                                              child: SingleChildScrollView(
+                                                                                child: Column(
+                                                                                  crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                                                                                  children: [
+                                                                                    CustomWishList(
+                                                                                      color: redColor,
+                                                                                      product_id: snapshot.data.items[index].id,
+                                                                                      qty: snapshot.data.items[index].extensionAttributes.stockItem.qty,
+                                                                                      context: context,
+                                                                                      screen: SearchScreen(),
+
+                                                                                    ),
+                                                                                    responsiveSizedBox(
+                                                                                        context: context, percentageOfHeight: .01),
+                                                                                    Padding(padding: EdgeInsets.only(right: 5,left: 5),
+                                                                                      child:  customDescriptionText(
+                                                                                          context: context,
+                                                                                          textColor: mainColor,
+                                                                                          maxLines: 2,
+                                                                                          text: snapshot.data.items[index].name,
+                                                                                          textAlign: translator.activeLanguageCode == 'ar' ? TextAlign.start :TextAlign.end),),
+                                                                                    responsiveSizedBox(
+                                                                                        context: context, percentageOfHeight: .01),
+                                                                                    Row(
+                                                                                      mainAxisAlignment:
+                                                                                      MainAxisAlignment.spaceBetween,
+                                                                                      children: [
+                                                                                        Container(
+                                                                                          child: customDescriptionText(
+                                                                                              context: context,
+                                                                                              textColor: mainColor,
+                                                                                              text: "${snapshot.data.items[index].price} ${MyApp.country_currency}",
+                                                                                              textAlign: TextAlign.start,
+                                                                                              fontWeight: FontWeight.bold),
+                                                                                        ),
+                                                                                        RatingBar.readOnly(
+                                                                                          initialRating:
+                                                                                          5.0,
+                                                                                          maxRating: 5,
+                                                                                          isHalfAllowed: true,
+                                                                                          halfFilledIcon: Icons.star_half,
+                                                                                          filledIcon: Icons.star,
+                                                                                          emptyIcon: Icons.star_border,
+                                                                                          size: StaticData.get_width(context) * 0.03,
+                                                                                          filledColor:
+                                                                                          (snapshot.data.items[index].visibility.toDouble() >= 1)
+                                                                                              ? Colors.yellow.shade700
+                                                                                              : Colors.yellow.shade700,
+                                                                                        ),
+
+
+                                                                                      ],
+                                                                                    ),
+                                                                                    responsiveSizedBox(
+                                                                                        context: context, percentageOfHeight: .01),
+                                                                                    Row(
+                                                                                      mainAxisAlignment:
+                                                                                      MainAxisAlignment.spaceBetween,
+                                                                                      children: [
+                                                                                        AddProductToCartWidget(
+                                                                                          product_sku: snapshot.data.items[index].sku,
+                                                                                          product_quantity:   1,
+                                                                                          instock_status: snapshot.data.items[index].extensionAttributes.stockItem.isInStock,
+                                                                                          scaffoldKey: scaffold_key,
+                                                                                          btn_height: width(context) * .08,
+                                                                                          btn_width: width(context) * .35,
+                                                                                          text_size: 0.017,
+                                                                                          home_shape: false,
+                                                                                          product_image: product_image,
+                                                                                          product_id:  snapshot.data.items[index].id,
+                                                                                        ),
+                                                                                        InkWell(
+                                                                                          onTap: () {
+                                                                                            final RenderBox box =
+                                                                                            context.findRenderObject();
+                                                                                            Share.share('${snapshot.data.items[index].name}',
+                                                                                                subject: 'Welcome To Amajed Oud',
+                                                                                                sharePositionOrigin:
+                                                                                                box.localToGlobal(Offset.zero) &
+                                                                                                box.size);
+                                                                                          },
+                                                                                          child: Container(
+                                                                                            width: width(context) * .15,
+                                                                                            height: isLandscape(context)
+                                                                                                ? 2 * height(context) * .035
+                                                                                                : height(context) * .035,
+                                                                                            decoration: BoxDecoration(
+                                                                                                border: Border.all(color: mainColor)),
+                                                                                            child: Row(
+                                                                                              mainAxisAlignment:
+                                                                                              MainAxisAlignment.spaceAround,
+                                                                                              children: [Icon(Icons.share_outlined)],
+                                                                                            ),
+                                                                                          ),
+                                                                                        )
+                                                                                      ],
+                                                                                    )
+                                                                                  ],
+                                                                                ),
+                                                                              )
+                                                                          )),
+                                                                    ],
+                                                                  ),
+                                                                  decoration: BoxDecoration(color: backGroundColor))),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  )
+                                              ),
                                             );
                                           }
 

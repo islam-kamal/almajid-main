@@ -68,12 +68,11 @@ class _HomeSlider_State extends State<HomeSlider> {
                   ),
                   Positioned(
                     bottom: -MediaQuery.of(context).size.width *0.06,
-                    left: StaticData.get_width(context) * 0.4,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: widget.gallery.map((url) {
                         int index =  widget.gallery.indexOf(url);
-                        return Container(
+                        return  Container(
                           width: 16.0,
                           height: 4.0,
                           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
@@ -83,7 +82,7 @@ class _HomeSlider_State extends State<HomeSlider> {
                                 ? mainColor
                                 : greyColor,
                           ),
-                        );
+                        ) ;
                       }).toList(),
                     ),
                   )
