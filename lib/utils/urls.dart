@@ -68,6 +68,8 @@ class Urls {
 
   static final String CREATE_PRODUCT_REVIEW = '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/reviews/';
 
+ static final String UPDATE_DEVICE_TOKEN =   "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/notifications";
+
 
 }
 

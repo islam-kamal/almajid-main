@@ -2,6 +2,7 @@ import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/screens/auth/get_started_screen.dart';
 import 'package:almajidoud/screens/auth/sing_in_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:rxdart/rxdart.dart';
 
 
@@ -63,6 +64,7 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
         final mobileElement = response.customAttributes.firstWhere((element) => element.attributeCode == 'mobile_number');
         print('you number is ' + mobileElement.value.toString());
         sharedPreferenceManager.writeData(CachingKey.MOBILE_NUMBER, mobileElement.value );
+        await _updateUserToken(customerId: response.id);
         yield Done(model:response);
       }else{
         yield ErrorLoading(model: response);
@@ -76,6 +78,12 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
     email_controller?.close();
     password_controller?.close();
 
+  }
+
+  void _updateUserToken({int customerId}) async{
+    //get the current device token
+    String deviceToken  = await FirebaseMessaging.instance.getToken();
+    await AuthenticationRepository.updateDeviceToken(customerId: customerId,deviceToken: deviceToken);
   }
 
 

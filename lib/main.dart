@@ -9,7 +9,7 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import 'notification/local_notification_service.dart';
+import 'Base/Notifications/local_notification_service.dart';
 
 /// receive message when app is in background without clicking on the notification
 Future<void> _backgroundHandler(RemoteMessage message) async{
@@ -127,24 +127,31 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _fcmConfigure(BuildContext context) async{
     LocalNotificationService.initialize(context);
+    final _firebaseMessaging = FirebaseMessaging.instance;
 
     ///required by IOS permissions
-    FirebaseMessaging.instance.requestPermission().then((value) {
-      print(value);});
-    FirebaseMessaging.instance.getToken().then((token){
-      print(token);});
-    FirebaseMessaging.instance.getAPNSToken().then((APNStoken){
-      print(APNStoken);});
+    _firebaseMessaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
 
-    //get the current device token
-    _getCustomerNotification();
+    // //get the current device token
+    // _getCustomerNotification();
 
     ///gives you the message on which use taps
     ///and it opened from the terminated state
-    FirebaseMessaging.instance.getInitialMessage().then((message) {
+    _firebaseMessaging.getInitialMessage().then((message) {
       if(message !=null){
         final routeMessage = message.data['route'];
-        Navigator.of(context).pushNamed(routeMessage);
+        if (StaticData.vistor_value != "visitor") {
+          switch (routeMessage) {
+            case "order_update":
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => OrdersScreen( increment_id: "" )));
+              break;
+          }
+        }
       }
     });
 
@@ -161,13 +168,16 @@ class _MyAppState extends State<MyApp> {
     ///app in background and not terminated when you click on the notification this should be triggered
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       final routeMessage = message.data['route'];
-      Navigator.of(context).pushNamed(routeMessage);
+      if (StaticData.vistor_value != "visitor") {
+        switch (routeMessage) {
+          case "order_update":
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => OrdersScreen( increment_id: "" )));
+            break;
+        }
+      }
     });
   }
-  void _getCustomerNotification() async{
-    FirebaseMessaging.instance.getToken().then((token) {
-      print("token: " + token);
-    } );
-  }
+
 
 }

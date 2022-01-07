@@ -160,5 +160,27 @@ class AuthenticationRepository{
  }
 
 
-
+ static Future<bool> updateDeviceToken({
+    int customerId,
+    String deviceToken,
+  }) async {
+    final payload =
+        convert.jsonEncode({"customerId": customerId, "token": deviceToken});
+    Dio dio = new Dio();
+    try {
+      final response = await dio.post(Urls.BASE_URL + Urls.UPDATE_DEVICE_TOKEN,
+          data: payload,
+          options: Options(headers: {
+            'content-type': 'application/json',
+            'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
+          }));
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
 }
