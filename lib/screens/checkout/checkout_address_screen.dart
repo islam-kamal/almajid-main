@@ -929,14 +929,22 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       btn_width: width(context) * .7,
       onTap: () {
     if (_formKey.currentState.validate() ) {
-      StaticData.order_address = addres_city_name +
-          " , " //use this to show address in CheckoutSummaryScreen
-              "${shipmentAddressBloc.street_controller.value == null
-              ? street
-              : shipmentAddressBloc.street_controller.value }";
-      shipmentAddressBloc.add(
-          GuestAddAdressEvent(context: context)
-      );
+      if(addres_city_name == null){
+        errorDialog(
+          context: context,
+          text: "City should be mandatory in checkout"
+        );
+      }else{
+        StaticData.order_address = addres_city_name +
+            " , " //use this to show address in CheckoutSummaryScreen
+                "${shipmentAddressBloc.street_controller.value == null
+                ? street
+                : shipmentAddressBloc.street_controller.value }";
+        shipmentAddressBloc.add(
+            GuestAddAdressEvent(context: context)
+        );
+      }
+
     }else if(frist_name !=null){
       StaticData.order_address = addres_city_name +
           " , " //use this to show address in CheckoutSummaryScreen

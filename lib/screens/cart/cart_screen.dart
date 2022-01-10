@@ -61,8 +61,7 @@ class _CartScreenState extends State<CartScreen> {
                 child: SingleChildScrollView(
                     child: Column(
                   children: [
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .09),
+                    responsiveSizedBox(context: context, percentageOfHeight: .06),
                     BlocBuilder(
                       bloc: shoppingCartBloc,
                       builder: (context, state) {

@@ -10,15 +10,16 @@ import 'package:almajidoud/utils/file_export.dart';
 class SearchRepository {
   static SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();
 
-  Future<ProductModel> search_products_fun({String search_text}) async {
+  Future<ProductModel> search_products_fun({String search_text ,var offset}) async {
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
     };
+    print("search offset : ${offset}");
     return NetworkUtil.internal().get(
         ProductModel(),
-        '${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/mstore/products?searchCriteria[filter_groups][0][filters][0][field]=name&searchCriteria[filter_groups][0][filters][0][value]=%${search_text}%&searchCriteria[filter_groups][0][filters][0][condition_type]=like',
+     '${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/mstore/products?searchCriteria[filter_groups][0][filters][0][field]=name&searchCriteria[filter_groups][0][filters][0][value]=%${search_text}%&searchCriteria[filter_groups][0][filters][0][condition_type]=like',
         headers: headers);
   }
 }

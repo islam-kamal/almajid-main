@@ -19,7 +19,8 @@ class CustomCircleNavigationBar extends StatefulWidget {
 class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
   int currentPage = 0;
   final List<Widget> _pages = [
-    translator.activeLanguageCode == 'en' ? CartScreen() : MyAccountScreen(),
+    translator.activeLanguageCode == 'en' ? MyAccountScreen() : CartScreen(),
+
     translator.activeLanguageCode == 'en'
         ? LocationScreen()
         : SearchScreen(),
@@ -27,7 +28,8 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
     translator.activeLanguageCode == 'en'
         ? SearchScreen()
         : LocationScreen(),
-    translator.activeLanguageCode == 'en' ? MyAccountScreen() : CartScreen()
+    translator.activeLanguageCode == 'en' ? CartScreen() : MyAccountScreen(),
+
   ];
 
   @override
@@ -91,12 +93,12 @@ List<TabData> getTabsData() {
   return [
     translator.activeLanguageCode == 'en'
         ? TabData(
-      icon: Icons.shopping_cart,
-      iconSize: 25.0,
-    )
-        : TabData(
       icon: Icons.menu,
       iconSize: 25,
+    )
+        : TabData(
+      icon: Icons.shopping_cart,
+      iconSize: 25.0,
     ),
     translator.activeLanguageCode == 'en'
         ? TabData(
@@ -122,12 +124,13 @@ List<TabData> getTabsData() {
     ),
     translator.activeLanguageCode == 'en'
         ? TabData(
-      icon: Icons.menu,
-      iconSize: 25,
-    )
-        : TabData(
       icon: Icons.shopping_cart,
       iconSize: 25.0,
+    )
+        : TabData(
+      icon: Icons.menu,
+      iconSize: 25,
     ),
+
   ];
 }

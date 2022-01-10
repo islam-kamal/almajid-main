@@ -38,7 +38,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       ScreenAppBar(
                         right_icon: 'cart',
                         category_name: translator.translate("My Orders" ),
-                        screen: CustomCircleNavigationBar(page_index: 2,),
+                        screen: CustomCircleNavigationBar(page_index: 4,),
 
                       ),
 //              noOrdersWidget(context: context)
