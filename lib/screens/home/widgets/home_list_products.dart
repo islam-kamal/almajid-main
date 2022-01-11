@@ -196,7 +196,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                       ),
                                       Container(
                                         width: width(context) * .32,
-                                        height: isLandscape(context) ? 2 * height(context) * .15 : height(context) * .09,
+                                        height: isLandscape(context) ? 2 * height(context) * .15 : height(context) * .08,
                                         color: whiteColor,
                                         child: Column(
                                           children: [
