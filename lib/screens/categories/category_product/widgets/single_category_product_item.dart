@@ -8,7 +8,6 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/WishList/custom_wishlist.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:rating_bar/rating_bar.dart';
-import 'package:share/share.dart';
 
 class singleCategoryProductItem extends StatelessWidget {
   TextEditingController qty_controller = new TextEditingController();
@@ -47,6 +46,7 @@ class singleCategoryProductItem extends StatelessWidget {
                   Neumorphic(
                       child: Container(
                           width: width(context) * .95,
+
                           child: Row(
                             children: [
                               Container(
@@ -95,7 +95,8 @@ class singleCategoryProductItem extends StatelessWidget {
                                         responsiveSizedBox(
                                             context: context,
                                             percentageOfHeight: .01),
-                                        customDescriptionText(
+                                      Align(
+                                        child:   customDescriptionText(
                                             context: context,
                                             textColor: mainColor,
                                             maxLines: 2,
@@ -104,7 +105,12 @@ class singleCategoryProductItem extends StatelessWidget {
                                             translator.activeLanguageCode ==
                                                 'en'
                                                 ? TextAlign.end
-                                                : TextAlign.start),
+                                                : TextAlign.start
+                                        ),
+                                        alignment:translator.activeLanguageCode ==
+                                            'en'
+                                            ? Alignment.centerLeft :  Alignment.centerRight,
+                                      ),
                                         responsiveSizedBox(
                                             context: context,
                                             percentageOfHeight: .01),
@@ -140,10 +146,10 @@ class singleCategoryProductItem extends StatelessWidget {
                                         ),
                                         responsiveSizedBox(
                                             context: context,
-                                            percentageOfHeight: .01),
+                                            percentageOfHeight: .02),
                                         Row(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.center,
                                           children: [
                                             AddProductToCartWidget(
                                               product_sku: product.sku,
@@ -151,42 +157,12 @@ class singleCategoryProductItem extends StatelessWidget {
                                               instock_status: product.extensionAttributes.stockItem.isInStock,
                                               scaffoldKey: scafffoldKey,
                                               btn_height: width(context) * .08,
-                                              btn_width: width(context) * .35,
+                                              btn_width: width(context) * .45,
                                               text_size: 0.017,
                                               home_shape: false,
                                               product_image: product_image,
                                               product_id: product.id,
                                             ),
-                                            InkWell(
-                                              onTap: () {
-                                                final RenderBox box =
-                                                context.findRenderObject();
-                                                Share.share('${product.name}',
-                                                    subject:
-                                                    'Welcome To Amajed Oud',
-                                                    sharePositionOrigin:
-                                                    box.localToGlobal(
-                                                        Offset.zero) &
-                                                    box.size);
-                                              },
-                                              child: Container(
-                                                width: width(context) * .15,
-                                                height: isLandscape(context)
-                                                    ? 2 * height(context) * .035
-                                                    : height(context) * .035,
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: mainColor)),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceAround,
-                                                  children: [
-                                                    Icon(Icons.share_outlined)
-                                                  ],
-                                                ),
-                                              ),
-                                            )
                                           ],
                                         )
                                       ],

@@ -1,3 +1,4 @@
+import 'package:almajidoud/Bloc/WishList_Bloc/wishlist_bloc.dart';
 import 'package:almajidoud/Model/CartModel/add_cart_model.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
@@ -5,7 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class AddProductToCartWidget extends StatefulWidget {
   var product_quantity, product_sku, instock_status,btn_width,btn_height,text_size ,
-      home_shape , product_image , product_id;
+      home_shape , product_image , product_id , add_wishlist_to_cart ;
   GlobalKey<ScaffoldState> scaffoldKey;
 
   AddProductToCartWidget(
@@ -18,7 +19,8 @@ class AddProductToCartWidget extends StatefulWidget {
         this.text_size,
         this.home_shape = true,
         this.product_image,
-        this.product_id
+        this.product_id,
+        this.add_wishlist_to_cart = false
       });
 
   @override
@@ -149,16 +151,20 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
                           )..show(widget.scaffoldKey.currentState.context);
                         }
                       : ()async {
-                    print("product_images_map 1");
-                    StaticData.product_images_map.add({widget.product_id.toString() : widget.product_image});
-                    print("product_images_map 2");
-                  await  sharedPreferenceManager.setListOfMaps(StaticData.product_images_map, 'product_images_map');
-                    print("product_images_map 3");
-                          shoppingCartBloc.add(AddProductToCartEvent(
-                              context: context,
-                              product_quantity: widget.product_quantity,
-                              product_sku: widget.product_sku,
-                              indictor: 'detail_add_to_cart'));
+                    if(widget.add_wishlist_to_cart){
+                      wishlist_bloc.add(AddToCarFromWishListEvent(
+                          context: context, qty: 1,
+                          wishlist_product_id: widget.product_id)
+                      );
+                    }else{
+                      shoppingCartBloc.add(AddProductToCartEvent(
+                          context: context,
+                          product_quantity: widget.product_quantity,
+                          product_sku: widget.product_sku,
+                          indictor: 'detail_add_to_cart'));
+                    }
+
+
                         },
                 ),
               );

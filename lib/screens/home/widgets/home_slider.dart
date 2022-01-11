@@ -50,7 +50,7 @@ class _HomeSlider_State extends State<HomeSlider> {
                       Image.network(
                         '${item}',
                         width: MediaQuery.of(context).size.width,
-                        fit: BoxFit.contain,
+                        fit: BoxFit.cover,
                       ),
                     )).toList(),
 

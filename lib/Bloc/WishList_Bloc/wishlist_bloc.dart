@@ -81,6 +81,7 @@ class WishListBloc extends Bloc<AppEvent,AppState>  {
 
     }
     else  if(event is AddToCarFromWishListEvent){
+      yield Loading(indicator: 'add_wishlist_item_to_cart');
       print('event.product_id : ${event.wishlist_product_id}');
       var response = await wishlistRepository.add_product_from_wishlist_to_cart(
           product_qty: event.qty,
@@ -88,9 +89,9 @@ class WishListBloc extends Bloc<AppEvent,AppState>  {
           context: event.context
       );
       if(response ==true){
-        yield Done(indicator: 'add_cart');
+        yield Done(indicator: 'add_wishlist_item_to_cart');
       }else{
-        yield  ErrorLoading(indicator: 'add_cart');
+        yield  ErrorLoading(indicator: 'add_wishlist_item_to_cart');
       }
     }
   }

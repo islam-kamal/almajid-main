@@ -27,6 +27,16 @@ class ProductLoading extends AppState{
   String toString() {
   }
 }
+class WishListToCartLoading extends AppState{
+  final String indicator;
+  final String id;
+  Mappable model;
+  WishListToCartLoading( {this.id='',this.model , this.indicator});
+
+  @override
+  String toString() {
+  }
+}
 class Done extends AppState{
   Mappable model;
   final String indicator;
@@ -54,6 +64,20 @@ class DoneProductAdded extends AppState{
   }
 
 }
+class DoneWishListToCartAdded extends AppState{
+  Mappable model;
+  final String indicator;
+  List<dynamic> general_model;
+  final String id;
+  var general_value;
+  DoneWishListToCartAdded({this.id='',this.model , this.indicator,this.general_model, this.general_value});
+
+  @override
+  String toString() {
+    // TODO: implement toString
+  }
+
+}
 
 class ErrorLoading extends AppState{
   Mappable model;
@@ -74,6 +98,19 @@ class ErrorLoadingProduct extends AppState{
   String indicator;
   String message;
   ErrorLoadingProduct({this.sku='',this.model,this.message,this.indicator,this.general_model});
+  @override
+  String toString() {
+    // TODO: implement toString
+  }
+
+}
+class ErrorLoadingWishListToCart extends AppState{
+  Mappable model;
+  List<dynamic> general_model;
+  final String id;
+  String indicator;
+  String message;
+  ErrorLoadingWishListToCart({this.id='',this.model,this.message,this.indicator,this.general_model});
   @override
   String toString() {
     // TODO: implement toString

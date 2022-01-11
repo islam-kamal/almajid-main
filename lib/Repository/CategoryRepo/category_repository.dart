@@ -27,11 +27,13 @@ class CategoryRepository {
       'Accept': 'application/json',
       'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
     };
-    print("MyApp.app_langauge : ${MyApp.app_langauge}");
+    print("category_id : ${category_id}");
+    print("offsete : ${offset}");
     return NetworkUtil.internal().get(
         ProductModel(),
-        '${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/products?searchCriteria&searchCriteria[filterGroups][0][filters][1][field]=category_id&searchCriteria[filterGroups][0][filters][1][value]=${category_id}&searchCriteria[filterGroups][0][filters][1][conditionType]=eq&searchCriteria[sortOrders][0][field]=position&searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[pageSize]=10&searchCriteria[currentPage]=1',
-    headers: headers);
+        //   '${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/products?searchCriteria&searchCriteria[filterGroups][0][filters][1][field]=category_id&searchCriteria[filterGroups][0][filters][1][value]=252&searchCriteria[filterGroups][0][filters][1][conditionType]=eq&searchCriteria[sortOrders][0][field]=position&searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[pageSize]=10&searchCriteria[currentPage]=${offset}',
+        "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/products?searchCriteria&searchCriteria[filterGroups][0][filters][1][field]=category_id&searchCriteria[filterGroups][0][filters][1][value]=${category_id}&searchCriteria[filterGroups][0][filters][1][conditionType]=eq&searchCriteria[sortOrders][0][field]=position&searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[pageSize]=10&searchCriteria[currentPage]=${offset}",
+        headers: headers);
   }
 
 
@@ -40,15 +42,15 @@ class CategoryRepository {
     print("id___ : ${id}");
     print("sku___ : ${sku}");
     var endPoint ;
-if(id== null){
-  endPoint =
-  '?searchCriteria[filterGroups][0][filters][1][field]=sku&searchCriteria[filterGroups][0][filters][1][condition_type]=eq';
-  endPoint += '&searchCriteria[filterGroups][0][filters][1][value]=$sku';
-}else{
-  endPoint =
-  '?searchCriteria[filterGroups][0][filters][0][field]=entity_id&searchCriteria[filterGroups][0][filters][0][condition_type]=eq';
-  endPoint += '&searchCriteria[filterGroups][0][filters][0][value]=$id';
-}
+    if(id== null){
+      endPoint =
+      '?searchCriteria[filterGroups][0][filters][1][field]=sku&searchCriteria[filterGroups][0][filters][1][condition_type]=eq';
+      endPoint += '&searchCriteria[filterGroups][0][filters][1][value]=$sku';
+    }else{
+      endPoint =
+      '?searchCriteria[filterGroups][0][filters][0][field]=entity_id&searchCriteria[filterGroups][0][filters][0][condition_type]=eq';
+      endPoint += '&searchCriteria[filterGroups][0][filters][0][value]=$id';
+    }
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',

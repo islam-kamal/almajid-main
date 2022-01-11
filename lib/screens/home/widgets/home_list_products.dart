@@ -14,7 +14,6 @@ import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigatio
 import 'package:almajidoud/screens/product_details/product_details_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
-import 'package:share/share.dart';
 import 'package:almajidoud/Widgets/customText.dart';
 import 'package:http/http.dart' as http;
 
@@ -41,6 +40,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
   var product_image;
   var _subject;
   List<product_model.Items> related_product_list = [];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -49,7 +49,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
         duration: const Duration(milliseconds: 3000), vsync: this);
     readJson();
     switch(widget.type){
-      case 'best-seller':
+      case "best-seller":
         _subject = home_bloc.best_seller_products_subject;
         break;
       case "New Arrivals":
@@ -196,7 +196,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                       ),
                                       Container(
                                         width: width(context) * .32,
-                                        height: isLandscape(context) ? 2 * height(context) * .15 : height(context) * .08,
+                                        height: isLandscape(context) ? 2 * height(context) * .15 : height(context) * .09,
                                         color: whiteColor,
                                         child: Column(
                                           children: [
@@ -318,23 +318,3 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
 
 }
 
-class MyShareButton extends StatelessWidget {
-  final String data;
-  const MyShareButton({Key key, this.data}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      child: Icon(
-        Icons.share_outlined,
-        color: mainColor,
-      ),
-      onTap: () {
-        final RenderBox box = context.findRenderObject();
-        Share.share('${data}',
-            subject: 'Welcome To Amajed Oud',
-            sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
-      },
-    );
-  }
-}
