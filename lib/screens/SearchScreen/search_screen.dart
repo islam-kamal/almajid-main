@@ -140,8 +140,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                           margin: EdgeInsets.only(right: 3,left: 3),
                                                                           width: width(context) * .3,
                                                                           height: isLandscape(context)
-                                                                              ? 2 * height(context) * .15
-                                                                              : height(context) * .15,
+                                                                              ? 2 * height(context) * .14
+                                                                              : height(context) * .14,
                                                                           decoration: BoxDecoration(
                                                                               color: backGroundColor,
                                                                               borderRadius: BorderRadius.circular(15),
@@ -160,10 +160,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                     left: width(context) * .02),
                                                                                 width: width(context) * .6,
                                                                                 height: isLandscape(context)
-                                                                                    ? 2 * height(context) * .17
-                                                                                    : height(context) * .17,
-                                                                                child: SingleChildScrollView(
-                                                                                  child: Column(
+                                                                                    ? 2 * height(context) * .15
+                                                                                    : height(context) * .15,
+                                                                                child: Column(
+                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                     crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                                                                                     children: [
                                                                                       CustomWishList(
@@ -174,28 +174,46 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                         screen: SearchScreen(),
 
                                                                                       ),
-                                                                                      responsiveSizedBox(
-                                                                                          context: context, percentageOfHeight: .01),
+                                                                                 //     responsiveSizedBox(context: context, percentageOfHeight: .01),
                                                                                       Padding(padding: EdgeInsets.only(right: 5,left: 5),
-                                                                                        child:  customDescriptionText(
+                                                                                        child:  Align(
+                                                                                          child:    customDescriptionText(
                                                                                             context: context,
                                                                                             textColor: mainColor,
                                                                                             maxLines: 2,
                                                                                             text: snapshot.data.items[index].name,
-                                                                                            textAlign: translator.activeLanguageCode == 'ar' ? TextAlign.start :TextAlign.end),),
-                                                                                      responsiveSizedBox(
-                                                                                          context: context, percentageOfHeight: .01),
+                                                                                        ),
+                                                                                          alignment:translator.activeLanguageCode ==
+                                                                                        'en'
+                                                                                        ? Alignment.centerLeft :  Alignment.centerRight,
+                                                                                        ),
+                                                                                        ),
+                                                                                  //    responsiveSizedBox(context: context, percentageOfHeight: .01),
                                                                                       Row(
                                                                                         mainAxisAlignment:
                                                                                         MainAxisAlignment.spaceBetween,
                                                                                         children: [
-                                                                                          Container(
-                                                                                            child: customDescriptionText(
-                                                                                                context: context,
-                                                                                                textColor: mainColor,
-                                                                                                text: "${snapshot.data.items[index].price} ${MyApp.country_currency}",
-                                                                                                textAlign: TextAlign.start,
-                                                                                                fontWeight: FontWeight.bold),
+                                                                                          Row(
+                                                                                            children: [
+                                                                                              Container(
+                                                                                                child: customDescriptionText(
+                                                                                                    context: context,
+                                                                                                    textColor: mainColor,
+                                                                                                    text:
+                                                                                                    " ${MyApp.country_currency} ",
+                                                                                                    textAlign: TextAlign.start,
+                                                                                                    fontWeight: FontWeight.bold),
+                                                                                              ),
+                                                                                              Container(
+                                                                                                child: customDescriptionText(
+                                                                                                    context: context,
+                                                                                                    textColor: mainColor,
+                                                                                                    text:
+                                                                                                    " ${snapshot.data.items[index].price}",
+                                                                                                    textAlign: TextAlign.start,
+                                                                                                    fontWeight: FontWeight.bold),
+                                                                                              ),
+                                                                                            ],
                                                                                           ),
                                                                                           RatingBar.readOnly(
                                                                                             initialRating:
@@ -215,11 +233,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
                                                                                         ],
                                                                                       ),
-                                                                                      responsiveSizedBox(
-                                                                                          context: context, percentageOfHeight: .01),
+                                                                                    //  responsiveSizedBox(context: context, percentageOfHeight: .01),
                                                                                       Row(
-                                                                                        mainAxisAlignment:
-                                                                                        MainAxisAlignment.spaceBetween,
+                                                                                        mainAxisAlignment: MainAxisAlignment.center,
                                                                                         children: [
                                                                                           AddProductToCartWidget(
                                                                                             product_sku: snapshot.data.items[index].sku,
@@ -233,35 +249,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                             product_image: product_image,
                                                                                             product_id:  snapshot.data.items[index].id,
                                                                                           ),
-                                                                                          InkWell(
-                                                                                            onTap: () {
-                                                                                              final RenderBox box =
-                                                                                              context.findRenderObject();
-                                                                                              Share.share('${snapshot.data.items[index].name}',
-                                                                                                  subject: 'Welcome To Amajed Oud',
-                                                                                                  sharePositionOrigin:
-                                                                                                  box.localToGlobal(Offset.zero) &
-                                                                                                  box.size);
-                                                                                            },
-                                                                                            child: Container(
-                                                                                              width: width(context) * .15,
-                                                                                              height: isLandscape(context)
-                                                                                                  ? 2 * height(context) * .035
-                                                                                                  : height(context) * .035,
-                                                                                              decoration: BoxDecoration(
-                                                                                                  border: Border.all(color: mainColor)),
-                                                                                              child: Row(
-                                                                                                mainAxisAlignment:
-                                                                                                MainAxisAlignment.spaceAround,
-                                                                                                children: [Icon(Icons.share_outlined)],
-                                                                                              ),
-                                                                                            ),
-                                                                                          )
                                                                                         ],
                                                                                       )
                                                                                     ],
                                                                                   ),
-                                                                                )
+
                                                                             )),
                                                                       ],
                                                                     ),

@@ -520,9 +520,17 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget positionedRemove({int itemId}) {
-    return Positioned(
-      top: 80,
-      right: 0,
+    return Directionality(
+        textDirection:
+        translator.activeLanguageCode == 'ar'
+            ? TextDirection.ltr
+            : TextDirection.rtl,
+        child:  Positioned(
+        top: width(context) * 0.15,
+    right:translator.activeLanguageCode == 'ar'
+    ?  0 : null,
+    left:translator.activeLanguageCode == 'ar'
+    ?  null : 0,
       child: Container(
         height: 30,
         width: 30,
@@ -539,7 +547,7 @@ class _CartScreenState extends State<CartScreen> {
                   delete_cart_item(cart_item_id: itemId),
                 }),
       ),
-    );
+    )  );
   }
 
 

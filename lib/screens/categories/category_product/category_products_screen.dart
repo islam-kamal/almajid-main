@@ -191,7 +191,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
 
   ScrollController _controller;
   // At the beginning, we fetch the first 20 posts
-  int _page = 0;
+  int _page = 1;
   int _limit = 20;
 
   // There is next page or not
@@ -332,9 +332,9 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                               if (_hasNextPage == false)
                                 Container(
                                   padding: const EdgeInsets.only(top: 20, bottom: 100),
-                                  color: Colors.amber,
+                                  color: mainColor,
                                   child: Center(
-                                    child: Text('You have fetched all of the content'),
+                                    child: Text('You have fetched all of the content',style: TextStyle(color: whiteColor),),
                                   ),
                                 ),
                             ],
