@@ -68,6 +68,7 @@ class WishListBloc extends Bloc<AppEvent,AppState>  {
       var response =await wishlistRepository.getAllWishListItems();
       if(response.message == "The consumer isn't authorized to access %resources."){
       }else{
+        print("response.items : ${response.items}");
         if(response.items.isNotEmpty){
           _wishlist_subject.sink.add(response);
 

@@ -191,7 +191,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
 
   ScrollController _controller;
   // At the beginning, we fetch the first 20 posts
-  int _page = 0;
+  int _page = 1;
   int _limit = 20;
 
   // There is next page or not
@@ -213,8 +213,8 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
     });
     try {
       final res = await categoryRepository.getCategoryProducts(
-        category_id: widget.category_id,
-        offset: _page
+          category_id: widget.category_id,
+          offset: _page
       );
       setState(() {
         _posts = res.items;
@@ -308,17 +308,17 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                             children: [
                               Expanded(
                                   child: ListView.builder(
-                                  controller: _controller,
-                                  shrinkWrap: true,
+                                      controller: _controller,
+                                      shrinkWrap: true,
                                       itemCount: _posts.length,
-                                  itemBuilder: (context, index) {
+                                      itemBuilder: (context, index) {
 
-                                    return   singleCategoryProductItem(
-                                      product: _posts[index] ,
-                                      scafffoldKey: _drawerKey,
-                                    );
+                                        return   singleCategoryProductItem(
+                                          product: _posts[index] ,
+                                          scafffoldKey: _drawerKey,
+                                        );
 
-                                  })),
+                                      })),
                               // when the _loadMore function is running
                               if (_isLoadMoreRunning == true)
                                 Padding(
@@ -332,9 +332,9 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                               if (_hasNextPage == false)
                                 Container(
                                   padding: const EdgeInsets.only(top: 20, bottom: 100),
-                                  color: Colors.amber,
+                                  color: mainColor,
                                   child: Center(
-                                    child: Text('You\'ve reached the end of the item.'),
+                                    child: Text('You have fetched all of the content',style: TextStyle(color: whiteColor),),
                                   ),
                                 ),
                             ],

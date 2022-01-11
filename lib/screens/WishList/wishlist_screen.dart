@@ -46,12 +46,12 @@ class _WishListScreenState extends State<WishListScreen> {
                         ? customAnimatedPushNavigation(
                             context,
                             CustomCircleNavigationBar(
-                              page_index: 0,
+                              page_index: 4,
                             ))
                         : customAnimatedPushNavigation(
                             context,
                             CustomCircleNavigationBar(
-                              page_index: 4,
+                              page_index: 0,
                             ));
                   },
                   child: SingleChildScrollView(
@@ -62,7 +62,7 @@ class _WishListScreenState extends State<WishListScreen> {
                         category_name: translator.translate("WishList"),
                         screen: CustomCircleNavigationBar(
                           page_index:
-                              translator.activeLanguageCode == 'ar' ? 0 : 4,
+                              translator.activeLanguageCode == 'ar' ? 4 : 0,
                         ),
                       ),
                       Container(
@@ -105,7 +105,9 @@ class _WishListScreenState extends State<WishListScreen> {
                                     child: CircularProgressIndicator(),
                                   );
                                 }
-                              } else if (state is Done) {
+                              }
+
+                              else if (state is Done) {
                                 if (state.indicator == 'get_fav') {
                                   var data = state.model as GetAllWishListModel;
                                   if (data.items == null ||
@@ -141,13 +143,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                         customAnimatedPushNavigation(
                                                             context,
                                                             ProductDetailsScreen(
-                                                              product_id:
-                                                                  snapshot
-                                                                      .data
-                                                                      .items[
-                                                                          index]
-                                                                      .product
-                                                                      .id,
+                                                              product_id: snapshot.data.items[index].product.id,
                                                             ));
                                                       },
                                                       child: Stack(children: [
@@ -170,15 +166,26 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                           children: [
                                                                             Container(
                                                                               margin: EdgeInsets.only(right: 3, left: 3),
-                                                                              height: StaticData.get_height(context) * .17,
+                                                                              height: isLandscape(context) ? 2 * height(context) * .14 : height(context) * .14,
                                                                               width: StaticData.get_width(context) * .3,
-                                                                              decoration: BoxDecoration(color: backGroundColor, borderRadius: BorderRadius.circular(15), image: DecorationImage(image: NetworkImage("${Urls.BASE_URL}/pub/media/catalog/product/${product_image}"), fit: BoxFit.fill)),
+                                                                              decoration: BoxDecoration(color: backGroundColor,
+                                                                                  borderRadius: BorderRadius.circular(15),
+                                                                                  image: DecorationImage(
+                                                                                      image: NetworkImage(
+                                                                                          "${Urls.BASE_URL}/pub/media/catalog/product/${product_image}"), fit: BoxFit.fill)),
                                                                             ),
-                                                                            Container(
+                                                                    Directionality(
+                                                                      textDirection:
+                                                                      translator.activeLanguageCode == 'ar'
+                                                                          ? TextDirection.ltr
+                                                                          : TextDirection.rtl,
+                                                                      child:     Container(
                                                                               padding: EdgeInsets.only(right: width(context) * .02, left: width(context) * .02),
                                                                               width: width(context) * .6,
-                                                                              height: isLandscape(context) ? 2 * height(context) * .18 : height(context) * .18,
+                                                                             height: isLandscape(context) ? 2 * height(context) * .15 : height(context) * .15,
                                                                               child: Column(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                                                                                 children: [
                                                                                   CustomWishList(
                                                                                     color: redColor,
@@ -189,15 +196,46 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                     scafffoldKey: _scaffoldKey,
                                                                                     in_wishlist: true,
                                                                                   ),
-                                                                                  responsiveSizedBox(context: context, percentageOfHeight: .01),
-                                                                                  customDescriptionText(context: context, textColor: mainColor, maxLines: 2, text: snapshot.data.items[index].product.name, textAlign: TextAlign.start),
-                                                                                  responsiveSizedBox(context: context, percentageOfHeight: .01),
+                                                                                  Padding(
+                                                                                    padding: EdgeInsets.only(right: 5,left: 5),
+                                                                                    child:    Align(
+                                                                                      child:   customDescriptionText(
+                                                                                        context: context,
+                                                                                        textColor: mainColor,
+                                                                                        maxLines: 2,
+                                                                                        text: snapshot.data.items[index].product.name,
+                                                                                      ),
+                                                                                      alignment:translator.activeLanguageCode ==
+                                                                                          'en'
+                                                                                          ? Alignment.centerLeft :  Alignment.centerRight,
+                                                                                    ),
+                                                                                  ),
                                                                                   Row(
                                                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                     children: [
-                                                                                      Container(
-                                                                                        child: customDescriptionText(context: context, textColor: mainColor, text: "${snapshot.data.items[index].product.price} ${MyApp.country_currency}", textAlign: TextAlign.start, fontWeight: FontWeight.bold),
+                                                                                      Row(
+                                                                                        children: [
+                                                                                          Container(
+                                                                                            child: customDescriptionText(
+                                                                                                context: context,
+                                                                                                textColor: mainColor,
+                                                                                                text:
+                                                                                                " ${MyApp.country_currency} ",
+                                                                                                textAlign: TextAlign.start,
+                                                                                                fontWeight: FontWeight.bold),
+                                                                                          ),
+                                                                                          Container(
+                                                                                            child: customDescriptionText(
+                                                                                                context: context,
+                                                                                                textColor: mainColor,
+                                                                                                text:
+                                                                                                " ${snapshot.data.items[index].product.price}",
+                                                                                                textAlign: TextAlign.start,
+                                                                                                fontWeight: FontWeight.bold),
+                                                                                          ),
+                                                                                        ],
                                                                                       ),
+
                                                                                       RatingBar.readOnly(
                                                                                         initialRating: 5.0,
                                                                                         maxRating: 5,
@@ -210,13 +248,13 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                       ),
                                                                                     ],
                                                                                   ),
-                                                                                  responsiveSizedBox(context: context, percentageOfHeight: .02),
                                                                                   AddWishlistItemToCart(
                                                                                     product_id:snapshot.data.items[index].id ,
                                                                                   )
                                                                                 ],
                                                                               ),
                                                                             ),
+                                                                      )
                                                                           ],
                                                                         ),
                                                                         decoration: BoxDecoration(color: backGroundColor))),
@@ -264,7 +302,9 @@ class _WishListScreenState extends State<WishListScreen> {
                                     flushbarStyle: FlushbarStyle.FLOATING,
                                   ).show(_scaffoldKey.currentState.context);
                                 }
-                              } else if (state is ErrorLoading) {
+                              }
+
+                              else if (state is ErrorLoading) {
                                 if (state.indicator == 'get_fav') {
                                   return no_data_widget(context: context);
                                 } else if (state.indicator == 'remove_fav') {
@@ -338,9 +378,17 @@ class _WishListScreenState extends State<WishListScreen> {
   }
 
   Widget positionedRemove({int itemId}) {
-    return Positioned(
-      top: 80,
-      right: 0,
+    return   Directionality(
+        textDirection:
+        translator.activeLanguageCode == 'ar'
+        ? TextDirection.ltr
+            : TextDirection.rtl,
+        child:   Positioned(
+      top: width(context) * 0.15,
+      right:translator.activeLanguageCode == 'ar'
+          ?  0 : null,
+          left:translator.activeLanguageCode == 'ar'
+              ?  null : 0,
       child: Container(
         height: 30,
         width: 30,
@@ -359,6 +407,6 @@ class _WishListScreenState extends State<WishListScreen> {
               //       delete_cart_item(wishlist_item_id: itemId),
             }),
       ),
-    );
+        ));
   }
 }

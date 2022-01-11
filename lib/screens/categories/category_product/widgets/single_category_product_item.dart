@@ -53,8 +53,8 @@ class singleCategoryProductItem extends StatelessWidget {
                                 margin: EdgeInsets.only(right: 3, left: 3),
                                 width: width(context) * .3,
                                 height: isLandscape(context)
-                                    ? 2 * height(context) * .15
-                                    : height(context) * .15,
+                                    ? 2 * height(context) * .14
+                                    : height(context) * .14,
                                 decoration: BoxDecoration(
                                     color: backGroundColor,
                                     borderRadius: BorderRadius.circular(15),
@@ -75,9 +75,10 @@ class singleCategoryProductItem extends StatelessWidget {
                                         left: width(context) * .02),
                                     width: width(context) * .6,
                                     height: isLandscape(context)
-                                        ? 2 * height(context) * .17
-                                        : height(context) * .19,
+                                        ? 2 * height(context) * .15
+                                        : height(context) * .15,
                                     child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment:
                                       translator.activeLanguageCode == 'en'
                                           ? CrossAxisAlignment.end
@@ -92,40 +93,46 @@ class singleCategoryProductItem extends StatelessWidget {
                                           screen: CategoryProductsScreen(),
                                           scafffoldKey: scafffoldKey,
                                         ),
-                                        responsiveSizedBox(
-                                            context: context,
-                                            percentageOfHeight: .01),
-                                      Align(
-                                        child:   customDescriptionText(
-                                            context: context,
-                                            textColor: mainColor,
-                                            maxLines: 2,
-                                            text: product.name,
-                                            textAlign:
-                                            translator.activeLanguageCode ==
-                                                'en'
-                                                ? TextAlign.end
-                                                : TextAlign.start
-                                        ),
-                                        alignment:translator.activeLanguageCode ==
-                                            'en'
-                                            ? Alignment.centerLeft :  Alignment.centerRight,
-                                      ),
-                                        responsiveSizedBox(
-                                            context: context,
-                                            percentageOfHeight: .01),
+                                   Padding(
+                                     padding: EdgeInsets.only(right: 5,left: 5),
+                                     child:    Align(
+                                       child:   customDescriptionText(
+                                           context: context,
+                                           textColor: mainColor,
+                                           maxLines: 2,
+                                           text: product.name,
+                                       ),
+                                       alignment:translator.activeLanguageCode ==
+                                           'en'
+                                           ? Alignment.centerLeft :  Alignment.centerRight,
+                                     ),
+                                   ),
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Container(
-                                              child: customDescriptionText(
-                                                  context: context,
-                                                  textColor: mainColor,
-                                                  text:
-                                                  "${MyApp.country_currency} ${product.price}",
-                                                  textAlign: TextAlign.start,
-                                                  fontWeight: FontWeight.bold),
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  child: customDescriptionText(
+                                                      context: context,
+                                                      textColor: mainColor,
+                                                      text:
+                                                      " ${MyApp.country_currency} ",
+                                                      textAlign: TextAlign.start,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                Container(
+                                                  child: customDescriptionText(
+                                                      context: context,
+                                                      textColor: mainColor,
+                                                      text:
+                                                      " ${product.price}",
+                                                      textAlign: TextAlign.start,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                              ],
                                             ),
+
                                             RatingBar.readOnly(
                                               initialRating: 5.0,
                                               maxRating: 5,
@@ -144,12 +151,8 @@ class singleCategoryProductItem extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                        responsiveSizedBox(
-                                            context: context,
-                                            percentageOfHeight: .02),
                                         Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             AddProductToCartWidget(
                                               product_sku: product.sku,
