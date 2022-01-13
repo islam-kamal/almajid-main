@@ -2,7 +2,6 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:html/parser.dart' show parse;
 descriptionAndShareRow({BuildContext context , String description ,String product_name}) {
   return Container(
-  //  padding: EdgeInsets.only(right: width(context) * .05, left: width(context) * .05),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -15,8 +14,9 @@ descriptionAndShareRow({BuildContext context , String description ,String produc
               text: _parseHtmlString(description),
               textAlign: TextAlign.start,
               maxLines: 10,
+              textHeight: 1.5,
               textColor: greyColor,
-              percentageOfHeight: .020),
+              percentageOfHeight: .015),
         ),
       ],
     ),

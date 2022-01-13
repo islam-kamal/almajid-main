@@ -202,16 +202,17 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                                     text:
                                                                                                     " ${MyApp.country_currency} ",
                                                                                                     textAlign: TextAlign.start,
-                                                                                                    fontWeight: FontWeight.bold),
+                                                                                                    fontWeight: FontWeight.normal),
                                                                                               ),
+                                                                                              SizedBox(width: 5,),
                                                                                               Container(
                                                                                                 child: customDescriptionText(
                                                                                                     context: context,
                                                                                                     textColor: mainColor,
                                                                                                     text:
-                                                                                                    " ${snapshot.data.items[index].price}",
+                                                                                                    " ${snapshot.data.items[index].price} ",
                                                                                                     textAlign: TextAlign.start,
-                                                                                                    fontWeight: FontWeight.bold),
+                                                                                                    fontWeight: FontWeight.normal),
                                                                                               ),
                                                                                             ],
                                                                                           ),

@@ -3,7 +3,12 @@ import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigatio
 import 'package:almajidoud/utils/file_export.dart';
 
 productDetailsNameWidget({BuildContext context , String product_name}) {
-  return Container(
+  return     Directionality(
+      textDirection:
+      translator.activeLanguageCode == 'en'
+      ? TextDirection.ltr
+          : TextDirection.rtl,
+      child:Container(
     padding: EdgeInsets.only(
         right: width(context) * .05, left: width(context) * .05),
     child: Row(
@@ -19,16 +24,16 @@ productDetailsNameWidget({BuildContext context , String product_name}) {
               },
             ),
             Container(
-              width: width(context) * .5,
+            //  width: width(context) * .5,
               child: customDescriptionText(
                   context: context,
                   text: product_name??"",
-                  percentageOfHeight: .025),
+                  percentageOfHeight: .020),
             )
           ],
         ),
         CartBadge(iconColor: Colors.black,)
       ],
     ),
-  );
+      ) );
 }

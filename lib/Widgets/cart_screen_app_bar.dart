@@ -84,8 +84,8 @@ class CartScreenAppBarState extends State<CartScreenAppBar> {
                 Image.asset(
                   "assets/icons/logo.png",
                   height: isLandscape(context)
-                      ? 2 * height(context) * .05
-                      : height(context) * .05,
+                      ? 2 * height(context) * .03
+                      : height(context) * .03,
                 )
                 // CartBadge()
                     : GestureDetector(

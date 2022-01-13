@@ -49,7 +49,7 @@ class _CartBadgeState extends State<CartBadge> {
                   position: BadgePosition.topEnd(top: 5, end: 7),
                   badgeContent: Text(
                     _count.toString(),
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: mainColor),
                   ),
                   child: IconButton(
                     icon: Icon(

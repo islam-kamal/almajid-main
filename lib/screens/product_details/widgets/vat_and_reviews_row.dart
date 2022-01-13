@@ -1,7 +1,8 @@
 import 'package:almajidoud/screens/Reviews/product_reviews_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-vatAndReviewsRow({BuildContext context , var product_sku , var product_id}) {
+vatAndReviewsRow({BuildContext context , var product_sku , var product_id, bool review_status}) {
+  print("product_sku : ${product_sku}");
   return Container(
     padding: EdgeInsets.only(
         right: width(context) * .05, left: width(context) * .05),
@@ -18,14 +19,14 @@ vatAndReviewsRow({BuildContext context , var product_sku , var product_id}) {
               percentageOfHeight: .015,
               fontWeight: FontWeight.bold),
         ),
-        InkWell(
+        review_status?  InkWell(
           onTap: (){
             reviewsBloc.add(GetProductReviewsEvent(
                 product_sku: product_sku,
 
             ));
             customAnimatedPushNavigation(context, ProductReviewsScreen(
-                product_id: product_id
+                product_suk: product_sku
             ));
           },
           child:    Container(
@@ -39,7 +40,7 @@ vatAndReviewsRow({BuildContext context , var product_sku , var product_id}) {
                 percentageOfHeight: .015,
                 fontWeight: FontWeight.bold),
           ),
-        )
+        ) : Container()
       ],
     ),
   );

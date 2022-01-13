@@ -7,6 +7,6 @@ const backGroundColor = Color(0xffededed);
 const redColor = Colors.red;
 const white_gray_color = Color(0xFFD6D2C6);
 const greenColor = Color(0xff64B903);
-const Color cartBadgeColor = Color(0xFFBA68C8);
+const Color cartBadgeColor = Color(0xFFD6D2C6);
 const Color cartColor = Color(0xFF5E35B1);
 

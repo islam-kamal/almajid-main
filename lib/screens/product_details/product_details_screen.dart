@@ -72,6 +72,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                           if(element.attributeCode == "thumbnail")
                             product_image = element.value;
                         });
+
+                        String special_price;
+                        var percentage;
+
+                        snapshot.data[0].customAttributes.forEach((element) {
+                          if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
+                            special_price = element.value;
+                          }
+                        });
+                        if(special_price != null){
+                          percentage = (1 - (double.parse(special_price)  / snapshot.data[0].price) )* 100;
+                        }
                         return Column(
                           children: [
                             responsiveSizedBox(
@@ -83,14 +95,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                 context: context, percentageOfHeight: .03),
                             HomeSlider(
                               gallery: product_images,
+                              height: width(context) *0.90,
                             ),
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .05),
                             favouriteAndNameRow(
                                 context: context,
-                                product_name: snapshot.data[0].name),
+                                product_name: snapshot.data[0].name,
+                            prod_id:  snapshot.data[0].id,
+                            prod_qty:  snapshot.data[0].extensionAttributes.stockItem.qty),
                             responsiveSizedBox(
-                                context: context, percentageOfHeight: .02),
+                                context: context, percentageOfHeight: .01),
                             descriptionAndShareRow(
                                 context: context,
                                 description:description??'',
@@ -98,13 +113,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .02),
                             priceAndRatingRow(
-                                context: context, price: snapshot.data[0].price),
+                                context: context,
+                                price: special_price ,
+                              old_price: snapshot.data[0].price,
+                              review_status:  snapshot.data[0].extensionAttributes.reviews.length==0 ? false : true,
+
+                            ),
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .02),
                             vatAndReviewsRow(
                                 context: context,
                                 product_sku: snapshot.data[0].sku,
                               product_id: snapshot.data[0].id,
+                              review_status:  snapshot.data[0].extensionAttributes.reviews.length==0 ? false : true,
                             ),
                             divider(context: context),
                             responsiveSizedBox(
