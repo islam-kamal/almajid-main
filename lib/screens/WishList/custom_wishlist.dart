@@ -69,7 +69,7 @@ class CustomFauvourite_State extends State<CustomWishList> {
             ? Alignment.topLeft
             : Alignment.topRight,
         height: StaticData.get_height(context) * .04,
-        width: StaticData.get_width(context) * .7,
+      //  width: StaticData.get_width(context) * .7,
         child:  wishlist_status
             ? IconButton(
                 icon: Icon(

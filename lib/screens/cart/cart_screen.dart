@@ -4,6 +4,7 @@ import 'package:almajidoud/Model/CartModel/cart_details_model.dart'
     as cart_details_model;
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/Widgets/cart_screen_app_bar.dart';
+import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 
 import 'package:almajidoud/screens/cart/widgets/proceed_to_checkout_button.dart';
@@ -12,6 +13,7 @@ import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/product_details/widgets/divider.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class CartScreen extends StatefulWidget {
@@ -22,28 +24,16 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   FocusNode fieldNode = FocusNode();
-  String _dropDownValue;
+  var _dropDownValue;
   var product_image;
   var edit_cart_status = false;
-  List<int> prod_image_key;
-  List<String> prod_image_value;
   SharedPreferences sharedPreferences;
+  var qty;
+
   @override
   void initState() {
-
-    prod_image_key = [];
-    prod_image_value = [];
-    get_wishlist_ids();
     shoppingCartBloc.add(GetCartDetailsEvent());
     super.initState();
-  }
-  void get_wishlist_ids()async {
-   // sharedPreferences = await SharedPreferences.getInstance();
-    // sharedPreferences.remove('product_images_map');
-    await sharedPreferenceManager.getListOfMaps('product_images_map').then((
-        value) {
-      StaticData.product_images_list = value;
-    });
   }
   @override
   Widget build(BuildContext context) {
@@ -277,36 +267,13 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
-  Widget textSwipeLeft() {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    return Container(
-      padding: EdgeInsets.only(left: width * .075),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Image.asset(
-            "assets/images/swipe.png",
-            height: height * .03,
-          ),
-          Text(
-            translator.translate("swipe"),
-            style: TextStyle(
-                fontSize: height * .015,
-                fontWeight: FontWeight.bold,
-                color: mainColor),
-          ),
-        ],
-      ),
-    );
-  }
 
   singleCartItem({BuildContext context, cart_details_model.Items item,String image}) {
     List<String> qantity_numbers = [];
     for (int i = 1; i < 20; i++) {
       qantity_numbers.add(i.toString());
     }
-
+     qty =item.qty;
     return Directionality(
         textDirection: translator.activeLanguageCode == 'ar'
             ? TextDirection.rtl
@@ -400,14 +367,203 @@ class _CartScreenState extends State<CartScreen> {
                                             width: width(context) * .01,
                                           ),
                                           Container(
-                                            width: width(context) * .15,
-                                            height: isLandscape(context)
-                                                ? 2 * height(context) * .035
-                                                : height(context) * .035,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: mainColor)),
-                                            child: DropdownButton(
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  MaterialButton(
+                                                    height: 5,
+                                                    minWidth:
+                                                    StaticData.get_width(context) *
+                                                        0.15,
+                                                    onPressed: () async {
+                                                      if (qty == 20) {
+                                                        errorDialog(
+                                                          context: context,
+                                                          text:
+                                                          "لا يمكنك تخطى الكمية المتاحة",
+                                                        );
+                                                      }
+                                                      else {
+                                                        setState(() {
+                                                          qty++;
+                                                        });
+                                                        final response =
+                                                        await cartRepository.update_product_quantity_cart(
+                                                            item_id: item.itemId, product_quantity: qty);
+                                                        if (response.message != null) {
+                                                          Flushbar(
+                                                            messageText: Row(
+                                                              children: [
+                                                                Container(
+                                                                  width: StaticData
+                                                                      .get_width(
+                                                                      context) *
+                                                                      0.7,
+                                                                  child: Wrap(
+                                                                    children: [
+                                                                      Text(
+                                                                        '${"There is Error"}',
+                                                                        textDirection:
+                                                                        TextDirection
+                                                                            .rtl,
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                            whiteColor),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Spacer(),
+                                                                Text(
+                                                                  translator.translate(
+                                                                      "Try Again"),
+                                                                  textDirection:
+                                                                  TextDirection.rtl,
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                      whiteColor),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            flushbarPosition:
+                                                            FlushbarPosition.BOTTOM,
+                                                            backgroundColor: redColor,
+                                                            flushbarStyle:
+                                                            FlushbarStyle.FLOATING,
+                                                            duration:
+                                                            Duration(seconds: 3),
+                                                          )..show(_drawerKey
+                                                              .currentState.context);
+                                                        } else {
+                                                          shoppingCartBloc.add(GetCartDetailsEvent());
+
+                                                          /*        customAnimatedPushNavigation(
+                                                              context,
+                                                              translator.activeLanguageCode ==
+                                                                  'ar'
+                                                                  ? CustomCircleNavigationBar(
+                                                                page_index: 0,
+                                                              )
+                                                                  : CustomCircleNavigationBar(
+                                                                page_index: 4,
+                                                              ));*/
+                                                        }
+                                                      }
+                                                    },
+                                                    color: whiteColor,
+                                                    textColor: greyColor,
+                                                    child: Icon(
+                                                      Icons.add,
+                                                      size: 18,
+                                                      color: blackColor,
+                                                    ),
+                                                    padding: EdgeInsets.all(5),
+                                                    shape: CircleBorder(),
+                                                  ),
+                                                  Text(
+                                                    '${qty}',
+                                                    style: TextStyle(
+                                                      color: mainColor,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 20,
+                                                    ),
+                                                  ),
+                                                  MaterialButton(
+                                                    height: 5,
+                                                    minWidth: StaticData.get_width(context) * 0.15,
+
+                                                    onPressed: () async {
+                                                      if (qty <= 1) {
+                                                        errorDialog(
+                                                          context: context,
+                                                          text:
+                                                          "لقد نفذت الكمية من هذا المنتج",
+                                                        );
+                                                      }
+                                                      else {
+                                                        setState(() {
+                                                          qty--;
+                                                        });
+
+                                                        final response =
+                                                        await cartRepository.update_product_quantity_cart(
+                                                            item_id: item.itemId, product_quantity: qty);
+                                                        if (response.message != null) {
+                                                          Flushbar(
+                                                            messageText: Row(
+                                                              children: [
+                                                                Container(
+                                                                  width: StaticData
+                                                                      .get_width(
+                                                                      context) *
+                                                                      0.7,
+                                                                  child: Wrap(
+                                                                    children: [
+                                                                      Text(
+                                                                        '${"There is Error"}',
+                                                                        textDirection:
+                                                                        TextDirection
+                                                                            .rtl,
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                            whiteColor),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Spacer(),
+                                                                Text(
+                                                                  translator.translate(
+                                                                      "Try Again"),
+                                                                  textDirection:
+                                                                  TextDirection.rtl,
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                      whiteColor),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            flushbarPosition:
+                                                            FlushbarPosition.BOTTOM,
+                                                            backgroundColor: redColor,
+                                                            flushbarStyle:
+                                                            FlushbarStyle.FLOATING,
+                                                            duration:
+                                                            Duration(seconds: 3),
+                                                          )..show(_drawerKey
+                                                              .currentState.context);
+                                                        } else {
+                                                          shoppingCartBloc.add(GetCartDetailsEvent());
+
+                                          /*                customAnimatedPushNavigation(
+                                                              context,
+                                                              translator.activeLanguageCode ==
+                                                                  'ar'
+                                                                  ? CustomCircleNavigationBar(
+                                                                page_index: 0,
+                                                              )
+                                                                  : CustomCircleNavigationBar(
+                                                                page_index: 4,
+                                                              ));*/
+                                                        }
+                                                      }
+                                                    },
+                                                    color: whiteColor,
+                                                    textColor: Colors.white,
+                                                    child: Icon(
+                                                      Icons.remove,
+                                                      size: 18,
+                                                      color: blackColor,
+                                                    ),
+                                                    padding: EdgeInsets.all(5),
+                                                    shape: CircleBorder(),
+                                                  ),
+                                                ],
+                                              )
+                                          )
+
+
+                                            /*DropdownButton(
                                               hint: _dropDownValue == null
                                                   ? Text(
                                                       "   ${item.qty.toString()}   ",
@@ -439,12 +595,8 @@ class _CartScreenState extends State<CartScreen> {
                                               onChanged: (val) async {
                                                 _dropDownValue = val;
                                                 final response =
-                                                    await cartRepository
-                                                        .update_product_quantity_cart(
-                                                            item_id:
-                                                                item.itemId,
-                                                            product_quantity:
-                                                                _dropDownValue);
+                                                    await cartRepository.update_product_quantity_cart(
+                                                        item_id: item.itemId, product_quantity: _dropDownValue);
                                                 if (response.message != null) {
                                                   Flushbar(
                                                     messageText: Row(
@@ -495,15 +647,15 @@ class _CartScreenState extends State<CartScreen> {
                                                       translator.activeLanguageCode ==
                                                               'ar'
                                                           ? CustomCircleNavigationBar(
-                                                              page_index: 4,
+                                                              page_index: 0,
                                                             )
                                                           : CustomCircleNavigationBar(
-                                                              page_index: 0,
+                                                              page_index: 4,
                                                             ));
                                                 }
                                               },
-                                            ),
-                                          )
+                                            ),*/
+
 
                                         ],
                                       )
@@ -549,6 +701,7 @@ class _CartScreenState extends State<CartScreen> {
       ),
     )  );
   }
+
 
 
 }

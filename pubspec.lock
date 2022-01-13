@@ -35,7 +35,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.6.1"
+    version: "2.5.0"
   badges:
     dependency: "direct main"
     description:
@@ -369,21 +369,14 @@ packages:
       name: flutter_local_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "9.1.4"
-  flutter_local_notifications_linux:
-    dependency: transitive
-    description:
-      name: flutter_local_notifications_linux
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
+    version: "5.0.0+4"
   flutter_local_notifications_platform_interface:
     dependency: transitive
     description:
       name: flutter_local_notifications_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.0"
+    version: "3.0.0"
   flutter_localizations:
     dependency: transitive
     description: flutter
@@ -830,7 +823,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.1"
+    version: "1.8.0"
   spincircle_bottom_bar:
     dependency: "direct main"
     description:
@@ -907,14 +900,14 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.2.19"
   timezone:
     dependency: transitive
     description:
       name: timezone
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.0"
+    version: "0.7.0"
   typed_data:
     dependency: transitive
     description:
@@ -1029,4 +1022,4 @@ packages:
     version: "3.1.0"
 sdks:
   dart: ">=2.12.0 <3.0.0"
-  flutter: ">=2.2.0"
+  flutter: ">=2.0.0"

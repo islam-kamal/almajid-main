@@ -31,12 +31,12 @@ Widget no_data_widget(
                 textColor: mainColor,
                 text: message,
                 maxLines: 2,
-                percentageOfHeight: .020
+                percentageOfHeight: .015
         ) : customDescriptionText(
                 context: context,
                 textColor: mainColor,
                 text: message,
-                percentageOfHeight: .03
+                percentageOfHeight: .02
         ),
         responsiveSizedBox(context: context, percentageOfHeight: .05),
         token_status == 'token_expire'

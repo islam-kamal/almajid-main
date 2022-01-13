@@ -93,16 +93,6 @@ class _SplashScreenState extends State<SplashScreen> {
       headers: {"charset": "utf-8", "Accept-Charset": "utf-8"}
     );
     StaticData.data = await json.decode(utf8.decode(response.bodyBytes));
-/*    if (StaticData.data != null) {
-      home_bloc.add(GetHomeNewArrivals(
-          category_id: StaticData.data['new-arrival']['id'],
-          offset: 1
-      ));
-      home_bloc.add(GetHomeBestSeller(
-          category_id: StaticData.data['best-seller']['id'],
-          offset: 1
-      ));
-    }*/
     StaticData.gallery = StaticData.data["slider"];
     StaticData.staticBanner = StaticData.data["static-banner"];
 

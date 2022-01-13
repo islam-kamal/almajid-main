@@ -104,7 +104,7 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
             widget.product_sku == state.sku) {
           _isLoading = false;
           Fluttertoast.showToast(
-              msg: 'product added successfully to cart',
+              msg: translator.translate("product added suceesfully to cart" ),
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.TOP,
               timeInSecForIosWeb: 1,

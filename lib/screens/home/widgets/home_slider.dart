@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 
 class HomeSlider extends StatefulWidget {
   List<dynamic> gallery ;
-  HomeSlider({this.gallery});
+  var height;
+  HomeSlider({this.gallery,this.height});
   @override
   State<StatefulWidget> createState() {
     return _HomeSlider_State();
@@ -50,15 +51,16 @@ class _HomeSlider_State extends State<HomeSlider> {
                       Image.network(
                         '${item}',
                         width: MediaQuery.of(context).size.width,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                       ),
                     )).toList(),
 
                     options: CarouselOptions(
                         autoPlay: true,
-
+                        viewportFraction: 16/9,
                         enlargeCenterPage: false,
                         aspectRatio: 2.7,
+                        height: widget.height != null ? widget.height: null ,
                         onPageChanged: (index, reason) {
                           setState(() {
                             _current = index;

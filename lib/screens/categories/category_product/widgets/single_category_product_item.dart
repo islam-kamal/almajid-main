@@ -1,5 +1,6 @@
 import 'package:almajidoud/Model/CartModel/add_cart_model.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
+import 'package:almajidoud/Widgets/customText.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/product_details/product_details_screen.dart';
@@ -12,7 +13,8 @@ import 'package:rating_bar/rating_bar.dart';
 class singleCategoryProductItem extends StatelessWidget {
   TextEditingController qty_controller = new TextEditingController();
   Items product;
-
+  String special_price;
+  var percentage;
   GlobalKey<ScaffoldState> scafffoldKey;
   singleCategoryProductItem({this.product, this.scafffoldKey});
   @override
@@ -27,6 +29,14 @@ class singleCategoryProductItem extends StatelessWidget {
       if(element.attributeCode == "thumbnail")
         product_image = element.value;
     });
+    product.customAttributes.forEach((element) {
+      if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
+        special_price = element.value;
+      }
+    });
+    if(special_price != null){
+      percentage = (1 - (double.parse(special_price)  / product.price) )* 100;
+    }
     return InkWell(
       onTap: (){
         customAnimatedPushNavigation(context, ProductDetailsScreen(
@@ -110,28 +120,42 @@ class singleCategoryProductItem extends StatelessWidget {
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  child: customDescriptionText(
-                                                      context: context,
-                                                      textColor: mainColor,
-                                                      text:
-                                                      " ${MyApp.country_currency} ",
-                                                      textAlign: TextAlign.start,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                                Container(
-                                                  child: customDescriptionText(
-                                                      context: context,
-                                                      textColor: mainColor,
-                                                      text:
-                                                      " ${product.price}",
-                                                      textAlign: TextAlign.start,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                              ],
-                                            ),
+                                           Row(
+                                             children: [
+                                               Wrap(
+                                                 children: [
+                                                   Row(
+                                                     mainAxisAlignment: MainAxisAlignment.end,
+                                                     crossAxisAlignment: CrossAxisAlignment.end,
+                                                     children: [
+                                                       MyText(
+                                                         text: "${special_price == null ?product.price : double.parse(special_price)} ",
+                                                         size: StaticData.get_height(context) * .017,
+                                                         color: blackColor,
+                                                         maxLines: 2,
+                                                         weight: FontWeight.normal,
+                                                       ),
+                                                       MyText(
+                                                         text: " ${translator.translate("SAR")}",
+                                                         size: StaticData.get_height(context) * .011,
+                                                         color: blackColor,
+                                                         maxLines: 2,
+                                                         weight: FontWeight.normal,
+                                                       ),
+                                                     ],
+                                                   ),
+                                                 ],
+                                               ),
+                                               SizedBox(width: width(context) * 0.05,),
+                                               special_price == null ?  Container()   :       Text(
+                                                 "${product.price} ${translator.translate("SAR")}",
+                                                 style: TextStyle(
+                                                     decoration: TextDecoration.lineThrough,
+                                                     fontSize: StaticData.get_height(context)  * .011,
+                                                     color: greyColor),
+                                               ),
+                                             ],
+                                           ),
 
                                             RatingBar.readOnly(
                                               initialRating: 5.0,

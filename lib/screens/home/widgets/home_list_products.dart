@@ -55,6 +55,13 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
       case "New Arrivals":
         _subject = home_bloc.new_arrivals_products_subject;
         break;
+      case "weekly-deal":
+        _subject = home_bloc.weekly_deal_products_subject;
+        break;
+      case "testahel-collection":
+        _subject = home_bloc.testahel_collection_products_subject;
+        break;
+
       case 'related products':
         widget.items.productLinks.forEach((element) async {
           print("element.linkedProductSku : ${element.linkedProductSku}");
@@ -108,6 +115,14 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
           category_id: StaticData.data['best-seller']['id'],
           offset: 1
       ));
+      home_bloc.add(GetWeeklyDealSeller(
+          category_id: StaticData.data['weekly-deal']['id'],
+          offset: 1
+      ));
+     home_bloc.add(GetTestahelCollectionEvent(
+          category_id: StaticData.data['testahel-collection']['id'],
+          offset: 1
+      ));
     }
   }
   @override
@@ -117,18 +132,20 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
         stream: _subject,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data == null) {
-              return Container();
+            if (snapshot.data.isEmpty) {
+              return no_data_widget(
+                context: context,
+                image_status: true
+              );
             } else {
-              print("snapshot.data : ${snapshot.data}");
              if(widget.type ==  'related products'){
-               print("      #### snapshot.data : ${snapshot.data[0].name}");
                snapshot.data.clear();
                related_product_list.forEach((element) {
+
                  snapshot.data.add(element) ;
                });
              }
-              return Container(
+              return  Container(
                   width: width(context),
                   height: isLandscape(context) ? 2 * height(context) * .27 : height(context) * .27,
                   child: ListView.builder(
@@ -139,18 +156,18 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                         var percentage;
 
                         snapshot.data[index].customAttributes.forEach((element) {
-                          if(element.attributeCode == 'special_price'){
+                          if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
                             special_price = element.value;
                           }
-                        });
-
-                        snapshot.data[index].customAttributes.forEach((element) {
-                          if(element.attributeCode == "thumbnail")
-                            product_image = element.value;
                         });
                         if(special_price != null){
                           percentage = (1 - (double.parse(special_price)  / snapshot.data[index].price) )* 100;
                         }
+                        snapshot.data[index].customAttributes.forEach((element) {
+                          if(element.attributeCode == "thumbnail")
+                            product_image = element.value;
+                        });
+
                         return Padding(
                           padding: EdgeInsets.only(left: 5, right: 5,),
                           child: Neumorphic(
@@ -184,15 +201,21 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                 product_id: snapshot.data[index].id,
                                               ));
                                         },
-                                        child: Container(
-                                          width: width(context) * .32,
-                                          height: isLandscape(context) ? 2 * height(context) * .12 : height(context) * .12,
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: NetworkImage(
-                                                      product_image??''),
-                                                  fit: BoxFit.cover)),
-                                        ),
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              width: width(context) * .32,
+                                              height: isLandscape(context) ? 2 * height(context) * .12 : height(context) * .12,
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(
+                                                          product_image??''),
+                                                      fit: BoxFit.cover)),
+                                            ),
+
+
+                                          ],
+                                        )
                                       ),
                                       Container(
                                         width: width(context) * .32,
@@ -216,10 +239,11 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                     Wrap(
                                                       children: [
                                                         Row(
-                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                          mainAxisAlignment: MainAxisAlignment.end,
+                                                          crossAxisAlignment: CrossAxisAlignment.end,
                                                           children: [
                                                             MyText(
-                                                              text: " ${snapshot.data[index].price} ",
+                                                              text: "${special_price == null ?snapshot.data[index].price : double.parse(special_price)} ",
                                                               size: StaticData.get_height(context) * .017,
                                                               color: blackColor,
                                                               maxLines: 2,
@@ -236,24 +260,14 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                         ),
                                                       ],
                                                     ),
-                                                    special_price == null ?  Container()   :  Row(
-                                                      children: [
-                                                        Text(
-                                                          "${double.parse(special_price) } ${translator.translate("SAR")}",
-                                                          style: TextStyle(
-                                                              decoration: TextDecoration.lineThrough,
-                                                              fontSize: StaticData.get_height(context)  * .011,
-                                                              color: greyColor),
-                                                        ),
-                                                        SizedBox(
-                                                          width: StaticData.get_width(context) * .02,
-                                                        ),
-                                                        MyText(
-                                                            text: "${percentage}%",
-                                                            size: StaticData.get_height(context)  * .011,
-                                                            color: greenColor),
-                                                      ],
-                                                    )  ,
+                                                    SizedBox(width: width(context) * 0.005,),
+                                                    special_price == null ?  Container()   :       Text(
+                                                      "${snapshot.data[index].price} ${translator.translate("SAR")}",
+                                                      style: TextStyle(
+                                                          decoration: TextDecoration.lineThrough,
+                                                          fontSize: StaticData.get_height(context)  * .011,
+                                                          color: greyColor),
+                                                    ),
                                                   ],
                                                 ),
 
@@ -302,7 +316,8 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                       })
               );
             }
-          } else if (snapshot.hasError) {
+          }
+          else if (snapshot.hasError) {
             return Container(
               child: Text('${snapshot.error}'),
             );

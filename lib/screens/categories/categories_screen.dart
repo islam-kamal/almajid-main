@@ -93,9 +93,23 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                       child: Row(
                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: [
-                                                          customDescriptionText(
-                                                              context: context,
-                                                              text: snapshot.data.childrenData[index].name),
+                                                          InkWell(
+                                                            onTap: (){
+                                                              customAnimatedPushNavigation(
+                                                                  context,
+                                                                  CategoryProductsScreen(
+                                                                    category_id: snapshot.data.childrenData[index].id.toString(),
+                                                                    category_name: snapshot.data.childrenData[index].name,
+
+                                                                  )
+
+                                                              );
+                                                            },
+                                                            child:  customDescriptionText(
+                                                                context: context,
+                                                                text: snapshot.data.childrenData[index].name),
+                                                          )
+                                                         ,
                                                           snapshot.data.childrenData[index].childrenData.isEmpty ? Container():    Icon(
                                                             Icons.keyboard_arrow_down,
                                                             size: 30,
@@ -174,7 +188,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                       return Container(
                                         child: Text('${snapshot.error}'),
                                       );
-                                    } else {
+                                    }
+                                    else {
                                       return Center(
                                         child: CircularProgressIndicator(),
                                       );
@@ -185,7 +200,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                               }
                             } else if (state is ErrorLoading) {
                               return Container();
-                            } else {
+                            }
+                            else {
                               return Center(
                                 child: CircularProgressIndicator(),
                               );
