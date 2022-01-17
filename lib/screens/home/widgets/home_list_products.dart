@@ -140,8 +140,12 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
              if(widget.type ==  'related products'){
                snapshot.data.clear();
                related_product_list.forEach((element) {
+                 element.productLinks.forEach((e) {
+                   if(e.linkType == "related"){
+                     snapshot.data.add(element) ;
+                   }
+                 });
 
-                 snapshot.data.add(element) ;
                });
              }
               return  Container(
@@ -180,7 +184,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                 lightSource: LightSource.left,
                               ),
                               child: Container(
-                                width: width(context) * .35,
+                                width: width(context) * .37,
                                 height: isLandscape(context)
                                     ? 2 * height(context) * .35
                                     : height(context) * .35,
@@ -203,7 +207,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                             child: Stack(
                                               children: [
                                                 Container(
-                                                  width: width(context) * .32,
+                                                  width: width(context) * .35,
                                                   height: isLandscape(context) ? 2 * height(context) * .12 : height(context) * .12,
                                                   decoration: BoxDecoration(
                                                       image: DecorationImage(
@@ -217,7 +221,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                             )
                                         ),
                                         Container(
-                                          width: width(context) * .32,
+                                          width: width(context) * .35,
                                           height: isLandscape(context) ? 2 * height(context) * .15 : height(context) * .08,
                                           color: whiteColor,
                                           child: Column(
@@ -282,7 +286,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                           instock_status: snapshot.data[index].extensionAttributes.stockItem.isInStock,
                                           scaffoldKey: widget.homeScaffoldKey,
                                           btn_height: width(context) * .08,
-                                          btn_width: width(context) * .35,
+                                          btn_width: width(context) * .37,
                                           text_size: 0.017,
                                           home_shape: true,
                                           product_image: product_image,
@@ -291,7 +295,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                         ) :
                                         Container(
                                           height: width(context) * .1,
-                                          width: width(context) * .35,
+                                          width: width(context) * .37,
                                           padding: EdgeInsets.all(4),
                                           decoration: BoxDecoration(
                                               borderRadius: const BorderRadius.all(Radius.circular(15.0))

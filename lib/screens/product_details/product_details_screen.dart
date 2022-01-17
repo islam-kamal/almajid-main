@@ -44,6 +44,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return NetworkIndicator(
       child: PageContainer(
