@@ -13,9 +13,14 @@ class CategoriesButtons extends StatefulWidget{
 
 }
 
-class categoriesButtonsSate extends State<CategoriesButtons>{
+class categoriesButtonsSate extends State<CategoriesButtons> with TickerProviderStateMixin{
   var selected_category = 0;
-
+  TabController _controller;
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,63 +44,106 @@ class categoriesButtonsSate extends State<CategoriesButtons>{
                     if (snapshot.data == null) {
                       return Container();
                     } else {
-                      print("length : ${snapshot.data.childrenData.length}");
-
+                      _controller = TabController(length: snapshot.data.childrenData.length, vsync: this);
                       return Container(
                           width: width(context),
                           height: isLandscape(context)
                               ? 2 * height(context) * .05
                               : height(context) * .05,
-                          child: ListView.builder(
-                              itemCount: snapshot.data.childrenData.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      selected_category = index;
-                                    });
-                                    Timer(Duration(seconds: 1), () async {
-                                      customAnimatedPushNavigation(
-                                          context, CategoryProductsScreen(
-                                        category_id: snapshot.data
-                                            .childrenData[index].id.toString(),
-                                        category_name: snapshot.data
-                                            .childrenData[index].name,
+                          color: mainColor,
+                          child: TabBar(
+                            controller: _controller,
+                            isScrollable: true,
+                            indicatorWeight: 5,
+                            tabs: snapshot.data.childrenData.map((item) => GestureDetector(
+                              onTap: () {
+                                setState(() {
 
-                                      ));
-                                    });
+                                  selected_category = snapshot.data.childrenData.indexOf(item);
+                                });
+                                Timer(Duration(seconds: 1), () async {
+                                  customAnimatedPushNavigation(
+                                      context, CategoryProductsScreen(
+                                    category_id: item.id.toString(),
+                                    category_name: item.name,
 
-                                  },
-                                  child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15)
+                                  ));
+                                });
+
+                              },
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15)
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(width: width(context) * .01),
+                                      Container(
+                                     padding: EdgeInsets.only(right: 5,left: 5),
+                                        child: Center(
+                                          child: customDescriptionText(
+                                              context: context,
+                                              text: item.name,
+                                              textColor:  whiteColor,
+                                              percentageOfHeight: .015),
+                                        ),
                                       ),
-                                      child: Row(
-                                        children: [
-                                          SizedBox(width: width(context) * .01),
-                                          Container(
-                                            width: width(context) * .33,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(15),
-                                              color: index == selected_category ? mainColor : whiteColor,
-                                            ),
+                                    ],
+                                  )),
+                            )).toList() ,
+                          )
 
-                                            child: Center(
-                                              child: customDescriptionText(
-                                                  context: context,
-                                                  text: snapshot.data
-                                                      .childrenData[index].name,
-                                                  textColor: index == selected_category
-                                                      ? whiteColor
-                                                      : mainColor,
-                                                  percentageOfHeight: .02),
-                                            ),
-                                          ),
-                                        ],
-                                      )),
-                                );
-                              }));
+                   /*       ListView.builder(
+                      itemCount: snapshot.data.childrenData.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selected_category = index;
+                                });
+                                Timer(Duration(seconds: 1), () async {
+                                  customAnimatedPushNavigation(
+                                      context, CategoryProductsScreen(
+                                    category_id: snapshot.data
+                                        .childrenData[index].id.toString(),
+                                    category_name: snapshot.data
+                                        .childrenData[index].name,
+
+                                  ));
+                                });
+
+                              },
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15)
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(width: width(context) * .01),
+                                      Container(
+                                        width: width(context) * .33,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(15),
+                                          color: index == selected_category ? mainColor : whiteColor,
+                                        ),
+
+                                        child: Center(
+                                          child: customDescriptionText(
+                                              context: context,
+                                              text: snapshot.data
+                                                  .childrenData[index].name,
+                                              textColor: index == selected_category
+                                                  ? whiteColor
+                                                  : mainColor,
+                                              percentageOfHeight: .02),
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                            );
+                          })*/
+                      );
                     }
                   } else if (snapshot.hasError) {
                     return Container(

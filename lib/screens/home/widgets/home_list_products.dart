@@ -16,7 +16,6 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:almajidoud/Widgets/customText.dart';
 import 'package:http/http.dart' as http;
-
 class HomeListProducts extends StatefulWidget {
   final String type;
   GlobalKey<ScaffoldState> homeScaffoldKey;
@@ -157,7 +156,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
 
                         snapshot.data[index].customAttributes.forEach((element) {
                           if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
-                            special_price = element.value;
+                            special_price = element.value == snapshot.data[index].price ? null : element.value;
                           }
                         });
                         if(special_price != null){
@@ -167,152 +166,181 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                           if(element.attributeCode == "thumbnail")
                             product_image = element.value;
                         });
-
-                        return Padding(
-                          padding: EdgeInsets.only(left: 5, right: 5,),
-                          child: Neumorphic(
-                            style: NeumorphicStyle(
-                              border:
-                              NeumorphicBorder(color: mainColor),
-                              shape: NeumorphicShape.flat,
-                              color: whiteColor,
-                              depth: 5,
-                              shadowDarkColor: greyColor,
-                              lightSource: LightSource.left,
-                            ),
-                            child: Container(
-                              width: width(context) * .35,
-                              height: isLandscape(context)
-                                  ? 2 * height(context) * .35
-                                  : height(context) * .35,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: mainColor.withOpacity(.2)),
-                                  borderRadius: BorderRadius.circular(0)),
-                              child: Stack(
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          customAnimatedPushNavigation(
-                                              context,
-                                              ProductDetailsScreen(
-                                                product_id: snapshot.data[index].id,
-                                              ));
-                                        },
-                                        child: Stack(
-                                          children: [
-                                            Container(
-                                              width: width(context) * .32,
-                                              height: isLandscape(context) ? 2 * height(context) * .12 : height(context) * .12,
-                                              decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: NetworkImage(
-                                                          product_image??''),
-                                                      fit: BoxFit.cover)),
-                                            ),
-
-
-                                          ],
-                                        )
-                                      ),
-                                      Container(
-                                        width: width(context) * .32,
-                                        height: isLandscape(context) ? 2 * height(context) * .15 : height(context) * .08,
-                                        color: whiteColor,
-                                        child: Column(
-                                          children: [
-                                            responsiveSizedBox(context: context, percentageOfHeight: .008),
-                                            customDescriptionText(
-                                                context: context,
-                                                textColor: mainColor,
-                                                text: snapshot.data[index].name,
-                                                maxLines: 2,
-                                                percentageOfHeight: .017),
-
-                                            Column(
+                        if(snapshot.data[index].status == 1){
+                          return Padding(
+                            padding: EdgeInsets.only(left: 5, right: 5,),
+                            child: Neumorphic(
+                              style: NeumorphicStyle(
+                                border:
+                                NeumorphicBorder(color: mainColor),
+                                shape: NeumorphicShape.flat,
+                                color: whiteColor,
+                                depth: 5,
+                                shadowDarkColor: greyColor,
+                                lightSource: LightSource.left,
+                              ),
+                              child: Container(
+                                width: width(context) * .35,
+                                height: isLandscape(context)
+                                    ? 2 * height(context) * .35
+                                    : height(context) * .35,
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: mainColor.withOpacity(.2)),
+                                    borderRadius: BorderRadius.circular(0)),
+                                child: Stack(
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        GestureDetector(
+                                            onTap: () {
+                                              customAnimatedPushNavigation(
+                                                  context,
+                                                  ProductDetailsScreen(
+                                                    product_id: snapshot.data[index].id,
+                                                  ));
+                                            },
+                                            child: Stack(
                                               children: [
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Wrap(
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment: MainAxisAlignment.end,
-                                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                                          children: [
-                                                            MyText(
-                                                              text: "${special_price == null ?snapshot.data[index].price : double.parse(special_price)} ",
-                                                              size: StaticData.get_height(context) * .017,
-                                                              color: blackColor,
-                                                              maxLines: 2,
-                                                              weight: FontWeight.normal,
-                                                            ),
-                                                            MyText(
-                                                              text: " ${translator.translate("SAR")}",
-                                                              size: StaticData.get_height(context) * .011,
-                                                              color: blackColor,
-                                                              maxLines: 2,
-                                                              weight: FontWeight.normal,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(width: width(context) * 0.005,),
-                                                    special_price == null ?  Container()   :       Text(
-                                                      "${snapshot.data[index].price} ${translator.translate("SAR")}",
-                                                      style: TextStyle(
-                                                          decoration: TextDecoration.lineThrough,
-                                                          fontSize: StaticData.get_height(context)  * .011,
-                                                          color: greyColor),
-                                                    ),
-                                                  ],
+                                                Container(
+                                                  width: width(context) * .32,
+                                                  height: isLandscape(context) ? 2 * height(context) * .12 : height(context) * .12,
+                                                  decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                          image: NetworkImage(
+                                                              product_image??''),
+                                                          fit: BoxFit.contain)),
                                                 ),
+
 
                                               ],
                                             )
-
-                                          ],
                                         ),
-                                      ),
-                                      AddProductToCartWidget(
-                                        product_sku: snapshot.data[index].sku,
-                                        product_quantity:   1,
-                                        instock_status: snapshot.data[index].extensionAttributes.stockItem.isInStock,
-                                        scaffoldKey: widget.homeScaffoldKey,
-                                        btn_height: width(context) * .08,
-                                        btn_width: width(context) * .35,
-                                        text_size: 0.017,
-                                        home_shape: true,
-                                        product_image: product_image,
-                                        product_id:  snapshot.data[index].id,
+                                        Container(
+                                          width: width(context) * .32,
+                                          height: isLandscape(context) ? 2 * height(context) * .15 : height(context) * .08,
+                                          color: whiteColor,
+                                          child: Column(
+                                            children: [
+                                              responsiveSizedBox(context: context, percentageOfHeight: .008),
+                                              customDescriptionText(
+                                                  context: context,
+                                                  textColor: mainColor,
+                                                  text: snapshot.data[index].name,
+                                                  maxLines: 2,
+                                                  percentageOfHeight: .017),
 
-                                      )
-                                    ],
-                                  ),
+                                              Column(
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Wrap(
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment: MainAxisAlignment.end,
+                                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                                            children: [
+                                                              MyText(
+                                                                text: "${special_price == null ?snapshot.data[index].price : double.parse(special_price)} ",
+                                                                size: StaticData.get_height(context) * .017,
+                                                                color: blackColor,
+                                                                maxLines: 2,
+                                                                weight: FontWeight.normal,
+                                                              ),
+                                                              MyText(
+                                                                text: " ${translator.translate("SAR")}",
+                                                                size: StaticData.get_height(context) * .011,
+                                                                color: blackColor,
+                                                                maxLines: 2,
+                                                                weight: FontWeight.normal,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      SizedBox(width: width(context) * 0.005,),
+                                                      special_price == null ?  Container()   :       Text(
+                                                        "${snapshot.data[index].price} ${translator.translate("SAR")}",
+                                                        style: TextStyle(
+                                                            decoration: TextDecoration.lineThrough,
+                                                            fontSize: StaticData.get_height(context)  * .011,
+                                                            color: greyColor),
+                                                      ),
+                                                    ],
+                                                  ),
 
-                                  // ------------------ here ----------------------
-                                  CustomWishList(
-                                    color: redColor,
-                                    product_id:
-                                    snapshot.data[index].id,
-                                    qty: snapshot
-                                        .data[index]
-                                        .extensionAttributes
-                                        .stockItem
-                                        .qty,
-                                    context: context,
-                                    screen:
-                                    CustomCircleNavigationBar(),
-                                  ),
-                                ],
+                                                ],
+                                              )
+
+                                            ],
+                                          ),
+                                        ),
+                                        snapshot.data[index].extensionAttributes.stockItem.isInStock ?   AddProductToCartWidget(
+                                          product_sku: snapshot.data[index].sku,
+                                          product_quantity:   1,
+                                          instock_status: snapshot.data[index].extensionAttributes.stockItem.isInStock,
+                                          scaffoldKey: widget.homeScaffoldKey,
+                                          btn_height: width(context) * .08,
+                                          btn_width: width(context) * .35,
+                                          text_size: 0.017,
+                                          home_shape: true,
+                                          product_image: product_image,
+                                          product_id:  snapshot.data[index].id,
+
+                                        ) :
+                                        Container(
+                                          height: width(context) * .1,
+                                          width: width(context) * .35,
+                                          padding: EdgeInsets.all(4),
+                                          decoration: BoxDecoration(
+                                              borderRadius: const BorderRadius.all(Radius.circular(15.0))
+                                          ),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color:redColor ,
+                                                borderRadius: BorderRadius.circular(8)),
+                                            child:  Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                customDescriptionText(
+                                                    context: context,
+                                                    text: "Out Of Stock",
+                                                    percentageOfHeight:  0.017,
+                                                    textColor: whiteColor) ,
+                                              ],),
+                                          ) ,
+                                        )
+
+
+
+                                      ],
+                                    ),
+
+                                    // ------------------ here ----------------------
+                                    snapshot.data[index].extensionAttributes.stockItem.isInStock ?     CustomWishList(
+                                      color: redColor,
+                                      product_id:
+                                      snapshot.data[index].id,
+                                      qty: snapshot
+                                          .data[index]
+                                          .extensionAttributes
+                                          .stockItem
+                                          .qty,
+                                      context: context,
+                                      screen:
+                                      CustomCircleNavigationBar(),
+                                    ) : Container(),
+                                  ],
+                                ),
+
                               ),
-
                             ),
-                          ),
-                        );
+                          );
+                        }else{
+
+                        }
+
                       })
               );
             }

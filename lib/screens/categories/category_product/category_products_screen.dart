@@ -316,6 +316,10 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                         return   singleCategoryProductItem(
                                           product: _posts[index] ,
                                           scafffoldKey: _drawerKey,
+                                          category_screen: CategoryProductsScreen(
+                                              category_id: widget.category_id,
+                                            category_name: widget.category_name,
+                                          ),
                                         );
 
                                       })),

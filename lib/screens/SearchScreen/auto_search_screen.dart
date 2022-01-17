@@ -112,7 +112,7 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                         return snapshot.data.items[index] ==
                                                 null
                                             ? Container()
-                                            : InkWell(
+                                            : snapshot.data.items[index].status == 1? InkWell(
                                             onTap: (){
                                           customAnimatedPushNavigation(context,ProductDetailsScreen(
                                             product_id: snapshot.data.items[index].id,
@@ -176,18 +176,19 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                                         child: Container(
                                                                             padding: EdgeInsets.only(right: width(context) * .02, left: width(context) * .02),
                                                                             width: width(context) * .6,
+                                                                            alignment: Alignment.center,
                                                                             height: isLandscape(context) ? 2 * height(context) * .17 : height(context) * .17,
                                                                             child: SingleChildScrollView(
                                                                               child: Column(
                                                                                 crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                                                                                 children: [
-                                                                                  CustomWishList(
+                                                                                  snapshot.data.items[index].extensionAttributes.stockItem.isInStock ?   CustomWishList(
                                                                                     color: redColor,
                                                                                     product_id: snapshot.data.items[index].id,
                                                                                     qty: snapshot.data.items[index].extensionAttributes.stockItem.qty,
                                                                                     context: context,
                                                                                     screen: AutoSearchScreen(),
-                                                                                  ),
+                                                                                  ) : Container(),
                                                                                   responsiveSizedBox(context: context, percentageOfHeight: .01),
                                                                                   Padding(
                                                                                     padding: EdgeInsets.only(right: 5, left: 5),
@@ -208,7 +209,7 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                                                         filledIcon: Icons.star,
                                                                                         emptyIcon: Icons.star_border,
                                                                                         size: StaticData.get_width(context) * 0.03,
-                                                                                        filledColor: (snapshot.data.items[index].visibility.toDouble() >= 1) ? Colors.yellow.shade700 : Colors.yellow.shade700,
+                                                                                        filledColor: snapshot.data.items[index].extensionAttributes.reviews.isEmpty ? greyColor : Colors.yellow.shade700,
                                                                                       ),
                                                                                     ],
                                                                                   ),
@@ -234,29 +235,8 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
 
                                                                                       return _isLoading
                                                                                           ? CircularProgressIndicator()
-                                                                                          : InkWell(
-                                                                                              onTap: snapshot.data.items[index].extensionAttributes.stockItem.isInStock == false
-                                                                                                  ? () {
-                                                                                                      Flushbar(
-                                                                                                        messageText: Container(
-                                                                                                          width: StaticData.get_width(context) * 0.7,
-                                                                                                          child: Wrap(
-                                                                                                            children: [
-                                                                                                              Text(
-                                                                                                                translator.translate("There is no quantity of this product in stock"),
-                                                                                                                textDirection: TextDirection.rtl,
-                                                                                                                style: TextStyle(color: whiteColor),
-                                                                                                              ),
-                                                                                                            ],
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                        flushbarPosition: FlushbarPosition.BOTTOM,
-                                                                                                        backgroundColor: redColor,
-                                                                                                        flushbarStyle: FlushbarStyle.FLOATING,
-                                                                                                        duration: Duration(seconds: 3),
-                                                                                                      )..show(scaffold_key.currentState.context);
-                                                                                                    }
-                                                                                                  : () {
+                                                                                          :  snapshot.data.items[index].extensionAttributes.stockItem.isInStock ? InkWell(
+                                                                                              onTap: () {
                                                                                                       shoppingCartBloc.add(AddProductToCartEvent(context: context, product_quantity: snapshot.data.items[index].extensionAttributes.stockItem.qty, product_sku: snapshot.data.items[index].sku, indictor: 'search_add_to_cart'));
                                                                                                     },
                                                                                               child: Container(
@@ -272,7 +252,27 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                                                                   ],
                                                                                                 ),
                                                                                               ),
-                                                                                            );
+                                                                                            ) : Container(
+                                                                                        height: width(context) * .08,
+                                                                                        width: width(context) * .45,
+                                                                                        padding: EdgeInsets.all(4),
+                                                                                        decoration: BoxDecoration(
+                                                                                          border: Border.all(color: redColor),
+                                                                                        ),
+                                                                                        child: Container(
+                                                                                          decoration: BoxDecoration(
+                                                                                              borderRadius: BorderRadius.circular(8)),
+                                                                                          child:  Row(
+                                                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                                                            children: [
+                                                                                              customDescriptionText(
+                                                                                                  context: context,
+                                                                                                  text: "Out Of Stock",
+                                                                                                  percentageOfHeight:  0.017,
+                                                                                                  textColor: redColor) ,
+                                                                                            ],),
+                                                                                        ) ,
+                                                                                      );
                                                                                     },
                                                                                   ),
                                                                                 ],
@@ -289,7 +289,7 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                   ],
                                                 )
 
-                                      ) );
+                                      ) ) : null;
                                       }
                                     });
                               }

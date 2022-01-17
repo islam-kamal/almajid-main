@@ -117,6 +117,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                         ],
                                                       ),
                                                     ),
+
                                                     subtitle: (finance_status) ?
                                                     ListView.builder(
                                                         shrinkWrap: true,

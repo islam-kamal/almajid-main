@@ -13,7 +13,7 @@ class StaticData {
   static String user_token = '';
   static int product_id ;
   static String order_status = 'accepted';
-  static int user_wallet_earnings = 0;
+  static int home_category_index = 0;
   static String user_mobile_number = '';
   static int saved_addresses_count;
   static bool chosse_address_status = false;

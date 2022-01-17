@@ -41,7 +41,7 @@ Future promoCodeAlertDialog({BuildContext base_context}) {
                 
                 child: Column(children: [
                   responsiveSizedBox(context: context, percentageOfHeight: .02),
-                  customDescriptionText(context: context , text: "Apply your promo code to avail offers" ,
+                  customDescriptionText(context: context , text:translator.translate("Apply promo code to avail offers") ,
                       percentageOfHeight: .02 , fontWeight: FontWeight.bold , textColor: greyColor),
                   responsiveSizedBox(context: context, percentageOfHeight: .02),
                   Container(width: width(context)*.7,height: height(context)*.06,
