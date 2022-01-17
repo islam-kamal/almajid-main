@@ -5,6 +5,7 @@ writeReviewButton({BuildContext context , var product_suk , var product_id}) {
     onTap: (){
       customPushNamedNavigation(context,ProductReviewsScreen(
         product_id: product_id,
+        product_suk: product_suk,
       ));
 
     },
