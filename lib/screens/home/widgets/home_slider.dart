@@ -19,7 +19,6 @@ class HomeSlider extends StatefulWidget {
 
 class _HomeSlider_State extends State<HomeSlider> {
   int _current = 0;
-
 @override
   void initState() {
     // TODO: implement initState

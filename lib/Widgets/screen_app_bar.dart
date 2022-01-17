@@ -3,6 +3,7 @@ import 'package:almajidoud/custom_widgets/cart_badge.dart';
 import 'package:almajidoud/screens/SearchScreen/auto_search_class.dart';
 import 'package:almajidoud/screens/SearchScreen/search_screen.dart';
 import 'package:almajidoud/screens/cart/widgets/promo_code_alert_dialog.dart';
+import 'package:almajidoud/screens/home/widgets/categories_buttons.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -38,7 +39,7 @@ class ScreenAppBarState extends State<ScreenAppBar> {
         padding: EdgeInsets.only(
             right: width(context) * .05,
             left: width(context) * .05,
-            bottom: isLandscape(context) ? 2 * height(context) * .01 : height(context) * .01
+         //   bottom: isLandscape(context) ? 2 * height(context) * .01 : height(context) * .01
         ),
         width: width(context),
         color: mainColor,
@@ -98,6 +99,7 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                     : Container(),
               ],
             ),
+            widget.home_logo ?  CategoriesButtons() : Container(),
           ],
         ),
       ),

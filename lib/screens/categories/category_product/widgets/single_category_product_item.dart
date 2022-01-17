@@ -15,8 +15,10 @@ class singleCategoryProductItem extends StatelessWidget {
   Items product;
   String special_price;
   var percentage;
+  Widget category_screen;
+
   GlobalKey<ScaffoldState> scafffoldKey;
-  singleCategoryProductItem({this.product, this.scafffoldKey});
+  singleCategoryProductItem({this.product, this.scafffoldKey,this.category_screen});
   @override
   Widget build(BuildContext context) {
     List<String> gallery = new List<String>();
@@ -40,7 +42,8 @@ class singleCategoryProductItem extends StatelessWidget {
     return InkWell(
       onTap: (){
         customAnimatedPushNavigation(context, ProductDetailsScreen(
-            product_id:product.id
+            product_id:product.id,
+          category_screen: category_screen,
         ));
       },
       child: Directionality(
@@ -63,8 +66,8 @@ class singleCategoryProductItem extends StatelessWidget {
                                 margin: EdgeInsets.only(right: 3, left: 3),
                                 width: width(context) * .3,
                                 height: isLandscape(context)
-                                    ? 2 * height(context) * .14
-                                    : height(context) * .14,
+                                    ? 2 * height(context) * .16
+                                    : height(context) * .16,
                                 decoration: BoxDecoration(
                                     color: backGroundColor,
                                     borderRadius: BorderRadius.circular(15),
@@ -80,13 +83,11 @@ class singleCategoryProductItem extends StatelessWidget {
                                       ? TextDirection.ltr
                                       : TextDirection.rtl,
                                   child: Container(
-                                    padding: EdgeInsets.only(
-                                        right: width(context) * .02,
-                                        left: width(context) * .02),
+                                    padding: EdgeInsets.only(right: width(context) * .02, left: width(context) * .02),
                                     width: width(context) * .6,
                                     height: isLandscape(context)
-                                        ? 2 * height(context) * .15
-                                        : height(context) * .15,
+                                        ? 2 * height(context) * .18
+                                        : height(context) * .18,
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment:
@@ -94,7 +95,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                           ? CrossAxisAlignment.end
                                           : CrossAxisAlignment.start,
                                       children: [
-                                        CustomWishList(
+                                        product.extensionAttributes.stockItem.isInStock ?     CustomWishList(
                                           color: redColor,
                                           product_id: product.id,
                                           qty: product
@@ -102,8 +103,8 @@ class singleCategoryProductItem extends StatelessWidget {
                                           context: context,
                                           screen: CategoryProductsScreen(),
                                           scafffoldKey: scafffoldKey,
-                                        ),
-                                   Padding(
+                                        ) : Container(),
+                                        Padding(
                                      padding: EdgeInsets.only(right: 5,left: 5),
                                      child:    Align(
                                        child:   customDescriptionText(
@@ -167,10 +168,8 @@ class singleCategoryProductItem extends StatelessWidget {
                                               size:
                                               StaticData.get_width(context) *
                                                   0.03,
-                                              filledColor: (product.visibility
-                                                  .toDouble() >=
-                                                  1)
-                                                  ? Colors.yellow.shade700
+                                              filledColor:
+                                              product.extensionAttributes.reviews.isEmpty    ? greyColor
                                                   : Colors.yellow.shade700,
                                             ),
                                           ],
@@ -178,7 +177,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            AddProductToCartWidget(
+                                            product.extensionAttributes.stockItem.isInStock ?     AddProductToCartWidget(
                                               product_sku: product.sku,
                                               product_quantity:   1,
                                               instock_status: product.extensionAttributes.stockItem.isInStock,
@@ -189,6 +188,27 @@ class singleCategoryProductItem extends StatelessWidget {
                                               home_shape: false,
                                               product_image: product_image,
                                               product_id: product.id,
+                                            )
+                                                : Container(
+                                              height: width(context) * .08,
+                                              width: width(context) * .45,
+                                              padding: EdgeInsets.all(4),
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(color: redColor),
+                                              ),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(8)),
+                                                child:  Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    customDescriptionText(
+                                                        context: context,
+                                                        text: "Out Of Stock",
+                                                        percentageOfHeight:  0.017,
+                                                        textColor: redColor) ,
+                                                  ],),
+                                              ) ,
                                             ),
                                           ],
                                         )

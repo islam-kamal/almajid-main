@@ -15,8 +15,10 @@ favouriteAndNameRow({BuildContext context, String product_name , var prod_id, va
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
+          width: width(context) * 0.7,
           child: customDescriptionText(
               context: context,
+              maxLines: 2,
               text: product_name??"",
               textColor: mainColor,
               percentageOfHeight: .020),
@@ -27,8 +29,7 @@ favouriteAndNameRow({BuildContext context, String product_name , var prod_id, va
           prod_id,
           qty:prod_qty,
           context: context,
-          screen:
-          ProductDetailsScreen(),
+          screen: ProductDetailsScreen(),
         ),
       ],
     ),

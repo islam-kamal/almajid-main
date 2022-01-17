@@ -116,7 +116,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                             } else {
                                               return snapshot.data.items[index] == null
                                                   ? Container()
-                                                  :   InkWell(
+                                                  :  snapshot.data.items[index].status == 1 ?InkWell(
                                                 onTap: (){
                                                   customAnimatedPushNavigation(context,ProductDetailsScreen(
                                                     product_id: snapshot.data.items[index].id,
@@ -140,8 +140,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                           margin: EdgeInsets.only(right: 3,left: 3),
                                                                           width: width(context) * .3,
                                                                           height: isLandscape(context)
-                                                                              ? 2 * height(context) * .14
-                                                                              : height(context) * .14,
+                                                                              ? 2 * height(context) * .16
+                                                                              : height(context) * .16,
                                                                           decoration: BoxDecoration(
                                                                               color: backGroundColor,
                                                                               borderRadius: BorderRadius.circular(15),
@@ -160,20 +160,20 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                     left: width(context) * .02),
                                                                                 width: width(context) * .6,
                                                                                 height: isLandscape(context)
-                                                                                    ? 2 * height(context) * .15
-                                                                                    : height(context) * .15,
+                                                                                    ? 2 * height(context) * .18
+                                                                                    : height(context) * .18,
                                                                                 child: Column(
                                                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                     crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                                                                                     children: [
-                                                                                      CustomWishList(
+                                                                                      snapshot.data.items[index].extensionAttributes.stockItem.isInStock?     CustomWishList(
                                                                                         color: redColor,
                                                                                         product_id: snapshot.data.items[index].id,
                                                                                         qty: snapshot.data.items[index].extensionAttributes.stockItem.qty,
                                                                                         context: context,
                                                                                         screen: SearchScreen(),
 
-                                                                                      ),
+                                                                                      ) : Container(),
                                                                                  //     responsiveSizedBox(context: context, percentageOfHeight: .01),
                                                                                       Padding(padding: EdgeInsets.only(right: 5,left: 5),
                                                                                         child:  Align(
@@ -226,8 +226,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                             emptyIcon: Icons.star_border,
                                                                                             size: StaticData.get_width(context) * 0.03,
                                                                                             filledColor:
-                                                                                            (snapshot.data.items[index].visibility.toDouble() >= 1)
-                                                                                                ? Colors.yellow.shade700
+                                                                                            snapshot.data.items[index].extensionAttributes.reviews.isEmpty
+                                                                                                ? greyColor
                                                                                                 : Colors.yellow.shade700,
                                                                                           ),
 
@@ -238,7 +238,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                       Row(
                                                                                         mainAxisAlignment: MainAxisAlignment.center,
                                                                                         children: [
-                                                                                          AddProductToCartWidget(
+                                                                                          snapshot.data.items[index].extensionAttributes.stockItem.isInStock?     AddProductToCartWidget(
                                                                                             product_sku: snapshot.data.items[index].sku,
                                                                                             product_quantity:   1,
                                                                                             instock_status: snapshot.data.items[index].extensionAttributes.stockItem.isInStock,
@@ -249,6 +249,26 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                             home_shape: false,
                                                                                             product_image: product_image,
                                                                                             product_id:  snapshot.data.items[index].id,
+                                                                                          ) :   Container(
+                                                                                            height: width(context) * .08,
+                                                                                            width: width(context) * .45,
+                                                                                            padding: EdgeInsets.all(4),
+                                                                                            decoration: BoxDecoration(
+                                                                                              border: Border.all(color: redColor),
+                                                                                            ),
+                                                                                            child: Container(
+                                                                                              decoration: BoxDecoration(
+                                                                                                  borderRadius: BorderRadius.circular(8)),
+                                                                                              child:  Row(
+                                                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                                                children: [
+                                                                                                  customDescriptionText(
+                                                                                                      context: context,
+                                                                                                      text: "Out Of Stock",
+                                                                                                      percentageOfHeight:  0.017,
+                                                                                                      textColor: redColor) ,
+                                                                                                ],),
+                                                                                            ) ,
                                                                                           ),
                                                                                         ],
                                                                                       )
@@ -264,7 +284,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                       ],
                                                     )
                                                 ),
-                                              );
+                                              ) : null ;
                                             }
 
                                           });

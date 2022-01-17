@@ -39,7 +39,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return NetworkIndicator(
         child: PageContainer(
-            child: Scaffold(
+            child:  Scaffold(
       backgroundColor: whiteColor,
       body: Container(
           height: height(context),
@@ -122,7 +122,7 @@ class _CartScreenState extends State<CartScreen> {
                                     ],
                                   ),
                                 ),
-                                data.discountAmount>0?Padding(
+                                data.discountAmount == null?Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -229,7 +229,10 @@ class _CartScreenState extends State<CartScreen> {
                   ],
                 )),
               ),
-              Container(
+                Directionality(
+                  textDirection: translator.activeLanguageCode == 'en' ? TextDirection.rtl : TextDirection.ltr,
+
+                  child: Container(
                 height: height(context),
                 width: width(context),
                 child: Column(
@@ -247,13 +250,14 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ],
                 ),
-              ),
+                  ) ),
             ],
           )),
       drawer: SettingsDrawer(
         node: fieldNode,
       ),
-    )));
+    )
+            ));
   }
 
   void delete_cart_item({var cart_item_id}) async {
@@ -351,9 +355,7 @@ class _CartScreenState extends State<CartScreen> {
                                           ),
                                         ],
                                       ),
-                                      responsiveSizedBox(
-                                          context: context,
-                                          percentageOfHeight: .02),
+                                      responsiveSizedBox(context: context, percentageOfHeight: .01),
                                       Row(
                                         children: [
                                           customDescriptionText(
@@ -468,19 +470,12 @@ class _CartScreenState extends State<CartScreen> {
                                                       fontSize: 20,
                                                     ),
                                                   ),
+
                                                   MaterialButton(
                                                     height: 5,
                                                     minWidth: StaticData.get_width(context) * 0.15,
 
-                                                    onPressed: () async {
-                                                      if (qty <= 1) {
-                                                        errorDialog(
-                                                          context: context,
-                                                          text:
-                                                          "لقد نفذت الكمية من هذا المنتج",
-                                                        );
-                                                      }
-                                                      else {
+                                                    onPressed: qty <= 1 ? (){} :() async {
                                                         setState(() {
                                                           qty--;
                                                         });
@@ -546,9 +541,9 @@ class _CartScreenState extends State<CartScreen> {
                                                                 page_index: 4,
                                                               ));*/
                                                         }
-                                                      }
+
                                                     },
-                                                    color: whiteColor,
+                                                    color: qty <= 1 ? greyColor : whiteColor,
                                                     textColor: Colors.white,
                                                     child: Icon(
                                                       Icons.remove,

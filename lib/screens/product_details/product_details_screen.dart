@@ -17,20 +17,22 @@ import 'package:almajidoud/Model/ProductModel/product_model.dart'
 as product_model;
 class ProductDetailsScreen extends StatefulWidget {
   var product_id;
-  ProductDetailsScreen({this.product_id});
+  Widget category_screen;
+  ProductDetailsScreen({this.product_id,this.category_screen});
   @override
   _ProductDetailsScreenState createState() => _ProductDetailsScreenState();
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen>
     with TickerProviderStateMixin {
-  List product_images = [];
+  List product_images ;
   var selected_size = 0;
   var qty=1;
   var description;
   var product_image;
   @override
   void initState() {
+
     print("widget.product_id : ${widget.product_id}");
     home_bloc.add(ProductDetailsEvent(
       product_id: widget.product_id
@@ -57,6 +59,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                       if (snapshot.data == null) {
                         return no_data_widget(context: context);
                       } else {
+                        product_images = [];
                         snapshot.data[0].mediaGalleryEntries.forEach((element) {
                           product_images.add(
                               "${Urls.BASE_URL}/media/catalog/product" + element.file);
@@ -90,7 +93,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                 context: context, percentageOfHeight: .02),
                             productDetailsNameWidget(
                                 context: context,
-                                product_name: snapshot.data[0].name),
+                                product_name: snapshot.data[0].name,
+                              category_screen: widget.category_screen
+                            ),
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .03),
                             HomeSlider(
@@ -288,46 +293,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
         fontWeight: FontWeight.bold,
         fontSize: 20,
       ),
-    );
-  }
-  sizesListView({BuildContext context}) {
-    return Container(
-      width: width(context),
-      height: isLandscape(context)
-          ? 2 * height(context) * .07
-          : height(context) * .07,
-      child: ListView.builder(
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () {
-                setState(() {
-                  selected_size = index;
-                });
-              },
-              child: Row(
-                children: [
-                  SizedBox(width: width(context) * .02),
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color:
-                                selected_size == index ? mainColor : greyColor,
-                            width: 2),
-                        borderRadius: BorderRadius.circular(8)),
-                    width: width(context) * .2,
-                    child: Center(
-                      child: customDescriptionText(
-                          context: context,
-                          text: "90 ml",
-                          percentageOfHeight: .02),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-          itemCount: 3,
-          scrollDirection: Axis.horizontal),
     );
   }
 }

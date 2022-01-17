@@ -34,132 +34,136 @@ class _HomeScreenState extends State<HomeScreen> {
     FocusNode fieldNode = FocusNode();
     return NetworkIndicator(
       child: PageContainer(
-        child: Scaffold(
-          backgroundColor: whiteColor,
-          key: _drawerKey,
-          body: GestureDetector(
-          onTap: (){
-      FocusScopeNode currentFocus = FocusScope.of(context);
-      if (!currentFocus.hasPrimaryFocus) {
-        currentFocus.unfocus();
-      }
-    },
-    child: Container(
-              height: height(context),
-              width: width(context),
-              child: Stack(
-                children: [
-                  Container(
-                    height: height(context),
-                    child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            responsiveSizedBox(context: context, percentageOfHeight: .11),
-                            titleText(context: context, text: "Shop By Category"),
-                            responsiveSizedBox(context: context, percentageOfHeight: .02),
-                            CategoriesButtons(),
-                            responsiveSizedBox(context: context, percentageOfHeight: .009),
-                            HomeSlider(
-                              gallery:StaticData.images
-                            ),
+        child: Directionality(
+          textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
 
-
-                            responsiveSizedBox(context: context, percentageOfHeight: .03),
-                            titleText(context: context, text: translator.activeLanguageCode == 'ar' ?  StaticData.data['new-arrival']['arabic-title'] : StaticData.data['new-arrival']['english-title']),
-                            responsiveSizedBox(context: context, percentageOfHeight: .02),
-                            HomeListProducts(
-                              type: "New Arrivals",
-                              homeScaffoldKey: _drawerKey,
-                            ),
-                            responsiveSizedBox(context: context, percentageOfHeight: .015),
-                            banner(
-                              id: StaticData.data["static-banner"]['id'].toString(),
-                              name_ar: StaticData.data["static-banner"]['arabic_name'],
-                              name_en: StaticData.data["static-banner"]['english_name'],
-                              url: StaticData.data["static-banner"]['url']
-                            ),
-//-----------------------------------------------------------------------------------------------------------------------
-                            responsiveSizedBox(context: context, percentageOfHeight: .015),
-                            titleText(context: context,
-                                text: translator.activeLanguageCode == 'ar' ? StaticData.data['best-seller']['arabic-title'] :
-                                          StaticData.data['best-seller']['english-title']),
-                            responsiveSizedBox(context: context, percentageOfHeight: .02),
-
-
-                            HomeListProducts(
-                              type: "best-seller",
-                              homeScaffoldKey: _drawerKey,
-
-                            ),
-                            responsiveSizedBox(context: context, percentageOfHeight: .015),
-
-//-----------------------------------------------------------------------------------------------------------------------
-                            banner(
-                                id: StaticData.data["static-banner-2"]['id'].toString(),
-                                name_ar: StaticData.data["static-banner-2"]['arabic_name'],
-                                name_en: StaticData.data["static-banner-2"]['english_name'],
-                                url: StaticData.data["static-banner-2"]['url']
-                            ),
-                            responsiveSizedBox(context: context, percentageOfHeight: .015),
-                            titleText(context: context,
-                                text: translator.activeLanguageCode == 'ar' ? StaticData.data['weekly-deal']['arabic-title'] :
-                                StaticData.data['weekly-deal']['english-title']),
-                            responsiveSizedBox(context: context, percentageOfHeight: .02),
-                            HomeListProducts(
-                              type: "weekly-deal",
-                              homeScaffoldKey: _drawerKey,
-
-                            ),
-                            responsiveSizedBox(context: context, percentageOfHeight: .015),
-
- //-----------------------------------------------------------------------------------------------------------------------
-                            banner(
-                                id: StaticData.data["static-banner-3"]['id'].toString(),
-                                name_ar: StaticData.data["static-banner-3"]['arabic_name'],
-                                name_en: StaticData.data["static-banner-3"]['english_name'],
-                                url: StaticData.data["static-banner-3"]['url']
-                            ),
-                            responsiveSizedBox(context: context, percentageOfHeight: .015),
-                            titleText(context: context,
-                                text: translator.activeLanguageCode == 'ar' ? StaticData.data['testahel-collection']['arabic-title'] :
-                                StaticData.data['testahel-collection']['english-title']),
-                            responsiveSizedBox(context: context, percentageOfHeight: .02),
-                            HomeListProducts(
-                              type: "testahel-collection",
-                              homeScaffoldKey: _drawerKey,
-
-                            ),
-                            responsiveSizedBox(context: context, percentageOfHeight: .015),
-
-                            //-----------------------------------------------------------------------------------------------------------------------
-
-                          ],
-                        )),
-                  ),
-                  Container(
+          child: Scaffold(
+            backgroundColor: whiteColor,
+            key: _drawerKey,
+            body: GestureDetector(
+                onTap: (){
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus) {
+                    currentFocus.unfocus();
+                  }
+                },
+                child: Container(
                     height: height(context),
                     width: width(context),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Stack(
                       children: [
-                        ScreenAppBar(
-                          onTapCategoryDrawer: () {
-                            _drawerKey.currentState.openDrawer();
-                          },
-                          home_logo: true,
+                        Container(
+                          height: height(context),
+                          child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  responsiveSizedBox(context: context, percentageOfHeight: .12),
+                              //    CategoriesButtons(),
+                                  responsiveSizedBox(context: context, percentageOfHeight: .009),
+                                  HomeSlider(
+                                      gallery:StaticData.images
+                                  ),
 
+
+                                  responsiveSizedBox(context: context, percentageOfHeight: .03),
+                                  titleText(context: context, text: translator.activeLanguageCode == 'ar' ?  StaticData.data['new-arrival']['arabic-title'] : StaticData.data['new-arrival']['english-title']),
+                                  responsiveSizedBox(context: context, percentageOfHeight: .02),
+                                  HomeListProducts(
+                                    type: "New Arrivals",
+                                    homeScaffoldKey: _drawerKey,
+                                  ),
+                                  responsiveSizedBox(context: context, percentageOfHeight: .015),
+                                  banner(
+                                      id: StaticData.data["static-banner"]['id'].toString(),
+                                      name_ar: StaticData.data["static-banner"]['arabic_name'],
+                                      name_en: StaticData.data["static-banner"]['english_name'],
+                                      url: StaticData.data["static-banner"]['url']
+                                  ),
+//-----------------------------------------------------------------------------------------------------------------------
+                                  responsiveSizedBox(context: context, percentageOfHeight: .015),
+                                  titleText(context: context,
+                                      text: translator.activeLanguageCode == 'ar' ? StaticData.data['best-seller']['arabic-title'] :
+                                      StaticData.data['best-seller']['english-title']),
+                                  responsiveSizedBox(context: context, percentageOfHeight: .02),
+
+
+                                  HomeListProducts(
+                                    type: "best-seller",
+                                    homeScaffoldKey: _drawerKey,
+
+                                  ),
+                                  responsiveSizedBox(context: context, percentageOfHeight: .015),
+
+//-----------------------------------------------------------------------------------------------------------------------
+                                  banner(
+                                      id: StaticData.data["static-banner-2"]['id'].toString(),
+                                      name_ar: StaticData.data["static-banner-2"]['arabic_name'],
+                                      name_en: StaticData.data["static-banner-2"]['english_name'],
+                                      url: StaticData.data["static-banner-2"]['url']
+                                  ),
+                                  responsiveSizedBox(context: context, percentageOfHeight: .015),
+                                  titleText(context: context,
+                                      text: translator.activeLanguageCode == 'ar' ? StaticData.data['weekly-deal']['arabic-title'] :
+                                      StaticData.data['weekly-deal']['english-title']),
+                                  responsiveSizedBox(context: context, percentageOfHeight: .02),
+                                  HomeListProducts(
+                                    type: "weekly-deal",
+                                    homeScaffoldKey: _drawerKey,
+
+                                  ),
+                                  responsiveSizedBox(context: context, percentageOfHeight: .015),
+
+                                  //-----------------------------------------------------------------------------------------------------------------------
+                                  banner(
+                                      id: StaticData.data["static-banner-3"]['id'].toString(),
+                                      name_ar: StaticData.data["static-banner-3"]['arabic_name'],
+                                      name_en: StaticData.data["static-banner-3"]['english_name'],
+                                      url: StaticData.data["static-banner-3"]['url']
+                                  ),
+                                  responsiveSizedBox(context: context, percentageOfHeight: .015),
+                                  titleText(context: context,
+                                      text: translator.activeLanguageCode == 'ar' ? StaticData.data['testahel-collection']['arabic-title'] :
+                                      StaticData.data['testahel-collection']['english-title']),
+                                  responsiveSizedBox(context: context, percentageOfHeight: .02),
+                                  HomeListProducts(
+                                    type: "testahel-collection",
+                                    homeScaffoldKey: _drawerKey,
+
+                                  ),
+                                  responsiveSizedBox(context: context, percentageOfHeight: .015),
+
+                                  //-----------------------------------------------------------------------------------------------------------------------
+
+                                ],
+                              )),
+                        ),
+                        Container(
+                       //   height: height(context),
+                      //    width: width(context),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ScreenAppBar(
+                                onTapCategoryDrawer: () {
+                                  _drawerKey.currentState.openDrawer();
+                                },
+                                home_logo: true,
+
+                              ),
+
+                            ],
+                          ),
                         ),
                       ],
-                    ),
-                  ),
-                ],
-              ) )),
+                    ) )
+            ),
 
-          drawer: SettingsDrawer(
-            node: fieldNode,
+            drawer: SettingsDrawer(
+              node: fieldNode,
+            ),
+
           ),
-
-        ),
+        )
       ),
     );
   }

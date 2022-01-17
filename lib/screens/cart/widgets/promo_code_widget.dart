@@ -13,6 +13,10 @@ class PromoCodeWidget extends StatefulWidget {
 
 class PromoCodeWidgetState extends State<PromoCodeWidget> {
   bool radioValue = false;
+  Map<String, bool> values = {
+    'foo': true,
+    'bar': false,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +41,8 @@ class PromoCodeWidgetState extends State<PromoCodeWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Radio(
-                  value: true,
-                  groupValue: radioValue,
+                Checkbox(
+                  value: radioValue,
                   activeColor: mainColor,
                   onChanged: (value) {
                     setState(() {
@@ -50,9 +53,8 @@ class PromoCodeWidgetState extends State<PromoCodeWidget> {
                 ),
                 Text(translator.translate('Apply')),
 
-                Radio(
-                  value: false,
-                  groupValue: radioValue,
+                Checkbox(
+                  value: !radioValue,
                   activeColor: mainColor,
                   onChanged: (value) {
                     setState(() {
@@ -65,7 +67,8 @@ class PromoCodeWidgetState extends State<PromoCodeWidget> {
                 ),
                 Text(translator.translate('Cancel')),
               ],
-            ),)
+            ),
+        )
       ],
     );
   }
