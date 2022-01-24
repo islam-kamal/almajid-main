@@ -12,63 +12,76 @@ class PromoCodeWidget extends StatefulWidget {
 }
 
 class PromoCodeWidgetState extends State<PromoCodeWidget> {
-  bool radioValue = false;
-  Map<String, bool> values = {
-    'foo': true,
-    'bar': false,
-  };
+  bool radioValue = true;
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Expanded(
-            flex: 1,
-            child: Column(
-          children: [
-            Row(
-              children: [
-                Icon(Icons.map),
-                Text(translator.translate("Promo Code"),style: TextStyle(color: mainColor,fontSize: 16),)
-              ],
-            ),
-            Text(translator.translate("Apply promo code to avail offers"),style: TextStyle(color: white_gray_color,fontSize: 10),)
-          ],
-        )
+          flex:3,
+          child: Row(
+            children: [
+              Icon(Icons.map),
+              SizedBox(width: 5,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(translator.translate("Promo Code"),style: TextStyle(color: mainColor,fontSize: 14),),
+                  Text(translator.translate("Apply promo code to avail offers"),
+                    style: TextStyle(color: white_gray_color,fontSize: 10),
+                  ),
+
+                ],
+              )
+
+            ],
+          ),
         ),
         Expanded(
-            flex: 1,
+          flex:2,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Checkbox(
-                  value: radioValue,
-                  activeColor: mainColor,
-                  onChanged: (value) {
-                    setState(() {
-                      radioValue = value;
-                      promoCodeAlertDialog(base_context: context);
-                    });
+                InkWell(
+                  onTap: (){
+                    promoCodeAlertDialog(base_context: context);
                   },
+                  child: Container(
+                    width:width(context) * 0.15,
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: mainColor)
+                    ),
+                    child:Text(translator.translate('Apply'),style: TextStyle(color: mainColor,fontSize: 12),),
+                  ),
                 ),
-                Text(translator.translate('Apply')),
+                InkWell(
+                    onTap: (){
+                      shoppingCartBloc.add(DeletePromoCodeEvent(
+                          context: context
+                      ));
 
-                Checkbox(
-                  value: !radioValue,
-                  activeColor: mainColor,
-                  onChanged: (value) {
-                    setState(() {
-                      radioValue = value;
-                    });
-                    shoppingCartBloc.add(DeletePromoCodeEvent(
-                      context: context
-                    ));
-                  },
-                ),
-                Text(translator.translate('Cancel')),
+                    },
+                    child: Container(
+                      width:width(context) * 0.15,
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: mainColor)
+                      ),
+                      alignment: Alignment.center,
+                      child:  Text(translator.translate('Cancel'),style: TextStyle(color: mainColor,fontSize: 12),),
+                    ))
               ],
             ),
+          )
         )
+
+
       ],
     );
   }

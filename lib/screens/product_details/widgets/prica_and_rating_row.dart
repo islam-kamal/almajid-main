@@ -45,7 +45,7 @@ priceAndRatingRow({BuildContext context , var price ,var old_price=89 ,bool revi
           ],
         ),
 
-        review_status ?  RatingBar.readOnly(
+       RatingBar.readOnly(
           initialRating: 5.0,
           maxRating: 5,
           isHalfAllowed: true,
@@ -53,8 +53,8 @@ priceAndRatingRow({BuildContext context , var price ,var old_price=89 ,bool revi
           filledIcon: Icons.star,
           emptyIcon: Icons.star_border,
           size: StaticData.get_width(context) * 0.03,
-          filledColor: Colors.yellow.shade700,
-        ) : Container(),
+          filledColor: review_status ? Colors.yellow.shade700 : greyColor,
+        )
       ],
     ),
   );

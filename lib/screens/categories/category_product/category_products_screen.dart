@@ -172,6 +172,7 @@ import 'package:almajidoud/Bloc/Product_Bloc/product_bloc.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart' as product_model;
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
+import 'package:almajidoud/screens/home/widgets/categories_tap.dart';
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 
 import 'package:almajidoud/utils/file_export.dart';
@@ -180,7 +181,8 @@ import 'package:almajidoud/Repository/CategoryRepo/category_repository.dart';
 class CategoryProductsScreen extends StatefulWidget {
   final String category_id;
   final String category_name;
-  CategoryProductsScreen({this.category_id,this.category_name});
+  var category_index;
+  CategoryProductsScreen({this.category_id,this.category_name,this.category_index});
   @override
   _CategoryProductsScreenState createState() => _CategoryProductsScreenState();
 }
@@ -306,13 +308,15 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                           )
                               :Column(
                             children: [
+                              CategoriesTap(
+                                category_index: widget.category_index,
+                              ),
                               Expanded(
                                   child: ListView.builder(
                                       controller: _controller,
                                       shrinkWrap: true,
                                       itemCount: _posts.length,
                                       itemBuilder: (context, index) {
-
                                         return   singleCategoryProductItem(
                                           product: _posts[index] ,
                                           scafffoldKey: _drawerKey,

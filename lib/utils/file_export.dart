@@ -73,3 +73,4 @@ export 'package:almajidoud/Widgets/no_data.dart';
 export 'package:almajidoud/screens/cart/widgets/add_product_to_cart_widget.dart';
 export 'package:almajidoud/main.dart';
 export 'package:almajidoud/screens/Payment/submit_success.dart';
+export 'package:almajidoud/screens/Payment/submit_faield.dart';

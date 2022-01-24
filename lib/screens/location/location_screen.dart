@@ -1,6 +1,6 @@
 import 'package:almajidoud/main.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
-import 'package:almajidoud/screens/home/widgets/categories_buttons.dart';
+import 'package:almajidoud/screens/home/widgets/categories_tap.dart';
 import 'package:almajidoud/screens/home/widgets/home_list_products.dart';
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 import 'package:almajidoud/screens/home/widgets/title_text.dart';
@@ -14,7 +14,8 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   FocusNode fieldNode = FocusNode();
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-  var dropdownCountryValue = MyApp.app_location == 'sa' ?      'Saudi Arabia' : 'kuwait';
+  var dropdownCountryValue = MyApp.app_location == 'sa' ?      'Saudi Arabia'
+      : MyApp.app_location == 'uae' ? 'United Arab Emirates': 'kuwait';
   @override
   Widget build(BuildContext context) {
     return NetworkIndicator(
@@ -35,7 +36,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     responsiveSizedBox(context: context, percentageOfHeight: .11),
                     titleText(context: context, text: "Shop By Category"),
                     responsiveSizedBox(context: context, percentageOfHeight: .02),
-                    CategoriesButtons(),
+                    CategoriesTap(),
                     responsiveSizedBox(
                         context: context, percentageOfHeight: .009),
                     HomeSlider(
@@ -92,7 +93,7 @@ class _LocationScreenState extends State<LocationScreen> {
                         context: context, percentageOfHeight: .05),
 
                     Container(
-                      width: width(context)*.7,
+                      width: width(context)*.8,
                       height: isLandscape(context) ? 2*height(context)*.08: height(context)*.08,
                     decoration: BoxDecoration(border: Border.all(color: greyColor) ),
                       child: Row(
@@ -102,7 +103,8 @@ class _LocationScreenState extends State<LocationScreen> {
                         width: width(context)*.1,
                         height: isLandscape(context) ? 2*height(context)*.03: height(context)*.03,
                         child: Image.asset(
-                            dropdownCountryValue == 'Saudi Arabia'?    "assets/flag/saudi.png"  : "assets/flag/kuwait.png"),
+                            dropdownCountryValue == 'Saudi Arabia'?    "assets/flag/saudi.png"
+                                : dropdownCountryValue == "United Arab Emirates" ? "assets/flag/uae.png" : "assets/flag/kuwait.png"),
                       ) ,
                         SizedBox(width: width(context)*.02,),
                           DropdownButton<String>(
@@ -116,8 +118,10 @@ class _LocationScreenState extends State<LocationScreen> {
                               onChanged: (String newValue) {
                                 setState(() {
                                   dropdownCountryValue = newValue;
-                                  MyApp.app_location = newValue == 'Saudi Arabia' ? 'sa' : 'kw';
-                                  MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR") : translator.translate("KWD");
+                                  MyApp.app_location = newValue == 'Saudi Arabia' ? 'sa'
+                                      :newValue =="United Arab Emirates" ? 'uae' :  'kw';
+                                  MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
+                                      : MyApp.app_location == 'uae'? translator.translate("AED") :   translator.translate("KWD");
                                   sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location );
                                   if(StaticData.vistor_value == 'visitor'){
                                     MyApp.restartApp(context);
@@ -134,6 +138,7 @@ class _LocationScreenState extends State<LocationScreen> {
                               items: <String>[
                                 'Saudi Arabia',
                                 'kuwait',
+                                "United Arab Emirates"
                               ].map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value:  value,

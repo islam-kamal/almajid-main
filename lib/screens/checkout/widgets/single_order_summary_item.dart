@@ -1,11 +1,11 @@
+import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
+import 'package:almajidoud/screens/checkout/checkout_address_screen.dart';
+import 'package:almajidoud/screens/checkout/checkout_payment_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-singleOrderSummaryItem(
-    {BuildContext context,
-    String title: "",
-    String details: "",
-    Function onTapChange,
-    String image: "" , bool isAddress : false  , bool rValue}) {
+singleOrderSummaryItem({BuildContext context, String title: "", String details: "",
+    Function onTapChange, String image: "" , bool isAddress : false  , bool rValue,
+    GuestShipmentAddressModel guestShipmentAddressModel }) {
   return Column(
     children: [
       Container(
@@ -44,16 +44,28 @@ singleOrderSummaryItem(
 
             ],
           )),
-      Container(
-        width: width(context) * .9,
-        child: GestureDetector(onTap: onTapChange,child:
-        customDescriptionText(
-            context: context,
-            text: "Change",
-            textAlign: TextAlign.start,
-            fontWeight: FontWeight.bold,
-            percentageOfHeight: .022),)
-      ),
+      InkWell(
+        onTap: (){
+          if(title == "Address"){
+            customAnimatedPushNavigation(context, CheckoutAddressScreen());
+          }else{
+            customAnimatedPushNavigation(context, CheckoutPaymentScreen(
+              guestShipmentAddressModel: guestShipmentAddressModel,
+            ));
+
+          }
+        },
+        child: Container(
+            width: width(context) * .9,
+            child: GestureDetector(onTap: onTapChange,child:
+            customDescriptionText(
+                context: context,
+                text: "Change",
+                textAlign: TextAlign.start,
+                fontWeight: FontWeight.bold,
+                percentageOfHeight: .022),)
+        ),
+      )
     ],
   );
 }

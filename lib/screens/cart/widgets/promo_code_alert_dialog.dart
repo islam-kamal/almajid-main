@@ -38,7 +38,7 @@ Future promoCodeAlertDialog({BuildContext base_context}) {
               ),
           Container(width: width(context),height: 4 ,color: mainColor),
               Container(
-                
+
                 child: Column(children: [
                   responsiveSizedBox(context: context, percentageOfHeight: .02),
                   customDescriptionText(context: context , text:translator.translate("Apply promo code to avail offers") ,
@@ -78,13 +78,14 @@ Future promoCodeAlertDialog({BuildContext base_context}) {
           
           Container(
             child: Center(
-              child: GestureDetector(onTap: (){
+              child: GestureDetector(
+                onTap: (){
                 print("------ prom_code ---- ${controller.value.text}");
                 shoppingCartBloc.add(ApplyPromoCodeEvent(
                   context: base_context,
                   prom_code: controller.value.text
                 ));
-                Navigator.pop(context);
+
 
               },
                 child: Container(
@@ -111,7 +112,7 @@ dotsRow({BuildContext context}){
   return Container(width: width(context),child: Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-    Container(width: width(context)*.6,
+    Container(width: width(context)*.4,
       child: Row(
 
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

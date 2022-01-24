@@ -20,6 +20,7 @@ productDetailsNameWidget({BuildContext context , String product_name , Widget ca
             InkWell(
               child: Icon(Icons.arrow_back_ios),
               onTap: (){
+
                 print("category_screen : ${category_screen}");
                 category_screen== null?  customAnimatedPushNavigation(context, CustomCircleNavigationBar())
                    : customAnimatedPushNavigation(context, category_screen) ;

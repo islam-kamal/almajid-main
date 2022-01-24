@@ -194,7 +194,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                               width: width(context) * .45,
                                               padding: EdgeInsets.all(4),
                                               decoration: BoxDecoration(
-                                                  border: Border.all(color: redColor),
+                                                  border: Border.all(color: greyColor),
                                               ),
                                               child: Container(
                                                 decoration: BoxDecoration(
@@ -204,9 +204,8 @@ class singleCategoryProductItem extends StatelessWidget {
                                                   children: [
                                                     customDescriptionText(
                                                         context: context,
-                                                        text: "Out Of Stock",
-                                                        percentageOfHeight:  0.017,
-                                                        textColor: redColor) ,
+                                                        text: translator.translate("Out Of Stock"),                                                        percentageOfHeight:  0.017,
+                                                        textColor: mainColor) ,
                                                   ],),
                                               ) ,
                                             ),

@@ -1,18 +1,20 @@
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
+import 'package:almajidoud/screens/checkout/checkout_address_screen.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-class SubmitSuccessfulScreen extends StatefulWidget{
-  var order_id;
-  SubmitSuccessfulScreen({this.order_id});
+class SubmitFaieldScreen extends StatefulWidget{
+  var faield_type;
+  var reason;
+  SubmitFaieldScreen({this.faield_type,this.reason});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return SubmitSuccessfulScreenState();
+    return SubmitFaieldScreenState();
   }
 
 }
-class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with TickerProviderStateMixin{
+class SubmitFaieldScreenState extends State<SubmitFaieldScreen> with TickerProviderStateMixin{
   AnimationController _loginButtonController ;
   bool isLoading = false;
 
@@ -21,28 +23,6 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
     _loginButtonController =AnimationController(
         duration: const Duration(milliseconds: 3000), vsync: this);
     super.initState();
-  }
-
-  Future<Null> _playAnimation() async {
-    try {
-      setState(() {
-        isLoading = true;
-      });
-      await _loginButtonController.forward();
-    } on TickerCanceled {
-      print('[_playAnimation] error');
-    }
-  }
-
-  Future<Null> _stopAnimation() async {
-    try {
-      await _loginButtonController.reverse();
-      setState(() {
-        isLoading = false;
-      });
-    } on TickerCanceled {
-      print('[_stopAnimation] error');
-    }
   }
 
   @override
@@ -60,7 +40,7 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
             appBar: AppBar(
               centerTitle: true,
               title: Text(
-               translator.translate( "Receipt of the request"),
+                translator.translate( "Receipt of the request"),
               ),
               automaticallyImplyLeading: false,
             ),
@@ -77,7 +57,7 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
                         children: [
 
                           const SizedBox(height: 8),
-                          Text(translator.translate("Congratulations!"),
+                          Text(translator.translate("Faield!"),
                             style: Theme.of(context)
                                 .textTheme
                                 .headline6
@@ -85,52 +65,42 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            translator.translate("Your order created successfully"),
+                            widget.faield_type == 'PaymentFailed' ? translator.translate( "Payment was not successful, because ${widget.reason == null ? '' : widget.reason} Please try again Later!" ) :
+                            translator.translate( "Problem Verifying Payment, If you balance is deducted please contact our customer support and get your payment verified!"
+                            ),
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            '${translator.translate("Your order Number")} #${widget.order_id}',
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodyText2,
-                          ),
+
                           SizedBox(height: width(context) * 0.15),
                           Container(
-                            width: 90,
-                            height: 90,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white,
-                                border: Border.all(color: Colors.green)
-                            ),
-                            child: const Icon(
-                              Icons.check,
-                              color: Colors.green,
-                              size: 32,
-                            ),
+                              width: width(context) * 0.3,
+                              height: width(context) * 0.4,
+
+                              child: Image.asset( "assets/images/error.png",)
                           ),
                           SizedBox(height: width(context) * 0.2),
 
                         ],
                       ),
-
-                      StaggerAnimation(
-                        titleButton: translator.translate("Continue").toUpperCase(),
-                        buttonController: _loginButtonController.view,
-
+                      InkWell(
                         onTap: () {
-                          if( StaticData.vistor_value == 'visitor') {
-
-                            customPushNamedNavigation(context, CustomCircleNavigationBar());
-                          }
-                          else{
-                            customPushNamedNavigation(context, OrdersScreen(
-                              increment_id: widget.order_id,
-                            ));
-                          }
+                          customPushNamedNavigation(context, CheckoutAddressScreen());
 
                         },
+                        child: Container(
+                            width: width(context) * .8,
+                            decoration: BoxDecoration(
+                                color: mainColor, borderRadius: BorderRadius.circular(8)),
+                            child: Center(
+                                child: customDescriptionText(
+                                    context: context,
+                                    text: translator.translate("Back To Checkout Screen"),
+                                    percentageOfHeight: .022,
+                                    textColor: whiteColor)),
+                            height: isLandscape(context)
+                                ? 2 * height(context) * .065
+                                : height(context) * .065),
                       )
                     ],
                   ),

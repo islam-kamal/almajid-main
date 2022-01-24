@@ -149,7 +149,7 @@ print(" PayFortSettings     response  : ${response}");
           sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD).then((value){
             switch(value){
               case 'cashondelivery':
-                customAnimatedPushNavigation(context, PaymentSuccessfulScreen(
+                customAnimatedPushNavigation(context, SubmitSuccessfulScreen(
                   order_id: extractedData["increment_id"],
                 ));
                 break;
@@ -311,8 +311,10 @@ print(" PayFortSettings     response  : ${response}");
                 )),
             singleOrderSummaryItem(
                 context: context,
-                title: "Payment",
-                details: "${widget.payment_method} "),
+                title:"Payment Method" ,
+                details: "${widget.payment_method} ",
+              guestShipmentAddressModel: widget.guestShipmentAddressModel
+            ),
             Container(
                 width: width(context) * .9,
                 child: Divider(

@@ -187,7 +187,6 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                     }else{
                       print('invalid!');
                     }
-
                     }
 
                   },

@@ -67,11 +67,23 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
       if (response != true) {
         errorDialog(
             context: event.context,
-            text:
-                "The coupon code isn't valid. Verify the code and try again.");
+            text: translator.translate("The coupon code isn't valid. Verify the code and try again."),
+            function: (){
+              shoppingCartBloc.add(GetCartDetailsEvent());
+              Navigator.pop(event.context);
+              Navigator.pop(event.context);
+            });
       } else {
+
         errorDialog(
-            context: event.context, text: "Promo Code Applied Sucessfully");
+            context: event.context,
+            text: translator.translate("Promo Code Applied Sucessfully"),
+          function: (){
+            shoppingCartBloc.add(GetCartDetailsEvent());
+            Navigator.pop(event.context);
+            Navigator.pop(event.context);
+          }
+        );
       }
     } else if (event is DeletePromoCodeEvent) {
       final response = await cartRepository.delete_promo_code_from_cart(
@@ -79,10 +91,20 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
       print("apply_promo_code response : ${response}");
 
       if (response != true) {
-        errorDialog(context: event.context, text: "There is error Occured");
+        errorDialog(context: event.context,
+            text: translator.translate("Promo Code not deleted"),
+          function: (){
+            Navigator.pop(event.context);
+          }
+        );
       } else {
         errorDialog(
-            context: event.context, text: "Promo Code deleted Sucessfully");
+            context: event.context,
+            text: translator.translate("Promo Code deleted Sucessfully"),
+            function: (){
+              shoppingCartBloc.add(GetCartDetailsEvent());
+              Navigator.pop(event.context);
+            });
       }
     }
   }

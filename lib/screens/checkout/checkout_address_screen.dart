@@ -58,7 +58,13 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   List<Item> saved_address_data;
   //-----------------------------------------------------
 
+  TextEditingController city_controller = TextEditingController();
+  String city_search_text='';
+  bool city_search_field_Status = true;
 
+  TextEditingController address_controller = TextEditingController();
+  String address_search_text='';
+  bool address_search_field_Status = true;
 
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   FocusNode fieldNode = FocusNode();
@@ -327,46 +333,39 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
             responsiveSizedBox(context: context, percentageOfHeight: .01),
 
-            paymentTitle(
-                context: context, title: "First Name"),
-            responsiveSizedBox(context: context, percentageOfHeight: .01),
-            frist_name_addressTextFields(
-                context: context, hint: "Frist Name"),
-            responsiveSizedBox(context: context, percentageOfHeight: .01),
+            paymentTitle(context: context, title: "First Name"),
+            responsiveSizedBox(context: context, percentageOfHeight: .015),
+            frist_name_addressTextFields(context: context, hint: "Frist Name"),
+            responsiveSizedBox(context: context, percentageOfHeight: .015),
 
-            paymentTitle(
-                context: context, title: "Last Name"),
-            responsiveSizedBox(
-                context: context, percentageOfHeight: .01),
-            last_name_addressTextFields(
-                context: context, hint: "Last Name"),
+            paymentTitle(context: context, title: "Last Name"),
+            responsiveSizedBox(context: context, percentageOfHeight: .015),
+            last_name_addressTextFields(context: context, hint: "Last Name"),
 
             StaticData.vistor_value == 'visitor' ?   Column(
               children: [
-                responsiveSizedBox(context: context, percentageOfHeight: .01),
+                responsiveSizedBox(context: context, percentageOfHeight: .015),
                 paymentTitle(context: context, title: "Email"),
-                responsiveSizedBox(context: context, percentageOfHeight: .01),
+                responsiveSizedBox(context: context, percentageOfHeight: .015),
                 email_addressTextFields(context: context, hint: "Email"),
               ],
             ) : Container(),
-            responsiveSizedBox(
-                context: context, percentageOfHeight: .01),
+            responsiveSizedBox(context: context, percentageOfHeight: .015),
 
             paymentTitle(context: context, title: "Phone"),
-            responsiveSizedBox(
-                context: context, percentageOfHeight: .01),
+            responsiveSizedBox(context: context, percentageOfHeight: .015),
             phone_addressTextFields(
                 context: context, hint: "Ex: 0096659xxxxxxx"),
             responsiveSizedBox(
-                context: context, percentageOfHeight: .01),
+                context: context, percentageOfHeight: .015),
 
             paymentTitle(context: context, title: "Street"),
             responsiveSizedBox(
-                context: context, percentageOfHeight: .01),
+                context: context, percentageOfHeight: .015),
             street_addressTextFields(
                 context: context, hint: "Street"),
             responsiveSizedBox(
-                context: context, percentageOfHeight: .01),
+                context: context, percentageOfHeight: .015),
           ],
         ))
     );
@@ -441,6 +440,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
           expansionCallback: (int index, bool isExpanded) {
             setState(() {
               saved_address_data[index].isExpanded = !isExpanded;
+              address_search_field_Status = !address_search_field_Status;
             });
           },
           children: saved_address_data.map<ExpansionPanel>((Item item) {
@@ -448,6 +448,32 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
                   title: Text(item.headerValue),
+                  subtitle:  address_search_field_Status ? null : TextFormField(
+                  controller: address_controller,
+                  onChanged: (value){
+                    setState(() {
+                      address_search_text = address_controller.value.text;
+
+                    });
+                  },
+
+                  style: TextStyle(color: greyColor,
+                    fontSize:AlmajedFont.primary_font_size,
+                  ),
+                  cursorColor: greyColor,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+
+                    hintText: translator.translate("Search By Address" ),
+                    hintStyle: TextStyle(color: Colors.grey, fontSize:AlmajedFont.secondary_font_size,),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: BorderSide(color: greenColor)),
+                  ),
+                ),
                 );
               },
               body: Container(
@@ -471,7 +497,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                                           itemBuilder:
                                               (BuildContext context, int index) {
 
-                                            return Directionality(
+                                            return snapshot.data[index].street[0].contains(address_search_text) ?
+                                                 Directionality(
                                               textDirection: TextDirection.ltr,
                                               child: Container(
                                                   padding: EdgeInsets.only(
@@ -496,7 +523,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
 
                                                             item.isExpanded = false;
-
+                                                            address_search_field_Status = true;
+                                                            address_controller.clear();
+                                                            address_search_text = '';
 
                                                             saved_address_header_item.add( "${snapshot.data[index].region.region} ,${snapshot.data[index].street[0]}");
 
@@ -511,7 +540,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                                                       )
                                                     ],
                                                   )),
-                                            );
+                                            )
+                                                  : Container();
                                           },
                                         ))
                                   ],
@@ -556,6 +586,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
           expansionCallback: (int index, bool isExpanded) {
             setState(() {
               _data[index].isExpanded = !isExpanded;
+              city_search_field_Status = !city_search_field_Status;
             });
           },
           children: _data.map<ExpansionPanel>((Item item) {
@@ -563,6 +594,31 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
                   title: Text(city_name?? item.headerValue),
+                  subtitle: city_search_field_Status ? null: TextFormField(
+                    controller: city_controller,
+                    onChanged: (value){
+                      setState(() {
+                        city_search_text = city_controller.value.text;
+
+                      });
+                    },
+                    style: TextStyle(color: greyColor,
+                      fontSize:AlmajedFont.primary_font_size,
+                    ),
+                    cursorColor: greyColor,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      contentPadding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                      hintText: translator.translate("Search By City Name"),
+                      hintStyle:
+                      TextStyle(color: Colors.grey, fontSize:AlmajedFont.secondary_font_size,),
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: BorderSide(color: greenColor)),
+                    ),
+                  ),
                 );
               },
               body: Container(
@@ -570,64 +626,116 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                   child: FutureBuilder<List<CityModel>>(
                     future: cities_list,
                     builder: (context, snapshot) {
-                      if (snapshot.connectionState ==
-                          ConnectionState.done) {
+                      if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
                           if (snapshot.data.length != 0) {
                             return ListView.builder(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               itemCount: snapshot.data.length,
-                              itemBuilder:
-                                  (BuildContext context, int index) {
+                              itemBuilder: (BuildContext context, int index) {
 
                                 if(index ==0){
                                   return Container();
                                 }
-                                return Directionality(
-                                  textDirection: TextDirection.ltr,
-                                  child: Container(
-                                      padding: EdgeInsets.only(
-                                          right: 10, left: 10),
-                                      child: Column(
-                                        children: <Widget>[
-                                          RadioListTile(
-                                            groupValue:  _currentIndex,
-                                            title: Text(
-                                              "${translator.activeLanguageCode == 'ar'? snapshot.data[index].label :snapshot.data[index].title}",
-                                              textDirection:
-                                              TextDirection.rtl,
-                                            ),
-                                            value: snapshot.data[index].value,
-                                            onChanged: (val) {
+                                if(MyApp.app_langauge == 'ar'){
+                                  return snapshot.data[index].label.contains(city_search_text) ?
+                                  Directionality(
+                                    textDirection: TextDirection.ltr,
+                                    child: Container(
+                                        padding: EdgeInsets.only(
+                                            right: 10, left: 10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            RadioListTile(
+                                              groupValue:  _currentIndex,
+                                              title: Text(
+                                                "${translator.activeLanguageCode == 'ar'? snapshot.data[index].label :snapshot.data[index].title}",
+                                                textDirection:
+                                                TextDirection.rtl,
+                                              ),
+                                              value: snapshot.data[index].value,
+                                              onChanged: (val) {
 
                                                 _currentIndex = val;
                                                 city_id = snapshot.data[index].value;
                                                 addres_city_name  = translator.activeLanguageCode == 'ar'? snapshot.data[index].label
                                                     : snapshot.data[index].title;
-                                              address_city_id = snapshot.data[index].value.toString();
+                                                address_city_id = snapshot.data[index].value.toString();
                                                 sharedPreferenceManager.writeData(CachingKey.REGION_ID, snapshot.data[index].value.toString());
                                                 sharedPreferenceManager.writeData(CachingKey.REGION_EN,  snapshot.data[index].title);
                                                 sharedPreferenceManager.writeData(CachingKey.REGION_AR,  snapshot.data[index].label);
 
                                                 item.isExpanded = false;
+                                                city_search_field_Status = true;
+                                                city_controller.clear();
+                                                city_search_text = '';
 
 
                                                 header_item.add( translator.activeLanguageCode == 'ar'? snapshot.data[index].label
                                                     :  snapshot.data[index].title);
-                                    setState(() {
-                                                item.headerValue =
-                                                    header_item.last;
-                                             });
-                                            },
-                                          ),
-                                          Divider(
-                                            color: Color(0xFFDADADA),
-                                          )
-                                        ],
-                                      )),
-                                );
-                                //    }
+                                                setState(() {
+                                                  item.headerValue =
+                                                      header_item.last;
+                                                });
+                                              },
+                                            ),
+                                            Divider(
+                                              color: Color(0xFFDADADA),
+                                            )
+                                          ],
+                                        )),
+                                  ) : Container();
+                                }
+                                else{
+                                  return snapshot.data[index].title.contains(city_search_text) ?
+                                  Directionality(
+                                    textDirection: TextDirection.ltr,
+                                    child: Container(
+                                        padding: EdgeInsets.only(
+                                            right: 10, left: 10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            RadioListTile(
+                                              groupValue:  _currentIndex,
+                                              title: Text(
+                                                "${translator.activeLanguageCode == 'ar'? snapshot.data[index].label :snapshot.data[index].title}",
+                                                textDirection:
+                                                TextDirection.rtl,
+                                              ),
+                                              value: snapshot.data[index].value,
+                                              onChanged: (val) {
+
+                                                _currentIndex = val;
+                                                city_id = snapshot.data[index].value;
+                                                addres_city_name  = translator.activeLanguageCode == 'ar'? snapshot.data[index].label
+                                                    : snapshot.data[index].title;
+                                                address_city_id = snapshot.data[index].value.toString();
+                                                sharedPreferenceManager.writeData(CachingKey.REGION_ID, snapshot.data[index].value.toString());
+                                                sharedPreferenceManager.writeData(CachingKey.REGION_EN,  snapshot.data[index].title);
+                                                sharedPreferenceManager.writeData(CachingKey.REGION_AR,  snapshot.data[index].label);
+
+                                                item.isExpanded = false;
+                                                city_search_field_Status = true;
+                                                city_controller.clear();
+                                                city_search_text = '';
+
+                                                header_item.add( translator.activeLanguageCode == 'ar'? snapshot.data[index].label
+                                                    :  snapshot.data[index].title);
+                                                setState(() {
+                                                  item.headerValue =
+                                                      header_item.last;
+                                                });
+                                              },
+                                            ),
+                                            Divider(
+                                              color: Color(0xFFDADADA),
+                                            )
+                                          ],
+                                        )),
+                                  ) : Container();
+                                }
+
 
                               },
                             );
@@ -824,7 +932,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
           child: TextFormField(
             initialValue: initialValue??'',
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.text,
             style: TextStyle(
                 color: whiteColor,
                 fontSize: isLandscape(context)

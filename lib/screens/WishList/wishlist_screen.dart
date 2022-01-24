@@ -313,8 +313,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                   Flushbar(
                                     messageText: Container(
                                       child: Text(
-                                        translator.translate(
-                                            "The wishlist item does not exist."),
+                                        translator.translate("The wishlist item does not exist."),
                                         maxLines: 2,
                                         textAlign: TextAlign.end,
                                         textDirection: TextDirection.rtl,

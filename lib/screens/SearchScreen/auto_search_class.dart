@@ -91,12 +91,13 @@ class MyTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
      width: width(context) * .5,
-       height: isLandscape(context) ? 2 * height(context) * .05 : height(context) * .05,
+       height: isLandscape(context) ? 2 * height(context) * .04 : height(context) * .04,
       child: TextFormField(
         controller: controller,
         onChanged: (value){
-          search_bloc.add(SearchProductsEvent(search_text: value));
+  //        search_bloc.add(SearchProductsEvent(search_text: value));
         },
+        style: TextStyle(color:whiteColor),
         textAlign: TextAlign.right,
         focusNode: focusNode,
         cursorColor: greyColor.withOpacity(.5),
@@ -104,14 +105,15 @@ class MyTextField extends StatelessWidget {
           hintStyle: TextStyle(
               color: whiteColor, fontSize: 12, ),
           hintText: translator.translate("Type here to search"),
-          prefixIcon: IconButton(
+          suffixIcon: IconButton(
             icon: Icon(
               Icons.search,
               size: 20,
             ),
             color: whiteColor,
             onPressed: () {
-              customAnimatedPushNavigation(context, AutoSearchScreen());
+              customAnimatedPushNavigation(context, SearchScreen(
+              ));
             },
           ),
           filled: false,
