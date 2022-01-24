@@ -12,6 +12,7 @@ class SettingsDrawer extends StatefulWidget {
 class _SettingsDrawerState extends State<SettingsDrawer> {
   var current_index;
   bool finance_status = false;
+  List<bool> _isExpanded = List.generate(50, (_) => false);
 
   @override
   void initState() {
@@ -78,82 +79,69 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                               color: mainColor,
                                               height: 10,
                                             ),
-                                            ListView.builder(
-                                                shrinkWrap: true,
-                                                physics: NeverScrollableScrollPhysics(),
-                                                itemCount: snapshot.data.childrenData.length,
-                                                padding: EdgeInsets.all(5),
-                                                itemBuilder: (context, index) {
-                                                  return snapshot.data.childrenData[index].isActive == true ?
-                                                  ListTile(
-                                                    title: Container(
-                                                      width: width(context),
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: [
-                                                          InkWell(
-                                                            onTap: (){
-                                                              customAnimatedPushNavigation(
-                                                                  context,
-                                                                  CategoryProductsScreen(
-                                                                    category_id: snapshot.data.childrenData[index].id.toString(),
-                                                                    category_name: snapshot.data.childrenData[index].name,
 
-                                                                  )
 
-                                                              );
-                                                            },
-                                                            child:  customDescriptionText(
-                                                                context: context,
-                                                                text: snapshot.data.childrenData[index].name),
-                                                          )
-                                                         ,
-                                                          snapshot.data.childrenData[index].childrenData.isEmpty ? Container():    Icon(
-                                                            Icons.keyboard_arrow_down,
-                                                            size: 30,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
+                                            ExpansionPanelList(
+                                                expansionCallback: (index, isExpanded) => setState(() {
+                                                  _isExpanded[index] = !isExpanded;
+                                                }),
+                                              children: [
+                                                for (int i = 0; i < snapshot.data.childrenData.length; i++)
+                                                  if(snapshot.data.childrenData[i].isActive == true)
+                                                  ExpansionPanel(
+                                                    headerBuilder: (_, isExpanded) {
+                                                      return Center(
+                                                        child:  InkWell(
+                                                          onTap: (){
+                                                            var parentItem = snapshot.data.childrenData[i];
+                                                            customAnimatedPushNavigation(
+                                                                context,
+                                                                CategoryProductsScreen(
+                                                                  category_id: parentItem.id.toString(),
+                                                                  category_name: parentItem.name,
 
-                                                    subtitle: (finance_status) ? ListView.builder(
+                                                                )
+
+                                                            );
+                                                          },
+                                                          child:
+                                                            Container(
+                                                              margin: const EdgeInsets.all(6.0),
+                                                              padding: const EdgeInsets.all(10.0),
+                                                              width: double.infinity,
+                                                              child: Text(snapshot.data.childrenData[i].name),
+                                                            )
+                                                        ),
+                                                      );
+                                                    },
+                                                    body: ListView.builder(
                                                         shrinkWrap: true,
                                                         padding: EdgeInsets.all(5),
                                                         physics: NeverScrollableScrollPhysics(),
-                                                        itemCount:  snapshot.data.childrenData[index].childrenData.length ,
+                                                        itemCount:  snapshot.data.childrenData[i].childrenData.length ,
                                                         itemBuilder: (context,ind){
                                                           return InkWell(
                                                               child: Padding(
-                                                            padding: EdgeInsets.only(
-                                                                right: 10, left: 10),
-                                                            child: Column(
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                              children: [
-                                                                  Padding(
-                                                                  padding: EdgeInsets.only(top: 15, bottom: 5),
-                                                                  child:  Text(
-                                                                        snapshot.data.childrenData[index].childrenData[ind].name,
-                                                                        style: TextStyle(
-                                                                            color: mainColor,
-                                                                            fontFamily: AlmajedFont.font_family,
-                                                                            fontSize: AlmajedFont.secondary_font_size),
-                                                                  ),
-                                                          ),
+                                                                padding: EdgeInsets.only(
+                                                                    right: 10, left: 10),
+                                                                child: Card(
 
-                                                                Divider(
-                                                                  color: mainColor,
+                                                                    child: Container(
+                                                                      margin: const EdgeInsets.all(3.0),
+                                                                      padding: const EdgeInsets.all(10.0),
+                                                                      width: double.infinity,
+                                                                      child: Text(snapshot.data.childrenData[i].childrenData[ind].name),
+                                                                    )
+
                                                                 ),
-
-                                                              ],
-                                                            ),
-                                                          ),
+                                                              ),
                                                               onTap: () {
 
                                                                 customAnimatedPushNavigation(
-                                                                  context,
+                                                                    context,
                                                                     CategoryProductsScreen(
-                                                                   category_id: snapshot.data.childrenData[index].childrenData[ind].id.toString(),
-                                                                      category_name: snapshot.data.childrenData[index].childrenData[ind].name,
+                                                                      category_id: snapshot.data.childrenData[i].childrenData[ind].id.toString(),
+                                                                      category_name: snapshot.data.childrenData[i].childrenData[ind].name,
 
                                                                     )
 
@@ -161,24 +149,14 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
 
 
                                                               });
-                                                        }) : null,
-                                                    onTap: () {
-                                                      snapshot.data.childrenData[index].childrenData.isEmpty ?    customAnimatedPushNavigation(
-                                                          context,
-                                                          CategoryProductsScreen(
-                                                            category_id: snapshot.data.childrenData[index].id.toString(),
-                                                            category_name: snapshot.data.childrenData[index].name,
+                                                        }),
+                                                    isExpanded: _isExpanded[i],
+                                                    canTapOnHeader: false,
+                                                    hasIcon: snapshot.data.childrenData[i].childrenData.length > 0 ?true:false,
+                                                  ),
+                                              ],
+                                            ),
 
-                                                          )
-
-                                                      ):
-                                                         setState(() {
-                                                        finance_status = !finance_status;
-                                                      });
-                                                    },
-                                                  ) : Container();
-
-                                                }),
                                             Container(
                                               height: width(context) * 0.5,
                                             )
