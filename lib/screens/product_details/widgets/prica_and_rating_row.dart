@@ -36,7 +36,7 @@ priceAndRatingRow({BuildContext context , var price ,var old_price=89 ,bool revi
             ),
             SizedBox(width: width(context) * 0.05,),
             Text(
-              "${old_price} ${translator.translate("SAR")}",
+              "${old_price} ${MyApp.country_currency}",
               style: TextStyle(
                   decoration: TextDecoration.lineThrough,
                   fontSize: StaticData.get_height(context)  * .017,
