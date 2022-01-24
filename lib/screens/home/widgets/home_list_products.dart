@@ -252,7 +252,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                                 weight: FontWeight.normal,
                                                               ),
                                                               MyText(
-                                                                text: " ${translator.translate("SAR")}",
+                                                                text: " ${MyApp.country_currency}",
                                                                 size: StaticData.get_height(context) * .011,
                                                                 color: blackColor,
                                                                 maxLines: 2,
@@ -264,7 +264,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                       ),
                                                       SizedBox(width: width(context) * 0.005,),
                                                       special_price == null ?  Container()   :       Text(
-                                                        "${snapshot.data[index].price} ${translator.translate("SAR")}",
+                                                        "${snapshot.data[index].price} ${MyApp.country_currency}",
                                                         style: TextStyle(
                                                             decoration: TextDecoration.lineThrough,
                                                             fontSize: StaticData.get_height(context)  * .011,

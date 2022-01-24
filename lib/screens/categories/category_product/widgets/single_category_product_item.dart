@@ -137,7 +137,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                                          weight: FontWeight.normal,
                                                        ),
                                                        MyText(
-                                                         text: " ${translator.translate("SAR")}",
+                                                         text: " ${MyApp.country_currency}",
                                                          size: StaticData.get_height(context) * .011,
                                                          color: blackColor,
                                                          maxLines: 2,
@@ -149,7 +149,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                                ),
                                                SizedBox(width: width(context) * 0.05,),
                                                special_price == null ?  Container()   :       Text(
-                                                 "${product.price} ${translator.translate("SAR")}",
+                                                 "${product.price} ${MyApp.country_currency}",
                                                  style: TextStyle(
                                                      decoration: TextDecoration.lineThrough,
                                                      fontSize: StaticData.get_height(context)  * .011,
