@@ -6,7 +6,7 @@ import 'package:almajidoud/Bloc/Home_Bloc/home_bloc.dart';
 import 'package:almajidoud/Bloc/Search_Bloc/search_bloc.dart';
 import 'package:almajidoud/Model/CategoryModel/category_model.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
-import 'package:almajidoud/screens/home/widgets/categories_buttons.dart';
+import 'package:almajidoud/screens/home/widgets/categories_tap.dart';
 import 'package:almajidoud/screens/home/widgets/home_list_products.dart';
 import 'package:almajidoud/screens/home/widgets/title_text.dart';
 import 'package:almajidoud/screens/home/widgets/top_slider.dart';
@@ -57,13 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: SingleChildScrollView(
                               child: Column(
                                 children: [
-                                  responsiveSizedBox(context: context, percentageOfHeight: .12),
-                              //    CategoriesButtons(),
-                                  responsiveSizedBox(context: context, percentageOfHeight: .009),
+                                  responsiveSizedBox(context: context, percentageOfHeight: .11),
                                   HomeSlider(
-                                      gallery:StaticData.images
-                                  ),
-
+                                      gallery:StaticData.images),
 
                                   responsiveSizedBox(context: context, percentageOfHeight: .03),
                                   titleText(context: context, text: translator.activeLanguageCode == 'ar' ?  StaticData.data['new-arrival']['arabic-title'] : StaticData.data['new-arrival']['english-title']),
@@ -138,8 +134,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               )),
                         ),
                         Container(
-                       //   height: height(context),
-                      //    width: width(context),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

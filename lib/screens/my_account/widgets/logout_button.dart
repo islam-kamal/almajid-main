@@ -35,7 +35,7 @@ logButton({BuildContext context ,var type}){
             SizedBox(width: width(context)*.02,),
             customDescriptionText(context: context ,
                 text: type, percentageOfHeight: .022,decoration: TextDecoration.underline
-                , textColor: Colors.red.shade900) ,
+                , textColor: mainColor) ,
 
           ],),
 

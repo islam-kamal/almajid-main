@@ -32,8 +32,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
   var product_image;
   @override
   void initState() {
-
-    print("widget.product_id : ${widget.product_id}");
     home_bloc.add(ProductDetailsEvent(
       product_id: widget.product_id
     ));
@@ -68,7 +66,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                           product_images.add(
                               "${Urls.BASE_URL}/media/catalog/product" + element.file);
                         });
-                        print("product_images : ${product_images.length}");
+
                         snapshot.data[0]..customAttributes.forEach((element) {
                           if(element.attributeCode ==  "description"){
                             description = element.value;
@@ -88,9 +86,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             special_price = element.value;
                           }
                         });
-                        if(special_price != null){
+                   /*     if(special_price != null){
                           percentage = (1 - (double.parse(special_price)  / snapshot.data[0].price) )* 100;
-                        }
+                        }*/
                         return Column(
                           children: [
                             responsiveSizedBox(
@@ -125,7 +123,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                 context: context,
                                 price: special_price ,
                               old_price: snapshot.data[0].price,
-                              review_status:  snapshot.data[0].extensionAttributes.reviews.length==0 ? false : true,
+                              review_status:  snapshot.data[0].extensionAttributes.reviews.isEmpty ? false : true,
 
                             ),
                             responsiveSizedBox(
@@ -134,7 +132,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                 context: context,
                                 product_sku: snapshot.data[0].sku,
                               product_id: snapshot.data[0].id,
-                              review_status:  snapshot.data[0].extensionAttributes.reviews.length==0 ? false : true,
+                              review_status:  snapshot.data[0].extensionAttributes.reviews.isEmpty? false : true,
                             ),
                             divider(context: context),
                             responsiveSizedBox(
@@ -226,9 +224,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                               ],
                             ),
                             //divider(context: context),
-                            responsiveSizedBox(
-                                context: context, percentageOfHeight: .03),
-                            AddProductToCartWidget(
+                            responsiveSizedBox(context: context, percentageOfHeight: .03),
+
+                            snapshot.data[0].extensionAttributes.stockItem.isInStock ?    AddProductToCartWidget(
                               product_sku: snapshot.data[0].sku,
                               product_quantity:  StaticData.product_qty ,
                               instock_status: snapshot.data[0].extensionAttributes.stockItem.isInStock,
@@ -238,7 +236,31 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                               text_size: .025,
                               product_image: product_image,
                               product_id: snapshot.data[0].id,
-                            ),
+                            )  :
+                            Container(
+                              height: width(context) * .13,
+                              width: width(context) * .7,
+                              padding: EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(Radius.circular(15.0))
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color:greyColor ,
+                                    borderRadius: BorderRadius.circular(8)),
+                                child:  Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    customDescriptionText(
+                                        context: context,
+                                        text: translator.translate("Out Of Stock"),
+                                        percentageOfHeight:  0.017,
+                                        textColor: mainColor) ,
+                                  ],),
+                              ) ,
+                            )
+                            ,
+
                             responsiveSizedBox(context: context, percentageOfHeight: .03),
                             Container(
                               height: height(context) * .1,

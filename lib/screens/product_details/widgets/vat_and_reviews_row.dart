@@ -26,7 +26,8 @@ vatAndReviewsRow({BuildContext context , var product_sku , var product_id, bool 
 
             ));
             customAnimatedPushNavigation(context, ProductReviewsScreen(
-                product_suk: product_sku
+                product_suk: product_sku,
+              product_id: product_id,
             ));
           },
           child:    Container(

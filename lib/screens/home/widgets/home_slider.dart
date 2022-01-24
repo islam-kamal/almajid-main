@@ -24,6 +24,7 @@ class _HomeSlider_State extends State<HomeSlider> {
     // TODO: implement initState
     super.initState();
 }
+
   @override
   // TODO: implemen
   Widget build(BuildContext context) {
@@ -52,6 +53,7 @@ class _HomeSlider_State extends State<HomeSlider> {
                         width: MediaQuery.of(context).size.width,
                         fit: BoxFit.fill,
                       ),
+
                     )).toList(),
 
                     options: CarouselOptions(

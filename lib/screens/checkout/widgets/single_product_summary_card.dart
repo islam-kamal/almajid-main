@@ -4,6 +4,8 @@ singleProductSummaryCard({BuildContext context,var prod_name,var prod_image, var
   return Container(
     width: width(context) * .4,
     child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
       children: [
         Container(
           width: width(context) * .4,

@@ -20,16 +20,7 @@ class ShipmentAddressRepository {
         _post_code = value;
       }
     });
-    print("region : ${await sharedPreferenceManager.readString(translator.activeLanguageCode == 'ar' ? CachingKey.REGION_AR : CachingKey.REGION_EN)}");
-    print("region_id : ${await sharedPreferenceManager.readString(CachingKey.REGION_ID)}");
-    print("region_code : ${await sharedPreferenceManager.readString(translator.activeLanguageCode == 'ar' ? CachingKey.REGION_AR : CachingKey.REGION_EN)}");
-    print("country_id : ${MyApp.app_location == 'sa' ? "SA" : "KW"}");
-    print(["street : ${shipmentAddressBloc.street_controller.value}"]);
-    print("city : ${ await sharedPreferenceManager.readString(translator.activeLanguageCode == 'ar' ? CachingKey.REGION_AR : CachingKey.REGION_EN)}");
-    print("firstname : ${shipmentAddressBloc.frist_name_controller.value}");
-    print("last_name : ${shipmentAddressBloc.last_name_controller.value}");
-    print("email : ${StaticData.vistor_value == 'visitor' ? "${shipmentAddressBloc.email_controller.value}" : await sharedPreferenceManager.readString(CachingKey.EMAIL)}");
-    print("telephone : ${shipmentAddressBloc.phone_controller.value}");
+
     try {
       final response = await dio.post(
           StaticData.vistor_value == 'visitor'
@@ -48,7 +39,8 @@ class ShipmentAddressRepository {
                     translator.activeLanguageCode == 'ar'
                         ? CachingKey.REGION_AR
                         : CachingKey.REGION_EN),
-                "country_id": MyApp.app_location == 'sa' ? "SA" : "KW",
+                "country_id": MyApp.app_location == 'sa' ? "SA"
+                    :   MyApp.app_location == 'uae' ? "UAE" : "KW",
                 "street": ["${shipmentAddressBloc.street_controller.value}"],
                 "postcode": "10577",
                 "city": await sharedPreferenceManager.readString(
@@ -75,7 +67,8 @@ class ShipmentAddressRepository {
                     translator.activeLanguageCode == 'ar'
                         ? CachingKey.REGION_AR
                         : CachingKey.REGION_EN),
-                "country_id": MyApp.app_location == 'sa' ? "SA" : "KW",
+                "country_id": MyApp.app_location == 'sa' ? "SA"
+                    :   MyApp.app_location == 'uae' ? "UAE" : "KW",
                 "street": ["${shipmentAddressBloc.street_controller.value}"],
                 "postcode": "10577",
                 "city": await sharedPreferenceManager.readString(
@@ -128,7 +121,8 @@ class ShipmentAddressRepository {
                   },
                   "region_id": await sharedPreferenceManager
                       .readString(CachingKey.REGION_ID),
-                  "country_id": MyApp.app_location == 'sa' ? "SA" : "KW",
+                  "country_id": MyApp.app_location == 'sa' ? "SA"
+                      :   MyApp.app_location == 'uae' ? "UAE" : "KW",
                   "street": ["${shipmentAddressBloc.street_controller.value}"],
                   "telephone": "${shipmentAddressBloc.phone_controller.value}",
                   "postcode": "10577",

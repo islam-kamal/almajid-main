@@ -77,10 +77,12 @@ class _MyAppState extends State<MyApp> {
     await sharedPreferenceManager.readString(CachingKey.USER_COUNTRY_CODE).then((value){
       if(value == ''){
         MyApp.app_location = 'sa';
-        MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR") : translator.translate("KWD");
+        MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
+            : MyApp.app_location == 'uae'? translator.translate("AED") :  translator.translate("KWD");
       }else{
         MyApp.app_location = value;
-        MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR") : translator.translate("KWD");
+        MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
+            : MyApp.app_location == 'uae'? translator.translate("AED") : translator.translate("KWD");
       }
       print("app_location : ${MyApp.app_location}");
 
@@ -112,8 +114,7 @@ class _MyAppState extends State<MyApp> {
               ),
               title: 'Al Majed Oud',
               home: SplashScreen(),
-              localizationsDelegates:
-              translator.delegates,
+              localizationsDelegates: translator.delegates,
               locale: local,
 // Android + iOS Delegates
               // locale: translator.locale, // Active locale

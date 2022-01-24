@@ -3,7 +3,7 @@ import 'package:almajidoud/custom_widgets/cart_badge.dart';
 import 'package:almajidoud/screens/SearchScreen/auto_search_class.dart';
 import 'package:almajidoud/screens/SearchScreen/search_screen.dart';
 import 'package:almajidoud/screens/cart/widgets/promo_code_alert_dialog.dart';
-import 'package:almajidoud/screens/home/widgets/categories_buttons.dart';
+import 'package:almajidoud/screens/home/widgets/categories_tap.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -72,7 +72,7 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                 ),
 
                 widget.category_name == null
-                    ?  AutoSearchClass()/*MyTextField(controller, focusNode)*/
+                    ? /* AutoSearchClass()*/MyTextField(controller, focusNode)
                     : Text(
                   widget.category_name,
                   style: TextStyle(
@@ -99,7 +99,9 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                     : Container(),
               ],
             ),
-            widget.home_logo ?  CategoriesButtons() : Container(),
+            widget.home_logo ?  CategoriesTap(
+
+            ) : Container(),
           ],
         ),
       ),

@@ -39,8 +39,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                 children: <Widget>[
                   Container(
                     color: whiteColor,
-                    padding: EdgeInsets.only(
-                        right: width(context) * .01, left: width(context) * .01),
+                    padding: EdgeInsets.only(right: width(context) * .01, left: width(context) * .01),
                     child: Column(
                       children: [
                         BlocBuilder(
@@ -50,7 +49,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                               return Center(
                                 child: CircularProgressIndicator(),
                               );
-                            } else if (state is Done) {
+                            }
+                            else if (state is Done) {
                               var data = state.model as CategoryModel;
                               if (data.childrenData == null || data.childrenData.isEmpty) {
                                 return Container();
@@ -64,8 +64,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                       } else {
                                         return Column(
                                           children: [
-                                            responsiveSizedBox(
-                                                context: context, percentageOfHeight: .01),
+                                            responsiveSizedBox(context: context, percentageOfHeight: .01),
                                             Container(
                                                 width: width(context),
                                                 padding: EdgeInsets.all(10),
@@ -85,7 +84,6 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                 itemCount: snapshot.data.childrenData.length,
                                                 padding: EdgeInsets.all(5),
                                                 itemBuilder: (context, index) {
-
                                                   return snapshot.data.childrenData[index].isActive == true ?
                                                   ListTile(
                                                     title: Container(
@@ -118,8 +116,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                       ),
                                                     ),
 
-                                                    subtitle: (finance_status) ?
-                                                    ListView.builder(
+                                                    subtitle: (finance_status) ? ListView.builder(
                                                         shrinkWrap: true,
                                                         padding: EdgeInsets.all(5),
                                                         physics: NeverScrollableScrollPhysics(),
@@ -164,8 +161,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
 
 
                                                               });
-                                                        })
-                                                        : null,
+                                                        }) : null,
                                                     onTap: () {
                                                       snapshot.data.childrenData[index].childrenData.isEmpty ?    customAnimatedPushNavigation(
                                                           context,
@@ -181,7 +177,11 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                       });
                                                     },
                                                   ) : Container();
-                                                })
+
+                                                }),
+                                            Container(
+                                              height: width(context) * 0.5,
+                                            )
                                           ],
                                         );
                                       }
@@ -199,7 +199,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                   },
                                 );
                               }
-                            } else if (state is ErrorLoading) {
+                            }
+                            else if (state is ErrorLoading) {
                               return Container();
                             }
                             else {

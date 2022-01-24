@@ -64,9 +64,14 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
       case 'related products':
         widget.items.productLinks.forEach((element) async {
           print("element.linkedProductSku : ${element.linkedProductSku}");
-          var response = await categoryRepository.getProduct(sku: element.linkedProductSku);
-          related_product_list.add(response.items[0]);
-          home_bloc.related_products_subject.sink.add(response.items);
+          if(element.linkType == "related"){
+            var response = await categoryRepository.getProduct(sku: element.linkedProductSku);
+            related_product_list.add(response.items[0]);
+            home_bloc.related_products_subject.sink.add(response.items);
+          }else{
+
+          }
+
         });
         _subject = home_bloc.related_products_subject;
         print("_subject : ${_subject}");
@@ -140,18 +145,14 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
              if(widget.type ==  'related products'){
                snapshot.data.clear();
                related_product_list.forEach((element) {
-                 element.productLinks.forEach((e) {
-                   if(e.linkType == "related"){
-                     snapshot.data.add(element) ;
-                   }
-                 });
-
+                 snapshot.data.add(element) ;
                });
              }
               return  Container(
                   width: width(context),
-                  height: isLandscape(context) ? 2 * height(context) * .27 : height(context) * .27,
+                 height: isLandscape(context) ? 2 * height(context) * .30 : height(context) * .30,
                   child: ListView.builder(
+                    shrinkWrap: true,
                       itemCount: snapshot.data.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
@@ -185,9 +186,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                               ),
                               child: Container(
                                 width: width(context) * .37,
-                                height: isLandscape(context)
-                                    ? 2 * height(context) * .35
-                                    : height(context) * .35,
+                           //     height: isLandscape(context) ? 2 * height(context) * .35 : height(context) * .35,
                                 decoration: BoxDecoration(
                                     border: Border.all(color: mainColor.withOpacity(.2)),
                                     borderRadius: BorderRadius.circular(0)),
@@ -222,7 +221,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                         ),
                                         Container(
                                           width: width(context) * .35,
-                                          height: isLandscape(context) ? 2 * height(context) * .15 : height(context) * .08,
+                                          height: isLandscape(context) ? 2 * height(context) * .08 : height(context) * .08,
                                           color: whiteColor,
                                           child: Column(
                                             children: [
@@ -280,7 +279,8 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                             ],
                                           ),
                                         ),
-                                        snapshot.data[index].extensionAttributes.stockItem.isInStock ?   AddProductToCartWidget(
+                                        snapshot.data[index].extensionAttributes.stockItem.isInStock ?
+                                        AddProductToCartWidget(
                                           product_sku: snapshot.data[index].sku,
                                           product_quantity:   1,
                                           instock_status: snapshot.data[index].extensionAttributes.stockItem.isInStock,
@@ -302,16 +302,15 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                           ),
                                           child: Container(
                                             decoration: BoxDecoration(
-                                                color:redColor ,
+                                                color:greyColor ,
                                                 borderRadius: BorderRadius.circular(8)),
                                             child:  Row(
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
                                                 customDescriptionText(
                                                     context: context,
-                                                    text: "Out Of Stock",
-                                                    percentageOfHeight:  0.017,
-                                                    textColor: whiteColor) ,
+                                                    text: translator.translate("Out Of Stock"),                                                    percentageOfHeight:  0.017,
+                                                    textColor: mainColor) ,
                                               ],),
                                           ) ,
                                         )

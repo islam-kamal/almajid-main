@@ -42,16 +42,8 @@ class PaymentRepository {
         return StcPayModel.fromJson(response.data);
 
 
-     //   go to otp verification
-/*        customAnimatedPushNavigation(context, StcVerificationCodeScreen(
-          user_phone: phone_number,
-          OtpReference: response.data['result']['OtpReference'],
-          paymentReference: response.data['result']['paymentReference'],
-        ));*/
       } else {
         return response.data;
-        Navigator.pop(context);
-        errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
       print("error : ${e.toString()}");

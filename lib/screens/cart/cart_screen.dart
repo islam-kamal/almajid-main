@@ -24,7 +24,7 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   FocusNode fieldNode = FocusNode();
-  var _dropDownValue;
+  var discount_amount , tax , subtotal, grandtotal;
   var product_image;
   var edit_cart_status = false;
   SharedPreferences sharedPreferences;
@@ -59,12 +59,24 @@ class _CartScreenState extends State<CartScreen> {
                           return Center(
                             child: ShimmerNotification(),
                           );
-                        } else if (state is Done) {
+                        }
+                        else if (state is Done) {
                           var data = state.model as CartDetailsModel;
                           if (data.message?.isEmpty != null ||
                               data.items == null || data.items.length == 0) {
                             return no_data_widget(context: context);
                           } else {
+                            data.totalSegments.forEach((element) {
+                              if(element.code == "discount"){
+                                discount_amount = element.value;
+                              }else if(element.code == "tax"){
+                                tax = element.value;
+                              }else if(element.code == "subtotal"){
+                                subtotal = element.value;
+                              }else if(element.code == "grand_total"){
+                                grandtotal = element.value;
+                              }
+                            });
                             return Column(
                               children: [
                                 ListView.builder(
@@ -116,13 +128,13 @@ class _CartScreenState extends State<CartScreen> {
                                       customDescriptionText(
                                           context: context,
                                           textColor: mainColor,
-                                          text: " ${data.subtotal.toString()} ${MyApp.country_currency} ",
+                                          text: " ${subtotal} ${MyApp.country_currency} ",
                                           percentageOfHeight: .018,
                                           fontWeight: FontWeight.bold),
                                     ],
                                   ),
                                 ),
-                                data.discountAmount == null?Padding(
+                                discount_amount != null?Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -136,7 +148,7 @@ class _CartScreenState extends State<CartScreen> {
                                       customDescriptionText(
                                           context: context,
                                           textColor: mainColor,
-                                          text: " -${data.discountAmount.toString()} ${MyApp.country_currency} ",
+                                          text: " ${discount_amount} ${MyApp.country_currency} ",
                                           percentageOfHeight: .018,
                                           fontWeight: FontWeight.bold),
                                     ],
@@ -156,7 +168,7 @@ class _CartScreenState extends State<CartScreen> {
                                       customDescriptionText(
                                           context: context,
                                           textColor: mainColor,
-                                          text: " ${data.taxAmount.toString()} ${MyApp.country_currency} ",
+                                          text: " ${tax} ${MyApp.country_currency} ",
                                           percentageOfHeight: .018,
                                           fontWeight: FontWeight.bold),
                                     ],
@@ -176,22 +188,22 @@ class _CartScreenState extends State<CartScreen> {
                                       customDescriptionText(
                                           context: context,
                                           textColor: mainColor,
-                                          text: " ${data.baseGrandTotal.toString()} ${MyApp.country_currency} ",
+                                          text: " ${grandtotal} ${MyApp.country_currency} ",
                                           percentageOfHeight: .022,
                                           fontWeight: FontWeight.bold),
                                     ],
                                   ),
                                 ),
 
-                                responsiveSizedBox(
-                                    context: context, percentageOfHeight: .02),
+                                responsiveSizedBox(context: context, percentageOfHeight: .02),
                                 proceedToCheckoutButton(context: context),
                                 responsiveSizedBox(
                                     context: context, percentageOfHeight: .01),
                               ],
                             );
                           }
-                        } else if (state is ErrorLoading) {
+                        }
+                        else if (state is ErrorLoading) {
                           if (state.indicator == 'GetCartDetails') {
                             if (state.message ==
                                 "The consumer isn't authorized to access %resources.") {
@@ -217,7 +229,8 @@ class _CartScreenState extends State<CartScreen> {
                               );
                             }
                           }
-                        } else {
+                        }
+                        else {
                           return Center(
                             child: CircularProgressIndicator(),
                           );
@@ -317,9 +330,7 @@ class _CartScreenState extends State<CartScreen> {
                                       right: width(context) * .02,
                                       left: width(context) * .02),
                                   width: width(context) * .6,
-                                  height: isLandscape(context)
-                                      ? 2 * height(context) * .17
-                                      : height(context) * .17,
+                               //   height: isLandscape(context) ? 2 * height(context) * .17 : height(context) * .17,
                                   child: Column(
                                     crossAxisAlignment:
                                         translator.activeLanguageCode == 'ar'
@@ -381,8 +392,7 @@ class _CartScreenState extends State<CartScreen> {
                                                       if (qty == 20) {
                                                         errorDialog(
                                                           context: context,
-                                                          text:
-                                                          "لا يمكنك تخطى الكمية المتاحة",
+                                                          text: translator.translate("You cannot exceed the available quantity." ),
                                                         );
                                                       }
                                                       else {
@@ -438,17 +448,6 @@ class _CartScreenState extends State<CartScreen> {
                                                               .currentState.context);
                                                         } else {
                                                           shoppingCartBloc.add(GetCartDetailsEvent());
-
-                                                          /*        customAnimatedPushNavigation(
-                                                              context,
-                                                              translator.activeLanguageCode ==
-                                                                  'ar'
-                                                                  ? CustomCircleNavigationBar(
-                                                                page_index: 0,
-                                                              )
-                                                                  : CustomCircleNavigationBar(
-                                                                page_index: 4,
-                                                              ));*/
                                                         }
                                                       }
                                                     },
@@ -529,17 +528,6 @@ class _CartScreenState extends State<CartScreen> {
                                                               .currentState.context);
                                                         } else {
                                                           shoppingCartBloc.add(GetCartDetailsEvent());
-
-                                          /*                customAnimatedPushNavigation(
-                                                              context,
-                                                              translator.activeLanguageCode ==
-                                                                  'ar'
-                                                                  ? CustomCircleNavigationBar(
-                                                                page_index: 0,
-                                                              )
-                                                                  : CustomCircleNavigationBar(
-                                                                page_index: 4,
-                                                              ));*/
                                                         }
 
                                                     },
@@ -557,99 +545,6 @@ class _CartScreenState extends State<CartScreen> {
                                               )
                                           )
 
-
-                                            /*DropdownButton(
-                                              hint: _dropDownValue == null
-                                                  ? Text(
-                                                      "   ${item.qty.toString()}   ",
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    )
-                                                  : Text("  $_dropDownValue  ",
-                                                      style: TextStyle(
-                                                          color: mainColor),
-                                                      textAlign:
-                                                          TextAlign.center),
-                                              isExpanded: true,
-                                              iconSize: 30.0,
-                                              style:
-                                                  TextStyle(color: Colors.blue),
-                                              items: qantity_numbers.map(
-                                                (val) {
-                                                  return DropdownMenuItem<
-                                                      String>(
-                                                    value: val,
-                                                    child: Text(
-                                                      "  $val  ",
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  );
-                                                },
-                                              ).toList(),
-                                              onChanged: (val) async {
-                                                _dropDownValue = val;
-                                                final response =
-                                                    await cartRepository.update_product_quantity_cart(
-                                                        item_id: item.itemId, product_quantity: _dropDownValue);
-                                                if (response.message != null) {
-                                                  Flushbar(
-                                                    messageText: Row(
-                                                      children: [
-                                                        Container(
-                                                          width: StaticData
-                                                                  .get_width(
-                                                                      context) *
-                                                              0.7,
-                                                          child: Wrap(
-                                                            children: [
-                                                              Text(
-                                                                '${"There is Error"}',
-                                                                textDirection:
-                                                                    TextDirection
-                                                                        .rtl,
-                                                                style: TextStyle(
-                                                                    color:
-                                                                        whiteColor),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Spacer(),
-                                                        Text(
-                                                          translator.translate(
-                                                              "Try Again"),
-                                                          textDirection:
-                                                              TextDirection.rtl,
-                                                          style: TextStyle(
-                                                              color:
-                                                                  whiteColor),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    flushbarPosition:
-                                                        FlushbarPosition.BOTTOM,
-                                                    backgroundColor: redColor,
-                                                    flushbarStyle:
-                                                        FlushbarStyle.FLOATING,
-                                                    duration:
-                                                        Duration(seconds: 3),
-                                                  )..show(_drawerKey
-                                                      .currentState.context);
-                                                } else {
-                                                  customAnimatedPushNavigation(
-                                                      context,
-                                                      translator.activeLanguageCode ==
-                                                              'ar'
-                                                          ? CustomCircleNavigationBar(
-                                                              page_index: 0,
-                                                            )
-                                                          : CustomCircleNavigationBar(
-                                                              page_index: 4,
-                                                            ));
-                                                }
-                                              },
-                                            ),*/
 
 
                                         ],

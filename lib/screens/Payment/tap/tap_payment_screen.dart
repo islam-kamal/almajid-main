@@ -59,17 +59,18 @@ class _TapPaymentScreenState extends State<TapPaymentScreen> {
   Widget getResponseScreen() {
     switch (_responseStatus) {
       case STATUS_SUCCESSFUL:
-        return PaymentSuccessfulScreen(
+        return SubmitSuccessfulScreen(
           order_id: widget.order_id,
         );
       case STATUS_CHECKSUM_FAILED:
-        return CheckSumFailedScreen();
+        return SubmitFaieldScreen();
       case STATUS_FAILED:
-        return PaymentFailedScreen(
+        return SubmitFaieldScreen(
+          faield_type: 'PaymentFailed',
           reason: StaticData.order_payment_refused_reason,
         );
     }
-    return PaymentSuccessfulScreen(
+    return SubmitSuccessfulScreen(
       order_id: widget.order_id,
     );
   }
@@ -202,180 +203,5 @@ class PaymentResult {
   }
 }
 
-/*class PaymentSuccessfulScreen extends StatelessWidget {
-  var order_id;
-  PaymentSuccessfulScreen({this.order_id});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Great!",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Thank you making the payment!",
-                style: TextStyle(fontSize: 30),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              MaterialButton(
-                  color: Colors.black,
-                  child: Text(
-                    "Close",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () {
-                    StaticData.vistor_value == 'visitor'
-                        ? customAnimatedPushNavigation(context, CustomCircleNavigationBar()):
-                    customAnimatedPushNavigation(context, OrdersScreen(
-                      increment_id: order_id,
-                    ));
-                  })
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}*/
 
-class PaymentFailedScreen extends StatelessWidget {
-  var reason;
-  PaymentFailedScreen({this.reason});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "OOPS!",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Payment was not successful because ${reason} ,Please try again Later!",
-                style: TextStyle(fontSize: 30),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              MaterialButton(
-                  color: Colors.black,
-                  child: Text(
-                    "Close",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () {
-                    customAnimatedPushNavigation(context, CustomCircleNavigationBar());
-                  })
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
-class CheckSumFailedScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Oh Snap!",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Problem Verifying Payment, If you balance is deducted please contact our customer support and get your payment verified!",
-                style: TextStyle(fontSize: 30),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              MaterialButton(
-                  color: Colors.black,
-                  child: Text(
-                    "Close",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () {
-            /*        cartRepository.check_quote_status().then((value){
-                      final extractedData = json.decode(value.body) as Map<String, dynamic>;
-                      if (extractedData["status"]) {
-                        print("cart quote is active");
-                      }else if(extractedData["message"] != null){
-                        print("cart quote is  not found");
-                        cartRepository.create_quote(context: context); // used to create new quote for guest
-                      }
-                      else{
-                        print("cart quote is not active");
-                        cartRepository.create_quote(context: context); // used to create new quote for guest
-                      }
-                    });*/
-
-                    customAnimatedPushNavigation(context, CustomCircleNavigationBar());
-                  })
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}

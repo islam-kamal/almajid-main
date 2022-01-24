@@ -85,7 +85,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                 )
                               ],
                             ),
-                          ) : Container(
+                          ) :
+                          Container(
                               child: StreamBuilder<ProductModel>(
                                 stream: search_bloc.search_products_subject,
                                 builder: (context, snapshot) {
@@ -123,46 +124,49 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   )
                                                   );
                                                 },
-                                                child: Directionality(
-                                                    textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl :TextDirection.ltr ,
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        Column(
-                                                          children: [
-                                                            responsiveSizedBox(context: context, percentageOfHeight: .02),
-                                                            Neumorphic(
-                                                                child: Container(
-                                                                    width: width(context) * .95,
-                                                                    child: Row(
-                                                                      children: [
-                                                                        Container(
-                                                                          margin: EdgeInsets.only(right: 3,left: 3),
-                                                                          width: width(context) * .3,
-                                                                          height: isLandscape(context)
-                                                                              ? 2 * height(context) * .16
-                                                                              : height(context) * .16,
-                                                                          decoration: BoxDecoration(
-                                                                              color: backGroundColor,
-                                                                              borderRadius: BorderRadius.circular(15),
-                                                                              image: DecorationImage(
-                                                                                  image: NetworkImage(
-                                                                                    product_image??'',
-                                                                                  ),
-                                                                                  fit: BoxFit.fill)),
-                                                                        ) ,
 
-                                                                        Directionality(
-                                                                            textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.ltr :TextDirection.rtl,
-                                                                            child: Container(
-                                                                                padding: EdgeInsets.only(
-                                                                                    right: width(context) * .02,
-                                                                                    left: width(context) * .02),
-                                                                                width: width(context) * .6,
-                                                                                height: isLandscape(context)
-                                                                                    ? 2 * height(context) * .18
-                                                                                    : height(context) * .18,
-                                                                                child: Column(
+                                                child: Column(
+                                                  children: [
+                                                    Directionality(
+                                                        textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl :TextDirection.ltr ,
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          children: [
+                                                            Column(
+                                                              children: [
+                                                                responsiveSizedBox(context: context, percentageOfHeight: .02),
+                                                                Neumorphic(
+                                                                    child: Container(
+                                                                        width: width(context) * .95,
+                                                                        child: Row(
+                                                                          children: [
+                                                                            Container(
+                                                                              margin: EdgeInsets.only(right: 3,left: 3),
+                                                                              width: width(context) * .3,
+                                                                              height: isLandscape(context)
+                                                                                  ? 2 * height(context) * .16
+                                                                                  : height(context) * .16,
+                                                                              decoration: BoxDecoration(
+                                                                                  color: backGroundColor,
+                                                                                  borderRadius: BorderRadius.circular(15),
+                                                                                  image: DecorationImage(
+                                                                                      image: NetworkImage(
+                                                                                        product_image??'',
+                                                                                      ),
+                                                                                      fit: BoxFit.fill)),
+                                                                            ) ,
+
+                                                                            Directionality(
+                                                                                textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.ltr :TextDirection.rtl,
+                                                                                child: Container(
+                                                                                  padding: EdgeInsets.only(
+                                                                                      right: width(context) * .02,
+                                                                                      left: width(context) * .02),
+                                                                                  width: width(context) * .6,
+                                                                                  height: isLandscape(context)
+                                                                                      ? 2 * height(context) * .18
+                                                                                      : height(context) * .18,
+                                                                                  child: Column(
                                                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                     crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                                                                                     children: [
@@ -174,7 +178,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                         screen: SearchScreen(),
 
                                                                                       ) : Container(),
-                                                                                 //     responsiveSizedBox(context: context, percentageOfHeight: .01),
+                                                                                      //     responsiveSizedBox(context: context, percentageOfHeight: .01),
                                                                                       Padding(padding: EdgeInsets.only(right: 5,left: 5),
                                                                                         child:  Align(
                                                                                           child:    customDescriptionText(
@@ -182,13 +186,13 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                             textColor: mainColor,
                                                                                             maxLines: 2,
                                                                                             text: snapshot.data.items[index].name,
-                                                                                        ),
+                                                                                          ),
                                                                                           alignment:translator.activeLanguageCode ==
-                                                                                        'en'
-                                                                                        ? Alignment.centerLeft :  Alignment.centerRight,
+                                                                                              'en'
+                                                                                              ? Alignment.centerLeft :  Alignment.centerRight,
                                                                                         ),
-                                                                                        ),
-                                                                                  //    responsiveSizedBox(context: context, percentageOfHeight: .01),
+                                                                                      ),
+                                                                                      //    responsiveSizedBox(context: context, percentageOfHeight: .01),
                                                                                       Row(
                                                                                         mainAxisAlignment:
                                                                                         MainAxisAlignment.spaceBetween,
@@ -234,7 +238,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
                                                                                         ],
                                                                                       ),
-                                                                                    //  responsiveSizedBox(context: context, percentageOfHeight: .01),
+                                                                                      //  responsiveSizedBox(context: context, percentageOfHeight: .01),
                                                                                       Row(
                                                                                         mainAxisAlignment: MainAxisAlignment.center,
                                                                                         children: [
@@ -254,7 +258,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                             width: width(context) * .45,
                                                                                             padding: EdgeInsets.all(4),
                                                                                             decoration: BoxDecoration(
-                                                                                              border: Border.all(color: redColor),
+                                                                                              border: Border.all(color: greyColor),
                                                                                             ),
                                                                                             child: Container(
                                                                                               decoration: BoxDecoration(
@@ -264,9 +268,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                                 children: [
                                                                                                   customDescriptionText(
                                                                                                       context: context,
-                                                                                                      text: "Out Of Stock",
-                                                                                                      percentageOfHeight:  0.017,
-                                                                                                      textColor: redColor) ,
+                                                                                                      text: translator.translate("Out Of Stock"),                                                                                                      percentageOfHeight:  0.017,
+                                                                                                      textColor: mainColor) ,
                                                                                                 ],),
                                                                                             ) ,
                                                                                           ),
@@ -275,14 +278,19 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                     ],
                                                                                   ),
 
-                                                                            )),
-                                                                      ],
-                                                                    ),
-                                                                    decoration: BoxDecoration(color: backGroundColor))),
+                                                                                )),
+                                                                          ],
+                                                                        ),
+                                                                        decoration: BoxDecoration(color: backGroundColor))),
+                                                              ],
+                                                            ),
                                                           ],
-                                                        ),
-                                                      ],
-                                                    )
+                                                        )
+                                                    ),
+                                                    snapshot.data.items.length ==index ?    Container(
+                                                      height: width(context) ,
+                                                    ) : Container()
+                                                  ],
                                                 ),
                                               ) : null ;
                                             }

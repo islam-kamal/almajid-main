@@ -518,7 +518,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
 
   get _getOtpConfirmationButton {
 
-    return GestureDetector(
+    return otp_code == null ? Container() : GestureDetector(
       onTap: otp_code == null
           ? () {}
           : () {
@@ -546,7 +546,8 @@ class _OtpState extends State<StcVerificationCodeScreen>
                 _isLoading = true;
                 _playAnimation();
               }
-            } else if (state is Done) {
+            }
+            else if (state is Done) {
               if (state.indicator == 'CreateOrder') {
                 var data = state.general_value;
                 print("### data ### : ${data}");
@@ -556,14 +557,15 @@ class _OtpState extends State<StcVerificationCodeScreen>
                   final extractedData = json.decode(response.body) as Map<String, dynamic>;
                   if (extractedData["success"]) {
                     _stopAnimation();
-                    customAnimatedPushNavigation(context, PaymentSuccessfulScreen(
+                    customAnimatedPushNavigation(context, SubmitSuccessfulScreen(
                       order_id: extractedData["increment_id"],
                     ));
                   }
                 });
               }
               _isLoading = false;
-            } else if (state is ErrorLoading) {
+            }
+            else if (state is ErrorLoading) {
               if (state.indicator == 'CreateOrder') {
                 print("ErrorLoading");
                 _stopAnimation();
@@ -611,34 +613,18 @@ class _OtpState extends State<StcVerificationCodeScreen>
                   : TextDirection.ltr,
               child: Container(
                 decoration: BoxDecoration(
-                    color: greyColor, borderRadius: BorderRadius.circular(5)),
+                    color: greenColor,
+                    borderRadius: BorderRadius.circular(5)),
                 padding: EdgeInsets.only(
                     right: width(context) * .0, left: width(context) * .02),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     customDescriptionText(
                         context: context,
                         text: "Confirm",
+                        textColor: whiteColor,
                         percentageOfHeight: .025),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: otp_code == null ? greyColor : greenColor,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: mainColor, width: 2)),
-                      child: Center(
-                        child: Icon(
-                          Icons.check,
-                          size: isLandscape(context)
-                              ? 2 * height(context) * .0
-                              : height(context) * .05,
-                        ),
-                      ),
-                      height: isLandscape(context)
-                          ? 2 * height(context) * .06
-                          : height(context) * .06,
-                      width: width(context) * .16,
-                    ),
                   ],
                 ),
                 width: width(context) * .5,

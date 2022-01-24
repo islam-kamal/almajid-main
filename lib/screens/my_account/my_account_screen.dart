@@ -167,13 +167,18 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     print("add image tapped ");
                                   },
                                 ),
-                                userName(context: context, name: _userName),
-                                userEmail(context: context, email: _email),
-                                responsiveSizedBox(
-                                    context: context, percentageOfHeight: .03),
-                                singleAccountItem(
+                                StaticData.vistor_value == "visitor"
+                                    ? Container()
+                                    :     userName(context: context, name: _userName),
+                                StaticData.vistor_value == "visitor"
+                                    ? Container()
+                                    :       userEmail(context: context, email: _email),
+                                responsiveSizedBox(context: context, percentageOfHeight: .03),
+                                StaticData.vistor_value == "visitor"
+                                    ? Container()
+                                    :       singleAccountItem(
                                     context: context,
-                                    iconPath: "assets/icons/share.png",
+                                    iconPath: "assets/icons/profile2.png",
                                     text: "Edit Profile",
                                     isContainMoreIcon: true,
                                     onTap: () async {
@@ -187,7 +192,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                         customAnimatedPushNavigation(context, SignInScreen());
                                       }
                                     }),
-                                singleAccountItem(
+                                StaticData.vistor_value == "visitor"
+                                    ? Container()
+                                    :                 singleAccountItem(
                                     context: context,
                                     iconPath: "assets/icons/tracking.png",
                                     text: "My Orders",
@@ -206,17 +213,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                       customPushNamedNavigation(
                                           context, WishListScreen());
                                     }),
-                                // singleAccountItem(
-                                //     context: context,
-                                //     iconPath: "assets/icons/settings3.png",
-                                //     text: "Settings",
-                                //     isContainMoreIcon: true,
-                                //     onTap: () {
-                                //       customPushNamedNavigation(context, SettingsScreen());
-                                //     }),
                                 singleAccountItem(
                                     context: context,
-                                    iconPath: "assets/icons/settings3.png",
+                                    iconPath: "assets/icons/language.png",
                                     text: _currentLang == 'en'?'العربية':'English',
                                     isContainMoreIcon: true,
                                     onTap: () {
