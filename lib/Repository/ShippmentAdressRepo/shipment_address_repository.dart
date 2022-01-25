@@ -40,7 +40,7 @@ class ShipmentAddressRepository {
                         ? CachingKey.REGION_AR
                         : CachingKey.REGION_EN),
                 "country_id": MyApp.app_location == 'sa' ? "SA"
-                    :   MyApp.app_location == 'uae' ? "UAE" : "KW",
+                    :   MyApp.app_location == 'uae' ? "AE" : "KW",
                 "street": ["${shipmentAddressBloc.street_controller.value}"],
                 "postcode": "10577",
                 "city": await sharedPreferenceManager.readString(
@@ -68,7 +68,7 @@ class ShipmentAddressRepository {
                         ? CachingKey.REGION_AR
                         : CachingKey.REGION_EN),
                 "country_id": MyApp.app_location == 'sa' ? "SA"
-                    :   MyApp.app_location == 'uae' ? "UAE" : "KW",
+                    :   MyApp.app_location == 'uae' ? "AE" : "KW",
                 "street": ["${shipmentAddressBloc.street_controller.value}"],
                 "postcode": "10577",
                 "city": await sharedPreferenceManager.readString(
@@ -122,7 +122,7 @@ class ShipmentAddressRepository {
                   "region_id": await sharedPreferenceManager
                       .readString(CachingKey.REGION_ID),
                   "country_id": MyApp.app_location == 'sa' ? "SA"
-                      :   MyApp.app_location == 'uae' ? "UAE" : "KW",
+                      :   MyApp.app_location == 'uae' ? "AE" : "KW",
                   "street": ["${shipmentAddressBloc.street_controller.value}"],
                   "telephone": "${shipmentAddressBloc.phone_controller.value}",
                   "postcode": "10577",
