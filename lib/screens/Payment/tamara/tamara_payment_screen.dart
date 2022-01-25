@@ -8,7 +8,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import 'Constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
+import 'dart:io' show Platform;
 class TamaraPaymentScreen extends StatefulWidget {
   var redirect_url;
   var increment_id;
@@ -110,13 +110,18 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
                       .evaluateJavascript("document.body.innerText");
                   var decodedJSON = jsonDecode(data);
                   print("result: " + decodedJSON.toString());
-                  var responseCode = decodedJSON.toString().substring(10,14) ;
-                  print('response code:  ${responseCode}  ,, ${responseCode.runtimeType}');
-                  print("status--- : ${responseCode == "true"}");
-                  StaticData.order_payment_refused_reason =  decodedJSON.toString().substring(24);
+
+                  Map<String, dynamic> responseJSON = {};
+                  if (Platform.isAndroid) {
+                    responseJSON = jsonDecode(decodedJSON);
+                  } else if (Platform.isIOS) {
+                    responseJSON = decodedJSON;
+                  }
+
+                  final responseCode = responseJSON["status"];
                   print('response code: ' + responseCode.toString());
                   _loadingPayment = false;
-                  if (responseCode == "true") {
+                  if (responseCode == true) {
                     _responseStatus = STATUS_SUCCESSFUL;
                   } else {
                     _responseStatus = STATUS_FAILED;
