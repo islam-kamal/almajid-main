@@ -964,8 +964,14 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
             ),
             validator: chossed_address_id != null ? null :(value) {
+              Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+965|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';
+              RegExp regex = new RegExp(pattern);
+
               if (value == null || value.isEmpty) {
                 return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
+              }else  if(!regex.hasMatch(value)){
+                return '${translator.translate("Please enter a correct phone number")} ';
+
               }
               return null;
             },
