@@ -15,7 +15,9 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
     if (event is CreateOrderEvent) {
-      yield Loading(indicator: 'CreateOrder');
+      final quoteId =  StaticData.vistor_value == 'visitor'?await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
+          :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE);
+      yield Loading(indicator: 'CreateOrder-$quoteId');
      final response = await StaticData.vistor_value == 'visitor'?   orderRepository.create_guest_order(
         context: event.context,
       ) : orderRepository.create_client_order(
@@ -23,11 +25,11 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
       );
 
       if (response == null) {
-        yield ErrorLoading(indicator: 'CreateOrder');
+        yield ErrorLoading(indicator: 'CreateOrder-$quoteId');
       } else {
         var order_id;
       await  response.then((value){order_id = value;});
-      yield Done(indicator: 'CreateOrder',general_value: order_id);
+      yield Done(indicator: 'CreateOrder-$quoteId',general_value: order_id);
       }
     }
     else if (event is GetAllOrderEvent) {
@@ -45,6 +47,7 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
       }
     }
   }
+
 }
 
 

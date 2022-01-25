@@ -41,8 +41,10 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
 
   AnimationController _loginButtonController;
   bool isLoading = false;
+  String _quoteId;
   @override
   void initState() {
+    getQuote().then((value) => _quoteId=value);
     _loginButtonController = AnimationController(
         duration: const Duration(milliseconds: 3000), vsync: this);
     super.initState();
@@ -90,14 +92,14 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
         bloc: orderBloc,
         listener: (context,state){
       if (state is Loading) {
-        if(state.indicator == 'CreateOrder'){
+        if(state.indicator == 'CreateOrder-$_quoteId'){
           print("Loading");
           _playAnimation();
         }
 
       }
       else if (state is ErrorLoading) {
-        if(state.indicator == 'CreateOrder') {
+        if(state.indicator == 'CreateOrder-$_quoteId') {
           print("ErrorLoading");
       _stopAnimation();
 
@@ -134,7 +136,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
       }
 
       else if (state is Done) {
-        if(state.indicator == 'CreateOrder') {
+        if(state.indicator == 'CreateOrder-$_quoteId') {
       print("done");
 
       var data = state.general_value;
@@ -346,14 +348,17 @@ print(" PayFortSettings     response  : ${response}");
           if(value=='stc_pay'){
             customAnimatedPushNavigation(context, StcPayPhoneScreen());
           }else{
-            orderBloc.add(CreateOrderEvent(
-                context: context
-            ));
+            orderBloc.add(CreateOrderEvent(context: context));
           }
         });
 
       },
     );
+  }
+
+  Future<String> getQuote() async{
+    return StaticData.vistor_value == 'visitor'?await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
+        :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE);
   }
 
 
