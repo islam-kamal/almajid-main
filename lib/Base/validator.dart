@@ -18,9 +18,9 @@ mixin Validator {
 
   var phone_validator = StreamTransformer<String, String>.fromHandlers(
       handleData: (phone, sink) async {
-    Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+965|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';
+    Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+9655|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';
       RegExp regex = new RegExp(pattern);
-      if (!regex.hasMatch(phone))
+      if (!regex.hasMatch(phone) || phone.length < 8)
         sink.addError(translator.translate("phone is incorrect!"));
       else {
         if (!phone.startsWith(RegExp(
