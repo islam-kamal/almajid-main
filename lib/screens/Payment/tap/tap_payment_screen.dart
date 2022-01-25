@@ -123,17 +123,19 @@ class _TapPaymentScreenState extends State<TapPaymentScreen> {
                   var data = await _webController
                       .evaluateJavascript("document.body.innerText");
                   final decodedJSON = jsonDecode(data);
-                  print("result: " + decodedJSON.toString());
 
-             //     print("decodedJSON[status] : ${decodedJSON["status"].runtimeType  } :  ${decodedJSON["status"]}");
+                  Map<String, dynamic> responseJSON = {};
+                  if (Platform.isAndroid) {
+                    responseJSON = jsonDecode(decodedJSON);
+                  } else if (Platform.isIOS) {
+                    responseJSON = decodedJSON;
+                  }
 
+                  final responseCode = responseJSON["status"];
+                  print('response code: ' + responseCode.toString());
 
-                  var responseCode = decodedJSON.toString().substring(10,14) ;
-                  print('response code:  ${responseCode}  ,, ${responseCode.runtimeType}');
-                  print("status--- : ${responseCode == "true"}");
-                  StaticData.order_payment_refused_reason =  decodedJSON.toString().substring(24);
                   _loadingPayment = false;
-                  if (responseCode == "true") {
+                  if (responseCode == true) {
                     _responseStatus = STATUS_SUCCESSFUL;
                   } else {
                     _responseStatus = STATUS_FAILED;
