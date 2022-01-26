@@ -8,8 +8,11 @@ import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'Base/Notifications/local_notification_service.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:country_code_picker/country_localizations.dart';
 
 /// receive message when app is in background without clicking on the notification
 Future<void> _backgroundHandler(RemoteMessage message) async{
@@ -114,7 +117,12 @@ class _MyAppState extends State<MyApp> {
               ),
               title: 'Al Majed Oud',
               home: SplashScreen(),
-              localizationsDelegates: translator.delegates,
+              localizationsDelegates: [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                DefaultCupertinoLocalizations.delegate,
+              ],
               locale: local,
 // Android + iOS Delegates
               // locale: translator.locale, // Active locale

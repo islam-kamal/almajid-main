@@ -931,7 +931,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       builder: (context, snapshot) {
         return Container(
           padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
-          child: Row(
+          child: translator.activeLanguageCode == 'en'?Row(
             children: [
               CountryCodePicker(
                 onChanged: (Object object)=>_countryCode=object.toString(),
@@ -989,6 +989,67 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     shipmentAddressBloc.phone_change(_countryCode+text);
                   },
                 ),
+              ),
+            ],
+          ):Row(
+            children: [
+              Flexible(
+                child: TextFormField(
+                  textAlign: TextAlign.left,
+                  initialValue: initialValue??'',
+                  keyboardType: TextInputType.text,
+                  style: TextStyle(
+                      color: whiteColor,
+                      fontSize: isLandscape(context)
+                          ? 2 * height(context) * .02
+                          : height(context) * .02),
+                  cursorColor: greyColor.withOpacity(.5),
+                  decoration: InputDecoration(
+                    hintText: translator.translate(hint??"Ex: 5xxxxxxxx"),
+                    contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
+                    hintStyle: TextStyle(
+                        color: greyColor.withOpacity(.5),
+                        fontWeight: FontWeight.bold,
+                        fontSize: isLandscape(context)
+                            ? 2 * height(context) * .018
+                            : height(context) * .018),
+                    filled: true,
+                    fillColor: greyColor.withOpacity(.5),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(3),
+                        borderSide: BorderSide(color: greyColor)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(3),
+                        borderSide: BorderSide(color: greyColor)),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(3),
+                        borderSide: BorderSide(color: greyColor)),
+                    errorText: snapshot.error,
+
+                  ),
+                  validator: chossed_address_id != null ? null :(value) {
+                    Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+965|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';
+                    RegExp regex = new RegExp(pattern);
+
+                    if (value == null || value.isEmpty) {
+                      return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
+                    }else  if(!regex.hasMatch(value) || value.length < 8){
+                      return '${translator.translate("Please enter a correct phone number")} ';
+
+                    }
+                    return null;
+                  },
+                  onChanged: (text) {
+                    shipmentAddressBloc.phone_change(_countryCode+text);
+                  },
+                ),
+              ),
+              CountryCodePicker(
+                onChanged: (Object object)=>_countryCode=object.toString(),
+                initialSelection: 'SA',
+                countryFilter: ['SA', 'KW', 'AE'],
+                showFlagDialog: true,
               ),
             ],
           ),
