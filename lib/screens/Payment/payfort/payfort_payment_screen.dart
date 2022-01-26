@@ -135,6 +135,11 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
                     _loadingPayment = false;
                   });
                 }
+                if (page.contains("return3DsTnxStatus")) {
+                  setState(() {
+                    _loadingPayment = true;
+                  });
+                }
                 if (page.contains("/flutterresponseonline")) {
                   setState(() {
                     _loadingPayment = true;
@@ -153,7 +158,6 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
 
                   final responseCode = responseJSON["response_code"];
                   print('success code' + responseCode.substring(2).toString());
-                  _loadingPayment = false;
                   if (responseCode.substring(2) == '000') {
                     final merchantReference =
                         responseJSON["merchant_reference"];

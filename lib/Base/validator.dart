@@ -16,6 +16,23 @@ mixin Validator {
     }
   });
 
+  var firstname_validator = StreamTransformer<String, String>.fromHandlers(
+      handleData: (username, sink) {
+        if (username.length < 1) {
+          sink.addError(translator.translate("first name is incorrect"));
+        } else {
+          sink.add(username);
+        }
+      });
+  var lastname_validator = StreamTransformer<String, String>.fromHandlers(
+      handleData: (username, sink) {
+        if (username.length < 1) {
+          sink.addError(translator.translate("last name is incorrect"));
+        } else {
+          sink.add(username);
+        }
+      });
+
   var phone_validator = StreamTransformer<String, String>.fromHandlers(
       handleData: (phone, sink) async {
     Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+9655|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';

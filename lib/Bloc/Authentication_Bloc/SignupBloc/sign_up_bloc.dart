@@ -20,11 +20,11 @@ class SignUpBloc extends Bloc<AppEvent,AppState> with Validator{
   Function(String) get password_change => password_controller.sink.add;
   Function(String) get lastname_change => lastname_controller.sink.add;
 
-  Stream<String> get fristname => fristname_controller.stream.transform(username_validator);
+  Stream<String> get fristname => fristname_controller.stream.transform(firstname_validator);
   Stream<String> get mobile => mobile_controller.stream.transform(phone_validator);
   Stream<String> get email => email_controller.stream.transform(email_validator);
   Stream<String> get password => password_controller.stream.transform(password_validator);
-  Stream<String> get lastname => lastname_controller.stream.transform(password_validator);
+  Stream<String> get lastname => lastname_controller.stream.transform(lastname_validator);
 
   Stream<bool> get submitCheck => Rx.combineLatest5(fristname, mobile, email, password,lastname ,(a, b, c, d,e) => true);
 
