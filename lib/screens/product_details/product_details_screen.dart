@@ -25,7 +25,7 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen>
     with TickerProviderStateMixin {
-  List product_images ;
+  List<SliderImage> product_images ;
   var selected_size = 0;
   var qty=1;
   var description;
@@ -64,7 +64,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                         product_images = [];
                         snapshot.data[0].mediaGalleryEntries.forEach((element) {
                           product_images.add(
-                              "${Urls.BASE_URL}/media/catalog/product" + element.file);
+                            SliderImage(
+                              url: "${Urls.BASE_URL}/media/catalog/product" + element.file
+                            )
+                          );
                         });
 
                         snapshot.data[0]..customAttributes.forEach((element) {

@@ -161,7 +161,12 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
 
                         snapshot.data[index].customAttributes.forEach((element) {
                           if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
-                            special_price = element.value == snapshot.data[index].price ? null : element.value;
+                            print("snapshot.data[index].price : ${snapshot.data[index].price}");
+                            print("element.value : ${double.parse(element.value).toStringAsFixed(2)}");
+                            if(double.parse(element.value).toStringAsFixed(2) != snapshot.data[index].price.toStringAsFixed(2) ){
+                              special_price = element.value == snapshot.data[index].price ? null : element.value;
+                            }
+
                           }
                         });
                         if(special_price != null){
@@ -236,7 +241,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                               Column(
                                                 children: [
                                                   Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
                                                       Wrap(
                                                         children: [
@@ -245,11 +250,11 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                             crossAxisAlignment: CrossAxisAlignment.end,
                                                             children: [
                                                               MyText(
-                                                                text: "${special_price == null ?snapshot.data[index].price : double.parse(special_price)} ",
+                                                                text: "${special_price == null ?snapshot.data[index].price.toStringAsFixed(2) : double.parse(special_price)} ",
                                                                 size: StaticData.get_height(context) * .017,
                                                                 color: blackColor,
                                                                 maxLines: 2,
-                                                                weight: FontWeight.normal,
+                                                                weight: FontWeight.bold,
                                                               ),
                                                               MyText(
                                                                 text: " ${MyApp.country_currency}",
@@ -262,13 +267,13 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                           ),
                                                         ],
                                                       ),
-                                                      SizedBox(width: width(context) * 0.005,),
+                                                      SizedBox(width: width(context) * 0.03,),
                                                       special_price == null ?  Container()   :       Text(
                                                         "${snapshot.data[index].price} ${MyApp.country_currency}",
                                                         style: TextStyle(
                                                             decoration: TextDecoration.lineThrough,
                                                             fontSize: StaticData.get_height(context)  * .011,
-                                                            color: greyColor),
+                                                            color: old_price_color),
                                                       ),
                                                     ],
                                                   ),

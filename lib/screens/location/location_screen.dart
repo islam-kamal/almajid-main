@@ -40,7 +40,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     responsiveSizedBox(
                         context: context, percentageOfHeight: .009),
                     HomeSlider(
-                        gallery:StaticData.images
+                        gallery:StaticData.slider
                     ),
 
 
@@ -92,65 +92,68 @@ class _LocationScreenState extends State<LocationScreen> {
                     responsiveSizedBox(
                         context: context, percentageOfHeight: .05),
 
-                    Container(
-                      width: width(context)*.8,
-                      height: isLandscape(context) ? 2*height(context)*.08: height(context)*.08,
-                    decoration: BoxDecoration(border: Border.all(color: greyColor) ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                      Container(
-                        width: width(context)*.1,
-                        height: isLandscape(context) ? 2*height(context)*.03: height(context)*.03,
-                        child: Image.asset(
-                            dropdownCountryValue == 'Saudi Arabia'?    "assets/flag/saudi.png"
-                                : dropdownCountryValue == "United Arab Emirates" ? "assets/flag/uae.png" : "assets/flag/kuwait.png"),
-                      ) ,
-                        SizedBox(width: width(context)*.02,),
-                          DropdownButton<String>(
-                              value: dropdownCountryValue,
-                              dropdownColor: mainColor.withOpacity(.3),
-                              icon: Icon(Icons.keyboard_arrow_down , color: whiteColor , size:
-                              isLandscape(context) ? 2*height(context)*.06: height(context)*.06,),
-                              iconSize: 42,
+                  Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+                      child:   Container(
+                        width: width(context)*.8,
+                        height: isLandscape(context) ? 2*height(context)*.08: height(context)*.08,
+                        decoration: BoxDecoration(border: Border.all(color: greyColor) ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: width(context)*.1,
+                              height: isLandscape(context) ? 2*height(context)*.03: height(context)*.03,
+                              child: Image.asset(
+                                  dropdownCountryValue == 'Saudi Arabia'?    "assets/flag/saudi.png"
+                                      : dropdownCountryValue == "United Arab Emirates" ? "assets/flag/uae.png" : "assets/flag/kuwait.png"),
+                            ) ,
+                            SizedBox(width: width(context)*.02,),
+                            DropdownButton<String>(
+                                value: dropdownCountryValue,
+                                dropdownColor: mainColor.withOpacity(.3),
+                                icon: Icon(Icons.keyboard_arrow_down , color: whiteColor , size:
+                                isLandscape(context) ? 2*height(context)*.06: height(context)*.06,),
+                                iconSize: 42,
 
-                              underline: SizedBox(),
-                              onChanged: (String newValue) {
-                                setState(() {
-                                  dropdownCountryValue = newValue;
-                                  MyApp.app_location = newValue == 'Saudi Arabia' ? 'sa'
-                                      :newValue =="United Arab Emirates" ? 'uae' :  'kw';
-                                  MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
-                                      : MyApp.app_location == 'uae'? translator.translate("AED") :   translator.translate("KWD");
-                                  sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location );
-                                  if(StaticData.vistor_value == 'visitor'){
-                                    MyApp.restartApp(context);
-                                  }else{
-                                    sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
-                                    sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
-                                    sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
-                                    sharedPreferenceManager.removeData(CachingKey.CUSTOMER_ID);
-                                    customAnimatedPushNavigation(context, SignInScreen());
-                                  }
+                                underline: SizedBox(),
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    dropdownCountryValue = newValue;
+                                    MyApp.app_location = newValue == 'Saudi Arabia' ? 'sa'
+                                        :newValue =="United Arab Emirates" ? 'uae' :  'kw';
+                                    MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
+                                        : MyApp.app_location == 'uae'? translator.translate("AED") :   translator.translate("KWD");
+                                    sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location );
+                                    if(StaticData.vistor_value == 'visitor'){
+                                      MyApp.restartApp(context);
+                                    }else{
+                                      sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
+                                      sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
+                                      sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
+                                      sharedPreferenceManager.removeData(CachingKey.CUSTOMER_ID);
+                                      customAnimatedPushNavigation(context, SignInScreen());
+                                    }
 
-                                });
-                              },
-                              items: <String>[
-                                'Saudi Arabia',
-                                'kuwait',
-                                "United Arab Emirates"
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value:  value,
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 10),
-                                    child: Text(value,
-                                      style: TextStyle(color: whiteColor),),
-                                  )
-                                );
-                              }).toList()),
+                                  });
+                                },
+                                items: <String>[
+                                  'Saudi Arabia',
+                                  'kuwait',
+                                  "United Arab Emirates"
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                      value:  value,
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 10),
+                                        child: Text(
+                                          value,
+                                          textDirection:MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+                                          style: TextStyle(color: whiteColor),),
+                                      )    
+                                  );
+                                }).toList()),
 
-                      ],),)
+                          ],),))
                   ],
                 )),
               ),

@@ -15,7 +15,7 @@ proceedToCheckoutButton({BuildContext context}) {
     child: Container(
         width: width(context) * .8,
         decoration: BoxDecoration(
-            color: mainColor, borderRadius: BorderRadius.circular(8)),
+            color: greenColor, borderRadius: BorderRadius.circular(8)),
         child: Center(
             child: customDescriptionText(
                 context: context,

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 
 class HomeSlider extends StatefulWidget {
-  List<dynamic> gallery ;
+  List<SliderImage> gallery ;
   var height;
   HomeSlider({this.gallery,this.height});
   @override
@@ -47,11 +47,21 @@ class _HomeSlider_State extends State<HomeSlider> {
                       ),
                       elevation: 0,
                       clipBehavior: Clip.none,
-                      child:
-                      Image.network(
-                        '${item}',
-                        width: MediaQuery.of(context).size.width,
-                        fit: BoxFit.fill,
+                      child: InkWell(
+                        onTap:  item.id == null ? (){} :(){
+                          final _catName = translator.activeLanguageCode == 'en'?item.english_name : item.arabic_name;
+                          customAnimatedPushNavigation(
+                              context, CategoryProductsScreen(
+                            category_id: item.id,
+                            category_name: _catName,
+                          ));
+
+                        },
+                        child:   Image.network(
+                          '${item.url}',
+                          width: MediaQuery.of(context).size.width,
+                          fit: BoxFit.fill,
+                        ),
                       ),
 
                     )).toList(),

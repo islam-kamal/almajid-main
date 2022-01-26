@@ -13,6 +13,7 @@ class StaggerAnimation extends StatelessWidget {
   final double text_size;
   final bool home_shape;
   Widget widget;
+  final bool checkout_color;
   StaggerAnimation(
       {Key key,
       this.buttonController,
@@ -24,6 +25,7 @@ class StaggerAnimation extends StatelessWidget {
       this.widget,
         this.text_size,
         this.home_shape= true,
+        this.checkout_color = false,
       this.isResetScreen})
       : buttonSqueezeanimation = Tween(
           begin: 240.0,
@@ -67,7 +69,7 @@ class StaggerAnimation extends StatelessWidget {
             ? FractionalOffset.center
             : FractionalOffset.bottomRight,
         decoration: BoxDecoration(
-          color: home_shape? Theme.of(context).primaryColor : null,
+          color: home_shape? checkout_color?greenColor :Theme.of(context).primaryColor : null,
             border: home_shape ? null: Border.all(color: mainColor),
         borderRadius: home_shape? const BorderRadius.all(Radius.circular(15.0)) :const BorderRadius.all(Radius.circular(0.0)),
         ),
@@ -108,7 +110,7 @@ class StaggerAnimation extends StatelessWidget {
                         : StaticData.get_height(context) * .06,
                     width: image != null && titleButton != null ? width(context) * .8 : width(context) * .3,
                     decoration: BoxDecoration(
-                        color: blackColor,
+                        color:  checkout_color?greenColor :blackColor,
                         borderRadius: BorderRadius.circular(30)),
                     child:  Center(
                       child: Row(

@@ -67,7 +67,7 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                     elevation: 0,
                     pinned: false,
                     flexibleSpace: FlexibleSpaceBar(
-                      background: HomeSlider(gallery: StaticData.images),
+                      background: HomeSlider(gallery: StaticData.slider),
                     ),
                   )
                 ];

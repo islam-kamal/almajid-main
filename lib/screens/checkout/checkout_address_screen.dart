@@ -497,10 +497,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                                           itemBuilder:
                                               (BuildContext context, int index) {
 
-                                            return snapshot.data[index].street[0].contains(address_search_text) ?
-                                                 Directionality(
-                                              textDirection: TextDirection.ltr,
-                                              child: Container(
+                                            return snapshot.data[index].street[0].toLowerCase().contains(address_search_text) ?
+                                            Directionality(
+                                              textDirection: MyApp.app_langauge == 'ar'? TextDirection.rtl :  TextDirection.ltr,
+                                              child:Container(
                                                   padding: EdgeInsets.only(
                                                       right: 10, left: 10),
                                                   child: Column(
@@ -580,7 +580,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
     }
 
-    return    Container(
+    return   Directionality(
+        textDirection: MyApp.app_langauge == 'ar'? TextDirection.rtl :  TextDirection.ltr,
+        child: Container(
         padding: EdgeInsets.all(10),
         child: ExpansionPanelList(
           expansionCallback: (int index, bool isExpanded) {
@@ -621,7 +623,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                   ),
                 );
               },
-              body: Container(
+              body:Container(
                   height: MediaQuery.of(context).size.width / 3,
                   child: FutureBuilder<List<CityModel>>(
                     future: cities_list,
@@ -629,7 +631,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
                           if (snapshot.data.length != 0) {
-                            return ListView.builder(
+                            return  ListView.builder(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               itemCount: snapshot.data.length,
@@ -639,20 +641,18 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                                   return Container();
                                 }
                                 if(MyApp.app_langauge == 'ar'){
-                                  return snapshot.data[index].label.contains(city_search_text) ?
+                                  return snapshot.data[index].label.toLowerCase().contains(city_search_text) ?
                                   Directionality(
-                                    textDirection: TextDirection.ltr,
+                                    textDirection: MyApp.app_langauge == 'ar'? TextDirection.rtl :  TextDirection.ltr,
                                     child: Container(
-                                        padding: EdgeInsets.only(
-                                            right: 10, left: 10),
+                                        padding: EdgeInsets.only(right: 10, left: 10),
                                         child: Column(
                                           children: <Widget>[
                                             RadioListTile(
                                               groupValue:  _currentIndex,
                                               title: Text(
                                                 "${translator.activeLanguageCode == 'ar'? snapshot.data[index].label :snapshot.data[index].title}",
-                                                textDirection:
-                                                TextDirection.rtl,
+                                                textDirection: MyApp.app_langauge == 'ar'? TextDirection.rtl :  TextDirection.ltr,
                                               ),
                                               value: snapshot.data[index].value,
                                               onChanged: (val) {
@@ -690,8 +690,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                                 else{
                                   return snapshot.data[index].title.contains(city_search_text) ?
                                   Directionality(
-                                    textDirection: TextDirection.ltr,
-                                    child: Container(
+                                    textDirection: MyApp.app_langauge == 'ar'? TextDirection.rtl :  TextDirection.ltr,
+                                    child:Container(
                                         padding: EdgeInsets.only(
                                             right: 10, left: 10),
                                         child: Column(
@@ -700,8 +700,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                                               groupValue:  _currentIndex,
                                               title: Text(
                                                 "${translator.activeLanguageCode == 'ar'? snapshot.data[index].label :snapshot.data[index].title}",
-                                                textDirection:
-                                                TextDirection.rtl,
+                                                textDirection:MyApp.app_langauge == 'ar'? TextDirection.rtl :  TextDirection.ltr,
                                               ),
                                               value: snapshot.data[index].value,
                                               onChanged: (val) {
@@ -761,7 +760,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               isExpanded: item.isExpanded,
             );
           }).toList(),
-        ));
+        )   ));
   }
 
 
@@ -775,13 +774,13 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
           child: TextFormField(
             initialValue: initialValue??'',
             style: TextStyle(
-                color: whiteColor,
+                color: mainColor,
                 fontSize: isLandscape(context)
                     ? 2 * height(context) * .02
                     : height(context) * .02),
             cursorColor: greyColor.withOpacity(.5),
             decoration: InputDecoration(
-              hintText: translator.translate(hint??"Frist Name"),
+              hintText: translator.translate(hint??"First Name"),
               contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
               hintStyle: TextStyle(
                   color: greyColor.withOpacity(.5),
@@ -790,7 +789,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                       ? 2 * height(context) * .018
                       : height(context) * .018),
               filled: true,
-              fillColor: greyColor.withOpacity(.5),
+              fillColor: backGroundColor,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3),
                   borderSide: BorderSide(color: greyColor)),
@@ -826,7 +825,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
           child: TextFormField(
             initialValue: initialValue??'',
             style: TextStyle(
-                color: whiteColor,
+                color: mainColor,
                 fontSize: isLandscape(context)
                     ? 2 * height(context) * .02
                     : height(context) * .02),
@@ -842,7 +841,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                       ? 2 * height(context) * .018
                       : height(context) * .018),
               filled: true,
-              fillColor: greyColor.withOpacity(.5),
+              fillColor: backGroundColor,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3),
                   borderSide: BorderSide(color: greyColor)),
@@ -878,7 +877,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
-                color: whiteColor,
+                color: mainColor,
                 fontSize: isLandscape(context)
                     ? 2 * height(context) * .02
                     : height(context) * .02),
@@ -894,7 +893,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                       ? 2 * height(context) * .018
                       : height(context) * .018),
               filled: true,
-              fillColor: greyColor.withOpacity(.5),
+              fillColor: backGroundColor,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3),
                   borderSide: BorderSide(color: greyColor)),
@@ -934,7 +933,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             initialValue: initialValue??'',
             keyboardType: TextInputType.text,
             style: TextStyle(
-                color: whiteColor,
+                color: mainColor,
                 fontSize: isLandscape(context)
                     ? 2 * height(context) * .02
                     : height(context) * .02),
@@ -950,7 +949,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                       ? 2 * height(context) * .018
                       : height(context) * .018),
               filled: true,
-              fillColor: greyColor.withOpacity(.5),
+              fillColor: backGroundColor,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3),
                   borderSide: BorderSide(color: greyColor)),
@@ -987,7 +986,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             initialValue: initialValue??'',
             keyboardType: TextInputType.streetAddress,
             style: TextStyle(
-                color: whiteColor,
+                color: mainColor,
                 fontSize: isLandscape(context)
                     ? 2 * height(context) * .02
                     : height(context) * .02),
@@ -1003,7 +1002,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                       ? 2 * height(context) * .018
                       : height(context) * .018),
               filled: true,
-              fillColor: greyColor.withOpacity(.5),
+              fillColor: backGroundColor,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3),
                   borderSide: BorderSide(color: greyColor)),
@@ -1035,6 +1034,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       titleButton: translator.translate("Next"),
       buttonController: _loginButtonController.view,
       btn_width: width(context) * .7,
+      checkout_color: true,
       onTap: () {
     if (_formKey.currentState.validate() ) {
       if(addres_city_name == null){

@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   responsiveSizedBox(context: context, percentageOfHeight: .11),
                                   HomeSlider(
-                                      gallery:StaticData.images),
+                                      gallery:StaticData.slider),
 
                                   responsiveSizedBox(context: context, percentageOfHeight: .03),
                                   titleText(context: context, text: translator.activeLanguageCode == 'ar' ?  StaticData.data['new-arrival']['arabic-title'] : StaticData.data['new-arrival']['english-title']),

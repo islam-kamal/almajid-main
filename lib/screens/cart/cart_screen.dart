@@ -195,7 +195,7 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                 ),
 
-                                responsiveSizedBox(context: context, percentageOfHeight: .02),
+                                responsiveSizedBox(context: context, percentageOfHeight: .04),
                                 proceedToCheckoutButton(context: context),
                                 responsiveSizedBox(
                                     context: context, percentageOfHeight: .01),
@@ -364,6 +364,7 @@ class _CartScreenState extends State<CartScreen> {
                                                 textAlign: TextAlign.start,
                                                 fontWeight: FontWeight.bold),
                                           ),
+
                                         ],
                                       ),
                                       responsiveSizedBox(context: context, percentageOfHeight: .01),

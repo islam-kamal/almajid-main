@@ -97,7 +97,12 @@ class _SplashScreenState extends State<SplashScreen> {
     StaticData.staticBanner = StaticData.data["static-banner"];
 
     StaticData.gallery.forEach((element) {
-      StaticData.images.add(element['url']);
+      StaticData.slider.add(SliderImage(
+        id: element['id'],
+        url: element['url'],
+        english_name: element['english_name'],
+        arabic_name: element['arabic_name'],
+      ));
     });
 
 
