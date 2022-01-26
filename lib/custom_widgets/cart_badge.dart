@@ -31,7 +31,8 @@ class _CartBadgeState extends State<CartBadge> {
           if (data.message?.isEmpty != null || data.items ==null) {
             _count = 0;
           } else {
-            _count = data.items.length;
+            _count = 0;
+            data.items.forEach((element) => _count += element.qty);
           }
         }
 
