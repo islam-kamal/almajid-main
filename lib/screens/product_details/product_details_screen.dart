@@ -90,6 +90,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             if(double.parse(element.value).toStringAsFixed(2) != snapshot.data[0].price.toStringAsFixed(2) ){
                               special_price = element.value == snapshot.data[0].price ? null : element.value;
                             }
+
                           }
                         });
                    /*     if(special_price != null){
