@@ -324,9 +324,10 @@ print(" PayFortSettings     response  : ${response}");
                 )),
             orderSummaryWidget(
                 context: context,
-            subtotal: widget.guestShipmentAddressModel.totals.subtotal,
-            vat: widget.guestShipmentAddressModel.totals.baseTaxAmount,
-            total: widget.guestShipmentAddressModel.totals.baseGrandTotal) ,
+            total_segments: widget.guestShipmentAddressModel.totals.totalSegments,
+           // vat: widget.guestShipmentAddressModel.totals.baseTaxAmount,
+          //  total: widget.guestShipmentAddressModel.totals.baseGrandTotal
+               ) ,
             responsiveSizedBox(context: context, percentageOfHeight: .04),
             doneButton(context: context)
 
@@ -342,6 +343,7 @@ print(" PayFortSettings     response  : ${response}");
       titleButton: translator.translate("Place Order"),
       buttonController: _loginButtonController.view,
       btn_width: width(context) * .7,
+      checkout_color: true,
       onTap: ()async {
       await  sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD).then((value){
         print("value : ${value}");

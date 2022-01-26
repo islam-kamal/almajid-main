@@ -214,7 +214,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                                     context: context,
                                                                                                     textColor: mainColor,
                                                                                                     text:
-                                                                                                    " ${snapshot.data.items[index].price} ",
+                                                                                                    " ${snapshot.data.items[index].price.toStringAsFixed(2)} ",
                                                                                                     textAlign: TextAlign.start,
                                                                                                     fontWeight: FontWeight.normal),
                                                                                               ),

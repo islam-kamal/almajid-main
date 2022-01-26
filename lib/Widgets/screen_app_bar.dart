@@ -72,7 +72,7 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                 ),
 
                 widget.category_name == null
-                    ? /* AutoSearchClass()*/MyTextField(controller, focusNode)
+                    ? MyTextField(controller, focusNode)
                     : Text(
                   widget.category_name,
                   style: TextStyle(

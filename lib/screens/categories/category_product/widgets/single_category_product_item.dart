@@ -33,7 +33,10 @@ class singleCategoryProductItem extends StatelessWidget {
     });
     product.customAttributes.forEach((element) {
       if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
-        special_price = element.value;
+        if(double.parse(element.value).toStringAsFixed(2) != product.price.toStringAsFixed(2) ){
+          special_price = element.value == product.price ? null : element.value;
+        }
+   //     special_price = element.value;
       }
     });
     if(special_price != null){
@@ -121,42 +124,44 @@ class singleCategoryProductItem extends StatelessWidget {
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                           Row(
-                                             children: [
-                                               Wrap(
-                                                 children: [
-                                                   Row(
-                                                     mainAxisAlignment: MainAxisAlignment.end,
-                                                     crossAxisAlignment: CrossAxisAlignment.end,
-                                                     children: [
-                                                       MyText(
-                                                         text: "${special_price == null ?product.price : double.parse(special_price)} ",
-                                                         size: StaticData.get_height(context) * .017,
-                                                         color: blackColor,
-                                                         maxLines: 2,
-                                                         weight: FontWeight.normal,
-                                                       ),
-                                                       MyText(
-                                                         text: " ${MyApp.country_currency}",
-                                                         size: StaticData.get_height(context) * .011,
-                                                         color: blackColor,
-                                                         maxLines: 2,
-                                                         weight: FontWeight.normal,
-                                                       ),
-                                                     ],
-                                                   ),
-                                                 ],
-                                               ),
-                                               SizedBox(width: width(context) * 0.05,),
-                                               special_price == null ?  Container()   :       Text(
-                                                 "${product.price} ${MyApp.country_currency}",
-                                                 style: TextStyle(
-                                                     decoration: TextDecoration.lineThrough,
-                                                     fontSize: StaticData.get_height(context)  * .011,
-                                                     color: greyColor),
-                                               ),
-                                             ],
-                                           ),
+                                        Directionality(textDirection: MyApp.app_langauge == 'ar' ?
+                                          TextDirection.rtl : TextDirection.ltr,
+                                            child:    Row(
+                                              children: [
+                                                Wrap(
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.end,
+                                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                                      children: [
+                                                        MyText(
+                                                          text: "${special_price == null ?product.price.toStringAsFixed(2) : double.parse(special_price)} ",
+                                                          size: StaticData.get_height(context) * .017,
+                                                          color: blackColor,
+                                                          maxLines: 2,
+                                                          weight: FontWeight.bold,
+                                                        ),
+                                                        MyText(
+                                                          text: " ${MyApp.country_currency}",
+                                                          size: StaticData.get_height(context) * .011,
+                                                          color: blackColor,
+                                                          maxLines: 2,
+                                                          weight: FontWeight.normal,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(width: width(context) * 0.02,),
+                                                special_price == null ?  Container()   :       Text(
+                                                  "${product.price.toStringAsFixed(2)} ${MyApp.country_currency}",
+                                                  style: TextStyle(
+                                                      decoration: TextDecoration.lineThrough,
+                                                      fontSize: StaticData.get_height(context)  * .014,
+                                                      color: old_price_color),
+                                                ),
+                                              ],
+                                            ),),
 
                                             RatingBar.readOnly(
                                               initialRating: 5.0,
@@ -174,43 +179,44 @@ class singleCategoryProductItem extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            product.extensionAttributes.stockItem.isInStock ?     AddProductToCartWidget(
-                                              product_sku: product.sku,
-                                              product_quantity:   1,
-                                              instock_status: product.extensionAttributes.stockItem.isInStock,
-                                              scaffoldKey: scafffoldKey,
-                                              btn_height: width(context) * .08,
-                                              btn_width: width(context) * .45,
-                                              text_size: 0.017,
-                                              home_shape: false,
-                                              product_image: product_image,
-                                              product_id: product.id,
-                                            )
-                                                : Container(
-                                              height: width(context) * .08,
-                                              width: width(context) * .45,
-                                              padding: EdgeInsets.all(4),
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(color: greyColor),
-                                              ),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(8)),
-                                                child:  Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    customDescriptionText(
-                                                        context: context,
-                                                        text: translator.translate("Out Of Stock"),                                                        percentageOfHeight:  0.017,
-                                                        textColor: mainColor) ,
-                                                  ],),
-                                              ) ,
-                                            ),
-                                          ],
-                                        )
+                                     Padding(padding: EdgeInsets.only(bottom: 10),
+                                     child:    Row(
+                                       mainAxisAlignment: MainAxisAlignment.center,
+                                       children: [
+                                         product.extensionAttributes.stockItem.isInStock ?     AddProductToCartWidget(
+                                           product_sku: product.sku,
+                                           product_quantity:   1,
+                                           instock_status: product.extensionAttributes.stockItem.isInStock,
+                                           scaffoldKey: scafffoldKey,
+                                           btn_height: width(context) * .08,
+                                           btn_width: width(context) * .45,
+                                           text_size: 0.017,
+                                           home_shape: false,
+                                           product_image: product_image,
+                                           product_id: product.id,
+                                         )
+                                             : Container(
+                                           height: width(context) * .08,
+                                           width: width(context) * .45,
+                                           padding: EdgeInsets.all(4),
+                                           decoration: BoxDecoration(
+                                             border: Border.all(color: greyColor),
+                                           ),
+                                           child: Container(
+                                             decoration: BoxDecoration(
+                                                 borderRadius: BorderRadius.circular(8)),
+                                             child:  Row(
+                                               mainAxisAlignment: MainAxisAlignment.center,
+                                               children: [
+                                                 customDescriptionText(
+                                                     context: context,
+                                                     text: translator.translate("Out Of Stock"),                                                        percentageOfHeight:  0.017,
+                                                     textColor: mainColor) ,
+                                               ],),
+                                           ) ,
+                                         ),
+                                       ],
+                                     ),)
                                       ],
                                     ),
                                   )

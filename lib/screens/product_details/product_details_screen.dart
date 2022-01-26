@@ -25,7 +25,7 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen>
     with TickerProviderStateMixin {
-  List product_images ;
+  List<SliderImage> product_images ;
   var selected_size = 0;
   var qty=1;
   var description;
@@ -64,7 +64,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                         product_images = [];
                         snapshot.data[0].mediaGalleryEntries.forEach((element) {
                           product_images.add(
-                              "${Urls.BASE_URL}/media/catalog/product" + element.file);
+                            SliderImage(
+                              url: "${Urls.BASE_URL}/media/catalog/product" + element.file
+                            )
+                          );
                         });
 
                         snapshot.data[0]..customAttributes.forEach((element) {
@@ -83,7 +86,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
 
                         snapshot.data[0].customAttributes.forEach((element) {
                           if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
-                            special_price = element.value;
+                           special_price = element.value;
+                            if(double.parse(element.value).toStringAsFixed(2) != snapshot.data[0].price.toStringAsFixed(2) ){
+                              special_price = element.value == snapshot.data[0].price ? null : element.value;
+                            }
+
                           }
                         });
                    /*     if(special_price != null){
@@ -122,7 +129,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             priceAndRatingRow(
                                 context: context,
                                 price: special_price ,
-                              old_price: snapshot.data[0].price,
+                              old_price: snapshot.data[0].price.toStringAsFixed(2),
                               review_status:  snapshot.data[0].extensionAttributes.reviews.isEmpty ? false : true,
 
                             ),

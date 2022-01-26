@@ -310,6 +310,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                             children: [
                               CategoriesTap(
                                 category_index: widget.category_index,
+                                category_name: widget.category_name,
                               ),
                               Expanded(
                                   child: ListView.builder(
@@ -342,7 +343,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                   padding: const EdgeInsets.only(top: 20, bottom: 100),
                                   color: mainColor,
                                   child: Center(
-                                    child: Text('You have fetched all of the content',style: TextStyle(color: whiteColor),),
+                                    child: Text(translator.translate(  "You have fetched all of the content"),style: TextStyle(color: whiteColor),),
                                   ),
                                 ),
                             ],

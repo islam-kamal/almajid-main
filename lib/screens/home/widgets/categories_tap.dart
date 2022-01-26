@@ -6,7 +6,8 @@ import 'package:almajidoud/utils/file_export.dart';
 
 class CategoriesTap extends StatefulWidget{
   var category_index;
-  CategoriesTap({this.category_index});
+  var category_name;
+  CategoriesTap({this.category_index,this.category_name});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -47,6 +48,7 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                       return Container();
                     } else {
                       _controller = TabController(length: snapshot.data.childrenData.length, vsync: this);
+
                       return Container(
                           width: width(context),
                           height: isLandscape(context) ? 2 * height(context) * .06 : height(context) * .06,
@@ -65,12 +67,17 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                                   ));
                               },
                               child: Container(
-                                padding: EdgeInsets.only(right: 5,left: 5),
+                                height: width(context) * 0.08,
+                                padding: EdgeInsets.symmetric(horizontal: 5,vertical: 5),
+                                decoration: BoxDecoration(
+                                    color: widget.category_name == item.name? whiteColor : mainColor,
+                                    borderRadius: BorderRadius.circular(15)
+                                ),
                                 child:Center(
                                   child: customDescriptionText(
                                       context: context,
                                       text: item.name,
-                                      textColor:  whiteColor,
+                                      textColor: widget.category_name == item.name? mainColor: whiteColor ,
                                       percentageOfHeight: .015),
                                 ),
                               ),

@@ -83,7 +83,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                 pinned: false,
                                 flexibleSpace: FlexibleSpaceBar(
                                   background:
-                                      HomeSlider(gallery: StaticData.images),
+                                      HomeSlider(gallery: StaticData.slider),
                                 ),
                               )
                             ];

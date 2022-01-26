@@ -89,17 +89,21 @@ class MyTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return  Container(
      width: width(context) * .5,
        height: isLandscape(context) ? 2 * height(context) * .04 : height(context) * .04,
       child: TextFormField(
-        controller: controller,
+     //   controller: controller,
         onChanged: (value){
   //        search_bloc.add(SearchProductsEvent(search_text: value));
         },
+        onTap: (){
+          customAnimatedPushNavigation(context, SearchScreen());
+        },
         style: TextStyle(color:whiteColor),
         textAlign: TextAlign.right,
-        focusNode: focusNode,
+     //   focusNode: focusNode,
+
         cursorColor: greyColor.withOpacity(.5),
         decoration: InputDecoration(
           hintStyle: TextStyle(
@@ -112,11 +116,11 @@ class MyTextField extends StatelessWidget {
             ),
             color: whiteColor,
             onPressed: () {
-              customAnimatedPushNavigation(context, SearchScreen(
-              ));
+           //   customAnimatedPushNavigation(context, SearchScreen());
             },
           ),
           filled: false,
+
           contentPadding: new EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
@@ -129,7 +133,7 @@ class MyTextField extends StatelessWidget {
               borderSide: BorderSide(color: whiteColor, width: 2)),
         ),
       ),
-    );
+     );
   }
 }
 

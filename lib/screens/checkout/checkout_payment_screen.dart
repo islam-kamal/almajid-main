@@ -60,7 +60,9 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
         child: Scaffold(
         key:_drawerKey,
           backgroundColor: whiteColor,
-          body: SingleChildScrollView(
+          body: Directionality(
+            textDirection: MyApp.app_langauge =='ar' ? TextDirection.rtl :TextDirection.ltr,
+            child: SingleChildScrollView(
             child:  Column(
               children: [
                 checkoutHeader(context: context),
@@ -193,7 +195,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                   child: Container(
                       width: width(context) * .8,
                       decoration: BoxDecoration(
-                          color: mainColor, borderRadius: BorderRadius.circular(8)
+                          color: greenColor, borderRadius: BorderRadius.circular(8)
                       ),
                       child: Center(
                           child: customDescriptionText(
@@ -213,7 +215,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
 
 
           ),
-        ),
+        ) ),
       ),
     );
   }
@@ -234,7 +236,9 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
             right: width(context) * .05, left: width(context) * .05),
         width: width(context) * .95,
         height:    _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments' ||   _currentIndex ==  'cashondelivery' ? width(context) * 0.7  :  width(context) * .5,
-        decoration: BoxDecoration(color: mainColor, borderRadius: BorderRadius.circular(20)),
+        decoration: BoxDecoration(
+            color: small_grey,
+            borderRadius: BorderRadius.circular(20)),
         child: Center(
           child: GridView.builder(
             //scrollDirection: Axis.vertical,
@@ -265,13 +269,11 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                     break;
                 }
 
-              return Directionality(
-                textDirection: TextDirection.ltr,
-                child: Container(
+              return  Container(
                   child: Theme(
                       data: Theme.of(context).copyWith(
-                          unselectedWidgetColor: whiteColor,
-                          disabledColor: whiteColor,
+                          unselectedWidgetColor: mainColor,
+                          disabledColor: mainColor,
                       ),
                       child:RadioListTile(
                         groupValue: _currentIndex,
@@ -310,7 +312,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                             ) ),
 
                         value: paymentMethods[index].code,
-                        activeColor: Colors.blue,
+                        activeColor: mainColor,
                         onChanged: (val) {
                           setState(() {
                             sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, paymentMethods[index].code);
@@ -324,7 +326,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
 
                         },
                       )),
-                ),
+
               );
             },
           ),

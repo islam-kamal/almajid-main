@@ -36,7 +36,7 @@ class StaticData {
 
 
   static List<dynamic> gallery = [];
-  static List images = [];
+  static List<SliderImage> slider = [];
   static  var data ;
 
   static Map<String,dynamic> staticBanner;
@@ -80,4 +80,8 @@ class StaticData {
   }
 }
 
+class SliderImage{
+  var id , url, english_name, arabic_name;
+  SliderImage({this.id,this.url,this.english_name,this.arabic_name});
+}
 
