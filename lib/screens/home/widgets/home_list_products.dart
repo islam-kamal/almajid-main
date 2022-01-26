@@ -161,8 +161,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
 
                         snapshot.data[index].customAttributes.forEach((element) {
                           if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
-                            print("snapshot.data[index].price : ${snapshot.data[index].price}");
-                            print("element.value : ${double.parse(element.value).toStringAsFixed(2)}");
+
                             if(double.parse(element.value).toStringAsFixed(2) != snapshot.data[index].price.toStringAsFixed(2) ){
                               special_price = element.value == snapshot.data[index].price ? null : element.value;
                             }

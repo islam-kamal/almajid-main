@@ -86,7 +86,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
 
                         snapshot.data[0].customAttributes.forEach((element) {
                           if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
-                            special_price = element.value;
+                           special_price = element.value;
+                            if(double.parse(element.value).toStringAsFixed(2) != snapshot.data[0].price.toStringAsFixed(2) ){
+                              special_price = element.value == snapshot.data[0].price ? null : element.value;
+                            }
                           }
                         });
                    /*     if(special_price != null){
@@ -125,7 +128,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             priceAndRatingRow(
                                 context: context,
                                 price: special_price ,
-                              old_price: snapshot.data[0].price,
+                              old_price: snapshot.data[0].price.toStringAsFixed(2),
                               review_status:  snapshot.data[0].extensionAttributes.reviews.isEmpty ? false : true,
 
                             ),

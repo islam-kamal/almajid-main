@@ -33,7 +33,10 @@ class singleCategoryProductItem extends StatelessWidget {
     });
     product.customAttributes.forEach((element) {
       if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
-        special_price = element.value;
+        if(double.parse(element.value).toStringAsFixed(2) != product.price.toStringAsFixed(2) ){
+          special_price = element.value == product.price ? null : element.value;
+        }
+   //     special_price = element.value;
       }
     });
     if(special_price != null){
@@ -132,7 +135,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                                       crossAxisAlignment: CrossAxisAlignment.end,
                                                       children: [
                                                         MyText(
-                                                          text: "${special_price == null ?product.price : double.parse(special_price)} ",
+                                                          text: "${special_price == null ?product.price.toStringAsFixed(2) : double.parse(special_price)} ",
                                                           size: StaticData.get_height(context) * .017,
                                                           color: blackColor,
                                                           maxLines: 2,
@@ -151,7 +154,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                                 ),
                                                 SizedBox(width: width(context) * 0.02,),
                                                 special_price == null ?  Container()   :       Text(
-                                                  "${product.price} ${MyApp.country_currency}",
+                                                  "${product.price.toStringAsFixed(2)} ${MyApp.country_currency}",
                                                   style: TextStyle(
                                                       decoration: TextDecoration.lineThrough,
                                                       fontSize: StaticData.get_height(context)  * .014,
