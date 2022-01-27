@@ -16,6 +16,8 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:almajidoud/Widgets/customText.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+
 class HomeListProducts extends StatefulWidget {
   final String type;
   GlobalKey<ScaffoldState> homeScaffoldKey;
@@ -39,11 +41,11 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
   var product_image;
   var _subject;
   List<product_model.Items> related_product_list = [];
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     _loginButtonController = AnimationController(
         duration: const Duration(milliseconds: 3000), vsync: this);
     readJson();
@@ -156,21 +158,53 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                       itemCount: snapshot.data.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        String special_price;
-                        var percentage;
-
+             /*           String special_price;
                         snapshot.data[index].customAttributes.forEach((element) {
                           if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
 
                             if(double.parse(element.value).toStringAsFixed(2) != snapshot.data[index].price.toStringAsFixed(2) ){
                               special_price = element.value == snapshot.data[index].price ? null : element.value;
                             }
-
                           }
                         });
-                        if(special_price != null){
-                          percentage = (1 - (double.parse(special_price)  / snapshot.data[index].price) )* 100;
+*/
+                        String special_price;
+                        var new_price , minimal_price;
+                        DateTime startDate , endDate ;
+                        snapshot.data[index].customAttributes.forEach((element) {
+                          if(element.attributeCode == "thumbnail")
+                            product_image = element.value;
+                          else if(element.attributeCode == "special_from_date"){
+                            startDate = DateTime.parse(element.value.toString().substring(0,10));
+                          }
+                          else  if(element.attributeCode == "special_to_date"){
+                            endDate = DateTime.parse("2022-01-28 00:00:00".substring(0,10));
+                          }
+                          else    if(element.attributeCode == 'special_price'){
+                            special_price = element.value;
+                          }
+                          else if( element.attributeCode == 'minimal_price'){
+                            minimal_price = element.value;
+                          }
+                        });
+                        if(startDate ==null && endDate ==null ){
+                          new_price = null;
+                        }else{
+                          if(StaticData.isCurrentDateInRange(startDate,endDate)
+                              && double.parse(special_price) <= double.parse(minimal_price)
+                              && double.parse(special_price).toStringAsFixed(2) !=  snapshot.data[index].price ) {
+                            new_price = special_price;
+
+                          }else if(double.parse(special_price) > double.parse(minimal_price)){
+                            new_price = minimal_price;
+                          }
+                          else {
+                            new_price = null;
+
+                          }
+
                         }
+
                         snapshot.data[index].customAttributes.forEach((element) {
                           if(element.attributeCode == "thumbnail")
                             product_image = element.value;
@@ -190,44 +224,38 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                               ),
                               child: Container(
                                 width: width(context) * .37,
-                           //     height: isLandscape(context) ? 2 * height(context) * .35 : height(context) * .35,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: mainColor.withOpacity(.2)),
+                                decoration: BoxDecoration(border: Border.all(color: mainColor.withOpacity(.2)),
                                     borderRadius: BorderRadius.circular(0)),
                                 child: Stack(
                                   children: [
                                     Column(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        GestureDetector(
-                                            onTap: () {
-                                              customAnimatedPushNavigation(
-                                                  context,
-                                                  ProductDetailsScreen(
-                                                    product_id: snapshot.data[index].id,
-                                                  ));
-                                            },
-                                            child: Stack(
-                                              children: [
-                                                Container(
-                                                  width: width(context) * .35,
-                                                  height: isLandscape(context) ? 2 * height(context) * .12 : height(context) * .12,
-                                                  decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                          image: NetworkImage(
-                                                              product_image??''),
-                                                          fit: BoxFit.contain)),
-                                                ),
-
-
-                                              ],
-                                            )
+                                        Expanded(
+                                            flex: 2,
+                                            child: GestureDetector(
+                                          onTap: () {
+                                            customAnimatedPushNavigation(context, ProductDetailsScreen(product_id: snapshot.data[index].id,));
+                                          },
+                                          child:  Container(
+                                            width: width(context) * .35,
+                                            //   height: isLandscape(context) ? 2 * height(context) * .12 : height(context) * .12,
+                                            decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: NetworkImage(
+                                                        product_image??''),
+                                                    fit: BoxFit.contain)),
+                                          ),
+                                        )
                                         ),
-                                        Container(
+                                        Expanded(
+                                          flex: 2,
+                                          child:   Container(
                                           width: width(context) * .35,
-                                          height: isLandscape(context) ? 2 * height(context) * .08 : height(context) * .08,
+                                       //   height: isLandscape(context) ? 2 * height(context) * .08 : height(context) * .08,
                                           color: whiteColor,
                                           child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               responsiveSizedBox(context: context, percentageOfHeight: .008),
                                               customDescriptionText(
@@ -249,7 +277,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                             crossAxisAlignment: CrossAxisAlignment.end,
                                                             children: [
                                                               MyText(
-                                                                text: "${special_price == null ?snapshot.data[index].price.toStringAsFixed(2) : double.parse(special_price)} ",
+                                                                text: "${new_price == null ?snapshot.data[index].price.toStringAsFixed(2) : double.parse(new_price)} ",
                                                                 size: StaticData.get_height(context) * .017,
                                                                 color: blackColor,
                                                                 maxLines: 2,
@@ -267,7 +295,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                         ],
                                                       ),
                                                       SizedBox(width: width(context) * 0.03,),
-                                                      special_price == null ?  Container()   :       Text(
+                                                      new_price == null ?  Container()   :       Text(
                                                         "${snapshot.data[index].price} ${MyApp.country_currency}",
                                                         style: TextStyle(
                                                             decoration: TextDecoration.lineThrough,
@@ -282,8 +310,10 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
 
                                             ],
                                           ),
-                                        ),
-                                        snapshot.data[index].extensionAttributes.stockItem.isInStock ?
+                                        )),
+                                        Expanded(
+                                          flex: 1,
+                                          child:  snapshot.data[index].extensionAttributes.stockItem.isInStock ?
                                         AddProductToCartWidget(
                                           product_sku: snapshot.data[index].sku,
                                           product_quantity:   1,
@@ -317,7 +347,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                     textColor: mainColor) ,
                                               ],),
                                           ) ,
-                                        )
+                                        ))
 
 
 
@@ -344,8 +374,8 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                               ),
                             ),
                           );
-                        }else{
-
+                        }
+                        else{
                         }
 
                       })

@@ -325,8 +325,7 @@ print(" PayFortSettings     response  : ${response}");
             orderSummaryWidget(
                 context: context,
             total_segments: widget.guestShipmentAddressModel.totals.totalSegments,
-           // vat: widget.guestShipmentAddressModel.totals.baseTaxAmount,
-          //  total: widget.guestShipmentAddressModel.totals.baseGrandTotal
+              cash: widget.payment_method
                ) ,
             responsiveSizedBox(context: context, percentageOfHeight: .04),
             doneButton(context: context)

@@ -16,7 +16,7 @@ class PaymentRepository {
   static SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();
   Dio dio = new Dio();
 
-  Future<StcPayModel> stc_pay_genertate_otp({BuildContext context , String phone_number}) async {
+  Future<StcPayModel> stc_pay_genertate_otp({BuildContext context , var phone_number}) async {
 
     Map<String, String> headers = StaticData.vistor_value == 'visitor'? {
       'Content-Type': 'application/json',
@@ -28,15 +28,17 @@ class PaymentRepository {
       'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}'
     };
     try {
+      print("%%% phone_number : ${phone_number.toString().replaceRange(0,4,'0')}");
       final response = await dio.post(
           Urls.BASE_URL+'/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/stc-pay/get-otp',
           data: {
-            "mobile": phone_number.substring(4,14) , //"0591826195",
+            "mobile": phone_number.toString().replaceRange(0,4,'0') , //"0591826195",
             "quoteId": StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
                 :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE),
            "isMask": StaticData.vistor_value == 'visitor'? true : false
           },
           options: Options(headers: headers));
+      print("response : ${response}");
       if (response.statusCode == 200) {
         print("response.data : ${response.data} :\n ${response.data['message']}");
         return StcPayModel.fromJson(response.data);
@@ -90,9 +92,7 @@ class PaymentRepository {
   }
 
   Future<http.Response> getPayFortSettings({var orderId}) async {
-    //final url = '${ORDER_DATA['website_domain']}/rest/V1/mstore/update-order-type';
     print("-----------------------orderId : ${orderId}");
-    print("PayFortSettings url ${Urls.BASE_URL+"/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/update-order-type"}");
     try {
       final Map<String, dynamic> data = {
         "orderId": int.parse(orderId),
@@ -105,6 +105,7 @@ class PaymentRepository {
             "Authorization": 'Bearer ${Urls.ADMIN_TOKEN}'
           },
           body: serializedData);
+      print("getPayFortSettings response : ${response}");
       return response;
     } catch (error) {
       throw (error);

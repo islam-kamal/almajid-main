@@ -5,7 +5,7 @@ weWillSendYouCode({BuildContext context}) {
     width: width(context) ,
     child: customDescriptionText(
         context: context,
-        textColor: greyColor,
+        textColor: old_price_color,
         text: "We will send you a verification code to your phone number",
         maxLines: 6,
 

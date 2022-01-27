@@ -4,6 +4,7 @@ import 'package:almajidoud/Bloc/Search_Bloc/search_bloc.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart' as product_model;
 import 'package:almajidoud/Model/SearchModel/search_model.dart';
+import 'package:almajidoud/Widgets/customText.dart';
 import 'package:almajidoud/screens/WishList/custom_wishlist.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
@@ -108,10 +109,65 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   .add(ProductImages.getProductImageUrlByName(imageName: element.file));
                                             });
 
-                                            snapshot.data.items[index].customAttributes.forEach((element) {
+                                   /*         snapshot.data.items[index].customAttributes.forEach((element) {
                                               if(element.attributeCode == "thumbnail")
                                                 product_image = element.value;
+                                            });*/
+                                            String special_price;
+                                            var new_price , minimal_price;
+                                            DateTime startDate , endDate ;
+                                            snapshot.data.items[index].customAttributes.forEach((element) {
+                                               if(element.attributeCode == "thumbnail")
+                                                product_image = element.value;
+                                              else if(element.attributeCode == "special_from_date"){
+                                                startDate = DateTime.parse(element.value.toString().substring(0,10));
+                                              }
+                                              else  if(element.attributeCode == "special_to_date"){
+                                                endDate = DateTime.parse("2022-01-28 00:00:00".substring(0,10));
+                                              }
+                                              else    if(element.attributeCode == 'special_price'){
+                                                special_price = element.value;
+                                              }
+                                              else if( element.attributeCode == 'minimal_price'){
+                                                minimal_price = element.value;
+                                              }
                                             });
+                                            if(startDate ==null && endDate ==null ){
+                                              new_price = null;
+                                            }else{
+                                              if(StaticData.isCurrentDateInRange(startDate,endDate)
+                                                  && double.parse(special_price) <= double.parse(minimal_price)
+                                                  && double.parse(special_price).toStringAsFixed(2) !=  snapshot.data.items[index].price ) {
+                                                new_price = special_price;
+
+                                              }else if(double.parse(special_price) > double.parse(minimal_price)){
+                                                new_price = minimal_price;
+                                              }
+                                              else {
+                                                new_price = null;
+
+                                              }
+
+                                            }
+
+
+
+                                   /*         String special_price;
+                                            var percentage;
+
+                                          snapshot.data.items[index].customAttributes.forEach((element) {
+                                              if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
+
+                                                if(double.parse(element.value).toStringAsFixed(2) != snapshot.data.items[index].price.toStringAsFixed(2) ){
+                                                  special_price = element.value == snapshot.data.items[index].price ? null : element.value;
+                                                }
+
+                                              }
+                                            });
+                                            if(special_price != null){
+                                              percentage = (1 - (double.parse(special_price)  / snapshot.data.items[index].price) )* 100;
+                                            }*/
+
                                             if (index >= snapshot.data.items.length) {
                                               return MyLoader(25, 25);
                                             } else {
@@ -178,7 +234,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                         screen: SearchScreen(),
 
                                                                                       ) : Container(),
-                                                                                      //     responsiveSizedBox(context: context, percentageOfHeight: .01),
                                                                                       Padding(padding: EdgeInsets.only(right: 5,left: 5),
                                                                                         child:  Align(
                                                                                           child:    customDescriptionText(
@@ -192,31 +247,43 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                               ? Alignment.centerLeft :  Alignment.centerRight,
                                                                                         ),
                                                                                       ),
-                                                                                      //    responsiveSizedBox(context: context, percentageOfHeight: .01),
                                                                                       Row(
                                                                                         mainAxisAlignment:
                                                                                         MainAxisAlignment.spaceBetween,
                                                                                         children: [
                                                                                           Row(
                                                                                             children: [
-                                                                                              Container(
-                                                                                                child: customDescriptionText(
-                                                                                                    context: context,
-                                                                                                    textColor: mainColor,
-                                                                                                    text:
-                                                                                                    " ${MyApp.country_currency} ",
-                                                                                                    textAlign: TextAlign.start,
-                                                                                                    fontWeight: FontWeight.normal),
+                                                                                              Wrap(
+                                                                                                children: [
+                                                                                                  Row(
+                                                                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                                                                    children: [
+                                                                                                      MyText(
+                                                                                                        text: "${new_price == null ?snapshot.data.items[index].price.toStringAsFixed(2) : double.parse(new_price)} ",
+                                                                                                        size: StaticData.get_height(context) * .017,
+                                                                                                        color: blackColor,
+                                                                                                        maxLines: 2,
+                                                                                                        weight: FontWeight.bold,
+                                                                                                      ),
+                                                                                                      MyText(
+                                                                                                        text: " ${MyApp.country_currency}",
+                                                                                                        size: StaticData.get_height(context) * .011,
+                                                                                                        color: blackColor,
+                                                                                                        maxLines: 2,
+                                                                                                        weight: FontWeight.normal,
+                                                                                                      ),
+                                                                                                    ],
+                                                                                                  ),
+                                                                                                ],
                                                                                               ),
-                                                                                              SizedBox(width: 5,),
-                                                                                              Container(
-                                                                                                child: customDescriptionText(
-                                                                                                    context: context,
-                                                                                                    textColor: mainColor,
-                                                                                                    text:
-                                                                                                    " ${snapshot.data.items[index].price.toStringAsFixed(2)} ",
-                                                                                                    textAlign: TextAlign.start,
-                                                                                                    fontWeight: FontWeight.normal),
+                                                                                              SizedBox(width: width(context) * 0.03,),
+                                                                                              new_price == null ?  Container()   :       Text(
+                                                                                                "${snapshot.data.items[index].price} ${MyApp.country_currency}",
+                                                                                                style: TextStyle(
+                                                                                                    decoration: TextDecoration.lineThrough,
+                                                                                                    fontSize: StaticData.get_height(context)  * .011,
+                                                                                                    color: old_price_color),
                                                                                               ),
                                                                                             ],
                                                                                           ),
@@ -239,42 +306,45 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                         ],
                                                                                       ),
                                                                                       //  responsiveSizedBox(context: context, percentageOfHeight: .01),
-                                                                                      Row(
-                                                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                                                        children: [
-                                                                                          snapshot.data.items[index].extensionAttributes.stockItem.isInStock?     AddProductToCartWidget(
-                                                                                            product_sku: snapshot.data.items[index].sku,
-                                                                                            product_quantity:   1,
-                                                                                            instock_status: snapshot.data.items[index].extensionAttributes.stockItem.isInStock,
-                                                                                            scaffoldKey: scaffold_key,
-                                                                                            btn_height: width(context) * .08,
-                                                                                            btn_width: width(context) * .35,
-                                                                                            text_size: 0.017,
-                                                                                            home_shape: false,
-                                                                                            product_image: product_image,
-                                                                                            product_id:  snapshot.data.items[index].id,
-                                                                                          ) :   Container(
-                                                                                            height: width(context) * .08,
-                                                                                            width: width(context) * .45,
-                                                                                            padding: EdgeInsets.all(4),
-                                                                                            decoration: BoxDecoration(
-                                                                                              border: Border.all(color: greyColor),
-                                                                                            ),
-                                                                                            child: Container(
-                                                                                              decoration: BoxDecoration(
-                                                                                                  borderRadius: BorderRadius.circular(8)),
-                                                                                              child:  Row(
-                                                                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                                                                children: [
-                                                                                                  customDescriptionText(
-                                                                                                      context: context,
-                                                                                                      text: translator.translate("Out Of Stock"),                                                                                                      percentageOfHeight:  0.017,
-                                                                                                      textColor: mainColor) ,
-                                                                                                ],),
-                                                                                            ) ,
-                                                                                          ),
-                                                                                        ],
-                                                                                      )
+                                                                                 Padding(padding: EdgeInsets.only(bottom: 10),
+                                                                                 child:      Row(
+                                                                                   mainAxisAlignment: MainAxisAlignment.center,
+                                                                                   children: [
+                                                                                     snapshot.data.items[index].extensionAttributes.stockItem.isInStock?
+                                                                                     AddProductToCartWidget(
+                                                                                       product_sku: snapshot.data.items[index].sku,
+                                                                                       product_quantity:   1,
+                                                                                       instock_status: snapshot.data.items[index].extensionAttributes.stockItem.isInStock,
+                                                                                       scaffoldKey: scaffold_key,
+                                                                                       btn_height: width(context) * .08,
+                                                                                       btn_width: width(context) * .35,
+                                                                                       text_size: 0.017,
+                                                                                       home_shape: false,
+                                                                                       product_image: product_image,
+                                                                                       product_id:  snapshot.data.items[index].id,
+                                                                                     )
+                                                                                         :   Container(
+                                                                                       height: width(context) * .08,
+                                                                                       width: width(context) * .45,
+                                                                                       padding: EdgeInsets.all(4),
+                                                                                       decoration: BoxDecoration(
+                                                                                         border: Border.all(color: greyColor),
+                                                                                       ),
+                                                                                       child: Container(
+                                                                                         decoration: BoxDecoration(
+                                                                                             borderRadius: BorderRadius.circular(8)),
+                                                                                         child:  Row(
+                                                                                           mainAxisAlignment: MainAxisAlignment.center,
+                                                                                           children: [
+                                                                                             customDescriptionText(
+                                                                                                 context: context,
+                                                                                                 text: translator.translate("Out Of Stock"),                                                                                                      percentageOfHeight:  0.017,
+                                                                                                 textColor: mainColor) ,
+                                                                                           ],),
+                                                                                       ) ,
+                                                                                     ),
+                                                                                   ],
+                                                                                 ),)
                                                                                     ],
                                                                                   ),
 
@@ -304,7 +374,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                     );
                                   } else {
                                     return Center(
-                                      child: CircularProgressIndicator(),
+                                      child: CircularProgressIndicator(
+                                      ),
                                     );
                                     ;
                                   }
@@ -399,7 +470,6 @@ class MyLoader extends StatelessWidget {
           height: height,
           child: CircularProgressIndicator(
             strokeWidth: 3.0,
-            backgroundColor: mainColor,
           ),
         ),
       ),

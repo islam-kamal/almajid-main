@@ -37,7 +37,7 @@ singleOrderSummaryItem({BuildContext context, String title: "", String details: 
                    textAlign: TextAlign.start,
                    maxLines: 2,
                    text: details ,
-                   textColor: greyColor,)) ,
+                   textColor: mainColor,)) ,
                 ],
               ) ,
               Radio(value:rValue  , onChanged: (v){} , activeColor: Colors.blue) ,

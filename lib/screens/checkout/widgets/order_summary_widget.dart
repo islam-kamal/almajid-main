@@ -1,7 +1,7 @@
 import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments }) {
+orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments ,var cash }) {
   var grand_total, subtotal, vat ,shipping, payment_fees;
   total_segments.forEach((element) {
     if(element.code ==  "grand_total"){
@@ -20,6 +20,8 @@ orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments 
       payment_fees = element.value;
     }
   });
+  print("cash : $cash");
+  print(  cash == 'الدفع عند التوصيل' );
   return Column(
     children: [
       Container(
@@ -83,7 +85,7 @@ orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments 
                   percentageOfHeight: .020),
             ],
           )),
-      Container(
+     cash == 'الدفع عند التوصيل' ? Container(
           width: width(context) * .9,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,24 +101,7 @@ orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments 
                   textAlign: TextAlign.start,
                   percentageOfHeight: .020),
             ],
-          )),
-      Container(
-          width: width(context) * .9,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              customDescriptionText(
-                  context: context,
-                  text: "VAT",
-                  textAlign: TextAlign.start,
-                  percentageOfHeight: .022),
-              customDescriptionText(
-                  context: context,
-                  text: " ${MyApp.country_currency} ${vat} ",
-                  textAlign: TextAlign.start,
-                  percentageOfHeight: .022),
-            ],
-          )),
+          )) : Container()  ,
       Divider(color: greyColor),
       Container(
           width: width(context) * .9,

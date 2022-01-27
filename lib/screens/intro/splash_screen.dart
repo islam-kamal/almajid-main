@@ -77,7 +77,9 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
 
-    new CircularProgressIndicator();
+    new CircularProgressIndicator(
+
+    );
     await categoryBloc.add(getAllCategories());
     readJson(token);
     await Future.delayed(Duration(seconds: 3));

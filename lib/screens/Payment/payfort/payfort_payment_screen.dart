@@ -177,7 +177,8 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
 
           (_loadingPayment)
               ? Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                  ),
                 )
               : Center(),
           (_responseStatus != STATUS_LOADING)

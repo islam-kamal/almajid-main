@@ -141,7 +141,8 @@ class CustomSavedAddressesWidgetState extends State<CustomSavedAddressesWidget> 
 
                       // By default, show a loading spinner.
                       return Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                        ),
                       );
                     },
                   )),

@@ -48,7 +48,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                           builder: (context, state) {
                             if (state is Loading) {
                               return Center(
-                                child: CircularProgressIndicator(),
+                                child: CircularProgressIndicator(
+                                ),
                               );
                             }
                             else if (state is Done) {
@@ -152,7 +153,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                         }),
                                                     isExpanded: _isExpanded[i],
                                                     canTapOnHeader: false,
-                                                    hasIcon: snapshot.data.childrenData[i].childrenData.length > 0 ?true:false,
+                                                 //   hasIcon: snapshot.data.childrenData[i].childrenData.length > 0 ?true:false,
                                                   ),
                                               ],
                                             ),
@@ -170,7 +171,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                     }
                                     else {
                                       return Center(
-                                        child: CircularProgressIndicator(),
+                                        child: CircularProgressIndicator(
+                                        ),
                                       );
                                       ;
                                     }
@@ -183,7 +185,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                             }
                             else {
                               return Center(
-                                child: CircularProgressIndicator(),
+                                child: CircularProgressIndicator(
+                                ),
                               );
                             }
                           },

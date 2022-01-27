@@ -73,7 +73,8 @@ class _HomePageState extends State<AutoSearchClass> {
               );
             } else {
               return Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                ),
               );
               ;
             }
