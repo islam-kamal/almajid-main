@@ -139,7 +139,7 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
                               context: context,
                               percentageOfHeight: .03,
                               textColor: blackColor,
-                              text: translator.translate("Enter Your Phone Number ?"),
+                              text: translator.translate("Enter Your Phone Number"),
                               fontWeight: FontWeight.w300),
                           responsiveSizedBox(
                               context: context, percentageOfHeight: .035),
