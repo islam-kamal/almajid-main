@@ -34,6 +34,7 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
   }
   @override
   void dispose() {
+    _products_details_subject = null;
   }
   final _newArrivalsProducts_list = <Items>[];
   final _bestSellerProducts_list = <Items>[];

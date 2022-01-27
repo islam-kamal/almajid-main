@@ -14,7 +14,7 @@ class StaticData {
   static int product_id ;
   static String order_status = 'accepted';
   static int home_category_index = 0;
-  static String user_mobile_number = '';
+  static var user_mobile_number = '';
   static int saved_addresses_count;
   static bool chosse_address_status = false;
   static String order_address = '';
@@ -41,6 +41,10 @@ class StaticData {
 
   static Map<String,dynamic> staticBanner;
 
+  static  bool isCurrentDateInRange(DateTime startDate, DateTime endDate) {
+    final currentDate = DateTime.now();
+    return currentDate.isAfter(startDate) && currentDate.isBefore(endDate);
+  }
 
   static double get_height(BuildContext context) {
     var height = MediaQuery

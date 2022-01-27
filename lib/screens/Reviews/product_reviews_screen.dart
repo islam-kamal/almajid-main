@@ -197,7 +197,8 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
                       return Container();
                     } else {
                       return Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                        ),
                       );
                     }
                   },

@@ -61,6 +61,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                       if (snapshot.data == null) {
                         return no_data_widget(context: context);
                       } else {
+
                         product_images = [];
                         snapshot.data[0].mediaGalleryEntries.forEach((element) {
                           product_images.add(
@@ -69,33 +70,54 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             )
                           );
                         });
-
+                        String special_price;
+                        var new_price , minimal_price;
+                        DateTime startDate , endDate ;
                         snapshot.data[0]..customAttributes.forEach((element) {
                           if(element.attributeCode ==  "description"){
                             description = element.value;
                           }
-                        });
-
-                        snapshot.data[0].customAttributes.forEach((element) {
-                          if(element.attributeCode == "thumbnail")
+                          else if(element.attributeCode == "thumbnail")
                             product_image = element.value;
-                        });
-
-                        String special_price;
-                        var percentage;
-
-                        snapshot.data[0].customAttributes.forEach((element) {
-                          if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
-                           special_price = element.value;
-                            if(double.parse(element.value).toStringAsFixed(2) != snapshot.data[0].price.toStringAsFixed(2) ){
-                              special_price = element.value == snapshot.data[0].price ? null : element.value;
-                            }
-
+                          else if(element.attributeCode == "special_from_date"){
+                            startDate = DateTime.parse(element.value.toString().substring(0,10));
+                            print("startDate : ${startDate}");
+                          }
+                          else  if(element.attributeCode == "special_to_date"){
+                            endDate = DateTime.parse("2022-01-28 00:00:00".substring(0,10));
+                            print("endDate : ${endDate}");
+                          }
+                          else    if(element.attributeCode == 'special_price'){
+                            special_price = element.value;
+                          }
+                          else if( element.attributeCode == 'minimal_price'){
+                            minimal_price = element.value;
                           }
                         });
-                   /*     if(special_price != null){
-                          percentage = (1 - (double.parse(special_price)  / snapshot.data[0].price) )* 100;
-                        }*/
+                        print("endDate((((((( : ${endDate}");
+                        if(startDate ==null && endDate ==null ){
+                          new_price = null;
+                          print("5 new_price : ${new_price}");
+                        }else{
+                          print("****************");
+                          if(StaticData.isCurrentDateInRange(startDate,endDate)
+                              && double.parse(special_price) <= double.parse(minimal_price)
+                              && double.parse(special_price).toStringAsFixed(2) != snapshot.data[0].price ) {
+                            new_price = special_price;
+                            print("1 new_price : ${new_price}");
+
+                          }else if(double.parse(special_price) > double.parse(minimal_price)){
+                            new_price = minimal_price;
+                            print("2 new_price : ${new_price}");
+                          }
+                          else {
+                            new_price = null;
+                            print("3 new_price : ${new_price}");
+
+                          }
+
+                        }
+
                         return Column(
                           children: [
                             responsiveSizedBox(
@@ -128,7 +150,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                 context: context, percentageOfHeight: .02),
                             priceAndRatingRow(
                                 context: context,
-                                price: special_price ,
+                                new_price: new_price ,
                               old_price: snapshot.data[0].price.toStringAsFixed(2),
                               review_status:  snapshot.data[0].extensionAttributes.reviews.isEmpty ? false : true,
 
@@ -306,7 +328,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                       );
                     } else {
                       return  Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+
+                          ),
                       );
 
                     }
@@ -328,4 +352,5 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
       ),
     );
   }
+
 }

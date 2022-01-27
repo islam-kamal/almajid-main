@@ -78,7 +78,8 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                   builder: (context, state) {
                     if (state is Loading) {
                       return Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                        ),
                       );
                     } else if (state is Done) {
                       var data = state.model as ProductModel;
@@ -234,7 +235,8 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                                                       }
 
                                                                                       return _isLoading
-                                                                                          ? CircularProgressIndicator()
+                                                                                          ? CircularProgressIndicator(
+                                                                                      )
                                                                                           :  snapshot.data.items[index].extensionAttributes.stockItem.isInStock ? InkWell(
                                                                                               onTap: () {
                                                                                                       shoppingCartBloc.add(AddProductToCartEvent(context: context, product_quantity: snapshot.data.items[index].extensionAttributes.stockItem.qty, product_sku: snapshot.data.items[index].sku, indictor: 'search_add_to_cart'));
@@ -298,7 +300,8 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                               );
                             } else {
                               return Center(
-                                child: CircularProgressIndicator(),
+                                child: CircularProgressIndicator(
+                                ),
                               );
                               ;
                             }
@@ -310,7 +313,8 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                       return Container();
                     } else {
                       return Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                        ),
                       );
                     }
                   },
@@ -340,7 +344,6 @@ class MyLoader extends StatelessWidget {
           height: height,
           child: CircularProgressIndicator(
             strokeWidth: 3.0,
-            backgroundColor: mainColor,
           ),
         ),
       ),

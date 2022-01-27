@@ -5,6 +5,7 @@ import 'package:almajidoud/Model/WishListModel/get_all_wishlist_model.dart';
 import 'package:almajidoud/Model/WishListModel/get_all_wishlist_model.dart'
     as wishlist_model;
 import 'package:almajidoud/Repository/WishListRepo/wishlist_repository.dart';
+import 'package:almajidoud/Widgets/customText.dart';
 import 'package:almajidoud/screens/WishList/custom_wishlist.dart';
 
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
@@ -98,11 +99,13 @@ class _WishListScreenState extends State<WishListScreen> {
                                   );
                                 } else if (state.indicator == 'remove_fav') {
                                   return Center(
-                                    child: CircularProgressIndicator(),
+                                    child: CircularProgressIndicator(
+                                    ),
                                   );
                                 } else if (state.indicator == 'add_cart') {
                                   return Center(
-                                    child: CircularProgressIndicator(),
+                                    child: CircularProgressIndicator(
+                                    ),
                                   );
                                 }
                               }
@@ -129,15 +132,48 @@ class _WishListScreenState extends State<WishListScreen> {
                                                 itemCount:
                                                     snapshot.data.itemsCount,
                                                 itemBuilder: (context, index) {
-                                                  snapshot.data.items[index]
-                                                      .product.customAttributes
-                                                      .forEach((element) {
-                                                    if (element.attributeCode ==
-                                                        'thumbnail') {
-                                                      product_image =
-                                                          element.value;
+                                                  snapshot.data.items[index].product.customAttributes.forEach((element) {
+                                                    if (element.attributeCode == 'thumbnail') {
+                                                      product_image = element.value;
                                                     }
                                                   });
+                                                  String special_price;
+                                                  var new_price , minimal_price;
+                                                  DateTime startDate , endDate ;
+                                                  snapshot.data.items[index].product.customAttributes.forEach((element) {
+                                                    if(element.attributeCode == "thumbnail")
+                                                      product_image = element.value;
+                                                    else if(element.attributeCode == "special_from_date"){
+                                                      startDate = DateTime.parse(element.value.toString().substring(0,10));
+                                                    }
+                                                    else  if(element.attributeCode == "special_to_date"){
+                                                      endDate = DateTime.parse("2022-01-28 00:00:00".substring(0,10));
+                                                    }
+                                                    else    if(element.attributeCode == 'special_price'){
+                                                      special_price = element.value;
+                                                    }
+                                                    else if( element.attributeCode == 'minimal_price'){
+                                                      minimal_price = element.value;
+                                                    }
+                                                  });
+                                                  if(startDate ==null && endDate ==null ){
+                                                    new_price = null;
+                                                  }else{
+                                                    if(StaticData.isCurrentDateInRange(startDate,endDate)
+                                                        && double.parse(special_price) <= double.parse(minimal_price)
+                                                        && double.parse(special_price).toStringAsFixed(2) !=  snapshot.data.items[index].product.price ) {
+                                                      new_price = special_price;
+
+                                                    }else if(double.parse(special_price) > double.parse(minimal_price)){
+                                                      new_price = minimal_price;
+                                                    }
+                                                    else {
+                                                      new_price = null;
+
+                                                    }
+
+                                                  }
+
                                                   return InkWell(
                                                       onTap: () {
                                                         customAnimatedPushNavigation(
@@ -213,7 +249,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                   Row(
                                                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                     children: [
-                                                                                      Row(
+                                                                                /*      Row(
                                                                                         children: [
                                                                                           Container(
                                                                                             child: customDescriptionText(
@@ -232,6 +268,43 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                                 " ${snapshot.data.items[index].product.price}",
                                                                                                 textAlign: TextAlign.start,
                                                                                                 fontWeight: FontWeight.bold),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),*/
+
+                                                                                      Row(
+                                                                                        children: [
+                                                                                          Wrap(
+                                                                                            children: [
+                                                                                              Row(
+                                                                                                mainAxisAlignment: MainAxisAlignment.end,
+                                                                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                                                                children: [
+                                                                                                  MyText(
+                                                                                                    text: "${new_price == null ?snapshot.data.items[index].product.price.toStringAsFixed(2) : double.parse(new_price)} ",
+                                                                                                    size: StaticData.get_height(context) * .017,
+                                                                                                    color: blackColor,
+                                                                                                    maxLines: 2,
+                                                                                                    weight: FontWeight.bold,
+                                                                                                  ),
+                                                                                                  MyText(
+                                                                                                    text: " ${MyApp.country_currency}",
+                                                                                                    size: StaticData.get_height(context) * .011,
+                                                                                                    color: blackColor,
+                                                                                                    maxLines: 2,
+                                                                                                    weight: FontWeight.normal,
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ],
+                                                                                          ),
+                                                                                          SizedBox(width: width(context) * 0.03,),
+                                                                                          new_price == null ?  Container()   :       Text(
+                                                                                            "${snapshot.data.items[index].product.price} ${MyApp.country_currency}",
+                                                                                            style: TextStyle(
+                                                                                                decoration: TextDecoration.lineThrough,
+                                                                                                fontSize: StaticData.get_height(context)  * .011,
+                                                                                                color: old_price_color),
                                                                                           ),
                                                                                         ],
                                                                                       ),
@@ -275,7 +348,8 @@ class _WishListScreenState extends State<WishListScreen> {
                                           );
                                         } else {
                                           return Center(
-                                            child: CircularProgressIndicator(),
+                                            child: CircularProgressIndicator(
+                                            ),
                                           );
                                         }
                                       },
@@ -328,7 +402,8 @@ class _WishListScreenState extends State<WishListScreen> {
                                 }
                               } else {
                                 return Center(
-                                  child: CircularProgressIndicator(),
+                                  child: CircularProgressIndicator(
+                                  ),
                                 );
                               }
                             },

@@ -458,7 +458,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     });
                   },
 
-                  style: TextStyle(color: greyColor,
+                  style: TextStyle(color: mainColor,
                     fontSize:AlmajedFont.primary_font_size,
                   ),
                   cursorColor: greyColor,
@@ -563,7 +563,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
                       // By default, show a loading spinner.
                       return Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+
+                        ),
                       );
                     },
                   )),
@@ -605,7 +607,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
                       });
                     },
-                    style: TextStyle(color: greyColor,
+                    style: TextStyle(color: mainColor,
                       fontSize:AlmajedFont.primary_font_size,
                     ),
                     cursorColor: greyColor,
@@ -689,7 +691,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                                   ) : Container();
                                 }
                                 else{
-                                  return snapshot.data[index].title.contains(city_search_text) ?
+                                  return snapshot.data[index].title.toLowerCase().contains(city_search_text) ?
                                   Directionality(
                                     textDirection: MyApp.app_langauge == 'ar'? TextDirection.rtl :  TextDirection.ltr,
                                     child:Container(
@@ -754,7 +756,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
                       // By default, show a loading spinner.
                       return Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator( ),
                       );
                     },
                   )),
@@ -769,6 +771,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
     return StreamBuilder<String>(
       stream: shipmentAddressBloc.frist_name,
       builder: (context, snapshot) {
+        print("frist_name_controller.text, ${initialValue}");
         return Container(
           padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
           width: MediaQuery.of(context).size.width * 0.9,
@@ -777,14 +780,14 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             style: TextStyle(
                 color: mainColor,
                 fontSize: isLandscape(context)
-                    ? 2 * height(context) * .02
-                    : height(context) * .02),
+                    ? 2 * height(context) * .020
+                    : height(context) * .020),
             cursorColor: greyColor.withOpacity(.5),
             decoration: InputDecoration(
-              hintText: translator.translate(hint??"First Name"),
+           hintText: translator.translate(hint??"First Name"),
               contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
               hintStyle: TextStyle(
-                  color: greyColor.withOpacity(.5),
+                  color: mainColor,
                   fontWeight: FontWeight.bold,
                   fontSize: isLandscape(context)
                       ? 2 * height(context) * .018
@@ -836,7 +839,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
               hintStyle: TextStyle(
-                  color: greyColor.withOpacity(.5),
+                  color: mainColor,
                   fontWeight: FontWeight.bold,
                   fontSize: isLandscape(context)
                       ? 2 * height(context) * .018
@@ -888,7 +891,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
               hintStyle: TextStyle(
-                  color: greyColor.withOpacity(.5),
+                  color: mainColor,
                   fontWeight: FontWeight.bold,
                   fontSize: isLandscape(context)
                       ? 2 * height(context) * .018
@@ -941,9 +944,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               Flexible(
                 child: TextFormField(
                   initialValue: initialValue??'',
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   style: TextStyle(
-                      color: whiteColor,
+                      color: mainColor,
                       fontSize: isLandscape(context)
                           ? 2 * height(context) * .02
                           : height(context) * .02),
@@ -953,13 +956,13 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
                     hintStyle: TextStyle(
-                        color: greyColor.withOpacity(.5),
+                        color: mainColor,
                         fontWeight: FontWeight.bold,
                         fontSize: isLandscape(context)
                             ? 2 * height(context) * .018
                             : height(context) * .018),
                     filled: true,
-                    fillColor: greyColor.withOpacity(.5),
+                    fillColor: whiteColor,
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(3),
                         borderSide: BorderSide(color: greyColor)),
@@ -995,9 +998,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                 child: TextFormField(
                   textAlign: TextAlign.left,
                   initialValue: initialValue??'',
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   style: TextStyle(
-                      color: whiteColor,
+                      color: mainColor,
                       fontSize: isLandscape(context)
                           ? 2 * height(context) * .02
                           : height(context) * .02),
@@ -1013,7 +1016,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                             ? 2 * height(context) * .018
                             : height(context) * .018),
                     filled: true,
-                    fillColor: greyColor.withOpacity(.5),
+                    fillColor: whiteColor,
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(3),
                         borderSide: BorderSide(color: greyColor)),
@@ -1077,7 +1080,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
               hintStyle: TextStyle(
-                  color: greyColor.withOpacity(.5),
+                  color: mainColor,
                   fontWeight: FontWeight.bold,
                   fontSize: isLandscape(context)
                       ? 2 * height(context) * .018

@@ -73,7 +73,8 @@ class AddWishlistItemToCartState extends State<AddWishlistItemToCart> with Ticke
         }
 
         return _isLoading
-            ? CircularProgressIndicator()
+            ? CircularProgressIndicator(
+        )
             : Container(
           alignment: Alignment.center,
           padding: EdgeInsets.all(4),

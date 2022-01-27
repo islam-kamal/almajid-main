@@ -48,7 +48,7 @@ class CustomComponents{
               width: 25.0,
               child: CircularProgressIndicator(
                 valueColor:
-                new AlwaysStoppedAnimation<Color>(greenColor),
+                new AlwaysStoppedAnimation<Color>(whiteColor),
                 strokeWidth: 4.0,
               ),
             )

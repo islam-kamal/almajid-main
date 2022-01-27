@@ -13,8 +13,6 @@ import 'package:rating_bar/rating_bar.dart';
 class singleCategoryProductItem extends StatelessWidget {
   TextEditingController qty_controller = new TextEditingController();
   Items product;
-  String special_price;
-  var percentage;
   Widget category_screen;
 
   GlobalKey<ScaffoldState> scafffoldKey;
@@ -31,7 +29,46 @@ class singleCategoryProductItem extends StatelessWidget {
       if(element.attributeCode == "thumbnail")
         product_image = element.value;
     });
+
+
+    String special_price;
+    var new_price , minimal_price;
+    DateTime startDate , endDate ;
     product.customAttributes.forEach((element) {
+      if(element.attributeCode == "thumbnail")
+        product_image = element.value;
+      else if(element.attributeCode == "special_from_date"){
+        startDate = DateTime.parse(element.value.toString().substring(0,10));
+      }
+      else  if(element.attributeCode == "special_to_date"){
+        endDate = DateTime.parse("2022-01-28 00:00:00".substring(0,10));
+      }
+      else    if(element.attributeCode == 'special_price'){
+        special_price = element.value;
+      }
+      else if( element.attributeCode == 'minimal_price'){
+        minimal_price = element.value;
+      }
+    });
+    if(startDate ==null && endDate ==null ){
+      new_price = null;
+    }else{
+      if(StaticData.isCurrentDateInRange(startDate,endDate)
+          && double.parse(special_price) <= double.parse(minimal_price)
+          && double.parse(special_price).toStringAsFixed(2) !=  product.price ) {
+        new_price = special_price;
+
+      }else if(double.parse(special_price) > double.parse(minimal_price)){
+        new_price = minimal_price;
+      }
+      else {
+        new_price = null;
+
+      }
+
+    }
+
+  /*  product.customAttributes.forEach((element) {
       if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
         if(double.parse(element.value).toStringAsFixed(2) != product.price.toStringAsFixed(2) ){
           special_price = element.value == product.price ? null : element.value;
@@ -41,7 +78,7 @@ class singleCategoryProductItem extends StatelessWidget {
     });
     if(special_price != null){
       percentage = (1 - (double.parse(special_price)  / product.price) )* 100;
-    }
+    }*/
     return InkWell(
       onTap: (){
         customAnimatedPushNavigation(context, ProductDetailsScreen(
@@ -135,7 +172,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                                       crossAxisAlignment: CrossAxisAlignment.end,
                                                       children: [
                                                         MyText(
-                                                          text: "${special_price == null ?product.price.toStringAsFixed(2) : double.parse(special_price)} ",
+                                                          text: "${new_price == null ?product.price.toStringAsFixed(2) : double.parse(new_price)} ",
                                                           size: StaticData.get_height(context) * .017,
                                                           color: blackColor,
                                                           maxLines: 2,
@@ -153,7 +190,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                                   ],
                                                 ),
                                                 SizedBox(width: width(context) * 0.02,),
-                                                special_price == null ?  Container()   :       Text(
+                                                new_price == null ?  Container()   :       Text(
                                                   "${product.price.toStringAsFixed(2)} ${MyApp.country_currency}",
                                                   style: TextStyle(
                                                       decoration: TextDecoration.lineThrough,

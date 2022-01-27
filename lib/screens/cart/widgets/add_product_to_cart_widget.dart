@@ -115,7 +115,6 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
 
         return _isLoading
             ? CircularProgressIndicator(
-          backgroundColor: white_gray_color,
 
         )
             : Container(

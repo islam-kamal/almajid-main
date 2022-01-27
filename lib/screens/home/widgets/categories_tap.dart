@@ -32,7 +32,9 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
         builder: (context, state) {
           if (state is Loading) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+
+              ),
             );
           } else if (state is Done) {
             var data = state.model as CategoryModel;
@@ -91,7 +93,9 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                     );
                   } else {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+
+                      ),
                     );
                     ;
                   }
@@ -102,7 +106,9 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
             return Container();
           } else {
             return Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+
+              ),
             );
           }
         },

@@ -1,7 +1,8 @@
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:rating_bar/rating_bar.dart';
 
-priceAndRatingRow({BuildContext context , var price ,var old_price=89 ,bool review_status}) {
+priceAndRatingRow({BuildContext context , var new_price ,var old_price=89 ,bool review_status}) {
+  print("price@@@ :${new_price}");
   return Container(
     padding: EdgeInsets.only(
         right: width(context) * .05, left: width(context) * .05),
@@ -10,12 +11,12 @@ priceAndRatingRow({BuildContext context , var price ,var old_price=89 ,bool revi
       children: [
         Row(
           children: [
-            Row(
+            new_price ==null? Container():    Row(
               children: [
                 Container(
                   child: customDescriptionText(
                       context: context,
-                      text: "${double.parse(price)} ",
+                      text: "${double.parse(new_price).toStringAsFixed(2)} ",
                       textAlign: TextAlign.start,
                       maxLines: 2,
                       textColor: mainColor,
@@ -35,10 +36,10 @@ priceAndRatingRow({BuildContext context , var price ,var old_price=89 ,bool revi
               ],
             ),
             SizedBox(width: width(context) * 0.05,),
-            if (double.parse(price) != double.parse(old_price))
+        /*    if (double.parse(new_price) != double.parse(old_price))*/
               Text("${old_price} ${MyApp.country_currency}",
               style: TextStyle(
-                  decoration: TextDecoration.lineThrough,
+                  decoration: new_price ==null? TextDecoration.none : TextDecoration.lineThrough,
                   fontSize: StaticData.get_height(context)  * .017,
                   color: greyColor),
             ),

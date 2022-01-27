@@ -76,7 +76,6 @@ class StaggerAnimation extends StatelessWidget {
         child: widget != null ? buttonSqueezeanimation.value > 75.0 ? widget  : const CircularProgressIndicator(
           value: null,
           strokeWidth: 1.0,
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
         )
 
             : image != null && titleButton != null ?Container(
@@ -213,7 +212,6 @@ class StaggerAnimation extends StatelessWidget {
             : const CircularProgressIndicator(
                 value: null,
                 strokeWidth: 1.0,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ) ,
       ),
     );

@@ -15,7 +15,7 @@ descriptionAndShareRow({BuildContext context , String description ,String produc
               textAlign: TextAlign.start,
               maxLines: 10,
               textHeight: 1.5,
-              textColor: greyColor,
+              textColor: old_price_color,
               percentageOfHeight: .015),
         ),
       ],

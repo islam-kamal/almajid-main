@@ -209,7 +209,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           children: [
                             SizedBox(width: 10),
                             _isLoading
-                                ? CircularProgressIndicator()
+                                ? CircularProgressIndicator(
+
+                            )
                                 : ElevatedButton(
                                     style: ButtonStyle(
                                         shape: MaterialStateProperty.all<

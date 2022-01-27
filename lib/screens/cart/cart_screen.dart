@@ -232,7 +232,8 @@ class _CartScreenState extends State<CartScreen> {
                         }
                         else {
                           return Center(
-                            child: CircularProgressIndicator(),
+                            child: CircularProgressIndicator(
+                            ),
                           );
                         }
 
@@ -345,11 +346,7 @@ class _CartScreenState extends State<CartScreen> {
                                           textColor: mainColor,
                                           maxLines: 2,
                                           text: item.name ?? '',
-                                          textAlign:
-                                              translator.activeLanguageCode ==
-                                                      'ar'
-                                                  ? TextAlign.end
-                                                  : TextAlign.start),
+                                          textAlign: translator.activeLanguageCode == 'ar' ? TextAlign.end : TextAlign.start),
                                       responsiveSizedBox(
                                           context: context,
                                           percentageOfHeight: .02),

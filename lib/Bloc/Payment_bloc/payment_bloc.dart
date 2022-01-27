@@ -12,7 +12,7 @@ class PaymentBloc extends Bloc<AppEvent, AppState> with Validator{
       yield Loading();
       final response = await payment_repository.stc_pay_genertate_otp(
           context: event.context,
-          phone_number: StaticData.user_mobile_number
+          phone_number: event.phone
       );
       if (response.result != null) {
         yield Done(model: response,);

@@ -304,13 +304,15 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                         child: Container(
                           child:_isFirstLoadRunning
                               ? Center(
-                            child: CircularProgressIndicator(),
+                            child: CircularProgressIndicator(
+                            ),
                           )
                               :Column(
                             children: [
                               CategoriesTap(
                                 category_index: widget.category_index,
                                 category_name: widget.category_name,
+
                               ),
                               Expanded(
                                   child: ListView.builder(
@@ -333,7 +335,8 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 20, bottom: 100),
                                   child: Center(
-                                    child: CircularProgressIndicator(),
+                                    child: CircularProgressIndicator(
+                                    ),
                                   ),
                                 ),
 
@@ -374,8 +377,8 @@ class MyLoader extends StatelessWidget {
           height: height,
           child: CircularProgressIndicator(
             strokeWidth: 3.0,
-            backgroundColor: mainColor,
-          ),
+
+        ),
         ),
       ),
     );

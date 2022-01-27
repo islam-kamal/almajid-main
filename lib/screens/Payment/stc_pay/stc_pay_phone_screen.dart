@@ -1,9 +1,11 @@
+import 'package:almajidoud/Bloc/ShippmentAddress_Bloc/shippment_address_bloc.dart';
 import 'package:almajidoud/Model/PaymentModel/stc_pay_model.dart';
 import 'package:almajidoud/Repository/PaymentRepo/payment_repository.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/screens/Payment/stc_pay/stc_pay_verify_phone_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:country_list_pick/country_list_pick.dart';
 import 'package:almajidoud/Bloc/Payment_bloc/payment_bloc.dart';
 class StcPayPhoneScreen extends StatefulWidget{
@@ -153,7 +155,7 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
                           // resetPasswordTextFields(context: context, hint: "Type Your Email"),
                           Form(
                             key: _formKey,
-                            child: mobile_textfield(),
+                            child: phone_addressTextFields(),
                           )
                           ,
                           responsiveSizedBox(context: context, percentageOfHeight: .01),
@@ -169,95 +171,139 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
       ),
     );
   }
-  mobile_textfield(){
-    return  StreamBuilder<String>(
-        stream: forgetPassword_bloc.mobile,
-        builder: (context, snapshot) {
-          return Container(
-              width: width(context) * .8,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
+
+
+  phone_addressTextFields({BuildContext context, String hint,var initialValue}) {
+    String _countryCode  ="+966";
+    return StreamBuilder<String>(
+      stream: shipmentAddressBloc.phone,
+      builder: (context, snapshot) {
+        return Container(
+          padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
+          child: translator.activeLanguageCode == 'en'?Row(
+            children: [
+              CountryCodePicker(
+                onChanged: (Object object)=>_countryCode=object.toString(),
+                initialSelection: 'SA',
+                countryFilter: ['SA', 'KW', 'AE'],
+                showFlagDialog: true,
               ),
-              child: Row(
-                children: [
-                  Container(
-                      width: MediaQuery.of(context).size.width *0.25,
-                      child:  CountryListPick(
-                        appBar: AppBar(
-                          backgroundColor: Colors.black,
-                          title: Text(translator.translate('country_code')),
-                        ),
+              Flexible(
+                child: TextFormField(
+                  initialValue: initialValue??'',
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(
+                      color: mainColor,
+                      fontSize: isLandscape(context)
+                          ? 2 * height(context) * .02
+                          : height(context) * .02),
+                  cursorColor: greyColor.withOpacity(.5),
+                  decoration: InputDecoration(
+                    hintText: translator.translate(hint??"Ex: 5xxxxxxxx"),
+                    contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
-                        // if you need custome picker use this
-                        pickerBuilder: (context, CountryCode countryCode){
-                          return Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(countryCode.dialCode,style: TextStyle(color: Colors.black),),
-                              SizedBox(width: MediaQuery.of(context).size.width * 0.02,),
-                              Image.asset(
-                                countryCode.flagUri,
-                                package: 'country_list_pick',width: 30,height: 20,
-                              ),
+                    hintStyle: TextStyle(
+                        color: mainColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: isLandscape(context)
+                            ? 2 * height(context) * .018
+                            : height(context) * .018),
+                    filled: true,
+                    fillColor: whiteColor,
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(3),
+                        borderSide: BorderSide(color: greyColor)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(3),
+                        borderSide: BorderSide(color: greyColor)),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(3),
+                        borderSide: BorderSide(color: greyColor)),
+                    errorText: snapshot.error,
 
-                            ],
-                          );
-                        },
-
-
-                        // To disable option set to false
-                        theme: CountryTheme(
-                          isShowFlag: true,
-                          isShowTitle: true,
-                          isShowCode: true,
-                          isDownIcon: true,
-                          showEnglishName: true,
-
-
-                        ),
-                        // Set default value
-                        initialSelection: '+966',
-                        onChanged: (CountryCode code) {
-                          print(code.name);
-                          print(code.code);
-                          print(code.dialCode);
-                          print(code.flagUri);
-                          _countryCode = code.dialCode;
-                          StaticData.country_code = _countryCode;
-                        },
-                        // Whether to allow the widget to set a custom UI overlay
-                        useUiOverlay: true,
-                        // Whether the country list should be wrapped in a SafeArea
-                        useSafeArea: false,
-
-                      ) ),
-                  Expanded(
-                      child: TextFormField(
-                          decoration: InputDecoration(
-                            hintText: translator.translate("Phone"),
-                            errorText: snapshot.error,
-                            contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-
-                          ),
-                          onChanged:  forgetPassword_bloc.mobile_change,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.number
-                      )
                   ),
+                  validator: (value) {
+                    Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+965|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';
+                    RegExp regex = new RegExp(pattern);
 
-                ],
-              )
+                    if (value == null || value.isEmpty) {
+                      return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
+                    }else  if(!regex.hasMatch(value) || value.length < 8){
+                      return '${translator.translate("Please enter a correct phone number")} ';
+                    }
+                    return null;
+                  },
+                  onChanged: (text) {
+                    shipmentAddressBloc.phone_change(_countryCode+text);
+                  },
+                ),
+              ),
+            ],
+          ):Row(
+            children: [
+              Flexible(
+                child: TextFormField(
+                  textAlign: TextAlign.left,
+                  initialValue: initialValue??'',
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(
+                      color: mainColor,
+                      fontSize: isLandscape(context)
+                          ? 2 * height(context) * .02
+                          : height(context) * .02),
+                  cursorColor: greyColor.withOpacity(.5),
+                  decoration: InputDecoration(
+                    hintText: translator.translate(hint??"Ex: 5xxxxxxxx"),
+                    contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
+                    hintStyle: TextStyle(
+                        color: greyColor.withOpacity(.5),
+                        fontWeight: FontWeight.bold,
+                        fontSize: isLandscape(context)
+                            ? 2 * height(context) * .018
+                            : height(context) * .018),
+                    filled: true,
+                    fillColor: whiteColor,
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(3),
+                        borderSide: BorderSide(color: greyColor)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(3),
+                        borderSide: BorderSide(color: greyColor)),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(3),
+                        borderSide: BorderSide(color: greyColor)),
+                    errorText: snapshot.error,
 
+                  ),
+                  validator:(value) {
+                    Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+965|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';
+                    RegExp regex = new RegExp(pattern);
 
-          );
-        });
+                    if (value == null || value.isEmpty) {
+                      return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
+                    }else  if(!regex.hasMatch(value) || value.length < 8){
+                      return '${translator.translate("Please enter a correct phone number")} ';
+
+                    }
+                    return null;
+                  },
+                  onChanged: (text) {
+                    shipmentAddressBloc.phone_change(_countryCode+text);
+                  },
+                ),
+              ),
+              CountryCodePicker(
+                onChanged: (Object object)=>_countryCode=object.toString(),
+                initialSelection: 'SA',
+                countryFilter: ['SA', 'KW', 'AE'],
+                showFlagDialog: true,
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   stc_generate_otpButton({BuildContext context,}) {
@@ -272,9 +318,11 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
         isResetScreen:false,
         onTap: () {
           if (_formKey.currentState.validate() ) {
-            StaticData.user_mobile_number = StaticData.country_code + forgetPassword_bloc.mobile_controller.value;
+            StaticData.user_mobile_number = shipmentAddressBloc.phone_controller.value;
             paymentBloc.add(StcSendVerificationCodeEvent(
-                context :context
+                context :context,
+              phone: shipmentAddressBloc.phone_controller.value
+
             ));
           }
 

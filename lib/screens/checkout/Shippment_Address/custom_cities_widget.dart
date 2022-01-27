@@ -182,7 +182,8 @@ class CustomCitiesWidgetState extends State<CustomCitiesWidget> {
 
                       // By default, show a loading spinner.
                       return Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                        ),
                       );
                     },
                   )),

@@ -218,7 +218,8 @@ class CreateReviewEvent extends AppEvent{
 
 class StcSendVerificationCodeEvent extends AppEvent{
   BuildContext context;
-  StcSendVerificationCodeEvent({this.context});
+  var phone;
+  StcSendVerificationCodeEvent({this.context,this.phone});
 }
 
 

@@ -126,11 +126,13 @@ class _OtpState extends State<StcVerificationCodeScreen>
         appBar: _getAppbar,
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-          child: new Container(
-            width: _screenSize.width,
-//        padding: new EdgeInsets.only(bottom: 16.0),
-            child: _getInputPart,
-          ),
+          child: Directionality(
+            textDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+            child: new Container(
+              width: _screenSize.width,
+              child: _getInputPart,
+            ),
+          )
         ));
   }
 
@@ -296,23 +298,35 @@ class _OtpState extends State<StcVerificationCodeScreen>
 
   // Return "Email" label
   get _getEmailLabel {
-    return Padding(
-        padding: EdgeInsets.only(
-            right: StaticData.get_width(context) * 0.06,
-            left: StaticData.get_width(context) * 0.06,
-            bottom: StaticData.get_width(context) * 0.06),
-        child: new Text(
-          "${translator.translate("Please type the verification code sent to")} (${user_phone_number()})",
-          textAlign: TextAlign.center,
-          style: new TextStyle(
-              fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w600),
-        ));
+    return Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.ltr : TextDirection.rtl,
+        child: Padding(
+            padding: EdgeInsets.all(StaticData.get_width(context) * 0.02),
+            child: Column(
+              children: [
+                 Text(
+                  "${translator.translate("Please type the verification code sent to")} ",
+                  textAlign: TextAlign.center,
+                  style: new TextStyle(
+                      fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w600),
+                ),
+                 Text(
+                  "${translator.translate("(${user_phone_number()})")} ",
+                  textAlign: TextAlign.center,
+                  textDirection:  MyApp.app_langauge == 'ar' ? TextDirection.ltr : TextDirection.rtl,
+                  style: new TextStyle(
+                      fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w600),
+                )
+
+              ],
+            )
+
+          ));
   }
 
   // Return "OTP" input field
   get _getInputField {
     return Padding(
-        padding: EdgeInsets.all(StaticData.get_width(context) * 0.1),
+        padding: EdgeInsets.symmetric(horizontal: StaticData.get_width(context) * 0.1,vertical: StaticData.get_width(context) * 0.05),
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -367,11 +381,13 @@ class _OtpState extends State<StcVerificationCodeScreen>
         clearOtp();
         _hideResendButton = !_hideResendButton;
         forgetPassword_bloc.add(resendOtpClick(route: widget.route));
+        _startCountdown();
       },
       child: Container(
           width: width(context) * .95,
+          padding: EdgeInsets.symmetric(horizontal: 10,vertical: StaticData.get_width(context) * 0.025),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MyApp.app_langauge == 'ar'? MainAxisAlignment.start : MainAxisAlignment.end,
             children: [
               customDescriptionText(
                   context: context,
@@ -398,7 +414,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
       child: Column(
         children: [
           responsiveSizedBox(context: context, percentageOfHeight: .05),
-          _getOtpConfirmationButton,
+    otp_code ==null ? Container() :      _getOtpConfirmationButton,
           responsiveSizedBox(context: context, percentageOfHeight: .02),
           new Container(
               height: _screenSize.width - 80,
@@ -516,7 +532,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
     );
   }
 
-  get _getOtpConfirmationButton {
+/*  get _getOtpConfirmationButton {
 
     return otp_code == null ? Container() : GestureDetector(
       onTap: otp_code == null
@@ -634,7 +650,143 @@ class _OtpState extends State<StcVerificationCodeScreen>
               ))
       ),
     );
+  }*/
+  get _getOtpConfirmationButton {
+
+    return GestureDetector(
+      onTap: otp_code == null
+          ? () {}
+          : () {
+        final Future<http.Response> response = payment_repository.stc_pay_validate_otp(
+            context: context,
+            phone_number: widget.user_phone,
+            otp: otp_code,
+            otpReference: widget.OtpReference,
+            paymentReference: widget.paymentReference);
+
+        response.then((response) {
+          print(response.body);
+          final extractedData =
+          json.decode(response.body) as Map<String, dynamic>;
+          if (extractedData["status"]) {
+            orderBloc.add(CreateOrderEvent(context: context));
+          }
+        });
+      },
+      child: BlocListener<OrderBloc, AppState>(
+          bloc: orderBloc,
+          listener: (context, state) async {
+            if (state is Loading) {
+              if (state.indicator == 'CreateOrder') {
+                _isLoading = true;
+                _playAnimation();
+              }
+            } else if (state is Done) {
+              if (state.indicator == 'CreateOrder') {
+                var data = state.general_value;
+                print("### data ### : ${data}");
+                final Future<http.Response> response = payment_repository.getPayFortSettings(orderId: data);
+                print("*** response : ${response}");
+                response.then((response) {
+                  print("response.body : ${response.body}");
+                  final extractedData = json.decode(response.body) as Map<String, dynamic>;
+                  print("extractedData : ${extractedData}");
+                  if (extractedData["success"]) {
+                    _stopAnimation();
+                    customAnimatedPushNavigation(context, SubmitSuccessfulScreen(
+                      order_id: extractedData["increment_id"],
+                    ));
+                  }
+                });
+              }
+              _isLoading = false;
+            } else if (state is ErrorLoading) {
+              if (state.indicator == 'CreateOrder') {
+                print("ErrorLoading");
+                _stopAnimation();
+                _isLoading = false;
+                Flushbar(
+                  messageText: Row(
+                    children: [
+                      Container(
+                        width: StaticData.get_width(context) * 0.7,
+                        child: Wrap(
+                          children: [
+                            Text(
+                              'There is Error',
+                              textDirection: TextDirection.rtl,
+                              style: TextStyle(color: whiteColor),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Spacer(),
+                      Text(
+                        translator.translate("Try Again"),
+                        textDirection: TextDirection.rtl,
+                        style: TextStyle(color: whiteColor),
+                      ),
+                    ],
+                  ),
+                  flushbarPosition: FlushbarPosition.BOTTOM,
+                  backgroundColor: redColor,
+                  flushbarStyle: FlushbarStyle.FLOATING,
+                  duration: Duration(seconds: 6),
+                )..show(_drawerKey.currentState.context);
+              }
+
+              //   customAnimatedPushNavigation(context, GetStartedScreen());
+            }
+          },
+          child:_isLoading
+              ? CircularProgressIndicator(
+          )
+              : Directionality(
+              textDirection: translator.activeLanguageCode == 'ar'
+                  ? TextDirection.rtl
+                  : TextDirection.ltr,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: greyColor, borderRadius: BorderRadius.circular(5)),
+                padding: EdgeInsets.only(
+                    right: width(context) * .0, left: width(context) * .02),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    customDescriptionText(
+                        context: context,
+                        text: "Confirm",
+                        percentageOfHeight: .025),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: otp_code == null ? greyColor : greenColor,
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: mainColor, width: 2)),
+                      child: Center(
+                        child: Icon(
+                          Icons.check,
+                          size: isLandscape(context)
+                              ? 2 * height(context) * .0
+                              : height(context) * .05,
+                        ),
+                      ),
+                      height: isLandscape(context)
+                          ? 2 * height(context) * .06
+                          : height(context) * .06,
+                      width: width(context) * .16,
+                    ),
+                  ],
+                ),
+                width: width(context) * .5,
+                height: isLandscape(context)
+                    ? 2 * height(context) * .06
+                    : height(context) * .06,
+              ))
+      ),
+    );
   }
+
+
 }
 
 class OtpTimer extends StatelessWidget {
