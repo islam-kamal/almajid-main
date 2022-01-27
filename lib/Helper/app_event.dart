@@ -207,6 +207,11 @@ class GetAllOrderEvent extends AppEvent{
   GetAllOrderEvent();
 }
 
+class ReOrderEvent extends AppEvent{
+  BuildContext context;
+  var order_id;
+  ReOrderEvent({this.context,this.order_id});
+}
 
 //Reviews
 class CreateReviewEvent extends AppEvent{

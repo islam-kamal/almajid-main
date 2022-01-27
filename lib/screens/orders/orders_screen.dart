@@ -41,7 +41,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         screen: CustomCircleNavigationBar(page_index: 4,),
 
                       ),
-//              noOrdersWidget(context: context)
 
                       Container(
                           height: height(context)*.85,

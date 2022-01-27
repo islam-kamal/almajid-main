@@ -76,6 +76,7 @@ class StaggerAnimation extends StatelessWidget {
         child: widget != null ? buttonSqueezeanimation.value > 75.0 ? widget  : const CircularProgressIndicator(
           value: null,
           strokeWidth: 1.0,
+          valueColor: AlwaysStoppedAnimation<Color>( whiteColor ),
         )
 
             : image != null && titleButton != null ?Container(
@@ -149,14 +150,8 @@ class StaggerAnimation extends StatelessWidget {
                                               ? Icon(
                                                   Icons.check,
                                                   color: blackColor,
-                                                  size: isLandscape(context)
-                                                      ? 2 *
-                                                          StaticData.get_height(
-                                                              context) *
-                                                          .02
-                                                      : StaticData.get_height(
-                                                              context) *
-                                                          .02,
+                                                  size: isLandscape(context) ? 2 * StaticData.get_height(context) * .02
+                                                      : StaticData.get_height(context) * .02,
                                                 )
                                               : Image.asset(
                                                   "assets/icons/send.png")))
@@ -211,7 +206,8 @@ class StaggerAnimation extends StatelessWidget {
                   )
             : const CircularProgressIndicator(
                 value: null,
-                strokeWidth: 1.0,
+                strokeWidth: 2.0,
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ) ,
       ),
     );

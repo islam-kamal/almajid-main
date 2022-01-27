@@ -1,7 +1,8 @@
+import 'package:almajidoud/Repository/OrderRepo/order_repository.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/orders/widgets/orders_details_header.dart';
 
-orderBottomButtonsStack({BuildContext context ,var total_payment, var currency}) {
+orderBottomButtonsStack({BuildContext context ,var total_payment, var currency, var order_id}) {
   return Container(
     height: isLandscape(context) ? 2 * height(context) : height(context),
     child: Column(
@@ -45,18 +46,26 @@ orderBottomButtonsStack({BuildContext context ,var total_payment, var currency})
                 ),
               ),
             ),
-            Container(
-              height: isLandscape(context)
-                  ? 2 * height(context) * .08
-                  : height(context) * .08,
-              width: width(context) * .4,
-              decoration: BoxDecoration(color: mainColor),
-              child: Center(
-                child: customDescriptionText(
-                    context: context,
-                    percentageOfHeight: .02,
-                    textColor: whiteColor,
-                    text: translator.translate("Re-Order")),
+            InkWell(
+              onTap: (){
+                orderRepository.re_order(
+                  context: context,
+                  order_id:order_id
+                );
+              },
+              child: Container(
+                height: isLandscape(context)
+                    ? 2 * height(context) * .08
+                    : height(context) * .08,
+                width: width(context) * .4,
+                decoration: BoxDecoration(color: mainColor),
+                child: Center(
+                  child: customDescriptionText(
+                      context: context,
+                      percentageOfHeight: .02,
+                      textColor: whiteColor,
+                      text: translator.translate("Re-Order")),
+                ),
               ),
             )
           ],
