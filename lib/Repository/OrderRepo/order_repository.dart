@@ -6,6 +6,7 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/Model/OrderMode/order_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
+import 'package:almajidoud/Model/OrderMode/reorder_model.dart';
 class OrderRepository {
   Future<String> create_guest_order({BuildContext context}) async {
     Dio dio = new Dio();
@@ -63,6 +64,32 @@ class OrderRepository {
     }
   }
 
+
+  Future<ReorderModel> re_order({BuildContext context, order_id}) async {
+    Dio dio = new Dio();
+    try {
+      final response = await dio.post(
+          "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/me/reorder/${order_id}",
+          data: {
+            "cartId":await sharedPreferenceManager.readString(CachingKey.CART_QUOTE),
+            "orderId":order_id
+          },
+          options: Options(headers: Map<String, String>.from({
+            'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}',
+            'content-type': 'application/json',
+            'Accept': 'application/json',
+          })));
+      if (response.statusCode == 200) {
+        errorDialog(context: context, text: translator.translate(  "Your order created successfully"));
+        return response.data;
+      } else {
+        Navigator.pop(context);
+        errorDialog(context: context, text: response.data['message']);
+      }
+    } catch (e) {
+      print("error : ${e.toString()}");
+    }
+  }
 
   Future<AllOrdersModel> get_all_orders({var user_email}) async{
     return NetworkUtil.internal().get(

@@ -100,6 +100,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
   @override
   void initState() {
     totalTimeInSeconds = time;
+
     super.initState();
     user_phone_number();
     _controller =
@@ -414,7 +415,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
       child: Column(
         children: [
           responsiveSizedBox(context: context, percentageOfHeight: .05),
-    otp_code ==null ? Container() :      _getOtpConfirmationButton,
+       _getOtpConfirmationButton,
           responsiveSizedBox(context: context, percentageOfHeight: .02),
           new Container(
               height: _screenSize.width - 80,
@@ -519,6 +520,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
                       ],
                     ),
                   ),
+
                 ],
               ))
         ],
@@ -677,17 +679,23 @@ class _OtpState extends State<StcVerificationCodeScreen>
           bloc: orderBloc,
           listener: (context, state) async {
             if (state is Loading) {
-              if (state.indicator == 'CreateOrder') {
+              if (state.indicator == 'CreateOrder-${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
+                  :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}') {
+                print("1");
                 _isLoading = true;
                 _playAnimation();
               }
             } else if (state is Done) {
-              if (state.indicator == 'CreateOrder') {
+              print("2");
+              if (state.indicator == 'CreateOrder-${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
+                  :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}') {
+                print("3");
                 var data = state.general_value;
                 print("### data ### : ${data}");
                 final Future<http.Response> response = payment_repository.getPayFortSettings(orderId: data);
                 print("*** response : ${response}");
                 response.then((response) {
+                  print("4");
                   print("response.body : ${response.body}");
                   final extractedData = json.decode(response.body) as Map<String, dynamic>;
                   print("extractedData : ${extractedData}");
@@ -701,7 +709,10 @@ class _OtpState extends State<StcVerificationCodeScreen>
               }
               _isLoading = false;
             } else if (state is ErrorLoading) {
-              if (state.indicator == 'CreateOrder') {
+              print("5");
+              if (state.indicator == 'CreateOrder-${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
+                  :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}') {
+                print("6");
                 print("ErrorLoading");
                 _stopAnimation();
                 _isLoading = false;
@@ -740,41 +751,26 @@ class _OtpState extends State<StcVerificationCodeScreen>
           },
           child:_isLoading
               ? CircularProgressIndicator(
+            backgroundColor: whiteColor,
           )
+
               : Directionality(
               textDirection: translator.activeLanguageCode == 'ar'
                   ? TextDirection.rtl
                   : TextDirection.ltr,
               child: Container(
                 decoration: BoxDecoration(
-                    color: greyColor, borderRadius: BorderRadius.circular(5)),
+                    color: otp_code ==null ?mainColor :greenColor, borderRadius: BorderRadius.circular(5)),
                 padding: EdgeInsets.only(
                     right: width(context) * .0, left: width(context) * .02),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     customDescriptionText(
                         context: context,
                         text: "Confirm",
+                        textColor: otp_code ==null ?mainColor :whiteColor,
                         percentageOfHeight: .025),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: otp_code == null ? greyColor : greenColor,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: mainColor, width: 2)),
-                      child: Center(
-                        child: Icon(
-                          Icons.check,
-                          size: isLandscape(context)
-                              ? 2 * height(context) * .0
-                              : height(context) * .05,
-                        ),
-                      ),
-                      height: isLandscape(context)
-                          ? 2 * height(context) * .06
-                          : height(context) * .06,
-                      width: width(context) * .16,
-                    ),
                   ],
                 ),
                 width: width(context) * .5,

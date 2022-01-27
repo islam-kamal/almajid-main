@@ -31,7 +31,8 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 orderBottomButtonsStack(
                     context: context,
                 currency: widget.order_details.orderCurrencyCode,
-                total_payment: widget.order_details.baseGrandTotal
+                total_payment: widget.order_details.baseGrandTotal,
+                  order_id: widget.order_details.entityId,
                 ),
 
                 orderIdStack(
