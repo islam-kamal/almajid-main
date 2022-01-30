@@ -44,7 +44,6 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
     //send otp Api handle
     if (event is sendOtpClick) {
       yield Loading(model: null);
-     // print(mobile_controller.value);
       var response = await AuthenticationRepository.sendVerificationCode(event.phone,event.route);
       if (response.success == "true") {
         sharedPreferenceManager.writeData(
@@ -84,8 +83,6 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
 
     else if (event is changePasswordClick) {
       yield Loading(model: null);
-      print('password : ${password_controller.value}');
-      print('confirm_password : ${confirm_password_controller.value}');
       await sharedPreferenceManager
           .readString(CachingKey.FORGET_PASSWORD_PHONE)
           .then((value) => user_phone = value);
@@ -95,7 +92,6 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
 
       }else{
          response = await AuthenticationRepository.changePassword(user_phone, password_controller.value, );
-        print("reset response : ${response.succeess}");
 
          if (response.succeess == "true") {
            yield Done(model: response);

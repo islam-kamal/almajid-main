@@ -8,8 +8,6 @@ class SharedPreferenceManager {
 
   Future<bool> removeData(CachingKey key) async {
     sharedPreferences = await SharedPreferences.getInstance();
-    print("remove : ${key.value}");
-
     return sharedPreferences.remove(key.value);
   }
 
@@ -20,8 +18,6 @@ class SharedPreferenceManager {
 
   Future<bool> writeData(CachingKey key, value) async {
     sharedPreferences = await SharedPreferences.getInstance();
-    print(
-        "saving this value $value into local prefrence with key ${key.value}");
     Future returnedValue;
     if (value is String) {
       returnedValue = sharedPreferences.setString(key.value, value);
@@ -64,7 +60,6 @@ class SharedPreferenceManager {
     messages.forEach((element) {
       messagesString.add(json.encode(element));
     });
-    print("set_list_of_wishlist : ${messagesString}");
     await sharedPreferences.setStringList(key, messagesString);
   }
 

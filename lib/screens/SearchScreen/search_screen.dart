@@ -82,7 +82,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 Image.asset('assets/images/search.png',
                                   height: width(context) * 0.5,),
                                 Text(
-                                    'Search for items'
+                                    translator.translate( "Search for items")
                                 )
                               ],
                             ),
@@ -109,10 +109,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   .add(ProductImages.getProductImageUrlByName(imageName: element.file));
                                             });
 
-                                   /*         snapshot.data.items[index].customAttributes.forEach((element) {
-                                              if(element.attributeCode == "thumbnail")
-                                                product_image = element.value;
-                                            });*/
                                             String special_price;
                                             var new_price , minimal_price;
                                             DateTime startDate , endDate ;
@@ -123,7 +119,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 startDate = DateTime.parse(element.value.toString().substring(0,10));
                                               }
                                               else  if(element.attributeCode == "special_to_date"){
-                                                endDate = DateTime.parse("2022-01-28 00:00:00".substring(0,10));
+                                                endDate = DateTime.parse(element.value.toString().substring(0,10));
                                               }
                                               else    if(element.attributeCode == 'special_price'){
                                                 special_price = element.value;
@@ -132,9 +128,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 minimal_price = element.value;
                                               }
                                             });
-                                            if(startDate ==null && endDate ==null ){
+                                            if(startDate ==null || endDate ==null ){
                                               new_price = null;
-                                            }else{
+                                            }
+                                            else{
                                               if(StaticData.isCurrentDateInRange(startDate,endDate)
                                                   && double.parse(special_price) <= double.parse(minimal_price)
                                                   && double.parse(special_price).toStringAsFixed(2) !=  snapshot.data.items[index].price ) {
@@ -143,34 +140,16 @@ class _SearchScreenState extends State<SearchScreen> {
                                               }else if(double.parse(special_price) > double.parse(minimal_price)){
                                                 new_price = minimal_price;
                                               }
-                                              else {
+                                              else  if(double.parse(special_price) > double.parse(minimal_price)){
                                                 new_price = null;
 
                                               }
 
                                             }
-
-
-
-                                   /*         String special_price;
-                                            var percentage;
-
-                                          snapshot.data.items[index].customAttributes.forEach((element) {
-                                              if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
-
-                                                if(double.parse(element.value).toStringAsFixed(2) != snapshot.data.items[index].price.toStringAsFixed(2) ){
-                                                  special_price = element.value == snapshot.data.items[index].price ? null : element.value;
-                                                }
-
-                                              }
-                                            });
-                                            if(special_price != null){
-                                              percentage = (1 - (double.parse(special_price)  / snapshot.data.items[index].price) )* 100;
-                                            }*/
-
                                             if (index >= snapshot.data.items.length) {
                                               return MyLoader(25, 25);
-                                            } else {
+                                            }
+                                            else {
                                               return snapshot.data.items[index] == null
                                                   ? Container()
                                                   :  snapshot.data.items[index].status == 1 ?InkWell(
@@ -180,6 +159,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   )
                                                   );
                                                 },
+
 
                                                 child: Column(
                                                   children: [
@@ -215,13 +195,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                             Directionality(
                                                                                 textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.ltr :TextDirection.rtl,
                                                                                 child: Container(
-                                                                                  padding: EdgeInsets.only(
-                                                                                      right: width(context) * .02,
-                                                                                      left: width(context) * .02),
+                                                                                  padding: EdgeInsets.only(right: width(context) * .02, left: width(context) * .02),
                                                                                   width: width(context) * .6,
-                                                                                  height: isLandscape(context)
-                                                                                      ? 2 * height(context) * .18
-                                                                                      : height(context) * .18,
+                                                                                  height: isLandscape(context) ? 2 * height(context) * .18 : height(context) * .18,
                                                                                   child: Column(
                                                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                     crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
@@ -234,7 +210,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                         screen: SearchScreen(),
 
                                                                                       ) : Container(),
-                                                                                      Padding(padding: EdgeInsets.only(right: 5,left: 5),
+                                                                                      Padding(
+                                                                                        padding: EdgeInsets.only(right: 5,left: 5),
                                                                                         child:  Align(
                                                                                           child:    customDescriptionText(
                                                                                             context: context,
@@ -260,7 +237,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                                     crossAxisAlignment: CrossAxisAlignment.end,
                                                                                                     children: [
                                                                                                       MyText(
-                                                                                                        text: "${new_price == null ?snapshot.data.items[index].price.toStringAsFixed(2) : double.parse(new_price)} ",
+                                                                                                        text: "${
+                                                                                                            new_price == null ?
+                                                                                                        double.parse(snapshot.data.items[index].price.toString()) <  double.parse(minimal_price) ?
+                                                                                                        snapshot.data.items[index].price.toStringAsFixed(2)  :
+                                                                                                        double.parse(minimal_price).toStringAsFixed(2)
+                                                                                                            : double.parse(new_price)} ",
                                                                                                         size: StaticData.get_height(context) * .017,
                                                                                                         color: blackColor,
                                                                                                         maxLines: 2,
@@ -278,7 +260,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                                 ],
                                                                                               ),
                                                                                               SizedBox(width: width(context) * 0.03,),
-                                                                                              new_price == null ?  Container()   :       Text(
+                                                                                              new_price == null ?  Container()   : Text(
                                                                                                 "${snapshot.data.items[index].price} ${MyApp.country_currency}",
                                                                                                 style: TextStyle(
                                                                                                     decoration: TextDecoration.lineThrough,
@@ -288,8 +270,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                             ],
                                                                                           ),
                                                                                           RatingBar.readOnly(
-                                                                                            initialRating:
-                                                                                            5.0,
+                                                                                            initialRating: 5.0,
                                                                                             maxRating: 5,
                                                                                             isHalfAllowed: true,
                                                                                             halfFilledIcon: Icons.star_half,

@@ -16,8 +16,6 @@ import 'package:country_code_picker/country_localizations.dart';
 
 /// receive message when app is in background without clicking on the notification
 Future<void> _backgroundHandler(RemoteMessage message) async{
-  print(message.data.toString());
-  print(message.notification.title);
 
 }
 void main() async {
@@ -48,9 +46,7 @@ class MyApp extends StatefulWidget{
 
   static void setLocale(BuildContext context, Locale newLocale) {
     _MyAppState state = context.findAncestorStateOfType();
-    print(newLocale.languageCode);
     app_langauge = newLocale.languageCode;
-    print("app_langauge : ${app_langauge}");
     state.setState(() => state.local = newLocale);
   }
 
@@ -87,7 +83,6 @@ class _MyAppState extends State<MyApp> {
         MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
             : MyApp.app_location == 'uae'? translator.translate("AED") : translator.translate("KWD");
       }
-      print("app_location : ${MyApp.app_location}");
 
     });
     await sharedPreferenceManager.readString(CachingKey.APP_LANGUAGE).then((value){
@@ -168,8 +163,6 @@ class _MyAppState extends State<MyApp> {
     ///app open on ForeGround. notification will not be visibile but you will receive the data
     FirebaseMessaging.onMessage.listen((message) {
       if(message.notification !=null){
-        print(message.notification.title);
-        print(message.notification.body);
         LocalNotificationService.display(message);
       }
     });

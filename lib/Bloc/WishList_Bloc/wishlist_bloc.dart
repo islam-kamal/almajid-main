@@ -42,7 +42,6 @@ class WishListBloc extends Bloc<AppEvent,AppState>  {
         context: event.context
       );
       if(response ==true){
-        print("fav AddToWishListEvent ");
 
         yield Done(indicator: 'add_fav');
       }else{
@@ -56,7 +55,6 @@ class WishListBloc extends Bloc<AppEvent,AppState>  {
         wishlist_item_id: event.wishlist_item_id,
       );
       if(response==true){
-        print("fav removeFromWishListEvent ");
 
         yield  Done(indicator: 'remove_fav');
       }else{
@@ -68,14 +66,11 @@ class WishListBloc extends Bloc<AppEvent,AppState>  {
       var response =await wishlistRepository.getAllWishListItems();
       if(response.message == "The consumer isn't authorized to access %resources."){
       }else{
-        print("response.items : ${response.items}");
         if(response.items.isNotEmpty){
           _wishlist_subject.sink.add(response);
 
           yield  Done(model: response , indicator: 'get_fav');
-          print("fav getAllWishList_click ");
         }else{
-          print("fav 5");
           yield   ErrorLoading(model: response ,indicator: 'get_fav');
         }
       }
@@ -83,7 +78,6 @@ class WishListBloc extends Bloc<AppEvent,AppState>  {
     }
     else  if(event is AddToCarFromWishListEvent){
       yield Loading(indicator: 'add_wishlist_item_to_cart');
-      print('event.product_id : ${event.wishlist_product_id}');
       var response = await wishlistRepository.add_product_from_wishlist_to_cart(
           product_qty: event.qty,
           wishlist_product_id: event.wishlist_product_id,

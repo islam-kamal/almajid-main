@@ -108,7 +108,7 @@ class StaggerAnimation extends StatelessWidget {
                     height: isLandscape(context)
                         ? 2 * StaticData.get_height(context) * .06
                         : StaticData.get_height(context) * .06,
-                    width: image != null && titleButton != null ? width(context) * .8 : width(context) * .3,
+                    width: image != null && titleButton != null ? width(context) * .8 : width(context) * .4,
                     decoration: BoxDecoration(
                         color:  checkout_color?greenColor :blackColor,
                         borderRadius: BorderRadius.circular(30)),
@@ -128,7 +128,7 @@ class StaggerAnimation extends StatelessWidget {
                             ? 2 * StaticData.get_height(context) * .04
                             : StaticData.get_height(context) * .04),),
 
-                          SizedBox(width: width(context) * .03),
+                          SizedBox(width: width(context) * .05),
                           isResetScreen == null
                               ? Container()
                               : Container(

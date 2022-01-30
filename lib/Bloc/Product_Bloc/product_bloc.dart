@@ -28,7 +28,6 @@ class ProductBloc extends Bloc<AppEvent, AppState> {
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
      if (event is getCategoryProducts) {
-      print("1");
       yield Loading();
 
       final response = await categoryRepository.getCategoryProducts(
@@ -38,10 +37,8 @@ class ProductBloc extends Bloc<AppEvent, AppState> {
       if (response.message == null) {
         response.items.isEmpty?_cat_products_subject : _categoryProducts_list.addAll(response.items);
         _cat_products_subject.sink.add(_categoryProducts_list);
-        print("_cat_products_subject: ${_cat_products_subject}");
         yield Done(model: response);
       } else if (response.message != null) {
-        print("4");
         yield ErrorLoading(model: response);
       }
     }

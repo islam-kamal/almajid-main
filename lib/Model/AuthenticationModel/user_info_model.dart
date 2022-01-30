@@ -157,7 +157,6 @@ class UserInfoModel extends BaseMappable {
       );
 
     }else{
-      print("333333333-3333333333333");
 
       return UserInfoModel(message: message,trace: trace,parameters: parameters);
     }

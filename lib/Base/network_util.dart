@@ -16,7 +16,6 @@ SharedPreferenceManager sharedPreferenceManager =SharedPreferenceManager();
       {Map headers}) async {
     
     var response;
-    print("headers : $headers");
     try {
       dio.options.baseUrl = Urls.BASE_URL;
       response = await dio.get(
@@ -28,7 +27,6 @@ SharedPreferenceManager sharedPreferenceManager =SharedPreferenceManager();
         )
       );
 
-      print('res : ${response}');
     } on DioError catch (e) {
       if (e.response != null) {
         response = e.response;
@@ -42,14 +40,10 @@ SharedPreferenceManager sharedPreferenceManager =SharedPreferenceManager();
     var response;
     dio.options.baseUrl = Urls.BASE_URL;
     try {
-      print(headers);
-      print(body.fields);
-      print(body.files);
       response = await dio.post(url,
           data: body,
           options: Options(headers: headers, requestEncoder: encoding ,
               followRedirects: false,  validateStatus: (status) { return status < 500; }));
-      print("response card : $response");
 
     } on DioError catch (e) {
       if (e.response != null) {
@@ -62,7 +56,6 @@ SharedPreferenceManager sharedPreferenceManager =SharedPreferenceManager();
 
 
   Future<ResponseType> delete<ResponseType extends Mappable>(ResponseType responseType,String url, {Map headers}) {
-print("delete 1");
     return dio
         .delete(
       url,
@@ -70,7 +63,6 @@ print("delete 1");
 
     )
         .then((Response response) {
-      print("delete 2");
 
       return handleResponse(response, responseType);
     });
@@ -89,14 +81,10 @@ print("delete 1");
 
   ResponseType handleResponse<ResponseType extends Mappable>(Response response, ResponseType responseType) {
     final int statusCode = response.statusCode;
-    print("Status Code " + statusCode.toString());
     if (statusCode >= 200 && statusCode < 300) {
-      print("correrct request: " + response.toString());
-      print("Status Code " + statusCode.toString());
+
       return Mappable(responseType, response.toString()) as ResponseType;
     } else {
-      print("request error: " + response.toString());
-      print("Status Code " + statusCode.toString());
       return Mappable(responseType, response.toString()) as ResponseType;
     }
   }

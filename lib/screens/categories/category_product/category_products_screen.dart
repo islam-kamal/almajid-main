@@ -192,23 +192,12 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   // The controller for the ListView
 
   ScrollController _controller;
-  // At the beginning, we fetch the first 20 posts
   int _page = 1;
   int _limit = 20;
-
-  // There is next page or not
   bool _hasNextPage = true;
-
-  // Used to display loading indicators when _firstLoad function is running
   bool _isFirstLoadRunning = false;
-
-  // Used to display loading indicators when _loadMore function is running
   bool _isLoadMoreRunning = false;
-
-  // This holds the posts fetched from the server
   List _posts = [];
-
-  // This function will be called when the app launches (see the initState function)
   void _firstLoad() async {
     setState(() {
       _isFirstLoadRunning = true;
@@ -229,9 +218,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
       _isFirstLoadRunning = false;
     });
   }
-
-  // This function will be triggered whenver the user scroll
-  // to near the bottom of the list view
   void _loadMore() async {
     if (_hasNextPage == true &&
         _isFirstLoadRunning == false &&

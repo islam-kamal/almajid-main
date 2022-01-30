@@ -6,7 +6,6 @@ class CustomComponents{
 
   static Future<bool> isFirstTime() async {
     bool isFirstTime = await sharedPreferenceManager.readBoolean(CachingKey.FRIST_TIME);
-    print("-- isFirstTime --- : ${isFirstTime}");
     if (isFirstTime != null && !isFirstTime) {
       sharedPreferenceManager.writeData(CachingKey.FRIST_TIME, true);
       return false;
@@ -17,7 +16,6 @@ class CustomComponents{
   }
   static Future<bool> isFirstLogin() async {
     bool isFirstLogin = await sharedPreferenceManager.readBoolean(CachingKey.FRIST_LOGIN);
-    print("--- isFirstLogin ---- : ${isFirstLogin}");
     if (isFirstLogin != null && !isFirstLogin) {
       sharedPreferenceManager.writeData(CachingKey.FRIST_LOGIN, true);
       return true;

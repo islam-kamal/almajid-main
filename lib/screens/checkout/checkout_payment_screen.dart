@@ -73,7 +73,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                 responsiveSizedBox(context: context, percentageOfHeight: .02),
                 paymentMethodCard(
                     context: context,
-                paymentMethods: widget.guestShipmentAddressModel.paymentMethods) ,
+                    paymentMethods: widget.guestShipmentAddressModel.paymentMethods
+                ),
                 _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments'  ||   _currentIndex ==  'cashondelivery'?
                 Container() :     Column(
                   children: [
@@ -94,15 +95,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       useBackgroundImage ? 'assets/card_bg.png' : null,
                       isSwipeGestureEnabled: true,
                       onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
+
                       customCardTypeIcons: <CustomCardTypeIcon>[
-                      /*  CustomCardTypeIcon(
-                          cardType: CardType.mastercard,
-                          cardImage: Image.asset(
-                            'assets/mastercard.png',
-                            height: 48,
-                            width: 48,
-                          ),
-                        ),*/
                       ],
                     ),
                     CreditCardForm(
@@ -119,12 +113,15 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       themeColor: Colors.blue,
                       textColor: mainColor,
                       cardNumberDecoration: InputDecoration(
-                        labelText: 'Number',
+                        labelText: translator.translate("Card Holder"),
                         hintText: 'XXXX XXXX XXXX XXXX',
-                        hintStyle: const TextStyle(color: greyColor),
+                        hintStyle: const TextStyle(color: greyColor,),
                         labelStyle: const TextStyle(color: mainColor),
                         focusedBorder: border,
+                        alignLabelWithHint: true,
                         enabledBorder: border,
+
+                        hintTextDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr ,
                         contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
                       ),
@@ -133,8 +130,9 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                         labelStyle: const TextStyle(color: mainColor),
                         focusedBorder: border,
                         enabledBorder: border,
-                        labelText: 'Expired Date',
+                        labelText: translator.translate("Expired Date"),
                         hintText: 'XX/XX',
+                        hintTextDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr ,
                         contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
                       ),
@@ -143,8 +141,9 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                         labelStyle: const TextStyle(color: mainColor),
                         focusedBorder: border,
                         enabledBorder: border,
-                        labelText: 'CVV',
+                        labelText: translator.translate("CVV"),
                         hintText: 'XXX',
+                        hintTextDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr ,
                         contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
                       ),
@@ -153,7 +152,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                         labelStyle: const TextStyle(color: mainColor),
                         focusedBorder: border,
                         enabledBorder: border,
-                        labelText: 'Card Holder',
+                        labelText: translator.translate("Card Holder"),
+                        hintTextDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr ,
                         contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
                       ),

@@ -58,7 +58,6 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
       });
       await _loginButtonController.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -69,7 +68,6 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
 
@@ -93,14 +91,12 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
         listener: (context,state){
       if (state is Loading) {
         if(state.indicator == 'CreateOrder-$_quoteId'){
-          print("Loading");
           _playAnimation();
         }
 
       }
       else if (state is ErrorLoading) {
         if(state.indicator == 'CreateOrder-$_quoteId') {
-          print("ErrorLoading");
       _stopAnimation();
 
       Flushbar(
@@ -137,15 +133,12 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
 
       else if (state is Done) {
         if(state.indicator == 'CreateOrder-$_quoteId') {
-      print("done");
 
       var data = state.general_value;
       final Future<http.Response> response = payment_repository.getPayFortSettings(
         orderId: data
       );
-print(" PayFortSettings     response  : ${response}");
       response.then((response) {
-               print(response.body);
         final extractedData = json.decode(response.body) as Map<String, dynamic>;
         if (extractedData["success"]) {
           sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD).then((value){
@@ -195,7 +188,6 @@ print(" PayFortSettings     response  : ${response}");
                   public_key: extractedData["payment_config"]["public_key"]
                 );
                 tap_response.then((result) {
-                  print(result.body);
                   final tap_extractedData = json.decode(result.body) as Map<String, dynamic>;
                   if (tap_extractedData[ "errors"] == null) {
                     customAnimatedPushNavigation(context, TapPaymentScreen(
@@ -253,7 +245,6 @@ print(" PayFortSettings     response  : ${response}");
 
 
         } else {
-          print('order not found');
         }
       });
 
@@ -314,7 +305,7 @@ print(" PayFortSettings     response  : ${response}");
             singleOrderSummaryItem(
                 context: context,
                 title:"Payment Method" ,
-                details: "${widget.payment_method} ",
+                details: "${widget.payment_method == "Split into 3 payments, without fees with Tamara" ? "Tamara" :widget.payment_method} ",
               guestShipmentAddressModel: widget.guestShipmentAddressModel
             ),
             Container(
@@ -345,7 +336,6 @@ print(" PayFortSettings     response  : ${response}");
       checkout_color: true,
       onTap: ()async {
       await  sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD).then((value){
-        print("value : ${value}");
           if(value=='stc_pay'){
             customAnimatedPushNavigation(context, StcPayPhoneScreen());
           }else{

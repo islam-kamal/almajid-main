@@ -9,7 +9,6 @@ logButton({BuildContext context ,var type}){
       await sharedPreferenceManager.readString(CachingKey.USER_NAME).then((value){
         user_name = value;
       });
-      print("logout------------");
       return  showDialog(
         context: context,
         barrierDismissible: false,

@@ -1,7 +1,8 @@
+import 'package:almajidoud/Widgets/customText.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:rating_bar/rating_bar.dart';
 
-priceAndRatingRow({BuildContext context , var new_price ,var old_price=89 ,bool review_status}) {
+priceAndRatingRow({BuildContext context , var new_price ,var old_price, var minimal_price ,bool review_status}) {
   print("price@@@ :${new_price}");
   return Container(
     padding: EdgeInsets.only(
@@ -9,42 +10,49 @@ priceAndRatingRow({BuildContext context , var new_price ,var old_price=89 ,bool 
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            new_price ==null? Container():    Row(
+
+            Row(
               children: [
-                Container(
-                  child: customDescriptionText(
-                      context: context,
-                      text: "${double.parse(new_price).toStringAsFixed(2)} ",
-                      textAlign: TextAlign.start,
-                      maxLines: 2,
-                      textColor: mainColor,
-                      percentageOfHeight: .03,
-                      fontWeight: FontWeight.bold),
+                Wrap(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        MyText(
+                          text: "${
+                              new_price == null ?
+                              double.parse(old_price.toString()) <  double.parse(minimal_price) ?
+                             old_price.toStringAsFixed(2)  :
+                              double.parse(minimal_price).toStringAsFixed(2)
+                                  : double.parse(new_price)} ",
+                          size: StaticData.get_height(context) * .020,
+                          color: blackColor,
+                          maxLines: 2,
+                          weight: FontWeight.bold,
+                        ),
+                        MyText(
+                          text: " ${MyApp.country_currency}",
+                          size: StaticData.get_height(context) * .011,
+                          color: blackColor,
+                          maxLines: 2,
+                          weight: FontWeight.normal,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                Container(
-                  child: customDescriptionText(
-                      context: context,
-                      text: "${MyApp.country_currency}",
-                      textAlign: TextAlign.start,
-                      maxLines: 2,
-                      textColor: mainColor,
-                      percentageOfHeight: .02,
-                      fontWeight: FontWeight.normal),
+                SizedBox(width: width(context) * 0.03,),
+                new_price == null ?  Container()   : Text(
+                  "${old_price} ${MyApp.country_currency}",
+                  style: TextStyle(
+                      decoration: TextDecoration.lineThrough,
+                      fontSize: StaticData.get_height(context)  * .014,
+                      color: old_price_color),
                 ),
               ],
             ),
-            SizedBox(width: width(context) * 0.05,),
-        /*    if (double.parse(new_price) != double.parse(old_price))*/
-              Text("${old_price} ${MyApp.country_currency}",
-              style: TextStyle(
-                  decoration: new_price ==null? TextDecoration.none : TextDecoration.lineThrough,
-                  fontSize: StaticData.get_height(context)  * .017,
-                  color: greyColor),
-            ),
-          ],
-        ),
+
 
        RatingBar.readOnly(
           initialRating: 5.0,

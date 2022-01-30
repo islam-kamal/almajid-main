@@ -2,6 +2,7 @@ import 'package:almajidoud/Bloc/WishList_Bloc/wishlist_bloc.dart';
 import 'package:almajidoud/Model/CartModel/add_cart_model.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AddProductToCartWidget extends StatefulWidget {
@@ -41,28 +42,6 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
     _loginButtonController = AnimationController(
         duration: const Duration(milliseconds: 3000), vsync: this);
     super.initState();
-  }
-
-  Future<Null> _playAnimation() async {
-    try {
-      setState(() {
-        isLoading = true;
-      });
-      await _loginButtonController.forward();
-    } on TickerCanceled {
-      print('[_playAnimation] error');
-    }
-  }
-
-  Future<Null> _stopAnimation() async {
-    try {
-      await _loginButtonController.reverse();
-      setState(() {
-        isLoading = false;
-      });
-    } on TickerCanceled {
-      print('[_stopAnimation] error');
-    }
   }
 
   @override
@@ -114,8 +93,11 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
         }
 
         return _isLoading
-            ? CircularProgressIndicator(
-
+            ? Center(
+          child: SpinKitFadingCube(
+            color: Theme.of(context).primaryColor,
+            size: width(context) *0.05,
+          ),
         )
             : Container(
                 alignment: Alignment.center,

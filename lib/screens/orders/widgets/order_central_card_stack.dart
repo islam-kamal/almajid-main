@@ -235,6 +235,12 @@ orderCentralCardStack({BuildContext context , OrderItems order_details}) {
 }*/
 
 orderCentralCardStack({BuildContext context, OrderItems order_details}) {
+  var payment_method = '';
+  order_details.extensionAttributes.paymentAdditionalInfo.forEach((element) {
+    if(element.key == "method_title"){
+      payment_method  =element.value == "Split into 3 payments, without fees with Tamara" ? "Tamara" : element.value;
+    }
+  });
   return Container(
     padding: EdgeInsets.only(
         top: isLandscape(context)
@@ -375,9 +381,7 @@ orderCentralCardStack({BuildContext context, OrderItems order_details}) {
                     context: context,
                     text: "${translator.translate("Payment method")} :",
                     percentageOfHeight: .02,
-
                     textColor: greyColor),
-
               ],
             ),
             responsiveSizedBox(context: context, percentageOfHeight: .005),
@@ -392,7 +396,7 @@ orderCentralCardStack({BuildContext context, OrderItems order_details}) {
                 ),
                 customDescriptionText(
                     context: context,
-                    text: "${order_details.payment.method}",
+                    text: "${payment_method}",
                     fontWeight: FontWeight.bold,
                     percentageOfHeight: .02,
                     textAlign: TextAlign.start,

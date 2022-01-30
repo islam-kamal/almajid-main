@@ -81,6 +81,7 @@
   "Free" : "Free",
   "Payment Fees" : "Payment Fees",
   "Shipping" : "Shipping",
+  "City should be mandatory in checkout" : "City should be mandatory in checkout",
   "-------------------Location-----------------": "---------------------------------",
   "Location": "Location",
   "Type here to search": "Type here to search",
@@ -256,7 +257,13 @@
   "Your order created successfully" : "Your order created successfully",
   "Receipt of the request" :  "Receipt of the request",
   "Your order Number": "Your order Number",
-  "Problem Verifying Payment, If you balance is deducted please contact our customer support and get your payment verified!" : "Problem Verifying Payment, If you balance is deducted please contact our customer support and get your payment verified!"
+  "Problem Verifying Payment, If you balance is deducted please contact our customer support and get your payment verified!" : "Problem Verifying Payment, If you balance is deducted please contact our customer support and get your payment verified!",
+
+
+  "Card Holder": "Card Holder Name",
+  "Number": "Card Number",
+  "Expired Date" : "Expired Date",
+  "CVV": "CVV"
 }
 
 

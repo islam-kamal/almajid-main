@@ -65,7 +65,6 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
 
       case 'related products':
         widget.items.productLinks.forEach((element) async {
-          print("element.linkedProductSku : ${element.linkedProductSku}");
           if(element.linkType == "related"){
             var response = await categoryRepository.getProduct(sku: element.linkedProductSku);
             related_product_list.add(response.items[0]);
@@ -76,7 +75,6 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
 
         });
         _subject = home_bloc.related_products_subject;
-        print("_subject : ${_subject}");
         break;
     }
   }
@@ -88,7 +86,6 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
       });
       await _loginButtonController.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -99,7 +96,6 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
 
@@ -178,7 +174,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                             startDate = DateTime.parse(element.value.toString().substring(0,10));
                           }
                           else  if(element.attributeCode == "special_to_date"){
-                            endDate = DateTime.parse("2022-01-28 00:00:00".substring(0,10));
+                            endDate = DateTime.parse(element.value.toString().substring(0,10));
                           }
                           else    if(element.attributeCode == 'special_price'){
                             special_price = element.value;
@@ -187,7 +183,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                             minimal_price = element.value;
                           }
                         });
-                        if(startDate ==null && endDate ==null ){
+                        if(startDate ==null || endDate ==null ){
                           new_price = null;
                         }else{
                           if(StaticData.isCurrentDateInRange(startDate,endDate)
@@ -277,8 +273,12 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                             crossAxisAlignment: CrossAxisAlignment.end,
                                                             children: [
                                                               MyText(
-                                                                text: "${new_price == null ?snapshot.data[index].price.toStringAsFixed(2) : double.parse(new_price)} ",
-                                                                size: StaticData.get_height(context) * .017,
+                                                                text: "${
+                                                                    new_price == null ?
+                                                                    double.parse(snapshot.data[index].price.toString()) <  double.parse(minimal_price) ?
+                                                                    snapshot.data[index].price.toStringAsFixed(2)  :
+                                                                    double.parse(minimal_price).toStringAsFixed(2)
+                                                                        : double.parse(new_price)} ",                                                                size: StaticData.get_height(context) * .017,
                                                                 color: blackColor,
                                                                 maxLines: 2,
                                                                 weight: FontWeight.bold,

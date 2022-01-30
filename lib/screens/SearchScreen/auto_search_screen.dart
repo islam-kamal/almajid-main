@@ -83,7 +83,6 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                       );
                     } else if (state is Done) {
                       var data = state.model as ProductModel;
-                      print("data : ${data}");
 
                       if (data.items == null || data.items.isEmpty) {
                         return no_data_widget(context: context);

@@ -34,11 +34,8 @@ class _LocationScreenState extends State<LocationScreen> {
                     child: Column(
                   children: [
                     responsiveSizedBox(context: context, percentageOfHeight: .11),
-                    titleText(context: context, text: "Shop By Category"),
-                    responsiveSizedBox(context: context, percentageOfHeight: .02),
-                    CategoriesTap(),
-                    responsiveSizedBox(
-                        context: context, percentageOfHeight: .009),
+                //    titleText(context: context, text: translator.activeLanguageCode == 'ar' ?  StaticData.data['new-arrival']['arabic-title'] : StaticData.data['new-arrival']['english-title']),
+                //    responsiveSizedBox(context: context, percentageOfHeight: .02),
                     HomeSlider(
                         gallery:StaticData.slider
                     ),
@@ -167,7 +164,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       onTapCategoryDrawer: () {
                         _drawerKey.currentState.openDrawer();
                       },
-
+                      home_logo: true,
                     ),
 
                   ],

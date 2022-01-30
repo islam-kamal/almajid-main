@@ -20,8 +20,6 @@ orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments 
       payment_fees = element.value;
     }
   });
-  print("cash : $cash");
-  print(  cash == 'الدفع عند التوصيل' );
   return Column(
     children: [
       Container(

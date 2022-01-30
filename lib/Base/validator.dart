@@ -50,7 +50,6 @@ mixin Validator {
             phone = "00971" + phone;
           }
         }
-        print("valid phone: " + phone);
         sink.add(phone);
       }
   });
