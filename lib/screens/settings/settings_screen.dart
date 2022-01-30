@@ -123,7 +123,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                     onChanged: (String newValue) {
                                                       setState(() {
                                                         dropdownValue = newValue;
-                                                        print("dropdownValue : ${dropdownValue}");
                                                         changeLang(
                                                             lang: dropdownValue  == 'ENG' ? 'en' : 'ar'
                                                         );

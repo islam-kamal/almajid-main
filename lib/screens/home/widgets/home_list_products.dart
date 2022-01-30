@@ -65,7 +65,6 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
 
       case 'related products':
         widget.items.productLinks.forEach((element) async {
-          print("element.linkedProductSku : ${element.linkedProductSku}");
           if(element.linkType == "related"){
             var response = await categoryRepository.getProduct(sku: element.linkedProductSku);
             related_product_list.add(response.items[0]);
@@ -76,7 +75,6 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
 
         });
         _subject = home_bloc.related_products_subject;
-        print("_subject : ${_subject}");
         break;
     }
   }
@@ -88,7 +86,6 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
       });
       await _loginButtonController.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -99,7 +96,6 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
 

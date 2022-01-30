@@ -37,7 +37,6 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
       var response = await shipmentAddressRepository.add_addresses(
         context: event.context
       );
-      print("shippment response : $response");
       if(response.message == null){
         yield Done(model:response,indicator: 'GuestAddAdress');
       }else {
@@ -49,7 +48,6 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
       var response = await shipmentAddressRepository.add_new_address(
           context: event.context
       );
-      print("shippment response : $response");
       if(response.message == null){
         yield Done(model:response,indicator: 'AddNewAdress');
       }else {
@@ -71,7 +69,6 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
     else if (event is GetAllAddressesEvent) {
       yield Loading(indicator: 'GetAllAddressesEvent');
       final response = await shipmentAddressRepository.get_all_saved_addresses(context: event.context);
-      print("apply_promo_code response : ${response}");
 
       if (response.isEmpty ) {
         yield ErrorLoading(indicator: 'GetAllAddressesEvent');

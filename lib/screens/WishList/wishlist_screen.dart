@@ -124,8 +124,6 @@ class _WishListScreenState extends State<WishListScreen> {
                                           if (snapshot.data == null) {
                                             return Container();
                                           } else {
-                                            print(
-                                                "length : ${snapshot.data.itemsCount}");
 
                                             return ListView.builder(
                                                 shrinkWrap: true,
@@ -423,7 +421,6 @@ class _WishListScreenState extends State<WishListScreen> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => super.widget));
     } else {
-      print("item can't be deleted");
     }
   }
 

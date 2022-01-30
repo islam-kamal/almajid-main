@@ -241,7 +241,6 @@ orderCentralCardStack({BuildContext context, OrderItems order_details}) {
       payment_method  =element.value == "Split into 3 payments, without fees with Tamara" ? "Tamara" : element.value;
     }
   });
-  print("payment_method : $payment_method");
   return Container(
     padding: EdgeInsets.only(
         top: isLandscape(context)

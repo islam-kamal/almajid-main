@@ -72,8 +72,6 @@ class QuantityButtonState extends State<QuantityButton>{
                           0.15,
                       onPressed: () {
                         setState(() {
-                          print(
-                              "prod_main_quantity : ${widget.quantity}");
                           if (qty == widget.quantity) {
                             errorDialog(
                               context: context,

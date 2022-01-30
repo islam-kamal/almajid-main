@@ -164,7 +164,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                             ),
                                           );
                                         });
-                                    print("add image tapped ");
                                   },
                                 ),
                                 StaticData.vistor_value == "visitor"
@@ -185,7 +184,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                       final _token = await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN);
                                       if(_token !=''){
                                         final result = await Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => UpdateProfile()));
-                                        print('result-->'+  result['full_name']);
                                         _userName = result['full_name'];
                                         setState(() {});
                                       }else{

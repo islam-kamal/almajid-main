@@ -28,7 +28,6 @@ class PaymentRepository {
       'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}'
     };
     try {
-      print("%%% phone_number : ${phone_number.toString().replaceRange(0,4,'0')}");
       final response = await dio.post(
           Urls.BASE_URL+'/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/stc-pay/get-otp',
           data: {
@@ -38,9 +37,7 @@ class PaymentRepository {
            "isMask": StaticData.vistor_value == 'visitor'? true : false
           },
           options: Options(headers: headers));
-      print("response : ${response}");
       if (response.statusCode == 200) {
-        print("response.data : ${response.data} :\n ${response.data['message']}");
         return StcPayModel.fromJson(response.data);
 
 
@@ -48,7 +45,6 @@ class PaymentRepository {
         return response.data;
       }
     } catch (e) {
-      print("error : ${e.toString()}");
     }
   }
 
@@ -64,9 +60,6 @@ class PaymentRepository {
       'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}'
     };
     try {
-      print("stc_pay_verify_quote : ${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
-          :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}");
-      print("_____________phone_number : ${phone_number}");
       final response = await http.post(
           Uri.parse(Urls.BASE_URL+'/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/stc-pay/verify-otp'),
           body:jsonEncode( {
@@ -87,12 +80,10 @@ class PaymentRepository {
         errorDialog(context: context, text: response.body);
       }
     } catch (e) {
-      print("error : ${e.toString()}");
     }
   }
 
   Future<http.Response> getPayFortSettings({var orderId}) async {
-    print("-----------------------orderId : ${orderId}");
     try {
       final Map<String, dynamic> data = {
         "orderId": int.parse(orderId),
@@ -105,7 +96,6 @@ class PaymentRepository {
             "Authorization": 'Bearer ${Urls.ADMIN_TOKEN}'
           },
           body: serializedData);
-      print("getPayFortSettings response : ${response}");
       return response;
     } catch (error) {
       throw (error);
@@ -116,9 +106,7 @@ class PaymentRepository {
   Future<http.Response> create_token_for_Tap({var public_key}) async {
   //  final info = NetworkInfo();
     var exp_month = StaticData.expiry_date.substring(2);
-    print("exp_month : ${exp_month}");
     var exp_year = "20" + StaticData.expiry_date.substring(0,2);
-    print("exp_year : ${exp_year}");
     try {
       final Map<String, dynamic> data = {
         "card": {
@@ -144,7 +132,6 @@ class PaymentRepository {
             "Authorization": 'Bearer ${public_key}'
           },
           body: serializedData);
-      print("Tap response : ${response.body}");
       return response;
     } catch (error) {
       throw (error);

@@ -33,8 +33,6 @@ class SignUpBloc extends Bloc<AppEvent,AppState> with Validator{
   Stream<AppState> mapEventToState(AppEvent event) async*{
     if(event is click){
       yield Loading(model: null);
-      print('signup 1');
-      print("fristname_controller.value : ${fristname_controller.value}");
       var response = await AuthenticationRepository.signUp(
         firstname:   fristname_controller.value,
         mobile: StaticData.country_code + mobile_controller.value,
@@ -42,22 +40,15 @@ class SignUpBloc extends Bloc<AppEvent,AppState> with Validator{
         password: password_controller.value,
         lastname:  lastname_controller.value,
       );
-      print('signup 2');
-      print('signup response : ${response.success}');
       if(response.success == "true" ){
-        print('signup 1');
-
         sharedPreferenceManager.writeData(CachingKey.USER_NAME, fristname_controller.value);
         sharedPreferenceManager.writeData(CachingKey.FORGET_PASSWORD_PHONE, StaticData.country_code +mobile_controller.value);
         sharedPreferenceManager.writeData(CachingKey.EMAIL,email_controller.value);
         StaticData.user_mobile_number = StaticData.country_code +mobile_controller.value;
         yield Done(model:response);
-        print('signup 3');
       }
       else if (response.success == "false"){
-        print('signup 4');
         yield ErrorLoading(model: response);
-        print('response status : ${response.success}');
       }
 
     }

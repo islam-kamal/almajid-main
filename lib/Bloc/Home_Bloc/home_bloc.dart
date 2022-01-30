@@ -43,7 +43,6 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
     if (event is GetHomeNewArrivals) {
-      print("1");
       yield Loading();
 
       final response = await categoryRepository.getCategoryProducts(
@@ -76,7 +75,6 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
     }
     else  if (event is GetWeeklyDealSeller) {
       yield Loading();
-print("------------event.category_id : ${event.category_id} ");
       final response = await categoryRepository.getCategoryProducts(
           category_id: event.category_id,
           offset: event.offset

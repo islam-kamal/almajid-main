@@ -35,7 +35,6 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
   @override
   void initState() {
     currentPage = widget.page_index;
-    print("  translator.activeLanguageCode : ${translator.activeLanguageCode}");
     super.initState();
   }
 
