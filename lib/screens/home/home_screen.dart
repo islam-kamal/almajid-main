@@ -10,6 +10,7 @@ import 'package:almajidoud/screens/home/widgets/categories_tap.dart';
 import 'package:almajidoud/screens/home/widgets/home_list_products.dart';
 import 'package:almajidoud/screens/home/widgets/title_text.dart';
 import 'package:almajidoud/screens/home/widgets/top_slider.dart';
+import 'package:almajidoud/screens/product_details/product_details_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:http/http.dart' as http;
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
@@ -74,7 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       id: StaticData.data["static-banner"]['id'].toString(),
                                       name_ar: StaticData.data["static-banner"]['arabic_name'],
                                       name_en: StaticData.data["static-banner"]['english_name'],
-                                      url: StaticData.data["static-banner"]['url']
+                                      url: StaticData.data["static-banner"]['url'],
+                                      type: StaticData.data["static-banner"]['type'],
                                   ),
 //-----------------------------------------------------------------------------------------------------------------------
                                   responsiveSizedBox(context: context, percentageOfHeight: .015),
@@ -96,7 +98,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       id: StaticData.data["static-banner-2"]['id'].toString(),
                                       name_ar: StaticData.data["static-banner-2"]['arabic_name'],
                                       name_en: StaticData.data["static-banner-2"]['english_name'],
-                                      url: StaticData.data["static-banner-2"]['url']
+                                      url: StaticData.data["static-banner-2"]['url'],
+                                      type: StaticData.data["static-banner-2"]['type'],
                                   ),
                                   responsiveSizedBox(context: context, percentageOfHeight: .015),
                                   titleText(context: context,
@@ -115,7 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       id: StaticData.data["static-banner-3"]['id'].toString(),
                                       name_ar: StaticData.data["static-banner-3"]['arabic_name'],
                                       name_en: StaticData.data["static-banner-3"]['english_name'],
-                                      url: StaticData.data["static-banner-3"]['url']
+                                      url: StaticData.data["static-banner-3"]['url'],
+                                      type: StaticData.data["static-banner-3"]['type'],
                                   ),
                                   responsiveSizedBox(context: context, percentageOfHeight: .015),
                                   titleText(context: context,
@@ -163,15 +167,24 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget banner({var name_ar , var name_en , var id , var url} ){
+  Widget banner({var name_ar , var name_en , var id , var url , var type} ){
     return    InkWell(
       onTap: (){
-        final _catName = translator.activeLanguageCode == 'en'?name_en:name_ar;
+      if(type == "product"){
+        customAnimatedPushNavigation(
+            context, ProductDetailsScreen(
+          product_id: id,
+        )
+        );
+      }else {
+        final _catName = translator.activeLanguageCode == 'en'
+            ? name_en : name_ar;
         customAnimatedPushNavigation(
             context, CategoryProductsScreen(
           category_id: id,
           category_name: _catName,
         ));
+      }
       },
       child: Container(
         width: width(context) ,

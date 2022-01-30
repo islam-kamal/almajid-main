@@ -96,7 +96,6 @@ class _SplashScreenState extends State<SplashScreen> {
     );
     StaticData.data = await json.decode(utf8.decode(response.bodyBytes));
     StaticData.gallery = StaticData.data["slider"];
-    StaticData.staticBanner = StaticData.data["static-banner"];
 
     StaticData.gallery.forEach((element) {
       StaticData.slider.add(SliderImage(
