@@ -85,7 +85,7 @@ class StaticData {
 }
 
 class SliderImage{
-  var id , url, english_name, arabic_name;
-  SliderImage({this.id,this.url,this.english_name,this.arabic_name});
+  var id , url, english_name, arabic_name,type;
+  SliderImage({this.id,this.url,this.english_name,this.arabic_name,this.type});
 }
 

@@ -928,6 +928,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
   phone_addressTextFields({BuildContext context, String hint,var initialValue}) {
     String _countryCode  ="+966";
+    print("hint ------------: ${hint}");
     return StreamBuilder<String>(
       stream: shipmentAddressBloc.phone,
       builder: (context, snapshot) {
@@ -1010,7 +1011,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
                     hintStyle: TextStyle(
-                        color: greyColor.withOpacity(.5),
+                        color:mainColor,
                         fontWeight: FontWeight.bold,
                         fontSize: isLandscape(context)
                             ? 2 * height(context) * .018
@@ -1124,7 +1125,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       if(addres_city_name == null){
         errorDialog(
           context: context,
-          text: "City should be mandatory in checkout"
+          text: translator.translate("City should be mandatory in checkout")
         );
       }else{
         StaticData.order_address = addres_city_name +
@@ -1137,7 +1138,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
         );
       }
 
-    }else if(frist_name !=null){
+    }
+    else if(frist_name !=null){
       StaticData.order_address = addres_city_name +
           " , " //use this to show address in CheckoutSummaryScreen
               "${shipmentAddressBloc.street_controller.value == null

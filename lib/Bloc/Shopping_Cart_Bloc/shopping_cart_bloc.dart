@@ -48,7 +48,8 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
         }
 
       }
-    } else if (event is GetCartDetailsEvent) {
+    }
+    else if (event is GetCartDetailsEvent) {
       yield Loading(indicator: 'GetCartDetails');
 
       final response = await cartRepository.get_cart_details();
@@ -59,7 +60,8 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
       } else {
         yield Done(model: response, indicator: 'GetCartDetails');
       }
-    } else if (event is ApplyPromoCodeEvent) {
+    }
+    else if (event is ApplyPromoCodeEvent) {
       final response = await cartRepository.apply_promo_code_to_cart(
           promo_code: event.prom_code, context: event.context);
       print("apply_promo_code response : ${response}");
@@ -85,7 +87,8 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
           }
         );
       }
-    } else if (event is DeletePromoCodeEvent) {
+    }
+    else if (event is DeletePromoCodeEvent) {
       final response = await cartRepository.delete_promo_code_from_cart(
           context: event.context);
       print("apply_promo_code response : ${response}");
@@ -107,6 +110,7 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
             });
       }
     }
+
   }
 }
 

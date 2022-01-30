@@ -147,7 +147,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                       startDate = DateTime.parse(element.value.toString().substring(0,10));
                                                     }
                                                     else  if(element.attributeCode == "special_to_date"){
-                                                      endDate = DateTime.parse("2022-01-28 00:00:00".substring(0,10));
+                                                      endDate = DateTime.parse(element.value.toString().substring(0,10));
                                                     }
                                                     else    if(element.attributeCode == 'special_price'){
                                                       special_price = element.value;
@@ -156,7 +156,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                       minimal_price = element.value;
                                                     }
                                                   });
-                                                  if(startDate ==null && endDate ==null ){
+                                                  if(startDate ==null || endDate ==null ){
                                                     new_price = null;
                                                   }else{
                                                     if(StaticData.isCurrentDateInRange(startDate,endDate)

@@ -68,6 +68,19 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
         yield ErrorLoading(model: response, indicator: 'address_detials');
       }
     }
+    else if (event is GetAllAddressesEvent) {
+      yield Loading(indicator: 'GetAllAddressesEvent');
+      final response = await shipmentAddressRepository.get_all_saved_addresses(context: event.context);
+      print("apply_promo_code response : ${response}");
+
+      if (response.isEmpty ) {
+        yield ErrorLoading(indicator: 'GetAllAddressesEvent');
+
+      } else {
+        yield Done(indicator: 'GetAllAddressesEvent');
+
+      }
+    }
   }
 
   @override

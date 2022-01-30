@@ -1,5 +1,6 @@
 
 import 'package:almajidoud/Base/Shimmer/slider_shimmer.dart';
+import 'package:almajidoud/screens/product_details/product_details_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:almajidoud/utils//file_export.dart';
 import 'package:flutter/material.dart';
@@ -49,12 +50,20 @@ class _HomeSlider_State extends State<HomeSlider> {
                       clipBehavior: Clip.none,
                       child: InkWell(
                         onTap:  item.id == null ? (){} :(){
-                          final _catName = translator.activeLanguageCode == 'en'?item.english_name : item.arabic_name;
-                          customAnimatedPushNavigation(
-                              context, CategoryProductsScreen(
-                            category_id: item.id,
-                            category_name: _catName,
-                          ));
+                          if(item.type == "product"){
+                            customAnimatedPushNavigation(
+                                context, ProductDetailsScreen(
+                              product_id: item.id,
+                            ));
+                          }else{
+                            final _catName = translator.activeLanguageCode == 'en'?item.english_name : item.arabic_name;
+                            customAnimatedPushNavigation(
+                                context, CategoryProductsScreen(
+                              category_id: item.id,
+                              category_name: _catName,
+                            ));
+
+                          }
 
                         },
                         child:   Image.network(

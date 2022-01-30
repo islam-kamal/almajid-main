@@ -178,7 +178,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                             startDate = DateTime.parse(element.value.toString().substring(0,10));
                           }
                           else  if(element.attributeCode == "special_to_date"){
-                            endDate = DateTime.parse("2022-01-28 00:00:00".substring(0,10));
+                            endDate = DateTime.parse(element.value.toString().substring(0,10));
                           }
                           else    if(element.attributeCode == 'special_price'){
                             special_price = element.value;
@@ -187,7 +187,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                             minimal_price = element.value;
                           }
                         });
-                        if(startDate ==null && endDate ==null ){
+                        if(startDate ==null || endDate ==null ){
                           new_price = null;
                         }else{
                           if(StaticData.isCurrentDateInRange(startDate,endDate)
@@ -277,8 +277,12 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                             crossAxisAlignment: CrossAxisAlignment.end,
                                                             children: [
                                                               MyText(
-                                                                text: "${new_price == null ?snapshot.data[index].price.toStringAsFixed(2) : double.parse(new_price)} ",
-                                                                size: StaticData.get_height(context) * .017,
+                                                                text: "${
+                                                                    new_price == null ?
+                                                                    double.parse(snapshot.data[index].price.toString()) <  double.parse(minimal_price) ?
+                                                                    snapshot.data[index].price.toStringAsFixed(2)  :
+                                                                    double.parse(minimal_price).toStringAsFixed(2)
+                                                                        : double.parse(new_price)} ",                                                                size: StaticData.get_height(context) * .017,
                                                                 color: blackColor,
                                                                 maxLines: 2,
                                                                 weight: FontWeight.bold,

@@ -104,6 +104,7 @@ class _SplashScreenState extends State<SplashScreen> {
         url: element['url'],
         english_name: element['english_name'],
         arabic_name: element['arabic_name'],
+        type: element['type'],
       ));
     });
 

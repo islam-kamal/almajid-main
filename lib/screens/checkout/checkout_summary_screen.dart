@@ -143,7 +143,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
       final Future<http.Response> response = payment_repository.getPayFortSettings(
         orderId: data
       );
-print(" PayFortSettings     response  : ${response}");
+print(" PayFortSettings  -------   response  : ${response}");
       response.then((response) {
                print(response.body);
         final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -314,7 +314,7 @@ print(" PayFortSettings     response  : ${response}");
             singleOrderSummaryItem(
                 context: context,
                 title:"Payment Method" ,
-                details: "${widget.payment_method} ",
+                details: "${widget.payment_method == "Split into 3 payments, without fees with Tamara" ? "Tamara" :widget.payment_method} ",
               guestShipmentAddressModel: widget.guestShipmentAddressModel
             ),
             Container(

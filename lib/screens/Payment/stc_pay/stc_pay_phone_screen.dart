@@ -152,12 +152,9 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
                           responsiveSizedBox(
                               context: context, percentageOfHeight: .045),
 
-                          // resetPasswordTextFields(context: context, hint: "Type Your Email"),
-                          Form(
-                            key: _formKey,
-                            child: phone_addressTextFields(),
-                          )
-                          ,
+                         phone_addressTextFields(),
+
+
                           responsiveSizedBox(context: context, percentageOfHeight: .01),
                           // resendMessageButton(context: context),
                           responsiveSizedBox(context: context, percentageOfHeight: .15),
@@ -178,7 +175,9 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
     return StreamBuilder<String>(
       stream: shipmentAddressBloc.phone,
       builder: (context, snapshot) {
-        return Container(
+        return  Form(
+            key: _formKey,
+            child: Container(
           padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
           child: translator.activeLanguageCode == 'en'?Row(
             children: [
@@ -300,36 +299,38 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
                 showFlagDialog: true,
               ),
             ],
-          ),
+          )),
         );
       },
     );
   }
 
   stc_generate_otpButton({BuildContext context,}) {
-    return Container(
-      alignment: Alignment.centerRight,
-      padding: EdgeInsets.all(10),
-      child: StaggerAnimation(
-        titleButton: translator.translate("Send") ,
-        buttonController: _loginButtonController.view,
-        btn_width: width(context) * .3,
-        btn_height:  width(context) * .1,
-        isResetScreen:false,
-        onTap: () {
-          if (_formKey.currentState.validate() ) {
-            StaticData.user_mobile_number = shipmentAddressBloc.phone_controller.value;
-            paymentBloc.add(StcSendVerificationCodeEvent(
-                context :context,
-              phone: shipmentAddressBloc.phone_controller.value
+      return Container(
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.all(10),
+        child: StaggerAnimation(
+          titleButton: translator.translate("Send") ,
+          buttonController: _loginButtonController.view,
+          btn_width: width(context) * .3,
+          btn_height:  width(context) * .1,
+          isResetScreen:false,
+          onTap: () {
+            if (_formKey.currentState.validate() ) {
+              StaticData.user_mobile_number = shipmentAddressBloc.phone_controller.value;
+              paymentBloc.add(StcSendVerificationCodeEvent(
+                  context :context,
+                  phone: shipmentAddressBloc.phone_controller.value
 
-            ));
-          }
+              ));
+            }
 
-        },
-      ),
-    );
-  }
+          },
+        ),
+      );
+    }
+
+
 
   stcpPayPhoneHeader({BuildContext context,}) {
     return Container(

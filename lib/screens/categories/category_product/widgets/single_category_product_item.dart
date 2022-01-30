@@ -41,7 +41,7 @@ class singleCategoryProductItem extends StatelessWidget {
         startDate = DateTime.parse(element.value.toString().substring(0,10));
       }
       else  if(element.attributeCode == "special_to_date"){
-        endDate = DateTime.parse("2022-01-28 00:00:00".substring(0,10));
+        endDate = DateTime.parse(element.value.toString().substring(0,10));
       }
       else    if(element.attributeCode == 'special_price'){
         special_price = element.value;
@@ -50,7 +50,7 @@ class singleCategoryProductItem extends StatelessWidget {
         minimal_price = element.value;
       }
     });
-    if(startDate ==null && endDate ==null ){
+    if(startDate ==null || endDate ==null ){
       new_price = null;
     }else{
       if(StaticData.isCurrentDateInRange(startDate,endDate)
@@ -68,17 +68,6 @@ class singleCategoryProductItem extends StatelessWidget {
 
     }
 
-  /*  product.customAttributes.forEach((element) {
-      if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
-        if(double.parse(element.value).toStringAsFixed(2) != product.price.toStringAsFixed(2) ){
-          special_price = element.value == product.price ? null : element.value;
-        }
-   //     special_price = element.value;
-      }
-    });
-    if(special_price != null){
-      percentage = (1 - (double.parse(special_price)  / product.price) )* 100;
-    }*/
     return InkWell(
       onTap: (){
         customAnimatedPushNavigation(context, ProductDetailsScreen(
@@ -172,8 +161,11 @@ class singleCategoryProductItem extends StatelessWidget {
                                                       crossAxisAlignment: CrossAxisAlignment.end,
                                                       children: [
                                                         MyText(
-                                                          text: "${new_price == null ?product.price.toStringAsFixed(2) : double.parse(new_price)} ",
-                                                          size: StaticData.get_height(context) * .017,
+                                                          text: "${new_price == null ?
+                                                          double.parse(product.price.toString()) <  double.parse(minimal_price) ?
+                                                          product.price.toStringAsFixed(2)  :
+                                                          double.parse(minimal_price).toStringAsFixed(2)
+                                                              : double.parse(new_price)} ",                                                          size: StaticData.get_height(context) * .017,
                                                           color: blackColor,
                                                           maxLines: 2,
                                                           weight: FontWeight.bold,

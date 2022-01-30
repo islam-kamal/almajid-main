@@ -197,7 +197,10 @@ class AddressDetailsEvent extends AppEvent{
   var address_id;
   AddressDetailsEvent({this.address_id});
 }
-
+class GetAllAddressesEvent extends AppEvent{
+  BuildContext context;
+  GetAllAddressesEvent({this.context});
+}
 //Orders
 class CreateOrderEvent extends AppEvent{
   BuildContext context;

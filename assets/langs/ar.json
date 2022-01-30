@@ -84,6 +84,7 @@
   "You will receive an verification code through your phone" : "سوف تتلقى رمز التحقق عبر هاتفك" ,
   "Search By City Name" : "البحث باسم المدينة",
   "Search By Address" : "البحث بالعنوان",
+  "City should be mandatory in checkout" : "من فضلك قم باختيار المدينة",
   "-------------------Location-----------------": "---------------------------------",
   "Location": "الموقع",
   "Type here to search": "اكتب هنا للبحث",
@@ -227,6 +228,7 @@
   "No Products Yet !" : "لا توجد منتجات حاليا",
   "What Are You Loking For ? " : "عن ماذا تريد البحث ؟",
   "Search" : "البحث",
+  "Search for items" : "ابحث عن المنتجات",
   "-------------------- WishList --------" :"------------------------------" ,
   "My WishList" : "مفضلتى",
 
@@ -259,5 +261,10 @@
   "Your order created successfully" : "تم إنشاء طلبك بنجاح",
   "Confirmation Screen" :  "استلام الطلب",
   "Your order Number": "رقم طلبك",
-  "Problem Verifying Payment, If you balance is deducted please contact our customer support and get your payment verified!" : "مشكلة في التحقق من الدفع ، إذا تم خصم رصيدك ، فيرجى الاتصال بدعم العملاء لدينا والتحقق من دفعتك!"
+  "Problem Verifying Payment, If you balance is deducted please contact our customer support and get your payment verified!" : "مشكلة في التحقق من الدفع ، إذا تم خصم رصيدك ، فيرجى الاتصال بدعم العملاء لدينا والتحقق من دفعتك!",
+
+  "Card Holder":  "اسم صاحب البطاقة",
+  "Number" : "رقم البطاقة" ,
+  "Expired Date": "تاريخ الانتهاء",
+  "CVV": "الرقم السرى"
 }

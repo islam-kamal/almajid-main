@@ -2,12 +2,12 @@ import 'package:almajidoud/main.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 class Urls {
-  static final String ADMIN_TOKEN = 'tda5h42j6mke2q43da55wckmoeynz1n1';
-
+  //static final String ADMIN_TOKEN = 'tda5h42j6mke2q43da55wckmoeynz1n1';
+  static final String ADMIN_TOKEN = 'akywvzb51qazebzlzll0nutx3zrry7ao';
   //Authentication Urls
- static final String BASE_URL = "https://test.almajed4oud.com";
+ //static final String BASE_URL = "https://test.almajed4oud.com";
 
-  // static final String BASE_URL = "https://almajed4oud.com";
+   static final String BASE_URL = "https://almajed4oud.com";
 
   static final String SIGN_UP = "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mobilelogin/account/create";
 
