@@ -80,7 +80,6 @@ Future promoCodeAlertDialog({BuildContext base_context}) {
             child: Center(
               child: GestureDetector(
                 onTap: (){
-                print("------ prom_code ---- ${controller.value.text}");
                 shoppingCartBloc.add(ApplyPromoCodeEvent(
                   context: base_context,
                   prom_code: controller.value.text

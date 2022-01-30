@@ -308,7 +308,6 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                         );
                       }
                     } else if (state is ErrorLoading) {
-                      print("33333333333");
                       return Container();
                     } else {
                       return Center(

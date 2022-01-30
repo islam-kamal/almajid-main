@@ -32,7 +32,6 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
       });
       await _loginButtonController.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -43,7 +42,6 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
 
@@ -89,8 +87,6 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
                   )..show(_drawerKey.currentState.context);
                 } else if (state is Done) {
                   var data = state.model as ResetPasswordModel;
-
-                  print("done");
                   _stopAnimation();
                   Flushbar(
                     messageText: Row(

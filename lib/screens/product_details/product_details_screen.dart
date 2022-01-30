@@ -83,11 +83,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                               product_image = element.value;
                             else if(element.attributeCode == "special_from_date"){
                               startDate = DateTime.parse(element.value.toString().substring(0,10));
-                              print("startDate : ${startDate}");
                             }
                             else  if(element.attributeCode == "special_to_date"){
                               endDate = DateTime.parse(element.value.toString().substring(0,10));
-                              print("endDate : ${endDate}");
                             }
                             else    if(element.attributeCode == 'special_price'){
                               special_price = element.value;
@@ -96,27 +94,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                               minimal_price = element.value;
                             }
                           });
-                          print("endDate((((((( : ${endDate}");
                           if(startDate ==null || endDate ==null ) {
                             new_price = null;
-                            print("5 new_price : ${new_price}");
                           }
                           else{
-                            print("****************");
                             if(StaticData.isCurrentDateInRange(startDate,endDate)
                                 && double.parse(special_price) <= double.parse(minimal_price)
                                 && double.parse(special_price).toStringAsFixed(2) != snapshot.data[0].price ) {
                               new_price = special_price;
-                              print("1 new_price : ${new_price}");
 
                             }else if(double.parse(special_price) > double.parse(minimal_price)){
                               new_price = minimal_price;
-                              print("2 new_price : ${new_price}");
                             }
                             else {
                               new_price = null;
-                              print("3 new_price : ${new_price}");
-
                             }
 
                           }
@@ -225,7 +216,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                                     0.15,
                                                 onPressed: () {
                                                   setState(() {
-                                                    print("prod_main_quantity : ${snapshot.data[0].extensionAttributes.stockItem.qty}");
                                                     if (qty == snapshot.data[0].extensionAttributes.stockItem.qty) {
                                                       errorDialog(
                                                         context: context,

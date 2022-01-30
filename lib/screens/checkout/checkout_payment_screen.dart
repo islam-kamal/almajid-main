@@ -175,7 +175,6 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       ));
                     }else{
                     if (formKey.currentState.validate()) {
-                      print('valid!');
                       StaticData.card_number = cardNumber.replaceAll(' ', '');
                       StaticData.card_holder_name = cardHolderName;
                       StaticData.card_security_code = cvvCode;
@@ -187,7 +186,6 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       );
 
                     }else{
-                      print('invalid!');
                     }
                     }
 
@@ -319,7 +317,6 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                             payment_method_name =   paymentMethods[index].title;
 
                             _currentIndex = val;
-                            print("_currentIndex : ${_currentIndex}");
                           });
 
 

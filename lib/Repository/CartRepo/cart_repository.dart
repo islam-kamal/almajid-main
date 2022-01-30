@@ -39,9 +39,6 @@ class CartRepository {
         //errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      print("create_quote 6");
-      print("error : ${e.toString()}");
-      //   errorDialog(context: context, text: e.toString());
     }
   }
 
@@ -93,7 +90,6 @@ class CartRepository {
           }
         };
         FormData formData = FormData.fromMap(params);
-        print("4");
         return NetworkUtil().post(
             AddCartModel(),
             StaticData.vistor_value == 'visitor'
@@ -108,7 +104,6 @@ class CartRepository {
                     'content-type': 'application/json'
                   }));
       } catch (e) {
-        print("error : ${e.toString()}");
         errorDialog(context: context, text: e.toString());
       }
     }
@@ -147,7 +142,6 @@ class CartRepository {
               }
             };
             FormData formData = FormData.fromMap(params);
-            print("4");
             return NetworkUtil().post(
                 AddCartModel(),
                 StaticData.vistor_value == 'visitor'
@@ -162,7 +156,6 @@ class CartRepository {
                         'content-type': 'application/json'
                       }));
           } catch (e) {
-            print("error : ${e.toString()}");
             errorDialog(context: context, text: e.toString());
           }
         } else {
@@ -170,7 +163,6 @@ class CartRepository {
           return null;
         }
       } catch (e) {
-        print("error : ${e.toString()}");
         errorDialog(context: context, text: e.toString());
       }
     }
@@ -208,7 +200,6 @@ class CartRepository {
               }
             };
             FormData formData = FormData.fromMap(params);
-            print("4");
             return NetworkUtil().post(
                 AddCartModel(),
                 StaticData.vistor_value == 'visitor'
@@ -223,7 +214,6 @@ class CartRepository {
                         'content-type': 'application/json'
                       }));
           } catch (e) {
-            print("error : ${e.toString()}");
             errorDialog(context: context, text: e.toString());
           }
         } else {
@@ -231,46 +221,10 @@ class CartRepository {
           return null;
         }
       } catch (e) {
-        print("error : ${e.toString()}");
         errorDialog(context: context, text: e.toString());
       }
     }
   }
-/*
-  Future<AddCartModel> add_product_to_cart(
-      {BuildContext context, var product_quantity, var product_sku}) async {
-    print("1");
-    try {
-      final params = {
-        'cartItem': {
-          'sku': product_sku,
-          'qty': product_quantity,
-          'quote_id': StaticData.vistor_value == 'visitor'
-              ? await sharedPreferenceManager
-                  .readString(CachingKey.GUEST_CART_QUOTE)
-              : await sharedPreferenceManager.readString(CachingKey.CART_QUOTE),
-        }
-      };
-      FormData formData = FormData.fromMap(params);
-      print("4");
-      return NetworkUtil().post(
-          AddCartModel(),
-          StaticData.vistor_value == 'visitor'
-              ? "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${StaticData.vistor_value == 'visitor' ? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE) : await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/items"
-              : "/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/carts/mine/items",
-          body: formData,
-          headers: StaticData.vistor_value == 'visitor'
-              ? Map<String, String>.from({})
-              : Map<String, String>.from({
-                  'Authorization':
-                      'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}',
-                  'content-type': 'application/json'
-                }));
-    } catch (e) {
-      print("error : ${e.toString()}");
-      errorDialog(context: context, text: e.toString());
-    }
-  }*/
 
   Future<CartDetailsModel> get_cart_details() async {
     Map<String, String> headers = StaticData.vistor_value == 'visitor'
@@ -344,8 +298,6 @@ class CartRepository {
         //errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      print("res 6");
-      print("error : ${e.toString()}");
       errorDialog(context: context, text: e.toString());
     }
   }
@@ -374,15 +326,11 @@ class CartRepository {
         errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      print("error : ${e.toString()}");
-      //    Navigator.pop(context);
-      // errorDialog(context: context, text: e.toString());
     }
   }
 
   Future<bool> delete_promo_code_from_cart({BuildContext context}) async {
     Dio dio = new Dio();
-    print("1");
     try {
       final response = await dio.delete(
           StaticData.vistor_value == 'visitor'
@@ -397,20 +345,13 @@ class CartRepository {
                       'content-type': 'application/json',
                       'Accept': 'application/json',
                     })));
-      print("2");
-      print("response : ${response}");
       if (response.statusCode == 200) {
-        print("3");
         return response.data;
       } else {
-        print("4");
         Navigator.pop(context);
-    //    errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      print("error : ${e.toString()}");
       Navigator.pop(context);
-   //   errorDialog(context: context, text: e.toString());
     }
   }
 }

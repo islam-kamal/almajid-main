@@ -30,11 +30,8 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
   void getData() {
     _webController.evaluateJavascript("document.body.innerText").then((data) {
       var decodedJSON = jsonDecode(data);
-      print("result: " + decodedJSON);
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
       final responseCode = responseJSON["response_code"];
-      print('response code' + responseCode);
-      print('success code' + responseCode.substring(2));
       if (responseCode.substring(2) != '000') {
         _responseStatus = STATUS_FAILED;
       } else {
@@ -71,7 +68,6 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('html: ' + _loadHTML());
     return SafeArea(
       child: Scaffold(
           body: Stack(
@@ -91,7 +87,6 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
               onPageFinished: (page) async {
                 _loadingPayment = false;
                 if (page.contains("/checkout/cart")) {
-                  print('am in cart page');
                   _responseStatus = STATUS_CHECKSUM_FAILED;
                   this.setState(() {
                     _loadingPayment = false;
@@ -109,8 +104,6 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
                   var data = await _webController
                       .evaluateJavascript("document.body.innerText");
                   var decodedJSON = jsonDecode(data);
-                  print("result: " + decodedJSON.toString());
-
                   Map<String, dynamic> responseJSON = {};
                   if (Platform.isAndroid) {
                     responseJSON = jsonDecode(decodedJSON);
@@ -119,7 +112,6 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
                   }
 
                   final responseCode = responseJSON["status"];
-                  print('response code: ' + responseCode.toString());
                   _loadingPayment = false;
                   if (responseCode == true) {
                     _responseStatus = STATUS_SUCCESSFUL;

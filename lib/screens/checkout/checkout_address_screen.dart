@@ -107,7 +107,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       });
       await _loginButtonController.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -118,7 +117,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
   final _formKey = GlobalKey<FormState>();
@@ -151,7 +149,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                       }
                     }
                     else if (state is ErrorLoading) {
-                      print("ErrorLoading");
                       _stopAnimation();
                       if(state.indicator == "address_detials"){
                         var data = state.model as AddressModel;
@@ -250,25 +247,20 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
                     }
                     else if (state is Done) {
-                      print("done");
                       _stopAnimation();
                       if(state.indicator == "address_detials"){
                         var data = state.model as AddressModel;
                    setState(() {
                      frist_name = data.firstname;
-                     print("frist_name : ${frist_name}");
                      last_name = data.lastname;
                      phone = data.telephone;
                      street = data.street[0];
                      addres_city_name = data.city;
                      address_city_id = data.regionId;
-                     print("*** address_city_id ** : ${_currentIndex} ");
                      shipmentAddressBloc.frist_name_controller.value = frist_name;
                      shipmentAddressBloc.last_name_controller.value = last_name;
                      shipmentAddressBloc.phone_controller.value = phone;
                      shipmentAddressBloc.street_controller.value = street;
-                     print("shipmentAddressBloc.frist_name_controller.value : ${shipmentAddressBloc.frist_name_controller.value} ");
-                     print("shipmentAddressBloc.last_name_controller.value : ${shipmentAddressBloc.last_name_controller.value}");
                    });
                       }else {
                         var data = state.model as GuestShipmentAddressModel;
@@ -771,7 +763,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
     return StreamBuilder<String>(
       stream: shipmentAddressBloc.frist_name,
       builder: (context, snapshot) {
-        print("frist_name_controller.text, ${initialValue}");
         return Container(
           padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
           width: MediaQuery.of(context).size.width * 0.9,
@@ -928,7 +919,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
   phone_addressTextFields({BuildContext context, String hint,var initialValue}) {
     String _countryCode  ="+966";
-    print("hint ------------: ${hint}");
     return StreamBuilder<String>(
       stream: shipmentAddressBloc.phone,
       builder: (context, snapshot) {
@@ -1150,8 +1140,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       );
 
     }else{
-
-      print("form validation error -------------------");
     }
       },
     );

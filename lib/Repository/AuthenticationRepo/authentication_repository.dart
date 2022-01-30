@@ -37,7 +37,6 @@ class AuthenticationRepository{
           data: convert.jsonEncode({'username': email, 'password': password}) , options: Options(
               headers: {'content-type': 'application/json'}
           ));
-      print("response : ${response.data}");
       if (response.statusCode == 200) {
        return StaticData.user_token = response.data;
       } else {
@@ -45,7 +44,6 @@ class AuthenticationRepository{
         //errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      print("error : ${e.toString()}");
       errorDialog(context: context, text: e.toString());
     }
 
@@ -75,9 +73,6 @@ class AuthenticationRepository{
   }
 
   static Future<AuthenticationModel> checkOtpCode(String phone , String code, String route){
-    print("phone : ${phone}");
-    print("code : ${code}");
-    print("route : ${route}");
     FormData formData =FormData.fromMap({
       'mobilenumber' : phone,
       'otpcode' : code,

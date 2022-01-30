@@ -8,8 +8,6 @@ import 'package:almajidoud/Repository/PaymentRepo/payment_repository.dart';
 import 'package:almajidoud/Repository/WishListRepo/wishlist_repository.dart';
 import 'package:almajidoud/main.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
-import 'package:almajidoud/screens/intro/intro1_screen.dart';
-import 'package:almajidoud/screens/intro/intro2_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/Widgets/customWidgets.dart';
 import 'intro_screen.dart';
@@ -30,7 +28,6 @@ class _SplashScreenState extends State<SplashScreen> {
     StaticData.wishlist_items = [];
     Timer(Duration(seconds: 0), () async {
       try {
-        print('--- token -- : ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}');
         checkAuthentication(await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN));
       } catch (e) {
         checkAuthentication(null);

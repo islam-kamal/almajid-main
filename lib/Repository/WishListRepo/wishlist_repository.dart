@@ -45,7 +45,6 @@ class WishListRepository {
        // errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      print("@@@@@@"+e.toString());
     //  errorDialog(context: context, text: "The consumer isn't authorized to access %resources.");
     }
   }
@@ -67,20 +66,17 @@ class WishListRepository {
                 'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}'
               }
           ));
-      print("response : ${response.data}");
       if (response.statusCode == 200) {
         return response.data;
       } else {
         errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      print("error : ${e.toString()}");
       errorDialog(context: context, text: e.toString());
     }
   }
 
   Future<bool> removeProudctToWishList({BuildContext context ,var wishlist_item_id})async {
-    print("remove wishlist_item_id : ${wishlist_item_id}");
     Dio dio = new Dio();
     try {
       final response = await dio.post(
@@ -92,17 +88,12 @@ class WishListRepository {
                 'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}'
               }
           ));
-      print("remove wishlist_item_id 1 : ${response}");
       if (response.statusCode == 200) {
-        print("remove wishlist_item_id 2");
         return response.data;
       } else {
-        print("remove wishlist_item_id 3");
         errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      print("remove wishlist_item_id 4");
-      print("error : ${e.toString()}");
       errorDialog(context: context, text: e.toString());
     }
   }
@@ -138,16 +129,13 @@ class WishListRepository {
             )
         );
         if(add_response.statusCode == 200){
-          print("add_response : ${add_response}");
           return add_response.data;
         }else{
-          print("else add_response : ${add_response.data['message']}");
           errorDialog(context: context, text: add_response.data['message']);
           return null;
         }
 
       } catch (e) {
-        print("error : ${e.toString()}");
         errorDialog(context: context, text: e.toString());
       }
     }
@@ -191,7 +179,6 @@ class WishListRepository {
             }
 
           } catch (e) {
-            print("error : ${e.toString()}");
             errorDialog(context: context, text: e.toString());
           }
         } else {
@@ -199,7 +186,6 @@ class WishListRepository {
           return null;
         }
       } catch (e) {
-        print("error : ${e.toString()}");
         errorDialog(context: context, text: e.toString());
       }
     }
@@ -243,7 +229,6 @@ class WishListRepository {
             }
 
           } catch (e) {
-            print("error : ${e.toString()}");
             errorDialog(context: context, text: e.toString());
           }
         } else {
@@ -251,7 +236,6 @@ class WishListRepository {
           return null;
         }
       } catch (e) {
-        print("error : ${e.toString()}");
         errorDialog(context: context, text: e.toString());
       }
     }

@@ -72,7 +72,6 @@ class _OtpState extends State<VerificationCodeScreen>
       });
       await _controller.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -83,7 +82,6 @@ class _OtpState extends State<VerificationCodeScreen>
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
 
@@ -218,7 +216,6 @@ class _OtpState extends State<VerificationCodeScreen>
             _secondDigit.toString() +
             _thirdDigit.toString() +
             _fourthDigit.toString();
-        print("otp_Code : ${otp_code}");
 // Verify your otp by here. API call
       }
     });
@@ -252,7 +249,6 @@ class _OtpState extends State<VerificationCodeScreen>
     for (int i = StaticData.country_code.length; i < number.length - 3; i++) {
       number = replaceCharAt(number, i, "*");
     }
-    print("newNumber : ${number}");
     return number;
   }
 
@@ -548,7 +544,6 @@ class _OtpState extends State<VerificationCodeScreen>
               _stopAnimation();
 
               if (state.indicator == 'checkOtpClick') {
-                print("------- Done ---------");
                 switch (widget.route) {
                   case 'SignUpScreen':
                     customPushNamedNavigation(
@@ -574,7 +569,6 @@ class _OtpState extends State<VerificationCodeScreen>
                 customAnimatedPushNavigation(context, VerificationCodeScreen());
               }
             } else if (state is ErrorLoading) {
-              print('login ErrorLoading');
               if (state.indicator == 'checkOtpClick') {
                 var data = state.model as AuthenticationModel;
 

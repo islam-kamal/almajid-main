@@ -51,7 +51,6 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
       });
       await _loginButtonController.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -62,7 +61,6 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
   @override
@@ -348,7 +346,6 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
     if (response) {
       shoppingCartBloc.add(GetCartDetailsEvent());
     } else {
-      print("item can't be deleted");
     }
   }
 

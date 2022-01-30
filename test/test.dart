@@ -5,7 +5,6 @@ void main() {
     {'attribute_code':'name','value':'Ali'}];
   final mobileElement = list1.firstWhere((element) => element['attribute_code'] == 'mobile_number');
 
-  print(mobileElement['value'].toString());
 }
 
 

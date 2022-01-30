@@ -61,14 +61,11 @@ class ReviewsRepository {
           List<ProductReviewModel> temp = (jsonresponse as List)
               .map((f) => ProductReviewModel.fromJson(f))
               .toList();
-          print("temp : ${temp}");
           return temp;
         }
       } else {
-        print("response.statusCode  : ${response.data['message'] }");
       }
     } catch (e) {
-      print("response error  : ${e.toString() }");
     }
 
 

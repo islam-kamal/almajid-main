@@ -67,11 +67,8 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
   void getData() {
     _webController.evaluateJavascript("document.body.innerText").then((data) {
       var decodedJSON = jsonDecode(data);
-      print("result: " + decodedJSON);
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
       final responseCode = responseJSON["response_code"];
-      print('response code' + responseCode);
-      print('success code' + responseCode.substring(2));
       if (responseCode.substring(2) != '000') {
         _responseStatus = STATUS_FAILED;
       } else {
@@ -148,7 +145,6 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
                       .evaluateJavascript("document.body.innerText");
                   var decodedJSON = jsonDecode(data);
 
-                  print("result: " + decodedJSON.toString());
                   Map<String, dynamic> responseJSON = {};
                   if (Platform.isAndroid) {
                     responseJSON = jsonDecode(decodedJSON);
@@ -157,11 +153,9 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
                   }
 
                   final responseCode = responseJSON["response_code"];
-                  print('success code' + responseCode.substring(2).toString());
                   if (responseCode.substring(2) == '000') {
                     final merchantReference =
                         responseJSON["merchant_reference"];
-                    print("merchantReference: " + merchantReference);
                     _responseStatus = STATUS_SUCCESSFUL;
                   } else {
                     _responseStatus = STATUS_FAILED;

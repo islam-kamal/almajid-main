@@ -2,7 +2,6 @@ import 'package:almajidoud/utils/file_export.dart';
 
 editCartHeader({BuildContext context, var item_id}) {
 
-  print("header item_id : ${item_id}");
   return Container(
     padding: EdgeInsets.only(
         right: width(context) * .02,
@@ -51,7 +50,6 @@ editCartHeader({BuildContext context, var item_id}) {
                 ),
                 InkWell(
                   onTap: (){
-                    print("------ item id : ${item_id}");
                     shoppingCartBloc.add(DeleteProductFromCartEvent(
                       context: context,
                       item_id: item_id

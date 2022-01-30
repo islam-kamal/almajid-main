@@ -19,7 +19,6 @@ class ProductReviewsScreen extends StatefulWidget{
 class ProductReviewsScreenState extends State<ProductReviewsScreen> {
   @override
   void initState() {
-    print("product_suk : ${widget.product_suk}");
     reviewsBloc.add(GetProductReviewsEvent(
         product_sku: widget.product_suk
     ));

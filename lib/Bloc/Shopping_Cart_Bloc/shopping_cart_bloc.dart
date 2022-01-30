@@ -30,13 +30,10 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
           context: event.context,
           product_sku: event.product_sku,
           product_quantity: event.product_quantity);
-      print("AddProductToCart response : ${response}");
 
       if (response.message != null) {
-        print("AddProductToCart ErrorLoading");
         yield ErrorLoadingProduct(sku: event.product_sku, model: response, indicator: event.indictor);
       } else {
-        print("AddProductToCart Done");
         yield DoneProductAdded(sku: event.product_sku, model: response, indicator: event.indictor);
 
         //update the car badge
@@ -53,7 +50,6 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
       yield Loading(indicator: 'GetCartDetails');
 
       final response = await cartRepository.get_cart_details();
-      print("cart response : ${response}");
       if (response.message != null) {
         yield ErrorLoading(
             message: response.message, indicator: 'GetCartDetails');
@@ -64,8 +60,6 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
     else if (event is ApplyPromoCodeEvent) {
       final response = await cartRepository.apply_promo_code_to_cart(
           promo_code: event.prom_code, context: event.context);
-      print("apply_promo_code response : ${response}");
-
       if (response != true) {
         errorDialog(
             context: event.context,
@@ -91,7 +85,6 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
     else if (event is DeletePromoCodeEvent) {
       final response = await cartRepository.delete_promo_code_from_cart(
           context: event.context);
-      print("apply_promo_code response : ${response}");
 
       if (response != true) {
         errorDialog(context: event.context,

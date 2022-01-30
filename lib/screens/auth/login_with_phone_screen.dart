@@ -35,7 +35,6 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
       });
       await _loginButtonController.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -46,7 +45,6 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
 
@@ -69,12 +67,10 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
               listener: (context, state) {
                 var data = state.model as AuthenticationModel;
                 if (state is Loading) {
-                  print("Loading");
                   _playAnimation();
                 }
                 else if (state is ErrorLoading) {
                   var data = state.model as AuthenticationModel;
-                  print("ErrorLoading");
                   _stopAnimation();
                   Flushbar(
                     messageText: Row(
@@ -107,7 +103,6 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
 
                 }
                 else if (state is Done) {
-                  print("done");
                   _stopAnimation();
                   Navigator.pushReplacement(
                     context,
@@ -244,10 +239,6 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                         // Set default value
                         initialSelection: '+966',
                         onChanged: (CountryCode code) {
-                          print(code.name);
-                          print(code.code);
-                          print(code.dialCode);
-                          print(code.flagUri);
                           _countryCode = code.dialCode;
                           StaticData.country_code = _countryCode;
                         },

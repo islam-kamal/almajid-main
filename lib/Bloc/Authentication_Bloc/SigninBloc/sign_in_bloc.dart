@@ -31,7 +31,6 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
         context: event.context,
           email: email_controller.value,
          password:  password_controller.value);
-      print("sigin response : ${response}");
       sharedPreferenceManager.writeData(CachingKey.AUTH_TOKEN,response);
       if(response != null){
         customPushNamedNavigation(event.context,GetStartedScreen(
@@ -41,7 +40,6 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
 
       }else{
 
-        // yield ErrorLoading(model: response);
         errorDialog(context: event.context,
             text:'he account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later',
         function: (){
@@ -52,17 +50,14 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
     }
     else if (event is UserInfoClick){
       yield Loading(model: null);
-      print("res 1");
       var response = await AuthenticationRepository.get_user_info(
           token: event.token,
       );
-      print("UserInfo response attributes: ${event.token}");
       if(response != null){
         sharedPreferenceManager.writeData(CachingKey.USER_NAME, response.firstname +' '+ response.lastname );
         sharedPreferenceManager.writeData(CachingKey.CUSTOMER_ID, response.id );
         sharedPreferenceManager.writeData(CachingKey.EMAIL, response.email );
         final mobileElement = response.customAttributes.firstWhere((element) => element.attributeCode == 'mobile_number');
-        print('you number is ' + mobileElement.value.toString());
         sharedPreferenceManager.writeData(CachingKey.MOBILE_NUMBER, mobileElement.value );
         await _updateUserToken(customerId: response.id);
         yield Done(model:response);

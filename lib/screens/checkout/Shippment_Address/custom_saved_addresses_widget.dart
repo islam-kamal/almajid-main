@@ -36,7 +36,6 @@ class CustomSavedAddressesWidgetState extends State<CustomSavedAddressesWidget> 
 
   @override
   void initState() {
-    print("StaticData.saved_addresses : ${StaticData.saved_addresses}");
     super.initState();
     saved_address_data = saved_address_generateItems(1);
   }
