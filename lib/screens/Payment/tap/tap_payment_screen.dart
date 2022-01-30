@@ -27,7 +27,7 @@ class _TapPaymentScreenState extends State<TapPaymentScreen> {
 
   String _loadHTML()  {
     return "<html> <body onload='document.f.submit();'> "
-        "<form id='f' name='f' method='get' action='${"https://test.almajed4oud.com/en-kw/tap/Standard/Redirect"}'>"
+        "<form id='f' name='f' method='get' action='${"https://almajed4oud.com/en-kw/tap/Standard/Redirect"}'>"
             "<input type='hidden' name='order_id' value='${widget.order_incremental_id}' />" +
         "<input type='hidden' name='token' value='${widget.public_key}' />" +
         "</form>  <head> <meta name='viewport' content='width=device-width, initial-scale=1'> <style>.loader {"

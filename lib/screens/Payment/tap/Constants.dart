@@ -1,7 +1,7 @@
 const PAYMENT_URL = "https://sbcheckout.payfort.com/FortAPI/paymentPage";
 //don't forgot to change order type column to 'mobile_android' in sales_order. this is for integration return url
 const ORDER_DATA = {
-  "url":"https://test.almajed4oud.com/en-kw/tap/Standard/Redirect",
+  "url":"https://almajed4oud.com/en-kw/tap/Standard/Redirect",
   "order_id": "ON50000206065",
   "token": "tok_9SUK402184872rZ15hg11a207",
 };
