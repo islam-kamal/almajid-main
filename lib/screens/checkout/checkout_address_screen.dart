@@ -411,7 +411,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             responsiveSizedBox(
                 context: context, percentageOfHeight: .01),
             phone_addressTextFields(
-                context: context, hint: phone==null?"Ex: 5xxxxxxxx" : phone.toString().substring(5),initialValue: phone==null?"Ex: 5xxxxxxxx" :phone.toString().substring(5)),
+                context: context, hint: phone==null?"Ex: 5xxxxxxxx" : phone.toString().substring(4),initialValue: phone==null?"Ex: 5xxxxxxxx" :phone.toString().substring(4)),
             responsiveSizedBox(
                 context: context, percentageOfHeight: .01),
 
