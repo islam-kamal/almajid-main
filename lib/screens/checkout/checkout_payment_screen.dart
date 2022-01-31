@@ -113,7 +113,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       themeColor: Colors.blue,
                       textColor: mainColor,
                       cardNumberDecoration: InputDecoration(
-                        labelText: translator.translate("Card Holder"),
+                        labelText: translator.translate("Card Number"),
                         hintText: 'XXXX XXXX XXXX XXXX',
                         hintStyle: const TextStyle(color: greyColor,),
                         labelStyle: const TextStyle(color: mainColor),
@@ -175,7 +175,6 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       ));
                     }else{
                     if (formKey.currentState.validate()) {
-                      print('valid!');
                       StaticData.card_number = cardNumber.replaceAll(' ', '');
                       StaticData.card_holder_name = cardHolderName;
                       StaticData.card_security_code = cvvCode;
@@ -187,7 +186,6 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       );
 
                     }else{
-                      print('invalid!');
                     }
                     }
 
@@ -319,7 +317,6 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                             payment_method_name =   paymentMethods[index].title;
 
                             _currentIndex = val;
-                            print("_currentIndex : ${_currentIndex}");
                           });
 
 

@@ -6,7 +6,6 @@ import 'package:almajidoud/utils/file_export.dart';
 singleOrderSummaryItem({BuildContext context, String title: "", String details: "",
     Function onTapChange, String image: "" , bool isAddress : false  , bool rValue,
     GuestShipmentAddressModel guestShipmentAddressModel }) {
-  print("details : ${details}");
   return Column(
     children: [
       Container(

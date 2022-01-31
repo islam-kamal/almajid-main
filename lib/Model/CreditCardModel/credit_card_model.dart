@@ -110,7 +110,6 @@ class Errors {
   Errors({this.holderName, this.number, this.expYear, this.expMonth});
 
   Errors.fromJson(Map<String, dynamic> json) {
-    print("--holder --- ${json['holder_name']}");
     holderName = json['holder_name']==null?null :json['holder_name'].cast<String>();
     number = json['number'] ==null?null :json['number'].cast<String>();
     expYear = json['exp_year']==null?null :json['exp_year'].cast<String>();

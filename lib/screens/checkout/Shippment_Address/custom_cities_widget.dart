@@ -82,7 +82,6 @@ class CustomCitiesWidgetState extends State<CustomCitiesWidget> {
                                       _currentIndex = int.parse(city_id);
                                     }
                                   });
-                                  print("*********1 *****");
                                   return Directionality(
                                     textDirection: TextDirection.ltr,
                                     child: Container(
@@ -123,7 +122,6 @@ class CustomCitiesWidgetState extends State<CustomCitiesWidget> {
                                         )),
                                   );
                                 }else{
-                                  print("*********2 *****");
                                   return Directionality(
                                     textDirection: TextDirection.ltr,
                                     child: Container(

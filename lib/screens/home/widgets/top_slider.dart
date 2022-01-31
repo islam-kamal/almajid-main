@@ -16,7 +16,6 @@ topSlider({BuildContext context , List gallery}) {
           showIndicator: true,
           dotSpacing: 13,
           onImageTap: (index) {
-            print('this is $index');
           },
           indicatorBgPadding: 5.0,
           dotBgColor: Colors.transparent,

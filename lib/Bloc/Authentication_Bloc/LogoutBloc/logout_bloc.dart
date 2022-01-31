@@ -25,7 +25,6 @@ class LogoutBloc extends Bloc<AppEvent,AppState> implements BaseBloc{
             sharedPreferenceManager.removeData(CachingKey.USER_NAME);
             sharedPreferenceManager.removeData(CachingKey.FORGET_PASSWORD_PHONE);
             sharedPreferenceManager.removeData(CachingKey.USER_ID);
-            print("Email logout");
             break;
           case 'facebook':
 
@@ -50,23 +49,6 @@ class LogoutBloc extends Bloc<AppEvent,AppState> implements BaseBloc{
       }else{
         yield ErrorLoading(model: response);
       }
-    /*  switch(await sharedPreferenceManager.readString(CachingKey.SOCIAL_LOGIN_TYPE)){
-
-       case 'facebook':
-          FirebaseAuth auth ;
-          FacebookLogin fbLogin ;
-          fbLogin = new FacebookLogin();
-          auth = FirebaseAuth.instance;
-          await auth.signOut();
-          await fbLogin.logOut();
-       print("facebook logout");
-
-          break;
-        case 'email':
-
-         break;
-
-      }*/
 
     }
   }

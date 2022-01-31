@@ -63,7 +63,6 @@ class LocalNotificationService {
         payload: message.data["route"],
       );
     } on Exception catch (e) {
-      print(e);
     }
   }
 

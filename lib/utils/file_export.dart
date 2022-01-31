@@ -59,7 +59,6 @@ export 'package:almajidoud/screens/cart/cart_screen.dart';
 export 'package:almajidoud/screens/location/location_screen.dart';
 export 'package:almajidoud/screens/my_account/my_account_screen.dart';
 export 'package:almajidoud/screens/notifications/notifications_screen.dart';
-export 'package:almajidoud/screens/settings/settings_screen.dart';
 export 'package:almajidoud/screens/categories/category_product/widgets/category_products_top_slider.dart';
 export 'package:almajidoud/screens/categories/category_product/widgets/single_category_product_item.dart';
 export 'package:almajidoud/screens/categories/category_product/category_products_screen.dart';

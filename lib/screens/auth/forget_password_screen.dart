@@ -38,7 +38,6 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
       });
       await _loginButtonController.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -49,7 +48,6 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
 
@@ -72,11 +70,9 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
         listener: (context, state) {
       var data = state.model as AuthenticationModel;
       if (state is Loading) {
-        print("Loading");
         _playAnimation();
       } else if (state is ErrorLoading) {
         var data = state.model as AuthenticationModel;
-        print("ErrorLoading");
         _stopAnimation();
         Flushbar(
           messageText: Row(
@@ -108,7 +104,6 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
         )..show(_drawerKey.currentState.context);
 
       } else if (state is Done) {
-        print("done");
         _stopAnimation();
         Navigator.pushReplacement(
           context,
@@ -233,10 +228,6 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
                         // Set default value
                         initialSelection: '+966',
                         onChanged: (CountryCode code) {
-                          print(code.name);
-                          print(code.code);
-                          print(code.dialCode);
-                          print(code.flagUri);
                           _countryCode = code.dialCode;
                           StaticData.country_code = _countryCode;
                         },

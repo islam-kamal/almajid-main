@@ -14,7 +14,6 @@ class LogoutDialogState extends State<LogoutDialog> {
 
   @override
   Widget build(BuildContext context) {
-    print("logout 1 ------------");
 
     return StatefulBuilder(
       builder: (context, setState) {

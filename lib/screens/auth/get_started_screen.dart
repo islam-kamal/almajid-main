@@ -36,7 +36,6 @@ class GetStartedScreenState extends State<GetStartedScreen>
       });
       await _loginButtonController.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -47,7 +46,6 @@ class GetStartedScreenState extends State<GetStartedScreen>
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
 
@@ -70,11 +68,9 @@ class GetStartedScreenState extends State<GetStartedScreen>
                   listener: (context, state) {
                     var data = state.model as UserInfoModel;
                     if (state is Loading) {
-                      print("Loading");
                       _playAnimation();
                     } else if (state is ErrorLoading) {
                       var data = state.model as UserInfoModel;
-                      print("ErrorLoading");
                       _stopAnimation();
 
                       Flushbar(
@@ -106,19 +102,15 @@ class GetStartedScreenState extends State<GetStartedScreen>
                         duration: Duration(seconds: 6),
                       )..show(_drawerKey.currentState.context);
                     } else if (state is Done) {
-                      print("done");
                       _stopAnimation();
                       StaticData.vistor_value = null;
                       cartRepository.check_quote_status().then((value){
                         final extractedData = json.decode(value.body) as Map<String, dynamic>;
                          if (extractedData["status"] == null){
-                        print("cart quote is not active");
                         cartRepository.create_quote(context: context); // used to create new quote for guest
                         }
                         else if (extractedData["status"]) {
-                          print("cart quote is active");
                         }else if(extractedData["message"] != null){
-                          print("cart quote is  not found");
                           cartRepository.create_quote(context: context); // used to create new quote for guest
                         }
 

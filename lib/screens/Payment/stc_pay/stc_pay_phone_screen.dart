@@ -39,7 +39,6 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
       });
       await _loginButtonController.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -50,7 +49,6 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
 
@@ -72,11 +70,9 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
               bloc: paymentBloc,
               listener: (context, state) {
                 if (state is Loading) {
-                  print("Loading");
                   _playAnimation();
                 } else if (state is ErrorLoading) {
                   var data = state.model as StcPayModel;
-                  print("ErrorLoading");
                   _stopAnimation();
                   Flushbar(
                     messageText: Row(
@@ -109,7 +105,6 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
 
                 } else if (state is Done) {
                   var data = state.model as StcPayModel;
-                  print("done");
                   _stopAnimation();
                   //   go to otp verification
         customAnimatedPushNavigation(context, StcVerificationCodeScreen(

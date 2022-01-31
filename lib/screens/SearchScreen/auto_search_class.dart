@@ -35,7 +35,6 @@ class _HomePageState extends State<AutoSearchClass> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data.items == null) {
-                print("search 1");
                 return Container();
               } else {
                 return SearchWidget<product_model.Items>(
@@ -56,11 +55,9 @@ class _HomePageState extends State<AutoSearchClass> {
                   // widget customization
                   noItemsFoundWidget: NoItemsFound(),
                   textFieldBuilder: (controller, focusNode) {
-                    print("search 6");
                     return MyTextField(controller, focusNode);
                   },
                   onItemSelected: (item) {
-                    print("search 7");
                     setState(() {
                       _selectedItem = item;
                     });
@@ -141,7 +138,6 @@ class MyTextField extends StatelessWidget {
 class NoItemsFound extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print("search 5");
     return  Text(
       translator.translate("There is no products"),
       style: TextStyle(

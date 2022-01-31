@@ -2,7 +2,6 @@ import 'package:almajidoud/screens/Reviews/product_reviews_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 vatAndReviewsRow({BuildContext context , var product_sku , var product_id, bool review_status}) {
-  print("product_sku : ${product_sku}");
   return Container(
     padding: EdgeInsets.only(
         right: width(context) * .05, left: width(context) * .05),

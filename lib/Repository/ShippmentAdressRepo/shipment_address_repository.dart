@@ -163,15 +163,12 @@ class ShipmentAddressRepository {
         errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      print("error : ${e.toString()}");
       errorDialog(context: context, text: e.toString());
     }
   }
 
   Future<List<AddressModel>> get_all_saved_addresses(
       {BuildContext context}) async {
-    print(
-        "get_all_saved_addresses url : ${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/customers/me/address/search?customer_id=${await sharedPreferenceManager.readInteger(CachingKey.CUSTOMER_ID)}&searchCriteria}");
     try {
       final response = await dio.get(
           '${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/customers/me/address/search?customer_id=${await sharedPreferenceManager.readInteger(CachingKey.CUSTOMER_ID)}&searchCriteria',
@@ -184,23 +181,17 @@ class ShipmentAddressRepository {
                   'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}',
             },
           )));
-      print("get_all_saved_addresses response : ${response}");
       if (response.statusCode == 200) {
-        print("get_all_saved_addresses 1");
         final jsonresponse = response.data['items'];
         List<AddressModel> temp = (jsonresponse as List)
             .map((f) => AddressModel.fromJson(f))
             .toList();
-        print("get_all_saved_addresses 2");
         StaticData.saved_addresses_count = temp.length;
-        print("get_all_saved_addresses 3");
         return temp;
       } else {
-        print("get_all_saved_addresses 4");
         errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      print("@@@@@@" + e.toString());
       errorDialog(
           context: context,
           text: "The consumer isn't authorized to access %resources.");

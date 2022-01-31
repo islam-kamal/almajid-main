@@ -3,7 +3,6 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:rating_bar/rating_bar.dart';
 
 priceAndRatingRow({BuildContext context , var new_price ,var old_price, var minimal_price ,bool review_status}) {
-  print("price@@@ :${new_price}");
   return Container(
     padding: EdgeInsets.only(
         right: width(context) * .05, left: width(context) * .05),

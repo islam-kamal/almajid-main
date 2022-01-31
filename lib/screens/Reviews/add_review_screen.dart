@@ -43,7 +43,6 @@ class _AddReviewScreenState extends State<AddReviewScreen>
       });
       await _loginButtonController.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -54,7 +53,6 @@ class _AddReviewScreenState extends State<AddReviewScreen>
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
 
@@ -79,7 +77,6 @@ class _AddReviewScreenState extends State<AddReviewScreen>
             } else if (state is ErrorLoading) {
               if(state.indicator ==  "CreateReview"){
                 var data = state.model as ProductReviewModel;
-                print("ErrorLoading");
                 _stopAnimation();
 
                 Flushbar(
@@ -205,7 +202,6 @@ class _AddReviewScreenState extends State<AddReviewScreen>
                                               title: summary.text,
                                               detail: review.text));
                                         } else {
-                                          print("empty fields");
                                         }
                                       },
                                     )
@@ -320,11 +316,8 @@ class _AddReviewScreenState extends State<AddReviewScreen>
             onRated: (value) {
               setState(() {
                 rating = value;
-                print(rating);
               });
 
-              print("rating value -> $value");
-              // print("rating value dd -> ${value.truncate()}");
             },
           ),
         ],

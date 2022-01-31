@@ -23,10 +23,8 @@ class AppPushNotifications {
 
   void notificationSetup(GlobalKey<NavigatorState> navigatorKey) {
     Firebase.initializeApp().whenComplete(() {
-      print("completed");
       _firebaseMessaging = FirebaseMessaging.instance;
       this.navigatorKey = navigatorKey;
-      print("===================================");
       requestPermissions();
       getFcmToken();
       notificationListeners();
@@ -44,18 +42,11 @@ class AppPushNotifications {
       badge: true,
       sound: true,
     );
-    /*   _firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings setting) {
-      print('IOS Setting Registed');
-    });*/
+
   }
 
   Future<String> getFcmToken() async {
-/*    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('msgToken', await _firebaseMessaging.getToken());*/
     sharedPreferenceManager.writeData(CachingKey.FIREBASE_TOKEN, await _firebaseMessaging.getToken());
-    print('firebase token => ${await _firebaseMessaging.getToken()??""}');
-    print("_____________" + await _firebaseMessaging.getToken());
     return await _firebaseMessaging.getToken();
   }
 
@@ -65,7 +56,6 @@ class AppPushNotifications {
       AndroidNotification android = message.notification?.android;
     });
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new onMessageOpenedApp event was published!');
       Navigator.pushReplacement(context, MaterialPageRoute(
           builder: (context)=>CustomCircleNavigationBar()));
     });
@@ -73,20 +63,17 @@ class AppPushNotifications {
   }
 
   Future<dynamic> _onNotificationMessage(Map<String, dynamic> message) async {
-    print("------- ON MESSAGE -------5555555----- $message");
 
     _onMessageStreamController.add(message);
   }
 
   Future<dynamic> _onNotificationResume(Map<String, dynamic> message) async {
 
-    print("------- ON RESUME ------66666666------ $message");
 
     _streamController.add(message);
   }
 
   Future<dynamic> _onNotificationLaunch(Map<String, dynamic> message) async {
-    print("------- ON LAUNCH -----7777777777777------- $message");
 
   }
 

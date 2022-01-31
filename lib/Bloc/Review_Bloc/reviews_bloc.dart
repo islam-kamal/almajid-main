@@ -41,10 +41,8 @@ class ReviewsBloc extends Bloc<AppEvent, AppState> with Validator{
       final response = await reviewsRepository.getProductReviews(
         product_sku: event.product_sku
       );
-      print("response : $response");
       if (response != null) {
         _product_reviews_subject.sink.add(response);
-        print("_product_reviews_subject : ${_product_reviews_subject}");
       yield Done(general_model: response , indicator: 'GetProductReviews');
       } else if (response == null) {
         yield ErrorLoading(indicator: 'GetProductReviews');

@@ -42,7 +42,6 @@ class _SignInScreenState extends State<SignInScreen>
       });
       await _loginButtonController.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -53,7 +52,6 @@ class _SignInScreenState extends State<SignInScreen>
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
 
@@ -76,12 +74,10 @@ class _SignInScreenState extends State<SignInScreen>
         listener: (context, state) {
       var data = state.model as AuthenticationModel;
       if (state is Loading) {
-        print("Loading");
         _playAnimation();
       }
       else if (state is ErrorLoading) {
         var data = state.model as AuthenticationModel;
-        print("ErrorLoading");
         _stopAnimation();
 
         Flushbar(
@@ -115,8 +111,6 @@ class _SignInScreenState extends State<SignInScreen>
       }
       else if (state is Done) {
         var data = state.model as AuthenticationModel;
-
-        print("done");
         _stopAnimation();
         sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
 

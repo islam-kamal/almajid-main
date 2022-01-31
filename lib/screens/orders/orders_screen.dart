@@ -65,7 +65,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                           );
                                         case ConnectionState.active:
                                           if (snapshot.hasError) {
-                                            print(snapshot.error.toString());
                                             return Center(
                                               child: Text(snapshot.error.toString()),
                                             );

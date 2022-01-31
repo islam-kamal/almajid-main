@@ -51,7 +51,6 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
       });
       await _loginButtonController.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -62,7 +61,6 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
   @override
@@ -333,10 +331,14 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
       btn_width: width(context) * .8,
       checkout_color: true,
       onTap: () {
-    StaticData.vistor_value == 'visitor' ? null
-        : shipmentAddressBloc.add(
+        if(StaticData.vistor_value == 'visitor' ){
+          customAnimatedPushNavigation(context, CheckoutAddressScreen());
+
+        }else{
+          shipmentAddressBloc.add(
               GetAllAddressesEvent(context: context)
           );
+        }
       },
     );
   }
@@ -348,7 +350,6 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
     if (response) {
       shoppingCartBloc.add(GetCartDetailsEvent());
     } else {
-      print("item can't be deleted");
     }
   }
 
@@ -424,7 +425,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                 context: context,
                                                 textColor: mainColor,
                                                 text:
-                                                    " ${item.price} ${MyApp.country_currency}",
+                                                    " ${item.rowTotalInclTax} ${MyApp.country_currency}",
                                                 textAlign: TextAlign.start,
                                                 fontWeight: FontWeight.bold),
                                           ),

@@ -30,7 +30,6 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
       });
       await _loginButtonController.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -41,7 +40,6 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
 

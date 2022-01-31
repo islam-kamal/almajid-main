@@ -107,7 +107,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       });
       await _loginButtonController.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -118,7 +117,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
   final _formKey = GlobalKey<FormState>();
@@ -151,7 +149,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                       }
                     }
                     else if (state is ErrorLoading) {
-                      print("ErrorLoading");
                       _stopAnimation();
                       if(state.indicator == "address_detials"){
                         var data = state.model as AddressModel;
@@ -250,25 +247,20 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
                     }
                     else if (state is Done) {
-                      print("done");
                       _stopAnimation();
                       if(state.indicator == "address_detials"){
                         var data = state.model as AddressModel;
                    setState(() {
                      frist_name = data.firstname;
-                     print("frist_name : ${frist_name}");
                      last_name = data.lastname;
                      phone = data.telephone;
                      street = data.street[0];
                      addres_city_name = data.city;
                      address_city_id = data.regionId;
-                     print("*** address_city_id ** : ${_currentIndex} ");
                      shipmentAddressBloc.frist_name_controller.value = frist_name;
                      shipmentAddressBloc.last_name_controller.value = last_name;
                      shipmentAddressBloc.phone_controller.value = phone;
                      shipmentAddressBloc.street_controller.value = street;
-                     print("shipmentAddressBloc.frist_name_controller.value : ${shipmentAddressBloc.frist_name_controller.value} ");
-                     print("shipmentAddressBloc.last_name_controller.value : ${shipmentAddressBloc.last_name_controller.value}");
                    });
                       }else {
                         var data = state.model as GuestShipmentAddressModel;
@@ -356,7 +348,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             paymentTitle(context: context, title: "Phone"),
             responsiveSizedBox(context: context, percentageOfHeight: .015),
             phone_addressTextFields(
-                context: context, hint: "Ex: 59xxxxxxx"),
+                context: context, hint: "Ex: 5xxxxxxxx"),
             responsiveSizedBox(
                 context: context, percentageOfHeight: .015),
 
@@ -371,7 +363,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
         ))
     );
   }
-  Widget checkout_address({var frist_name,var last_name,var phone,var street,var  city_name,var address_city_id}){
+
+  Widget checkout_address({var frist_name,var last_name,var phone,var street,var city_name,
+    var address_city_id}){
     return  Container(
         decoration: BoxDecoration(
             color: whiteColor,
@@ -417,7 +411,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             responsiveSizedBox(
                 context: context, percentageOfHeight: .01),
             phone_addressTextFields(
-                context: context, hint: phone,initialValue: phone),
+                context: context, hint: phone==null?"Ex: 5xxxxxxxx" : phone.toString().substring(5),initialValue: phone==null?"Ex: 5xxxxxxxx" :phone.toString().substring(5)),
             responsiveSizedBox(
                 context: context, percentageOfHeight: .01),
 
@@ -432,6 +426,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
         ))
     );
   }
+
+
+
 
   Widget get_saved_addresses(){
     return Container(
@@ -771,7 +768,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
     return StreamBuilder<String>(
       stream: shipmentAddressBloc.frist_name,
       builder: (context, snapshot) {
-        print("frist_name_controller.text, ${initialValue}");
         return Container(
           padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
           width: MediaQuery.of(context).size.width * 0.9,
@@ -788,10 +784,11 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
               hintStyle: TextStyle(
                   color: mainColor,
-                  fontWeight: FontWeight.bold,
+                  fontWeight:initialValue == null ? FontWeight.normal : FontWeight.bold,
                   fontSize: isLandscape(context)
-                      ? 2 * height(context) * .018
-                      : height(context) * .018),
+                      ? initialValue == null ? 2* height(context) * .016 : 2* height(context) * .018
+                      : initialValue == null ? height(context) * .016 : height(context) * .018
+              ),
               filled: true,
               fillColor: backGroundColor,
               enabledBorder: OutlineInputBorder(
@@ -840,10 +837,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
               hintStyle: TextStyle(
                   color: mainColor,
-                  fontWeight: FontWeight.bold,
+                  fontWeight:initialValue == null ? FontWeight.normal : FontWeight.bold,
                   fontSize: isLandscape(context)
-                      ? 2 * height(context) * .018
-                      : height(context) * .018),
+                      ? initialValue == null ? 2* height(context) * .016 : 2* height(context) * .018
+                      : initialValue == null ? height(context) * .016 : height(context) * .018),
               filled: true,
               fillColor: backGroundColor,
               enabledBorder: OutlineInputBorder(
@@ -892,10 +889,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
               hintStyle: TextStyle(
                   color: mainColor,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.normal,
                   fontSize: isLandscape(context)
-                      ? 2 * height(context) * .018
-                      : height(context) * .018),
+                      ? 2 * height(context) * .016
+                      : height(context) * .016),
               filled: true,
               fillColor: backGroundColor,
               enabledBorder: OutlineInputBorder(
@@ -928,7 +925,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
   phone_addressTextFields({BuildContext context, String hint,var initialValue}) {
     String _countryCode  ="+966";
-    print("hint ------------: ${hint}");
     return StreamBuilder<String>(
       stream: shipmentAddressBloc.phone,
       builder: (context, snapshot) {
@@ -958,10 +954,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
                     hintStyle: TextStyle(
                         color: mainColor,
-                        fontWeight: FontWeight.bold,
+                        fontWeight:initialValue == null ? FontWeight.normal : FontWeight.bold,
                         fontSize: isLandscape(context)
-                            ? 2 * height(context) * .018
-                            : height(context) * .018),
+                            ? initialValue == null ? 2* height(context) * .016 : 2* height(context) * .018
+                            : initialValue == null ? height(context) * .016 : height(context) * .018),
                     filled: true,
                     fillColor: whiteColor,
                     enabledBorder: OutlineInputBorder(
@@ -1012,10 +1008,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
                     hintStyle: TextStyle(
                         color:mainColor,
-                        fontWeight: FontWeight.bold,
+                        fontWeight:initialValue == null ? FontWeight.normal : FontWeight.bold,
                         fontSize: isLandscape(context)
-                            ? 2 * height(context) * .018
-                            : height(context) * .018),
+                            ? initialValue == null ? 2* height(context) * .016 : 2* height(context) * .018
+                            : initialValue == null ? height(context) * .016 : height(context) * .018),
                     filled: true,
                     fillColor: whiteColor,
                     enabledBorder: OutlineInputBorder(
@@ -1082,10 +1078,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
               hintStyle: TextStyle(
                   color: mainColor,
-                  fontWeight: FontWeight.bold,
+                  fontWeight:initialValue == null ? FontWeight.normal : FontWeight.bold,
                   fontSize: isLandscape(context)
-                      ? 2 * height(context) * .018
-                      : height(context) * .018),
+                      ? initialValue == null ? 2* height(context) * .016 : 2* height(context) * .018
+                      : initialValue == null ? height(context) * .016 : height(context) * .018),
               filled: true,
               fillColor: backGroundColor,
               enabledBorder: OutlineInputBorder(
@@ -1150,8 +1146,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       );
 
     }else{
-
-      print("form validation error -------------------");
     }
       },
     );

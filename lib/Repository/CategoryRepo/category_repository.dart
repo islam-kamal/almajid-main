@@ -37,8 +37,6 @@ class CategoryRepository {
 
   @override
   Future<ProductModel> getProduct({id, sku}) async {
-    print("id___ : ${id}");
-    print("sku___ : ${sku}");
     var endPoint ;
     if(id== null){
       endPoint =
@@ -54,7 +52,6 @@ class CategoryRepository {
       'Accept': 'application/json',
       'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
     };
-    print("MyApp.app_langauge : ${MyApp.app_langauge}");
     return NetworkUtil.internal().get(
         ProductModel(),
         '${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/products${endPoint}',

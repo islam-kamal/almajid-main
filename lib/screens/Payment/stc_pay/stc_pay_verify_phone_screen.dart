@@ -50,6 +50,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
   int _secondDigit;
   int _thirdDigit;
   int _fourthDigit;
+  int _fifthDigit;
 
   Timer timer;
   int totalTimeInSeconds;
@@ -73,7 +74,6 @@ class _OtpState extends State<StcVerificationCodeScreen>
       });
       await _controller.forward();
     } on TickerCanceled {
-      print('[_playAnimation] error');
     }
   }
 
@@ -84,7 +84,6 @@ class _OtpState extends State<StcVerificationCodeScreen>
         isLoading = false;
       });
     } on TickerCanceled {
-      print('[_stopAnimation] error');
     }
   }
 
@@ -222,8 +221,14 @@ class _OtpState extends State<StcVerificationCodeScreen>
             _secondDigit.toString() +
             _thirdDigit.toString() +
             _fourthDigit.toString();
-        print("otp_Code : ${otp_code}");
-// Verify your otp by here. API call
+      }else if (_fifthDigit == null) {
+        _fifthDigit = _currentDigit;
+
+        otp_code = _firstDigit.toString() +
+            _secondDigit.toString() +
+            _thirdDigit.toString() +
+            _fourthDigit.toString() +
+            _fifthDigit.toString() ;
       }
     });
   }
@@ -238,6 +243,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
   }
 
   void clearOtp() {
+    _fifthDigit = null;
     _fourthDigit = null;
     _thirdDigit = null;
     _secondDigit = null;
@@ -256,7 +262,6 @@ class _OtpState extends State<StcVerificationCodeScreen>
     for (int i = StaticData.country_code.length; i < number.length - 3; i++) {
       number = replaceCharAt(number, i, "*");
     }
-    print("newNumber : ${number}");
     return number;
   }
 
@@ -335,6 +340,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
             _otpTextField(_secondDigit),
             _otpTextField(_thirdDigit),
             _otpTextField(_fourthDigit),
+            _otpTextField(_fifthDigit),
           ],
         ));
   }
@@ -506,7 +512,10 @@ class _OtpState extends State<StcVerificationCodeScreen>
                             ),
                             onPressed: () {
                               setState(() {
-                                if (_fourthDigit != null) {
+                                if (_fifthDigit != null) {
+                                  _fifthDigit = null;
+                                }
+                                else if (_fourthDigit != null) {
                                   _fourthDigit = null;
                                 } else if (_thirdDigit != null) {
                                   _thirdDigit = null;
@@ -525,7 +534,6 @@ class _OtpState extends State<StcVerificationCodeScreen>
               ))
         ],
       ),
-      //      height: isLandscape(context) ? 2 * height(context) * .49 : height(context) * .49,
       width: width(context),
       decoration: BoxDecoration(
           color: blackColor,
@@ -534,125 +542,6 @@ class _OtpState extends State<StcVerificationCodeScreen>
     );
   }
 
-/*  get _getOtpConfirmationButton {
-
-    return otp_code == null ? Container() : GestureDetector(
-      onTap: otp_code == null
-          ? () {}
-          : () {
-              final Future<http.Response> response = payment_repository.stc_pay_validate_otp(
-                      context: context,
-                      phone_number: widget.user_phone,
-                      otp: otp_code,
-                      otpReference: widget.OtpReference,
-                      paymentReference: widget.paymentReference);
-
-              response.then((response) {
-                print(response.body);
-                final extractedData =
-                    json.decode(response.body) as Map<String, dynamic>;
-                if (extractedData["status"]) {
-                  orderBloc.add(CreateOrderEvent(context: context));
-                }
-              });
-            },
-      child: BlocListener<OrderBloc, AppState>(
-          bloc: orderBloc,
-          listener: (context, state) async {
-            if (state is Loading) {
-              if (state.indicator == 'CreateOrder') {
-                _isLoading = true;
-                _playAnimation();
-              }
-            }
-            else if (state is Done) {
-              if (state.indicator == 'CreateOrder') {
-                var data = state.general_value;
-                print("### data ### : ${data}");
-                final Future<http.Response> response = payment_repository.getPayFortSettings(orderId: data);
-                response.then((response) {
-                  print(response.body);
-                  final extractedData = json.decode(response.body) as Map<String, dynamic>;
-                  if (extractedData["success"]) {
-                    _stopAnimation();
-                    customAnimatedPushNavigation(context, SubmitSuccessfulScreen(
-                      order_id: extractedData["increment_id"],
-                    ));
-                  }
-                });
-              }
-              _isLoading = false;
-            }
-            else if (state is ErrorLoading) {
-              if (state.indicator == 'CreateOrder') {
-                print("ErrorLoading");
-                _stopAnimation();
-                _isLoading = false;
-                Flushbar(
-                  messageText: Row(
-                    children: [
-                      Container(
-                        width: StaticData.get_width(context) * 0.7,
-                        child: Wrap(
-                          children: [
-                            Text(
-                              'There is Error',
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(color: whiteColor),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Spacer(),
-                      Text(
-                        translator.translate("Try Again"),
-                        textDirection: TextDirection.rtl,
-                        style: TextStyle(color: whiteColor),
-                      ),
-                    ],
-                  ),
-                  flushbarPosition: FlushbarPosition.BOTTOM,
-                  backgroundColor: redColor,
-                  flushbarStyle: FlushbarStyle.FLOATING,
-                  duration: Duration(seconds: 6),
-                )..show(_drawerKey.currentState.context);
-              }
-
-              //   customAnimatedPushNavigation(context, GetStartedScreen());
-            }
-          },
-          child:_isLoading
-              ? CircularProgressIndicator(
-            backgroundColor: whiteColor,
-          )
-              : Directionality(
-              textDirection: translator.activeLanguageCode == 'ar'
-                  ? TextDirection.rtl
-                  : TextDirection.ltr,
-              child: Container(
-                decoration: BoxDecoration(
-                    color: greenColor,
-                    borderRadius: BorderRadius.circular(5)),
-                padding: EdgeInsets.only(
-                    right: width(context) * .0, left: width(context) * .02),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    customDescriptionText(
-                        context: context,
-                        text: "Confirm",
-                        textColor: whiteColor,
-                        percentageOfHeight: .025),
-                  ],
-                ),
-                width: width(context) * .5,
-                height: isLandscape(context)
-                    ? 2 * height(context) * .06
-                    : height(context) * .06,
-              ))
-      ),
-    );
-  }*/
   get _getOtpConfirmationButton {
 
     return GestureDetector(
@@ -665,9 +554,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
             otp: otp_code,
             otpReference: widget.OtpReference,
             paymentReference: widget.paymentReference);
-
         response.then((response) {
-          print(response.body);
           final extractedData =
           json.decode(response.body) as Map<String, dynamic>;
           if (extractedData["status"]) {
@@ -681,24 +568,16 @@ class _OtpState extends State<StcVerificationCodeScreen>
             if (state is Loading) {
               if (state.indicator == 'CreateOrder-${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
                   :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}') {
-                print("1");
                 _isLoading = true;
                 _playAnimation();
               }
             } else if (state is Done) {
-              print("2");
               if (state.indicator == 'CreateOrder-${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
                   :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}') {
-                print("3");
                 var data = state.general_value;
-                print("### data ### : ${data}");
                 final Future<http.Response> response = payment_repository.getPayFortSettings(orderId: data);
-                print("*** response : ${response}");
                 response.then((response) {
-                  print("4");
-                  print("response.body : ${response.body}");
                   final extractedData = json.decode(response.body) as Map<String, dynamic>;
-                  print("extractedData : ${extractedData}");
                   if (extractedData["success"]) {
                     _stopAnimation();
                     customAnimatedPushNavigation(context, SubmitSuccessfulScreen(
@@ -709,11 +588,8 @@ class _OtpState extends State<StcVerificationCodeScreen>
               }
               _isLoading = false;
             } else if (state is ErrorLoading) {
-              print("5");
               if (state.indicator == 'CreateOrder-${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
                   :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}') {
-                print("6");
-                print("ErrorLoading");
                 _stopAnimation();
                 _isLoading = false;
                 Flushbar(
