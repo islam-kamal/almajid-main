@@ -331,10 +331,14 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
       btn_width: width(context) * .8,
       checkout_color: true,
       onTap: () {
-    StaticData.vistor_value == 'visitor' ? null
-        : shipmentAddressBloc.add(
+        if(StaticData.vistor_value == 'visitor' ){
+          customAnimatedPushNavigation(context, CheckoutAddressScreen());
+
+        }else{
+          shipmentAddressBloc.add(
               GetAllAddressesEvent(context: context)
           );
+        }
       },
     );
   }
@@ -421,7 +425,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                 context: context,
                                                 textColor: mainColor,
                                                 text:
-                                                    " ${item.price} ${MyApp.country_currency}",
+                                                    " ${item.rowTotalInclTax} ${MyApp.country_currency}",
                                                 textAlign: TextAlign.start,
                                                 fontWeight: FontWeight.bold),
                                           ),

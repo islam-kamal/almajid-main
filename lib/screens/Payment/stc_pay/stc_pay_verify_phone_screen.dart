@@ -50,6 +50,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
   int _secondDigit;
   int _thirdDigit;
   int _fourthDigit;
+  int _fifthDigit;
 
   Timer timer;
   int totalTimeInSeconds;
@@ -220,6 +221,14 @@ class _OtpState extends State<StcVerificationCodeScreen>
             _secondDigit.toString() +
             _thirdDigit.toString() +
             _fourthDigit.toString();
+      }else if (_fifthDigit == null) {
+        _fifthDigit = _currentDigit;
+
+        otp_code = _firstDigit.toString() +
+            _secondDigit.toString() +
+            _thirdDigit.toString() +
+            _fourthDigit.toString() +
+            _fifthDigit.toString() ;
       }
     });
   }
@@ -234,6 +243,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
   }
 
   void clearOtp() {
+    _fifthDigit = null;
     _fourthDigit = null;
     _thirdDigit = null;
     _secondDigit = null;
@@ -330,6 +340,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
             _otpTextField(_secondDigit),
             _otpTextField(_thirdDigit),
             _otpTextField(_fourthDigit),
+            _otpTextField(_fifthDigit),
           ],
         ));
   }
@@ -501,7 +512,10 @@ class _OtpState extends State<StcVerificationCodeScreen>
                             ),
                             onPressed: () {
                               setState(() {
-                                if (_fourthDigit != null) {
+                                if (_fifthDigit != null) {
+                                  _fifthDigit = null;
+                                }
+                                else if (_fourthDigit != null) {
                                   _fourthDigit = null;
                                 } else if (_thirdDigit != null) {
                                   _thirdDigit = null;
@@ -540,7 +554,6 @@ class _OtpState extends State<StcVerificationCodeScreen>
             otp: otp_code,
             otpReference: widget.OtpReference,
             paymentReference: widget.paymentReference);
-
         response.then((response) {
           final extractedData =
           json.decode(response.body) as Map<String, dynamic>;

@@ -348,7 +348,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             paymentTitle(context: context, title: "Phone"),
             responsiveSizedBox(context: context, percentageOfHeight: .015),
             phone_addressTextFields(
-                context: context, hint: "Ex: 59xxxxxxx"),
+                context: context, hint: "Ex: 5xxxxxxxx"),
             responsiveSizedBox(
                 context: context, percentageOfHeight: .015),
 
@@ -363,7 +363,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
         ))
     );
   }
-  Widget checkout_address({var frist_name,var last_name,var phone,var street,var  city_name,var address_city_id}){
+
+  Widget checkout_address({var frist_name,var last_name,var phone,var street,var city_name,
+    var address_city_id}){
     return  Container(
         decoration: BoxDecoration(
             color: whiteColor,
@@ -409,7 +411,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             responsiveSizedBox(
                 context: context, percentageOfHeight: .01),
             phone_addressTextFields(
-                context: context, hint: phone,initialValue: phone),
+                context: context, hint: phone==null?"Ex: 5xxxxxxxx" : phone.toString().substring(5),initialValue: phone==null?"Ex: 5xxxxxxxx" :phone.toString().substring(5)),
             responsiveSizedBox(
                 context: context, percentageOfHeight: .01),
 
@@ -424,6 +426,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
         ))
     );
   }
+
+
+
 
   Widget get_saved_addresses(){
     return Container(
@@ -779,10 +784,11 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
               hintStyle: TextStyle(
                   color: mainColor,
-                  fontWeight: FontWeight.bold,
+                  fontWeight:initialValue == null ? FontWeight.normal : FontWeight.bold,
                   fontSize: isLandscape(context)
-                      ? 2 * height(context) * .018
-                      : height(context) * .018),
+                      ? initialValue == null ? 2* height(context) * .016 : 2* height(context) * .018
+                      : initialValue == null ? height(context) * .016 : height(context) * .018
+              ),
               filled: true,
               fillColor: backGroundColor,
               enabledBorder: OutlineInputBorder(
@@ -831,10 +837,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
               hintStyle: TextStyle(
                   color: mainColor,
-                  fontWeight: FontWeight.bold,
+                  fontWeight:initialValue == null ? FontWeight.normal : FontWeight.bold,
                   fontSize: isLandscape(context)
-                      ? 2 * height(context) * .018
-                      : height(context) * .018),
+                      ? initialValue == null ? 2* height(context) * .016 : 2* height(context) * .018
+                      : initialValue == null ? height(context) * .016 : height(context) * .018),
               filled: true,
               fillColor: backGroundColor,
               enabledBorder: OutlineInputBorder(
@@ -883,10 +889,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
               hintStyle: TextStyle(
                   color: mainColor,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.normal,
                   fontSize: isLandscape(context)
-                      ? 2 * height(context) * .018
-                      : height(context) * .018),
+                      ? 2 * height(context) * .016
+                      : height(context) * .016),
               filled: true,
               fillColor: backGroundColor,
               enabledBorder: OutlineInputBorder(
@@ -948,10 +954,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
                     hintStyle: TextStyle(
                         color: mainColor,
-                        fontWeight: FontWeight.bold,
+                        fontWeight:initialValue == null ? FontWeight.normal : FontWeight.bold,
                         fontSize: isLandscape(context)
-                            ? 2 * height(context) * .018
-                            : height(context) * .018),
+                            ? initialValue == null ? 2* height(context) * .016 : 2* height(context) * .018
+                            : initialValue == null ? height(context) * .016 : height(context) * .018),
                     filled: true,
                     fillColor: whiteColor,
                     enabledBorder: OutlineInputBorder(
@@ -1002,10 +1008,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
                     hintStyle: TextStyle(
                         color:mainColor,
-                        fontWeight: FontWeight.bold,
+                        fontWeight:initialValue == null ? FontWeight.normal : FontWeight.bold,
                         fontSize: isLandscape(context)
-                            ? 2 * height(context) * .018
-                            : height(context) * .018),
+                            ? initialValue == null ? 2* height(context) * .016 : 2* height(context) * .018
+                            : initialValue == null ? height(context) * .016 : height(context) * .018),
                     filled: true,
                     fillColor: whiteColor,
                     enabledBorder: OutlineInputBorder(
@@ -1072,10 +1078,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
               hintStyle: TextStyle(
                   color: mainColor,
-                  fontWeight: FontWeight.bold,
+                  fontWeight:initialValue == null ? FontWeight.normal : FontWeight.bold,
                   fontSize: isLandscape(context)
-                      ? 2 * height(context) * .018
-                      : height(context) * .018),
+                      ? initialValue == null ? 2* height(context) * .016 : 2* height(context) * .018
+                      : initialValue == null ? height(context) * .016 : height(context) * .018),
               filled: true,
               fillColor: backGroundColor,
               enabledBorder: OutlineInputBorder(

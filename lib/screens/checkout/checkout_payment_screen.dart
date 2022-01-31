@@ -113,7 +113,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       themeColor: Colors.blue,
                       textColor: mainColor,
                       cardNumberDecoration: InputDecoration(
-                        labelText: translator.translate("Card Holder"),
+                        labelText: translator.translate("Card Number"),
                         hintText: 'XXXX XXXX XXXX XXXX',
                         hintStyle: const TextStyle(color: greyColor,),
                         labelStyle: const TextStyle(color: mainColor),
