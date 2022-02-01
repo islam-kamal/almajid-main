@@ -359,7 +359,6 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
       qantity_numbers.add(i.toString());
     }
      qty =item.qty;
-    print("item.rowTotalInclTax : ${item.rowTotalInclTax}");
     return Directionality(
         textDirection: translator.activeLanguageCode == 'ar'
             ? TextDirection.rtl

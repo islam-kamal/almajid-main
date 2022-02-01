@@ -8,8 +8,6 @@ class ProductUseTabBar extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    print("how_to_use : ${how_to_use}");
-    print("description : ${description}");
 
     return Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr,
         child: Container(

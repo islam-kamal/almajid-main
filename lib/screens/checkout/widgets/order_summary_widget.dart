@@ -3,7 +3,6 @@ import 'package:almajidoud/utils/file_export.dart';
 
 orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments ,var cash }) {
   var grand_total, subtotal, vat ,shipping, payment_fees;
-  print("cash : $cash");
   total_segments.forEach((element) {
     if(element.code ==  "grand_total"){
       grand_total = element.value;
