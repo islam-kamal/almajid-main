@@ -166,7 +166,7 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
 
 
   phone_addressTextFields({BuildContext context, String hint,var initialValue}) {
-    String _countryCode  ="+966";
+    String _countryCode  = MyApp.app_location == 'sa' ?"+966" : MyApp.app_location == 'kw' ? "+965" : "+971";
     return StreamBuilder<String>(
       stream: shipmentAddressBloc.phone,
       builder: (context, snapshot) {
@@ -178,7 +178,7 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
             children: [
               CountryCodePicker(
                 onChanged: (Object object)=>_countryCode=object.toString(),
-                initialSelection: 'SA',
+                initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
                 countryFilter: ['SA', 'KW', 'AE'],
                 showFlagDialog: true,
               ),
@@ -289,7 +289,7 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
               ),
               CountryCodePicker(
                 onChanged: (Object object)=>_countryCode=object.toString(),
-                initialSelection: 'SA',
+                initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
                 countryFilter: ['SA', 'KW', 'AE'],
                 showFlagDialog: true,
               ),

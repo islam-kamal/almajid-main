@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:html/parser.dart' show parse;
-descriptionAndShareRow({BuildContext context , String description ,String product_name}) {
+descriptionAndShareRow({BuildContext context , String description }) {
   return Container(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

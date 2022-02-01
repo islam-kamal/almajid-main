@@ -223,37 +223,37 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 singleAccountItem(
                                     context: context,
                                     iconPath: "assets/icons/help.png",
-                                    text: "Help Center",
+                                    text: translator.translate("Help Center"),
                                     isContainMoreIcon: true,
                                     onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'Contact us',url: Urls.CONTACT_US_URL,)));
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title:  "Contact us" ,url: Urls.CONTACT_US_URL,)));
                                     }),
 
                                 singleAccountItem(
                                     context: context,
                                     iconPath: "assets/icons/about_us.png",
-                                    text: "About US",
+                                    text: translator.translate("About US"),
                                     isContainMoreIcon: true,
                                     onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'About us',url: Urls.ABOUT_US_URL,)));
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "About US",url: Urls.ABOUT_US_URL,)));
                                     }),
 
                                 singleAccountItem(
                                     context: context,
                                     iconPath: "assets/icons/privacy.png",
-                                    text: "Privacy And Policy",
+                                    text:translator.translate( "Privacy And Policy"),
                                     isContainMoreIcon: true,
                                     onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'Privacy And Policy',url: Urls.PTIVACY_URL,)));
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "Privacy And Policy",url: Urls.PTIVACY_URL,)));
                                     }),
 
                                 singleAccountItem(
                                     context: context,
                                     iconPath: "assets/icons/faqs.png",
-                                    text: "FAQs",
+                                    text: translator.translate("FAQs"),
                                     isContainMoreIcon: true,
                                     onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'FAQs',url: Urls.FAQS_URL,)));
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "FAQs",url: Urls.FAQS_URL,)));
                                     }),
                                 StaticData.vistor_value == 'visitor'
                                     ? logButton(context: context, type: "Sign In")

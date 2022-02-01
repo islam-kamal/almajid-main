@@ -72,7 +72,7 @@ class WishListRepository {
         errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      errorDialog(context: context, text: e.toString());
+     // errorDialog(context: context, text: e.toString());
     }
   }
 
@@ -94,7 +94,7 @@ class WishListRepository {
         errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      errorDialog(context: context, text: e.toString());
+    //  errorDialog(context: context, text: e.toString());
     }
   }
 
@@ -136,7 +136,7 @@ class WishListRepository {
         }
 
       } catch (e) {
-        errorDialog(context: context, text: e.toString());
+   //     errorDialog(context: context, text: e.toString());
       }
     }
     else if (check_quote_response.data['status'] == false) {
@@ -179,14 +179,14 @@ class WishListRepository {
             }
 
           } catch (e) {
-            errorDialog(context: context, text: e.toString());
+         //   errorDialog(context: context, text: e.toString());
           }
         } else {
           errorDialog(context: context, text: response.data['message']);
           return null;
         }
       } catch (e) {
-        errorDialog(context: context, text: e.toString());
+      //  errorDialog(context: context, text: e.toString());
       }
     }
     else {
@@ -229,14 +229,14 @@ class WishListRepository {
             }
 
           } catch (e) {
-            errorDialog(context: context, text: e.toString());
+        //    errorDialog(context: context, text: e.toString());
           }
         } else {
           errorDialog(context: context, text: response.data['message']);
           return null;
         }
       } catch (e) {
-        errorDialog(context: context, text: e.toString());
+      //  errorDialog(context: context, text: e.toString());
       }
     }
 

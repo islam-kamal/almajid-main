@@ -1,6 +1,7 @@
 import 'package:almajidoud/Bloc/Category_Bloc/category_bloc.dart';
 import 'package:almajidoud/Model/CategoryModel/category_model.dart';
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SettingsDrawer extends StatefulWidget {
   final FocusNode node;
@@ -48,9 +49,12 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                           builder: (context, state) {
                             if (state is Loading) {
                               return Center(
-                                child: CircularProgressIndicator(
+                                child: SpinKitFadingCube(
+                                  color: Theme.of(context).primaryColor,
+                                  size: width(context) *0.05,
                                 ),
-                              );
+                              )
+                              ;
                             }
                             else if (state is Done) {
                               var data = state.model as CategoryModel;
@@ -171,10 +175,13 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                     }
                                     else {
                                       return Center(
-                                        child: CircularProgressIndicator(
+                                        child: SpinKitFadingCube(
+                                          color: Theme.of(context).primaryColor,
+                                          size: width(context) *0.05,
                                         ),
-                                      );
+                                      )
                                       ;
+
                                     }
                                   },
                                 );
@@ -185,9 +192,12 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                             }
                             else {
                               return Center(
-                                child: CircularProgressIndicator(
+                                child: SpinKitFadingCube(
+                                  color: Theme.of(context).primaryColor,
+                                  size: width(context) *0.05,
                                 ),
-                              );
+                              )
+                              ;
                             }
                           },
                         ),

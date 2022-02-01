@@ -168,7 +168,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                         children: [
                                           customDescriptionText(
                                               context: context,
-                                              textColor: greyColor,
+                                              textColor: mainColor,
                                               text: "Sub Total",
                                               percentageOfHeight: .018),
                                           Spacer(),
@@ -188,7 +188,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                         children: [
                                           customDescriptionText(
                                               context: context,
-                                              textColor: greyColor,
+                                              textColor: mainColor,
                                               text: "Discount",
                                               percentageOfHeight: .018),
                                           Spacer(),
@@ -208,7 +208,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                         children: [
                                           customDescriptionText(
                                               context: context,
-                                              textColor: greyColor,
+                                              textColor: mainColor,
                                               text: "TAX(15%)",
                                               percentageOfHeight: .018),
                                           Spacer(),
@@ -228,7 +228,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                         children: [
                                           customDescriptionText(
                                               context: context,
-                                              textColor: greyColor,
+                                              textColor: mainColor,
                                               text: "Grand Total",
                                               percentageOfHeight: .022),
                                           Spacer(),
@@ -243,7 +243,6 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                     ),
 
                                     responsiveSizedBox(context: context, percentageOfHeight: .04),
-                                //    proceedToCheckoutButton(context: context),
                                     proceedToCheckoutButton(context: context),
                                     responsiveSizedBox(
                                         context: context, percentageOfHeight: .01),
@@ -324,7 +323,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
             ));
   }
 
-  proceedToCheckoutButton({BuildContext context,}) {
+  proceedToCheckoutButton({BuildContext context}) {
     return StaggerAnimation(
       titleButton: translator.translate("Proceed to checkout"),
       buttonController: _loginButtonController.view,
@@ -391,9 +390,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                             ),
                             Directionality(
                                 textDirection:
-                                    translator.activeLanguageCode == 'ar'
-                                        ? TextDirection.rtl
-                                        : TextDirection.ltr,
+                                    translator.activeLanguageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
                                 child: Container(
                                   padding: EdgeInsets.only(
                                       right: width(context) * .02,

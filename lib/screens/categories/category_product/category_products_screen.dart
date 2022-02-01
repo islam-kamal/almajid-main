@@ -13,6 +13,7 @@ import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:almajidoud/Repository/CategoryRepo/category_repository.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 class CategoryProductsScreen extends StatefulWidget {
   final String category_id;
   final String category_name;
@@ -123,9 +124,12 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                         child: Container(
                           child:_isFirstLoadRunning
                               ? Center(
-                            child: CircularProgressIndicator(
+                            child: SpinKitFadingCube(
+                              color: Theme.of(context).primaryColor,
+                              size: width(context) *0.1,
                             ),
                           )
+
                               :Column(
                             children: [
                               CategoriesTap(
@@ -154,7 +158,9 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 20, bottom: 100),
                                   child: Center(
-                                    child: CircularProgressIndicator(
+                                    child: SpinKitFadingCube(
+                                      color: Theme.of(context).primaryColor,
+                                      size: width(context) *0.1,
                                     ),
                                   ),
                                 ),
@@ -194,10 +200,13 @@ class MyLoader extends StatelessWidget {
         child: SizedBox(
           width: width,
           height: height,
-          child: CircularProgressIndicator(
-            strokeWidth: 3.0,
-
-        ),
+          child: Center(
+            child: SpinKitFadingCube(
+              color: Theme.of(context).primaryColor,
+              size: width *0.1,
+            ),
+          )
+          ,
         ),
       ),
     );

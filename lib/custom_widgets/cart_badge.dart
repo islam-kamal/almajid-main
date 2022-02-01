@@ -37,8 +37,7 @@ class _CartBadgeState extends State<CartBadge> {
         }
 
         return _isLoading
-            ? CircularProgressIndicator(
-        )
+            ? CircularProgressIndicator()
             : InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(

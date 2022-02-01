@@ -31,7 +31,7 @@ orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments 
             fontWeight: FontWeight.bold,
             percentageOfHeight: .022),
       ),
-      responsiveSizedBox(context: context, percentageOfHeight: .01),
+      responsiveSizedBox(context: context, percentageOfHeight: .02),
       Container(
           width: width(context) * .9,
           child: Row(
@@ -49,6 +49,7 @@ orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments 
                   percentageOfHeight: .020),
             ],
           )),
+      responsiveSizedBox(context: context, percentageOfHeight: .015),
       Container(
           width: width(context) * .9,
           child: Row(
@@ -66,6 +67,7 @@ orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments 
                   percentageOfHeight: .020),
             ],
           )),
+      responsiveSizedBox(context: context, percentageOfHeight: .015),
       Container(
           width: width(context) * .9,
           child: Row(
@@ -83,7 +85,8 @@ orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments 
                   percentageOfHeight: .020),
             ],
           )),
-     cash == 'الدفع عند التوصيل' ? Container(
+      responsiveSizedBox(context: context, percentageOfHeight: .015),
+     cash == 'الدفع عند التوصيل' || cash == "Cash On Delivery" ? Container(
           width: width(context) * .9,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

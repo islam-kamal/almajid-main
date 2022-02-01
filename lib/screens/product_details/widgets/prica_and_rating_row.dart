@@ -22,7 +22,7 @@ priceAndRatingRow({BuildContext context , var new_price ,var old_price, var mini
                           text: "${
                               new_price == null ?
                               double.parse(old_price.toString()) <  double.parse(minimal_price) ?
-                             old_price.toStringAsFixed(2)  :
+                             old_price.toString()  :
                               double.parse(minimal_price).toStringAsFixed(2)
                                   : double.parse(new_price)} ",
                           size: StaticData.get_height(context) * .020,

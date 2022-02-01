@@ -163,7 +163,7 @@ class ShipmentAddressRepository {
         errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      errorDialog(context: context, text: e.toString());
+    //  errorDialog(context: context, text: e.toString());
     }
   }
 
