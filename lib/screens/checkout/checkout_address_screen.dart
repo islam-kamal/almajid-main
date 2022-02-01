@@ -924,7 +924,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   }
 
   phone_addressTextFields({BuildContext context, String hint,var initialValue}) {
-    String _countryCode  ="+966";
+
+    String _countryCode  = MyApp.app_location == 'sa' ?"+966" : MyApp.app_location == 'kw' ? "+965" : "+971";
+
     return StreamBuilder<String>(
       stream: shipmentAddressBloc.phone,
       builder: (context, snapshot) {
@@ -934,7 +936,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             children: [
               CountryCodePicker(
                 onChanged: (Object object)=>_countryCode=object.toString(),
-                initialSelection: 'SA',
+                initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
                 countryFilter: ['SA', 'KW', 'AE'],
                 showFlagDialog: true,
               ),
@@ -1045,7 +1047,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               ),
               CountryCodePicker(
                 onChanged: (Object object)=>_countryCode=object.toString(),
-                initialSelection: 'SA',
+                initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
                 countryFilter: ['SA', 'KW', 'AE'],
                 showFlagDialog: true,
               ),

@@ -1,4 +1,5 @@
 import 'package:almajidoud/utils/colors.dart';
+import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart' as flutter;
 
@@ -30,7 +31,7 @@ class _WebViewState extends State<WebView> {
             backgroundColor: mainColor,
             elevation: 0.0,
             title: Text(
-              widget.title ?? '',
+              translator.translate(widget.title) ?? '',
               style: TextStyle(color: Colors.white),
             ),
             leading: IconButton(

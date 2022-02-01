@@ -67,7 +67,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
         widget.items.productLinks.forEach((element) async {
           if(element.linkType == "related"){
             var response = await categoryRepository.getProduct(sku: element.linkedProductSku);
-            related_product_list.add(response.items[0]);
+            related_product_list.add(response.items.isNotEmpty ?response.items[0] : null);
             home_bloc.related_products_subject.sink.add(response.items);
           }else{
 
@@ -154,20 +154,10 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                       itemCount: snapshot.data.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-             /*           String special_price;
-                        snapshot.data[index].customAttributes.forEach((element) {
-                          if(element.attributeCode == 'special_price' || element.attributeCode == 'minimal_price'){
-
-                            if(double.parse(element.value).toStringAsFixed(2) != snapshot.data[index].price.toStringAsFixed(2) ){
-                              special_price = element.value == snapshot.data[index].price ? null : element.value;
-                            }
-                          }
-                        });
-*/
                         String special_price;
                         var new_price , minimal_price;
                         DateTime startDate , endDate ;
-                        snapshot.data[index].customAttributes.forEach((element) {
+                        snapshot.data[index]==null ? null :   snapshot.data[index].customAttributes.forEach((element) {
                           if(element.attributeCode == "thumbnail")
                             product_image = element.value;
                           else if(element.attributeCode == "special_from_date"){
@@ -185,7 +175,8 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                         });
                         if(startDate ==null || endDate ==null ){
                           new_price = null;
-                        }else{
+                        }
+                        else{
                           if(StaticData.isCurrentDateInRange(startDate,endDate)
                               && double.parse(special_price) <= double.parse(minimal_price)
                               && double.parse(special_price).toStringAsFixed(2) !=  snapshot.data[index].price ) {
@@ -200,8 +191,9 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                           }
 
                         }
-
-                        snapshot.data[index].customAttributes.forEach((element) {
+                        print("snapshot.data[index].customAttributes : ${snapshot.data[index] == null}");
+                        print("snapshot.data[index].customAttributes : ${snapshot.data[index].customAttributes}");
+                        snapshot.data[index] == null? product_image ='' : snapshot.data[index].customAttributes.forEach((element) {
                           if(element.attributeCode == "thumbnail")
                             product_image = element.value;
                         });

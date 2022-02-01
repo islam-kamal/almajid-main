@@ -118,12 +118,12 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
                         buttonController: _loginButtonController.view,
 
                         onTap: () {
+                          shoppingCartBloc.add(GetCartDetailsEvent());
+
                           if( StaticData.vistor_value == 'visitor') {
-                            shoppingCartBloc.add(GetCartDetailsEvent());
                             customPushNamedNavigation(context, CustomCircleNavigationBar());
                           }
                           else{
-                            shoppingCartBloc.add(GetCartDetailsEvent());
                             customPushNamedNavigation(context, OrdersScreen(
                               increment_id: widget.order_id,
                             ));

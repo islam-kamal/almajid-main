@@ -274,7 +274,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
                       singleProductSummaryCard(
                           context: context,
                       prod_name: widget.guestShipmentAddressModel.totals.items[index].name,
-                        prod_price: widget.guestShipmentAddressModel.totals.items[index].price,
+                        prod_price: widget.guestShipmentAddressModel.totals.items[index].rowTotalInclTax,
                         prod_qty: widget.guestShipmentAddressModel.totals.items[index].qty,
                         prod_image: widget.guestShipmentAddressModel.totals.items[index].extensionAttributes['product_image']
                       ),

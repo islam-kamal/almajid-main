@@ -20,6 +20,7 @@ class SubmitFaieldScreenState extends State<SubmitFaieldScreen> with TickerProvi
 
   @override
   void initState() {
+    widget.faield_type == 'PaymentFailed' ? null :  customAnimatedPushNavigation(context, CustomCircleNavigationBar());
     _loginButtonController =AnimationController(
         duration: const Duration(milliseconds: 3000), vsync: this);
     super.initState();
@@ -85,7 +86,7 @@ class SubmitFaieldScreenState extends State<SubmitFaieldScreen> with TickerProvi
                       ),
                       InkWell(
                         onTap: () {
-                          customPushNamedNavigation(context, CheckoutAddressScreen());
+                          customPushNamedNavigation(context, CustomCircleNavigationBar());
 
                         },
                         child: Container(

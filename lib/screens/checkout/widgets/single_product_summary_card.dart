@@ -16,7 +16,7 @@ singleProductSummaryCard({BuildContext context,var prod_name,var prod_image, var
               borderRadius: BorderRadius.circular(20),
               image: DecorationImage(
                   image: NetworkImage("${Urls.BASE_URL}/pub/media/catalog/product/${prod_image}"),
-                  fit: BoxFit.cover)),
+                  fit: BoxFit.fill)),
         ),
         responsiveSizedBox(context: context, percentageOfHeight: .01),
         Container(

@@ -51,7 +51,7 @@ class CountriesRepository {
         errorDialog(context: context, text: response.data['msg']);
       }
     } catch (e) {
-      errorDialog(context: context, text: e.toString());
+    //  errorDialog(context: context, text: e.toString());
     }
   }
 }
