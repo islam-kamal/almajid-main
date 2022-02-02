@@ -42,7 +42,8 @@ class ProductUseTabBar extends StatelessWidget{
                 ),
                 descriptionAndShareRow(
                     context: context,
-                    description: translator.translate( "shipping&returns")
+                    description: translator.translate( "shipping&returns"),
+
                 ),
                 descriptionAndShareRow(
                     context: context,

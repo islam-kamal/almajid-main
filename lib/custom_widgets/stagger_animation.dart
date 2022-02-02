@@ -108,7 +108,7 @@ class StaggerAnimation extends StatelessWidget {
                     height: isLandscape(context)
                         ? 2 * StaticData.get_height(context) * .06
                         : StaticData.get_height(context) * .06,
-                    width: image != null && titleButton != null ? width(context) * .8 : width(context) * .4,
+                    width: image != null && titleButton != null ? width(context) * .8 : width(context) * .45,
                     decoration: BoxDecoration(
                         color:  checkout_color?greenColor :blackColor,
                         borderRadius: BorderRadius.circular(30)),
