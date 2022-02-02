@@ -27,6 +27,7 @@ class _CartBadgeState extends State<CartBadge> {
         if (state is Loading) {
           _isLoading = true;
         } else if (state is Done) {
+          _isLoading = false;
           var data = state.model as CartDetailsModel;
           if (data.message?.isEmpty != null || data.items ==null) {
             _count = 0;
@@ -34,6 +35,8 @@ class _CartBadgeState extends State<CartBadge> {
             _count = 0;
             data.items.forEach((element) => _count += element.qty);
           }
+        }else {
+          _isLoading = false;
         }
 
         return _isLoading
