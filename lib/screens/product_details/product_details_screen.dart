@@ -178,10 +178,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                     titleText(context: context, text: "Quantity"),
                                     responsiveSizedBox(
                                         context: context, percentageOfHeight: .02),
-
-
-
-
                                     Row(
                                       children: [
 
@@ -308,8 +304,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                     ),
 
                                     responsiveSizedBox(context: context, percentageOfHeight: .03),
-
-
                                     responsiveSizedBox(context: context, percentageOfHeight: .03),
                                     Container(
                                       height: height(context) * .1,
@@ -345,7 +339,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                               ),
                             );
                           }
-
 
                         }
                       }
