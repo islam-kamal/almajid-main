@@ -104,7 +104,11 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return WillPopScope(
+        onWillPop: (){
+      customAnimatedPushNavigation(context, CustomCircleNavigationBar());
+    },
+    child: SafeArea(
       child: Scaffold(
           body: Stack(
         children: <Widget>[
@@ -180,7 +184,7 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
               : Center()
         ],
       )),
-    );
+    )  );
   }
 }
 

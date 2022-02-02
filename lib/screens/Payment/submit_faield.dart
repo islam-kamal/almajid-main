@@ -20,7 +20,7 @@ class SubmitFaieldScreenState extends State<SubmitFaieldScreen> with TickerProvi
 
   @override
   void initState() {
-    widget.faield_type == 'PaymentFailed' ? null :  customAnimatedPushNavigation(context, CustomCircleNavigationBar());
+  //  widget.faield_type == 'PaymentFailed' ? null :  customAnimatedPushNavigation(context, CustomCircleNavigationBar());
     _loginButtonController =AnimationController(
         duration: const Duration(milliseconds: 3000), vsync: this);
     super.initState();
@@ -96,7 +96,7 @@ class SubmitFaieldScreenState extends State<SubmitFaieldScreen> with TickerProvi
                             child: Center(
                                 child: customDescriptionText(
                                     context: context,
-                                    text: translator.translate("Back To Checkout Screen"),
+                                    text: translator.translate("Back To Home Screen"),
                                     percentageOfHeight: .022,
                                     textColor: whiteColor)),
                             height: isLandscape(context)

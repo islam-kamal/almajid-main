@@ -68,99 +68,103 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return WillPopScope(
+        onWillPop: (){
+          customAnimatedPushNavigation(context, CustomCircleNavigationBar());
+        },
+        child: SafeArea(
       child: Scaffold(
           body: Stack(
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: WebView(
-              debuggingEnabled: false,
-              javascriptMode: JavascriptMode.unrestricted,
-              onWebViewCreated: (controller) {
-                _webController = controller;
-                _webController.loadUrl(
-                    new Uri.dataFromString(_loadHTML(), mimeType: 'text/html')
-                        .toString());
-              },
-              onPageFinished: (page) async {
-                _loadingPayment = false;
-                if (page.contains("/checkout/cart")) {
-                  _responseStatus = STATUS_CHECKSUM_FAILED;
-                  this.setState(() {
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: WebView(
+                  debuggingEnabled: false,
+                  javascriptMode: JavascriptMode.unrestricted,
+                  onWebViewCreated: (controller) {
+                    _webController = controller;
+                    _webController.loadUrl(
+                        new Uri.dataFromString(_loadHTML(), mimeType: 'text/html')
+                            .toString());
+                  },
+                  onPageFinished: (page) async {
                     _loadingPayment = false;
-                  });
-                }
-                if (page.contains("tamara")) {
-                  setState(() {
-                    _loadingPayment = false;
-                  });
-                }
-                if (page.contains("/success")) {
-                  setState(() {
-                    _loadingPayment = true;
-                  });
-                  var data = await _webController
-                      .evaluateJavascript("document.body.innerText");
-                  var decodedJSON = jsonDecode(data);
-                  Map<String, dynamic> responseJSON = {};
-                  if (Platform.isAndroid) {
-                    responseJSON = jsonDecode(decodedJSON);
-                  } else if (Platform.isIOS) {
-                    responseJSON = decodedJSON;
-                  }
+                    if (page.contains("/checkout/cart")) {
+                      _responseStatus = STATUS_CHECKSUM_FAILED;
+                      this.setState(() {
+                        _loadingPayment = false;
+                      });
+                    }
+                    if (page.contains("tamara")) {
+                      setState(() {
+                        _loadingPayment = false;
+                      });
+                    }
+                    if (page.contains("/success")) {
+                      setState(() {
+                        _loadingPayment = true;
+                      });
+                      var data = await _webController
+                          .evaluateJavascript("document.body.innerText");
+                      var decodedJSON = jsonDecode(data);
+                      Map<String, dynamic> responseJSON = {};
+                      if (Platform.isAndroid) {
+                        responseJSON = jsonDecode(decodedJSON);
+                      } else if (Platform.isIOS) {
+                        responseJSON = decodedJSON;
+                      }
 
-                  final responseCode = responseJSON["status"];
-                  _loadingPayment = false;
-                  if (responseCode == true) {
-                    _responseStatus = STATUS_SUCCESSFUL;
-                  } else {
-                    _responseStatus = STATUS_FAILED;
-                  }
-                  setState(() {
-                    _loadingPayment = false;
-                  });
-                }
-              },
-            ),
-          ),
-          (_loadingPayment)
-              ? Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0, vertical: 20.0),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  color: Colors.blueGrey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'please wait while we are processing your order 😉',
-                        style: TextStyle(fontSize: 22, color: Colors.black54),
-                      ),
-                      const SizedBox(
-                        height: 50.0,
-                      ),
-                      Container(
-                        height: 100,
-                        child: Center(
-                          child: SpinKitFadingCube(
-                            color: Theme.of(context).primaryColor,
-                            size: 30.0,
-                          ),
+                      final responseCode = responseJSON["status"];
+                      _loadingPayment = false;
+                      if (responseCode == true) {
+                        _responseStatus = STATUS_SUCCESSFUL;
+                      } else {
+                        _responseStatus = STATUS_FAILED;
+                      }
+                      setState(() {
+                        _loadingPayment = false;
+                      });
+                    }
+                  },
+                ),
+              ),
+              (_loadingPayment)
+                  ? Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 20.0),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                color: Colors.blueGrey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'please wait while we are processing your order 😉',
+                      style: TextStyle(fontSize: 22, color: Colors.black54),
+                    ),
+                    const SizedBox(
+                      height: 50.0,
+                    ),
+                    Container(
+                      height: 100,
+                      child: Center(
+                        child: SpinKitFadingCube(
+                          color: Theme.of(context).primaryColor,
+                          size: 30.0,
                         ),
-                      )
-                    ],
-                  ),
-                )
-              : Center(),
-          (_responseStatus != STATUS_LOADING)
-              ? Center(child: getResponseScreen())
-              : Center()
-        ],
-      )),
-    );
+                      ),
+                    )
+                  ],
+                ),
+              )
+                  : Center(),
+              (_responseStatus != STATUS_LOADING)
+                  ? Center(child: getResponseScreen())
+                  : Center()
+            ],
+          )),
+    ), );
   }
 }
 

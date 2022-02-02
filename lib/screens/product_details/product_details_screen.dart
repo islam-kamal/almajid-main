@@ -64,7 +64,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                       if (snapshot.hasData) {
                         if (snapshot.data == null) {
                           return no_data_widget(context: context);
-                        } else {
+                        }
+                        else {
                           if(snapshot.data.isEmpty){
                             return  no_data_widget(context: context);
                           }else{
@@ -123,220 +124,217 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
 
                             }
 
-                            return Container(
-                              //    height: height(context) * 0.88,
-                              child: SingleChildScrollView(
-                                child: Column(
+                            return  Column(
+                              children: [
+                                responsiveSizedBox(
+                                    context: context, percentageOfHeight: .02),
+                                productDetailsNameWidget(
+                                    context: context,
+                                    product_name: snapshot.data[0].name,
+                                    category_screen: widget.category_screen
+                                ),
+                                responsiveSizedBox(
+                                    context: context, percentageOfHeight: .03),
+                                HomeSlider(
+                                  gallery: product_images,
+                                  height: width(context) *0.90,
+                                ),
+                                responsiveSizedBox(
+                                    context: context, percentageOfHeight: .05),
+                                favouriteAndNameRow(
+                                    context: context,
+                                    product_name: snapshot.data[0].name,
+                                    prod_id:  snapshot.data[0].id,
+                                    prod_qty:  snapshot.data[0].extensionAttributes.stockItem.qty),
+                                responsiveSizedBox(
+                                    context: context, percentageOfHeight: .01),
+                                descriptionAndShareRow(
+                                  context: context,
+                                  description:description??'',
+                                ),
+                                responsiveSizedBox(
+                                    context: context, percentageOfHeight: .02),
+                                priceAndRatingRow(
+                                  context: context,
+                                  new_price: new_price ,
+                                  minimal_price: minimal_price,
+                                  old_price: snapshot.data[0].price.toStringAsFixed(2),
+                                  review_status:  snapshot.data[0].extensionAttributes.reviews.isEmpty ? false : true,
+
+                                ),
+                                responsiveSizedBox(
+                                    context: context, percentageOfHeight: .02),
+                                vatAndReviewsRow(
+                                  context: context,
+                                  product_sku: snapshot.data[0].sku,
+                                  product_id: snapshot.data[0].id,
+                                  review_status:  snapshot.data[0].extensionAttributes.reviews.isEmpty? false : true,
+                                ),
+                                divider(context: context),
+                                responsiveSizedBox(
+                                    context: context, percentageOfHeight: .02),
+                                titleText(context: context, text: "Quantity"),
+                                responsiveSizedBox(
+                                    context: context, percentageOfHeight: .02),
+                                Row(
                                   children: [
-                                    responsiveSizedBox(
-                                        context: context, percentageOfHeight: .02),
-                                    productDetailsNameWidget(
-                                        context: context,
-                                        product_name: snapshot.data[0].name,
-                                        category_screen: widget.category_screen
-                                    ),
-                                    responsiveSizedBox(
-                                        context: context, percentageOfHeight: .03),
-                                    HomeSlider(
-                                      gallery: product_images,
-                                      height: width(context) *0.90,
-                                    ),
-                                    responsiveSizedBox(
-                                        context: context, percentageOfHeight: .05),
-                                    favouriteAndNameRow(
-                                        context: context,
-                                        product_name: snapshot.data[0].name,
-                                        prod_id:  snapshot.data[0].id,
-                                        prod_qty:  snapshot.data[0].extensionAttributes.stockItem.qty),
-                                    responsiveSizedBox(
-                                        context: context, percentageOfHeight: .01),
-                                    descriptionAndShareRow(
-                                      context: context,
-                                      description:description??'',
-                                    ),
-                                    responsiveSizedBox(
-                                        context: context, percentageOfHeight: .02),
-                                    priceAndRatingRow(
-                                      context: context,
-                                      new_price: new_price ,
-                                      minimal_price: minimal_price,
-                                      old_price: snapshot.data[0].price.toStringAsFixed(2),
-                                      review_status:  snapshot.data[0].extensionAttributes.reviews.isEmpty ? false : true,
 
-                                    ),
-                                    responsiveSizedBox(
-                                        context: context, percentageOfHeight: .02),
-                                    vatAndReviewsRow(
-                                      context: context,
-                                      product_sku: snapshot.data[0].sku,
-                                      product_id: snapshot.data[0].id,
-                                      review_status:  snapshot.data[0].extensionAttributes.reviews.isEmpty? false : true,
-                                    ),
-                                    divider(context: context),
-                                    responsiveSizedBox(
-                                        context: context, percentageOfHeight: .02),
-                                    titleText(context: context, text: "Quantity"),
-                                    responsiveSizedBox(
-                                        context: context, percentageOfHeight: .02),
-                                    Row(
-                                      children: [
-
-                                        Container(
-                                          padding: EdgeInsets.only(
-                                              right: width(context) * .05, left: width(context) * .05),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: mainColor, width: 2),
-                                                borderRadius: BorderRadius.circular(8)),
-                                            width: width(context) * .4,
-                                            height: isLandscape(context)
-                                                ? 2 * height(context) * .06
-                                                : height(context) * .06,
-                                            child: Center(
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                  children: [
-                                                    MaterialButton(
-                                                      height: 5,
-                                                      minWidth: StaticData.get_width(context) * 0.10,
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          if (qty <= 1) {
-                                                            errorDialog(
-                                                              context: context,
-                                                              text:
-                                                              "لقد نفذت الكمية من هذا المنتج",
-                                                            );
-                                                          } else {
-                                                            setState(() {
-                                                              qty--;
-                                                              StaticData.product_qty = qty;
-                                                            });
-                                                          }
-                                                        });
-                                                      },
-                                                      textColor: Colors.white,
-                                                      child: Icon(
-                                                        Icons.remove,
-                                                        size: 18,
-                                                        color: blackColor,
-                                                      ),
-
-                                                    ),
-                                                    quantity(),
-                                                    MaterialButton(
-                                                      height: 5,
-                                                      minWidth:
-                                                      StaticData.get_width(context) *
-                                                          0.10,
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          if (qty == snapshot.data[0].extensionAttributes.stockItem.qty) {
-                                                            errorDialog(
-                                                              context: context,
-                                                              text:
-                                                              "لا يمكنك تخطى الكمية المتاحة",
-                                                            );
-                                                          } else {
-                                                            setState(() {
-                                                              qty++;
-                                                              StaticData.product_qty = qty;
-
-                                                            });
-                                                          }
-                                                        });
-                                                      },
-                                                      textColor: greyColor,
-                                                      child: Icon(
-                                                        Icons.add,
-                                                        size: 18,
-                                                        color: blackColor,
-                                                      ),
-
-                                                    ),
-
-                                                  ],
-                                                )),
-                                          ),
-                                        ),
-                                        snapshot.data[0].extensionAttributes.stockItem.isInStock ?    AddProductToCartWidget(
-                                          product_sku: snapshot.data[0].sku,
-                                          product_quantity:  StaticData.product_qty ,
-                                          instock_status: snapshot.data[0].extensionAttributes.stockItem.isInStock,
-                                          scaffoldKey: _scaffoldKey,
-                                          btn_height: width(context) * .13,
-                                          btn_width: width(context) * .4,
-                                          text_size: .025,
-                                          product_image: product_image,
-                                          product_id: snapshot.data[0].id,
-                                        )  :
-                                        Container(
-                                          height: width(context) * .16,
-                                          //   width: width(context) * .7,
-                                          padding: EdgeInsets.all(4),
-                                          decoration: BoxDecoration(
-                                              borderRadius: const BorderRadius.all(Radius.circular(15.0))
-                                          ),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                color:greyColor ,
-                                                borderRadius: BorderRadius.circular(8)),
-                                            child:  Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                customDescriptionText(
-                                                    context: context,
-                                                    text: translator.translate("Out Of Stock"),
-                                                    percentageOfHeight:  0.017,
-                                                    textColor: mainColor) ,
-                                              ],),
-                                          ) ,
-                                        ),
-                                      ],
-                                    ),
-                                    //divider(context: context),
-                                    responsiveSizedBox(context: context, percentageOfHeight: .03),
-
-                                    //how to use
-                                    ProductUseTabBar(
-                                      description: description_use,
-                                      how_to_use: how_to_use,
-                                    ),
-
-                                    responsiveSizedBox(context: context, percentageOfHeight: .03),
-                                    responsiveSizedBox(context: context, percentageOfHeight: .03),
                                     Container(
-                                      height: height(context) * .1,
-                                      color: mainColor,
-                                      alignment: Alignment.bottomCenter,
-                                      child: Column(
-                                        children: [
-                                          responsiveSizedBox(
-                                              context: context, percentageOfHeight: .015),
-                                          writeReviewButton(
-                                            context: context,
-                                            product_suk: snapshot.data[0].sku,
-                                            product_id: snapshot.data[0].id,
-                                          ),
-                                          responsiveSizedBox(
-                                              context: context, percentageOfHeight: .005),
-                                        ],
+                                      padding: EdgeInsets.only(
+                                          right: width(context) * .05, left: width(context) * .05),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(color: mainColor, width: 2),
+                                            borderRadius: BorderRadius.circular(8)),
+                                        width: width(context) * .4,
+                                        height: isLandscape(context)
+                                            ? 2 * height(context) * .06
+                                            : height(context) * .06,
+                                        child: Center(
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                              children: [
+                                                MaterialButton(
+                                                  height: 5,
+                                                  minWidth: StaticData.get_width(context) * 0.10,
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      if (qty <= 1) {
+                                                        errorDialog(
+                                                          context: context,
+                                                          text:
+                                                          "لقد نفذت الكمية من هذا المنتج",
+                                                        );
+                                                      } else {
+                                                        setState(() {
+                                                          qty--;
+                                                          StaticData.product_qty = qty;
+                                                        });
+                                                      }
+                                                    });
+                                                  },
+                                                  textColor: Colors.white,
+                                                  child: Icon(
+                                                    Icons.remove,
+                                                    size: 18,
+                                                    color: blackColor,
+                                                  ),
+
+                                                ),
+                                                quantity(),
+                                                MaterialButton(
+                                                  height: 5,
+                                                  minWidth:
+                                                  StaticData.get_width(context) *
+                                                      0.10,
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      if (qty == snapshot.data[0].extensionAttributes.stockItem.qty) {
+                                                        errorDialog(
+                                                          context: context,
+                                                          text:
+                                                          "لا يمكنك تخطى الكمية المتاحة",
+                                                        );
+                                                      } else {
+                                                        setState(() {
+                                                          qty++;
+                                                          StaticData.product_qty = qty;
+
+                                                        });
+                                                      }
+                                                    });
+                                                  },
+                                                  textColor: greyColor,
+                                                  child: Icon(
+                                                    Icons.add,
+                                                    size: 18,
+                                                    color: blackColor,
+                                                  ),
+
+                                                ),
+
+                                              ],
+                                            )),
                                       ),
                                     ),
-                                    responsiveSizedBox(context: context, percentageOfHeight: .03),
-                                    titleText(context: context, text: "Related Products"),
-                                    responsiveSizedBox(context: context, percentageOfHeight: .02),
-
-                                    HomeListProducts(
-                                      type: 'related products',
-                                      homeScaffoldKey: _scaffoldKey,
-                                      items: snapshot.data[0],
+                                    snapshot.data[0].extensionAttributes.stockItem.isInStock ?    AddProductToCartWidget(
+                                      product_sku: snapshot.data[0].sku,
+                                      product_quantity:  StaticData.product_qty ,
+                                      instock_status: snapshot.data[0].extensionAttributes.stockItem.isInStock,
+                                      scaffoldKey: _scaffoldKey,
+                                      btn_height: width(context) * .13,
+                                      btn_width: width(context) * .4,
+                                      text_size: .025,
+                                      product_image: product_image,
+                                      product_id: snapshot.data[0].id,
+                                    )  :
+                                    Container(
+                                      height: width(context) * .16,
+                                      //   width: width(context) * .7,
+                                      padding: EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(Radius.circular(15.0))
+                                      ),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color:greyColor ,
+                                            borderRadius: BorderRadius.circular(8)),
+                                        child:  Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            customDescriptionText(
+                                                context: context,
+                                                text: translator.translate("Out Of Stock"),
+                                                percentageOfHeight:  0.017,
+                                                textColor: mainColor) ,
+                                          ],),
+                                      ) ,
                                     ),
-                                    responsiveSizedBox(context: context, percentageOfHeight: .04),
                                   ],
                                 ),
-                              ),
+                                //divider(context: context),
+                                responsiveSizedBox(context: context, percentageOfHeight: .03),
+
+                                //how to use
+                                ProductUseTabBar(
+                                  description: description_use,
+                                  how_to_use: how_to_use,
+                                ),
+
+                                responsiveSizedBox(context: context, percentageOfHeight: .03),
+                                responsiveSizedBox(context: context, percentageOfHeight: .03),
+                                Container(
+                                  height: height(context) * .1,
+                                  color: mainColor,
+                                  alignment: Alignment.bottomCenter,
+                                  child: Column(
+                                    children: [
+                                      responsiveSizedBox(
+                                          context: context, percentageOfHeight: .015),
+                                      writeReviewButton(
+                                        context: context,
+                                        product_suk: snapshot.data[0].sku,
+                                        product_id: snapshot.data[0].id,
+                                      ),
+                                      responsiveSizedBox(
+                                          context: context, percentageOfHeight: .005),
+                                    ],
+                                  ),
+                                ),
+                                responsiveSizedBox(context: context, percentageOfHeight: .03),
+                                titleText(context: context, text: "Related Products"),
+                                responsiveSizedBox(context: context, percentageOfHeight: .02),
+
+                                HomeListProducts(
+                                  type: 'related products',
+                                  homeScaffoldKey: _scaffoldKey,
+                                  items: snapshot.data[0],
+                                ),
+                                responsiveSizedBox(context: context, percentageOfHeight: .04),
+                              ],
                             );
+
+
                           }
 
                         }
