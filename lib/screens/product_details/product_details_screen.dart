@@ -333,7 +333,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                       items: snapshot.data[0],
                                     ),
                                     responsiveSizedBox(context: context, percentageOfHeight: .04),
-
                                   ],
                                 ),
                               ),

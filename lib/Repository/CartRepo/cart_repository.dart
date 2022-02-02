@@ -354,6 +354,31 @@ class CartRepository {
       Navigator.pop(context);
     }
   }
+  Future<bool> updateCartLanguage({BuildContext context}) async {
+    Dio dio = new Dio();
+    try {
+      final isMask = StaticData.vistor_value == 'visitor'?1:0;
+      final cartId=  StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
+          :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE);
+      final url = '${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/update-quote-language/$isMask/$cartId';
+      final response = await dio.get(
+          url,
+          options: Options(
+              headers:  Map<String, String>.from({
+                      'Authorization':
+                          'Bearer ${Urls.ADMIN_TOKEN}',
+                      'content-type': 'application/json',
+                      'Accept': 'application/json',
+                    })));
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      // Navigator.pop(context);
+    }
+  }
 }
 
 CartRepository cartRepository = CartRepository();

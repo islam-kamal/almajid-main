@@ -2,10 +2,16 @@ import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_addre
 import 'package:almajidoud/utils/file_export.dart';
 
 orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments ,var cash }) {
-  var grand_total, subtotal, vat ,shipping, payment_fees;
+  var grand_total, subtotal, vat ,shipping, payment_fees=0;
+  if(cash == 'الدفع عند الإستلام' || cash == "Cash On Delivery"){
+    if(MyApp.app_location == 'sa') payment_fees= 15;
+    if(MyApp.app_location == 'kw') payment_fees= 1;
+    if(MyApp.app_location == 'uae') payment_fees= 11;
+  }
+
   total_segments.forEach((element) {
     if(element.code ==  "grand_total"){
-      grand_total = element.value;
+      grand_total = double.parse((element.value + payment_fees).toStringAsFixed(2));
     }
     if(element.code ==  "subtotal" ){
       subtotal = element.value;
@@ -16,10 +22,9 @@ orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments 
     if(element.code == "shipping"){
       shipping = element.value;
     }
-    if(element.code ==  "payment_fee"){
-      payment_fees = element.value;
-    }
   });
+
+
   return Column(
     children: [
       Container(
@@ -86,7 +91,7 @@ orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments 
             ],
           )),
       responsiveSizedBox(context: context, percentageOfHeight: .015),
-     cash == 'الدفع عند التوصيل' || cash == "Cash On Delivery" ? Container(
+     cash == 'الدفع عند الإستلام' || cash == "Cash On Delivery" ? Container(
           width: width(context) * .9,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

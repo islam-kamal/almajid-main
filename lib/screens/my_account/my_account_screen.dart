@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/my_account/update_profile.dart';
 import 'package:almajidoud/screens/my_account/widgets/logout_button.dart';
@@ -350,5 +351,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     });
     MyApp.setLocale(context, Locale('${lang}'));
     sharedPreferenceManager.writeData(CachingKey.APP_LANGUAGE, lang);
+    cartRepository.updateCartLanguage(context: context);
   }
 }

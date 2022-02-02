@@ -225,6 +225,11 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
       if(element.code =="aps_fort_vault" || element.code == "mestores_applepay"){
         toRemove.add(element);
       }
+      if(widget.guestShipmentAddressModel.totals.grandTotal < 99){
+        if(element.code =="tamara_pay_by_instalments" || element.code == "tamara_pay_later"){
+          toRemove.add(element);
+        }
+      }
     });
     paymentMethods.removeWhere( (e) => toRemove.contains(e));
 
