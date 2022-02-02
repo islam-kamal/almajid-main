@@ -178,8 +178,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                     titleText(context: context, text: "Quantity"),
                                     responsiveSizedBox(
                                         context: context, percentageOfHeight: .02),
+
+
+
+
                                     Row(
                                       children: [
+
                                         Container(
                                           padding: EdgeInsets.only(
                                               right: width(context) * .05, left: width(context) * .05),
@@ -197,7 +202,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                                   children: [
                                                     MaterialButton(
                                                       height: 5,
-                                                      minWidth: StaticData.get_width(context) * 0.15,
+                                                      minWidth: StaticData.get_width(context) * 0.10,
                                                       onPressed: () {
                                                         setState(() {
                                                           if (qty <= 1) {
@@ -227,7 +232,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                                       height: 5,
                                                       minWidth:
                                                       StaticData.get_width(context) *
-                                                          0.15,
+                                                          0.10,
                                                       onPressed: () {
                                                         setState(() {
                                                           if (qty == snapshot.data[0].extensionAttributes.stockItem.qty) {
@@ -257,6 +262,39 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                                   ],
                                                 )),
                                           ),
+                                        ),
+                                        snapshot.data[0].extensionAttributes.stockItem.isInStock ?    AddProductToCartWidget(
+                                          product_sku: snapshot.data[0].sku,
+                                          product_quantity:  StaticData.product_qty ,
+                                          instock_status: snapshot.data[0].extensionAttributes.stockItem.isInStock,
+                                          scaffoldKey: _scaffoldKey,
+                                          btn_height: width(context) * .13,
+                                          btn_width: width(context) * .4,
+                                          text_size: .025,
+                                          product_image: product_image,
+                                          product_id: snapshot.data[0].id,
+                                        )  :
+                                        Container(
+                                          height: width(context) * .16,
+                                          //   width: width(context) * .7,
+                                          padding: EdgeInsets.all(4),
+                                          decoration: BoxDecoration(
+                                              borderRadius: const BorderRadius.all(Radius.circular(15.0))
+                                          ),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color:greyColor ,
+                                                borderRadius: BorderRadius.circular(8)),
+                                            child:  Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                customDescriptionText(
+                                                    context: context,
+                                                    text: translator.translate("Out Of Stock"),
+                                                    percentageOfHeight:  0.017,
+                                                    textColor: mainColor) ,
+                                              ],),
+                                          ) ,
                                         ),
                                       ],
                                     ),
@@ -301,39 +339,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                       items: snapshot.data[0],
                                     ),
                                     responsiveSizedBox(context: context, percentageOfHeight: .04),
-                                    snapshot.data[0].extensionAttributes.stockItem.isInStock ?    AddProductToCartWidget(
-                                      product_sku: snapshot.data[0].sku,
-                                      product_quantity:  StaticData.product_qty ,
-                                      instock_status: snapshot.data[0].extensionAttributes.stockItem.isInStock,
-                                      scaffoldKey: _scaffoldKey,
-                                      btn_height: width(context) * .13,
-                                      btn_width: width(context) * .7,
-                                      text_size: .025,
-                                      product_image: product_image,
-                                      product_id: snapshot.data[0].id,
-                                    )  :
-                                    Container(
-                                      height: width(context) * .16,
-                                      //   width: width(context) * .7,
-                                      padding: EdgeInsets.all(4),
-                                      decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(Radius.circular(15.0))
-                                      ),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color:greyColor ,
-                                            borderRadius: BorderRadius.circular(8)),
-                                        child:  Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            customDescriptionText(
-                                                context: context,
-                                                text: translator.translate("Out Of Stock"),
-                                                percentageOfHeight:  0.017,
-                                                textColor: mainColor) ,
-                                          ],),
-                                      ) ,
-                                    ),
+
                                   ],
                                 ),
                               ),
