@@ -34,10 +34,6 @@ class AuthenticationRepository {
   static Future<String> signIn(
       {BuildContext context, String email, String password}) async {
     Dio dio = new Dio();
-    print("${  Urls.BASE_URL +
-        "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/integration/customer/token"}");
-    print("email : $email");
-    print("password : $password");
 
     try {
       final response = await dio.post(
