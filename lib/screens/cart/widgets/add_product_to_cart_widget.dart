@@ -7,7 +7,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class AddProductToCartWidget extends StatefulWidget {
   var product_quantity, product_sku, instock_status,btn_width,btn_height,text_size ,
-      home_shape , product_image , product_id , add_wishlist_to_cart ;
+      home_shape , product_image , product_id , add_wishlist_to_cart ,
+   product_details_page;
   GlobalKey<ScaffoldState> scaffoldKey;
 
   AddProductToCartWidget(
@@ -21,6 +22,7 @@ class AddProductToCartWidget extends StatefulWidget {
         this.home_shape = true,
         this.product_image,
         this.product_id,
+        this.product_details_page = false,
         this.add_wishlist_to_cart = false
       });
 
@@ -93,15 +95,25 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
         }
 
         return _isLoading
-            ? Center(
+            ? widget.product_details_page ? Container(
+          width: width(context),
+          height: widget.btn_height,
+          //color: greenColor,
+          child: Center(
+            child: SpinKitFadingCube(
+              color: Theme.of(context).primaryColor,
+              size:  width(context) *0.09,
+            ),
+          ),
+        ): Center(
           child: SpinKitFadingCube(
             color: Theme.of(context).primaryColor,
-            size: width(context) *0.05,
+            size:  width(context) *0.05,
           ),
         )
             : Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.all(4),
+                padding: widget.product_details_page ? EdgeInsets.all(0) :EdgeInsets.all(4),
                 child: StaggerAnimation(
                   buttonController: _loginButtonController.view,
                   btn_height: widget.btn_height,

@@ -11,7 +11,7 @@ class PageContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Platform.isIOS ? Colors.white : blackColor,
+        color: Platform.isIOS ? Colors.white : Colors.white,
         child: SafeArea(
           child: GestureDetector(
             onTap: () {

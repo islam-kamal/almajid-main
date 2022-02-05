@@ -32,8 +32,18 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_backgroundHandler);
 
   runApp(
-    LocalizedApp(
-      child: MyApp(),
+    MaterialApp(
+      home: LocalizedApp(
+        child: MyApp(),
+
+      ),
+     theme: ThemeData(
+        accentColor: mainColor,
+        primaryColor: mainColor,
+        fontFamily: checkDirection(
+            dirArabic: "Cairo", dirEnglish: "Cairo")
+    ),
+      debugShowCheckedModeBanner: false,
     ),
   );
 }
@@ -70,7 +80,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     get_Static_data();
+    print("1");
     _fcmConfigure(context);
+    print("2");
   }
   void get_Static_data()async{
     await sharedPreferenceManager.readString(CachingKey.USER_COUNTRY_CODE).then((value){
@@ -131,29 +143,35 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _fcmConfigure(BuildContext context) async{
+    print("1-1");
     LocalNotificationService.initialize(context);
     final _firebaseMessaging = FirebaseMessaging.instance;
-
+    print("1-2");
     ///required by IOS permissions
     _firebaseMessaging.requestPermission(
       alert: true,
       badge: true,
       sound: true,
     );
-
+    print("1-3");
     // //get the current device token
     // _getCustomerNotification();
 
     ///gives you the message on which use taps
     ///and it opened from the terminated state
     _firebaseMessaging.getInitialMessage().then((message) {
+      print("1-4");
       if(message !=null){
+        print("1-5");
         final routeMessage = message.data['route'];
+        print("getInitialMessage routeMessage : ${routeMessage}");
         if (StaticData.vistor_value != "visitor") {
+          print("1-6");
           switch (routeMessage) {
             case "order_update":
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => OrdersScreen( increment_id: "" )));
+              print("1-7");
               break;
           }
         }
@@ -163,19 +181,27 @@ class _MyAppState extends State<MyApp> {
 
     ///app open on ForeGround. notification will not be visibile but you will receive the data
     FirebaseMessaging.onMessage.listen((message) {
+      print("1-8");
       if(message.notification !=null){
+        print("1-9");
         LocalNotificationService.display(message);
       }
     });
 
     ///app in background and not terminated when you click on the notification this should be triggered
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      print("1-10");
       final routeMessage = message.data['route'];
+      print("1-11");
+      print("onMessageOpenedApp routeMessage : ${routeMessage}");
+
       if (StaticData.vistor_value != "visitor") {
+        print("1-12");
         switch (routeMessage) {
           case "order_update":
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) => OrdersScreen( increment_id: "" )));
+            print("1-13");
             break;
         }
       }

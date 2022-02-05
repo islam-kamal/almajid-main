@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
+import 'package:almajidoud/screens/Store_Locator/store_locator_screen.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/my_account/update_profile.dart';
 import 'package:almajidoud/screens/my_account/widgets/logout_button.dart';
@@ -220,6 +221,15 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     onTap: () {
                                       final newLang = _currentLang == 'en'?'ar':'en';
                                       _changeLang(lang: newLang);
+                                    }),
+
+                                singleAccountItem(
+                                    context: context,
+                                    text:translator.translate("Our Locations"),
+                                    isContainMoreIcon: true,
+                                    onTap: () {
+                                      StoreLocatorScreen();
+                                      customAnimatedPushNavigation(context, StoreLocatorScreen());
                                     }),
                                 singleAccountItem(
                                     context: context,

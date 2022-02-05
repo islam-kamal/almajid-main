@@ -13,7 +13,7 @@ singleAccountItem({BuildContext context, String text, String iconPath, Function 
             children: [
               Row(
                 children: [
-                  Image.asset(
+                  iconPath==null? Icon(Icons.location_on) :   Image.asset(
                     iconPath,
                     color: mainColor,
                     height: isLandscape(context)
