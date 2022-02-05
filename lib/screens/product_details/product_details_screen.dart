@@ -319,7 +319,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             text_size: .025,
                             product_image: product_image,
                             product_id: snapshot.data[0].id,
-                            product_details_page: true,
+                            product_details_page: false,
                           )  :
                           Container(
                             height: width(context) * .16,

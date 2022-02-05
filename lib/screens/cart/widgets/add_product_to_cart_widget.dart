@@ -113,12 +113,13 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
         )
             : Container(
                 alignment: Alignment.center,
-                padding: widget.product_details_page ? EdgeInsets.all(0) :EdgeInsets.all(4),
+                padding: !widget.product_details_page ? EdgeInsets.all(0) :EdgeInsets.all(4),
                 child: StaggerAnimation(
                   buttonController: _loginButtonController.view,
                   btn_height: widget.btn_height,
                   btn_width: widget.btn_width,
                   text_size: widget.text_size,
+                  product_details_page: widget.product_details_page,
                   image: "assets/icons/right-arrow.png",
                   titleButton: "Add TO Cart",
                   home_shape: widget.home_shape,
