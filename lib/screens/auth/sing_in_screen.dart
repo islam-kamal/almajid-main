@@ -93,7 +93,6 @@ class _SignInScreenState extends State<SignInScreen>
       }
       else if (state is Done) {
         var data = state.general_value;
-        print("data : $data");
         _stopAnimation();
         customPushNamedNavigation(context,GetStartedScreen(
           token: data,

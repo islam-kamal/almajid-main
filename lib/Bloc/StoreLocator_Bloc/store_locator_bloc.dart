@@ -20,7 +20,6 @@ class StoreLocatorBloc extends Bloc<AppEvent,AppState>{
     if(event is GetAllStoreLocatoreEvent){
       yield Loading();
       var response = await store_locator_repo.get_stores_locators();
-      print("response : $response");
       if(response != null){
         _store_locator_subject.sink.add(response);
 
