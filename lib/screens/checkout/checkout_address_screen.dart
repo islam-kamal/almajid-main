@@ -937,7 +937,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               CountryCodePicker(
                 onChanged: (Object object)=>_countryCode=object.toString(),
                 initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
-                countryFilter: ['SA', 'KW', 'AE'],
+                countryFilter: ['SA', 'KW',],
                 showFlagDialog: true,
               ),
               Flexible(
@@ -1048,7 +1048,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               CountryCodePicker(
                 onChanged: (Object object)=>_countryCode=object.toString(),
                 initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
-                countryFilter: ['SA', 'KW', 'AE'],
+                countryFilter: ['SA', 'KW', ],
                 showFlagDialog: true,
               ),
             ],

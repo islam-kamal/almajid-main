@@ -231,7 +231,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                       StoreLocatorScreen();
                                       customAnimatedPushNavigation(context, StoreLocatorScreen());
                                     }),
-                                singleAccountItem(
+                    /*            singleAccountItem(
                                     context: context,
                                     iconPath: "assets/icons/help.png",
                                     text: translator.translate("Help Center"),
@@ -239,7 +239,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     onTap: () {
                                       Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title:  "Contact us" ,url: Urls.CONTACT_US_URL,)));
                                     }),
-
+*/
                                 singleAccountItem(
                                     context: context,
                                     iconPath: "assets/icons/about_us.png",
