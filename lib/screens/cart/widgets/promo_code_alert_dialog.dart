@@ -3,7 +3,7 @@ import 'package:almajidoud/custom_widgets/responsive_sized_box.dart';
 import 'package:almajidoud/custom_widgets/custom_description_text.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-Future promoCodeAlertDialog({BuildContext base_context}) {
+Future promoCodeAlertDialog({BuildContext base_context , GlobalKey<ScaffoldState> scafffoldKey}) {
   TextEditingController controller = new TextEditingController();
   return showDialog<void>(
     context: base_context,
@@ -22,8 +22,8 @@ Future promoCodeAlertDialog({BuildContext base_context}) {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(width: width(context),height: height(context) *.08,color: whiteColor,
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween
-                  ,children: [
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                     SizedBox(),
                   customDescriptionText(context: context , text: "Promo Code" , percentageOfHeight: .025 , fontWeight: FontWeight.bold)
 ,
@@ -82,8 +82,10 @@ Future promoCodeAlertDialog({BuildContext base_context}) {
                 onTap: (){
                 shoppingCartBloc.add(ApplyPromoCodeEvent(
                   context: base_context,
+                    scafffoldKey: scafffoldKey,
                   prom_code: controller.value.text
                 ));
+                Navigator.pop(context);
 
 
               },

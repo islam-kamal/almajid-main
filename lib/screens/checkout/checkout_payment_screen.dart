@@ -76,7 +76,9 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                     paymentMethods: widget.guestShipmentAddressModel.paymentMethods
                 ),
                 _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments'  ||   _currentIndex ==  'cashondelivery'?
-                Container() :     Column(
+                Container() :    Directionality(
+                  textDirection: TextDirection.ltr,
+                  child:  Column(
                   children: [
                     CreditCardWidget(
                       glassmorphismConfig:
@@ -121,7 +123,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                         alignLabelWithHint: true,
                         enabledBorder: border,
 
-                        hintTextDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr ,
+                      //  hintTextDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr ,
                         contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
                       ),
@@ -160,7 +162,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       onCreditCardModelChange: onCreditCardModelChange,
                     ),
                   ],
-                ),
+                )),
 
 
 
@@ -175,10 +177,13 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       ));
                     }else{
                     if (formKey.currentState.validate()) {
+
+
                       StaticData.card_number = cardNumber.replaceAll(' ', '');
                       StaticData.card_holder_name = cardHolderName;
                       StaticData.card_security_code = cvvCode;
                       StaticData.expiry_date = expiryDate[3] + expiryDate[4] + expiryDate[0] + expiryDate[1];
+
                       customAnimatedPushNavigation(context , CheckoutSummaryScreen(
                         guestShipmentAddressModel: widget.guestShipmentAddressModel,
                         payment_method: payment_method_name,

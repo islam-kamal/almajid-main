@@ -38,6 +38,8 @@ class StcVerificationCodeScreen extends StatefulWidget {
 
 class _OtpState extends State<StcVerificationCodeScreen>
     with SingleTickerProviderStateMixin {
+  TextEditingController controller = new TextEditingController();
+
   // Constants
   var otp_code;
   final int time = 30;
@@ -122,7 +124,8 @@ class _OtpState extends State<StcVerificationCodeScreen>
   Widget build(BuildContext context) {
     _screenSize = MediaQuery.of(context).size;
     number = StaticData.user_mobile_number;
-    return new Scaffold(
+    return new Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+    child:Scaffold(
         appBar: _getAppbar,
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -133,7 +136,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
               child: _getInputPart,
             ),
           )
-        ));
+        ) ));
   }
 
   // Returns "Otp custom text field"
@@ -208,20 +211,27 @@ class _OtpState extends State<StcVerificationCodeScreen>
   void _setCurrentDigit(int i) {
     setState(() {
       _currentDigit = i;
+      controller.text += _currentDigit.toString() ;
+
       if (_firstDigit == null) {
+
         _firstDigit = _currentDigit;
-      } else if (_secondDigit == null) {
+      }
+      else if (_secondDigit == null) {
         _secondDigit = _currentDigit;
-      } else if (_thirdDigit == null) {
+      }
+      else if (_thirdDigit == null) {
         _thirdDigit = _currentDigit;
-      } else if (_fourthDigit == null) {
+      }
+      else if (_fourthDigit == null) {
         _fourthDigit = _currentDigit;
 
         otp_code = _firstDigit.toString() +
             _secondDigit.toString() +
             _thirdDigit.toString() +
             _fourthDigit.toString();
-      }else if (_fifthDigit == null) {
+      }
+      else if (_fifthDigit == null) {
         _fifthDigit = _currentDigit;
 
         otp_code = _firstDigit.toString() +
@@ -354,7 +364,34 @@ class _OtpState extends State<StcVerificationCodeScreen>
       children: <Widget>[
         _getVerificationCodeLabel,
         _getEmailLabel,
-        _getInputField,
+       // _getInputField,
+       Padding(
+         padding: EdgeInsets.symmetric(vertical: width(context) * 0.06),
+       child: Align(
+         alignment: Alignment.center,
+         child:  Container(
+             width: width(context)*.7,height: height(context)*.06,
+             child: TextField(
+                 controller: controller,
+                 textAlign: TextAlign.center,
+                 decoration: InputDecoration(
+                   hintText: translator.translate("Input code number"),
+                   hintStyle: TextStyle(
+                       color:  greyColor.withOpacity(.5) ,
+                       fontWeight: FontWeight.bold,
+                       fontSize:  isLandscape(context)   ? 2* height(context)*.018 :height(context)*.018),
+                   filled: true,fillColor: whiteColor,
+                   enabledBorder: OutlineInputBorder(
+                       borderRadius: BorderRadius.circular(3),
+                       borderSide: BorderSide(color: blackColor)),
+                   focusedBorder: OutlineInputBorder(
+                       borderRadius: BorderRadius.circular(3),
+                       borderSide: BorderSide(color: blackColor)),
+                   border: OutlineInputBorder(
+                       borderRadius: BorderRadius.circular(3),
+                       borderSide: BorderSide(color: blackColor)),
+                 ))),
+       ),),
         _hideResendButton ? _getTimerText : _getResendButton,
         _getOtpKeyboard
       ],
@@ -386,6 +423,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
     return InkWell(
       onTap: () {
         clearOtp();
+        controller.clear();
         _hideResendButton = !_hideResendButton;
         forgetPassword_bloc.add(resendOtpClick(route: widget.route));
         _startCountdown();
@@ -417,129 +455,131 @@ class _OtpState extends State<StcVerificationCodeScreen>
 
   // Returns "Otp" keyboard
   get _getOtpKeyboard {
-    return Container(
-      child: Column(
-        children: [
-          responsiveSizedBox(context: context, percentageOfHeight: .05),
-       _getOtpConfirmationButton,
-          responsiveSizedBox(context: context, percentageOfHeight: .02),
-          new Container(
-              height: _screenSize.width - 80,
-              child: new Column(
-                children: <Widget>[
-                  new Expanded(
-                    child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        _otpKeyboardInputButton(
-                            label: "1",
-                            onPressed: () {
-                              _setCurrentDigit(1);
-                            }),
-                        _otpKeyboardInputButton(
-                            label: "2",
-                            onPressed: () {
-                              _setCurrentDigit(2);
-                            }),
-                        _otpKeyboardInputButton(
-                            label: "3",
-                            onPressed: () {
-                              _setCurrentDigit(3);
-                            }),
-                      ],
-                    ),
-                  ),
-                  new Expanded(
-                    child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        _otpKeyboardInputButton(
-                            label: "4",
-                            onPressed: () {
-                              _setCurrentDigit(4);
-                            }),
-                        _otpKeyboardInputButton(
-                            label: "5",
-                            onPressed: () {
-                              _setCurrentDigit(5);
-                            }),
-                        _otpKeyboardInputButton(
-                            label: "6",
-                            onPressed: () {
-                              _setCurrentDigit(6);
-                            }),
-                      ],
-                    ),
-                  ),
-                  new Expanded(
-                    child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        _otpKeyboardInputButton(
-                            label: "7",
-                            onPressed: () {
-                              _setCurrentDigit(7);
-                            }),
-                        _otpKeyboardInputButton(
-                            label: "8",
-                            onPressed: () {
-                              _setCurrentDigit(8);
-                            }),
-                        _otpKeyboardInputButton(
-                            label: "9",
-                            onPressed: () {
-                              _setCurrentDigit(9);
-                            }),
-                      ],
-                    ),
-                  ),
-                  new Expanded(
-                    child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        new SizedBox(
-                          width: 80.0,
+    return  Directionality(
+        textDirection: TextDirection.ltr,
+        child: Container(
+          child: Column(
+            children: [
+              responsiveSizedBox(context: context, percentageOfHeight: .05),
+              _getOtpConfirmationButton,
+              responsiveSizedBox(context: context, percentageOfHeight: .02),
+              new Container(
+                  height: _screenSize.width - 80,
+                  child: new Column(
+                    children: <Widget>[
+                      new Expanded(
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            _otpKeyboardInputButton(
+                                label: "1",
+                                onPressed: () {
+                                  _setCurrentDigit(1);
+                                }),
+                            _otpKeyboardInputButton(
+                                label: "2",
+                                onPressed: () {
+                                  _setCurrentDigit(2);
+                                }),
+                            _otpKeyboardInputButton(
+                                label: "3",
+                                onPressed: () {
+                                  _setCurrentDigit(3);
+                                }),
+                          ],
                         ),
-                        _otpKeyboardInputButton(
-                            label: "0",
-                            onPressed: () {
-                              _setCurrentDigit(0);
-                            }),
-                        _otpKeyboardActionButton(
-                            label: new Icon(
-                              Icons.backspace,
-                              color: whiteColor,
+                      ),
+                      new Expanded(
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            _otpKeyboardInputButton(
+                                label: "4",
+                                onPressed: () {
+                                  _setCurrentDigit(4);
+                                }),
+                            _otpKeyboardInputButton(
+                                label: "5",
+                                onPressed: () {
+                                  _setCurrentDigit(5);
+                                }),
+                            _otpKeyboardInputButton(
+                                label: "6",
+                                onPressed: () {
+                                  _setCurrentDigit(6);
+                                }),
+                          ],
+                        ),
+                      ),
+                      new Expanded(
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            _otpKeyboardInputButton(
+                                label: "7",
+                                onPressed: () {
+                                  _setCurrentDigit(7);
+                                }),
+                            _otpKeyboardInputButton(
+                                label: "8",
+                                onPressed: () {
+                                  _setCurrentDigit(8);
+                                }),
+                            _otpKeyboardInputButton(
+                                label: "9",
+                                onPressed: () {
+                                  _setCurrentDigit(9);
+                                }),
+                          ],
+                        ),
+                      ),
+                      new Expanded(
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            new SizedBox(
+                              width: 80.0,
                             ),
-                            onPressed: () {
-                              setState(() {
-                                if (_fifthDigit != null) {
-                                  _fifthDigit = null;
-                                }
-                                else if (_fourthDigit != null) {
-                                  _fourthDigit = null;
-                                } else if (_thirdDigit != null) {
-                                  _thirdDigit = null;
-                                } else if (_secondDigit != null) {
-                                  _secondDigit = null;
-                                } else if (_firstDigit != null) {
-                                  _firstDigit = null;
-                                }
-                              });
-                            }),
-                      ],
-                    ),
-                  ),
+                            _otpKeyboardInputButton(
+                                label: "0",
+                                onPressed: () {
+                                  _setCurrentDigit(0);
+                                }),
+                            _otpKeyboardActionButton(
+                                label: new Icon(
+                                  Icons.backspace,
+                                  color: whiteColor,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    if (_fifthDigit != null) {
+                                      _fifthDigit = null;
+                                    }
+                                    else if (_fourthDigit != null) {
+                                      _fourthDigit = null;
+                                    } else if (_thirdDigit != null) {
+                                      _thirdDigit = null;
+                                    } else if (_secondDigit != null) {
+                                      _secondDigit = null;
+                                    } else if (_firstDigit != null) {
+                                      _firstDigit = null;
+                                    }
+                                  });
+                                }),
+                          ],
+                        ),
+                      ),
 
-                ],
-              ))
-        ],
-      ),
-      width: width(context),
-      decoration: BoxDecoration(
-          color: blackColor,
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(200), topLeft: Radius.circular(200))),
-    );
+                    ],
+                  ))
+            ],
+          ),
+          width: width(context),
+          decoration: BoxDecoration(
+              color: blackColor,
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(200), topLeft: Radius.circular(200))),
+        ));
   }
 
   get _getOtpConfirmationButton {

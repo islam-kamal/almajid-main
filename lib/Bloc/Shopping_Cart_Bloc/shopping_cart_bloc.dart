@@ -5,6 +5,7 @@ import 'package:almajidoud/Model/CategoryModel/category_model.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/Repository/CategoryRepo/category_repository.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
@@ -61,25 +62,43 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
       final response = await cartRepository.apply_promo_code_to_cart(
           promo_code: event.prom_code, context: event.context);
       if (response != true) {
-        errorDialog(
-            context: event.context,
-            text: translator.translate("The coupon code isn't valid. Verify the code and try again."),
-            function: (){
-              shoppingCartBloc.add(GetCartDetailsEvent());
-              Navigator.pop(event.context);
-              Navigator.pop(event.context);
-            });
-      } else {
 
-        errorDialog(
-            context: event.context,
-            text: translator.translate("Promo Code Applied Sucessfully"),
-          function: (){
-            shoppingCartBloc.add(GetCartDetailsEvent());
-            Navigator.pop(event.context);
-            Navigator.pop(event.context);
-          }
-        );
+        Flushbar(
+          messageText:  Container(
+            child: Wrap(
+              children: [
+                Text(
+                  translator.translate("The coupon code isn't valid. Verify the code and try again."),
+                  textDirection: TextDirection.rtl,
+                  style: TextStyle(color: whiteColor),
+                ),
+              ],
+            ),
+          ),
+          flushbarPosition: FlushbarPosition.BOTTOM,
+          backgroundColor: redColor,
+          flushbarStyle: FlushbarStyle.FLOATING,
+          duration: Duration(seconds: 3),
+        )..show(event.scafffoldKey.currentState.context);
+      } else {
+        Flushbar(
+          messageText:   Container(
+            child: Wrap(
+              children: [
+                Text(
+                  translator.translate("Promo Code Applied Sucessfully"),
+                  textDirection: TextDirection.rtl,
+                  style: TextStyle(color: whiteColor),
+                ),
+              ],
+            ),
+          ),
+          flushbarPosition: FlushbarPosition.BOTTOM,
+          backgroundColor: greenColor,
+          flushbarStyle: FlushbarStyle.FLOATING,
+          duration: Duration(seconds: 3),
+        )..show(event.scafffoldKey.currentState.context);
+
       }
     }
     else if (event is DeletePromoCodeEvent) {
@@ -87,20 +106,43 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
           context: event.context);
 
       if (response != true) {
-        errorDialog(context: event.context,
-            text: translator.translate("Promo Code not deleted"),
-          function: (){
-            Navigator.pop(event.context);
-          }
-        );
+        Flushbar(
+          messageText:  Container(
+            child: Wrap(
+              children: [
+                Text(
+                  translator.translate("Promo Code not deleted"),
+                  textDirection: TextDirection.rtl,
+                  style: TextStyle(color: whiteColor),
+                ),
+              ],
+            ),
+          ),
+          flushbarPosition: FlushbarPosition.BOTTOM,
+          backgroundColor: redColor,
+          flushbarStyle: FlushbarStyle.FLOATING,
+          duration: Duration(seconds: 3),
+        )..show(event.scafffoldKey.currentState.context);
+
       } else {
-        errorDialog(
-            context: event.context,
-            text: translator.translate("Promo Code deleted Sucessfully"),
-            function: (){
-              shoppingCartBloc.add(GetCartDetailsEvent());
-              Navigator.pop(event.context);
-            });
+        Flushbar(
+          messageText:   Container(
+            child: Wrap(
+              children: [
+                Text(
+                  translator.translate("Promo Code deleted Sucessfully"),
+                  textDirection: TextDirection.rtl,
+                  style: TextStyle(color: whiteColor),
+                ),
+              ],
+            ),
+          ),
+          flushbarPosition: FlushbarPosition.BOTTOM,
+          backgroundColor: greenColor,
+          flushbarStyle: FlushbarStyle.FLOATING,
+          duration: Duration(seconds: 3),
+        )..show(event.scafffoldKey.currentState.context);
+
       }
     }
 
