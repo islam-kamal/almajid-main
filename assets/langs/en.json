@@ -277,7 +277,11 @@
   "email is incorrect!" : "email is incorrect!",
   "password is incorrect" : "password is incorrect",
   "input is incorrect" : "input is incorrect",
-  "otp code is incorrect" : "otp code is incorrect"
+  "otp code is incorrect" : "otp code is incorrect",
+  "Choose option" : "Choose option",
+  "Camera" : "Camera",
+  "Gallery" : "Gallery",
+  "Remove": "Remove"
 }
 
 

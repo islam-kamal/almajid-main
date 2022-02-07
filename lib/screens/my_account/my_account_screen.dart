@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/Store_Locator/store_locator_screen.dart';
+import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/my_account/update_profile.dart';
 import 'package:almajidoud/screens/my_account/widgets/logout_button.dart';
@@ -77,9 +78,11 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
-                                          return AlertDialog(
+                                          return Directionality(
+                                              textDirection: MyApp.app_langauge =='ar' ? TextDirection.rtl :TextDirection.ltr,
+                                              child: AlertDialog(
                                             title: Text(
-                                              'Choose option',
+                                              translator.translate("Choose option"),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w600,
                                                   color: greenColor),
@@ -101,7 +104,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          'Camera',
+                                                          translator.translate("Camera"),
                                                           style: TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
@@ -126,7 +129,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          'Gallery',
+                                                          translator.translate("Gallery"),
                                                           style: TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
@@ -151,7 +154,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          'Remove',
+                                                          translator.translate("Remove"),
                                                           style: TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
@@ -164,7 +167,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                                 ],
                                               ),
                                             ),
-                                          );
+                                              )     );
                                         });
                                   },
                                 ),
@@ -301,7 +304,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   void _pickImageCamera() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.camera);
-    final pickedImageFile = File(pickedImage.path);
+    final pickedImageFile = File(pickedImage?.path??"");
 
 // getting a directory path for saving
     final Directory extDir = await getApplicationDocumentsDirectory();
@@ -316,14 +319,14 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         _pickedImage = newImage;
       });
     }
-
-    Navigator.pop(context);
+    customAnimatedPushNavigation(context, CustomCircleNavigationBar(
+        page_index: MyApp.app_langauge == 'ar' ?4 : 0));
   }
 
   void _pickImageGallery() async {
     final picker = ImagePicker();
     final pickedImage = await picker.getImage(source: ImageSource.gallery);
-    final pickedImageFile = File(pickedImage.path);
+    final pickedImageFile = File(pickedImage?.path??"");
     // getting a directory path for saving
     final Directory extDir = await getApplicationDocumentsDirectory();
     String dirPath = extDir.path;
@@ -338,7 +341,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       });
     }
 
-    Navigator.pop(context);
+
+    customAnimatedPushNavigation(context, CustomCircleNavigationBar(
+        page_index: MyApp.app_langauge == 'ar' ?4 : 0));
   }
 
   void _remove() {
@@ -346,7 +351,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     setState(() {
       _pickedImage = null;
     });
-    Navigator.pop(context);
+
+    customAnimatedPushNavigation(context, CustomCircleNavigationBar(
+        page_index: MyApp.app_langauge == 'ar' ?4 : 0));
   }
 
   void _changeLang({String lang}) async {
