@@ -16,6 +16,7 @@ class CountriesBloc extends Bloc<AppEvent, AppState> with Validator{
   void get_countries() async{
     var response =await countriesRepository.getCountriesList(
     );
+
     _countries_subject.sink.add(response);
   }
 

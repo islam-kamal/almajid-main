@@ -4,6 +4,7 @@ import 'package:almajidoud/screens/auth/widgets/send_code_top_icon.dart';
 import 'package:almajidoud/screens/auth/widgets/we_will_send_you_code_text.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:country_list_pick/country_list_pick.dart';
 
 class LoginWithPhoneScreen extends StatefulWidget {
@@ -200,54 +201,15 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
               ),
               child: Row(
                 children: [
-                  Container(
-                      width: MediaQuery.of(context).size.width *0.25,
-                      child:  CountryListPick(
-                        appBar: AppBar(
-                          backgroundColor: Colors.black,
-                          title: Text(translator.translate('country_code')),
-                        ),
-
-                        // if you need custome picker use this
-                        pickerBuilder: (context, CountryCode countryCode){
-                          return Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(countryCode.dialCode,style: TextStyle(color: Colors.black),),
-                              SizedBox(width: MediaQuery.of(context).size.width * 0.02,),
-                              Image.asset(
-                                countryCode.flagUri,
-                                package: 'country_list_pick',width: 30,height: 20,
-                              ),
-
-                            ],
-                          );
-                        },
-
-
-                        // To disable option set to false
-                        theme: CountryTheme(
-                          isShowFlag: true,
-                          isShowTitle: true,
-                          isShowCode: true,
-                          isDownIcon: true,
-                          showEnglishName: true,
-
-
-                        ),
-                        // Set default value
-                        initialSelection: '+966',
-                        onChanged: (CountryCode code) {
-                          _countryCode = code.dialCode;
-                          StaticData.country_code = _countryCode;
-                        },
-                        // Whether to allow the widget to set a custom UI overlay
-                        useUiOverlay: true,
-                        // Whether the country list should be wrapped in a SafeArea
-                        useSafeArea: false,
-
-                      ) ),
+                  CountryCodePicker(
+                    onChanged: (Object object){
+                      _countryCode=object.toString();
+                      StaticData.country_code = _countryCode;
+                    },
+                    initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
+                    countryFilter: ['SA', 'KW', ],
+                    showFlagDialog: true,
+                  ),
                   Expanded(
                       child: TextFormField(
                           decoration: InputDecoration(

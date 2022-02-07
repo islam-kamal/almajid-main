@@ -51,51 +51,51 @@ userImageWidget(
                   ],
                 ),
               ),
-              Container(
-                padding: EdgeInsets.only(
-                    bottom: isLandscape(context)
-                        ? 2 * height(context) * .04
-                        : height(context) * .04,
-                    left: isLandscape(context)
-                        ? width(context) * .15
-                        : width(context) * .25),
-                alignment: Alignment.bottomCenter,
-                width: width(context) * .5,
-                height: isLandscape(context)
-                    ? 2 * height(context) * .22
-                    : height(context) * .22,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RotatedBox(
-                      quarterTurns: 1,
-                      child: GestureDetector(
-                        onTap: onTapAddImage,
-                        child: Polygon(
-                            sides: 6,
-                            child: Container(
-                                color: Colors.black,
-                                width: 35.0,
-                                height: 35.0,
-                                child: Center(
-                                    child: RotatedBox(
-                                        quarterTurns: 3,
-                                        child: Center(
-                                          child: Icon(Icons.add,
-                                              color: whiteColor),
-                                        )
-
-//                                ClipRRect(
-//                                  child: Image.network
-//                                    ("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyj-wgGa-GZ1vJSGgmf6LCmvd7fxUgl-Pl0w&usqp=CAU"
-//                                    , fit: BoxFit.contain),
-//                                ),
-                                        )))),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+//               Container(
+//                 padding: EdgeInsets.only(
+//                     bottom: isLandscape(context)
+//                         ? 2 * height(context) * .04
+//                         : height(context) * .04,
+//                     left: isLandscape(context)
+//                         ? width(context) * .15
+//                         : width(context) * .25),
+//                 alignment: Alignment.bottomCenter,
+//                 width: width(context) * .5,
+//                 height: isLandscape(context)
+//                     ? 2 * height(context) * .22
+//                     : height(context) * .22,
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     RotatedBox(
+//                       quarterTurns: 1,
+//                       child: GestureDetector(
+//                         onTap: onTapAddImage,
+//                         child: Polygon(
+//                             sides: 6,
+//                             child: Container(
+//                                 color: Colors.black,
+//                                 width: 35.0,
+//                                 height: 35.0,
+//                                 child: Center(
+//                                     child: RotatedBox(
+//                                         quarterTurns: 3,
+//                                         child: Center(
+//                                           child: Icon(Icons.add,
+//                                               color: whiteColor),
+//                                         )
+//
+// //                                ClipRRect(
+// //                                  child: Image.network
+// //                                    ("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyj-wgGa-GZ1vJSGgmf6LCmvd7fxUgl-Pl0w&usqp=CAU"
+// //                                    , fit: BoxFit.contain),
+// //                                ),
+//                                         )))),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
             ],
           )),
     ],

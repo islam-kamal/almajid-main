@@ -2,6 +2,7 @@ import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/screens/auth/get_started_screen.dart';
 import 'package:almajidoud/screens/auth/sing_in_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -33,18 +34,10 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
          password:  password_controller.value);
       sharedPreferenceManager.writeData(CachingKey.AUTH_TOKEN,response);
       if(response != null){
-        customPushNamedNavigation(event.context,GetStartedScreen(
-          token: response,
-          route: 'SignInScreen',
-        ));
+        yield Done(general_value: response);
 
       }else{
-
-        errorDialog(context: event.context,
-            text:'he account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later',
-        function: (){
-          customPushNamedNavigation(event.context,SignInScreen());
-        });
+        yield ErrorLoading();
 
       }
     }

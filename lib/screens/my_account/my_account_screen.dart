@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
-import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
+import 'package:almajidoud/screens/Store_Locator/store_locator_screen.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/my_account/update_profile.dart';
 import 'package:almajidoud/screens/my_account/widgets/logout_button.dart';
@@ -79,7 +79,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                         builder: (BuildContext context) {
                                           return AlertDialog(
                                             title: Text(
-                                              translator.translate("Choose option"),
+                                              'Choose option',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w600,
                                                   color: greenColor),
@@ -101,7 +101,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          translator.translate("Camera"),
+                                                          'Camera',
                                                           style: TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
@@ -126,7 +126,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          translator.translate("Gallery"),
+                                                          'Gallery',
                                                           style: TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
@@ -151,7 +151,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          translator.translate("Remove"),
+                                                          'Remove',
                                                           style: TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
@@ -222,55 +222,50 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                       final newLang = _currentLang == 'en'?'ar':'en';
                                       _changeLang(lang: newLang);
                                     }),
-          /*                  InkWell(
-                              onTap: (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title:  "Contact us" ,url: Urls.CONTACT_US_URL,)));
 
-                              },
-                              child:   singleAccountItem(
+                                singleAccountItem(
+                                    context: context,
+                                    text:translator.translate("Our Locations"),
+                                    isContainMoreIcon: true,
+                                    onTap: () {
+                                      StoreLocatorScreen();
+                                      customAnimatedPushNavigation(context, StoreLocatorScreen());
+                                    }),
+                    /*            singleAccountItem(
                                     context: context,
                                     iconPath: "assets/icons/help.png",
                                     text: translator.translate("Help Center"),
                                     isContainMoreIcon: true,
-                              )),*/
-
-                            InkWell(
-                              onTap: (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "About US",url: Urls.ABOUT_US_URL,)));
-
-                              },
-                              child:  singleAccountItem(
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title:  "Contact us" ,url: Urls.CONTACT_US_URL,)));
+                                    }),
+*/
+                                singleAccountItem(
                                     context: context,
                                     iconPath: "assets/icons/about_us.png",
                                     text: translator.translate("About US"),
                                     isContainMoreIcon: true,
-                                  )),
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "About US",url: Urls.ABOUT_US_URL,)));
+                                    }),
 
-                            InkWell(
-                              onTap: (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "Privacy And Policy",url: Urls.PTIVACY_URL,)));
-
-                              },
-                              child:    singleAccountItem(
+                                singleAccountItem(
                                     context: context,
                                     iconPath: "assets/icons/privacy.png",
                                     text:translator.translate( "Privacy And Policy"),
                                     isContainMoreIcon: true,
-                                  )),
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "Privacy And Policy",url: Urls.PTIVACY_URL,)));
+                                    }),
 
-                                InkWell(
-                                  onTap: (){
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "FAQs",url: Urls.FAQS_URL,)));
-
-                                  },
-                                  child:   singleAccountItem(
-                                      context: context,
-                                      iconPath: "assets/icons/faqs.png",
-                                      text: translator.translate("FAQs"),
-                                      isContainMoreIcon: true,
-                                     ),
-                                )
-                              ,
+                                singleAccountItem(
+                                    context: context,
+                                    iconPath: "assets/icons/faqs.png",
+                                    text: translator.translate("FAQs"),
+                                    isContainMoreIcon: true,
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "FAQs",url: Urls.FAQS_URL,)));
+                                    }),
                                 StaticData.vistor_value == 'visitor'
                                     ? logButton(context: context, type: "Sign In")
                                     : logButton(context: context, type: "Logout"),
@@ -306,7 +301,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   void _pickImageCamera() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.camera);
-    final pickedImageFile = File(pickedImage?.path??"");
+    final pickedImageFile = File(pickedImage.path);
 
 // getting a directory path for saving
     final Directory extDir = await getApplicationDocumentsDirectory();
@@ -322,14 +317,13 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       });
     }
 
-    customAnimatedPushNavigation(context, CustomCircleNavigationBar(
-        page_index: MyApp.app_langauge == 'ar' ?4 : 0));
+    Navigator.pop(context);
   }
 
   void _pickImageGallery() async {
     final picker = ImagePicker();
     final pickedImage = await picker.getImage(source: ImageSource.gallery);
-    final pickedImageFile = File(pickedImage?.path??"");
+    final pickedImageFile = File(pickedImage.path);
     // getting a directory path for saving
     final Directory extDir = await getApplicationDocumentsDirectory();
     String dirPath = extDir.path;
@@ -344,8 +338,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       });
     }
 
-    customAnimatedPushNavigation(context, CustomCircleNavigationBar(
-        page_index: MyApp.app_langauge == 'ar' ?4 : 0));
+    Navigator.pop(context);
   }
 
   void _remove() {
@@ -353,8 +346,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     setState(() {
       _pickedImage = null;
     });
-    customAnimatedPushNavigation(context, CustomCircleNavigationBar(
-        page_index: MyApp.app_langauge == 'ar' ?4 : 0));
+    Navigator.pop(context);
   }
 
   void _changeLang({String lang}) async {

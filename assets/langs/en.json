@@ -111,6 +111,7 @@
   "!Continue Using Phone Number" : "!Continue Using Phone Number",
   "Don't have an account ?": "Don't have an account ?",
   "Already have an account?": "Already have an account?",
+  "account sign-in was incorrect or your account is disabled temporarily." :   "account sign-in was incorrect or your account is disabled temporarily.",
   "First Name": "First Name",
   "Last Name": "Last Name",
   "Phone": "Phone",
@@ -248,7 +249,6 @@
   "Shippment Address"  : "Shippment Address",
   "Payment method" : "Payment method",
   "There is no orders now" : "There is no orders now",
-  "email is incorrect!" : "email is incorrect!",
   "phone is incorrect!" : "phone is incorrect!",
   "Empty menu !" :   "Empty menu !",
   "Looks like you have not made your orders yet !" :    "Looks like you have not made your orders yet !" ,
@@ -256,7 +256,6 @@
   "Back to Sign In Page" : "Back to Sign In Page",
   "your order created successfully with this number" : "your order created successfully with this number",
   "Ok" : "Ok",
-  "input is incorrect" : "input is incorrect",
   "Continue" :   "Continue",
   "Congratulations!" : "Congratulations!",
   "Your order created successfully" : "Your order created successfully",
@@ -269,10 +268,16 @@
   "Number": "Card Number",
   "Expired Date" : "Expired Date",
   "CVV": "CVV",
-  "Remove" : "Remove",
-  "Gallery": "Gallery",
-  "Camera": "Camera",
-  "Choose option" : "Choose option"
+
+  "There is no Stores Yet" : "There is no Stores Yet",
+  "Our Locations" :  "Our Locations",
+  "Google Maps" : "Google Maps",
+  "username is incorrect" : "username is incorrect!",
+  "mobile number is incorrect!" : "mobile number is incorrect!",
+  "email is incorrect!" : "email is incorrect!",
+  "password is incorrect" : "password is incorrect",
+  "input is incorrect" : "input is incorrect",
+  "otp code is incorrect" : "otp code is incorrect"
 }
 
 

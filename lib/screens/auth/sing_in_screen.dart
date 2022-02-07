@@ -72,37 +72,19 @@ class _SignInScreenState extends State<SignInScreen>
       body:  BlocListener<SigninBloc, AppState>(
         bloc: signIn_bloc,
         listener: (context, state) {
-      var data = state.model as AuthenticationModel;
       if (state is Loading) {
         _playAnimation();
       }
       else if (state is ErrorLoading) {
-        var data = state.model as AuthenticationModel;
         _stopAnimation();
-
         Flushbar(
-          messageText: Row(
-            children: [
-              Container(
-                width: StaticData.get_width(context) * 0.7,
-                child: Wrap(
-                  children: [
-                    Text(
-                      '${data.errormsg}',
-                      textDirection: TextDirection.rtl,
-                      style: TextStyle(color: whiteColor),
-                    ),
-                  ],
-                ),
-              ),
-              Spacer(),
-              Text(
-                translator.translate("Try Again" ),
-                textDirection: TextDirection.rtl,
-                style: TextStyle(color: whiteColor),
-              ),
-            ],
+          messageText:  Text(
+            translator.translate(
+                "account sign-in was incorrect or your account is disabled temporarily."),
+            textDirection: TextDirection.rtl,
+            style: TextStyle(color: whiteColor),
           ),
+          maxWidth: MediaQuery.of(context).size.width,
           flushbarPosition: FlushbarPosition.BOTTOM,
           backgroundColor: redColor,
           flushbarStyle: FlushbarStyle.FLOATING,
@@ -110,29 +92,12 @@ class _SignInScreenState extends State<SignInScreen>
         )..show(_drawerKey.currentState.context);
       }
       else if (state is Done) {
-        var data = state.model as AuthenticationModel;
+        var data = state.general_value;
         _stopAnimation();
-        sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
-
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) {
-              return GetStartedScreen(
-                token: data.token,
-                route: 'SignInScreen',
-              );
-            },
-            transitionsBuilder:
-                (context, animation8, animation15, child) {
-              return FadeTransition(
-                opacity: animation8,
-                child: child,
-              );
-            },
-            transitionDuration: Duration(milliseconds: 10),
-          ),
-        );
+        customPushNamedNavigation(context,GetStartedScreen(
+          token: data,
+          route: 'SignInScreen',
+        ));
       }
     },
     child:Container(
@@ -238,7 +203,7 @@ class _SignInScreenState extends State<SignInScreen>
                 ),
                 onChanged: signIn_bloc.password_change,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                  if (value.length < 8 || value.isEmpty) {
                     return '${translator.translate("Please enter")} ${translator.translate("Password")}';
                   }
                   return null;
@@ -260,9 +225,7 @@ class _SignInScreenState extends State<SignInScreen>
         btn_width: width(context) * .7,
         onTap: () {
     if (_formKey.currentState.validate() ) {
-      signIn_bloc.add(click(
-          context: context
-      ));
+      signIn_bloc.add(click());
     }
         },
       );

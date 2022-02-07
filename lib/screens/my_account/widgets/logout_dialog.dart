@@ -32,7 +32,7 @@ class LogoutDialogState extends State<LogoutDialog> {
                   textDirection: TextDirection.rtl,
                   child: Container(
                     width: width,
-                    height: height / 2,
+                    height: height / 1.8,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(width * 0.4)),
                     child: new Column(
@@ -43,7 +43,7 @@ class LogoutDialogState extends State<LogoutDialog> {
                           padding: EdgeInsets.only(top: width * 0.06),
                             child: Container(
                             margin: EdgeInsets.all(width * 0.0),
-                            child: Wrap(
+                            child: Column(
                               children: [
                                 Text(
                                   widget.name??'',
@@ -52,20 +52,25 @@ class LogoutDialogState extends State<LogoutDialog> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: AlmajedFont.header_font_size),
                                 ),
-                                Text(
-                                  translator.translate(" Thanks "),
-                                  style: TextStyle(
-                                      color: mainColor,
-                                      fontSize: AlmajedFont.primary_font_size),
-                                ),
+                                Wrap(
+                                  children: [
 
-                                Text(
-                                  translator.translate(translator.translate(" for chossing Us ")    ),
-                                  style: TextStyle(
-                                      color: mainColor,
-                                      fontSize: AlmajedFont.primary_font_size),
-                                ),
+                                    Text(
+                                      translator.translate(" Thanks "),
+                                      style: TextStyle(
+                                          color: mainColor,
+                                          fontSize: AlmajedFont.primary_font_size),
+                                    ),
 
+                                    Text(
+                                      translator.translate(translator.translate(" for chossing Us ")    ),
+                                      style: TextStyle(
+                                          color: mainColor,
+                                          fontSize: AlmajedFont.primary_font_size),
+                                    ),
+
+                                  ],
+                                )
                               ],
                             )
                           ),

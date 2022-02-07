@@ -36,18 +36,16 @@ class AuthenticationRepository {
     Dio dio = new Dio();
     try {
       final response = await dio.post(
-          Urls.BASE_URL +
-              "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/integration/customer/token",
+          Urls.BASE_URL + "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/integration/customer/token",
           data: convert.jsonEncode({'username': email, 'password': password}),
           options: Options(headers: {'content-type': 'application/json'}));
+
       if (response.statusCode == 200) {
         return StaticData.user_token = response.data;
       } else {
         return null;
-        //errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      //errorDialog(context: context, text: e.toString());
     }
   }
 

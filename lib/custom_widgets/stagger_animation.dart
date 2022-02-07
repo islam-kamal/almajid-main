@@ -13,6 +13,7 @@ class StaggerAnimation extends StatelessWidget {
   final double text_size;
   final bool home_shape;
   Widget widget;
+  var product_details_page;
   final bool checkout_color;
   StaggerAnimation(
       {Key key,
@@ -22,6 +23,7 @@ class StaggerAnimation extends StatelessWidget {
       this.btn_width,
       this.btn_height,
       this.image,
+        this.product_details_page = false,
       this.widget,
         this.text_size,
         this.home_shape= true,
@@ -71,7 +73,8 @@ class StaggerAnimation extends StatelessWidget {
         decoration: BoxDecoration(
           color: home_shape? checkout_color?greenColor :Theme.of(context).primaryColor : null,
             border: home_shape ? null: Border.all(color: mainColor),
-        borderRadius: home_shape? const BorderRadius.all(Radius.circular(15.0)) :const BorderRadius.all(Radius.circular(0.0)),
+        borderRadius: home_shape ?
+            const BorderRadius.all(Radius.circular(15.0)) :product_details_page? const BorderRadius.all(Radius.circular(0.0)) : const BorderRadius.all(Radius.circular(0.0)) ,
         ),
         child: widget != null ? buttonSqueezeanimation.value > 75.0 ? widget  : const CircularProgressIndicator(
           value: null,

@@ -32,8 +32,18 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_backgroundHandler);
 
   runApp(
-    LocalizedApp(
-      child: MyApp(),
+    MaterialApp(
+      home: LocalizedApp(
+        child: MyApp(),
+
+      ),
+     theme: ThemeData(
+        accentColor: mainColor,
+        primaryColor: mainColor,
+        fontFamily: checkDirection(
+            dirArabic: "Cairo", dirEnglish: "Cairo")
+    ),
+      debugShowCheckedModeBanner: false,
     ),
   );
 }
@@ -133,14 +143,12 @@ class _MyAppState extends State<MyApp> {
   Future<void> _fcmConfigure(BuildContext context) async{
     LocalNotificationService.initialize(context);
     final _firebaseMessaging = FirebaseMessaging.instance;
-
     ///required by IOS permissions
     _firebaseMessaging.requestPermission(
       alert: true,
       badge: true,
       sound: true,
     );
-
     // //get the current device token
     // _getCustomerNotification();
 
@@ -171,6 +179,7 @@ class _MyAppState extends State<MyApp> {
     ///app in background and not terminated when you click on the notification this should be triggered
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       final routeMessage = message.data['route'];
+
       if (StaticData.vistor_value != "visitor") {
         switch (routeMessage) {
           case "order_update":

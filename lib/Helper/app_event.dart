@@ -183,6 +183,11 @@ class SearchProductsEvent extends AppEvent{
   SearchProductsEvent({this.search_text});
 }
 
+//Store Locators
+
+class GetAllStoreLocatoreEvent extends AppEvent{
+
+}
 // Shipment Address
 
 class GuestAddAdressEvent extends AppEvent{

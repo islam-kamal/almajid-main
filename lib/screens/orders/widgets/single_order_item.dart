@@ -26,27 +26,6 @@ singleOrderItem({BuildContext context , OrderItems order ,var order_increment_id
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                    /*        Container(
-                              height: isLandscape(context)
-                                  ? 2 * height(context) * .1
-                                  : height(context) * .1,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: width(context) * .2,
-                                    height: isLandscape(context)
-                                        ? 2 * height(context) * .1
-                                        : height(context) * .1,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Og0-LY1uOs7Z3I_sBLafG8F2IbFwRVprrg&usqp=CAU"),
-                                            fit: BoxFit.cover)),
-                                  ),
-                                ],
-                              ),
-                            ),*/
                             Container(
                               padding: EdgeInsets.only(
                                   right: width(context) * .02,
@@ -117,12 +96,12 @@ singleOrderItem({BuildContext context , OrderItems order ,var order_increment_id
                                     customDescriptionText(
                                         context: context,
                                         text: translator.translate("payment"),
-                                        textColor: greyColor),
+                                        textColor: old_price_color),
 
                                     customDescriptionText(
                                         context: context,
                                         text: translator.translate( "order status"),
-                                        textColor: greyColor)
+                                        textColor: old_price_color)
                                   ],
                                 ),
                               ),
