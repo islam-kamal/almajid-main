@@ -268,7 +268,11 @@
   "Card Holder": "Card Holder Name",
   "Number": "Card Number",
   "Expired Date" : "Expired Date",
-  "CVV": "CVV"
+  "CVV": "CVV",
+  "Remove" : "Remove",
+  "Gallery": "Gallery",
+  "Camera": "Camera",
+  "Choose option" : "Choose option"
 }
 
 
