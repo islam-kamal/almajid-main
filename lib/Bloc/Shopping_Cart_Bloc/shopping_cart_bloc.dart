@@ -82,7 +82,7 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
         )..show(event.scafffoldKey.currentState.context);
       } else {
         Flushbar(
-          messageText:   Container(
+          messageText: Container(
             child: Wrap(
               children: [
                 Text(
@@ -96,8 +96,10 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
           flushbarPosition: FlushbarPosition.BOTTOM,
           backgroundColor: greenColor,
           flushbarStyle: FlushbarStyle.FLOATING,
-          duration: Duration(seconds: 3),
-        )..show(event.scafffoldKey.currentState.context);
+          duration: Duration(seconds: 1),
+        )..show(event.scafffoldKey.currentState.context).whenComplete((){
+          shoppingCartBloc.add(GetCartDetailsEvent());
+        });
 
       }
     }
@@ -127,21 +129,27 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
       } else {
         Flushbar(
           messageText:   Container(
-            child: Wrap(
-              children: [
-                Text(
-                  translator.translate("Promo Code deleted Sucessfully"),
-                  textDirection: TextDirection.rtl,
-                  style: TextStyle(color: whiteColor),
-                ),
-              ],
+            child:    Container(
+              child: Wrap(
+                children: [
+                  Text(
+                    translator.translate("Promo Code deleted Sucessfully"),
+                    textDirection: TextDirection.rtl,
+                    style: TextStyle(color: whiteColor),
+                  ),
+                ],
+              ),
             ),
           ),
           flushbarPosition: FlushbarPosition.BOTTOM,
           backgroundColor: greenColor,
           flushbarStyle: FlushbarStyle.FLOATING,
-          duration: Duration(seconds: 3),
-        )..show(event.scafffoldKey.currentState.context);
+          duration: Duration(seconds: 1),
+        )..show(event.scafffoldKey.currentState.context).whenComplete((){
+          StaticData.discount_amount = null;
+          shoppingCartBloc.add(GetCartDetailsEvent());
+        });
+
 
       }
     }

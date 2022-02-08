@@ -24,7 +24,7 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   FocusNode fieldNode = FocusNode();
-  var discount_amount , tax , subtotal, grandtotal;
+  var   tax , subtotal, grandtotal;
   var product_image;
   var edit_cart_status = false;
   SharedPreferences sharedPreferences;
@@ -118,7 +118,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                               } else {
                                 data.totalSegments.forEach((element) {
                                   if(element.code == "discount"){
-                                    discount_amount = element.value;
+                                    StaticData.discount_amount = element.value;
                                   }else if(element.code == "tax"){
                                     tax = element.value;
                                   }else if(element.code == "subtotal"){
@@ -186,7 +186,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                         ],
                                       ),
                                     ),
-                                    discount_amount != null?Padding(
+                                    StaticData.discount_amount != null?Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
@@ -200,7 +200,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                           customDescriptionText(
                                               context: context,
                                               textColor: mainColor,
-                                              text: " ${discount_amount} ${MyApp.country_currency} ",
+                                              text: " ${StaticData.discount_amount} ${MyApp.country_currency} ",
                                               percentageOfHeight: .018,
                                               fontWeight: FontWeight.bold),
                                         ],
