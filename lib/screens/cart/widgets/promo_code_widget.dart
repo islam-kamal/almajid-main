@@ -4,6 +4,8 @@ import 'package:almajidoud/screens/cart/widgets/promo_code_alert_dialog.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 class PromoCodeWidget extends StatefulWidget {
+  GlobalKey<ScaffoldState> scafffoldKey;
+  PromoCodeWidget({this.scafffoldKey});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -49,7 +51,8 @@ class PromoCodeWidgetState extends State<PromoCodeWidget> {
               children: [
                 InkWell(
                   onTap: (){
-                    promoCodeAlertDialog(base_context: context);
+                    promoCodeAlertDialog(base_context: context,
+                    scafffoldKey: widget.scafffoldKey);
                   },
                   child: Container(
                     width:width(context) * 0.15,
@@ -63,7 +66,8 @@ class PromoCodeWidgetState extends State<PromoCodeWidget> {
                 InkWell(
                     onTap: (){
                       shoppingCartBloc.add(DeletePromoCodeEvent(
-                          context: context
+                          context: context,
+                        scafffoldKey: widget.scafffoldKey
                       ));
 
                     },

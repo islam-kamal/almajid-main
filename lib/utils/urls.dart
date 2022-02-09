@@ -2,12 +2,12 @@ import 'package:almajidoud/main.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 class Urls {
-
-  // //test base url
-  //static final String BASE_URL = "https://test.almajed4oud.com";
+/*
+ // test base url
+  static final String BASE_URL = "https://test.almajed4oud.com";
   // //test admin token
-  //static final String ADMIN_TOKEN = 'tda5h42j6mke2q43da55wckmoeynz1n1';
-
+  static final String ADMIN_TOKEN = 'tda5h42j6mke2q43da55wckmoeynz1n1';
+*/
   //production base url
   static final String BASE_URL = "https://almajed4oud.com";
   //production admin token

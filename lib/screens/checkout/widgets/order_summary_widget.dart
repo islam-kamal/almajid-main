@@ -1,8 +1,8 @@
 import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments ,var cash }) {
-  var grand_total, subtotal, vat ,shipping, payment_fees=0;
+orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments ,var cash   }) {
+  var grand_total, subtotal, vat ,shipping, payment_fees=0 , discount;
   if(cash == 'الدفع عند الإستلام' || cash == "Cash On Delivery"){
     if(MyApp.app_location == 'sa') payment_fees= 15;
     if(MyApp.app_location == 'kw') payment_fees= 1;
@@ -21,6 +21,9 @@ orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments 
     }
     if(element.code == "shipping"){
       shipping = element.value;
+    }
+    if(element.code == "discount"){
+      discount = element.value;
     }
   });
 
@@ -50,6 +53,24 @@ orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments 
               customDescriptionText(
                   context: context,
                   text: " ${MyApp.country_currency} ${subtotal} ",
+                  textAlign: TextAlign.start,
+                  percentageOfHeight: .020),
+            ],
+          )),
+      responsiveSizedBox(context: context, percentageOfHeight: .015),
+      discount == null ? Container() :   Container(
+          width: width(context) * .9,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              customDescriptionText(
+                  context: context,
+                  text: "Discount",
+                  textAlign: TextAlign.start,
+                  percentageOfHeight: .020),
+              customDescriptionText(
+                  context: context,
+                  text:  " ${MyApp.country_currency} ${discount} ",
                   textAlign: TextAlign.start,
                   percentageOfHeight: .020),
             ],
@@ -90,6 +111,7 @@ orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments 
                   percentageOfHeight: .020),
             ],
           )),
+
       responsiveSizedBox(context: context, percentageOfHeight: .015),
      cash == 'الدفع عند الإستلام' || cash == "Cash On Delivery" ? Container(
           width: width(context) * .9,

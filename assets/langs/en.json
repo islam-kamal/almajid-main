@@ -171,7 +171,7 @@
   "No , Cancel": "No , Cancel",
   "-------------------Categories -----------------": "---------------------------------",
   "PERFUME": "PERFUME",
-   "Categories":"Categories" ,
+  "Categories":"Categories" ,
   "PERFUME OIL": "PERFUME OIL",
   "SPRAY & LOTION": "SPRAY & LOTION",
   "OUD & INCENCE": "OUD & INCENCE",
@@ -277,7 +277,12 @@
   "email is incorrect!" : "email is incorrect!",
   "password is incorrect" : "password is incorrect",
   "input is incorrect" : "input is incorrect",
-  "otp code is incorrect" : "otp code is incorrect"
+  "otp code is incorrect" : "otp code is incorrect",
+  "Choose option" : "Choose option",
+  "Camera" : "Camera",
+  "Gallery" : "Gallery",
+  "Remove": "Remove",
+  "Input code number" : "Input code number"
 }
 
 

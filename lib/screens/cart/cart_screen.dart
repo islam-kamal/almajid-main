@@ -22,9 +22,9 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
-  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   FocusNode fieldNode = FocusNode();
-  var discount_amount , tax , subtotal, grandtotal;
+  var   tax , subtotal, grandtotal;
   var product_image;
   var edit_cart_status = false;
   SharedPreferences sharedPreferences;
@@ -68,6 +68,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
     return NetworkIndicator(
         child: PageContainer(
             child:  Scaffold(
+              key: _scaffoldKey,
       backgroundColor: whiteColor,
       body: BlocListener<ShipmentAddressBloc,AppState>(
           bloc: shipmentAddressBloc,
@@ -77,12 +78,14 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                 _playAnimation();
               }
 
-            }else if(state is Done){
+            }
+            else if(state is Done){
               if(state.indicator == "GetAllAddressesEvent"){
                 _stopAnimation();
                 customAnimatedPushNavigation(context, CheckoutAddressScreen());
               }
-            }else if(state is ErrorLoading){
+            }
+            else if(state is ErrorLoading){
               if(state.indicator == "GetAllAddressesEvent"){
                 _stopAnimation();
               }
@@ -115,7 +118,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                               } else {
                                 data.totalSegments.forEach((element) {
                                   if(element.code == "discount"){
-                                    discount_amount = element.value;
+                                    StaticData.discount_amount = element.value;
                                   }else if(element.code == "tax"){
                                     tax = element.value;
                                   }else if(element.code == "subtotal"){
@@ -156,7 +159,9 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                     responsiveSizedBox(
                                         context: context, percentageOfHeight: .02),
                                     divider(context: context),
-                                    PromoCodeWidget(),
+                                    PromoCodeWidget(
+                                      scafffoldKey: _scaffoldKey,
+                                    ),
                                     responsiveSizedBox(context: context, percentageOfHeight: .02),
                                     divider(context: context),
                                     responsiveSizedBox(
@@ -181,7 +186,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                         ],
                                       ),
                                     ),
-                                    discount_amount != null?Padding(
+                                    StaticData.discount_amount != null?Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
@@ -195,7 +200,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                           customDescriptionText(
                                               context: context,
                                               textColor: mainColor,
-                                              text: " ${discount_amount} ${MyApp.country_currency} ",
+                                              text: " ${StaticData.discount_amount} ${MyApp.country_currency} ",
                                               percentageOfHeight: .018,
                                               fontWeight: FontWeight.bold),
                                         ],
@@ -301,7 +306,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                       children: [
                         CartScreenAppBar(
                           onTapCategoryDrawer: () {
-                            _drawerKey.currentState.openDrawer();
+                            _scaffoldKey.currentState.openDrawer();
                           },
                           right_icon: 'cart',
                           screen: CustomCircleNavigationBar(
@@ -507,7 +512,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                             FlushbarStyle.FLOATING,
                                                             duration:
                                                             Duration(seconds: 3),
-                                                          )..show(_drawerKey
+                                                          )..show(_scaffoldKey
                                                               .currentState.context);
                                                         } else {
                                                           shoppingCartBloc.add(GetCartDetailsEvent());
@@ -587,7 +592,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                             FlushbarStyle.FLOATING,
                                                             duration:
                                                             Duration(seconds: 3),
-                                                          )..show(_drawerKey
+                                                          )..show(_scaffoldKey
                                                               .currentState.context);
                                                         } else {
                                                           shoppingCartBloc.add(GetCartDetailsEvent());

@@ -110,7 +110,6 @@
   "Your phone number has been verified sucessfully" : "تم التحقق من رقم هاتفك بنجاح",
   "Your Account has been verified sucessfully" : "تم التحقق من حسابك بنجاح",
   "!Continue Using Phone Number" : " تسجيل الدخول باستخدام رقم الهاتف !",
-  "account sign-in was incorrect or your account is disabled temporarily." : "تسجيل الدخول إلى الحساب غير صحيح أو تم تعطيل حسابك مؤقتًا.",
   "Email": "البريد الإلكتروني",
   "Password": "كلمة المرور",
   "Forget Password ?": "نسيت كلمة المرور",
@@ -253,6 +252,7 @@
   "Shippment Address"  :"عنوان الشحن",
   "Payment method": "وسيلة الدفع",
   "There is no orders now" : "لا توجد طلبات حاليا",
+  "email is incorrect!" : "البريد الاكترونى غير صحيح",
   "phone is incorrect!" : "رقم الهاتف غير صحيح",
   "Empty menu !" : "قائمة فارغة!",
   "Looks like you have not made your orders yet !" :    "يبدو أنك لم تصدر أوامرك بعد!",
@@ -260,6 +260,7 @@
   "Back to Sign In Page" : "العودة إلى صفحة تسجيل الدخول",
   "your order created successfully with this number" :"تم إنشاء طلبك بنجاح بهذا الرقم",
   "Ok" : "حسنا",
+  "input is incorrect" : "البيانات المدخلة غير صحيح",
   "Continue" : "استمرار",
   "Congratulations!" : "تهانينا!",
   "Your order created successfully" : "تم إنشاء طلبك بنجاح",
@@ -272,13 +273,9 @@
   "Expired Date": "تاريخ الانتهاء",
   "CVV": "الرقم السرى",
 
-
-  "There is no Stores Yet" : "لا يوجد فروع لدينا حاليا",
-  "Our Locations" :  "فروعنا",
-  "Google Maps" : "خريطة جوجل",
-  "mobile number is incorrect!" :    "رقم الجوال غير صحيح!",
-  "email is incorrect!" :    "البريد الإلكتروني غير صحيح!",
-  "password is incorrect" :    "كلمة المرور غير صحيحة",
-  "input is incorrect" :    "البيانات المدخلة غير صحيح",
-  "otp code is incorrect" :    "رمز التفعيل غير صحيح"
+  "Choose option" : "اختيار الطريقة",
+  "Camera" : "كاميرا",
+  "Gallery" : "معرض الصور",
+  "Remove": "حذف",
+  "Input code number" : "ادخل رقم الكود"
 }

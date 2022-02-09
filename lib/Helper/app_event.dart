@@ -168,12 +168,16 @@ class DeleteProductFromCartEvent extends AppEvent{
 class ApplyPromoCodeEvent extends AppEvent{
   var prom_code;
   BuildContext context;
-  ApplyPromoCodeEvent({this.prom_code,this.context});
+  GlobalKey<ScaffoldState> scafffoldKey;
+
+  ApplyPromoCodeEvent({this.prom_code,this.context,this.scafffoldKey});
 }
 
 class DeletePromoCodeEvent extends AppEvent{
   BuildContext context;
-  DeletePromoCodeEvent({this.context});
+  GlobalKey<ScaffoldState> scafffoldKey;
+
+  DeletePromoCodeEvent({this.context,this.scafffoldKey});
 }
 
 
