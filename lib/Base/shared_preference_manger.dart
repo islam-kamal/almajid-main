@@ -105,7 +105,6 @@ class   CachingKey extends Enum<String> {
   static const CachingKey USER_COUNTRY_CODE = const CachingKey('USER_COUNTRY_CODE');
   static const CachingKey APP_LANGUAGE = const CachingKey('APP_LANGUAGE');
 
-  static const CachingKey USER_CITY = const CachingKey('USER_CITY');
   static const CachingKey REGION_ID = const CachingKey('REGION_ID');
   static const CachingKey REGION_AR = const CachingKey('REGION_AR');
   static const CachingKey REGION_EN = const CachingKey('REGION_EN');
@@ -123,23 +122,8 @@ class   CachingKey extends Enum<String> {
   static const CachingKey USER_DEFAULT_LOCATION_ID = const CachingKey('USER_DEFAULT_LOCATION_ID'); //use in payment
   static const CachingKey LOGOUT = const CachingKey('LOGOUT'); //check direction to UserLocation page
 
-  static const CachingKey MAPS_LAT = const CachingKey('lat');
-  static const CachingKey Maps_lang = const CachingKey('lang');
-  static const CachingKey MAP_ADDRESS = const CachingKey('map_address');
-  static const CachingKey DEFAULT_CREDIT_CARD = const CachingKey('DEFAULT_CREDIT_CARD');
-  static const CachingKey USER_WALLET= const CachingKey('USER_WALLET');
-  static const CachingKey SOCIAL_LOGIN_TYPE= const CachingKey('SOCIAL_LOGIN_TYPE');
-  static const CachingKey STRART_PRICE = const CachingKey('start_price');
-  static const CachingKey END_PRICE = const CachingKey('end_price');
-  static const CachingKey FILTER_RATE = const CachingKey('FILTER_RATE');
-  static const CachingKey CATEGORY_ID = const CachingKey('CATEGORY_ID');
-  static const CachingKey BRAND_ID = const CachingKey('BRAND_ID');
-  static const CachingKey SIZE_ID = const CachingKey('SIZE_ID');
-  static const CachingKey PAYMENT_METHOD = const CachingKey('PAYMENT_METHOD');
-  static const CachingKey CARD_ID = const CachingKey('CARD_ID');
-  static const CachingKey CVV = const CachingKey('CVV');
-  static const CachingKey RECHARGE_AMOUNT = const CachingKey('RECHARGE_AMOUNT');
-  static const CachingKey COUPON_IS_FRIST = const CachingKey('COUPON_IS_FRIST');
+
+
 
 }
 

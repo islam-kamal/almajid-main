@@ -87,6 +87,17 @@ class SubmitFaieldScreenState extends State<SubmitFaieldScreen> with TickerProvi
                       InkWell(
                         onTap: () {
                           customPushNamedNavigation(context, CustomCircleNavigationBar());
+                          print("------------ faield remove cached data 1-----------");
+                          sharedPreferenceManager.removeData(CachingKey.REGION_AR);
+                          sharedPreferenceManager.removeData(CachingKey.REGION_ID);
+                          sharedPreferenceManager.removeData(CachingKey.REGION_EN);
+                          sharedPreferenceManager.removeData(CachingKey.CHOSSED_ADDRESS_ID);
+                          sharedPreferenceManager.removeData(CachingKey.ORDER_ID);
+                          sharedPreferenceManager.removeData(CachingKey.CHOSSED_PAYMENT_METHOD);
+                          sharedPreferenceManager.removeData(CachingKey.ORDER_INCREMENTAL_ID);
+                          sharedPreferenceManager.removeData(CachingKey.TAP_PUBLIC_KEY);
+                          sharedPreferenceManager.removeData(CachingKey.TAP_TOKEN);
+                          print("------------ faield remove cached data 2-----------");
 
                         },
                         child: Container(
