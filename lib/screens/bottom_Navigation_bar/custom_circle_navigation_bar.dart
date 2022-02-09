@@ -11,6 +11,7 @@ class CustomCircleNavigationBar extends StatefulWidget {
 
   CustomCircleNavigationBar({this.page_index = 2});
 
+
   @override
   _CustomCircleNavigationBarState createState() =>
       _CustomCircleNavigationBarState();
