@@ -54,6 +54,7 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
         yield ErrorLoading(model: response,indicator: 'AddNewAdress');
       }
     }
+
     else if(event is AddressDetailsEvent){
       yield Loading();
       var response = await shipmentAddressRepository.get_addresss_details(

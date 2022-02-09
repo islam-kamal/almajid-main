@@ -14,24 +14,6 @@ noOrdersWidget({BuildContext context}){
         Container(child: customDescriptionText(context: context , textColor: greyColor ,percentageOfHeight: .027,maxLines: 2,
             text: translator.translate("Looks like you have not made your orders yet !")) ,width: width(context)*.9),
         responsiveSizedBox(context: context , percentageOfHeight: .1),
-     /*   InkWell(
-          onTap: (){
-            customAnimatedPushNavigation(context,CustomCircleNavigationBar());
-          },
-          child: Container(
-              width: width(context) * .8,
-              decoration: BoxDecoration(
-                  color: mainColor, borderRadius: BorderRadius.circular(8)),
-              child: Center(
-                  child: customDescriptionText(
-                      context: context,
-                      text: translator.translate("Back to Home" ),
-                      percentageOfHeight: .025,
-                      textColor: whiteColor)),
-              height: isLandscape(context)
-                  ? 2 * height(context) * .065
-                  : height(context) * .065),
-        )*/
 
 
 

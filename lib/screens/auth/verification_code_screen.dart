@@ -111,8 +111,7 @@ class _OtpState extends State<VerificationCodeScreen>
     _controller.reverse(
         from: _controller.value == 0.0 ? 1.0 : _controller.value);
     _startCountdown();
-    /* _loginButtonController = AnimationController(
-        duration: const Duration(milliseconds: 3000), vsync: this);*/
+
   }
 
   @override

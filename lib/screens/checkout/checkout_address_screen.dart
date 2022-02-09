@@ -262,13 +262,17 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                      shipmentAddressBloc.phone_controller.value = phone;
                      shipmentAddressBloc.street_controller.value = street;
                    });
-                      }else {
-                        var data = state.model as GuestShipmentAddressModel;
-                        customAnimatedPushNavigation(context,CheckoutPaymentScreen(
-                          guestShipmentAddressModel: data,
-                        ));
                       }
+                      else {
+                        if(state.indicator == "GetAllAddressesEvent"){
+                        }else{
+                          var data = state.model as GuestShipmentAddressModel;
 
+                          customAnimatedPushNavigation(context,CheckoutPaymentScreen(
+                            guestShipmentAddressModel: data,
+                          ));
+                        }
+                        }
 
                     }
                   },
@@ -411,7 +415,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             responsiveSizedBox(
                 context: context, percentageOfHeight: .01),
             phone_addressTextFields(
-                context: context, hint: phone==null?"Ex: 5xxxxxxxx" : phone.toString().substring(4),initialValue: phone==null?"Ex: 5xxxxxxxx" :phone.toString().substring(4)),
+                context: context, hint: phone==null?"Ex: 5xxxxxxxx" : phone.toString().substring(4)),
             responsiveSizedBox(
                 context: context, percentageOfHeight: .01),
 

@@ -21,11 +21,7 @@ topSlider({BuildContext context , List gallery}) {
           dotBgColor: Colors.transparent,
           boxFit: BoxFit.fill,
           images: gallery,
-       /*   images: [
-            AssetImage("assets/images/scroll.png"),
-            AssetImage("assets/images/scroll.png"),
-            AssetImage("assets/images/scroll.png")
-          ],*/
+
         ),
       )
     ],

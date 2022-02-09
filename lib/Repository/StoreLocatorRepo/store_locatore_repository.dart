@@ -6,18 +6,6 @@ import 'package:dio/dio.dart';
 
 class StoreLocatorReopistory {
   static SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();
-/*
-  Future<StoreLocatorModel> get_stores_locators() async {
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
-    };
-    return NetworkUtil.internal().get(
-        StoreLocatorModel(),
-        '${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/store-locator',
-        headers: headers);
-  }*/
   Future<List<StoreLocatorModel>> get_stores_locators() async {
     Dio dio = new Dio();
     try {

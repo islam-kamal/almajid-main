@@ -13,10 +13,6 @@ Widget no_data_widget(
         image_status
             ? Container()
             : Container(
-                /*   decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(width(context) * 0.1),
-              color: backGroundColor
-          ),*/
                 child: Image.asset(
                   "assets/images/search.png",
                   width: width(context) * .7,

@@ -15,6 +15,7 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class CartScreen extends StatefulWidget {
   @override
@@ -283,9 +284,13 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                               }
                             }
                             else {
-                              return Center(
-                                child: CircularProgressIndicator(
+                              return Padding(
+                                padding: EdgeInsets.only(top:  width(context ) * 0.3),
+                                child: SpinKitFadingCube(
+                                  color: Theme.of(context).primaryColor,
+                                  size: width(context) * 0.1,
                                 ),
+
                               );
                             }
 

@@ -122,7 +122,6 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
 
                           if( StaticData.vistor_value == 'visitor') {
                             customPushNamedNavigation(context, CustomCircleNavigationBar());
-                            print("------------ visitor success remove cached data 1-----------");
 
                             sharedPreferenceManager.removeData(CachingKey.REGION_AR);
                             sharedPreferenceManager.removeData(CachingKey.REGION_ID);
@@ -133,7 +132,6 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
                             sharedPreferenceManager.removeData(CachingKey.ORDER_INCREMENTAL_ID);
                             sharedPreferenceManager.removeData(CachingKey.TAP_PUBLIC_KEY);
                             sharedPreferenceManager.removeData(CachingKey.TAP_TOKEN);
-                            print("------------ visitor success remove cached data 2-----------");
 
 
                           }
@@ -141,7 +139,6 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
                             customPushNamedNavigation(context, OrdersScreen(
                               increment_id: widget.order_id,
                             ));
-                            print("------------ client success remove cached data 1-----------");
 
                             sharedPreferenceManager.removeData(CachingKey.REGION_AR);
                             sharedPreferenceManager.removeData(CachingKey.REGION_ID);
@@ -152,7 +149,6 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
                             sharedPreferenceManager.removeData(CachingKey.ORDER_INCREMENTAL_ID);
                             sharedPreferenceManager.removeData(CachingKey.TAP_PUBLIC_KEY);
                             sharedPreferenceManager.removeData(CachingKey.TAP_TOKEN);
-                            print("------------ client success remove cached data 2-----------");
 
 
                           }

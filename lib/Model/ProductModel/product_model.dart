@@ -182,42 +182,6 @@ class Items {
   }
 }
 
-/*class ExtensionAttributes {
-  List<int> websiteIds;
-  List<CategoryLinks> categoryLinks;
-  List<Reviews> reviews;
-
-  ExtensionAttributes({this.websiteIds, this.categoryLinks, this.reviews});
-
-  ExtensionAttributes.fromJson(Map<String, dynamic> json) {
-    websiteIds = json['website_ids'].cast<int>();
-    if (json['category_links'] != null) {
-      categoryLinks = new List<CategoryLinks>();
-      json['category_links'].forEach((v) {
-        categoryLinks.add(new CategoryLinks.fromJson(v));
-      });
-    }
-    if (json['reviews'] != null) {
-      reviews = new List<Reviews>();
-      json['reviews'].forEach((v) {
-        reviews.add(new Reviews.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['website_ids'] = this.websiteIds;
-    if (this.categoryLinks != null) {
-      data['category_links'] =
-          this.categoryLinks.map((v) => v.toJson()).toList();
-    }
-    if (this.reviews != null) {
-      data['reviews'] = this.reviews.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}*/
 
 class ExtensionAttributes {
   List<int> websiteIds;

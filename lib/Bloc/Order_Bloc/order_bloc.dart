@@ -29,7 +29,17 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
       } else {
         var order_id;
       await  response.then((value){order_id = value;});
-      yield Done(indicator: 'CreateOrder-$quoteId',general_value: order_id);
+      if(order_id == null){
+       // yield ErrorLoading(indicator: 'CreateOrder-$quoteId');
+        customAnimatedPushNavigation(event.context, SubmitFaieldScreen(
+          reason: translator.translate("There is no enough balance"),
+          faield_type: 'PaymentFailed',
+
+        ));
+      }else{
+        yield Done(indicator: 'CreateOrder-$quoteId',general_value: order_id);
+      }
+
       }
     }
     else if (event is GetAllOrderEvent) {

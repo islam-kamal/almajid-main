@@ -84,12 +84,6 @@ userImageWidget(
                                               color: whiteColor),
                                         )
 
-                                      /*          child: ClipRRect(
-                                  child: Image.network
-                                    (
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyj-wgGa-GZ1vJSGgmf6LCmvd7fxUgl-Pl0w&usqp=CAU"
-                                    , fit: BoxFit.contain),
-                                ),*/
                                     )))),
                       ),
                     ),

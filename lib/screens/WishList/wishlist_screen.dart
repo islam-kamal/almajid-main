@@ -247,28 +247,6 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                   Row(
                                                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                     children: [
-                                                                                /*      Row(
-                                                                                        children: [
-                                                                                          Container(
-                                                                                            child: customDescriptionText(
-                                                                                                context: context,
-                                                                                                textColor: mainColor,
-                                                                                                text:
-                                                                                                " ${MyApp.country_currency} ",
-                                                                                                textAlign: TextAlign.start,
-                                                                                                fontWeight: FontWeight.bold),
-                                                                                          ),
-                                                                                          Container(
-                                                                                            child: customDescriptionText(
-                                                                                                context: context,
-                                                                                                textColor: mainColor,
-                                                                                                text:
-                                                                                                " ${snapshot.data.items[index].product.price}",
-                                                                                                textAlign: TextAlign.start,
-                                                                                                fontWeight: FontWeight.bold),
-                                                                                          ),
-                                                                                        ],
-                                                                                      ),*/
 
                                                                                       Row(
                                                                                         children: [

@@ -5,10 +5,6 @@ import 'package:almajidoud/Bloc/Order_Bloc/order_bloc.dart';
 import 'package:almajidoud/Repository/PaymentRepo/payment_repository.dart';
 import 'package:almajidoud/custom_widgets/custom_push_named_navigation.dart';
 import 'package:almajidoud/screens/Payment/stc_pay/stc_pay_phone_screen.dart';
-import 'package:almajidoud/screens/auth/get_started_screen.dart';
-import 'package:almajidoud/screens/auth/reset_password_screen.dart';
-import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
-import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/utils/static_data.dart';
 import 'package:another_flushbar/flushbar.dart';
@@ -42,7 +38,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
 
   // Constants
   var otp_code;
-  final int time = 30;
+  final int time = 180;
   AnimationController _controller;
  bool _isLoading = false;
   // Variables
@@ -126,6 +122,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
     number = StaticData.user_mobile_number;
     return new Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr,
     child:Scaffold(
+      key: _drawerKey,
         appBar: _getAppbar,
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -328,7 +325,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
                  Text(
                   "${translator.translate("(${user_phone_number()})")} ",
                   textAlign: TextAlign.center,
-                  textDirection:  MyApp.app_langauge == 'ar' ? TextDirection.ltr : TextDirection.rtl,
+                  textDirection:  MyApp.app_langauge == 'en' ? TextDirection.ltr : TextDirection.rtl,
                   style: new TextStyle(
                       fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w600),
                 )
@@ -374,10 +371,11 @@ class _OtpState extends State<StcVerificationCodeScreen>
              child: TextField(
                  controller: controller,
                  textAlign: TextAlign.center,
+                 enabled: false,
                  decoration: InputDecoration(
                    hintText: translator.translate("Input code number"),
                    hintStyle: TextStyle(
-                       color:  greyColor.withOpacity(.5) ,
+                       color:  old_price_color ,
                        fontWeight: FontWeight.bold,
                        fontSize:  isLandscape(context)   ? 2* height(context)*.018 :height(context)*.018),
                    filled: true,fillColor: whiteColor,
@@ -552,6 +550,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
                                 ),
                                 onPressed: () {
                                   setState(() {
+                                    controller.clear() ;
                                     if (_fifthDigit != null) {
                                       _fifthDigit = null;
                                     }
@@ -631,7 +630,10 @@ class _OtpState extends State<StcVerificationCodeScreen>
               if (state.indicator == 'CreateOrder-${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
                   :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}') {
                 _stopAnimation();
-                _isLoading = false;
+                setState(() {
+                  _isLoading = false;
+                });
+
                 Flushbar(
                   messageText: Row(
                     children: [
@@ -640,7 +642,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
                         child: Wrap(
                           children: [
                             Text(
-                              'There is Error',
+                              translator.translate("There is no enough balance"),
                               textDirection: TextDirection.rtl,
                               style: TextStyle(color: whiteColor),
                             ),
