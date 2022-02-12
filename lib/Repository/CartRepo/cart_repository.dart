@@ -58,6 +58,7 @@ class CartRepository {
       return response;
     } catch (error) {
       throw (error);
+
     }
   }
 
