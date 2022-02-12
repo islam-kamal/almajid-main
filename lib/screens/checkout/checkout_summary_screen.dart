@@ -70,9 +70,9 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
     } on TickerCanceled {
     }
   }
-
   @override
   void dispose() {
+    _quoteId =null;
 
     _loginButtonController.dispose();
     super.dispose();
