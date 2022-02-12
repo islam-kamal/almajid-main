@@ -17,7 +17,7 @@ import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/screens/WishList/wishlist_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-
+import 'package:almajidoud/screens/my_account/widgets/profile_image.dart';
 class MyAccountScreen extends StatefulWidget {
   @override
   _MyAccountScreenState createState() => _MyAccountScreenState();
@@ -40,13 +40,18 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
 
   void _getUseData() async {
+    print("1");
     _currentLang =  MyApp.app_langauge;
     _email = await sharedPreferenceManager.readString(CachingKey.EMAIL);
     _userName = await sharedPreferenceManager.readString(CachingKey.USER_NAME);
+    print("2");
     _imagePath = await sharedPreferenceManager.readString(CachingKey.PROFILE_IMAGE);
+    print("3");
     if(_imagePath !='' ){
+      print("4");
       _pickedImage = File(_imagePath);
     }
+    print("5");
     setState(() {});
   }
 
@@ -71,106 +76,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                   context: context,
                                   percentageOfHeight: .10,
                                 ),
-                                userImageWidget(
-                                  context: context,
-                                  imagePath: _pickedImage,
-                                  onTapAddImage: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return Directionality(
-                                              textDirection: MyApp.app_langauge =='ar' ? TextDirection.rtl :TextDirection.ltr,
-                                              child: AlertDialog(
-                                                title: Text(
-                                                  translator.translate("Choose option"),
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.w600,
-                                                      color: greenColor),
-                                                ),
-                                                content: SingleChildScrollView(
-                                                  child: ListBody(
-                                                    children: [
-                                                      InkWell(
-                                                        onTap: _pickImageCamera,
-                                                        splashColor: Colors.purpleAccent,
-                                                        child: Row(
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                              const EdgeInsets.all(8.0),
-                                                              child: Icon(
-                                                                Icons.camera,
-                                                                color: Colors.purpleAccent,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              translator.translate("Camera"),
-                                                              style: TextStyle(
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                  FontWeight.w500,
-                                                                  color:
-                                                                  mainColor),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      InkWell(
-                                                        onTap: _pickImageGallery,
-                                                        splashColor: Colors.purpleAccent,
-                                                        child: Row(
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                              const EdgeInsets.all(8.0),
-                                                              child: Icon(
-                                                                Icons.image,
-                                                                color: Colors.purpleAccent,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              translator.translate("Gallery"),
-                                                              style: TextStyle(
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                  FontWeight.w500,
-                                                                  color:
-                                                                  mainColor),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      InkWell(
-                                                        onTap: _remove,
-                                                        splashColor: Colors.purpleAccent,
-                                                        child: Row(
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                              const EdgeInsets.all(8.0),
-                                                              child: Icon(
-                                                                Icons.remove_circle,
-                                                                color: Colors.red,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              translator.translate("Remove"),
-                                                              style: TextStyle(
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                  FontWeight.w500,
-                                                                  color: Colors.red),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              )     );
-                                        });
-                                  },
-                                ),
+                                ProfileImage(),
+
                                 StaticData.vistor_value == "visitor"
                                     ? Container()
                                     :     userName(context: context, name: _userName),
@@ -293,60 +200,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             )));
   }
 
-  void _pickImageCamera() async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: ImageSource.camera);
-    final pickedImageFile = File(pickedImage?.path??"");
 
-// getting a directory path for saving
-    final Directory extDir = await getApplicationDocumentsDirectory();
-    String dirPath = extDir.path;
-    final String filePath = '$dirPath/profile_image.png';
-    //save the path in preference
-    sharedPreferenceManager.writeData(CachingKey.PROFILE_IMAGE, filePath);
-
-    final File newImage = await pickedImageFile.copy(filePath);
-    if (pickedImageFile != null) {
-      setState(() {
-        _pickedImage = newImage;
-      });
-    }
-    customAnimatedPushNavigation(context, CustomCircleNavigationBar(
-        page_index: MyApp.app_langauge == 'ar' ?4 : 0));
-  }
-
-  void _pickImageGallery() async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.getImage(source: ImageSource.gallery);
-    final pickedImageFile = File(pickedImage?.path??"");
-    // getting a directory path for saving
-    final Directory extDir = await getApplicationDocumentsDirectory();
-    String dirPath = extDir.path;
-    final String filePath = '$dirPath/profile_image.png';
-    //save the path in preference
-    sharedPreferenceManager.writeData(CachingKey.PROFILE_IMAGE, filePath);
-
-    final File newImage = await pickedImageFile.copy(filePath);
-    if (pickedImageFile != null) {
-      setState(() {
-        _pickedImage = newImage;
-      });
-    }
-
-
-    customAnimatedPushNavigation(context, CustomCircleNavigationBar(
-        page_index: MyApp.app_langauge == 'ar' ?4 : 0));
-  }
-
-  void _remove() {
-    sharedPreferenceManager.removeData(CachingKey.PROFILE_IMAGE);
-    setState(() {
-      _pickedImage = null;
-    });
-
-    customAnimatedPushNavigation(context, CustomCircleNavigationBar(
-        page_index: MyApp.app_langauge == 'ar' ?4 : 0));
-  }
 
   void _changeLang({String lang}) async {
     setState(() {

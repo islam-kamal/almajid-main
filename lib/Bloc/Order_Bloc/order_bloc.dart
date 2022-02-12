@@ -15,7 +15,8 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
     if (event is CreateOrderEvent) {
-      final quoteId =  StaticData.vistor_value == 'visitor'?await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
+      final quoteId =  StaticData.vistor_value == 'visitor'?
+      await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
           :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE);
       yield Loading(indicator: 'CreateOrder-$quoteId');
      final response = await StaticData.vistor_value == 'visitor'?   orderRepository.create_guest_order(
