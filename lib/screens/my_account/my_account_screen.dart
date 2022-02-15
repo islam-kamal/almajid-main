@@ -40,18 +40,13 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
 
   void _getUseData() async {
-    print("1");
     _currentLang =  MyApp.app_langauge;
     _email = await sharedPreferenceManager.readString(CachingKey.EMAIL);
     _userName = await sharedPreferenceManager.readString(CachingKey.USER_NAME);
-    print("2");
     _imagePath = await sharedPreferenceManager.readString(CachingKey.PROFILE_IMAGE);
-    print("3");
     if(_imagePath !='' ){
-      print("4");
       _pickedImage = File(_imagePath);
     }
-    print("5");
     setState(() {});
   }
 
