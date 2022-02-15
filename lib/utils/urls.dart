@@ -7,8 +7,8 @@ class Urls {
   static final String BASE_URL = "https://test.almajed4oud.com";
   // //test admin token
   static final String ADMIN_TOKEN = 'tda5h42j6mke2q43da55wckmoeynz1n1';
-*/
 
+*/
   //production base url
   static final String BASE_URL = "https://almajed4oud.com";
   //production admin token
