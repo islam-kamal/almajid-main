@@ -32,6 +32,8 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
   var qty;
   AnimationController _loginButtonController;
   bool isLoading = false;
+  ShoppingCartBloc shoppingCartBloc = new ShoppingCartBloc(null);
+
   @override
   void initState() {
     shoppingCartBloc.add(GetCartDetailsEvent());

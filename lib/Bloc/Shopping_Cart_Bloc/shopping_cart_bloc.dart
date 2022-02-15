@@ -51,6 +51,7 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
       yield Loading(indicator: 'GetCartDetails');
 
       final response = await cartRepository.get_cart_details();
+      print("response : ${response}");
       if (response.message != null) {
         yield ErrorLoading(
             message: response.message, indicator: 'GetCartDetails');
