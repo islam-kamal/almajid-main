@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
+import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:dio/dio.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/Model/OrderMode/order_model.dart';
@@ -34,11 +35,15 @@ class OrderRepository {
   Future<String> create_client_order({BuildContext context}) async {
     Dio dio = new Dio();
     try {
+      final paymentMethod = await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD);
+      if(paymentMethod == "mestores_applepay"){
+        customAnimatedPushNavigation(context, CustomCircleNavigationBar());
+      }
       final response = await dio.post(
           "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/carts/mine/payment-information",
           data: {
             "paymentMethod": {
-            "method": await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD),
+            "method": paymentMethod,
             }
           },
           options: Options(headers: Map<String, String>.from({
