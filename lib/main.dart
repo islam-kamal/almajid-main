@@ -1,9 +1,6 @@
 
-import 'package:almajidoud/Base/Shimmer/list_shimmer.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
-import 'package:almajidoud/screens/Payment/stc_pay/stc_pay_phone_screen.dart';
-import 'package:almajidoud/screens/checkout/checkout_address_screen.dart';
-import 'package:almajidoud/screens/checkout/checkout_payment_screen.dart';
+
 import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,7 +9,6 @@ import 'package:flutter/cupertino.dart';
 
 import 'Base/Notifications/local_notification_service.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:country_code_picker/country_localizations.dart';
 
 /// receive message when app is in background without clicking on the notification
 Future<void> _backgroundHandler(RemoteMessage message) async{
@@ -122,7 +118,8 @@ class _MyAppState extends State<MyApp> {
                       dirArabic: "Cairo", dirEnglish: "Cairo")
               ),
               title: 'Al Majed Oud',
-              home: SplashScreen(),
+              home: SplashScreen(
+              ),
               localizationsDelegates: [
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,

@@ -51,7 +51,7 @@ userImageWidget(
                   ],
                 ),
               ),
-              Container(
+           /*   Container(
                 padding: EdgeInsets.only(
                     bottom: isLandscape(context)
                         ? 2 * height(context) * .04
@@ -89,7 +89,7 @@ userImageWidget(
                     ),
                   ],
                 ),
-              ),
+              ),*/
             ],
           )),
     ],

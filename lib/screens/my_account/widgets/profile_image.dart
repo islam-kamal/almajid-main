@@ -73,8 +73,6 @@ class ProfileImageState extends State<ProfileImage>{
                                 });
                               }
                               Navigator.pop(context);
-                             /* customAnimatedPushNavigation(context, CustomCircleNavigationBar(
-                                  page_index: MyApp.app_langauge == 'ar' ?4 : 0));*/
                             },
                             splashColor: Colors.purpleAccent,
                             child: Row(
@@ -119,8 +117,7 @@ class ProfileImageState extends State<ProfileImage>{
                               //save the path in preference
 
                               Navigator.pop(context);
-                         /*     customAnimatedPushNavigation(context, CustomCircleNavigationBar(
-                                  page_index: MyApp.app_langauge == 'ar' ?4 : 0));*/
+
                             },
                             splashColor: Colors.purpleAccent,
                             child: Row(
