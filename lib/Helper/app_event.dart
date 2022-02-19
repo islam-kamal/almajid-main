@@ -240,8 +240,16 @@ class StcSendVerificationCodeEvent extends AppEvent{
 }
 
 
+//Profile Image Events
+class PickCamareEvent extends AppEvent{
 
+}
+class PickGalleryEvent extends AppEvent{
 
+}
+class RemoveIamgeEvent extends AppEvent{
+
+}
 
 
 

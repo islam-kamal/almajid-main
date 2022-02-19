@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:almajidoud/Model/CartModel/add_cart_model.dart';
 import 'package:almajidoud/Model/CartModel/cart_details_model.dart';
 import 'package:almajidoud/Model/CartModel/guest_cart_details_model.dart';
@@ -21,7 +23,9 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
 
   void drainStream() {}
 
-  void dispose() {}
+  void dispose() {
+    _cart_details_subject.drain();
+  }
 
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
@@ -99,7 +103,9 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
           flushbarStyle: FlushbarStyle.FLOATING,
           duration: Duration(seconds: 1),
         )..show(event.scafffoldKey.currentState.context).whenComplete((){
-          shoppingCartBloc.add(GetCartDetailsEvent());
+         // shoppingCartBloc.add(GetCartDetailsEvent());
+          customAnimatedPushNavigation(event.context, CartScreen());
+
         });
 
       }
@@ -128,6 +134,7 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
         )..show(event.scafffoldKey.currentState.context);
 
       } else {
+        StaticData.discount_amount = null;
         Flushbar(
           messageText:   Container(
             child:    Container(
@@ -147,8 +154,8 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
           flushbarStyle: FlushbarStyle.FLOATING,
           duration: Duration(seconds: 1),
         )..show(event.scafffoldKey.currentState.context).whenComplete((){
-          StaticData.discount_amount = null;
-          shoppingCartBloc.add(GetCartDetailsEvent());
+            customAnimatedPushNavigation(event.context, CartScreen());
+
         });
 
 

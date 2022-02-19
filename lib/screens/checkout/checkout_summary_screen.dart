@@ -22,7 +22,7 @@ import 'package:almajidoud/screens/Payment/tamara/tamara_payment_screen.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io' show Platform;
-
+import 'package:almajidoud/screens/Payment/apple_pay/apple_pay_screen.dart';
 
 class CheckoutSummaryScreen extends StatefulWidget{
   GuestShipmentAddressModel guestShipmentAddressModel;
@@ -236,9 +236,19 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen> with Ticke
                 ));
                 break;
               case 'mestores_applepay':
-                customAnimatedPushNavigation(context, StaticData.vistor_value == 'visitor'? CustomCircleNavigationBar(): OrdersScreen(
+            /*    customAnimatedPushNavigation(context, StaticData.vistor_value == 'visitor'? CustomCircleNavigationBar(): OrdersScreen(
                   increment_id: extractedData["increment_id"],
-                ));
+                ));*/
+              var grand_total;
+               widget.guestShipmentAddressModel.totals.totalSegments.forEach((element) {
+                 if (element.code == "grand_total") {
+                   grand_total = double.parse(element.value.toStringAsFixed(2));
+                 }
+               });
+              customAnimatedPushNavigation(context, ApplePayScreen(
+                order_increment_id:  extractedData["increment_id"],
+                grand_total: grand_total,
+              ));
                 break;
             }
           });

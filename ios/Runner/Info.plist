@@ -54,13 +54,15 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 
-	<key>NSCameraUsageDescription</key>
+     <key>NSCameraUsageDescription</key>
     <string>Almajed Oud would like to use your camera</string>
-
+	<key>NSMicrophoneUsageDescription</key>
+    <string>Almajed Oud would like to use your Microphone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Almajed Oud would like access to your photo gallery</string>
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>Almajed Oud would like to save photos to your photo gallery</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Almajed Oud would like access to your photo gallery</string>
+
 
 </dict>
 </plist>

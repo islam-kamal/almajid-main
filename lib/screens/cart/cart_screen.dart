@@ -45,6 +45,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
   void dispose() {
     // TODO: implement dispose
     _loginButtonController.dispose();
+    shoppingCartBloc.dispose();
     super.dispose();
   }
   Future<Null> _playAnimation() async {
@@ -121,7 +122,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                               } else {
                                 data.totalSegments.forEach((element) {
                                   if(element.code == "discount"){
-                                    StaticData.discount_amount = element.value;
+                                      StaticData.discount_amount = element.value.toString();
                                   }else if(element.code == "tax"){
                                     tax = element.value;
                                   }else if(element.code == "subtotal"){
@@ -130,6 +131,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                     grandtotal = element.value;
                                   }
                                 });
+
                                 return Column(
                                   children: [
                                     ListView.builder(
@@ -162,9 +164,13 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                     responsiveSizedBox(
                                         context: context, percentageOfHeight: .02),
                                     divider(context: context),
+
+
                                     PromoCodeWidget(
                                       scafffoldKey: _scaffoldKey,
                                     ),
+
+
                                     responsiveSizedBox(context: context, percentageOfHeight: .02),
                                     divider(context: context),
                                     responsiveSizedBox(
@@ -189,7 +195,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                         ],
                                       ),
                                     ),
-                                    StaticData.discount_amount != null?Padding(
+                                 StaticData.discount_amount != null? Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
