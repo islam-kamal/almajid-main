@@ -2,7 +2,7 @@
   "provider": "apple_pay",
   "data": {
     "merchantIdentifier": "merchant.com.almajedoud.applepay",
-    "displayName": "Sam's Fish",
+    "displayName": "Almajed",
     "merchantCapabilities": ["3DS", "debit", "credit"],
     "supportedNetworks": ["amex", "visa", "discover", "masterCard"],
     "countryCode": "US",
