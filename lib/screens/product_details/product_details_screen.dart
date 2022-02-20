@@ -292,7 +292,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                               ),
                             ),
                             responsiveSizedBox(context: context, percentageOfHeight: .03),
-                            titleText(context: context, text: "Related Products"),
+                            snapshot.data[0].productLinks.length > 0?
+                            titleText(context: context, text: "Related Products") : Container(),
                             responsiveSizedBox(context: context, percentageOfHeight: .02),
 
                             HomeListProducts(

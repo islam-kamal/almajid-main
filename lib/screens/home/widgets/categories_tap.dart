@@ -59,31 +59,37 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                             controller: _controller,
                             isScrollable: true,
                             indicatorColor: mainColor ,
-                            tabs: snapshot.data.childrenData.map((item) => GestureDetector(
-                              onTap: () {
-                                customAnimatedPushNavigation(
+                            tabs: snapshot.data.childrenData.map((item){
+                              if(item.isActive == true)
+                              return GestureDetector(
+                                onTap: () {
+
+                                  customAnimatedPushNavigation(
                                       context, CategoryProductsScreen(
-                                      category_id: item.id.toString(),
-                                      category_name: item.name,
-                                  category_index: _controller.index,
+                                    category_id: item.id.toString(),
+                                    category_name: item.name,
+                                    category_index: _controller.index,
                                   ));
-                              },
-                              child: Container(
-                                height: width(context) * 0.08,
-                                padding: EdgeInsets.symmetric(horizontal: 5,vertical: 5),
-                                decoration: BoxDecoration(
-                                    color: widget.category_name == item.name? whiteColor : mainColor,
-                                    borderRadius: BorderRadius.circular(15)
+                                },
+                                child: Container(
+                                  height: width(context) * 0.08,
+                                  padding: EdgeInsets.symmetric(horizontal: 5,vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: widget.category_name == item.name? whiteColor : mainColor,
+                                      borderRadius: BorderRadius.circular(15)
+                                  ),
+                                  child:Center(
+                                    child: customDescriptionText(
+                                        context: context,
+                                        text: item.name,
+                                        textColor: widget.category_name == item.name? mainColor: whiteColor ,
+                                        percentageOfHeight: .015),
+                                  ),
                                 ),
-                                child:Center(
-                                  child: customDescriptionText(
-                                      context: context,
-                                      text: item.name,
-                                      textColor: widget.category_name == item.name? mainColor: whiteColor ,
-                                      percentageOfHeight: .015),
-                                ),
-                              ),
-                            )).toList() ,
+                              );
+                              else
+                                return Container();
+                            }).toList() ,
                           )
                       );
                     }

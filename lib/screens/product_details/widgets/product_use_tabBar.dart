@@ -25,9 +25,10 @@ class ProductUseTabBar extends StatelessWidget{
                   title: TabBar(
                     isScrollable: true,physics: NeverScrollableScrollPhysics(),
                     tabs: [
+                      Tab(child: Text(translator.translate("Description"))),
                       Tab(child: Text(translator.translate("How To Use"))),
                       Tab(child: Text(translator.translate("Shipping And Returns"))),
-                      Tab(child: Text(translator.translate("Description"))),
+
 
                     ],
                   ),
@@ -38,6 +39,10 @@ class ProductUseTabBar extends StatelessWidget{
               children: <Widget>[
                 descriptionAndShareRow(
                     context: context,
+                    description: description??''
+                ),
+                descriptionAndShareRow(
+                    context: context,
                     description: how_to_use??''
                 ),
                 descriptionAndShareRow(
@@ -45,10 +50,7 @@ class ProductUseTabBar extends StatelessWidget{
                     description: translator.translate( "shipping&returns"),
 
                 ),
-                descriptionAndShareRow(
-                    context: context,
-                    description: description
-                ),
+
 
 
 
