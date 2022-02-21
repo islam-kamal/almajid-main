@@ -68,105 +68,107 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                       if (snapshot.data.childrenData.isEmpty) {
                                         return Container();
                                       } else {
-                                        return Column(
-                                          children: [
-                                            responsiveSizedBox(context: context, percentageOfHeight: .01),
-                                            Container(
-                                                width: width(context),
-                                                padding: EdgeInsets.all(10),
-                                                child: customDescriptionText(
-                                                    context: context,
-                                                    textAlign: TextAlign.start,
-                                                    textColor: mainColor,
-                                                    text: "${snapshot.data.name}",
-                                                    percentageOfHeight: .025)),
-                                            Divider(
-                                              color: mainColor,
-                                              height: 10,
-                                            ),
+                                          return Column(
+                                            children: [
+                                              responsiveSizedBox(context: context, percentageOfHeight: .01),
+                                              Container(
+                                                  width: width(context),
+                                                  padding: EdgeInsets.all(10),
+                                                  child: customDescriptionText(
+                                                      context: context,
+                                                      textAlign: TextAlign.start,
+                                                      textColor: mainColor,
+                                                      text: "${snapshot.data.name}",
+                                                      percentageOfHeight: .025)),
+                                              Divider(
+                                                color: mainColor,
+                                                height: 10,
+                                              ),
 
 
-                                            ExpansionPanelList(
+                                              ExpansionPanelList(
                                                 expansionCallback: (index, isExpanded) => setState(() {
                                                   _isExpanded[index] = !isExpanded;
                                                 }),
-                                              children: [
-                                                for (int i = 0; i < snapshot.data.childrenData.length; i++)
-                                                  if(snapshot.data.childrenData[i].isActive == true)
-                                                  ExpansionPanel(
-                                                    headerBuilder: (_, isExpanded) {
-                                                      return Center(
-                                                        child:  InkWell(
-                                                          onTap: (){
-                                                            var parentItem = snapshot.data.childrenData[i];
-                                                            customAnimatedPushNavigation(
-                                                                context,
-                                                                CategoryProductsScreen(
-                                                                  category_id: parentItem.id.toString(),
-                                                                  category_name: parentItem.name,
+                                                children: [
+                                                  for (int i = 0; i < snapshot.data.childrenData.length; i++)
+                                                    if(snapshot.data.childrenData[i].isActive == true)
+                                                      ExpansionPanel(
+                                                        headerBuilder: (_, isExpanded) {
+                                                          return Center(
+                                                            child:  InkWell(
+                                                                onTap: (){
+                                                                  var parentItem = snapshot.data.childrenData[i];
+                                                                  customAnimatedPushNavigation(
+                                                                      context,
+                                                                      CategoryProductsScreen(
+                                                                        category_id: parentItem.id.toString(),
+                                                                        category_name: parentItem.name,
 
+                                                                      )
+
+                                                                  );
+                                                                },
+                                                                child:
+                                                                Container(
+                                                                  margin: const EdgeInsets.all(6.0),
+                                                                  padding: const EdgeInsets.all(10.0),
+                                                                  width: double.infinity,
+                                                                  child: Text(snapshot.data.childrenData[i].name),
                                                                 )
+                                                            ),
+                                                          );
+                                                        },
+                                                        body: ListView.builder(
+                                                            shrinkWrap: true,
+                                                            padding: EdgeInsets.all(5),
+                                                            physics: NeverScrollableScrollPhysics(),
+                                                            itemCount:  snapshot.data.childrenData[i].childrenData.length ,
+                                                            itemBuilder: (context,ind){
+                                                              if(snapshot.data.childrenData[i].childrenData[ind].isActive == true)
+                                                              return InkWell(
+                                                                  child: Padding(
+                                                                    padding: EdgeInsets.only(
+                                                                        right: 10, left: 10),
+                                                                    child: Card(
 
-                                                            );
-                                                          },
-                                                          child:
-                                                            Container(
-                                                              margin: const EdgeInsets.all(6.0),
-                                                              padding: const EdgeInsets.all(10.0),
-                                                              width: double.infinity,
-                                                              child: Text(snapshot.data.childrenData[i].name),
-                                                            )
-                                                        ),
-                                                      );
-                                                    },
-                                                    body: ListView.builder(
-                                                        shrinkWrap: true,
-                                                        padding: EdgeInsets.all(5),
-                                                        physics: NeverScrollableScrollPhysics(),
-                                                        itemCount:  snapshot.data.childrenData[i].childrenData.length ,
-                                                        itemBuilder: (context,ind){
-                                                          return InkWell(
-                                                              child: Padding(
-                                                                padding: EdgeInsets.only(
-                                                                    right: 10, left: 10),
-                                                                child: Card(
+                                                                        child: Container(
+                                                                          margin: const EdgeInsets.all(3.0),
+                                                                          padding: const EdgeInsets.all(10.0),
+                                                                          width: double.infinity,
+                                                                          child: Text(snapshot.data.childrenData[i].childrenData[ind].name),
+                                                                        )
 
-                                                                    child: Container(
-                                                                      margin: const EdgeInsets.all(3.0),
-                                                                      padding: const EdgeInsets.all(10.0),
-                                                                      width: double.infinity,
-                                                                      child: Text(snapshot.data.childrenData[i].childrenData[ind].name),
-                                                                    )
+                                                                    ),
+                                                                  ),
+                                                                  onTap: () {
 
-                                                                ),
-                                                              ),
-                                                              onTap: () {
+                                                                    customAnimatedPushNavigation(
+                                                                        context,
+                                                                        CategoryProductsScreen(
+                                                                          category_id: snapshot.data.childrenData[i].childrenData[ind].id.toString(),
+                                                                          category_name: snapshot.data.childrenData[i].childrenData[ind].name,
 
-                                                                customAnimatedPushNavigation(
-                                                                    context,
-                                                                    CategoryProductsScreen(
-                                                                      category_id: snapshot.data.childrenData[i].childrenData[ind].id.toString(),
-                                                                      category_name: snapshot.data.childrenData[i].childrenData[ind].name,
+                                                                        )
 
-                                                                    )
-
-                                                                );
+                                                                    );
 
 
-                                                              });
-                                                        }),
-                                                    isExpanded: _isExpanded[i],
-                                                    canTapOnHeader: false,
-                                                 //   hasIcon: snapshot.data.childrenData[i].childrenData.length > 0 ?true:false,
-                                                  ),
-                                              ],
-                                            ),
+                                                                  });
+                                                            }),
+                                                        isExpanded: _isExpanded[i],
+                                                        canTapOnHeader: false,
+                                                        //   hasIcon: snapshot.data.childrenData[i].childrenData.length > 0 ?true:false,
+                                                      ),
+                                                ],
+                                              ),
 
-                                            Container(
-                                              height: width(context) * 0.5,
-                                            )
-                                          ],
-                                        );
+                                              Container(
+                                                height: width(context) * 0.5,
+                                              )
+                                            ],
+                                          );
+
                                       }
                                     } else if (snapshot.hasError) {
                                       return Container(
