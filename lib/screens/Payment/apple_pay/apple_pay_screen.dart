@@ -37,26 +37,14 @@ class _ApplePayScreenState extends State<ApplePayScreen> {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         children: [
-          // Container(
-          //   margin: const EdgeInsets.symmetric(vertical: 20),
-          //   child: const Image(
-          //     image: AssetImage('assets/images/startup 2.png'),
-          //     height: 350,
-          //   ),
-          // ),
-         // SizedBox(height:30),
-         //  GooglePayButton(
-         //    paymentConfigurationAsset:
-         //    'apple_pay/default_payment_profile_google_pay.json',
-         //    paymentItems: _paymentItems,
-         //    style: GooglePayButtonStyle.black,
-         //    type: GooglePayButtonType.pay,
-         //    margin: const EdgeInsets.only(top: 15.0),
-         //    onPaymentResult: onGooglePayResult,
-         //    loadingIndicator: const Center(
-         //      child: CircularProgressIndicator(),
-         //    ),
-         //  ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 20),
+            child: const Image(
+              image: AssetImage('assets/images/startup 2.png'),
+              height: 350,
+            ),
+          ),
+         SizedBox(height:30),
           ApplePayButton(
             paymentConfigurationAsset: 'apple_pay/default_payment_profile_apple_pay.json',
             paymentItems: _paymentItems,
