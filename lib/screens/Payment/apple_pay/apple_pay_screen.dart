@@ -1,7 +1,11 @@
+import 'dart:convert';
+
+import 'package:almajidoud/Repository/PaymentRepo/payment_repository.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:pay/pay.dart';
+import 'package:http/http.dart' as http;
 
 class ApplePayScreen extends StatefulWidget {
   final String order_increment_id;
@@ -15,9 +19,28 @@ class ApplePayScreen extends StatefulWidget {
 class _ApplePayScreenState extends State<ApplePayScreen> {
   void onGooglePayResult(paymentResult) {
     debugPrint(paymentResult.toString());
-    customAnimatedPushNavigation(context, StaticData.vistor_value == 'visitor'? CustomCircleNavigationBar(): OrdersScreen(
-     increment_id: widget.order_increment_id,
-    ));
+    final extractedData = json.decode(paymentResult) as Map<String, dynamic>;
+
+    final Future<http.Response> response = payment_repository.getPayfortApplePayValidation(
+      apple_data: extractedData["token"]["data"],
+      apple_signature: extractedData["token"]["signature"],
+      apple_publicKeyHash: extractedData["token"]["header"]["publicKeyHash"],
+      apple_transactionId: extractedData["token"]["header"]["transactionId"],
+      apple_ephemeralPublicKey: extractedData["token"]["header"]["ephemeralPublicKey"],
+      apple_displayName: extractedData["token"]["paymentMethod"]["displayName"],
+      apple_network: extractedData["token"]["paymentMethod"]["network"],
+      apple_version: extractedData["token"]["version"],
+      order_id: widget.order_increment_id,
+    );
+
+    response.then((res) {
+      final extractedData = json.decode(res.body) as Map<String, dynamic>;
+      if (extractedData["status"]) {
+        customAnimatedPushNavigation(context, StaticData.vistor_value == 'visitor'? CustomCircleNavigationBar(): OrdersScreen(
+          increment_id: widget.order_increment_id,
+        ));
+      }
+      });
   }
 
   void onApplePayResult(paymentResult) {
