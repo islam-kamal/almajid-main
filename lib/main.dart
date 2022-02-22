@@ -2,7 +2,6 @@
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 
 import 'package:almajidoud/screens/orders/orders_screen.dart';
-import 'package:almajidoud/test.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -119,9 +118,7 @@ class _MyAppState extends State<MyApp> {
                       dirArabic: "Cairo", dirEnglish: "Cairo")
               ),
               title: 'Al Majed Oud',
-              home: MyHomePage(
-                title: "dsfghghj",
-              ),
+              home: SplashScreen(),
               localizationsDelegates: [
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,

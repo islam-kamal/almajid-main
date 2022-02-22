@@ -17,6 +17,19 @@ class ApplePayScreen extends StatefulWidget {
 }
 
 class _ApplePayScreenState extends State<ApplePayScreen> {
+
+  var _paymentItems;
+  @override
+  void initState() {
+     _paymentItems = [
+      PaymentItem(
+        label: 'Total',
+        amount: widget.grand_total,
+        status: PaymentItemStatus.final_price,
+      )
+    ];
+     super.initState();
+  }
   void onGooglePayResult(paymentResult) {
     debugPrint(paymentResult.toString());
     final extractedData = json.decode(paymentResult) as Map<String, dynamic>;
@@ -89,13 +102,8 @@ class _ApplePayScreenState extends State<ApplePayScreen> {
       ),
     );
   }
+
 }
 
 
-const _paymentItems = [
-  PaymentItem(
-    label: 'Total',
-    amount: '1.0',
-    status: PaymentItemStatus.final_price,
-  )
-];
+
