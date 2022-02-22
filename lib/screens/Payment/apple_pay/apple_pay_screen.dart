@@ -36,9 +36,14 @@ class _ApplePayScreenState extends State<ApplePayScreen> {
     response.then((res) {
       final extractedData = json.decode(res.body) as Map<String, dynamic>;
       if (extractedData["status"]) {
-        customAnimatedPushNavigation(context, StaticData.vistor_value == 'visitor'? CustomCircleNavigationBar(): OrdersScreen(
+       /* customAnimatedPushNavigation(context, StaticData.vistor_value == 'visitor'? CustomCircleNavigationBar(): OrdersScreen(
           increment_id: widget.order_increment_id,
+        ));*/
+        customAnimatedPushNavigation(context, SubmitSuccessfulScreen(
+          order_id: widget.order_increment_id,
         ));
+      }else{
+        customAnimatedPushNavigation(context, SubmitFaieldScreen());
       }
       });
   }
