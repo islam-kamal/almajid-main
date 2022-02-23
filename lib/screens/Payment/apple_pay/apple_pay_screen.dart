@@ -30,19 +30,20 @@ class _ApplePayScreenState extends State<ApplePayScreen> {
     ];
      super.initState();
   }
-  void onGooglePayResult(paymentResult) {
+  void onApplePayResult(paymentResult) {
     debugPrint(paymentResult.toString());
-    final extractedData = json.decode(paymentResult) as Map<String, dynamic>;
+    final token = json.decode(paymentResult["token"]);
+    debugPrint("after extracted data");
 
     final Future<http.Response> response = payment_repository.getPayfortApplePayValidation(
-      apple_data: extractedData["token"]["data"],
-      apple_signature: extractedData["token"]["signature"],
-      apple_publicKeyHash: extractedData["token"]["header"]["publicKeyHash"],
-      apple_transactionId: extractedData["token"]["header"]["transactionId"],
-      apple_ephemeralPublicKey: extractedData["token"]["header"]["ephemeralPublicKey"],
-      apple_displayName: extractedData["token"]["paymentMethod"]["displayName"],
-      apple_network: extractedData["token"]["paymentMethod"]["network"],
-      apple_version: extractedData["token"]["version"],
+      apple_data: token["data"],
+      apple_signature: token["signature"],
+      apple_publicKeyHash: token["header"]["publicKeyHash"],
+      apple_transactionId:token["header"]["transactionId"],
+      apple_ephemeralPublicKey: token["header"]["ephemeralPublicKey"],
+      apple_displayName: "Almajed",
+      apple_network: paymentResult["paymentMethod"]["network"],
+      apple_version: token["version"],
       order_id: widget.order_increment_id,
     );
 
@@ -61,12 +62,6 @@ class _ApplePayScreenState extends State<ApplePayScreen> {
       });
   }
 
-  void onApplePayResult(paymentResult) {
-    debugPrint(paymentResult.toString());
-    customAnimatedPushNavigation(context, StaticData.vistor_value == 'visitor'? CustomCircleNavigationBar(): OrdersScreen(
-      increment_id: widget.order_increment_id,
-    ));
-  }
 
   @override
   Widget build(BuildContext context) {

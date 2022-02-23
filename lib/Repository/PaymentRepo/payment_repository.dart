@@ -154,6 +154,7 @@ class PaymentRepository {
         "apple_network" :apple_network,
         "order_id" : order_id
       };
+      print("data form Apple Pay");
       final serializedData = json.encode(data);
       final response = await http.post(Uri.parse(Urls.BASE_URL+"/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/apple-pay/validate"),
           headers: {
