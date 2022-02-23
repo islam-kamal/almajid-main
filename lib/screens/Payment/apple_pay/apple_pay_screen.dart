@@ -24,7 +24,7 @@ class _ApplePayScreenState extends State<ApplePayScreen> {
      _paymentItems = [
       PaymentItem(
         label: 'Total',
-        amount: widget.grand_total,
+        amount: widget.grand_total.toString(),
         status: PaymentItemStatus.final_price,
       )
     ];
