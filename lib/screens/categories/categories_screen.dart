@@ -125,6 +125,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                         physics: NeverScrollableScrollPhysics(),
                                                         itemCount:  snapshot.data.childrenData[i].childrenData.length ,
                                                         itemBuilder: (context,ind){
+                                                          if(snapshot.data.childrenData[i].childrenData[ind].isActive == true)
                                                           return InkWell(
                                                               child: Padding(
                                                                 padding: EdgeInsets.only(
