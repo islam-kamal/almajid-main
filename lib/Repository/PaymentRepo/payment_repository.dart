@@ -155,7 +155,7 @@ class PaymentRepository {
         "order_id" : order_id
       };
       final serializedData = json.encode(data);
-      final response = await http.post(Uri.parse(Urls.BASE_URL+"/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/update-order-type"),
+      final response = await http.post(Uri.parse(Urls.BASE_URL+"/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/apple-pay/validate"),
           headers: {
             "content-type": "application/json",
             "Authorization": 'Bearer ${Urls.ADMIN_TOKEN}'
