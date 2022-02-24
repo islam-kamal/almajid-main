@@ -99,8 +99,10 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
           flushbarStyle: FlushbarStyle.FLOATING,
           duration: Duration(seconds: 1),
         )..show(event.scafffoldKey.currentState.context).whenComplete((){
-          shoppingCartBloc.add(GetCartDetailsEvent());
+          customAnimatedPushNavigation(event.context, CartScreen());
+
         });
+
 
       }
     }
@@ -147,9 +149,11 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
           flushbarStyle: FlushbarStyle.FLOATING,
           duration: Duration(seconds: 1),
         )..show(event.scafffoldKey.currentState.context).whenComplete((){
-          StaticData.discount_amount = null;
-          shoppingCartBloc.add(GetCartDetailsEvent());
+          // shoppingCartBloc.add(GetCartDetailsEvent());
+          customAnimatedPushNavigation(event.context, CartScreen());
+
         });
+
 
 
       }
