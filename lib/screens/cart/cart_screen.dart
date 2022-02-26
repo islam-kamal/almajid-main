@@ -34,6 +34,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
   bool isLoading = false;
   ShoppingCartBloc shoppingCartBloc = new ShoppingCartBloc(null);
 
+  var discount_amount = '';
   @override
   void initState() {
     shoppingCartBloc.add(GetCartDetailsEvent());
@@ -121,7 +122,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                               } else {
                                 data.totalSegments.forEach((element) {
                                   if(element.code == "discount"){
-                                    StaticData.discount_amount = element.value;
+                                    discount_amount = element.value.toString();
                                   }else if(element.code == "tax"){
                                     tax = element.value;
                                   }else if(element.code == "subtotal"){
@@ -130,6 +131,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                     grandtotal = element.value;
                                   }
                                 });
+                                print("StaticData.discount_amount : ${discount_amount}");
                                 return Column(
                                   children: [
                                     ListView.builder(
@@ -189,7 +191,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                         ],
                                       ),
                                     ),
-                                    StaticData.discount_amount != null?Padding(
+                                    discount_amount != ''?Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
@@ -203,7 +205,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                           customDescriptionText(
                                               context: context,
                                               textColor: mainColor,
-                                              text: " ${StaticData.discount_amount} ${MyApp.country_currency} ",
+                                              text: " ${discount_amount} ${MyApp.country_currency} ",
                                               percentageOfHeight: .018,
                                               fontWeight: FontWeight.bold),
                                         ],
