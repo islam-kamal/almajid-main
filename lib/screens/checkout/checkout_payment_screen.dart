@@ -304,7 +304,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                                    Container(
                                     width: width(context) * 0.15,
                                      child:    Text(
-                                    paymentMethods[index].code == 'tamara_pay_by_instalments'? "Tamara" :  "${paymentMethods[index].title} ",
+                                    paymentMethods[index].code == 'tamara_pay_by_instalments'? translator.translate("Tamara") :  paymentMethods[index].code == 'mestores_applepay'? translator.translate("Apple Pay") :  "${paymentMethods[index].title} ",
                                        maxLines: 2,
                                        style: TextStyle(
                                            fontSize: AlmajedFont.secondary_font_size,color: mainColor,fontWeight: FontWeight.w300
