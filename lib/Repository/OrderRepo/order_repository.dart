@@ -8,56 +8,70 @@ import 'package:almajidoud/Model/OrderMode/order_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:almajidoud/Model/OrderMode/reorder_model.dart';
+import 'dart:io' show Platform;
 class OrderRepository {
   Future<String> create_guest_order({BuildContext context}) async {
     Dio dio = new Dio();
-
     try {
-      final response = await dio.put(
-          "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)}/order",
-          data: {
-            "paymentMethod": {
-                 "method": await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD),
-            }
-          },
-          options: Options(headers: Map<String, String>.from({})));
-      if (response.statusCode == 200) {
-        sharedPreferenceManager.writeData(CachingKey.ORDER_ID, response.data);
-        return response.data;
-      } else {
-        Navigator.pop(context);
-        errorDialog(context: context, text: response.data['message']);
-      }
-    } catch (e) {
+      await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD).then((value) async {
+        if(value == "mestores_applepay" && Platform.isAndroid){
+          customAnimatedPushNavigation(context, CustomCircleNavigationBar());
+        }
+        else {
+          final response = await dio.put(
+              "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp
+                  .app_location}/index.php/rest/V1/guest-carts/${await sharedPreferenceManager
+                  .readString(CachingKey.GUEST_CART_QUOTE)}/order",
+              data: {
+                "paymentMethod": {
+                  "method": value,
+                }
+              },
+              options: Options(headers: Map<String, String>.from({})));
+          if (response.statusCode == 200) {
+            sharedPreferenceManager.writeData(CachingKey.ORDER_ID, response.data);
+            return response.data;
+          } else {
+            Navigator.pop(context);
+            errorDialog(context: context, text: response.data['message']);
+          }
+        }
+      });
+    }catch (e) {
     }
   }
 
   Future<String> create_client_order({BuildContext context}) async {
     Dio dio = new Dio();
     try {
-      final paymentMethod = await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD);
-      if(paymentMethod == "mestores_applepay"){
-        customAnimatedPushNavigation(context, CustomCircleNavigationBar());
-      }
-      final response = await dio.post(
-          "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/carts/mine/payment-information",
-          data: {
-            "paymentMethod": {
-            "method": paymentMethod,
-            }
-          },
-          options: Options(headers: Map<String, String>.from({
-            'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}',
-            'content-type': 'application/json',
-            'Accept': 'application/json',
-          })));
-      if (response.statusCode == 200) {
-        sharedPreferenceManager.writeData(CachingKey.ORDER_ID, response.data);
-        return response.data;
-      } else {
-        Navigator.pop(context);
-        errorDialog(context: context, text: response.data['message']);
-      }
+      await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD).then((value) async {
+        if(value == "mestores_applepay" && Platform.isAndroid){
+          customAnimatedPushNavigation(context, CustomCircleNavigationBar());
+        }
+        else{
+          final response = await dio.post(
+              "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/carts/mine/payment-information",
+              data: {
+                "paymentMethod": {
+                  "method": value,
+                }
+              },
+              options: Options(headers: Map<String, String>.from({
+                'Authorization': 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}',
+                'content-type': 'application/json',
+                'Accept': 'application/json',
+              })));
+          if (response.statusCode == 200) {
+            sharedPreferenceManager.writeData(CachingKey.ORDER_ID, response.data);
+            return response.data;
+          } else {
+            Navigator.pop(context);
+            errorDialog(context: context, text: response.data['message']);
+          }
+        }
+      });
+
+
     } catch (e) {
     }
   }
@@ -93,11 +107,11 @@ class OrderRepository {
         AllOrdersModel(),
         Urls.BASE_URL + "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/orders?searchCriteria[filter_groups][0][filters][0][field]=customer_email&searchCriteria[filter_groups][0][filters][0][value]=${user_email}&searchCriteria[filter_groups][0][filters][0][condition_type]=eq&searchCriteria[currentPage]=1&searchCriteria[pageSize]=20&searchCriteria[sortOrders][0][field]=created_at&searchCriteria[sortOrders][0][direction]=DESC",
         headers:Map<String, String>.from({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
 
-    })
+        })
     );
   }
 
@@ -105,3 +119,5 @@ class OrderRepository {
 }
 
 OrderRepository orderRepository = new OrderRepository();
+
+

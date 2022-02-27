@@ -16,6 +16,7 @@ class Urls {
   //production admin token
   static final String ADMIN_TOKEN = 'akywvzb51qazebzlzll0nutx3zrry7ao';
 */
+
   static final String SIGN_UP = "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mobilelogin/account/create";
 
   static final String USER_INFO_URL = "/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/customers/me";

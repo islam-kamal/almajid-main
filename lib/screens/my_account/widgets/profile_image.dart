@@ -39,7 +39,6 @@ class ProfileImageState extends State<ProfileImage> {
 
   @override
   Widget build(BuildContext context) {
-    print("_pickedImage ------: ${_pickedImage}");
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -147,7 +146,6 @@ class ProfileImageState extends State<ProfileImage> {
                                                     setState(() {
                                                       _pickedImage = newImage;
 
-                                                      print("_pickedImage ## : ${_pickedImage}");
                                                     });
                                                   }
                                                   //save the path in preference
