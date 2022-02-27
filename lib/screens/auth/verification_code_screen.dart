@@ -41,7 +41,7 @@ class _OtpState extends State<VerificationCodeScreen>
   var otp_code;
   final int time = 30;
   AnimationController _controller;
-
+  bool _isLoading = false;
   // Variables
   Size _screenSize;
   int _currentDigit;
@@ -523,8 +523,11 @@ class _OtpState extends State<VerificationCodeScreen>
   get _getOtpConfirmationButton {
     return GestureDetector(
       onTap: otp_code == null
-          ? () {}
+          ? () {
+        print("saddsds**********");
+      }
           : () {
+        print("11111**********");
               forgetPassword_bloc.add(checkOtpClick(otp_code: otp_code, route: widget.route));
             },
       child: BlocListener(
@@ -536,8 +539,10 @@ class _OtpState extends State<VerificationCodeScreen>
             if (state is Loading) {
               if (state.indicator == 'checkOtpClick') {
                 _playAnimation();
+                _isLoading = true;
               } else if (state.indicator == 'resendOtpClick') {}
-            } else if (state is Done) {
+            }
+            else if (state is Done) {
               var data = state.model as AuthenticationModel;
 
               _stopAnimation();
@@ -564,15 +569,18 @@ class _OtpState extends State<VerificationCodeScreen>
                         ));
                     break;
                 }
+                _isLoading = false;
               } else if (state.indicator == 'resendOtpClick') {
                 customAnimatedPushNavigation(context, VerificationCodeScreen());
               }
-            } else if (state is ErrorLoading) {
+            }
+            else if (state is ErrorLoading) {
               if (state.indicator == 'checkOtpClick') {
                 var data = state.model as AuthenticationModel;
-
                 _stopAnimation();
-
+                setState(() {
+                  _isLoading = false;
+                });
                 Flushbar(
                   messageText: Row(
                     children: [
@@ -602,47 +610,36 @@ class _OtpState extends State<VerificationCodeScreen>
               }
             }
           },
-          child: Directionality(
+          child: _isLoading
+              ? CircularProgressIndicator(
+            backgroundColor: whiteColor,
+          )
+
+              : Directionality(
               textDirection: translator.activeLanguageCode == 'ar'
                   ? TextDirection.rtl
                   : TextDirection.ltr,
               child: Container(
                 decoration: BoxDecoration(
-                    color: greyColor, borderRadius: BorderRadius.circular(5)),
+                    color: otp_code ==null ?mainColor :greenColor, borderRadius: BorderRadius.circular(5)),
                 padding: EdgeInsets.only(
                     right: width(context) * .0, left: width(context) * .02),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     customDescriptionText(
                         context: context,
                         text: "Confirm",
+                        textColor: otp_code ==null ?mainColor :whiteColor,
                         percentageOfHeight: .025),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: otp_code == null ? greyColor : greenColor,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: mainColor, width: 2)),
-                      child: Center(
-                        child: Icon(
-                          Icons.check,
-                          size: isLandscape(context)
-                              ? 2 * height(context) * .0
-                              : height(context) * .05,
-                        ),
-                      ),
-                      height: isLandscape(context)
-                          ? 2 * height(context) * .06
-                          : height(context) * .06,
-                      width: width(context) * .16,
-                    ),
                   ],
                 ),
                 width: width(context) * .5,
                 height: isLandscape(context)
                     ? 2 * height(context) * .06
                     : height(context) * .06,
-              ))),
+              ))
+      ),
     );
   }
 }

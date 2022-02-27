@@ -65,7 +65,7 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
         sharedPreferenceManager.writeData(CachingKey.AUTH_TOKEN, response.token);
       yield Done(model: response, indicator: 'checkOtpClick');
       } else {
-        yield ErrorLoading(model: response);
+        yield ErrorLoading(model: response, indicator: 'checkOtpClick');
       }
     }
     //resend otp Api hamdle

@@ -610,7 +610,8 @@ class _OtpState extends State<StcVerificationCodeScreen>
                 _isLoading = true;
                 _playAnimation();
               }
-            } else if (state is Done) {
+            }
+            else if (state is Done) {
               if (state.indicator == 'CreateOrder-${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
                   :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}') {
                 var data = state.general_value;
