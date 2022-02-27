@@ -6,6 +6,7 @@ import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:pay/pay.dart';
 import 'package:http/http.dart' as http;
+import 'dart:io' show Platform;
 
 class ApplePayScreen extends StatefulWidget {
   final String order_increment_id;
@@ -97,6 +98,7 @@ class _ApplePayScreenState extends State<ApplePayScreen> {
       ),
     );
   }
+
 
 }
 

@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:almajidoud/Repository/PaymentRepo/payment_repository.dart';
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:pay/pay.dart';
+import 'package:http/http.dart' as http;
 
 
 
@@ -79,5 +84,116 @@ class CustomComponents{
           ],
         ));
   }
+
+
+/*
+  static void applePayBottomSheet({BuildContext context, var total}) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width ;
+   var _paymentItems = [
+      PaymentItem(
+        label: 'Total',
+        amount: total.toString(),
+        status: PaymentItemStatus.final_price,
+      )
+    ];
+    showModalBottomSheet<void>(
+        context: context,
+        shape: OutlineInputBorder(
+          borderRadius: new BorderRadius.only(
+              topLeft: const Radius.circular(20.0),
+              topRight: const Radius.circular(20.0)),
+        ),
+        builder: (BuildContext context) {
+          return  Directionality(
+              textDirection: translator.currentLanguage =='ar'?TextDirection.rtl : TextDirection.ltr,
+              child:Container(
+                height: width * 0.6,
+                child:  Column(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        padding: EdgeInsets.only(left: width * .075, right: width * .075, ),
+                        alignment: translator.currentLanguage =='ar'?Alignment.centerRight : Alignment.centerLeft,
+                        child:   Image.asset( "assets/icons/apple pay.png",
+                            height: MediaQuery.of(context).size.height*.13
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child:  Container(
+                          width: StaticData.get_width(context) * .9,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              customDescriptionText(
+                                  context: context,
+                                  text: "Total to pay",
+                                  fontWeight: FontWeight.bold,
+                                  textAlign: TextAlign.start,
+                                  percentageOfHeight: .020),
+                              customDescriptionText(
+                                  context: context,
+                                  text: "${MyApp.country_currency} $total",
+                                  fontWeight: FontWeight.bold,
+                                  textAlign: TextAlign.start,
+                                  percentageOfHeight: .020),
+                            ],
+                          )),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child:      ApplePayButton(
+                        paymentConfigurationAsset: 'apple_pay/default_payment_profile_apple_pay.json',
+                        paymentItems: _paymentItems,
+                        style: ApplePayButtonStyle.black,
+                        type: ApplePayButtonType.buy,
+                        margin: const EdgeInsets.only(top: 15.0),
+                        onPaymentResult: onApplePayResult,
+                        loadingIndicator: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ));
+        }
+
+    );
+  }
+ static void onApplePayResult(paymentResult,{BuildContext context , var order_incremental_id}) {
+    debugPrint(paymentResult.toString());
+    final token = json.decode(paymentResult["token"]);
+    debugPrint("after extracted data");
+
+    final Future<http.Response> response = payment_repository.getPayfortApplePayValidation(
+      apple_data: token["data"],
+      apple_signature: token["signature"],
+      apple_publicKeyHash: token["header"]["publicKeyHash"],
+      apple_transactionId:token["header"]["transactionId"],
+      apple_ephemeralPublicKey: token["header"]["ephemeralPublicKey"],
+      apple_displayName: "Almajed",
+      apple_network: paymentResult["paymentMethod"]["network"],
+      apple_version: token["version"],
+      order_id: order_incremental_id,
+    );
+
+    response.then((res) {
+      final extractedData = json.decode(res.body) as Map<String, dynamic>;
+      if (extractedData["status"]) {
+        customAnimatedPushNavigation(context, SubmitSuccessfulScreen(
+          order_id: order_incremental_id,
+        ));
+      }else{
+        customAnimatedPushNavigation(context, SubmitFaieldScreen());
+      }
+    });
+  }
+*/
+
+
 
 }
