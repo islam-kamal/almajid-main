@@ -39,7 +39,7 @@ class _OtpState extends State<VerificationCodeScreen>
     with SingleTickerProviderStateMixin {
   // Constants
   var otp_code;
-  final int time = 30;
+  final int time = 180;
   AnimationController _controller;
   bool _isLoading = false;
   // Variables
