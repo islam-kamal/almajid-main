@@ -300,7 +300,8 @@ class _OtpState extends State<VerificationCodeScreen>
 
   // Return "Email" label
   get _getEmailLabel {
-    return Padding(
+    return Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.ltr : TextDirection.rtl,
+    child: Padding(
         padding: EdgeInsets.only(
             right: StaticData.get_width(context) * 0.06,
             left: StaticData.get_width(context) * 0.06,
@@ -310,7 +311,7 @@ class _OtpState extends State<VerificationCodeScreen>
           textAlign: TextAlign.center,
           style: new TextStyle(
               fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w600),
-        ));
+        ) ));
   }
 
   // Return "OTP" input field

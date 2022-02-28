@@ -201,15 +201,6 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
               ),
               child: Row(
                 children: [
-                  CountryCodePicker(
-                    onChanged: (Object object){
-                      _countryCode=object.toString();
-                      StaticData.country_code = _countryCode;
-                    },
-                    initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
-                    countryFilter: ['SA', 'KW', ],
-                    showFlagDialog: true,
-                  ),
                   Expanded(
                       child: TextFormField(
                           decoration: InputDecoration(
@@ -228,6 +219,16 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                           keyboardType: TextInputType.number
                       )
                   ),
+                  CountryCodePicker(
+                    onChanged: (Object object){
+                      _countryCode=object.toString();
+                      StaticData.country_code = _countryCode;
+                    },
+                    initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
+                    countryFilter: ['SA', 'KW', ],
+                    showFlagDialog: true,
+                  ),
+
 
                 ],
               )
