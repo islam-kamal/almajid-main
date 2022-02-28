@@ -339,6 +339,7 @@ class _OtpState extends State<VerificationCodeScreen>
             _otpTextField(_thirdDigit),
             _otpTextField(_fourthDigit),
           ],
+
         ));
   }
 
