@@ -192,7 +192,7 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
 
   mobile_textfield(){
     return  Directionality(
-        textDirection: MyApp.app_langauge == 'ar' ? TextDirection.ltr : TextDirection.rtl,
+        textDirection: MyApp.app_langauge == 'ar' ? TextDirection.ltr : TextDirection.ltr,
     child: StreamBuilder<String>(
         stream: forgetPassword_bloc.mobile,
         builder: (context, snapshot) {
@@ -203,6 +203,15 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
               ),
               child: Row(
                 children: [
+                  CountryCodePicker(
+                    onChanged: (Object object){
+                      _countryCode=object.toString();
+                      StaticData.country_code = _countryCode;
+                    },
+                    initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
+                    countryFilter: ['SA', 'KW', ],
+                    showFlagDialog: true,
+                  ),
                   Expanded(
                       child: TextFormField(
                           decoration: InputDecoration(
@@ -221,15 +230,7 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                           keyboardType: TextInputType.number
                       )
                   ),
-                  CountryCodePicker(
-                    onChanged: (Object object){
-                      _countryCode=object.toString();
-                      StaticData.country_code = _countryCode;
-                    },
-                    initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
-                    countryFilter: ['SA', 'KW', ],
-                    showFlagDialog: true,
-                  ),
+
                 ],
               )
 

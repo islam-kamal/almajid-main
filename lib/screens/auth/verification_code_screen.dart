@@ -118,7 +118,8 @@ class _OtpState extends State<VerificationCodeScreen>
   Widget build(BuildContext context) {
     _screenSize = MediaQuery.of(context).size;
     number = StaticData.user_mobile_number;
-    return new Scaffold(
+    return new Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+    child:new Scaffold(
         appBar: _getAppbar,
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -127,7 +128,7 @@ class _OtpState extends State<VerificationCodeScreen>
 //        padding: new EdgeInsets.only(bottom: 16.0),
             child: _getInputPart,
           ),
-        ));
+        ) ));
   }
 
   // Returns "Otp custom text field"
@@ -300,18 +301,30 @@ class _OtpState extends State<VerificationCodeScreen>
 
   // Return "Email" label
   get _getEmailLabel {
-    return Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.ltr : TextDirection.ltr,
+    return Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.ltr : TextDirection.rtl,
     child: Padding(
         padding: EdgeInsets.only(
             right: StaticData.get_width(context) * 0.06,
             left: StaticData.get_width(context) * 0.06,
             bottom: StaticData.get_width(context) * 0.06),
-        child: new Text(
-          "${translator.translate("Please type the verification code sent to")} (${user_phone_number()})",
-          textAlign: TextAlign.center,
-          style: new TextStyle(
-              fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w600),
-        ) ));
+        child: Column(
+          children: [
+            Text(
+              "${translator.translate("Please type the verification code sent to")} ",
+              textAlign: TextAlign.center,
+              style: new TextStyle(
+                  fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w600),
+            ),
+            Text(
+              "${translator.translate("(${user_phone_number()})")} ",
+              textAlign: TextAlign.center,
+              textDirection:  MyApp.app_langauge == 'en' ? TextDirection.ltr : TextDirection.rtl,
+              style: new TextStyle(
+                  fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w600),
+            )
+
+          ],
+        )));
   }
 
   // Return "OTP" input field
@@ -375,8 +388,10 @@ class _OtpState extends State<VerificationCodeScreen>
       },
       child: Container(
           width: width(context) * .95,
+          padding: EdgeInsets.symmetric(horizontal: 10,),
+
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MyApp.app_langauge == 'ar'? MainAxisAlignment.start : MainAxisAlignment.end,
             children: [
               customDescriptionText(
                   context: context,
