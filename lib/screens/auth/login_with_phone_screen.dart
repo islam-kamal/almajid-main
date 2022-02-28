@@ -191,7 +191,9 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
   }
 
   mobile_textfield(){
-    return  StreamBuilder<String>(
+    return  Directionality(
+        textDirection: MyApp.app_langauge == 'ar' ? TextDirection.ltr : TextDirection.rtl,
+    child: StreamBuilder<String>(
         stream: forgetPassword_bloc.mobile,
         builder: (context, snapshot) {
           return Container(
@@ -235,8 +237,8 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
 
 
 
-          );
-        });
+         );
+        }));
   }
   LoginUsingPhoneButton({BuildContext context,}) {
     return Container(
