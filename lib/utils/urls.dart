@@ -10,6 +10,7 @@ class Urls {
 */
 
   //production base url
+
   static final String BASE_URL = "https://almajed4oud.com";
   //production admin token
   static final String ADMIN_TOKEN = 'akywvzb51qazebzlzll0nutx3zrry7ao';
