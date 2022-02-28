@@ -301,7 +301,7 @@ class _OtpState extends State<VerificationCodeScreen>
 
   // Return "Email" label
   get _getEmailLabel {
-    return Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.ltr : TextDirection.rtl,
+    return Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.ltr : TextDirection.ltr,
     child: Padding(
         padding: EdgeInsets.only(
             right: StaticData.get_width(context) * 0.06,
@@ -318,7 +318,7 @@ class _OtpState extends State<VerificationCodeScreen>
             Text(
               "${translator.translate("(${user_phone_number()})")} ",
               textAlign: TextAlign.center,
-              textDirection:  MyApp.app_langauge == 'en' ? TextDirection.ltr : TextDirection.rtl,
+              textDirection:  MyApp.app_langauge == 'en' ? TextDirection.ltr : TextDirection.ltr,
               style: new TextStyle(
                   fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w600),
             )
@@ -330,7 +330,7 @@ class _OtpState extends State<VerificationCodeScreen>
   // Return "OTP" input field
   get _getInputField {
     return Padding(
-        padding: EdgeInsets.all(StaticData.get_width(context) * 0.1),
+        padding: EdgeInsets.all(StaticData.get_width(context) * 0.05),
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
