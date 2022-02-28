@@ -300,7 +300,7 @@ class _OtpState extends State<VerificationCodeScreen>
 
   // Return "Email" label
   get _getEmailLabel {
-    return Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.ltr : TextDirection.rtl,
+    return Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.ltr : TextDirection.ltr,
     child: Padding(
         padding: EdgeInsets.only(
             right: StaticData.get_width(context) * 0.06,

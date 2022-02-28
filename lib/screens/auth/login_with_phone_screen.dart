@@ -230,8 +230,6 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                     countryFilter: ['SA', 'KW', ],
                     showFlagDialog: true,
                   ),
-
-
                 ],
               )
 
