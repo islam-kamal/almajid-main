@@ -61,6 +61,8 @@ class OrderRepository {
                 'content-type': 'application/json',
                 'Accept': 'application/json',
               })));
+          print("order response : ${response}");
+
           if (response.statusCode == 200) {
             sharedPreferenceManager.writeData(CachingKey.ORDER_ID, response.data);
             return response.data;
