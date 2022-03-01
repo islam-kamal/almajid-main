@@ -131,7 +131,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                 grandtotal = element.value;
                                               }
                                             });
-                                            print("StaticData.discount_amount : ${discount_amount}");
+                                            // print("StaticData.discount_amount : ${discount_amount}");
                                             return Column(
                                               children: [
                                                 ListView.builder(

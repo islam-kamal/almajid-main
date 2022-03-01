@@ -541,10 +541,10 @@ class _OtpState extends State<VerificationCodeScreen>
     return GestureDetector(
       onTap: otp_code == null
           ? () {
-        print("saddsds**********");
+        // print("saddsds**********");
       }
           : () {
-        print("11111**********");
+        // print("11111**********");
               forgetPassword_bloc.add(checkOtpClick(otp_code: otp_code, route: widget.route));
             },
       child: BlocListener(

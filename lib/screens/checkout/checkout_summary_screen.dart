@@ -488,9 +488,9 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
     setState(() {
       apple_pay_loading = true;
     });
-    debugPrint(paymentResult.toString());
+    // debugPrint(paymentResult.toString());
     final token = json.decode(paymentResult["token"]);
-    debugPrint("after extracted data");
+    // debugPrint("after extracted data");
 
     final Future<http.Response> response =
         payment_repository.getPayfortApplePayValidation(
