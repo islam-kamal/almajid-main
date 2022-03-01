@@ -6,8 +6,7 @@ descriptionAndShareRow({BuildContext context , String description }) {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          padding: EdgeInsets.only(
-              right: width(context) * .05, left: width(context) * .05),
+          padding: EdgeInsets.all(width(context) * .05),
           width: width(context) ,
           child: customDescriptionText(
               context: context,
@@ -25,5 +24,5 @@ descriptionAndShareRow({BuildContext context , String description }) {
 String _parseHtmlString(String htmlString) {
   var document = parse(htmlString);
   String parsedString = parse(document.body.text).documentElement.text;
-  return parsedString;
+  return parsedString.replaceAll('.' ,'\n');
 }

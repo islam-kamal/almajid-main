@@ -13,7 +13,7 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
   ShoppingCartBloc(AppState initialState) : super(initialState);
 
   BehaviorSubject<CartDetailsModel> _cart_details_subject =
-      new BehaviorSubject<CartDetailsModel>();
+  new BehaviorSubject<CartDetailsModel>();
 
   get cart_details_subject {
     return _cart_details_subject;

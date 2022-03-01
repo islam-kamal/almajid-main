@@ -13,7 +13,7 @@ import 'package:almajidoud/screens/checkout/widgets/top_page_indicator.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
-
+import 'dart:io' show Platform;
 class CheckoutPaymentScreen extends StatefulWidget{
   GuestShipmentAddressModel guestShipmentAddressModel;
   CheckoutPaymentScreen({this.guestShipmentAddressModel});
@@ -75,7 +75,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                     context: context,
                     paymentMethods: widget.guestShipmentAddressModel.paymentMethods
                 ),
-                _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments'  ||   _currentIndex ==  'cashondelivery'?
+                _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments'
+                    ||   _currentIndex ==  'cashondelivery' || _currentIndex == 'mestores_applepay' ?
                 Container() :    Directionality(
                   textDirection: TextDirection.ltr,
                   child:  Column(
@@ -167,10 +168,13 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
 
 
                 responsiveSizedBox(context: context, percentageOfHeight: _currentIndex == "stc_pay" ||
-                    _currentIndex == 'tamara_pay_by_instalments' ||   _currentIndex ==  'cashondelivery'? 0.1: .05),
+                    _currentIndex == 'tamara_pay_by_instalments'
+                    ||   _currentIndex ==  'cashondelivery'
+                    || _currentIndex == 'mestores_applepay'? 0.1: .05),
                 GestureDetector(
                   onTap: () {
-                  if(_currentIndex == "stc_pay" || _currentIndex == 'tamara_pay_by_instalments' ||   _currentIndex ==  'cashondelivery') {
+                  if(_currentIndex == "stc_pay" || _currentIndex == 'tamara_pay_by_instalments'
+                      ||   _currentIndex ==  'cashondelivery'  || _currentIndex == 'mestores_applepay') {
                       customAnimatedPushNavigation(context , CheckoutSummaryScreen(
                         guestShipmentAddressModel: widget.guestShipmentAddressModel,
                         payment_method: payment_method_name,
@@ -227,7 +231,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
     var toRemove = [];
     var image;
     paymentMethods.forEach((element) {
-      if(element.code =="aps_fort_vault" || element.code == "mestores_applepay"){
+      if(element.code =="aps_fort_vault" ){
         toRemove.add(element);
       }
 
@@ -235,6 +239,9 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
         if(element.code =="tamara_pay_by_instalments" || element.code == "tamara_pay_later"){
           toRemove.add(element);
         }
+      }
+      if(element.code == "mestores_applepay" && Platform.isAndroid){
+        toRemove.add(element);
       }
     });
     paymentMethods.removeWhere( (e) => toRemove.contains(e));
@@ -244,7 +251,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
         padding: EdgeInsets.only(
             right: width(context) * .05, left: width(context) * .05),
         width: width(context) * .95,
-        height:    _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments' ||   _currentIndex ==  'cashondelivery' ? width(context) * 0.7  :  width(context) * .5,
+        height:    _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments'
+            ||   _currentIndex ==  'cashondelivery' || _currentIndex == 'mestores_applepay' ? width(context) * 0.7  :  width(context) * .5,
         decoration: BoxDecoration(
             color: small_grey,
             borderRadius: BorderRadius.circular(20)),
@@ -275,6 +283,9 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                     break;
                   case 'tap':
                     image = "credit card.png";
+                    break;
+                  case 'mestores_applepay' :
+                    image = "apple pay.png";
                     break;
                 }
 

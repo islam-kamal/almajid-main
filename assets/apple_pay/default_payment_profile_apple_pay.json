@@ -1,0 +1,14 @@
+{
+  "provider": "apple_pay",
+  "data": {
+    "merchantIdentifier": "merchant.com.almajedoud.applepay",
+    "displayName": "Almajed 4 Oud",
+    "merchantCapabilities": ["3DS", "debit", "credit"],
+    "supportedNetworks": ["visa", "mada", "masterCard"],
+    "countryCode": "SA",
+    "currencyCode": "SAR",
+    "requiredBillingContactFields": ["name", "phoneNumber"],
+    "requiredShippingContactFields": [],
+    "shippingMethods": []
+  }
+}

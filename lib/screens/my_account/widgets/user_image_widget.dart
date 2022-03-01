@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:almajidoud/utils/file_export.dart';
 
 userImageWidget(
@@ -51,7 +50,7 @@ userImageWidget(
                   ],
                 ),
               ),
-           /*   Container(
+           Container(
                 padding: EdgeInsets.only(
                     bottom: isLandscape(context)
                         ? 2 * height(context) * .04
@@ -66,30 +65,31 @@ userImageWidget(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    RotatedBox(
-                      quarterTurns: 1,
-                      child: GestureDetector(
-                        onTap: onTapAddImage,
-                        child: Polygon(
-                            sides: 6,
-                            child: Container(
-                                color: Colors.black,
-                                width: 35.0,
-                                height: 35.0,
-                                child: Center(
-                                    child: RotatedBox(
-                                        quarterTurns: 3,
-                                        child: Center(
-                                          child: Icon(Icons.add,
-                                              color: whiteColor),
-                                        )
+          RotatedBox(
+                     quarterTurns: 1,
+                     child: GestureDetector(
+                       onTap: onTapAddImage,
+                       child: Polygon(
+                           sides: 6,
+                           child: Container(
+                               color: Colors.black,
+                               width: 35.0,
+                               height: 35.0,
+                               child: Center(
+                                   child: RotatedBox(
+                                       quarterTurns: 3,
+                                       child: Center(
+                                         child: Icon(Icons.add,
+                                             color: whiteColor),
+                                       )
 
-                                    )))),
-                      ),
-                    ),
+                                   )))),
+                     ),
+                   ),
+                 
                   ],
                 ),
-              ),*/
+              ),
 
             ],
           )),

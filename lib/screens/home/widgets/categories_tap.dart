@@ -92,7 +92,7 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                                 return Container();
 
                             }
-                          ).toList(),
+                            ).toList(),
                           )
                       );
                     }

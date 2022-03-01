@@ -138,6 +138,35 @@ class PaymentRepository {
     }
   }
 
+  Future<http.Response> getPayfortApplePayValidation({
+  var apple_data , var apple_signature , var apple_version , var apple_ephemeralPublicKey , var apple_publicKeyHash,
+    var apple_transactionId , var apple_displayName , var apple_network , var order_id
+})async{
+    try {
+      final Map<String, dynamic> data = {
+        "apple_data" : apple_data,
+        "apple_signature" : apple_signature,
+        "apple_version" : apple_version,
+        "apple_ephemeralPublicKey" :apple_ephemeralPublicKey,
+        "apple_publicKeyHash" : apple_publicKeyHash,
+        "apple_transactionId" : apple_transactionId,
+        "apple_displayName" : apple_displayName,
+        "apple_network" :apple_network,
+        "order_id" : order_id
+      };
+      final serializedData = json.encode(data);
+      final response = await http.post(Uri.parse(Urls.BASE_URL+"/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/apple-pay/validate"),
+          headers: {
+            "content-type": "application/json",
+            "Authorization": 'Bearer ${Urls.ADMIN_TOKEN}'
+          },
+          body: serializedData);
+      return response;
+    } catch (error) {
+      throw (error);
+    }
+
+  }
 
 }
 final payment_repository = PaymentRepository();

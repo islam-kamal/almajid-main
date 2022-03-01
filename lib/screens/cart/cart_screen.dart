@@ -2,7 +2,7 @@ import 'package:almajidoud/Base/Shimmer/shimmer_notification.dart';
 import 'package:almajidoud/Bloc/ShippmentAddress_Bloc/shippment_address_bloc.dart';
 import 'package:almajidoud/Model/CartModel/cart_details_model.dart';
 import 'package:almajidoud/Model/CartModel/cart_details_model.dart'
-    as cart_details_model;
+as cart_details_model;
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/Widgets/cart_screen_app_bar.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
@@ -73,268 +73,268 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
         child: PageContainer(
             child:  Scaffold(
               key: _scaffoldKey,
-      backgroundColor: whiteColor,
-      body: BlocListener<ShipmentAddressBloc,AppState>(
-          bloc: shipmentAddressBloc,
-          listener: (context,state) {
-            if(state is Loading){
-              if(state.indicator == "GetAllAddressesEvent"){
-                _playAnimation();
-              }
+              backgroundColor: whiteColor,
+              body: BlocListener<ShipmentAddressBloc,AppState>(
+                  bloc: shipmentAddressBloc,
+                  listener: (context,state) {
+                    if(state is Loading){
+                      if(state.indicator == "GetAllAddressesEvent"){
+                        _playAnimation();
+                      }
 
-            }
-            else if(state is Done){
-              if(state.indicator == "GetAllAddressesEvent"){
-                _stopAnimation();
-                customAnimatedPushNavigation(context, CheckoutAddressScreen());
-              }
-            }
-            else if(state is ErrorLoading){
-              if(state.indicator == "GetAllAddressesEvent"){
-                _stopAnimation();
-              }
-            }
-          },
-            child:Container(
-          height: height(context),
-          width: width(context),
-          child: Stack(
-            children: [
-              Container(
-                height: height(context),
-                child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        responsiveSizedBox(context: context, percentageOfHeight: .06),
-                        BlocBuilder(
-                          bloc: shoppingCartBloc,
-                          builder: (context, state) {
-                            if (state is Loading) {
-                              return Center(
-                                child: ShimmerNotification(),
-                              );
-                            }
-                            else if (state is Done) {
-                              var data = state.model as CartDetailsModel;
-                              if (data.message?.isEmpty != null ||
-                                  data.items == null || data.items.length == 0) {
-                                return no_data_widget(context: context);
-                              } else {
-                                data.totalSegments.forEach((element) {
-                                  if(element.code == "discount"){
-                                    discount_amount = element.value.toString();
-                                  }else if(element.code == "tax"){
-                                    tax = element.value;
-                                  }else if(element.code == "subtotal"){
-                                    subtotal = element.value;
-                                  }else if(element.code == "grand_total"){
-                                    grandtotal = element.value;
-                                  }
-                                });
-                                print("StaticData.discount_amount : ${discount_amount}");
-                                return Column(
+                    }
+                    else if(state is Done){
+                      if(state.indicator == "GetAllAddressesEvent"){
+                        _stopAnimation();
+                        customAnimatedPushNavigation(context, CheckoutAddressScreen());
+                      }
+                    }
+                    else if(state is ErrorLoading){
+                      if(state.indicator == "GetAllAddressesEvent"){
+                        _stopAnimation();
+                      }
+                    }
+                  },
+                  child:Container(
+                      height: height(context),
+                      width: width(context),
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: height(context),
+                            child: SingleChildScrollView(
+                                child: Column(
                                   children: [
-                                    ListView.builder(
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        itemCount: data.items.length,
-                                        scrollDirection: Axis.vertical,
-                                        itemBuilder: (context, index) {
-
-                                          return Stack(
-                                            children: [
-                                              Column(children: [
-                                                SizedBox(
-                                                  height: width(context) * .002,
-                                                ),
-                                                singleCartItem(
-                                                    context: context,
-                                                    item: data.items[index],
-                                                    image: "${Urls.BASE_URL}/media/catalog/product/cache/089af6965a318f5bf47750f284c40786"+data.items[index].extensionAttributes.productImage
-                                                ),
-                                                SizedBox(
-                                                  height: width(context) * .002,
-                                                ),
-                                              ]),
-                                              positionedRemove(
-                                                  itemId: data.items[index].itemId),
-                                            ],
+                                    responsiveSizedBox(context: context, percentageOfHeight: .06),
+                                    BlocBuilder(
+                                      bloc: shoppingCartBloc,
+                                      builder: (context, state) {
+                                        if (state is Loading) {
+                                          return Center(
+                                            child: ShimmerNotification(),
                                           );
-                                        }),
-                                    responsiveSizedBox(
-                                        context: context, percentageOfHeight: .02),
-                                    divider(context: context),
-                                    PromoCodeWidget(
-                                      scafffoldKey: _scaffoldKey,
-                                    ),
-                                    responsiveSizedBox(context: context, percentageOfHeight: .02),
-                                    divider(context: context),
-                                    responsiveSizedBox(
-                                        context: context, percentageOfHeight: .01),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          customDescriptionText(
-                                              context: context,
-                                              textColor: mainColor,
-                                              text: "Sub Total",
-                                              percentageOfHeight: .018),
-                                          Spacer(),
-                                          customDescriptionText(
-                                              context: context,
-                                              textColor: mainColor,
-                                              text: " ${subtotal} ${MyApp.country_currency} ",
-                                              percentageOfHeight: .018,
-                                              fontWeight: FontWeight.bold),
-                                        ],
-                                      ),
-                                    ),
-                                    discount_amount != ''?Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          customDescriptionText(
-                                              context: context,
-                                              textColor: mainColor,
-                                              text: "Discount",
-                                              percentageOfHeight: .018),
-                                          Spacer(),
-                                          customDescriptionText(
-                                              context: context,
-                                              textColor: mainColor,
-                                              text: " ${discount_amount} ${MyApp.country_currency} ",
-                                              percentageOfHeight: .018,
-                                              fontWeight: FontWeight.bold),
-                                        ],
-                                      ),
-                                    ):Container(),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          customDescriptionText(
-                                              context: context,
-                                              textColor: mainColor,
-                                              text: "TAX(15%)",
-                                              percentageOfHeight: .018),
-                                          Spacer(),
-                                          customDescriptionText(
-                                              context: context,
-                                              textColor: mainColor,
-                                              text: " ${tax} ${MyApp.country_currency} ",
-                                              percentageOfHeight: .018,
-                                              fontWeight: FontWeight.bold),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          customDescriptionText(
-                                              context: context,
-                                              textColor: mainColor,
-                                              text: "Grand Total",
-                                              percentageOfHeight: .022),
-                                          Spacer(),
-                                          customDescriptionText(
-                                              context: context,
-                                              textColor: mainColor,
-                                              text: " ${grandtotal} ${MyApp.country_currency} ",
-                                              percentageOfHeight: .022,
-                                              fontWeight: FontWeight.bold),
-                                        ],
-                                      ),
-                                    ),
+                                        }
+                                        else if (state is Done) {
+                                          var data = state.model as CartDetailsModel;
+                                          if (data.message?.isEmpty != null ||
+                                              data.items == null || data.items.length == 0) {
+                                            return no_data_widget(context: context);
+                                          } else {
+                                            data.totalSegments.forEach((element) {
+                                              if(element.code == "discount"){
+                                                discount_amount = element.value.toString();
+                                              }else if(element.code == "tax"){
+                                                tax = element.value;
+                                              }else if(element.code == "subtotal"){
+                                                subtotal = element.value;
+                                              }else if(element.code == "grand_total"){
+                                                grandtotal = element.value;
+                                              }
+                                            });
+                                            print("StaticData.discount_amount : ${discount_amount}");
+                                            return Column(
+                                              children: [
+                                                ListView.builder(
+                                                    shrinkWrap: true,
+                                                    physics: NeverScrollableScrollPhysics(),
+                                                    itemCount: data.items.length,
+                                                    scrollDirection: Axis.vertical,
+                                                    itemBuilder: (context, index) {
 
-                                    responsiveSizedBox(context: context, percentageOfHeight: .04),
-                                    proceedToCheckoutButton(context: context),
-                                    responsiveSizedBox(
-                                        context: context, percentageOfHeight: .01),
+                                                      return Stack(
+                                                        children: [
+                                                          Column(children: [
+                                                            SizedBox(
+                                                              height: width(context) * .002,
+                                                            ),
+                                                            singleCartItem(
+                                                                context: context,
+                                                                item: data.items[index],
+                                                                image: "${Urls.BASE_URL}/media/catalog/product/cache/089af6965a318f5bf47750f284c40786"+data.items[index].extensionAttributes.productImage
+                                                            ),
+                                                            SizedBox(
+                                                              height: width(context) * .002,
+                                                            ),
+                                                          ]),
+                                                          positionedRemove(
+                                                              itemId: data.items[index].itemId),
+                                                        ],
+                                                      );
+                                                    }),
+                                                responsiveSizedBox(
+                                                    context: context, percentageOfHeight: .02),
+                                                divider(context: context),
+                                                PromoCodeWidget(
+                                                  scafffoldKey: _scaffoldKey,
+                                                ),
+                                                responsiveSizedBox(context: context, percentageOfHeight: .02),
+                                                divider(context: context),
+                                                responsiveSizedBox(
+                                                    context: context, percentageOfHeight: .01),
+                                                Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      customDescriptionText(
+                                                          context: context,
+                                                          textColor: mainColor,
+                                                          text: "Sub Total",
+                                                          percentageOfHeight: .018),
+                                                      Spacer(),
+                                                      customDescriptionText(
+                                                          context: context,
+                                                          textColor: mainColor,
+                                                          text: " ${subtotal} ${MyApp.country_currency} ",
+                                                          percentageOfHeight: .018,
+                                                          fontWeight: FontWeight.bold),
+                                                    ],
+                                                  ),
+                                                ),
+                                                discount_amount != ''?Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      customDescriptionText(
+                                                          context: context,
+                                                          textColor: mainColor,
+                                                          text: "Discount",
+                                                          percentageOfHeight: .018),
+                                                      Spacer(),
+                                                      customDescriptionText(
+                                                          context: context,
+                                                          textColor: mainColor,
+                                                          text: " ${discount_amount} ${MyApp.country_currency} ",
+                                                          percentageOfHeight: .018,
+                                                          fontWeight: FontWeight.bold),
+                                                    ],
+                                                  ),
+                                                ):Container(),
+                                                Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      customDescriptionText(
+                                                          context: context,
+                                                          textColor: mainColor,
+                                                          text: "TAX(15%)",
+                                                          percentageOfHeight: .018),
+                                                      Spacer(),
+                                                      customDescriptionText(
+                                                          context: context,
+                                                          textColor: mainColor,
+                                                          text: " ${tax} ${MyApp.country_currency} ",
+                                                          percentageOfHeight: .018,
+                                                          fontWeight: FontWeight.bold),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      customDescriptionText(
+                                                          context: context,
+                                                          textColor: mainColor,
+                                                          text: "Grand Total",
+                                                          percentageOfHeight: .022),
+                                                      Spacer(),
+                                                      customDescriptionText(
+                                                          context: context,
+                                                          textColor: mainColor,
+                                                          text: " ${grandtotal} ${MyApp.country_currency} ",
+                                                          percentageOfHeight: .022,
+                                                          fontWeight: FontWeight.bold),
+                                                    ],
+                                                  ),
+                                                ),
+
+                                                responsiveSizedBox(context: context, percentageOfHeight: .04),
+                                                proceedToCheckoutButton(context: context),
+                                                responsiveSizedBox(
+                                                    context: context, percentageOfHeight: .01),
+                                              ],
+                                            );
+                                          }
+                                        }
+                                        else if (state is ErrorLoading) {
+                                          if (state.indicator == 'GetCartDetails') {
+                                            if (state.message ==
+                                                "The consumer isn't authorized to access %resources.") {
+                                              return Column(
+                                                children: [
+                                                  responsiveSizedBox(
+                                                      context: context,
+                                                      percentageOfHeight: .03),
+                                                  no_data_widget(
+                                                      context: context,
+                                                      message: state.message,
+                                                      token_status: 'token_expire'),
+                                                ],
+                                              );
+                                            } else {
+                                              return Column(
+                                                children: [
+                                                  responsiveSizedBox(
+                                                      context: context,
+                                                      percentageOfHeight: .03),
+                                                  no_data_widget(context: context),
+                                                ],
+                                              );
+                                            }
+                                          }
+                                        }
+                                        else {
+                                          return Padding(
+                                            padding: EdgeInsets.only(top:  width(context ) * 0.3),
+                                            child: SpinKitFadingCube(
+                                              color: Theme.of(context).primaryColor,
+                                              size: width(context) * 0.1,
+                                            ),
+
+                                          );
+                                        }
+
+                                        return no_data_widget(context: context);
+                                      },
+                                    ),
                                   ],
-                                );
-                              }
-                            }
-                            else if (state is ErrorLoading) {
-                              if (state.indicator == 'GetCartDetails') {
-                                if (state.message ==
-                                    "The consumer isn't authorized to access %resources.") {
-                                  return Column(
-                                    children: [
-                                      responsiveSizedBox(
-                                          context: context,
-                                          percentageOfHeight: .03),
-                                      no_data_widget(
-                                          context: context,
-                                          message: state.message,
-                                          token_status: 'token_expire'),
-                                    ],
-                                  );
-                                } else {
-                                  return Column(
-                                    children: [
-                                      responsiveSizedBox(
-                                          context: context,
-                                          percentageOfHeight: .03),
-                                      no_data_widget(context: context),
-                                    ],
-                                  );
-                                }
-                              }
-                            }
-                            else {
-                              return Padding(
-                                padding: EdgeInsets.only(top:  width(context ) * 0.3),
-                                child: SpinKitFadingCube(
-                                  color: Theme.of(context).primaryColor,
-                                  size: width(context) * 0.1,
-                                ),
-
-                              );
-                            }
-
-                            return no_data_widget(context: context);
-                          },
-                        ),
-                      ],
-                    )),
-              ),
-              Directionality(
-                  textDirection: translator.activeLanguageCode == 'en' ? TextDirection.rtl : TextDirection.ltr,
-
-                  child: Container(
-                    height: height(context),
-                    width: width(context),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CartScreenAppBar(
-                          onTapCategoryDrawer: () {
-                            _scaffoldKey.currentState.openDrawer();
-                          },
-                          right_icon: 'cart',
-                          screen: CustomCircleNavigationBar(
-                            page_index: 2,
+                                )),
                           ),
-                          category_name: translator.translate("Cart"),
-                        ),
-                      ],
-                    ),
-                  ) ),
-            ],
-          ))
-    ),
+                          Directionality(
+                              textDirection: translator.activeLanguageCode == 'en' ? TextDirection.rtl : TextDirection.ltr,
 
-      drawer: SettingsDrawer(
-        node: fieldNode,
-      ),
-    )
-            ));
+                              child: Container(
+                                height: height(context),
+                                width: width(context),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    CartScreenAppBar(
+                                      onTapCategoryDrawer: () {
+                                        _scaffoldKey.currentState.openDrawer();
+                                      },
+                                      right_icon: 'cart',
+                                      screen: CustomCircleNavigationBar(
+                                        page_index: 2,
+                                      ),
+                                      category_name: translator.translate("Cart"),
+                                    ),
+                                  ],
+                                ),
+                              ) ),
+                        ],
+                      ))
+              ),
+
+              drawer: SettingsDrawer(
+                node: fieldNode,
+              ),
+            )
+        ));
   }
 
   proceedToCheckoutButton({BuildContext context}) {
@@ -372,7 +372,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
     for (int i = 1; i < 20; i++) {
       qantity_numbers.add(i.toString());
     }
-     qty =item.qty;
+    qty =item.qty;
     return Directionality(
         textDirection: translator.activeLanguageCode == 'ar'
             ? TextDirection.rtl
@@ -404,18 +404,18 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                             ),
                             Directionality(
                                 textDirection:
-                                    translator.activeLanguageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+                                translator.activeLanguageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
                                 child: Container(
                                   padding: EdgeInsets.only(
                                       right: width(context) * .02,
                                       left: width(context) * .02),
                                   width: width(context) * .6,
-                               //   height: isLandscape(context) ? 2 * height(context) * .17 : height(context) * .17,
+                                  //   height: isLandscape(context) ? 2 * height(context) * .17 : height(context) * .17,
                                   child: Column(
                                     crossAxisAlignment:
-                                        translator.activeLanguageCode == 'ar'
-                                            ? CrossAxisAlignment.start
-                                            : CrossAxisAlignment.start,
+                                    translator.activeLanguageCode == 'ar'
+                                        ? CrossAxisAlignment.start
+                                        : CrossAxisAlignment.start,
                                     children: [
                                       responsiveSizedBox(
                                           context: context,
@@ -436,7 +436,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                 context: context,
                                                 textColor: mainColor,
                                                 text:
-                                                    " ${item.rowTotalInclTax} ${MyApp.country_currency}",
+                                                " ${item.rowTotalInclTax} ${MyApp.country_currency}",
                                                 textAlign: TextAlign.start,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -450,7 +450,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                               context: context,
                                               textColor: mainColor,
                                               text:
-                                                  "${translator.translate("Qty")} : ",
+                                              "${translator.translate("Qty")} : ",
                                               textAlign: TextAlign.start,
                                               fontWeight: FontWeight.bold),
                                           SizedBox(
@@ -552,60 +552,60 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                     minWidth: StaticData.get_width(context) * 0.15,
 
                                                     onPressed: qty <= 1 ? (){} :() async {
-                                                        setState(() {
-                                                          qty--;
-                                                        });
+                                                      setState(() {
+                                                        qty--;
+                                                      });
 
-                                                        final response =
-                                                        await cartRepository.update_product_quantity_cart(
-                                                            item_id: item.itemId, product_quantity: qty);
-                                                        if (response.message != null) {
-                                                          Flushbar(
-                                                            messageText: Row(
-                                                              children: [
-                                                                Container(
-                                                                  width: StaticData
-                                                                      .get_width(
-                                                                      context) *
-                                                                      0.7,
-                                                                  child: Wrap(
-                                                                    children: [
-                                                                      Text(
-                                                                        '${"There is Error"}',
-                                                                        textDirection:
-                                                                        TextDirection
-                                                                            .rtl,
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                            whiteColor),
-                                                                      ),
-                                                                    ],
-                                                                  ),
+                                                      final response =
+                                                      await cartRepository.update_product_quantity_cart(
+                                                          item_id: item.itemId, product_quantity: qty);
+                                                      if (response.message != null) {
+                                                        Flushbar(
+                                                          messageText: Row(
+                                                            children: [
+                                                              Container(
+                                                                width: StaticData
+                                                                    .get_width(
+                                                                    context) *
+                                                                    0.7,
+                                                                child: Wrap(
+                                                                  children: [
+                                                                    Text(
+                                                                      '${"There is Error"}',
+                                                                      textDirection:
+                                                                      TextDirection
+                                                                          .rtl,
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                          whiteColor),
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                                Spacer(),
-                                                                Text(
-                                                                  translator.translate(
-                                                                      "Try Again"),
-                                                                  textDirection:
-                                                                  TextDirection.rtl,
-                                                                  style: TextStyle(
-                                                                      color:
-                                                                      whiteColor),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            flushbarPosition:
-                                                            FlushbarPosition.BOTTOM,
-                                                            backgroundColor: redColor,
-                                                            flushbarStyle:
-                                                            FlushbarStyle.FLOATING,
-                                                            duration:
-                                                            Duration(seconds: 3),
-                                                          )..show(_scaffoldKey
-                                                              .currentState.context);
-                                                        } else {
-                                                          shoppingCartBloc.add(GetCartDetailsEvent());
-                                                        }
+                                                              ),
+                                                              Spacer(),
+                                                              Text(
+                                                                translator.translate(
+                                                                    "Try Again"),
+                                                                textDirection:
+                                                                TextDirection.rtl,
+                                                                style: TextStyle(
+                                                                    color:
+                                                                    whiteColor),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          flushbarPosition:
+                                                          FlushbarPosition.BOTTOM,
+                                                          backgroundColor: redColor,
+                                                          flushbarStyle:
+                                                          FlushbarStyle.FLOATING,
+                                                          duration:
+                                                          Duration(seconds: 3),
+                                                        )..show(_scaffoldKey
+                                                            .currentState.context);
+                                                      } else {
+                                                        shoppingCartBloc.add(GetCartDetailsEvent());
+                                                      }
 
                                                     },
                                                     color: qty <= 1 ? greyColor : whiteColor,
@@ -645,28 +645,28 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
             ? TextDirection.ltr
             : TextDirection.rtl,
         child:  Positioned(
-        top: width(context) * 0.15,
-    right:translator.activeLanguageCode == 'ar'
-    ?  0 : null,
-    left:translator.activeLanguageCode == 'ar'
-    ?  null : 0,
-      child: Container(
-        height: 30,
-        width: 30,
-        child: MaterialButton(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0)),
-            padding: EdgeInsets.all(0.0),
-            color: mainColor,
-            child: Icon(
-              Icons.clear,
-              color: Colors.white,
-            ),
-            onPressed: () => {
+          top: width(context) * 0.15,
+          right:translator.activeLanguageCode == 'ar'
+              ?  0 : null,
+          left:translator.activeLanguageCode == 'ar'
+              ?  null : 0,
+          child: Container(
+            height: 30,
+            width: 30,
+            child: MaterialButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0)),
+                padding: EdgeInsets.all(0.0),
+                color: mainColor,
+                child: Icon(
+                  Icons.clear,
+                  color: Colors.white,
+                ),
+                onPressed: () => {
                   delete_cart_item(cart_item_id: itemId),
                 }),
-      ),
-    )  );
+          ),
+        )  );
   }
 
 

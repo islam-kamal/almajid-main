@@ -19,6 +19,7 @@ class StaticData {
   static bool chosse_address_status = false;
   static String order_address = '';
   static String order_payment_refused_reason = '';
+  static String discount_amount;
 
   //order payment
   static String card_number = "";

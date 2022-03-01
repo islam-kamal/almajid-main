@@ -32,7 +32,7 @@ dependencies:
   custom_switch:
   carousel_pro:
   dotted_border:
-  bottom_personalized_dot_bar:
+ # bottom_personalized_dot_bar:
   localize_and_translate:
   intro_slider:
   flutter_neumorphic:
@@ -78,11 +78,14 @@ dependencies:
   badges: ^2.0.2
   flutter_local_notifications:
   country_code_picker: ^2.0.0
-
+  image_cropper: ^1.5.0
+  pay: ^1.0.5
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+dependency_overrides:
+  flutter_svg: 0.22.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -105,6 +108,7 @@ flutter:
     - assets/icons/
     - assets/langs/
     - assets/flag/
+    - assets/apple_pay/
 
   fonts:
     - family: Cairo

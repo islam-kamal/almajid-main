@@ -29,6 +29,7 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
         yield ErrorLoading(indicator: 'CreateOrder-$quoteId');
       } else {
         var order_id;
+        print("response.toString() : ${response.toString()}");
       await  response.then((value){order_id = value;});
       if(order_id == null){
        // yield ErrorLoading(indicator: 'CreateOrder-$quoteId');
@@ -37,6 +38,7 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
           faield_type: 'PaymentFailed',
 
         ));
+
       }else{
         yield Done(indicator: 'CreateOrder-$quoteId',general_value: order_id);
       }
