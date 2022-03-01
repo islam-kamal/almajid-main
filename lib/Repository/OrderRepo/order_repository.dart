@@ -13,18 +13,18 @@ class OrderRepository {
   Future<String> create_guest_order({BuildContext context}) async {
     Dio dio = new Dio();
     try {
-      await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD).then((value) async {
+    /*  await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD).then((value) async {
         if(value == "mestores_applepay" && Platform.isAndroid){
           customAnimatedPushNavigation(context, CustomCircleNavigationBar());
         }
-        else {
+        else {*/
           final response = await dio.put(
               "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp
                   .app_location}/index.php/rest/V1/guest-carts/${await sharedPreferenceManager
                   .readString(CachingKey.GUEST_CART_QUOTE)}/order",
               data: {
                 "paymentMethod": {
-                  "method": value,
+                  "method": await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD),
                 }
               },
               options: Options(headers: Map<String, String>.from({})));
@@ -35,8 +35,8 @@ class OrderRepository {
             Navigator.pop(context);
             errorDialog(context: context, text: response.data['message']);
           }
-        }
-      });
+     /*   }
+      });*/
     }catch (e) {
     }
   }
@@ -44,16 +44,16 @@ class OrderRepository {
   Future<String> create_client_order({BuildContext context}) async {
     Dio dio = new Dio();
     try {
-      await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD).then((value) async {
+ /*     await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD).then((value) async {
         if(value == "mestores_applepay" && Platform.isAndroid){
           customAnimatedPushNavigation(context, CustomCircleNavigationBar());
         }
-        else{
+        else{*/
           final response = await dio.post(
               "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/carts/mine/payment-information",
               data: {
                 "paymentMethod": {
-                  "method": value,
+                  "method": await sharedPreferenceManager.readString(CachingKey.CHOSSED_PAYMENT_METHOD),
                 }
               },
               options: Options(headers: Map<String, String>.from({
@@ -70,8 +70,8 @@ class OrderRepository {
             Navigator.pop(context);
             errorDialog(context: context, text: response.data['message']);
           }
-        }
-      });
+      /*  }
+      });*/
 
 
     } catch (e) {
