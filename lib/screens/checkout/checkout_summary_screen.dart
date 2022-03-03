@@ -377,9 +377,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
     );
   }
 
-  doneButton({
-    BuildContext context,
-  }) {
+  doneButton({BuildContext context,}) {
     return StaggerAnimation(
       titleButton: translator.translate("Place Order"),
       buttonController: _loginButtonController.view,

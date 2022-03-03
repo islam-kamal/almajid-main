@@ -85,7 +85,7 @@ class ProfileImageState extends State<ProfileImage> {
                     ],
                   ),
                 ),
-                Container(
+              /*  Container(
                   padding: EdgeInsets.only(
                       bottom: isLandscape(context)
                           ? 2 * height(context) * .04
@@ -151,7 +151,7 @@ class ProfileImageState extends State<ProfileImage> {
                                                   //save the path in preference
                                                   sharedPreferenceManager.writeData(CachingKey.PROFILE_IMAGE, filePath);
                                                  Navigator.pop(ctx);
-                                        MyApp.restartApp(context);
+                                 //       MyApp.restartApp(context);
 
                                                 },
                                                 splashColor:
@@ -299,7 +299,7 @@ class ProfileImageState extends State<ProfileImage> {
                       ),
                     ],
                   ),
-                ),
+                ),*/
               ],
             )),
       ],

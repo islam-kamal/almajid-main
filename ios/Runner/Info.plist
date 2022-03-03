@@ -31,9 +31,9 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Get your current location for delivery</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Almajed Oud would like to save photos to your photo gallery</string>
+	<string>Almajed Oud would like to write photos to your photo gallery</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Almajed Oud would like access to your photo gallery</string>
+	<string>Almajed Oud  requires access to the photo library to upload your profile photo</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
