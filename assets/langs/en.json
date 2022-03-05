@@ -285,7 +285,8 @@
   "Gallery" : "Gallery",
   "Remove": "Remove",
   "Input code number" : "Input code number",
-  "There is no enough balance" : "There is not enough balance to complete the transaction"
+  "There is no enough balance" : "There is not enough balance to complete the transaction",
+  "Credit/Debit Card" : "Credit Card"
 }
 
 

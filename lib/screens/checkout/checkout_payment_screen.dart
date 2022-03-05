@@ -14,6 +14,7 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'dart:io' show Platform;
+
 class CheckoutPaymentScreen extends StatefulWidget{
   GuestShipmentAddressModel guestShipmentAddressModel;
   CheckoutPaymentScreen({this.guestShipmentAddressModel});
@@ -59,7 +60,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
       child: PageContainer(
         child: Scaffold(
         key:_drawerKey,
-          backgroundColor: whiteColor,
+          backgroundColor: small_grey,
           body: Directionality(
             textDirection: MyApp.app_langauge =='ar' ? TextDirection.rtl :TextDirection.ltr,
             child: SingleChildScrollView(
@@ -69,15 +70,34 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                 responsiveSizedBox(context: context, percentageOfHeight: .02),
                 topPageIndicator(context: context , isPayment: true  , indicatorWidth: .66),
                 responsiveSizedBox(context: context, percentageOfHeight: .02),
-                pageTitle(context: context, title: "Payment Method"),
+
+                _currentIndex == 'aps_fort_cc' ? Row(
+                  children: [
+                IconButton(icon: Icon(Icons.arrow_back_ios_outlined), onPressed: () {
+                  setState(() {
+                    _currentIndex = null;
+                  });
+                }
+                  ),
+                    Container(
+                      child: customDescriptionText(
+                          context: context,
+                          textColor: mainColor,
+                          textAlign: TextAlign.start,
+                          text: "Credit/Debit Card",
+                          percentageOfHeight: .022,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ) :  pageTitle(context: context ,title: "Payment Method" ),
+
                 responsiveSizedBox(context: context, percentageOfHeight: .02),
-                paymentMethodCard(
+
+                _currentIndex == 'aps_fort_cc' ? Container() :   paymentMethodCard(
                     context: context,
                     paymentMethods: widget.guestShipmentAddressModel.paymentMethods
                 ),
-                _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments'
-                    ||   _currentIndex ==  'cashondelivery' || _currentIndex == 'mestores_applepay' ?
-                Container() :    Directionality(
+               _currentIndex == 'aps_fort_cc' ? Directionality(
                   textDirection: TextDirection.ltr,
                   child:  Column(
                   children: [
@@ -163,14 +183,11 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
                       onCreditCardModelChange: onCreditCardModelChange,
                     ),
                   ],
-                )),
+                )) :  Container(),
 
 
 
-                responsiveSizedBox(context: context, percentageOfHeight: _currentIndex == "stc_pay" ||
-                    _currentIndex == 'tamara_pay_by_instalments'
-                    ||   _currentIndex ==  'cashondelivery'
-                    || _currentIndex == 'mestores_applepay'? 0.1: .05),
+                responsiveSizedBox(context: context, percentageOfHeight:_currentIndex == 'aps_fort_cc' ? 0.05: .1),
                 GestureDetector(
                   onTap: () {
                   if(_currentIndex == "stc_pay" || _currentIndex == 'tamara_pay_by_instalments'
@@ -248,108 +265,104 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>with Ticker
 
 
     return Container(
-        padding: EdgeInsets.only(
-            right: width(context) * .05, left: width(context) * .05),
-        width: width(context) * .95,
-        height:    _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments'
-            ||   _currentIndex ==  'cashondelivery' || _currentIndex == 'mestores_applepay' ? width(context) * 0.7  :  width(context) * .5,
+        padding: EdgeInsets.all(width(context) * .05),
+
+  //      height:    _currentIndex == "stc_pay" ||  _currentIndex == 'tamara_pay_by_instalments' ||   _currentIndex ==  'cashondelivery' || _currentIndex == 'mestores_applepay' ? width(context) * 0.7  :  width(context) * .5,
         decoration: BoxDecoration(
             color: small_grey,
-            borderRadius: BorderRadius.circular(20)),
+           // borderRadius: BorderRadius.circular(20)
+        ),
         child: Center(
-          child: GridView.builder(
-            //scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: paymentMethods.length,
+              child: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: paymentMethods.length,
 
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 20/9,
-            ),
-            itemBuilder: (BuildContext context, int index) {
+                itemBuilder: (BuildContext context, int index) {
 
-                switch(paymentMethods[index].code){
-                  case 'stc_pay':
-                    image = "stc pay.png";
-                    break;
-                  case 'tamara_pay_by_instalments':
-                    image = "tamara.png";
-                    break;
-                  case 'cashondelivery':
-                    image = "cash icon.png";
-                    break;
-                  case 'aps_fort_cc':
-                    image = "credit card.png";
-                    break;
-                  case 'tap':
-                    image = "credit card.png";
-                    break;
-                  case 'mestores_applepay' :
-                    image = "apple pay.png";
-                    break;
-                }
+                  switch(paymentMethods[index].code){
+                    case 'stc_pay':
+                      image = "stc pay.png";
+                      break;
+                    case 'tamara_pay_by_instalments':
+                      image = "tamara.png";
+                      break;
+                    case 'cashondelivery':
+                      image = "cash icon.png";
+                      break;
+                    case 'aps_fort_cc':
+                      image = "credit card.png";
+                      break;
+                    case 'tap':
+                      image = "credit card.png";
+                      break;
+                    case 'mestores_applepay' :
+                      image = "apple pay.png";
+                      break;
+                  }
 
-              return  Container(
-                  child: Theme(
-                      data: Theme.of(context).copyWith(
-                          unselectedWidgetColor: mainColor,
-                          disabledColor: mainColor,
-                      ),
-                      child:RadioListTile(
-                        groupValue: _currentIndex,
-                        contentPadding: const EdgeInsets.all(5.0),
-                        dense: true,
-                        title: Container(
-                            decoration: BoxDecoration(
-                                color: whiteColor,
-                                borderRadius: BorderRadius.circular(15)
-                            ),
-                            child:Row(
+                  return  Column(
+                    children: [
+                      Container(
+                        color: whiteColor,
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            unselectedWidgetColor: mainColor,
+                            disabledColor: mainColor,
+                          ),
+                          child: RadioListTile(
+                            groupValue: _currentIndex,
+                            contentPadding: const EdgeInsets.all(5.0),
+                            dense: true,
+                            title:  Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                    children: [
-                                      Padding(padding: EdgeInsets.all(3),
-                                      child: Image.asset('assets/icons/$image',
-                                        width: width(context) * 0.05,
-                                      ),
-                                      ),
-                                   Container(
-                                    width: width(context) * 0.15,
-                                     child:    Text(
-                                    paymentMethods[index].code == 'tamara_pay_by_instalments'? translator.translate("Tamara") :  paymentMethods[index].code == 'mestores_applepay'? translator.translate("Apple Pay") :  "${paymentMethods[index].title} ",
-                                       maxLines: 2,
-                                       style: TextStyle(
-                                           fontSize: AlmajedFont.secondary_font_size,color: mainColor,fontWeight: FontWeight.w300
-                                       ),
-                                       textAlign: TextAlign.center,
-                                     ),
-                                   )
-                                    ],
-
+                                Text(
+                                  paymentMethods[index].code == 'tamara_pay_by_instalments'? translator.translate("Tamara") :  paymentMethods[index].code == 'mestores_applepay'? translator.translate("Apple Pay") :  "${paymentMethods[index].title} ",
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      fontSize: AlmajedFont.secondary_font_size,color: mainColor,fontWeight: FontWeight.w300
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
 
+                                Padding(
+                                  padding: EdgeInsets.all(3),
+                                  child: Image.asset('assets/icons/$image',
+                                    width: width(context) * 0.08,
+                                  ),
+                                ),
                               ],
-                            ) ),
 
-                        value: paymentMethods[index].code,
-                        activeColor: mainColor,
-                        onChanged: (val) {
-                          setState(() {
-                            sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, paymentMethods[index].code);
-                            payment_method_name =   paymentMethods[index].title;
+                            ),
 
-                            _currentIndex = val;
-                          });
+                            value: paymentMethods[index].code,
+                            activeColor: mainColor,
+                            onChanged: (val) {
+                              setState(() {
+                                sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, paymentMethods[index].code);
+                                payment_method_name =   paymentMethods[index].title;
+
+                                _currentIndex = val;
+                              });
 
 
 
-                        },
-                      )),
+                            },
+                          ),
 
-              );
-            },
-          ),
-        )
+                        ),
+
+                      ),
+                      Container(height: 10,)
+                    ],
+                  );
+                },
+              ),
+            )
+
+
+
 
 
     );

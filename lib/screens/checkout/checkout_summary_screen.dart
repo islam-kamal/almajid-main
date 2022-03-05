@@ -51,11 +51,20 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
   var grand_total;
   var increment_order_id;
   var _paymentItems;
+  Pay _payClient;
   @override
   void initState() {
     getQuote().then((value) => _quoteId = value);
     _loginButtonController = AnimationController(
         duration: const Duration(milliseconds: 3000), vsync: this);
+
+    if(Platform.isIOS){
+      _payClient = Pay.withAssets([
+        'apple_pay/default_payment_profile_apple_pay.json'
+      ]);
+    }
+
+
     super.initState();
   }
 
@@ -87,6 +96,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
 
   @override
   Widget build(BuildContext context) {
+    print("widget.payment_method : ${widget.payment_method}");
     return WillPopScope(
       onWillPop: () async {
         if (_show) {
@@ -108,7 +118,8 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
               if (state.indicator == 'CreateOrder-$_quoteId') {
                 _playAnimation();
               }
-            } else if (state is ErrorLoading) {
+            }
+            else if (state is ErrorLoading) {
               if (state.indicator == 'CreateOrder-$_quoteId') {
                 _stopAnimation();
 
@@ -141,7 +152,8 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                   duration: Duration(seconds: 6),
                 )..show(_drawerKey.currentState.context);
               }
-            } else if (state is Done) {
+            }
+            else if (state is Done) {
               if (state.indicator == 'CreateOrder-$_quoteId') {
                 var data = state.general_value;
                 final Future<http.Response> response =
@@ -296,8 +308,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
             children: [
               checkoutHeader(context: context),
               responsiveSizedBox(context: context, percentageOfHeight: .02),
-              topPageIndicator(
-                  context: context,
+              topPageIndicator(context: context,
                   isPayment: true,
                   isAddress: true,
                   indicatorWidth: 1,
@@ -354,8 +365,8 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
               singleOrderSummaryItem(
                   context: context,
                   title: "Payment Method",
-                  details:
-                      "${widget.payment_method == "Split into 3 payments, without fees with Tamara" ? "Tamara" : widget.payment_method} ",
+                  details: "${widget.payment_method == "Split into 3 payments, without fees with Tamara" ? translator.translate("Tamara")
+                          : widget.payment_method =="Credit Card" ? translator.translate("Credit/Debit Card")  : widget.payment_method} ",
                   guestShipmentAddressModel: widget.guestShipmentAddressModel),
               Container(
                   width: width(context) * .9,
@@ -423,7 +434,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                   ),
                 )
               : Container(
-                  height: width(context) * 0.6,
+                  height: width(context) * 0.45,
                   decoration: BoxDecoration(
                       color: small_grey,
                       borderRadius: BorderRadius.circular(20)),
@@ -431,12 +442,6 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                   child: ListView(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     children: [
-                      Container(
-                        child: const Image(
-                          image: AssetImage('assets/icons/apple pay.png'),
-                          height: 70,
-                        ),
-                      ),
                       Container(
                           width: width(context) * .8,
                           child: Row(
@@ -458,19 +463,48 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                             ],
                           )),
                       SizedBox(height: width(context) * 0.1),
-                      ApplePayButton(
-                        paymentConfigurationAsset:
-                            'apple_pay/default_payment_profile_apple_pay.json',
-                        paymentItems: _paymentItems,
-                        style: ApplePayButtonStyle.black,
-                        type: ApplePayButtonType.buy,
-                        height: width(context) * 0.1,
-                        margin: const EdgeInsets.only(top: 15.0),
-                        onPaymentResult: onApplePayResult,
-                        loadingIndicator: const Center(
-                          child: CircularProgressIndicator(),
-                        ),
+
+                      FutureBuilder<bool>(
+                        future: _payClient.userCanPay(PayProvider.apple_pay),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            if (snapshot.data == true) {
+                              return ApplePayButton(
+                                paymentConfigurationAsset: 'apple_pay/default_payment_profile_apple_pay.json',
+                                paymentItems: _paymentItems,
+                                style: ApplePayButtonStyle.black,
+                                type: ApplePayButtonType.buy,
+                                height: width(context) * 0.1,
+                                margin: const EdgeInsets.only(top: 15.0),
+                                onPaymentResult: onApplePayResult,
+                                loadingIndicator: const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            } else {
+                              return ApplePayButton(
+                                style: ApplePayButtonStyle.black,
+                                type: ApplePayButtonType.setUp,
+                                height: width(context) * 0.1,
+                                margin: const EdgeInsets.only(top: 15.0),
+                                loadingIndicator: const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                                onPressed: (){
+
+                                },
+                              );
+                            }
+                          }
+                          return Center(
+                            child: SpinKitFadingCube(
+                              color: Theme.of(context).primaryColor,
+                              size: 15.0,
+                            ),
+                          );
+                        },
                       ),
+
                       const SizedBox(height: 15)
                     ],
                   ),

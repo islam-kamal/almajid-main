@@ -281,5 +281,6 @@
   "Remove": "حذف",
   "Input code number" : "ادخل رقم الكود",
   "There is no enough balance" : "لا يوجد رصيد كافى لاتمام العملية",
-  "Our Locations" : "فروع الشركة"
+  "Our Locations" : "فروع الشركة",
+  "Credit/Debit Card" : "بطاقة الدفع الائتمانية"
 }

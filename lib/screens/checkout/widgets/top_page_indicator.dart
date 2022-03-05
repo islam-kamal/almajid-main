@@ -23,11 +23,11 @@ topPageIndicator(
               customDescriptionText(
                   context: context,
                   text:"Payment Method",
-                  textColor: isPayment == true ? mainColor : greyColor),
+                  textColor: isPayment == true ? mainColor : old_price_color),
               customDescriptionText(
                   context: context,
                   text: "Summary",
-                  textColor: isSummary == true ? mainColor : greyColor),
+                  textColor: isSummary == true ? mainColor : old_price_color),
             ],
           ),
         ),

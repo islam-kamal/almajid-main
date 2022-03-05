@@ -10,5 +10,10 @@
     "requiredBillingContactFields": ["name", "phoneNumber"],
     "requiredShippingContactFields": [],
     "shippingMethods": []
+  },
+  "merchantInfo": {
+    "merchantName": "Almajed 4 Oud"
   }
 }
+
+
