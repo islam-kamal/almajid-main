@@ -291,7 +291,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                           increment_order_id = extractedData["increment_id"];
                           _paymentItems = [
                             PaymentItem(
-                              label: 'Total',
+                              label: 'Almajed 4 Oud',
                               amount: grand_total.toString(),
                               status: PaymentItemStatus.final_price,
                             )
