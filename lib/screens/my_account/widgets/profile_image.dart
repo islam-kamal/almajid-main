@@ -1,10 +1,7 @@
 import 'dart:io';
 
-import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
-import 'package:almajidoud/screens/my_account/widgets/user_image_widget.dart';
+
 import 'package:almajidoud/utils/file_export.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 
 class ProfileImage extends StatefulWidget {
   @override

@@ -294,6 +294,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                               label: 'Total',
                               amount: grand_total.toString(),
                               status: PaymentItemStatus.final_price,
+
                             )
                           ];
                           break;
