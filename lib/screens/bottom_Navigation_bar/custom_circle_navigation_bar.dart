@@ -100,6 +100,7 @@ List<TabData> getTabsData() {
       icon: Icons.shopping_cart,
       iconSize: 25.0,
     ),
+
     translator.activeLanguageCode == 'en'
         ? TabData(
       icon: Icons.location_on,
@@ -109,6 +110,7 @@ List<TabData> getTabsData() {
       icon: Icons.search,
       iconSize: 25,
     ),
+
     TabData(
       icon: Icons.home,
       iconSize: 25,

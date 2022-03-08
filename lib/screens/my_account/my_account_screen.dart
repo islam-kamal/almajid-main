@@ -4,6 +4,7 @@ import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/Store_Locator/store_locator_screen.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
+import 'package:almajidoud/screens/intro/language_country_screen.dart';
 import 'package:almajidoud/screens/my_account/update_profile.dart';
 import 'package:almajidoud/screens/my_account/widgets/logout_button.dart';
 import 'package:almajidoud/screens/my_account/widgets/single_account_item.dart';
@@ -121,11 +122,15 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 singleAccountItem(
                                     context: context,
                                     iconPath: "assets/icons/language.png",
-                                    text: _currentLang == 'en'?'العربية':'English',
+                                    text:   translator.translate("Change Language"),
                                     isContainMoreIcon: true,
                                     onTap: () {
-                                      final newLang = _currentLang == 'en'?'ar':'en';
-                                      _changeLang(lang: newLang);
+                                /*      final newLang = _currentLang == 'en'?'ar':'en';
+                                      _changeLang(lang: newLang);*/
+                                      customPushNamedNavigation(
+                                          context, LanguageCountryScreen(
+                                        type: 'settings' ,
+                                      ));
                                     }),
 
                                 singleAccountItem(

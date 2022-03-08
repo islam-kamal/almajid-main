@@ -123,7 +123,7 @@ class _MyAppState extends State<MyApp> {
                       dirArabic: "Cairo", dirEnglish: "Cairo")
               ),
               title: 'Al Majed Oud',
-              home: LanguageCountryScreen(),
+              home: SplashScreen(),
               localizationsDelegates: [
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,

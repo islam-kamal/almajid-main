@@ -5,14 +5,18 @@ import 'package:flutter/foundation.dart';
 class Urls {
   static  bool isDebugMode = kDebugMode;
 
+//test BASE_URL
+  static final String BASE_URL = "https://test.almajed4oud.com";
+//test ADMIN_TOKEN
+  static final String ADMIN_TOKEN = 'tda5h42j6mke2q43da55wckmoeynz1n1' ;
 
-  static final String BASE_URL = isDebugMode ? "https://test.almajed4oud.com" : "https://almajed4oud.com";
+/*
 
-  static final String ADMIN_TOKEN = isDebugMode ? 'tda5h42j6mke2q43da55wckmoeynz1n1' : 'akywvzb51qazebzlzll0nutx3zrry7ao';
-
-
-
-
+//production BASE_URL
+  static final String BASE_URL = "https://almajed4oud.com";
+//production ADMIN_TOKEN
+  static final String ADMIN_TOKEN =  'akywvzb51qazebzlzll0nutx3zrry7ao';
+*/
 
 
   static final String SIGN_UP = "/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mobilelogin/account/create";

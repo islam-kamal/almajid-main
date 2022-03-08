@@ -28,7 +28,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
           body: WillPopScope(
             onWillPop: (){
-              customAnimatedPushNavigation(context, CustomCircleNavigationBar(page_index: 4,));
+              customAnimatedPushNavigation(context, CustomCircleNavigationBar(page_index: 3,));
             },
             child: Directionality(
               textDirection: translator.activeLanguageCode =='ar'? TextDirection.rtl : TextDirection.ltr,

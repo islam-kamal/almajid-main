@@ -1,6 +1,10 @@
+import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
+import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/utils/file_export.dart';
-
+import 'dart:ui' as ui;
 class LanguageCountryScreen extends StatefulWidget{
+  String type ;
+  LanguageCountryScreen({this.type});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -12,101 +16,244 @@ class LanguageCountryScreen extends StatefulWidget{
 class LanguageCountryScreenState extends State<LanguageCountryScreen>{
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
+  List<Country> countries = [];
+  var country_name =  MyApp.app_location == 'sa' ?      'Saudi Arabia'
+      : MyApp.app_location == 'uae' ? 'United Arab Emirates': 'kuwait';
+@override
+  void initState() {
+  countries.add(Country(
+    name:  'Saudi Arabia',
+    photo: "assets/flag/saudi.png"
+  ));
+  countries.add(Country(
+      name:  'kuwait',
+      photo:"assets/flag/kuwait.png"
+  ));
+  countries.add(Country(
+      name: "United Arab Emirates",
+      photo: "assets/flag/uae.png"
+  ));
+   if((widget.type == 'settings' ? MyApp.app_langauge  : ui.window.locale.languageCode ) == 'ar'){
+     MyApp.app_langauge = 'ar';
+   }else{
+     MyApp.app_langauge = 'en';
+   }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return NetworkIndicator(
         child: PageContainer(
         child:Scaffold(
-          key: _scaffoldKey,
-          body:     Container(
-            width: width(context),
-            height: height(context),
-            decoration: BoxDecoration(
-              color: small_grey
-            ),
-            child:Padding(
-              padding: EdgeInsets.symmetric(vertical:width(context) * 0.3, horizontal:width(context) * 0.3 ),
-              child: Container(
-
-                child:   Text("Almajed Oud",style: TextStyle(color: mainColor,fontSize: 22,fontWeight: FontWeight.bold),),
-              ),
-            )
-
-          ),
-          bottomSheet: BottomSheet(
-            onClosing: (){
-
-            },
-            backgroundColor:    small_grey,
-            builder: (context){
-              return Container(
-                height: height(context) * 0.55,
+            key: _scaffoldKey,
+            body:     Container(
+                width: width(context),
+                height: height(context),
                 decoration: BoxDecoration(
-
-                    shape: BoxShape.rectangle,
-                    color: whiteColor,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(height(context) * .05),
-                        topLeft: Radius.circular(height(context) * .05))
+                    color: small_grey
                 ),
-                child:Column(
-                  children: [
-                    Expanded(
-                        flex: 1,
-                        child: Center(
-                      child: Text(translator.translate("Select Language" ),style: TextStyle(color: mainColor,fontSize: 14),),
-                    )),
-                    Expanded(
-                        flex: 2,
-                        child: Center(
-                          child: Row(
-                            children: [
+                child:Padding(
+                  padding: EdgeInsets.symmetric(vertical:width(context) * 0.3, horizontal:width(context) * 0.3 ),
+                  child: Container(
 
-                            ],
-                          )
-                        )),
-                    Divider(color: mainColor,),
-                    Expanded(
-                        flex: 1,
-                        child: Center(
-                          child: Text(translator.translate("Select Country" ),style: TextStyle(color: mainColor,fontSize: 14),),
-                        )),
-                    Expanded(
-                        flex: 2,
-                        child: Center(
-                          child: Text(translator.translate("Select Language" ),style: TextStyle(color: mainColor,fontSize: 16),),
-                        )),
-                    Expanded(
-                      flex: 1,
-                      child:    GestureDetector(
-                      onTap: () {
-
-                      },
-                      child: Container(
-                          width: width(context) * .9,
-                          decoration: BoxDecoration(
-                              color: mainColor,
-                              borderRadius: BorderRadius.circular(8)
-                          ),
-                          child: Center(
-                              child: customDescriptionText(
-                                  context: context,
-                                  text: "Continue",
-                                  percentageOfHeight: .025,
-                                  textColor: whiteColor
-                              )
-                          ),
-                          height: isLandscape(context)
-                              ? 2 * height(context) * .065
-                              : height(context) * .065),
-                    ),)
-                  ],
+                    child:   Text(translator.translate("Almajed Oud"),style: TextStyle(color: mainColor,fontSize: 22,fontWeight: FontWeight.bold),),
+                  ),
                 )
-              );
-            },
+
+            ),
+            bottomSheet: BottomSheet(
+              onClosing: (){
+
+              },
+              backgroundColor:    small_grey,
+              builder: (context){
+                return Container(
+                    height: height(context) * 0.55,
+                    decoration: BoxDecoration(
+
+                        shape: BoxShape.rectangle,
+                        color: whiteColor,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(height(context) * .05),
+                            topLeft: Radius.circular(height(context) * .05))
+                    ),
+                    child:Column(
+                      children: [
+                        Expanded(
+                            flex: 1,
+                            child: Center(
+                              child: Text(translator.translate("Select Language" ),style: TextStyle(color: mainColor,fontSize: 14),),
+                            )),
+                        Expanded(
+                            flex: 2,
+                            child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+
+                                        final newLang =  MyApp.app_langauge == 'en'?'ar':'en';
+                                        _changeLang(lang: newLang);
+                                      },
+                                      child: new Container(
+                                        width: width(context) * 0.2,
+                                        height: width(context) * 0.2,
+                                        alignment: Alignment.center,
+                                        decoration: new BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border:  MyApp.app_langauge == 'ar' ? Border.all(color: mainColor,width: 3) : Border.all(color: greyColor,width: 3)
+                                        ),
+                                        child:  new Text("عربى",
+                                          style: new TextStyle(color: mainColor, ),
+                                          textAlign: TextAlign.center,),
+                                      ),
+                                    ),
+                                    SizedBox(width: width(context) * 0.1,),
+                                    InkWell(
+                                      onTap: () {
+
+                                        final newLang =  MyApp.app_langauge == 'en'?'ar':'en';
+                                        _changeLang(lang: newLang);
+                                      },
+                                      child: new Container(
+                                        width: width(context) * 0.2,
+                                        height: width(context) * 0.2,
+                                        alignment: Alignment.center,
+                                        decoration: new BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border:   MyApp.app_langauge == 'ar' ? Border.all(color: greyColor,width: 3) : Border.all(color: mainColor,width: 3)
+                                        ),
+                                        child: new Text("English",
+                                          style: new TextStyle(color: mainColor, ),
+                                          textAlign: TextAlign.center,),// You can add a Icon instead of text also, like below.
+                                      ),
+                                    ),
+                                  ],
+                                )
+                            )),
+                        Divider(color: mainColor,),
+                        Expanded(
+                            flex: 1,
+                            child: Center(
+                              child: Text(translator.translate("Select Country" ),style: TextStyle(color: mainColor,fontSize: 14),),
+                            )),
+                        Expanded(
+                            flex: 3,
+                            child: Center(
+                              child:ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: countries.length,
+                                  itemBuilder: (context,index){
+                                return   Padding(padding: EdgeInsets.all(5),
+                                child: Column(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            country_name = countries[index].name;
+                                            MyApp.app_location = country_name == 'Saudi Arabia' ? 'sa'
+                                                :country_name =="United Arab Emirates" ? 'uae' :  'kw';
+                                            MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
+                                                : MyApp.app_location == 'uae'? translator.translate("AED") :   translator.translate("KWD");
+                                            sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location );
+
+                                              sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
+                                              sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
+                                              sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
+                                              sharedPreferenceManager.removeData(CachingKey.CUSTOMER_ID);
+
+
+                                          });
+                                        },
+                                        child: new Container(
+                                            width: width(context) * 0.2,
+                                            height: width(context) * 0.2,
+                                            alignment: Alignment.center,
+                                            decoration: new BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: country_name == countries[index].name ? Border.all(color: mainColor,width: 3) : Border.all(color: greyColor,width: 3)
+                                            ),
+                                            child:  Image.asset(countries[index].photo)
+                                        ),
+                                      ),
+                                      Text(countries[index].name.tr())
+                                    ],
+                                  ),
+
+                                );
+                              })
+                            )),
+                        Expanded(
+                          flex: 1,
+                          child:    Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                            child: GestureDetector(
+                              onTap: () {
+                                if(widget.type == 'settings'){
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => CustomCircleNavigationBar(
+                                      page_index:  MyApp.app_langauge =='ar' ? 4 : 0,)));
+                                }else{
+                                  cartRepository.create_quote(context: context);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => CustomCircleNavigationBar()),
+                                  );
+                                }
+
+                              },
+                              child: Container(
+                                  width: width(context) * .9,
+                                  decoration: BoxDecoration(
+                                      color: mainColor,
+                                      borderRadius: BorderRadius.circular(8)
+                                  ),
+                                  child: Center(
+                                      child: customDescriptionText(
+                                          context: context,
+                                          text: "Continue",
+                                          percentageOfHeight: .025,
+                                          textColor: whiteColor
+                                      )
+                                  ),
+                                  height: isLandscape(context)
+                                      ? 2 * height(context) * .065
+                                      : height(context) * .065),
+                            ),
+                          ),)
+                      ],
+                    )
+                );
+              },
+            ),
+
           ),
 
-    )));
+        ));
+  }
+  void _changeLang({String lang}) async {
+    setState(() {
+      translator.setNewLanguage(
+        context,
+        newLanguage: '${lang}',
+        remember: true,
+        restart: false,
+      );
+
+    });
+    MyApp.setLocale(context, Locale('${lang}'));
+    sharedPreferenceManager.writeData(CachingKey.APP_LANGUAGE, lang);
+    cartRepository.updateCartLanguage(context: context);
   }
 
+}
+
+class Country{
+  String name;
+  String photo;
+  Country({this.name,this.photo});
 }

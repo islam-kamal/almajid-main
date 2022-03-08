@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/auth/sign_up_screen.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
+import 'package:almajidoud/screens/intro/language_country_screen.dart';
 import 'package:almajidoud/utils/colors.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/material.dart';
@@ -66,11 +67,11 @@ class IntroScreenState extends State<IntroScreen> {
   }
 
   void onDonePress() async{
-    cartRepository.create_quote(context: context);
+   // cartRepository.create_quote(context: context);
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => CustomCircleNavigationBar()),
+      MaterialPageRoute(builder: (context) => LanguageCountryScreen()),
     );
   }
 
