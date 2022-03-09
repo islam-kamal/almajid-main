@@ -74,7 +74,7 @@ class StaggerAnimation extends StatelessWidget {
           color: home_shape? checkout_color?greenColor :Theme.of(context).primaryColor : null,
             border: home_shape ? null: Border.all(color: mainColor),
         borderRadius: home_shape ?
-            const BorderRadius.all(Radius.circular(15.0)) :product_details_page? const BorderRadius.all(Radius.circular(0.0)) : const BorderRadius.all(Radius.circular(0.0)) ,
+        product_details_page? const BorderRadius.all(Radius.circular(0.0)) :  const BorderRadius.all(Radius.circular(15.0)) :product_details_page? const BorderRadius.all(Radius.circular(0.0)) : const BorderRadius.all(Radius.circular(0.0)) ,
         ),
         child: widget != null ? buttonSqueezeanimation.value > 75.0 ? widget  : const CircularProgressIndicator(
           value: null,
