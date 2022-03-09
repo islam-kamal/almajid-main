@@ -3,12 +3,9 @@ import 'package:flutter/scheduler.dart';
 
 checkoutHeader({BuildContext context, String title}) {
   return Container(
-    padding: EdgeInsets.only(
-        right: width(context) * .05,
-        left: width(context) * .05,
-  ),
+
     width: width(context),
-    color: mainColor,
+    color: whiteColor,
     height: isLandscape(context)
         ? 2 * height(context) * .07
         : height(context) * .07,
@@ -22,13 +19,13 @@ checkoutHeader({BuildContext context, String title}) {
           },
           child: Icon(
             Icons.navigate_before,
-            color: whiteColor,
+            color: mainColor,
             size: 30,
           ),
         ),
         customDescriptionText(
             context: context,
-            textColor: whiteColor,
+            textColor: mainColor,
             text: title,
             percentageOfHeight: .025),
         SizedBox()

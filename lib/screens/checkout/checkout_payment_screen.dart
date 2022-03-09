@@ -1,4 +1,5 @@
 import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
+import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/main.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/Payment/Constants.dart';
@@ -249,17 +250,26 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                       flex: 1,
                       child: GestureDetector(
                         onTap: () {
+                          print("_currentIndex : ${_currentIndex}");
                           if (_currentIndex == "stc_pay" ||
                               _currentIndex == 'tamara_pay_by_instalments' ||
                               _currentIndex == 'cashondelivery' ||
                               _currentIndex == 'mestores_applepay') {
-                            customAnimatedPushNavigation(
-                                context,
-                                CheckoutSummaryScreen(
-                                  guestShipmentAddressModel:
-                                      widget.guestShipmentAddressModel,
-                                  payment_method: payment_method_name,
-                                ));
+                            if(_currentIndex == 'mestores_applepay' && Platform.isAndroid){
+                              errorDialog(
+                                context: context,
+                                text: translator.translate("Please select payment method") 
+                              );
+                            }else{
+                              customAnimatedPushNavigation(
+                                  context,
+                                  CheckoutSummaryScreen(
+                                    guestShipmentAddressModel:
+                                    widget.guestShipmentAddressModel,
+                                    payment_method: payment_method_name,
+                                  ));
+                            }
+                          
                           } else {
                             if (formKey.currentState.validate()) {
                               StaticData.card_number =

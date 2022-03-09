@@ -112,7 +112,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                       builder: (context, state) {
                                         if (state is Loading) {
                                           return Padding(
-                                            padding: EdgeInsets.only(top: width(context) * 0.3, ),
+                                            padding: EdgeInsets.only(top: width(context) * 0.4, ),
                                             child: Center(
                                               child: SpinKitFadingCube(
                                                 color: Theme.of(context).primaryColor,

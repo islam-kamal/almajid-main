@@ -1319,63 +1319,73 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
   Widget checkoutAdresssAppBar(){
     return Container(
-      padding: EdgeInsets.only(right: width(context) * .05, left: width(context) * .05,),
       width: width(context),
-      color: mainColor,
-      child: Row(
+      color: whiteColor,
+      alignment: Alignment.center,
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          GestureDetector(
-            onTap: () {
-              if(edit_address_status){
-                setState(() {
-                  edit_address_status = false;
-                });
-              }else{
-                Navigator.of(context).pop();
-              }
+      Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+      child:   Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  if(edit_address_status){
+                    setState(() {
+                      edit_address_status = false;
+                    });
+                  }else{
+                    Navigator.of(context).pop();
+                  }
 
 
-            },
-            child: Icon(
-              Icons.navigate_before,
-              color: whiteColor,
-              size: 30,
-            ),
-          ),
-          customDescriptionText(
-              context: context,
-              textColor: whiteColor,
-              text: "Address",
-              percentageOfHeight: .025),
-          StaticData.vistor_value == 'visitor' ?  SizedBox():      GestureDetector(
-            onTap: () {
-              setState(() {
-                edit_address_status = true;
-                StaticData.chosse_address_status = false;
-                frist_name = null;
-                last_name = null;
-                phone  = null;
-                street = null;
-                addres_city_name = null;
-                address_city_id = null;
-              });
-
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: whiteColor)
+                },
+                child: Icon(
+                  Icons.navigate_before,
+                  color: mainColor,
+                  size: 30,
+                ),
               ),
-              child: Icon(
-                Icons.add,
-                color: whiteColor,
-                size: 25,
-              ),
-            ),
-          )  ,
-        ],
+              customDescriptionText(
+                  context: context,
+                  textColor: mainColor,
+                  text: "Address",
+                  percentageOfHeight: .025),
+              StaticData.vistor_value == 'visitor' ?  SizedBox():      GestureDetector(
+                onTap: () {
+                  setState(() {
+                    edit_address_status = true;
+                    StaticData.chosse_address_status = false;
+                    frist_name = null;
+                    last_name = null;
+                    phone  = null;
+                    street = null;
+                    addres_city_name = null;
+                    address_city_id = null;
+                  });
+
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: mainColor)
+                  ),
+                  child: Icon(
+                    Icons.add,
+                    color: mainColor,
+                    size: 25,
+                  ),
+                ),
+              )  ,
+            ],
+          )
       ),
+          Divider(color: mainColor,thickness: 1,)
+        ],
+      )
     );
   }
 }
