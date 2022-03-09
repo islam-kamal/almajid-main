@@ -255,7 +255,7 @@ class _OtpState extends State<VerificationCodeScreen>
   // Returns "Appbar"
   get _getAppbar {
     return new AppBar(
-      backgroundColor: blackColor,
+      backgroundColor: whiteColor,
       elevation: 0.0,
       title: Text(
         translator.translate("Verification Code"),
@@ -265,7 +265,7 @@ class _OtpState extends State<VerificationCodeScreen>
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
           Icons.arrow_back_ios,
-          color: whiteColor,
+          color: mainColor,
           size: 20,
         ),
         onTap: () {

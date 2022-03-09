@@ -148,7 +148,8 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                   duration: Duration(seconds: 6),
                 )..show(_drawerKey.currentState.context);
               }
-            } else if (state is Done) {
+            }
+            else if (state is Done) {
               if (state.indicator == 'CreateOrder-$_quoteId') {
                 var data = state.general_value;
                 final Future<http.Response> response =
@@ -305,7 +306,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                 children: [
                   Expanded(
                     flex: 1,
-                    child: checkoutHeader(context: context),
+                    child: checkoutHeader(context: context,title: "Summary"),
                   ),
                   Expanded(
                     flex: 1,
@@ -429,7 +430,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
       titleButton: translator.translate("Place Order"),
       buttonController: _loginButtonController.view,
       btn_width: width(context) ,
-      checkout_color: false,
+      checkout_color: true,
       product_details_page:true ,
       onTap: () async {
         await sharedPreferenceManager

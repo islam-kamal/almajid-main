@@ -4,6 +4,7 @@ import 'package:almajidoud/Base/shared_preference_manger.dart';
 import 'package:almajidoud/Repository/AuthenticationRepo/authentication_repository.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/utils/colors.dart';
+import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -145,7 +146,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                 filled: true,
                                 prefixIcon: Icon(Icons.person),
                                 labelText: 'First name',
-                                fillColor: Theme.of(context).backgroundColor),
+                                fillColor: whiteColor
+                            ),
                             onSaved: (value) {
                               _firstName = value;
                             },
@@ -171,7 +173,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                 filled: true,
                                 prefixIcon: Icon(Icons.person),
                                 labelText: 'Last name',
-                                fillColor: Theme.of(context).backgroundColor),
+                                fillColor: whiteColor),
                             onSaved: (value) {
                                _lastName = value;
                             },
@@ -197,14 +199,16 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                 filled: true,
                                 prefixIcon: Icon(Icons.phone_android),
                                 labelText: 'Phone number ex: 00966xxx or 00965xx',
-                                fillColor: Theme.of(context).backgroundColor),
+                                fillColor: whiteColor),
                             onSaved: (value) {
                               _phoneNumber = value;
                             },
                             controller: _phoneController,
                           ),
                         ),
-                        Row(
+              Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child:    Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             SizedBox(width: 10),
@@ -212,39 +216,42 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                 ? CircularProgressIndicator(
 
                             )
-                                : ElevatedButton(
-                                    style: ButtonStyle(
-                                        shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                        side: BorderSide(color: Colors.black12),
+                                : InkWell(
+                                    onTap: _submitForm,
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 20),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(color: mainColor)
                                       ),
-                                    )),
-                                    onPressed: _submitForm,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Update',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 17),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Feather.user,
-                                          size: 18,
-                                        )
-                                      ],
-                                    )),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Update',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                color: mainColor,
+                                                fontSize: 17),
+
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Icon(
+                                            Feather.user,
+                                            size: 18,
+                                            color: mainColor,
+                                          )
+                                        ],
+                                      ),
+                                    )
+                            ),
                             SizedBox(width: 20),
                           ],
                         ),
+              )
                       ],
                     ))
               ],
@@ -256,12 +263,12 @@ class _UpdateProfileState extends State<UpdateProfile> {
   }
 
   Widget leadingWidget() {
-    return BackButton(
+    return IconButton(icon: Icon(Icons.arrow_back_ios),
       color: mainColor,
       onPressed: () {
         Navigator.canPop(context)?Navigator.pop(context):null;
-      },
-    );
+      },);
+
   }
 
   @override

@@ -28,14 +28,14 @@ class _WebViewState extends State<WebView> {
     return Scaffold(
       appBar: widget.appBar ??
           AppBar(
-            backgroundColor: mainColor,
+            backgroundColor: whiteColor,
             elevation: 0.0,
             title: Text(
               translator.translate(widget.title) ?? '',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: mainColor,fontWeight: FontWeight.normal),
             ),
             leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back_ios, color: mainColor,),
                 onPressed: () async {
                   var value = await _controller.canGoBack();
                   if (value) {
@@ -44,6 +44,7 @@ class _WebViewState extends State<WebView> {
                     Navigator.of(context).pop();
                   }
                 }),
+
           ),
       body: Builder(builder: (BuildContext context) {
         return flutter.WebView(

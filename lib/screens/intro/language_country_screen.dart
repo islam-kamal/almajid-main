@@ -43,10 +43,29 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen>{
 
   @override
   Widget build(BuildContext context) {
-    return NetworkIndicator(
+    return WillPopScope(
+      onWillPop: () async {
+        if (widget.type == 'settings') {
+          customAnimatedPushNavigation(context, MyAccountScreen());
+
+        } else {
+          return false;
+        }
+      },
+      child: NetworkIndicator(
         child: PageContainer(
-        child:Scaffold(
+          child:Scaffold(
             key: _scaffoldKey,
+            appBar:  widget.type == 'settings' ?  AppBar(
+              title: Text(translator.translate("Settings"),style: TextStyle(color: Colors.black,fontWeight: FontWeight.normal),),
+              centerTitle: true,
+              backgroundColor: Colors.white,
+              leading: IconButton(icon: Icon(Icons.arrow_back_ios),
+                color: mainColor,
+                onPressed: () {
+                  customAnimatedPushNavigation(context,MyAccountScreen());
+                },),
+            ) : null ,
             body:     Container(
                 width: width(context),
                 height: height(context),
@@ -142,49 +161,49 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen>{
                         Expanded(
                             flex: 3,
                             child: Center(
-                              child:ListView.builder(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: countries.length,
-                                  itemBuilder: (context,index){
-                                return   Padding(padding: EdgeInsets.all(5),
-                                child: Column(
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            country_name = countries[index].name;
-                                            MyApp.app_location = country_name == 'Saudi Arabia' ? 'sa'
-                                                :country_name =="United Arab Emirates" ? 'uae' :  'kw';
-                                            MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
-                                                : MyApp.app_location == 'uae'? translator.translate("AED") :   translator.translate("KWD");
-                                            sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location );
+                                child:ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: countries.length,
+                                    itemBuilder: (context,index){
+                                      return   Padding(padding: EdgeInsets.all(5),
+                                        child: Column(
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  country_name = countries[index].name;
+                                                  MyApp.app_location = country_name == 'Saudi Arabia' ? 'sa'
+                                                      :country_name =="United Arab Emirates" ? 'uae' :  'kw';
+                                                  MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
+                                                      : MyApp.app_location == 'uae'? translator.translate("AED") :   translator.translate("KWD");
+                                                  sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location );
 
-                                              sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
-                                              sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
-                                              sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
-                                              sharedPreferenceManager.removeData(CachingKey.CUSTOMER_ID);
+                                                  sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
+                                                  sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
+                                                  sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
+                                                  sharedPreferenceManager.removeData(CachingKey.CUSTOMER_ID);
 
 
-                                          });
-                                        },
-                                        child: new Container(
-                                            width: width(context) * 0.2,
-                                            height: width(context) * 0.2,
-                                            alignment: Alignment.center,
-                                            decoration: new BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: country_name == countries[index].name ? Border.all(color: mainColor,width: 3) : Border.all(color: greyColor,width: 3)
+                                                });
+                                              },
+                                              child: new Container(
+                                                  width: width(context) * 0.2,
+                                                  height: width(context) * 0.2,
+                                                  alignment: Alignment.center,
+                                                  decoration: new BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      border: country_name == countries[index].name ? Border.all(color: mainColor,width: 3) : Border.all(color: greyColor,width: 3)
+                                                  ),
+                                                  child:  Image.asset(countries[index].photo)
+                                              ),
                                             ),
-                                            child:  Image.asset(countries[index].photo)
+                                            Text(countries[index].name.tr())
+                                          ],
                                         ),
-                                      ),
-                                      Text(countries[index].name.tr())
-                                    ],
-                                  ),
 
-                                );
-                              })
+                                      );
+                                    })
                             )),
                         Expanded(
                           flex: 1,
@@ -196,7 +215,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen>{
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(builder: (context) => CustomCircleNavigationBar(
-                                      page_index:  MyApp.app_langauge =='ar' ? 4 : 0,)));
+                                        page_index:  MyApp.app_langauge =='ar' ? 4 : 0,)));
                                 }else{
                                   cartRepository.create_quote(context: context);
                                   Navigator.push(
@@ -233,7 +252,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen>{
 
           ),
 
-        ));
+        )), );
   }
   void _changeLang({String lang}) async {
     setState(() {

@@ -69,7 +69,8 @@ class GetStartedScreenState extends State<GetStartedScreen>
                     var data = state.model as UserInfoModel;
                     if (state is Loading) {
                       _playAnimation();
-                    } else if (state is ErrorLoading) {
+                    }
+                    else if (state is ErrorLoading) {
                       var data = state.model as UserInfoModel;
                       _stopAnimation();
 
@@ -101,7 +102,8 @@ class GetStartedScreenState extends State<GetStartedScreen>
                         flushbarStyle: FlushbarStyle.FLOATING,
                         duration: Duration(seconds: 6),
                       )..show(_drawerKey.currentState.context);
-                    } else if (state is Done) {
+                    }
+                    else if (state is Done) {
                       _stopAnimation();
                       StaticData.vistor_value = null;
                       cartRepository.check_quote_status().then((value){

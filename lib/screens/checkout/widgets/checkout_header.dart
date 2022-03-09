@@ -29,7 +29,7 @@ checkoutHeader({BuildContext context, String title}) {
         customDescriptionText(
             context: context,
             textColor: whiteColor,
-            text: "Checkout",
+            text: title,
             percentageOfHeight: .025),
         SizedBox()
       ],

@@ -121,7 +121,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
           category_id: StaticData.data['weekly-deal']['id'],
           offset: 1
       ));
-     home_bloc.add(GetTestahelCollectionEvent(
+      home_bloc.add(GetTestahelCollectionEvent(
           category_id: StaticData.data['testahel-collection']['id'],
           offset: 1
       ));
@@ -136,21 +136,21 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
           if (snapshot.hasData) {
             if (snapshot.data.isEmpty) {
               return no_data_widget(
-                context: context,
-                image_status: true
+                  context: context,
+                  image_status: true
               );
             } else {
-             if(widget.type ==  'related products'){
-               snapshot.data.clear();
-               related_product_list.forEach((element) {
-                 snapshot.data.add(element) ;
-               });
-             }
+              if(widget.type ==  'related products'){
+                snapshot.data.clear();
+                related_product_list.forEach((element) {
+                  snapshot.data.add(element) ;
+                });
+              }
               return  Container(
                   width: width(context),
-                 height: isLandscape(context) ? 2 * height(context) * .30 : height(context) * .30,
+                  height: isLandscape(context) ? 2 * height(context) * .30 : height(context) * .30,
                   child: ListView.builder(
-                    shrinkWrap: true,
+                      shrinkWrap: true,
                       itemCount: snapshot.data.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
@@ -314,9 +314,9 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                 instock_status: snapshot.data[index].extensionAttributes.stockItem.isInStock,
                                                 scaffoldKey: widget.homeScaffoldKey,
                                                 btn_height: width(context) * .08,
-                                                btn_width: width(context) * .37,
+                                                btn_width: width(context) * .33,
                                                 text_size: 0.017,
-                                                home_shape: true,
+                                                home_shape: false,
                                                 product_image: product_image,
                                                 product_id:  snapshot.data[index].id,
 

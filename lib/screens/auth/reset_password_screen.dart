@@ -61,7 +61,8 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
               listener: (context, state) {
                 if (state is Loading) {
                   _playAnimation();
-                } else if (state is ErrorLoading) {
+                }
+                else if (state is ErrorLoading) {
                   var data = state.model as ResetPasswordModel;
                   _stopAnimation();
                   Flushbar(
@@ -85,7 +86,8 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
                     flushbarStyle: FlushbarStyle.FLOATING,
                     duration: Duration(seconds: 6),
                   )..show(_drawerKey.currentState.context);
-                } else if (state is Done) {
+                }
+                else if (state is Done) {
                   var data = state.model as ResetPasswordModel;
                   _stopAnimation();
                   Flushbar(

@@ -23,11 +23,11 @@ class StaggerAnimation extends StatelessWidget {
       this.btn_width,
       this.btn_height,
       this.image,
-        this.product_details_page = false,
+      this.product_details_page = false,
       this.widget,
-        this.text_size,
-        this.home_shape= true,
-        this.checkout_color = false,
+      this.text_size,
+      this.home_shape = true,
+      this.checkout_color = false,
       this.isResetScreen})
       : buttonSqueezeanimation = Tween(
           begin: 240.0,
@@ -71,147 +71,193 @@ class StaggerAnimation extends StatelessWidget {
             ? FractionalOffset.center
             : FractionalOffset.bottomRight,
         decoration: BoxDecoration(
-          color: home_shape? checkout_color?greenColor :Theme.of(context).primaryColor : null,
-            border: home_shape ? null: Border.all(color: mainColor),
-        borderRadius: home_shape ?
-        product_details_page? const BorderRadius.all(Radius.circular(0.0)) :  const BorderRadius.all(Radius.circular(15.0)) :product_details_page? const BorderRadius.all(Radius.circular(0.0)) : const BorderRadius.all(Radius.circular(0.0)) ,
+          color: home_shape
+              ? checkout_color
+                  ? greenColor
+                  : Theme.of(context).primaryColor
+              : null,
+          border: home_shape ? null : Border.all(color: mainColor),
+          borderRadius: home_shape
+              ? const BorderRadius.all(Radius.circular(0.0))
+              : product_details_page
+                  ? const BorderRadius.all(Radius.circular(0.0))
+                  : const BorderRadius.all(Radius.circular(5.0)),
         ),
-        child: widget != null ? buttonSqueezeanimation.value > 75.0 ? widget  : const CircularProgressIndicator(
-          value: null,
-          strokeWidth: 1.0,
-          valueColor: AlwaysStoppedAnimation<Color>( whiteColor ),
-        )
-
-            : image != null && titleButton != null ?Container(
-            width: width(context) * .9,
-            decoration: BoxDecoration(
-                color: home_shape ?mainColor : null,
-                borderRadius: BorderRadius.circular(8)),
-            child:  Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.shopping_cart , color: home_shape ?whiteColor : mainColor),
-                SizedBox(width: 10 ) ,
-
-                customDescriptionText(
-                    context: context,
-                    text: "Add To Cart",
-                    percentageOfHeight: text_size,
-
-                    textColor: home_shape ?whiteColor : mainColor) ,
-
-
-              ],),
-            height: isLandscape(context)
-                ? 2 * MediaQuery.of(context).size.height * .065
-                : MediaQuery.of(context).size.height * .065) :
-        buttonSqueezeanimation.value > 75.0
-            ? isResetScreen == null
-                ? Container(
-                    height: isLandscape(context)
-                        ? 2 * StaticData.get_height(context) * .06
-                        : StaticData.get_height(context) * .06,
-                    width: image != null && titleButton != null ? width(context) * .8 : width(context) * .45,
-                    decoration: BoxDecoration(
-                        color:  checkout_color?greenColor :blackColor,
-                        borderRadius: BorderRadius.circular(30)),
-                    child:  Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                        image== null?  customDescriptionText(
-                              context: context,
-                              text: isResetScreen == null
-                                  ? titleButton
-                                  : isResetScreen
-                                      ? "Done"
-                                      : "Send",
-                              textColor: whiteColor) :
-                        Center(child: Image.asset(image , height: isLandscape(context)
-                            ? 2 * StaticData.get_height(context) * .04
-                            : StaticData.get_height(context) * .04),),
-
-                          SizedBox(width: width(context) * .05),
-                          isResetScreen == null
-                              ? Container()
-                              : Container(
-                                  padding: EdgeInsets.all(isLandscape(context)
-                                      ? 2 *
-                                          StaticData.get_height(context) *
-                                          .005
-                                      : StaticData.get_height(context) * .005),
-                                  height: isLandscape(context)
-                                      ? 2 * StaticData.get_height(context) * .08
-                                      : StaticData.get_height(context) * .08,
-                                  width: width(context) * .055,
-                                  decoration: BoxDecoration(
-                                      color: whiteColor,
-                                      shape: BoxShape.circle),
-                                  child: Center(
-                                      child:
-                                          StaticData.get_height(context) == true
-                                              ? Icon(
-                                                  Icons.check,
-                                                  color: blackColor,
-                                                  size: isLandscape(context) ? 2 * StaticData.get_height(context) * .02
-                                                      : StaticData.get_height(context) * .02,
-                                                )
-                                              : Image.asset(
-                                                  "assets/icons/send.png")))
-                        ],
-                      ),
-                    ),
+        child: widget != null
+            ? buttonSqueezeanimation.value > 75.0
+                ? widget
+                : const CircularProgressIndicator(
+                    value: null,
+                    strokeWidth: 1.0,
+                    valueColor: AlwaysStoppedAnimation<Color>(whiteColor),
                   )
-                : Container(
-                    height: isLandscape(context)
-                        ? 2 * StaticData.get_height(context) * .06
-                        : StaticData.get_height(context) * .06,
-                    width: width(context) * .3,
+            : image != null && titleButton != null
+                ? Container(
+                    width: width(context) * .9,
                     decoration: BoxDecoration(
-                        color: blackColor,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          customDescriptionText(
-                              context: context,
-                              text: isResetScreen ? "Done" : "Send",
-                              textColor: whiteColor),
-                          SizedBox(width: width(context) * .03),
-                          Container(
-                              padding: EdgeInsets.all(isLandscape(context)
-                                  ? 2 * StaticData.get_height(context) * .005
-                                  : StaticData.get_height(context) * .005),
-                              height: isLandscape(context)
-                                  ? 2 * StaticData.get_height(context) * .08
-                                  : StaticData.get_height(context) * .08,
-                              width: width(context) * .055,
-                              decoration: BoxDecoration(
-                                  color: whiteColor, shape: BoxShape.circle),
-                              child: Center(
-                                  child: StaticData.get_height(context) == true
-                                      ? Icon(
-                                          Icons.check,
-                                          color: blackColor,
-                                          size: isLandscape(context)
+                        color: home_shape ? mainColor : null,
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.shopping_cart,
+                            color: home_shape ? whiteColor : mainColor),
+                        SizedBox(width: 10),
+                        customDescriptionText(
+                            context: context,
+                            text: "Add To Cart",
+                            percentageOfHeight: text_size,
+                            textColor: home_shape ? whiteColor : mainColor),
+                      ],
+                    ),
+                    height: isLandscape(context)
+                        ? 2 * MediaQuery.of(context).size.height * .065
+                        : MediaQuery.of(context).size.height * .065)
+                : buttonSqueezeanimation.value > 75.0
+                    ? isResetScreen == null
+                        ? Container(
+                            height: isLandscape(context)
+                                ? 2 * StaticData.get_height(context) * .06
+                                : StaticData.get_height(context) * .06,
+                            width: image != null && titleButton != null
+                                ? width(context) * .8
+                                : width(context) * .45,
+                            decoration: BoxDecoration(
+                                color: checkout_color ? greenColor : blackColor,
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  image == null
+                                      ? customDescriptionText(
+                                          context: context,
+                                          text: isResetScreen == null
+                                              ? titleButton
+                                              : isResetScreen
+                                                  ? "Done"
+                                                  : "Send",
+                                          textColor: whiteColor)
+                                      : Center(
+                                          child: Image.asset(image,
+                                              height: isLandscape(context)
+                                                  ? 2 *
+                                                      StaticData.get_height(
+                                                          context) *
+                                                      .04
+                                                  : StaticData.get_height(
+                                                          context) *
+                                                      .04),
+                                        ),
+                                  SizedBox(width: width(context) * .05),
+                                  isResetScreen == null
+                                      ? Container()
+                                      : Container(
+                                          padding: EdgeInsets.all(isLandscape(
+                                                  context)
                                               ? 2 *
                                                   StaticData.get_height(
                                                       context) *
-                                                  .02
+                                                  .005
                                               : StaticData.get_height(context) *
-                                                  .02,
-                                        )
-                                      : Image.asset("assets/icons/send.png")))
-                        ],
+                                                  .005),
+                                          height: isLandscape(context)
+                                              ? 2 *
+                                                  StaticData.get_height(
+                                                      context) *
+                                                  .08
+                                              : StaticData.get_height(context) *
+                                                  .08,
+                                          width: width(context) * .055,
+                                          decoration: BoxDecoration(
+                                              color: whiteColor,
+                                              shape: BoxShape.circle),
+                                          child: Center(
+                                              child: StaticData.get_height(
+                                                          context) ==
+                                                      true
+                                                  ? Icon(
+                                                      Icons.check,
+                                                      color: blackColor,
+                                                      size: isLandscape(context)
+                                                          ? 2 *
+                                                              StaticData
+                                                                  .get_height(
+                                                                      context) *
+                                                              .02
+                                                          : StaticData
+                                                                  .get_height(
+                                                                      context) *
+                                                              .02,
+                                                    )
+                                                  : Image.asset(
+                                                      "assets/icons/send.png")))
+                                ],
+                              ),
+                            ),
+                          )
+                        : Container(
+                            height: isLandscape(context)
+                                ? 2 * StaticData.get_height(context) * .06
+                                : StaticData.get_height(context) * .06,
+                            width: width(context) * .3,
+                            decoration: BoxDecoration(
+                                color: blackColor,
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  customDescriptionText(
+                                      context: context,
+                                      text: isResetScreen ? "Done" : "Send",
+                                      textColor: whiteColor),
+                                  SizedBox(width: width(context) * .03),
+                                  Container(
+                                      padding: EdgeInsets.all(isLandscape(
+                                              context)
+                                          ? 2 *
+                                              StaticData.get_height(context) *
+                                              .005
+                                          : StaticData.get_height(context) *
+                                              .005),
+                                      height: isLandscape(context)
+                                          ? 2 *
+                                              StaticData.get_height(context) *
+                                              .08
+                                          : StaticData.get_height(context) *
+                                              .08,
+                                      width: width(context) * .055,
+                                      decoration: BoxDecoration(
+                                          color: whiteColor,
+                                          shape: BoxShape.circle),
+                                      child: Center(
+                                          child: StaticData.get_height(
+                                                      context) ==
+                                                  true
+                                              ? Icon(
+                                                  Icons.check,
+                                                  color: blackColor,
+                                                  size: isLandscape(context)
+                                                      ? 2 *
+                                                          StaticData.get_height(
+                                                              context) *
+                                                          .02
+                                                      : StaticData.get_height(
+                                                              context) *
+                                                          .02,
+                                                )
+                                              : Image.asset(
+                                                  "assets/icons/send.png")))
+                                ],
+                              ),
+                            ),
+                          )
+                    : const CircularProgressIndicator(
+                        value: null,
+                        strokeWidth: 2.0,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       ),
-                    ),
-                  )
-            : const CircularProgressIndicator(
-                value: null,
-                strokeWidth: 2.0,
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-              ) ,
       ),
     );
   }

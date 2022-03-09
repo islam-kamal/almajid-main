@@ -19,6 +19,7 @@ import 'package:almajidoud/screens/WishList/wishlist_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:almajidoud/screens/my_account/widgets/profile_image.dart';
+
 class MyAccountScreen extends StatefulWidget {
   @override
   _MyAccountScreenState createState() => _MyAccountScreenState();
@@ -121,8 +122,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     }),
                                 singleAccountItem(
                                     context: context,
-                                    iconPath: "assets/icons/language.png",
-                                    text:   translator.translate("Change Language"),
+                                    iconPath: "assets/icons/settings.png",
+                                    text:   translator.translate("Settings"),
                                     isContainMoreIcon: true,
                                     onTap: () {
                                 /*      final newLang = _currentLang == 'en'?'ar':'en';

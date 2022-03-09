@@ -72,7 +72,8 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
       var data = state.model as AuthenticationModel;
       if (state is Loading) {
         _playAnimation();
-      } else if (state is ErrorLoading) {
+      }
+      else if (state is ErrorLoading) {
         var data = state.model as AuthenticationModel;
         _stopAnimation();
         Flushbar(
@@ -104,7 +105,8 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
           duration: Duration(seconds: 3),
         )..show(_drawerKey.currentState.context);
 
-      } else if (state is Done) {
+      }
+      else if (state is Done) {
         _stopAnimation();
         Navigator.pushReplacement(
           context,

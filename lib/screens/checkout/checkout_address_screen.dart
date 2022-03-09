@@ -1139,7 +1139,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       titleButton: translator.translate("Next"),
       buttonController: _loginButtonController.view,
       btn_width: width(context) ,
-      checkout_color: false,
+      checkout_color: true,
         product_details_page :true,
       onTap: () {
     if (_formKey.currentState.validate() ) {
@@ -1346,7 +1346,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
           customDescriptionText(
               context: context,
               textColor: whiteColor,
-              text: "Checkout",
+              text: "Address",
               percentageOfHeight: .025),
           StaticData.vistor_value == 'visitor' ?  SizedBox():      GestureDetector(
             onTap: () {

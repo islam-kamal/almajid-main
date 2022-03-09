@@ -95,13 +95,14 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                       }
                     }
                   },
-                  child:Container(
+                  child: Container(
                       height: height(context),
                       width: width(context),
                       child: Stack(
                         children: [
                           Container(
                             height: height(context),
+                            padding: EdgeInsets.symmetric(vertical: 10),
                             child: SingleChildScrollView(
                                 child: Column(
                                   children: [
@@ -110,8 +111,14 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                       bloc: shoppingCartBloc,
                                       builder: (context, state) {
                                         if (state is Loading) {
-                                          return Center(
-                                            child: ShimmerNotification(),
+                                          return Padding(
+                                            padding: EdgeInsets.only(top: width(context) * 0.3, ),
+                                            child: Center(
+                                              child: SpinKitFadingCube(
+                                                color: Theme.of(context).primaryColor,
+                                                size: width(context) * 0.1,
+                                              ),
+                                            ),
                                           );
                                         }
                                         else if (state is Done) {
@@ -302,11 +309,11 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                       },
                                     ),
                                   ],
-                                )),
+                                )
+                            ),
                           ),
                           Directionality(
                               textDirection: translator.activeLanguageCode == 'en' ? TextDirection.rtl : TextDirection.ltr,
-
                               child: Container(
                                 height: height(context),
                                 width: width(context),
@@ -334,7 +341,8 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                 node: fieldNode,
               ),
             )
-        ));
+        )
+    );
   }
 
   proceedToCheckoutButton({BuildContext context}) {
@@ -365,7 +373,6 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
     } else {
     }
   }
-
 
   singleCartItem({BuildContext context, cart_details_model.Items item,String image}) {
     List<String> qantity_numbers = [];

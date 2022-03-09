@@ -72,9 +72,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                   children: [
                     Expanded(
                       flex: 1,
-                      child: checkoutHeader(context: context),
+                      child: checkoutHeader(context: context,title: "Payment Method"),
                     ),
-                    // responsiveSizedBox(context: context, percentageOfHeight: .02),
                     Expanded(
                       flex: 1,
                       child: Padding(
@@ -117,122 +116,124 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                             flex: 9,
                             child: Directionality(
                                 textDirection: TextDirection.ltr,
-                                child: Column(
-                                  children: [
-                                    CreditCardWidget(
-                                      glassmorphismConfig: useGlassMorphism
-                                          ? Glassmorphism.defaultConfig()
-                                          : null,
-                                      cardNumber: cardNumber,
-                                      expiryDate: expiryDate,
-                                      cardHolderName: cardHolderName,
-                                      cvvCode: cvvCode,
-                                      showBackView: isCvvFocused,
-                                      height: width(context) * 0.5,
-                                      obscureCardNumber: false,
-                                      obscureCardCvv: true,
-                                      isHolderNameVisible: false,
-                                      cardBgColor: greyColor,
-                                      backgroundImage: useBackgroundImage
-                                          ? 'assets/card_bg.png'
-                                          : null,
-                                      isSwipeGestureEnabled: true,
-                                      onCreditCardWidgetChange:
-                                          (CreditCardBrand creditCardBrand) {},
-                                      customCardTypeIcons: <
-                                          CustomCardTypeIcon>[],
-                                    ),
-                                    CreditCardForm(
-                                      formKey: formKey,
-                                      obscureCvv: true,
-                                      obscureNumber: true,
-                                      cardNumber: cardNumber,
-                                      cvvCode: cvvCode,
-                                      isHolderNameVisible: true,
-                                      isCardNumberVisible: true,
-                                      isExpiryDateVisible: true,
-                                      cardHolderName: cardHolderName,
-                                      expiryDate: expiryDate,
-                                      themeColor: Colors.blue,
-                                      textColor: mainColor,
-                                      cardNumberDecoration: InputDecoration(
-                                        labelText:
-                                            translator.translate("Card Number"),
-                                        hintText: 'XXXX XXXX XXXX XXXX',
-                                        hintStyle: const TextStyle(
-                                          color: greyColor,
-                                        ),
-                                        labelStyle:
-                                            const TextStyle(color: mainColor),
-                                        focusedBorder: border,
-                                        alignLabelWithHint: true,
-                                        enabledBorder: border,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      CreditCardWidget(
+                                        glassmorphismConfig: useGlassMorphism
+                                            ? Glassmorphism.defaultConfig()
+                                            : null,
+                                        cardNumber: cardNumber,
+                                        expiryDate: expiryDate,
+                                        cardHolderName: cardHolderName,
+                                        cvvCode: cvvCode,
+                                        showBackView: isCvvFocused,
+                                        height: width(context) * 0.5,
+                                        obscureCardNumber: false,
+                                        obscureCardCvv: true,
+                                        isHolderNameVisible: false,
+                                        cardBgColor: greyColor,
+                                        backgroundImage: useBackgroundImage
+                                            ? 'assets/card_bg.png'
+                                            : null,
+                                        isSwipeGestureEnabled: true,
+                                        onCreditCardWidgetChange:
+                                            (CreditCardBrand creditCardBrand) {},
+                                        customCardTypeIcons: <
+                                            CustomCardTypeIcon>[],
+                                      ),
+                                      CreditCardForm(
+                                        formKey: formKey,
+                                        obscureCvv: true,
+                                        obscureNumber: true,
+                                        cardNumber: cardNumber,
+                                        cvvCode: cvvCode,
+                                        isHolderNameVisible: true,
+                                        isCardNumberVisible: true,
+                                        isExpiryDateVisible: true,
+                                        cardHolderName: cardHolderName,
+                                        expiryDate: expiryDate,
+                                        themeColor: Colors.blue,
+                                        textColor: mainColor,
+                                        cardNumberDecoration: InputDecoration(
+                                          labelText:
+                                          translator.translate("Card Number"),
+                                          hintText: 'XXXX XXXX XXXX XXXX',
+                                          hintStyle: const TextStyle(
+                                            color: greyColor,
+                                          ),
+                                          labelStyle:
+                                          const TextStyle(color: mainColor),
+                                          focusedBorder: border,
+                                          alignLabelWithHint: true,
+                                          enabledBorder: border,
 
-                                        //  hintTextDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr ,
-                                        contentPadding:
-                                            new EdgeInsets.symmetric(
-                                                vertical: 10.0,
-                                                horizontal: 10.0),
+                                          //  hintTextDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr ,
+                                          contentPadding:
+                                          new EdgeInsets.symmetric(
+                                              vertical: 10.0,
+                                              horizontal: 10.0),
+                                        ),
+                                        expiryDateDecoration: InputDecoration(
+                                          hintStyle:
+                                          const TextStyle(color: greyColor),
+                                          labelStyle:
+                                          const TextStyle(color: mainColor),
+                                          focusedBorder: border,
+                                          enabledBorder: border,
+                                          labelText: translator
+                                              .translate("Expired Date"),
+                                          hintText: 'XX/XX',
+                                          hintTextDirection:
+                                          MyApp.app_langauge == 'ar'
+                                              ? TextDirection.rtl
+                                              : TextDirection.ltr,
+                                          contentPadding:
+                                          new EdgeInsets.symmetric(
+                                              vertical: 10.0,
+                                              horizontal: 10.0),
+                                        ),
+                                        cvvCodeDecoration: InputDecoration(
+                                          hintStyle:
+                                          const TextStyle(color: greyColor),
+                                          labelStyle:
+                                          const TextStyle(color: mainColor),
+                                          focusedBorder: border,
+                                          enabledBorder: border,
+                                          labelText: translator.translate("CVV"),
+                                          hintText: 'XXX',
+                                          hintTextDirection:
+                                          MyApp.app_langauge == 'ar'
+                                              ? TextDirection.rtl
+                                              : TextDirection.ltr,
+                                          contentPadding:
+                                          new EdgeInsets.symmetric(
+                                              vertical: 10.0,
+                                              horizontal: 10.0),
+                                        ),
+                                        cardHolderDecoration: InputDecoration(
+                                          hintStyle:
+                                          const TextStyle(color: greyColor),
+                                          labelStyle:
+                                          const TextStyle(color: mainColor),
+                                          focusedBorder: border,
+                                          enabledBorder: border,
+                                          labelText:
+                                          translator.translate("Card Holder"),
+                                          hintTextDirection:
+                                          MyApp.app_langauge == 'ar'
+                                              ? TextDirection.rtl
+                                              : TextDirection.ltr,
+                                          contentPadding:
+                                          new EdgeInsets.symmetric(
+                                              vertical: 10.0,
+                                              horizontal: 10.0),
+                                        ),
+                                        onCreditCardModelChange:
+                                        onCreditCardModelChange,
                                       ),
-                                      expiryDateDecoration: InputDecoration(
-                                        hintStyle:
-                                            const TextStyle(color: greyColor),
-                                        labelStyle:
-                                            const TextStyle(color: mainColor),
-                                        focusedBorder: border,
-                                        enabledBorder: border,
-                                        labelText: translator
-                                            .translate("Expired Date"),
-                                        hintText: 'XX/XX',
-                                        hintTextDirection:
-                                            MyApp.app_langauge == 'ar'
-                                                ? TextDirection.rtl
-                                                : TextDirection.ltr,
-                                        contentPadding:
-                                            new EdgeInsets.symmetric(
-                                                vertical: 10.0,
-                                                horizontal: 10.0),
-                                      ),
-                                      cvvCodeDecoration: InputDecoration(
-                                        hintStyle:
-                                            const TextStyle(color: greyColor),
-                                        labelStyle:
-                                            const TextStyle(color: mainColor),
-                                        focusedBorder: border,
-                                        enabledBorder: border,
-                                        labelText: translator.translate("CVV"),
-                                        hintText: 'XXX',
-                                        hintTextDirection:
-                                            MyApp.app_langauge == 'ar'
-                                                ? TextDirection.rtl
-                                                : TextDirection.ltr,
-                                        contentPadding:
-                                            new EdgeInsets.symmetric(
-                                                vertical: 10.0,
-                                                horizontal: 10.0),
-                                      ),
-                                      cardHolderDecoration: InputDecoration(
-                                        hintStyle:
-                                            const TextStyle(color: greyColor),
-                                        labelStyle:
-                                            const TextStyle(color: mainColor),
-                                        focusedBorder: border,
-                                        enabledBorder: border,
-                                        labelText:
-                                            translator.translate("Card Holder"),
-                                        hintTextDirection:
-                                            MyApp.app_langauge == 'ar'
-                                                ? TextDirection.rtl
-                                                : TextDirection.ltr,
-                                        contentPadding:
-                                            new EdgeInsets.symmetric(
-                                                vertical: 10.0,
-                                                horizontal: 10.0),
-                                      ),
-                                      onCreditCardModelChange:
-                                          onCreditCardModelChange,
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 )))
                         : Expanded(
                             flex: 9,
@@ -281,7 +282,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                           }
                         },
                         child: Container(
-                            decoration: BoxDecoration(color: mainColor),
+                            decoration: BoxDecoration(color: greenColor),
                             child: Center(
                                 child: customDescriptionText(
                                     context: context,
@@ -369,13 +370,11 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          paymentMethods[index].code ==
-                                  'tamara_pay_by_instalments'
+                          paymentMethods[index].code == 'tamara_pay_by_instalments'
                               ? translator.translate("Tamara")
-                              : paymentMethods[index].code ==
-                                      'mestores_applepay'
+                              : paymentMethods[index].code == 'mestores_applepay'
                                   ? translator.translate("Apple Pay")
-                                  : "${paymentMethods[index].title} ",
+                                  : "${paymentMethods[index].title == "Credit Card" ? translator.translate("Credit/Debit Card") : paymentMethods[index].title} ",
                           maxLines: 2,
                           style: TextStyle(
                               fontSize: AlmajedFont.secondary_font_size,

@@ -50,11 +50,13 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                       return Container();
                     } else {
                       _controller = TabController(length: snapshot.data.childrenData.length, vsync: this);
-
+                      snapshot.data.childrenData.forEach((element) {
+                        print("sasd : ${element.name}");
+                      });
                       return Container(
                           width: width(context),
-                          height: isLandscape(context) ? 2 * height(context) * .06 : height(context) * .06,
-                          color: mainColor,
+                          height: isLandscape(context) ? 2 * height(context) * .04: height(context) * .04,
+                          color: whiteColor,
                           child: TabBar(
                             controller: _controller,
                             isScrollable: true,
@@ -73,17 +75,13 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                                     ));
                                   },
                                   child: Container(
-                                    height: width(context) * 0.08,
-                                    padding: EdgeInsets.symmetric(horizontal: 5,vertical: 5),
-                                    decoration: BoxDecoration(
-                                        color: widget.category_name == item.name? whiteColor : mainColor,
-                                        borderRadius: BorderRadius.circular(15)
-                                    ),
+                                    padding: EdgeInsets.symmetric(horizontal: 10),
+
                                     child:Center(
                                       child: customDescriptionText(
                                           context: context,
                                           text: item.name,
-                                          textColor: widget.category_name == item.name? mainColor: whiteColor ,
+                                          textColor: mainColor ,
                                           percentageOfHeight: .015),
                                     ),
                                   ),

@@ -5,9 +5,11 @@ import 'package:almajidoud/utils/file_export.dart';
 topHeader({BuildContext context}) {
   return Container(
     padding: EdgeInsets.only(
-        right: width(context) * .05, left: width(context) * .05,top: width(context) * .0),
+        right: width(context) * .05,
+        left: width(context) * .05,
+        top: width(context) * .0),
     width: width(context),
-    color: mainColor,
+    color: whiteColor,
     height: isLandscape(context)
         ? 2 * height(context) * .07
         : height(context) * .07,
@@ -21,7 +23,7 @@ topHeader({BuildContext context}) {
           },
           child: Icon(
             Icons.navigate_before,
-            color: whiteColor,
+            color: mainColor,
             size: 30,
           ),
         ),
