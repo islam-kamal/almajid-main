@@ -50,9 +50,6 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                       return Container();
                     } else {
                       _controller = TabController(length: snapshot.data.childrenData.length, vsync: this);
-                      snapshot.data.childrenData.forEach((element) {
-                        print("sasd : ${element.name}");
-                      });
                       return Container(
                           width: width(context),
                           height: isLandscape(context) ? 2 * height(context) * .04: height(context) * .04,

@@ -13,7 +13,7 @@ orderBottomButtonsStack({BuildContext context ,var total_payment, var currency, 
           height: isLandscape(context)
               ? 2 * height(context) * .35
               : height(context) * .35,
-          color: mainColor,
+          color: whiteColor,
         ),
         responsiveSizedBox(context: context, percentageOfHeight: .447),
         Row(
@@ -25,23 +25,34 @@ orderBottomButtonsStack({BuildContext context ,var total_payment, var currency, 
               width: width(context) * .6,
               decoration: BoxDecoration(color: whiteColor),
               child: Center(
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     customDescriptionText(
                         context: context,
                         percentageOfHeight: .02,
                         textColor: mainColor,
-                        text: "${translator.translate("Total to pay")} :"),
+                        text: "${translator.translate("Total to pay")} "),
                     SizedBox(
-                      width: 5,
+                      height: 5,
                     ),
-                    customDescriptionText(
-                        context: context,
-                        percentageOfHeight: .02,
-                        textColor: mainColor,
-                        text: " ${total_payment??''} ${currency??''}",
-                        fontWeight: FontWeight.bold)
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       customDescriptionText(
+                           context: context,
+                           percentageOfHeight: .025,
+                           textColor: mainColor,
+                           text: " ${total_payment??''} ",
+                           fontWeight: FontWeight.bold),
+                       customDescriptionText(
+                           context: context,
+                           percentageOfHeight: .02,
+                           textColor: mainColor,
+                           text: " ${MyApp.country_currency??''}",
+                           fontWeight: FontWeight.bold)
+                     ],
+                   )
                   ],
                 ),
               ),
@@ -58,7 +69,7 @@ orderBottomButtonsStack({BuildContext context ,var total_payment, var currency, 
                     ? 2 * height(context) * .08
                     : height(context) * .08,
                 width: width(context) * .4,
-                decoration: BoxDecoration(color: mainColor),
+                decoration: BoxDecoration(color: greenColor),
                 child: Center(
                   child: customDescriptionText(
                       context: context,

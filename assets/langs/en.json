@@ -294,7 +294,17 @@
   "Input code number" : "Input code number",
   "There is no enough balance" : "There is not enough balance to complete the transaction",
   "Credit/Debit Card" : "Credit Card",
-  "Please select payment method" : "Please select payment method to continue your purchase process"
+  "Please select payment method" : "Please select payment method to continue your purchase process",
+  "Delivered Address" : "Delivered Address",
+
+  "-------------------- Orders  Status--------" :"------------------------------",
+  "Delivered" : "Delivered",
+  "Processing" :  "Processing",
+  "Pending" : "Pending",
+  "Canceled" : "Canceled",
+  "New" : "New",
+  "Dispatched" : "Dispatched",
+  "closed" : "closed"
 }
 
 

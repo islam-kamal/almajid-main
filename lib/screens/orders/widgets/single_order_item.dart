@@ -1,4 +1,5 @@
 import 'package:almajidoud/Model/OrderMode/order_model.dart';
+import 'package:almajidoud/Widgets/customWidgets.dart';
 import 'package:almajidoud/custom_widgets/custom_animated_push_navigation.dart';
 import 'package:almajidoud/screens/orders/order_details_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
@@ -122,7 +123,7 @@ singleOrderItem({BuildContext context , OrderItems order ,var order_increment_id
                                         fontWeight: FontWeight.bold),
                                     customDescriptionText(
                                         context: context,
-                                        text: "${order.status}",
+                                        text: "${CustomComponents.order_status(order.status)}",
                                         textColor: Colors.red,
                                         fontWeight: FontWeight.bold)
                                   ],
@@ -143,4 +144,6 @@ singleOrderItem({BuildContext context , OrderItems order ,var order_increment_id
     ],
   );
 }
+
+
 

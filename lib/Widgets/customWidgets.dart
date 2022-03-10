@@ -194,6 +194,33 @@ class CustomComponents{
   }
 */
 
+  static String order_status(String status){
+    print("status : ${status}");
+    print("status : $status");
+    switch(status){
+      case "order_delivered":
+        return translator.translate("Delivered");
+        break;
+      case "processing":
+        return translator.translate("Processing");
+        break;
+      case "pending":
+        return translator.translate("Pending");
+        break;
+      case "canceled":
+        return translator.translate("Canceled");
+        break;
+      case "payfort_fort_new":
+        return translator.translate("New");
+        break;
+      case "ready_to_dispatched":
+        return translator.translate("Dispatched");
+        break;
+      case "closed":
+        return translator.translate("closed");
+        break;
+    }
 
+  }
 
 }

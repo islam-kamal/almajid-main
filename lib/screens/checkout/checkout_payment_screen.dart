@@ -43,11 +43,12 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    _currentIndex = widget.guestShipmentAddressModel.paymentMethods[0].code;
+    _currentIndex = Platform.isAndroid ? widget.guestShipmentAddressModel.paymentMethods[2].code
+         : widget.guestShipmentAddressModel.paymentMethods[0].code;
     sharedPreferenceManager.writeData(
         CachingKey.CHOSSED_PAYMENT_METHOD, _currentIndex);
-    payment_method_name =
-        widget.guestShipmentAddressModel.paymentMethods[0].title;
+    payment_method_name =Platform.isAndroid ? widget.guestShipmentAddressModel.paymentMethods[2].title
+         : widget.guestShipmentAddressModel.paymentMethods[0].title;
     border = OutlineInputBorder(
       borderSide: BorderSide(
         color: Colors.grey.withOpacity(0.7),

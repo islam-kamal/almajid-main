@@ -24,8 +24,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
         textDirection: translator.activeLanguageCode =='ar'? TextDirection.rtl : TextDirection.ltr,
         child:SingleChildScrollView(
         child: Container(
-            height:
-                isLandscape(context) ? 2 * height(context) : height(context),
+            height: isLandscape(context) ? 2 * height(context) : height(context),
             child: Stack(
               children: [
                 orderBottomButtonsStack(

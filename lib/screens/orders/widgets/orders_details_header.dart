@@ -6,13 +6,13 @@ orderDetailsHeader({BuildContext context}){
     child:Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
       GestureDetector(onTap: (){Navigator.of(context).pop();},
-          child: Icon(Icons.arrow_back_ios , color: whiteColor,)) ,
+          child: Icon(Icons.arrow_back_ios , color: mainColor,)) ,
       customDescriptionText(context: context , text: translator.translate("Orders Details") ,
-          textColor: whiteColor , percentageOfHeight: .025) ,
+          textColor: mainColor , percentageOfHeight: .025) ,
       SizedBox()
 
     ],) ,
-    color: mainColor,
+    color: whiteColor,
     width: width(context),height:
   isLandscape(context) ?2*height(context)*.12: height(context)*.12 ,) ;
 

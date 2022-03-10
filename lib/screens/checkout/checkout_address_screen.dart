@@ -5,6 +5,7 @@ import 'package:almajidoud/Model/ShipmentAddressModel/client/address_model.dart'
 import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
 import 'package:almajidoud/Repository/CountriesRepo/countries_repoistory.dart';
 import 'package:almajidoud/Repository/ShippmentAdressRepo/shipment_address_repository.dart';
+import 'package:almajidoud/Widgets/customText.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/screens/checkout/checkout_payment_screen.dart';
 import 'package:almajidoud/screens/checkout/widgets/address_card.dart';
@@ -31,6 +32,8 @@ class CheckoutAddressScreen extends StatefulWidget{
 }
 class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with TickerProviderStateMixin {
   //-------------- get cities -----------------------------
+  var selected_address_id;
+  bool selected_address_status = false;
   var check = true;
   var _currentIndex ;
   var city_id;
@@ -329,6 +332,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
           ),
         );
   }
+
+
   Widget base_checkout_address(){
     return SingleChildScrollView(
       child: Container(
@@ -1142,180 +1147,53 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       checkout_color: true,
         product_details_page :true,
       onTap: () {
-    if (_formKey.currentState.validate() ) {
-      if(addres_city_name == null){
-        errorDialog(
-          context: context,
-          text: translator.translate("City should be mandatory in checkout")
-        );
-      }
-      else{
-        StaticData.order_address = addres_city_name +
-            " , " //use this to show address in CheckoutSummaryScreen
-                "${shipmentAddressBloc.street_controller.value == null
-                ? street
-                : shipmentAddressBloc.street_controller.value }";
-        shipmentAddressBloc.add(
-            GuestAddAdressEvent(context: context)
-        );
-      }
-
-    }
-    else if(frist_name !=null){
-      StaticData.order_address = addres_city_name +
-          " , " //use this to show address in CheckoutSummaryScreen
-              "${shipmentAddressBloc.street_controller.value == null
-              ? street
-              : shipmentAddressBloc.street_controller.value }";
-      shipmentAddressBloc.add(
-          GuestAddAdressEvent(context: context)
-      );
-
-    }else{
-    }
-      },
-    );
-  }
-
-  Widget show_all_avaliable_addresses (){
-    return FutureBuilder<List<AddressModel>>(
-      future: all_addresses,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasData) {
-            if (snapshot.data.length != 0) {
-              return  Directionality(
-                    textDirection: translator.activeLanguageCode == 'ar'?TextDirection.rtl : TextDirection.ltr,
-                    child:   ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(8),
-
-                              child: Directionality(
-                                  textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl :TextDirection.ltr ,
-                                  child: Container(
-                                    width: width(context) * .95,
-                                    padding: EdgeInsets.all( width(context) * .05),
-                                    decoration: BoxDecoration(
-                                        color: small_grey,
-                                        borderRadius: BorderRadius.circular(15),
-                                        border: Border.all(color: blackColor,width: 2)
-                                    ),
-
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                     Expanded(
-                                       flex: 6,
-                                       child:    Column(
-
-                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                       crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-                                       children: [
-                                         Padding(
-                                           padding: EdgeInsets.all( 5),
-                                           child:  Align(
-                                             child:   customDescriptionText(
-                                               context: context,
-                                               textColor: mainColor,
-                                               maxLines: 2,
-                                               text: "${snapshot.data[index].firstname} ${snapshot.data[index].lastname}",
-                                             ),
-                                             alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
-                                           ),
-                                         ),
-                                         Padding(
-                                           padding: EdgeInsets.all( 5),
-                                           child:  Align(
-                                             child:    customDescriptionText(
-                                               context: context,
-                                               textColor: mainColor,
-                                               maxLines: 1,
-                                               text: snapshot.data[index].telephone,
-                                             ),
-                                             alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
-                                           ),
-                                         ),
-                                         Padding(
-                                           padding: EdgeInsets.all( 5),
-                                           child:  Align(
-                                             child:  customDescriptionText(
-                                               context: context,
-                                               textColor: mainColor,
-                                               maxLines: 2,
-                                               text: "${snapshot.data[index].street[0]} , ${snapshot.data[index].region.region}" ,
-
-                                             ),
-                                             alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
-                                           ),
-                                         ),
-
-                                       ],
-                                     ),
-                                     ),
-                                    Expanded(
-                                      flex: 1,
-                                      child:   InkWell(
-                                          onTap: (){
-                                            setState(() {
-                                              edit_address_status = true;
-                                              chossed_address_id = snapshot.data[index].id;
-                                              shipmentAddressBloc.add(AddressDetailsEvent(
-                                                  address_id: snapshot.data[index].id
-                                              ));
-                                              sharedPreferenceManager.writeData(CachingKey.CHOSSED_ADDRESS_ID, chossed_address_id);
-                                              StaticData.chosse_address_status = true;
-
-                                            });
-                                          },
-                                        child: Icon(Icons.edit),
-                                       /*   child: Text(translator.translate( "Edit"),style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),*/
-                                      ))
-                                      ],
-                                    ),
-                                  )
-                              ),
-
-                            ),
-                            // for last element can appear
-                            snapshot.data.length == index ? Container(
-                              height: width(context) ,
-                            ) : Container()
-                          ],
-                        );
-
-                      },
-                    )
-                );
-            } else {
-              return Container(
-                child: Text(
-                    translator.translate("There is no saved addresses")),
+        if(selected_address_id != null){
+          StaticData.order_address = addres_city_name +
+              " , " //use this to show address in CheckoutSummaryScreen
+                  "${shipmentAddressBloc.street_controller.value == null
+                  ? street
+                  : shipmentAddressBloc.street_controller.value }";
+          shipmentAddressBloc.add(
+              GuestAddAdressEvent(context: context)
+          );
+        }else{
+          if (_formKey.currentState.validate() ) {
+            if(addres_city_name == null){
+              errorDialog(
+                  context: context,
+                  text: translator.translate("City should be mandatory in checkout")
               );
             }
-          } else {
-            return Container(
-              child: Text(translator.translate("There is no saved addresses")),
+            else{
+              StaticData.order_address = addres_city_name +
+                  " , " //use this to show address in CheckoutSummaryScreen
+                      "${shipmentAddressBloc.street_controller.value == null
+                      ? street
+                      : shipmentAddressBloc.street_controller.value }";
+              shipmentAddressBloc.add(
+                  GuestAddAdressEvent(context: context)
+              );
+            }
+
+          }
+          else if(frist_name !=null  ){
+            StaticData.order_address = addres_city_name +
+                " , " //use this to show address in CheckoutSummaryScreen
+                    "${shipmentAddressBloc.street_controller.value == null
+                    ? street
+                    : shipmentAddressBloc.street_controller.value }";
+            shipmentAddressBloc.add(
+                GuestAddAdressEvent(context: context)
             );
+
+          }else{
           }
         }
 
-        // By default, show a loading spinner.
-        return Center(
-          child: SpinKitFadingCube(
-            color: Theme.of(context).primaryColor,
-            size: 30.0,
-          ),
-
-        );
       },
     );
   }
+
 
   Widget checkoutAdresssAppBar(){
     return Container(
@@ -1388,6 +1266,179 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       )
     );
   }
+
+
+  Widget show_all_avaliable_addresses (){
+    return FutureBuilder<List<AddressModel>>(
+      future: all_addresses,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            if (snapshot.data.length != 0) {
+              return listViewOfAdressesCards(
+                data: snapshot.data
+              );
+            } else {
+              return Container(
+                child: Text(
+                    translator.translate("There is no saved addresses")),
+              );
+            }
+          } else {
+            return Container(
+              child: Text(translator.translate("There is no saved addresses")),
+            );
+          }
+        }
+
+        // By default, show a loading spinner.
+        return Center(
+          child: SpinKitFadingCube(
+            color: Theme.of(context).primaryColor,
+            size: 30.0,
+          ),
+
+        );
+      },
+    );
+  }
+
+  Widget listViewOfAdressesCards({List<AddressModel> data}) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    return Container(
+        child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: data.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: EdgeInsets.all(width * 0.02),
+                child:  singlePaymentCard(
+                        cardModel: data[index], index: data[index].id)
+              );
+            }));
+  }
+
+
+  Widget singlePaymentCard({AddressModel cardModel, int index}) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    return Directionality(
+      textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl :TextDirection.ltr ,
+      child: Container(
+        width: width * .90,
+        padding: EdgeInsets.all( width * .05),
+        decoration: BoxDecoration(
+            color: selected_address_id == index
+                ? Colors.green.withOpacity(.2)  : small_grey ,
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(color: blackColor,width: 2)
+        ),
+
+        child: Row(
+          children: [
+            Expanded(
+                flex: 1,
+                child: InkWell(
+              onTap: () {
+                setState(() {
+                  selected_address_id = cardModel.id;
+                  selected_address_status = ! selected_address_status;
+                  print("selected_address_id : ${selected_address_id}");
+                  setState(() {
+                    frist_name = cardModel.firstname;
+                    last_name = cardModel.lastname;
+                    phone = cardModel.telephone;
+                    street = cardModel.street[0];
+                    addres_city_name = cardModel.city;
+                    address_city_id = cardModel.regionId;
+                    shipmentAddressBloc.frist_name_controller.value = frist_name;
+                    shipmentAddressBloc.last_name_controller.value = last_name;
+                    shipmentAddressBloc.phone_controller.value = phone;
+                    shipmentAddressBloc.street_controller.value = street;
+                  });
+                });
+              },
+              child: Container(
+                  child: selected_address_id == index
+                      ?Icon(Icons.check_circle,color: greenColor,) : Icon(Icons.check_circle_outline,color: mainColor,)
+              ),
+            )
+            ),
+          Expanded(
+            flex: 4,
+            child:    Column(
+              children: [
+            Padding(
+            padding: EdgeInsets.all( 5),
+            child:  Align(
+              child:   customDescriptionText(
+                context: context,
+                textColor: mainColor,
+                maxLines: 2,
+                text: "${cardModel.firstname} ${cardModel.lastname}",
+              ),
+              alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
+            ),
+          ),
+                Padding(
+                  padding: EdgeInsets.all( 5),
+                  child:  Align(
+                    child:    customDescriptionText(
+                      context: context,
+                      textColor: mainColor,
+                      maxLines: 1,
+                      text: cardModel.telephone,
+                    ),
+                    alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all( 5),
+                  child:  Align(
+                    child:  customDescriptionText(
+                      context: context,
+                      textColor: mainColor,
+                      maxLines: 2,
+                      text: "${cardModel.street[0]} , ${cardModel.region.region}" ,
+
+                    ),
+                    alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
+                  ),
+                ),
+              ],
+            ),
+          ),
+            Expanded(
+                flex: 1,
+                child:   InkWell(
+                  onTap: (){
+                    setState(() {
+                      edit_address_status = true;
+                      chossed_address_id = cardModel.id;
+                      shipmentAddressBloc.add(AddressDetailsEvent(
+                          address_id: cardModel.id
+                      ));
+                      sharedPreferenceManager.writeData(CachingKey.CHOSSED_ADDRESS_ID, chossed_address_id);
+                      StaticData.chosse_address_status = true;
+
+                    });
+                  },
+                  child:  Icon(Icons.edit) ,
+                ))
+
+
+    ],
+        )
+
+
+      ),
+    );
+  }
+
 }
 class Item {
   Item({

@@ -291,5 +291,15 @@
   "There is no enough balance" : "لا يوجد رصيد كافى لاتمام العملية",
   "Our Locations" : "فروع الشركة",
   "Credit/Debit Card" : "بطاقة الدفع الائتمانية",
-  "Please select payment method" : "من فضلك قم باختيار احدى وسائل الدفع لاستكمال عملية الشراء الخاصة بك "
+  "Please select payment method" : "من فضلك قم باختيار احدى وسائل الدفع لاستكمال عملية الشراء الخاصة بك ",
+  "Delivered Address" : "عنوان التوصيل",
+
+  "-------------------- Orders  Status--------" :"------------------------------",
+  "Delivered" : "تم التوصيل",
+  "Processing" :  "قيد التجهيز",
+  "Pending" :  "معلق",
+  "Canceled" :"تم الرفض",
+  "New" : "جديد",
+  "Dispatched" : "فى الطريق",
+  "closed" : "تم الالغاء"
 }
