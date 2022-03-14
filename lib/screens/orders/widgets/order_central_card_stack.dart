@@ -64,7 +64,7 @@ orderCentralCardStack({BuildContext context, OrderItems order_details}) {
 
                             Expanded(
                                 flex:4,
-                                child: Padding(padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Padding(padding: EdgeInsets.symmetric(horizontal: 0),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -78,22 +78,23 @@ orderCentralCardStack({BuildContext context, OrderItems order_details}) {
                                       ),
                                       responsiveSizedBox(context: context, percentageOfHeight: .01),
 
-                                      Row(
-                                        children: [
-                                          customDescriptionText(
-                                              context: context,
-                                              text: "${translator.translate("Quantity")} :   ${order_details.items[index].qtyOrdered} ",
-                                              percentageOfHeight: .020),
-                                          SizedBox(width: width(context) *0.04,),
-                                          customDescriptionText(
-                                              context: context,
-                                              text:
-                                              "${translator.translate("price")} : ${order_details.items[index].baseRowTotal} ${order_details.orderCurrencyCode}",
-                                              percentageOfHeight: .020,
-                                              fontWeight: FontWeight.normal),
+                                         Row(
+                                           children: [
+                                             customDescriptionText(
+                                                 context: context,
+                                                 text: "${translator.translate("Quantity")} :   ${order_details.items[index].qtyOrdered} ",
+                                                 percentageOfHeight: .020),
+                                             SizedBox(width: width(context) *0.04,),
+                                             customDescriptionText(
+                                                 context: context,
+                                                 text:
+                                                 "${translator.translate("price")} : ${order_details.items[index].baseRowTotal} ${order_details.orderCurrencyCode}",
+                                                 percentageOfHeight: .020,
+                                                 fontWeight: FontWeight.normal),
 
-                                        ],
-                                      ),
+                                           ],
+                                         ),
+
 
                                     ],
                                   ),)
