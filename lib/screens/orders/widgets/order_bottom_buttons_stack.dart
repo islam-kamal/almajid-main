@@ -1,8 +1,12 @@
+/*
 import 'package:almajidoud/Repository/OrderRepo/order_repository.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/orders/widgets/orders_details_header.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 orderBottomButtonsStack({BuildContext context ,var total_payment, var currency, var order_id}) {
+  bool reoder_loading = false;
+
   return Container(
     height: isLandscape(context) ? 2 * height(context) : height(context),
     child: Column(
@@ -19,11 +23,10 @@ orderBottomButtonsStack({BuildContext context ,var total_payment, var currency, 
         Row(
           children: [
             Container(
-              height: isLandscape(context)
-                  ? 2 * height(context) * .08
-                  : height(context) * .08,
-              width: width(context) * .6,
-              decoration: BoxDecoration(color: whiteColor),
+              height: isLandscape(context) ? 2 * height(context) * .08 : height(context) * .08,
+              width: width(context) * .5,
+              decoration: BoxDecoration(color: whiteColor,
+              border: Border.all(color: mainColor)),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -59,16 +62,22 @@ orderBottomButtonsStack({BuildContext context ,var total_payment, var currency, 
             ),
             InkWell(
               onTap: (){
+                reoder_loading = true;
                 orderRepository.re_order(
                   context: context,
                   order_id:order_id
-                );
+                ).whenComplete(() {
+                  reoder_loading = false;
+                });
               },
-              child: Container(
-                height: isLandscape(context)
-                    ? 2 * height(context) * .08
-                    : height(context) * .08,
-                width: width(context) * .4,
+              child: reoder_loading ? Center(
+                child: SpinKitFadingCube(
+                  color: Theme.of(context).primaryColor,
+                  size: width(context) * 0.1,
+                ),
+              ) : Container(
+                height: isLandscape(context) ? 2 * height(context) * .08 : height(context) * .08,
+                width: width(context) * .5,
                 decoration: BoxDecoration(color: greenColor),
                 child: Center(
                   child: customDescriptionText(
@@ -85,3 +94,4 @@ orderBottomButtonsStack({BuildContext context ,var total_payment, var currency, 
     ),
   );
 }
+*/

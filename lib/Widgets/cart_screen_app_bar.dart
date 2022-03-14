@@ -37,15 +37,13 @@ class CartScreenAppBarState extends State<CartScreenAppBar> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10,),
-        alignment: Alignment.center,
         width: width(context),
         color: whiteColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
         Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5,vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
         child:      Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

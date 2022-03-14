@@ -12,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,10 +23,10 @@ class StcVerificationCodeScreen extends StatefulWidget {
   final String paymentReference;
   const StcVerificationCodeScreen(
       {Key key,
-      this.user_phone,
-      this.route,
-      this.OtpReference,
-      this.paymentReference})
+        this.user_phone,
+        this.route,
+        this.OtpReference,
+        this.paymentReference})
       : super(key: key);
 
   @override
@@ -40,7 +41,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
   var otp_code;
   final int time = 180;
   AnimationController _controller;
- bool _isLoading = false;
+  bool _isLoading = false;
   // Variables
   Size _screenSize;
   int _currentDigit;
@@ -101,14 +102,14 @@ class _OtpState extends State<StcVerificationCodeScreen>
     super.initState();
     user_phone_number();
     _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: time))
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.dismissed) {
-              setState(() {
-                _hideResendButton = !_hideResendButton;
-              });
-            }
+    AnimationController(vsync: this, duration: Duration(seconds: time))
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.dismissed) {
+          setState(() {
+            _hideResendButton = !_hideResendButton;
           });
+        }
+      });
     _controller.reverse(
         from: _controller.value == 0.0 ? 1.0 : _controller.value);
     _startCountdown();
@@ -121,19 +122,19 @@ class _OtpState extends State<StcVerificationCodeScreen>
     _screenSize = MediaQuery.of(context).size;
     number = StaticData.user_mobile_number;
     return new Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr,
-    child:Scaffold(
-      key: _drawerKey,
-        appBar: _getAppbar,
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Directionality(
-            textDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr,
-            child: new Container(
-              width: _screenSize.width,
-              child: _getInputPart,
-            ),
-          )
-        ) ));
+        child:Scaffold(
+            key: _drawerKey,
+            appBar: _getAppbar,
+            backgroundColor: Colors.white,
+            body: SingleChildScrollView(
+                child: Directionality(
+                  textDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+                  child: new Container(
+                    width: _screenSize.width,
+                    child: _getInputPart,
+                  ),
+                )
+            ) ));
   }
 
   // Returns "Otp custom text field"
@@ -146,11 +147,10 @@ class _OtpState extends State<StcVerificationCodeScreen>
         digit != null ? digit.toString() : "",
         style: new TextStyle(
           fontSize: 30.0,
-          color: whiteColor,
+          color: mainColor,
         ),
       ),
       decoration: BoxDecoration(
-          color: digit != null ? blackColor : greyColor,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: Colors.black,
@@ -177,7 +177,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
               label,
               style: new TextStyle(
                 fontSize: 30.0,
-                color: whiteColor,
+                color: mainColor,
               ),
             ),
           ),
@@ -275,17 +275,17 @@ class _OtpState extends State<StcVerificationCodeScreen>
   // Returns "Appbar"
   get _getAppbar {
     return new AppBar(
-      backgroundColor: blackColor,
+      backgroundColor: whiteColor,
       elevation: 0.0,
       title: Text(
         translator.translate("Verification Code"),
-        style: TextStyle(color: whiteColor),
+        style: TextStyle(color: mainColor),
       ),
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
           Icons.arrow_back_ios,
-          color: whiteColor,
+          color: mainColor,
           size: 20,
         ),
         onTap: () {
@@ -316,13 +316,13 @@ class _OtpState extends State<StcVerificationCodeScreen>
             padding: EdgeInsets.all(StaticData.get_width(context) * 0.02),
             child: Column(
               children: [
-                 Text(
+                Text(
                   "${translator.translate("Please type the verification code sent to")} ",
                   textAlign: TextAlign.center,
                   style: new TextStyle(
                       fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w600),
                 ),
-                 Text(
+                Text(
                   "${translator.translate("(${user_phone_number()})")} ",
                   textAlign: TextAlign.center,
                   textDirection:  MyApp.app_langauge == 'en' ? TextDirection.ltr : TextDirection.rtl,
@@ -333,7 +333,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
               ],
             )
 
-          ));
+        ));
   }
 
   // Return "OTP" input field
@@ -361,35 +361,37 @@ class _OtpState extends State<StcVerificationCodeScreen>
       children: <Widget>[
         _getVerificationCodeLabel,
         _getEmailLabel,
-       // _getInputField,
-       Padding(
-         padding: EdgeInsets.symmetric(vertical: width(context) * 0.06),
-       child: Align(
-         alignment: Alignment.center,
-         child:  Container(
-             width: width(context)*.7,height: height(context)*.06,
-             child: TextField(
-                 controller: controller,
-                 textAlign: TextAlign.center,
-                 enabled: false,
-                 decoration: InputDecoration(
-                   hintText: translator.translate("Input code number"),
-                   hintStyle: TextStyle(
-                       color:  old_price_color ,
-                       fontWeight: FontWeight.bold,
-                       fontSize:  isLandscape(context)   ? 2* height(context)*.018 :height(context)*.018),
-                   filled: true,fillColor: whiteColor,
-                   enabledBorder: OutlineInputBorder(
-                       borderRadius: BorderRadius.circular(3),
-                       borderSide: BorderSide(color: blackColor)),
-                   focusedBorder: OutlineInputBorder(
-                       borderRadius: BorderRadius.circular(3),
-                       borderSide: BorderSide(color: blackColor)),
-                   border: OutlineInputBorder(
-                       borderRadius: BorderRadius.circular(3),
-                       borderSide: BorderSide(color: blackColor)),
-                 ))),
-       ),),
+        // _getInputField,
+      Padding(
+          padding: EdgeInsets.symmetric(vertical: width(context) * 0.06),
+          child: Align(
+            alignment: Alignment.center,
+            child:  Container(
+                width: width(context)*.7,height: height(context)*.06,
+                child: TextField(
+                    controller: controller,
+                    textAlign: TextAlign.center,
+                    enabled: false,
+                    decoration: InputDecoration(
+                      hintText: translator.translate("Input code number"),
+                      hintStyle: TextStyle(
+                          color:  old_price_color ,
+                          fontWeight: FontWeight.bold,
+                          fontSize:  isLandscape(context)   ? 2* height(context)*.018 :height(context)*.018),
+                      filled: true,fillColor: whiteColor,
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(3),
+                          borderSide: BorderSide(color: blackColor)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(3),
+                          borderSide: BorderSide(color: blackColor)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(3),
+                          borderSide: BorderSide(color: blackColor)),
+                    ),
+
+                )),
+          ),),
         _hideResendButton ? _getTimerText : _getResendButton,
         _getOtpKeyboard
       ],
@@ -546,7 +548,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
                             _otpKeyboardActionButton(
                                 label: new Icon(
                                   Icons.backspace,
-                                  color: whiteColor,
+                                  color: mainColor,
                                 ),
                                 onPressed: () {
                                   setState(() {
@@ -575,7 +577,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
           ),
           width: width(context),
           decoration: BoxDecoration(
-              color: blackColor,
+              color: whiteColor,
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(200), topLeft: Radius.circular(200))),
         ));
@@ -627,7 +629,8 @@ class _OtpState extends State<StcVerificationCodeScreen>
                 });
               }
               _isLoading = false;
-            } else if (state is ErrorLoading) {
+            }
+            else if (state is ErrorLoading) {
               if (state.indicator == 'CreateOrder-${StaticData.vistor_value == 'visitor'? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
                   :await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}') {
                 _stopAnimation();
@@ -669,8 +672,11 @@ class _OtpState extends State<StcVerificationCodeScreen>
             }
           },
           child:_isLoading
-              ? CircularProgressIndicator(
-            backgroundColor: whiteColor,
+              ?  Center(
+            child: SpinKitFadingCube(
+              color: Theme.of(context).primaryColor,
+              size: 25.0,
+            ),
           )
 
               : Directionality(
@@ -679,7 +685,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
                   : TextDirection.ltr,
               child: Container(
                 decoration: BoxDecoration(
-                    color: otp_code ==null ?mainColor :greenColor, borderRadius: BorderRadius.circular(5)),
+                    color: otp_code ==null ?whiteColor :mainColor, borderRadius: BorderRadius.circular(5)),
                 padding: EdgeInsets.only(
                     right: width(context) * .0, left: width(context) * .02),
                 child: Row(
@@ -688,7 +694,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
                     customDescriptionText(
                         context: context,
                         text: "Confirm",
-                        textColor: otp_code ==null ?mainColor :whiteColor,
+                        textColor: whiteColor,
                         percentageOfHeight: .025),
                   ],
                 ),

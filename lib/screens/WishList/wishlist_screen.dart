@@ -29,6 +29,8 @@ class _WishListScreenState extends State<WishListScreen> {
   List<String> gallery = new List<String>();
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   var product_image;
+  var percentage;
+
   @override
   void initState() {
     wishlist_bloc.add(getAllWishList_click());
@@ -63,7 +65,8 @@ class _WishListScreenState extends State<WishListScreen> {
                         right_icon: 'cart',
                         category_name: translator.translate("WishList"),
                         screen: CustomCircleNavigationBar(
-                          page_index: translator.activeLanguageCode == 'ar' ? 4 : 0,
+                          page_index:
+                              translator.activeLanguageCode == 'ar' ? 4 : 0,
                         ),
                       ),
                       Container(
@@ -75,13 +78,16 @@ class _WishListScreenState extends State<WishListScreen> {
                               SliverAppBar(
                                 automaticallyImplyLeading: false,
                                 leading: null,
-                                expandedHeight: isLandscape(context) ? 2 * height(context) * .2 : height(context) * .2,
+                                expandedHeight: isLandscape(context)
+                                    ? 2 * height(context) * .2
+                                    : height(context) * .2,
                                 floating: false,
                                 backgroundColor: whiteColor,
                                 elevation: 0,
                                 pinned: false,
                                 flexibleSpace: FlexibleSpaceBar(
-                                  background: HomeSlider(gallery: StaticData.slider),
+                                  background:
+                                      HomeSlider(gallery: StaticData.slider),
                                 ),
                               )
                             ];
@@ -103,8 +109,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                     child: CircularProgressIndicator(),
                                   );
                                 }
-                              } 
-                              else if (state is Done) {
+                              } else if (state is Done) {
                                 if (state.indicator == 'get_fav') {
                                   var data = state.model as GetAllWishListModel;
                                   if (data.items == null ||
@@ -120,11 +125,16 @@ class _WishListScreenState extends State<WishListScreen> {
                                           } else {
                                             return ListView.builder(
                                                 shrinkWrap: true,
-                                                itemCount: snapshot.data.itemsCount,
+                                                itemCount:
+                                                    snapshot.data.itemsCount,
                                                 itemBuilder: (context, index) {
-                                                  snapshot.data.items[index].product.customAttributes.forEach((element) {
-                                                    if (element.attributeCode == 'thumbnail') {
-                                                      product_image = element.value;
+                                                  snapshot.data.items[index]
+                                                      .product.customAttributes
+                                                      .forEach((element) {
+                                                    if (element.attributeCode ==
+                                                        'thumbnail') {
+                                                      product_image =
+                                                          element.value;
                                                     }
                                                   });
                                                   String special_price;
@@ -166,33 +176,21 @@ class _WishListScreenState extends State<WishListScreen> {
                                                           element.value;
                                                     }
                                                   });
-                                                  if (startDate == null ||
-                                                      endDate == null) {
-                                                    new_price = null;
+                                                  if (startDate == null || endDate == null) {
+                                                    new_price = minimal_price;
+                                                    if(double.parse(minimal_price) < double.parse( snapshot.data.items[index].product.price.toString()))
+                                                      percentage = (1 - (double.parse(minimal_price)  /  snapshot.data.items[index].product.price) )* 100;
+
                                                   } else {
-                                                    if (StaticData
-                                                            .isCurrentDateInRange(
-                                                                startDate,
-                                                                endDate) &&
-                                                        double.parse(
-                                                                special_price) <=
-                                                            double.parse(
-                                                                minimal_price) &&
-                                                        double.parse(
-                                                                    special_price)
-                                                                .toStringAsFixed(
-                                                                    2) !=
-                                                            snapshot
-                                                                .data
-                                                                .items[index]
-                                                                .product
-                                                                .price) {
+                                                    if (StaticData.isCurrentDateInRange(startDate, endDate) &&
+                                                        double.parse(special_price) <=double.parse(minimal_price) &&
+                                                        double.parse(special_price).toStringAsFixed(2) !=
+                                                            snapshot.data.items[index].product.price) {
                                                       new_price = special_price;
-                                                    } else if (double.parse(
-                                                            special_price) >
-                                                        double.parse(
-                                                            minimal_price)) {
+                                                      percentage = (1 - (double.parse(new_price)  / snapshot.data.items[index].product.price) )* 100;
+                                                    } else if (double.parse(special_price) > double.parse(minimal_price)) {
                                                       new_price = minimal_price;
+                                                      percentage = (1 - (double.parse(new_price)  / snapshot.data.items[index].product.price) )* 100;
                                                     } else {
                                                       new_price = null;
                                                     }
@@ -203,7 +201,13 @@ class _WishListScreenState extends State<WishListScreen> {
                                                         customAnimatedPushNavigation(
                                                             context,
                                                             ProductDetailsScreen(
-                                                              product_id: snapshot.data.items[index].product.id,
+                                                              product_id:
+                                                                  snapshot
+                                                                      .data
+                                                                      .items[
+                                                                          index]
+                                                                      .product
+                                                                      .id,
                                                             ));
                                                       },
                                                       child: Stack(
@@ -215,20 +219,39 @@ class _WishListScreenState extends State<WishListScreen> {
                                                           children: [
                                                             Column(
                                                               children: [
-                                                                responsiveSizedBox(context: context, percentageOfHeight: .02),
+                                                                responsiveSizedBox(
+                                                                    context:
+                                                                        context,
+                                                                    percentageOfHeight:
+                                                                        .02),
                                                                 Neumorphic(
                                                                     child: Container(
                                                                         width: width(context) * .95,
                                                                         child: Row(
                                                                           children: [
-                                                                            Container(
-                                                                              margin: EdgeInsets.only(right: 3, left: 3),
-                                                                              height: isLandscape(context) ? 2 * height(context) * .14 : height(context) * .14,
-                                                                              width: StaticData.get_width(context) * .3,
-                                                                              decoration: BoxDecoration(color: backGroundColor,
-                                                                                  borderRadius: BorderRadius.circular(15),
-                                                                                  image: DecorationImage(image: NetworkImage("${Urls.BASE_URL}/pub/media/catalog/product/${product_image}"), fit: BoxFit.fill)),
-                                                                            ),
+                                                                            Stack(
+                                                                              children: [
+                                                                                Container(
+                                                                                  margin: EdgeInsets.only(right: 3, left: 3),
+                                                                                  height: isLandscape(context) ? 2 * height(context) * .14 : height(context) * .14,
+                                                                                  width: StaticData.get_width(context) * .3,
+                                                                                  decoration: BoxDecoration(
+                                                                                      color: backGroundColor, borderRadius: BorderRadius.circular(15),
+                                                                                      image: DecorationImage(image: NetworkImage("${Urls.BASE_URL}/pub/media/catalog/product/${product_image}"),
+                                                                                          fit: BoxFit.fill)),
+                                                                                ),
+                                                                                percentage== null ? Container():    Container(
+                                                                                  width: width(context) * 0.15,
+                                                                                  decoration: BoxDecoration(
+                                                                                      color: greyColor,
+                                                                                      borderRadius: BorderRadius.circular(5)
+                                                                                  ),
+
+                                                                                  child: Text("${percentage.round()} %",style: TextStyle(color: mainColor),textAlign: TextAlign.center,),
+                                                                                ),
+                                                                              ],
+                                                                            )
+                                                                           ,
                                                                             Directionality(
                                                                               textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.ltr : TextDirection.rtl,
                                                                               child: Container(
@@ -366,8 +389,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                     flushbarStyle: FlushbarStyle.FLOATING,
                                   ).show(_scaffoldKey.currentState.context);
                                 }
-                              } 
-                              else if (state is ErrorLoading) {
+                              } else if (state is ErrorLoading) {
                                 if (state.indicator == 'get_fav') {
                                   return no_data_widget(context: context);
                                 } else if (state.indicator == 'remove_fav') {
@@ -420,7 +442,7 @@ class _WishListScreenState extends State<WishListScreen> {
             ? TextDirection.ltr
             : TextDirection.rtl,
         child: Positioned(
-          top: width(context) * 0.15,
+          top: width(context) * 0.20,
           right: translator.activeLanguageCode == 'ar' ? 0 : null,
           left: translator.activeLanguageCode == 'ar' ? null : 0,
           child: Container(

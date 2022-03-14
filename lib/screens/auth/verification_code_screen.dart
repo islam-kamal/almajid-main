@@ -141,11 +141,11 @@ class _OtpState extends State<VerificationCodeScreen>
         digit != null ? digit.toString() : "",
         style: new TextStyle(
           fontSize: 30.0,
-          color: whiteColor,
+          color: mainColor,
         ),
       ),
       decoration: BoxDecoration(
-          color: digit != null ? blackColor : greyColor,
+          color: digit != null ? whiteColor : greyColor,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: Colors.black,
@@ -172,7 +172,7 @@ class _OtpState extends State<VerificationCodeScreen>
               label,
               style: new TextStyle(
                 fontSize: 30.0,
-                color: whiteColor,
+                color: mainColor,
               ),
             ),
           ),
@@ -415,7 +415,9 @@ class _OtpState extends State<VerificationCodeScreen>
 
   // Returns "Otp" keyboard
   get _getOtpKeyboard {
-    return Container(
+    return Directionality(
+        textDirection: TextDirection.ltr,
+        child:Container(
       child: Column(
         children: [
           responsiveSizedBox(context: context, percentageOfHeight: .05),
@@ -506,7 +508,7 @@ class _OtpState extends State<VerificationCodeScreen>
                         _otpKeyboardActionButton(
                             label: new Icon(
                               Icons.backspace,
-                              color: whiteColor,
+                              color: mainColor,
                             ),
                             onPressed: () {
                               setState(() {
@@ -531,20 +533,18 @@ class _OtpState extends State<VerificationCodeScreen>
       //      height: isLandscape(context) ? 2 * height(context) * .49 : height(context) * .49,
       width: width(context),
       decoration: BoxDecoration(
-          color: blackColor,
+          color: whiteColor,
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(200), topLeft: Radius.circular(200))),
-    );
+        )  );
   }
 
   get _getOtpConfirmationButton {
     return GestureDetector(
       onTap: otp_code == null
           ? () {
-        // print("saddsds**********");
       }
           : () {
-        // print("11111**********");
               forgetPassword_bloc.add(checkOtpClick(otp_code: otp_code, route: widget.route));
             },
       child: BlocListener(
@@ -621,6 +621,12 @@ class _OtpState extends State<VerificationCodeScreen>
                 )..show(context);
                 setState(() {
                   _hideResendButton = false;
+                  otp_code = null;
+                  _firstDigit = null;
+                  _secondDigit = null;
+                  _thirdDigit = null;
+                  _fourthDigit = null;
+
                 });
 
                 //   customAnimatedPushNavigation(context, GetStartedScreen());
@@ -629,7 +635,7 @@ class _OtpState extends State<VerificationCodeScreen>
           },
           child: _isLoading
               ? CircularProgressIndicator(
-            backgroundColor: whiteColor,
+            backgroundColor: mainColor,
           )
 
               : Directionality(
@@ -638,7 +644,7 @@ class _OtpState extends State<VerificationCodeScreen>
                   : TextDirection.ltr,
               child: Container(
                 decoration: BoxDecoration(
-                    color: otp_code ==null ?mainColor :greenColor, borderRadius: BorderRadius.circular(5)),
+                    color: otp_code ==null ?whiteColor :greenColor, borderRadius: BorderRadius.circular(5)),
                 padding: EdgeInsets.only(
                     right: width(context) * .0, left: width(context) * .02),
                 child: Row(
@@ -647,7 +653,7 @@ class _OtpState extends State<VerificationCodeScreen>
                     customDescriptionText(
                         context: context,
                         text: "Confirm",
-                        textColor: otp_code ==null ?mainColor :whiteColor,
+                        textColor: otp_code ==null ?whiteColor :whiteColor,
                         percentageOfHeight: .025),
                   ],
                 ),

@@ -17,8 +17,12 @@ class CategoriesTap extends StatefulWidget{
 }
 
 class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMixin{
-  int _selectedIndex = 0;
   TabController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+  }
   @override
   void dispose() {
     _controller.dispose();
@@ -26,6 +30,7 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
   }
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child: BlocBuilder(
         bloc: categoryBloc,
@@ -36,7 +41,8 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
 
               ),
             );
-          } else if (state is Done) {
+          }
+          else if (state is Done) {
             var data = state.model as CategoryModel;
             if (data.childrenData == null || data.childrenData.isEmpty) {
               return Container();
@@ -50,35 +56,40 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                       return Container();
                     } else {
                       _controller = TabController(length: snapshot.data.childrenData.length, vsync: this);
+
                       return Container(
                           width: width(context),
                           height: isLandscape(context) ? 2 * height(context) * .04: height(context) * .04,
                           color: whiteColor,
                           child: TabBar(
                             controller: _controller,
+                            labelColor: mainColor,
+
                             isScrollable: true,
-                            indicatorColor: mainColor ,
+                            // indicatorColor: mainColor ,
+
+
                             tabs: snapshot.data.childrenData.map((item) {
 
                               if(item.isActive == true)
                                 return GestureDetector(
                                   onTap: () {
-
                                     customAnimatedPushNavigation(
                                         context, CategoryProductsScreen(
                                       category_id: item.id.toString(),
                                       category_name: item.name,
                                       category_index: _controller.index,
                                     ));
+
                                   },
                                   child: Container(
                                     padding: EdgeInsets.symmetric(horizontal: 10),
 
-                                    child:Center(
+                                    child: Center(
                                       child: customDescriptionText(
                                           context: context,
                                           text: item.name,
-                                          textColor: mainColor ,
+                                          textColor: widget.category_name == item.name? redColor : mainColor ,
                                           percentageOfHeight: .015),
                                     ),
                                   ),
@@ -88,14 +99,16 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
 
                             }
                             ).toList(),
-                          )
+                          ),
                       );
                     }
-                  } else if (snapshot.hasError) {
+                  }
+                  else if (snapshot.hasError) {
                     return Container(
                       child: Text('${snapshot.error}'),
                     );
-                  } else {
+                  }
+                  else {
                     return Center(
                       child: CircularProgressIndicator(
 
@@ -106,9 +119,11 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                 },
               );
             }
-          } else if (state is ErrorLoading) {
+          }
+          else if (state is ErrorLoading) {
             return Container();
-          } else {
+          }
+          else {
             return Center(
               child: CircularProgressIndicator(
 

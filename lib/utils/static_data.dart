@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:almajidoud/Model/ProductModel/product_model.dart'
 as product_model;
+
 class StaticData {
   static List<Map> wishlist_items;
   static List<Map> product_images_list;
@@ -20,6 +21,8 @@ class StaticData {
   static String order_address = '';
   static String order_payment_refused_reason = '';
   static String discount_amount;
+  static int selectedIndex = 0;
+
 
   //order payment
   static String card_number = "";

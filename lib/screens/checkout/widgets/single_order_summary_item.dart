@@ -21,7 +21,7 @@ singleOrderSummaryItem(
             text: title,
             textAlign: TextAlign.start,
             fontWeight: FontWeight.bold,
-            percentageOfHeight: .022),
+            percentageOfHeight: .020),
       ),
       SizedBox(
         height: 10,

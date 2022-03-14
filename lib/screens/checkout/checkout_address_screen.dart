@@ -291,7 +291,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                         Expanded(
                           flex: 1,
                           child:    Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
+                            padding: EdgeInsets.symmetric(vertical: 0),
                             child:  topPageIndicator(context: context),
                           ),
                         ),
@@ -1196,74 +1196,75 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
 
   Widget checkoutAdresssAppBar(){
-    return Container(
-      width: width(context),
-      color: whiteColor,
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-      Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-      child:   Row(
+    return SingleChildScrollView(
+      child: Container(
+          width: width(context),
+          color: whiteColor,
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              GestureDetector(
-                onTap: () {
-                  if(edit_address_status){
-                    setState(() {
-                      edit_address_status = false;
-                    });
-                  }else{
-                    Navigator.of(context).pop();
-                  }
+              Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                  child:   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          if(edit_address_status){
+                            setState(() {
+                              edit_address_status = false;
+                            });
+                          }else{
+                            Navigator.of(context).pop();
+                          }
 
 
-                },
-                child: Icon(
-                  Icons.navigate_before,
-                  color: mainColor,
-                  size: 30,
-                ),
+                        },
+                        child: Icon(
+                          Icons.navigate_before,
+                          color: mainColor,
+                          size: 30,
+                        ),
+                      ),
+                      customDescriptionText(
+                          context: context,
+                          textColor: mainColor,
+                          text: "Address",
+                          percentageOfHeight: .025),
+                      StaticData.vistor_value == 'visitor' ?  SizedBox():      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            edit_address_status = true;
+                            StaticData.chosse_address_status = false;
+                            frist_name = null;
+                            last_name = null;
+                            phone  = null;
+                            street = null;
+                            addres_city_name = null;
+                            address_city_id = null;
+                          });
+
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: mainColor)
+                          ),
+                          child: Icon(
+                            Icons.add,
+                            color: mainColor,
+                            size: 25,
+                          ),
+                        ),
+                      )  ,
+                    ],
+                  )
               ),
-              customDescriptionText(
-                  context: context,
-                  textColor: mainColor,
-                  text: "Address",
-                  percentageOfHeight: .025),
-              StaticData.vistor_value == 'visitor' ?  SizedBox():      GestureDetector(
-                onTap: () {
-                  setState(() {
-                    edit_address_status = true;
-                    StaticData.chosse_address_status = false;
-                    frist_name = null;
-                    last_name = null;
-                    phone  = null;
-                    street = null;
-                    addres_city_name = null;
-                    address_city_id = null;
-                  });
-
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: mainColor)
-                  ),
-                  child: Icon(
-                    Icons.add,
-                    color: mainColor,
-                    size: 25,
-                  ),
-                ),
-              )  ,
+              Divider(color: mainColor,thickness: 1,)
             ],
           )
       ),
-          Divider(color: mainColor,thickness: 1,)
-        ],
-      )
     );
   }
 
@@ -1347,7 +1348,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                 setState(() {
                   selected_address_id = cardModel.id;
                   selected_address_status = ! selected_address_status;
-                  print("selected_address_id : ${selected_address_id}");
                   setState(() {
                     frist_name = cardModel.firstname;
                     last_name = cardModel.lastname;
@@ -1359,6 +1359,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     shipmentAddressBloc.last_name_controller.value = last_name;
                     shipmentAddressBloc.phone_controller.value = phone;
                     shipmentAddressBloc.street_controller.value = street;
+                    sharedPreferenceManager.writeData(CachingKey.REGION_ID, cardModel.regionId.toString());
+                    sharedPreferenceManager.writeData(CachingKey.REGION_EN,  cardModel.region.region);
+                    sharedPreferenceManager.writeData(CachingKey.REGION_AR,  cardModel.region.region);
+
                   });
                 });
               },

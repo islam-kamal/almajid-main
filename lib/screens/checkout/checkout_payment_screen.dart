@@ -79,7 +79,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                     Expanded(
                       flex: 1,
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
+                        padding: EdgeInsets.symmetric(vertical: 0),
                         child: topPageIndicator(
                             context: context,
                             isPayment: true,
@@ -115,7 +115,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
 
                     _currentIndex == 'aps_fort_cc'
                         ? Expanded(
-                            flex: 9,
+                            flex: 8,
                             child: Directionality(
                                 textDirection: TextDirection.ltr,
                                 child: SingleChildScrollView(
@@ -238,7 +238,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                                   ),
                                 )))
                         : Expanded(
-                            flex: 9,
+                            flex: 8,
                             child: _currentIndex == 'aps_fort_cc'
                                 ? Container()
                                 : paymentMethodCard(
@@ -251,7 +251,6 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                       flex: 1,
                       child: GestureDetector(
                         onTap: () {
-                          print("_currentIndex : ${_currentIndex}");
                           if (_currentIndex == "stc_pay" ||
                               _currentIndex == 'tamara_pay_by_instalments' ||
                               _currentIndex == 'cashondelivery' ||

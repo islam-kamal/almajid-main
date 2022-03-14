@@ -195,8 +195,6 @@ class CustomComponents{
 */
 
   static String order_status(String status){
-    print("status : ${status}");
-    print("status : $status");
     switch(status){
       case "order_delivered":
         return translator.translate("Delivered");

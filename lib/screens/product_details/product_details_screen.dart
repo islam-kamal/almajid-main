@@ -35,6 +35,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
   var positioned_status = false;
   final home_bloc = HomeBloc(null);
   bool releated_products = false;
+  var percentage;
   @override
   void initState() {
     home_bloc.add(ProductDetailsEvent(
@@ -107,16 +108,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
 
                   });
                   if(startDate ==null || endDate ==null ) {
-                    new_price = null;
+                    new_price = minimal_price;
+                    if(double.parse(minimal_price) < double.parse(snapshot.data[0].price.toString()))
+                      percentage = (1 - (double.parse(minimal_price)  / snapshot.data[0].price) )* 100;
+
                   }
                   else{
                     if(StaticData.isCurrentDateInRange(startDate,endDate)
                         && double.parse(special_price) <= double.parse(minimal_price)
                         && double.parse(special_price).toStringAsFixed(2) != snapshot.data[0].price ) {
                       new_price = special_price;
+                      percentage = (1 - (double.parse(new_price)  / snapshot.data[0].price) )* 100;
 
                     }else if(double.parse(special_price) > double.parse(minimal_price)){
                       new_price = minimal_price;
+                      percentage = (1 - (double.parse(new_price)  / snapshot.data[0].price) )* 100;
+
                     }
                     else {
                       new_price = null;
@@ -139,9 +146,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                 product_name: snapshot.data[0].name,
                                 category_screen: widget.category_screen
                             ),
-                            HomeSlider(
-                              gallery: product_images,
-                              height: width(context) *0.90,
+                            Stack(
+                              children: [
+                                HomeSlider(
+                                  gallery: product_images,
+                                  height: width(context) *0.90,
+                                ),
+                                percentage== null ? Container():   Container(
+                                  width: width(context) * 0.2,
+                                  decoration: BoxDecoration(
+                                      color: greyColor,
+                                      borderRadius: BorderRadius.circular(5)
+                                  ),
+
+                                  child: Text("${percentage.round()} %",style: TextStyle(color: mainColor),textAlign: TextAlign.center,),
+                                ),
+                              ],
                             ),
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .05),
@@ -309,7 +329,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                           bottom: 0,
                           right: 0,
                           left: 0,
-                          child:    snapshot.data[0].extensionAttributes.stockItem.isInStock ?
+                          child:    snapshot.data[0].extensionAttributes.stockItem.qty >=0 ?
                           AddProductToCartWidget(
                             product_sku: snapshot.data[0].sku,
                             product_quantity:  StaticData.product_qty ,

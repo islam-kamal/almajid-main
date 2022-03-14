@@ -94,7 +94,6 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
 
   @override
   Widget build(BuildContext context) {
-    print("widget.payment_method : ${widget.payment_method}");
     return WillPopScope(
       onWillPop: () async {
         if (_show) {
@@ -115,7 +114,8 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
               if (state.indicator == 'CreateOrder-$_quoteId') {
                 _playAnimation();
               }
-            } else if (state is ErrorLoading) {
+            }
+            else if (state is ErrorLoading) {
               if (state.indicator == 'CreateOrder-$_quoteId') {
                 _stopAnimation();
 
@@ -311,7 +311,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                   Expanded(
                     flex: 1,
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
+                      padding: EdgeInsets.symmetric(vertical: 0),
                       child: topPageIndicator(
                           context: context,
                           isPayment: true,
@@ -321,7 +321,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                     ),
                   ),
                   Expanded(
-                    flex: 3,
+                    flex: 2,
                     child: Container(
                       width: width(context),
                       padding: EdgeInsets.symmetric(horizontal: 5),
@@ -349,7 +349,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                   ),
 
                   Expanded(
-                    flex: 2,
+                    flex:2,
                     child:  Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -376,41 +376,46 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
 
                   ),
                   Expanded(
-                    flex: 2,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
+                    flex: 1,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
 
-                        singleOrderSummaryItem(
-                            context: context,
-                            title: "Payment Method",
-                            details:
-                            "${widget.payment_method == "Split into 3 payments, without fees with Tamara" ? translator.translate("Tamara") : widget.payment_method == "Credit Card" ? translator.translate("Credit/Debit Card") : widget.payment_method} ",
-                            guestShipmentAddressModel:
-                            widget.guestShipmentAddressModel),
-                        Container(
-                            width: width(context) * .9,
-                            child: Divider(
-                              color: greyColor,
-                              thickness: 2,
-                            )),
-                      ],
+                          singleOrderSummaryItem(
+                              context: context,
+                              title: "Payment Method",
+                              details:
+                              "${widget.payment_method == "Split into 3 payments, without fees with Tamara" ? translator.translate("Tamara") : widget.payment_method == "Credit Card" ? translator.translate("Credit/Debit Card") : widget.payment_method} ",
+                              guestShipmentAddressModel:
+                              widget.guestShipmentAddressModel),
+                          Container(
+                              width: width(context) * .9,
+                              child: Divider(
+                                color: greyColor,
+                                thickness: 2,
+                              )),
+                        ],
+                      ),
                     )
                   ),
 
                   Expanded(
                     flex: 4,
-                    child: ListView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                      child: ListView(
 
-                      children: [
+                        children: [
 
-                        orderSummaryWidget(
-                            context: context,
-                            total_segments: widget
-                                .guestShipmentAddressModel.totals.totalSegments,
-                            cash: widget.payment_method),
-                      ],
+                          orderSummaryWidget(
+                              context: context,
+                              total_segments: widget
+                                  .guestShipmentAddressModel.totals.totalSegments,
+                              cash: widget.payment_method),
+                        ],
+                      ),
                     )
                   ),
                   // responsiveSizedBox(context: context, percentageOfHeight: .04),
@@ -427,23 +432,23 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
     BuildContext context,
   }) {
     return StaggerAnimation(
-      titleButton: translator.translate("Place Order"),
-      buttonController: _loginButtonController.view,
-      btn_width: width(context) ,
-      checkout_color: true,
-      product_details_page:true ,
-      onTap: () async {
-        await sharedPreferenceManager
-            .readString(CachingKey.CHOSSED_PAYMENT_METHOD)
-            .then((value) {
-          if (value == 'stc_pay') {
-            customAnimatedPushNavigation(context, StcPayPhoneScreen());
-          } else {
-            orderBloc.add(CreateOrderEvent(context: context));
-          }
-        });
-      },
-    );
+        titleButton: translator.translate("Place Order"),
+        buttonController: _loginButtonController.view,
+        btn_width: width(context) ,
+        checkout_color: true,
+        product_details_page:true ,
+        onTap: () async {
+          await sharedPreferenceManager
+              .readString(CachingKey.CHOSSED_PAYMENT_METHOD)
+              .then((value) {
+            if (value == 'stc_pay') {
+              customAnimatedPushNavigation(context, StcPayPhoneScreen());
+            } else {
+              orderBloc.add(CreateOrderEvent(context: context));
+            }
+          });
+        },
+      );
   }
 
   Future<String> getQuote() async {
@@ -556,9 +561,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
     setState(() {
       apple_pay_loading = true;
     });
-    // debugPrint(paymentResult.toString());
     final token = json.decode(paymentResult["token"]);
-    // debugPrint("after extracted data");
 
     final Future<http.Response> response =
         payment_repository.getPayfortApplePayValidation(

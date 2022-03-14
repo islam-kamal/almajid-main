@@ -18,36 +18,45 @@ orderIdStack({BuildContext context,var order_id,var status , var createAt}) {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                Container(
+                  //  width: width(context) * .60,
+                    child: Row(
+                      children: [
+                        customDescriptionText(
+                            context: context,
+                            text: "${translator.translate("Order ID")} : ",
+                            maxLines: 1,
+                            textAlign: TextAlign.start,
+                            percentageOfHeight: .020,
+                            textColor: mainColor),
+                        customDescriptionText(
+                            context: context,
+                            text: "${order_id??''}",
+                            maxLines: 1,
+                            textAlign: TextAlign.start,
+                            percentageOfHeight: .023,
+                            textColor: mainColor),
+                      ],
+                    )
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: width(context) * .60,
-                      child: Row(
-                        children: [
-                          customDescriptionText(
-                              context: context,
-                              text: "${translator.translate("Order ID")} : ",
-                              maxLines: 1,
-                              textAlign: TextAlign.start,
-                              percentageOfHeight: .020,
-                              textColor: mainColor),
-                          customDescriptionText(
-                              context: context,
-                              text: "${order_id??''}",
-                              maxLines: 1,
-                              textAlign: TextAlign.start,
-                              percentageOfHeight: .023,
-                              textColor: mainColor),
-                        ],
-                      )
+                  //    width: width(context) * .9,
+                      child: customDescriptionText(
+                          context: context,
+                          text: "${translator.translate("Ordered On")} :  ${createAt??''}",
+                          textAlign: TextAlign.start,
+                          maxLines: 2,
+                          percentageOfHeight: .017,
+                          textColor: mainColor),
                     ),
                     Container(
-                      height: isLandscape(context)
-                          ? 2 * height(context) * .06
-                          : height(context) * .06,
+                      padding: EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                           color: mainColor,
+
                           borderRadius: BorderRadius.circular(20)),
                       width: width(context) * .30,
                       child: Row(
@@ -69,16 +78,7 @@ orderIdStack({BuildContext context,var order_id,var status , var createAt}) {
                     ),
                   ],
                 ),
-                Container(
-                  width: width(context) * .9,
-                  child: customDescriptionText(
-                      context: context,
-                      text: "${translator.translate("Ordered On")} :  ${createAt??''}",
-                      textAlign: TextAlign.start,
-                      maxLines: 2,
-                      percentageOfHeight: .017,
-                      textColor: mainColor),
-                ),
+
               ],
             ),
           )));
