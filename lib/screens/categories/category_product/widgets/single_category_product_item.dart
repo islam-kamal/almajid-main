@@ -71,6 +71,8 @@ class singleCategoryProductItem extends StatelessWidget {
       else {
         if(!StaticData.isCurrentDateInRange(startDate,endDate) ){
           new_price = minimal_price;
+          percentage = (1 - (double.parse(new_price)  / product.price) )* 100;
+
         }
       }
 

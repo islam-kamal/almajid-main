@@ -147,8 +147,9 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                 related_product_list.forEach((element) {
                   snapshot.data.add(element) ;
                 });
+                print(" snapshot.data : ${ snapshot.data}");
               }
-              return  Container(
+              return Container(
                   width: width(context),
                   height: isLandscape(context) ? 2 * height(context) * .30 : height(context) * .30,
                   child: ListView.builder(
@@ -189,7 +190,6 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                               && double.parse(special_price).toStringAsFixed(2) !=  snapshot.data[index].price ) {
                             new_price = special_price;
                             percentage = (1 - (double.parse(new_price)  / snapshot.data[index].price) )* 100;
-
                           }else if(double.parse(special_price) > double.parse(minimal_price)){
                             new_price = minimal_price;
                             percentage = (1 - (double.parse(new_price)  / snapshot.data[index].price) )* 100;
@@ -197,6 +197,8 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                           else {
                             if(!StaticData.isCurrentDateInRange(startDate,endDate) ){
                               new_price = minimal_price;
+                              percentage = (1 - (double.parse(new_price)  / snapshot.data[index].price) )* 100;
+
                             }
                           }
 
@@ -208,7 +210,6 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                         if(  snapshot.data[index] == null){
 
                         }else{
-
                           if(snapshot.data[index].status == 1){
                             return Padding(
                               padding: EdgeInsets.only(left: 5, right: 5,),

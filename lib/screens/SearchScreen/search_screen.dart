@@ -148,7 +148,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 else{
                                                   if(!StaticData.isCurrentDateInRange(startDate,endDate) ){
                                                     new_price = minimal_price;
-                                                  }                                                }
+                                                    percentage = (1 - (double.parse(new_price)  / snapshot.data.items[index].price) )* 100;
+
+                                                  }
+                                                }
 
                                               }
                                               if (index >= snapshot.data.items.length) {

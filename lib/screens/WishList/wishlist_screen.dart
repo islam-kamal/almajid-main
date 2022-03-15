@@ -194,7 +194,10 @@ class _WishListScreenState extends State<WishListScreen> {
                                                     } else {
                                                       if(!StaticData.isCurrentDateInRange(startDate,endDate) ){
                                                         new_price = minimal_price;
-                                                      }                                                    }
+                                                        percentage = (1 - (double.parse(new_price)  / snapshot.data.items[index].product.price) )* 100;
+
+                                                      }
+                                                    }
                                                   }
 
                                                   return InkWell(
