@@ -146,8 +146,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
                                                 }
                                                 else{
-                                                  new_price = null;
-                                                }
+                                                  if(!StaticData.isCurrentDateInRange(startDate,endDate) ){
+                                                    new_price = minimal_price;
+                                                  }                                                }
 
                                               }
                                               if (index >= snapshot.data.items.length) {

@@ -126,8 +126,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
 
                     }
                     else {
-                      new_price = null;
-                    }
+                      if(!StaticData.isCurrentDateInRange(startDate,endDate) ){
+                        new_price = minimal_price;
+                      }                    }
 
                   }
 
