@@ -5,6 +5,7 @@ import 'package:almajidoud/Model/ShipmentAddressModel/client/address_model.dart'
 import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
 import 'package:almajidoud/Repository/CountriesRepo/countries_repoistory.dart';
 import 'package:almajidoud/Repository/ShippmentAdressRepo/shipment_address_repository.dart';
+import 'package:almajidoud/Widgets/customText.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/screens/checkout/checkout_payment_screen.dart';
 import 'package:almajidoud/screens/checkout/widgets/address_card.dart';
@@ -19,6 +20,7 @@ import 'package:almajidoud/screens/checkout/Shippment_Address/custom_saved_addre
 import 'package:almajidoud/screens/checkout/Shippment_Address/custom_cities_widget.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CheckoutAddressScreen extends StatefulWidget{
   @override
@@ -30,6 +32,8 @@ class CheckoutAddressScreen extends StatefulWidget{
 }
 class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with TickerProviderStateMixin {
   //-------------- get cities -----------------------------
+  var selected_address_id;
+  bool selected_address_status = false;
   var check = true;
   var _currentIndex ;
   var city_id;
@@ -72,7 +76,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
   AnimationController _loginButtonController;
   bool isLoading = false;
-
+  bool edit_address_status = false;
+  bool add_new_address_status = false;
   var frist_name,last_name,phone,street, addres_city_name,address_city_id;
 
   Future<List<AddressModel>> all_addresses;
@@ -135,8 +140,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
           child: Scaffold(
             key: _drawerKey,
             backgroundColor: whiteColor,
-            body: SingleChildScrollView(
-                child: BlocListener<ShipmentAddressBloc,AppState>(
+            body: BlocListener<ShipmentAddressBloc,AppState>(
                   bloc: shipmentAddressBloc,
                   listener: (context,state){
                     if (state is Loading) {
@@ -276,95 +280,114 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
                     }
                   },
-                  child: Column(
-                    children: [
-                      checkoutHeader(context: context),
-                      responsiveSizedBox(
-                          context: context, percentageOfHeight: .02),
-                      topPageIndicator(context: context),
-                      responsiveSizedBox(context: context, percentageOfHeight: .04),
+                  child: Container(
+                    height: height(context),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child:    checkoutAdresssAppBar()
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child:    Padding(
+                            padding: EdgeInsets.symmetric(vertical: 0),
+                            child:  topPageIndicator(context: context),
+                          ),
+                        ),
 
-                    //  StaticData.vistor_value == 'visitor' ? Container() : CustomSavedAddressesWidget(),
-                      //-------------------- saved address -----------------------------
-                      StaticData.vistor_value == 'visitor' ? Container()
-                          :   StaticData.saved_addresses_count == 0? Container():          get_saved_addresses(),
-                      //---------------------------------------------
+                        !edit_address_status ?         StaticData.vistor_value == 'visitor' ?  Expanded(
+                          flex: 9,
+                          child:base_checkout_address(),
+                        )
+                            :      Expanded(
+                          flex: 9,
+                          child:  StaticData.saved_addresses_count == 0? Container():          show_all_avaliable_addresses(),
+                        )
+                            :  Expanded(
+                          flex: 9,
+                      child: SingleChildScrollView(
+                        child: StaticData.chosse_address_status ? checkout_address(
+                            frist_name: frist_name,
+                            last_name: last_name,
+                            street: street,
+                            phone: phone,
+                            address_city_id: address_city_id,
+                            city_name: addres_city_name
+                        ) : base_checkout_address(),
+                      )
 
+                    ),
 
-                      StaticData.chosse_address_status ? checkout_address(
-                        frist_name: frist_name,
-                        last_name: last_name,
-                        street: street,
-                        phone: phone,
-                        address_city_id: address_city_id,
-                        city_name: addres_city_name
-                      ) : base_checkout_address(),
-
-
-                      responsiveSizedBox(
-                          context: context,
-                          percentageOfHeight: .05),
-                      //  nextButton(context: context)
-                      addressNextButton(context: context)
-                    ],
-                  ),
+                        //  nextButton(context: context)
+                        Expanded(
+                            flex: 1,
+                            child:    addressNextButton(context: context)
+                        )
+                      ],
+                    ),
+                  )
                 )
             ),
           ),
-        ));
+        );
   }
+
+
   Widget base_checkout_address(){
-    return Container(
-        decoration: BoxDecoration(
-            color: whiteColor,
-            borderRadius: BorderRadius.circular(8)),
-        width: MediaQuery.of(context).size.width * 0.9,
-        child: Form(
-        key: _formKey,
+    return SingleChildScrollView(
+      child: Container(
+          decoration: BoxDecoration(
+              color: whiteColor,
+              borderRadius: BorderRadius.circular(8)),
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: Form(
+              key: _formKey,
 
-        child: Column(
-          children: [
-            responsiveSizedBox(context: context, percentageOfHeight: .01),
+              child: Column(
+                children: [
+                  responsiveSizedBox(context: context, percentageOfHeight: .01),
 
-            get_cities(),
+                  get_cities(),
 
-            responsiveSizedBox(context: context, percentageOfHeight: .01),
+                  responsiveSizedBox(context: context, percentageOfHeight: .01),
 
-            paymentTitle(context: context, title: "First Name"),
-            responsiveSizedBox(context: context, percentageOfHeight: .015),
-            frist_name_addressTextFields(context: context, hint: "Frist Name"),
-            responsiveSizedBox(context: context, percentageOfHeight: .015),
+                  paymentTitle(context: context, title: "First Name"),
+                  responsiveSizedBox(context: context, percentageOfHeight: .015),
+                  frist_name_addressTextFields(context: context, hint: "Frist Name"),
+                  responsiveSizedBox(context: context, percentageOfHeight: .015),
 
-            paymentTitle(context: context, title: "Last Name"),
-            responsiveSizedBox(context: context, percentageOfHeight: .015),
-            last_name_addressTextFields(context: context, hint: "Last Name"),
+                  paymentTitle(context: context, title: "Last Name"),
+                  responsiveSizedBox(context: context, percentageOfHeight: .015),
+                  last_name_addressTextFields(context: context, hint: "Last Name"),
 
-            StaticData.vistor_value == 'visitor' ?   Column(
-              children: [
-                responsiveSizedBox(context: context, percentageOfHeight: .015),
-                paymentTitle(context: context, title: "Email"),
-                responsiveSizedBox(context: context, percentageOfHeight: .015),
-                email_addressTextFields(context: context, hint: "Email"),
-              ],
-            ) : Container(),
-            responsiveSizedBox(context: context, percentageOfHeight: .015),
+                  StaticData.vistor_value == 'visitor' ?   Column(
+                    children: [
+                      responsiveSizedBox(context: context, percentageOfHeight: .015),
+                      paymentTitle(context: context, title: "Email"),
+                      responsiveSizedBox(context: context, percentageOfHeight: .015),
+                      email_addressTextFields(context: context, hint: "Email"),
+                    ],
+                  ) : Container(),
+                  responsiveSizedBox(context: context, percentageOfHeight: .015),
 
-            paymentTitle(context: context, title: "Phone"),
-            responsiveSizedBox(context: context, percentageOfHeight: .015),
-            phone_addressTextFields(
-                context: context, hint: "Ex: 5xxxxxxxx"),
-            responsiveSizedBox(
-                context: context, percentageOfHeight: .015),
+                  paymentTitle(context: context, title: "Phone"),
+                  responsiveSizedBox(context: context, percentageOfHeight: .015),
+                  phone_addressTextFields(
+                      context: context, hint: "Ex: 5xxxxxxxx"),
+                  responsiveSizedBox(
+                      context: context, percentageOfHeight: .015),
 
-            paymentTitle(context: context, title: "Street"),
-            responsiveSizedBox(
-                context: context, percentageOfHeight: .015),
-            street_addressTextFields(
-                context: context, hint: "Street"),
-            responsiveSizedBox(
-                context: context, percentageOfHeight: .015),
-          ],
-        ))
+                  paymentTitle(context: context, title: "Street"),
+                  responsiveSizedBox(
+                      context: context, percentageOfHeight: .015),
+                  street_addressTextFields(
+                      context: context, hint: "Street"),
+                  responsiveSizedBox(
+                      context: context, percentageOfHeight: .015),
+                ],
+              ))
+      ),
     );
   }
 
@@ -1120,42 +1143,306 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
     return StaggerAnimation(
       titleButton: translator.translate("Next"),
       buttonController: _loginButtonController.view,
-      btn_width: width(context) * .7,
+      btn_width: width(context) ,
       checkout_color: true,
+        product_details_page :true,
       onTap: () {
-    if (_formKey.currentState.validate() ) {
-      if(addres_city_name == null){
-        errorDialog(
-          context: context,
-          text: translator.translate("City should be mandatory in checkout")
-        );
-      }else{
-        StaticData.order_address = addres_city_name +
-            " , " //use this to show address in CheckoutSummaryScreen
-                "${shipmentAddressBloc.street_controller.value == null
-                ? street
-                : shipmentAddressBloc.street_controller.value }";
-        shipmentAddressBloc.add(
-            GuestAddAdressEvent(context: context)
-        );
-      }
+        if(selected_address_id != null){
+          StaticData.order_address = addres_city_name +
+              " , " //use this to show address in CheckoutSummaryScreen
+                  "${shipmentAddressBloc.street_controller.value == null
+                  ? street
+                  : shipmentAddressBloc.street_controller.value }";
+          shipmentAddressBloc.add(
+              GuestAddAdressEvent(context: context)
+          );
+        }else{
+          if (_formKey.currentState.validate() ) {
+            if(addres_city_name == null){
+              errorDialog(
+                  context: context,
+                  text: translator.translate("City should be mandatory in checkout")
+              );
+            }
+            else{
+              StaticData.order_address = addres_city_name +
+                  " , " //use this to show address in CheckoutSummaryScreen
+                      "${shipmentAddressBloc.street_controller.value == null
+                      ? street
+                      : shipmentAddressBloc.street_controller.value }";
+              shipmentAddressBloc.add(
+                  GuestAddAdressEvent(context: context)
+              );
+            }
 
-    }
-    else if(frist_name !=null){
-      StaticData.order_address = addres_city_name +
-          " , " //use this to show address in CheckoutSummaryScreen
-              "${shipmentAddressBloc.street_controller.value == null
-              ? street
-              : shipmentAddressBloc.street_controller.value }";
-      shipmentAddressBloc.add(
-          GuestAddAdressEvent(context: context)
-      );
+          }
+          else if(frist_name !=null  ){
+            StaticData.order_address = addres_city_name +
+                " , " //use this to show address in CheckoutSummaryScreen
+                    "${shipmentAddressBloc.street_controller.value == null
+                    ? street
+                    : shipmentAddressBloc.street_controller.value }";
+            shipmentAddressBloc.add(
+                GuestAddAdressEvent(context: context)
+            );
 
-    }else{
-    }
+          }else{
+          }
+        }
+
       },
     );
   }
+
+
+  Widget checkoutAdresssAppBar(){
+    return SingleChildScrollView(
+      child: Container(
+          width: width(context),
+          color: whiteColor,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                  child:   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          if(edit_address_status){
+                            setState(() {
+                              edit_address_status = false;
+                            });
+                          }else{
+                            Navigator.of(context).pop();
+                          }
+
+
+                        },
+                        child: Icon(
+                          Icons.navigate_before,
+                          color: mainColor,
+                          size: 30,
+                        ),
+                      ),
+                      customDescriptionText(
+                          context: context,
+                          textColor: mainColor,
+                          text: "Address",
+                          percentageOfHeight: .025),
+                      StaticData.vistor_value == 'visitor' ?  SizedBox():      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            edit_address_status = true;
+                            StaticData.chosse_address_status = false;
+                            frist_name = null;
+                            last_name = null;
+                            phone  = null;
+                            street = null;
+                            addres_city_name = null;
+                            address_city_id = null;
+                          });
+
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: mainColor)
+                          ),
+                          child: Icon(
+                            Icons.add,
+                            color: mainColor,
+                            size: 25,
+                          ),
+                        ),
+                      )  ,
+                    ],
+                  )
+              ),
+              Divider(color: mainColor,thickness: 1,)
+            ],
+          )
+      ),
+    );
+  }
+
+
+  Widget show_all_avaliable_addresses (){
+    return FutureBuilder<List<AddressModel>>(
+      future: all_addresses,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            if (snapshot.data.length != 0) {
+              return listViewOfAdressesCards(
+                data: snapshot.data
+              );
+            } else {
+              return Container(
+                child: Text(
+                    translator.translate("There is no saved addresses")),
+              );
+            }
+          } else {
+            return Container(
+              child: Text(translator.translate("There is no saved addresses")),
+            );
+          }
+        }
+
+        // By default, show a loading spinner.
+        return Center(
+          child: SpinKitFadingCube(
+            color: Theme.of(context).primaryColor,
+            size: 30.0,
+          ),
+
+        );
+      },
+    );
+  }
+
+  Widget listViewOfAdressesCards({List<AddressModel> data}) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    return Container(
+        child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: data.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: EdgeInsets.all(width * 0.02),
+                child:  singlePaymentCard(
+                        cardModel: data[index], index: data[index].id)
+              );
+            }));
+  }
+
+
+  Widget singlePaymentCard({AddressModel cardModel, int index}) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    return Directionality(
+      textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl :TextDirection.ltr ,
+      child: Container(
+        width: width * .90,
+        padding: EdgeInsets.all( width * .05),
+        decoration: BoxDecoration(
+            color: selected_address_id == index
+                ? Colors.green.withOpacity(.2)  : small_grey ,
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(color: blackColor,width: 2)
+        ),
+
+        child: Row(
+          children: [
+            Expanded(
+                flex: 1,
+                child: InkWell(
+              onTap: () {
+                setState(() {
+                  selected_address_id = cardModel.id;
+                  selected_address_status = ! selected_address_status;
+                  setState(() {
+                    frist_name = cardModel.firstname;
+                    last_name = cardModel.lastname;
+                    phone = cardModel.telephone;
+                    street = cardModel.street[0];
+                    addres_city_name = cardModel.city;
+                    address_city_id = cardModel.regionId;
+                    shipmentAddressBloc.frist_name_controller.value = frist_name;
+                    shipmentAddressBloc.last_name_controller.value = last_name;
+                    shipmentAddressBloc.phone_controller.value = phone;
+                    shipmentAddressBloc.street_controller.value = street;
+                    sharedPreferenceManager.writeData(CachingKey.REGION_ID, cardModel.regionId.toString());
+                    sharedPreferenceManager.writeData(CachingKey.REGION_EN,  cardModel.region.region);
+                    sharedPreferenceManager.writeData(CachingKey.REGION_AR,  cardModel.region.region);
+
+                  });
+                });
+              },
+              child: Container(
+                  child: selected_address_id == index
+                      ?Icon(Icons.check_circle,color: greenColor,) : Icon(Icons.check_circle_outline,color: mainColor,)
+              ),
+            )
+            ),
+          Expanded(
+            flex: 4,
+            child:    Column(
+              children: [
+            Padding(
+            padding: EdgeInsets.all( 5),
+            child:  Align(
+              child:   customDescriptionText(
+                context: context,
+                textColor: mainColor,
+                maxLines: 2,
+                text: "${cardModel.firstname} ${cardModel.lastname}",
+              ),
+              alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
+            ),
+          ),
+                Padding(
+                  padding: EdgeInsets.all( 5),
+                  child:  Align(
+                    child:    customDescriptionText(
+                      context: context,
+                      textColor: mainColor,
+                      maxLines: 1,
+                      text: cardModel.telephone,
+                    ),
+                    alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all( 5),
+                  child:  Align(
+                    child:  customDescriptionText(
+                      context: context,
+                      textColor: mainColor,
+                      maxLines: 2,
+                      text: "${cardModel.street[0]} , ${cardModel.region.region}" ,
+
+                    ),
+                    alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
+                  ),
+                ),
+              ],
+            ),
+          ),
+            Expanded(
+                flex: 1,
+                child:   InkWell(
+                  onTap: (){
+                    setState(() {
+                      edit_address_status = true;
+                      chossed_address_id = cardModel.id;
+                      shipmentAddressBloc.add(AddressDetailsEvent(
+                          address_id: cardModel.id
+                      ));
+                      sharedPreferenceManager.writeData(CachingKey.CHOSSED_ADDRESS_ID, chossed_address_id);
+                      StaticData.chosse_address_status = true;
+
+                    });
+                  },
+                  child:  Icon(Icons.edit) ,
+                ))
+
+
+    ],
+        )
+
+
+      ),
+    );
+  }
+
 }
 class Item {
   Item({

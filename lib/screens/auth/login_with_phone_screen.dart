@@ -131,6 +131,7 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                   height: height(context),
                   width: width(context),
                   child: Container(
+                    color: whiteColor,
                       child: Column(
                         children: [
                           sendCodeTopHeader(context: context),
@@ -142,16 +143,14 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                               percentageOfHeight: .03,
                               fontWeight: FontWeight.w700,
                               text: "Personal Information",
-                              textColor: whiteColor),
+                              textColor: mainColor),
                           responsiveSizedBox(context: context, percentageOfHeight: .025),
                           Container(
+
                             child: Column(
                               children: [
-                                responsiveSizedBox(
-                                    context: context, percentageOfHeight: .1),
-                                //  chooseCountryWidgetInResetPassword(context: context) ,
-                                //  responsiveSizedBox(context: context, percentageOfHeight: .02) ,
-                                // phoneNumberWidgetInResetPassword(context: context) ,
+                                responsiveSizedBox(context: context, percentageOfHeight: .1),
+
                             Form(
                               key: _formKey,
                               child: mobile_textfield(),

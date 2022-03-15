@@ -375,7 +375,7 @@ class CartRepository {
       if (response.statusCode == 200) {
         return response.data;
       } else {
-        Navigator.pop(context);
+      //  Navigator.pop(context);
       }
     } catch (e) {
       // Navigator.pop(context);

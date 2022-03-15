@@ -40,8 +40,11 @@ class SubmitFaieldScreenState extends State<SubmitFaieldScreen> with TickerProvi
         child: Scaffold(
             appBar: AppBar(
               centerTitle: true,
+              backgroundColor: whiteColor,
               title: Text(
                 translator.translate( "Receipt of the request"),
+                style: TextStyle(color:mainColor , fontWeight: FontWeight.normal),
+
               ),
               automaticallyImplyLeading: false,
             ),

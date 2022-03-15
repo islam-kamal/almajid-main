@@ -2,16 +2,12 @@ import 'package:almajidoud/utils/file_export.dart';
 
 passwordTopHeader({BuildContext context, bool isResetScreen: false}) {
   return Container(
-    padding: EdgeInsets.only(
-        right: width(context) * .05,
-        left: width(context) * .05,
-      top: width(context) * .05,
-      ),
+    padding: EdgeInsets.symmetric(horizontal: width(context) * .05),
     width: width(context),
-    color: mainColor,
+    color: whiteColor,
     height: isLandscape(context)
-        ? 2 * height(context) * .09
-        : height(context) * .09,
+        ? 2 * height(context) * .07
+        : height(context) * .07,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -21,14 +17,14 @@ passwordTopHeader({BuildContext context, bool isResetScreen: false}) {
           },
           child: Icon(
             Icons.navigate_before,
-            color: whiteColor,
+            color: mainColor,
             size: 30,
           ),
         ),
         isResetScreen == true
             ? customDescriptionText(
                 context: context,
-                textColor: whiteColor,
+                textColor: mainColor,
                 text: "Reset passsword")
             : SizedBox(),
         GestureDetector(
@@ -40,6 +36,7 @@ passwordTopHeader({BuildContext context, bool isResetScreen: false}) {
               height: isLandscape(context)
                   ? 2 * height(context) * .03
                   : height(context) * .03,
+              color: mainColor,
             )),
       ],
     ),

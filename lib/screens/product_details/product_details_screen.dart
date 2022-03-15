@@ -1,5 +1,4 @@
 import 'package:almajidoud/Bloc/Home_Bloc/home_bloc.dart';
-import 'package:almajidoud/Repository/CategoryRepo/category_repository.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/screens/home/widgets/home_list_products.dart';
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
@@ -9,7 +8,6 @@ import 'package:almajidoud/screens/product_details/widgets/favourite_and_name_ro
 import 'package:almajidoud/screens/product_details/widgets/prica_and_rating_row.dart';
 import 'package:almajidoud/screens/product_details/widgets/product_details_name_widget.dart';
 import 'package:almajidoud/screens/product_details/widgets/size_and_quantity_text.dart';
-import 'package:almajidoud/screens/product_details/widgets/sold_by_widget.dart';
 import 'package:almajidoud/screens/product_details/widgets/vat_and_reviews_row.dart';
 import 'package:almajidoud/screens/product_details/widgets/write_review_button.dart';
 import 'package:almajidoud/utils/file_export.dart';
@@ -36,7 +34,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
   var product_image;
   var positioned_status = false;
   final home_bloc = HomeBloc(null);
-
+  bool releated_products = false;
+  var percentage;
   @override
   void initState() {
     home_bloc.add(ProductDetailsEvent(
@@ -69,7 +68,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
               else {
                 if(snapshot.data.isEmpty){
                   return  no_data_widget(context: context);
-                }else{
+                }
+                else{
                   product_images = [];
                   snapshot.data[0].mediaGalleryEntries.forEach((element) {
                     product_images.add(
@@ -108,39 +108,60 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
 
                   });
                   if(startDate ==null || endDate ==null ) {
-                    new_price = null;
+                    new_price = minimal_price;
+                    if(double.parse(minimal_price) < double.parse(snapshot.data[0].price.toString()))
+                      percentage = (1 - (double.parse(minimal_price)  / snapshot.data[0].price) )* 100;
+
                   }
                   else{
                     if(StaticData.isCurrentDateInRange(startDate,endDate)
                         && double.parse(special_price) <= double.parse(minimal_price)
                         && double.parse(special_price).toStringAsFixed(2) != snapshot.data[0].price ) {
                       new_price = special_price;
+                      percentage = (1 - (double.parse(new_price)  / snapshot.data[0].price) )* 100;
 
                     }else if(double.parse(special_price) > double.parse(minimal_price)){
                       new_price = minimal_price;
+                      percentage = (1 - (double.parse(new_price)  / snapshot.data[0].price) )* 100;
+
                     }
                     else {
                       new_price = null;
                     }
 
                   }
+
+                  snapshot.data[0].productLinks.forEach((element) {
+                    if(element.linkType == "related"){
+                      releated_products = true;
+                    }
+                  });
                   return  Stack(
                     children: [
                       SingleChildScrollView(
                         child: Column(
                           children: [
-                            responsiveSizedBox(
-                                context: context, percentageOfHeight: .02),
                             productDetailsNameWidget(
                                 context: context,
                                 product_name: snapshot.data[0].name,
                                 category_screen: widget.category_screen
                             ),
-                            responsiveSizedBox(
-                                context: context, percentageOfHeight: .03),
-                            HomeSlider(
-                              gallery: product_images,
-                              height: width(context) *0.90,
+                            Stack(
+                              children: [
+                                HomeSlider(
+                                  gallery: product_images,
+                                  height: width(context) *0.90,
+                                ),
+                                percentage== null ? Container():   Container(
+                                  width: width(context) * 0.2,
+                                  decoration: BoxDecoration(
+                                      color: greyColor,
+                                      borderRadius: BorderRadius.circular(5)
+                                  ),
+
+                                  child: Text("${percentage.round()} %",style: TextStyle(color: mainColor),textAlign: TextAlign.center,),
+                                ),
+                              ],
                             ),
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .05),
@@ -292,8 +313,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                               ),
                             ),
                             responsiveSizedBox(context: context, percentageOfHeight: .03),
-                            snapshot.data[0].productLinks.length > 0?
-                            titleText(context: context, text: "Related Products") : Container(),
+                            releated_products? titleText(context: context, text: "Related Products") : Container(),
                             responsiveSizedBox(context: context, percentageOfHeight: .02),
 
                             HomeListProducts(
@@ -309,7 +329,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                           bottom: 0,
                           right: 0,
                           left: 0,
-                          child:    snapshot.data[0].extensionAttributes.stockItem.isInStock ?
+                          child:    snapshot.data[0].extensionAttributes.stockItem.qty >=0 ?
                           AddProductToCartWidget(
                             product_sku: snapshot.data[0].sku,
                             product_quantity:  StaticData.product_qty ,
@@ -320,19 +340,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             text_size: .025,
                             product_image: product_image,
                             product_id: snapshot.data[0].id,
-                            product_details_page: false,
+                            product_details_page: true,
                           )  :
                           Container(
                             height: width(context) * .16,
                            width: width(context) ,
-                        //    padding: EdgeInsets.all(4),
                             decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(Radius.circular(15.0))
+                                borderRadius: const BorderRadius.all(Radius.circular(0.0))
                             ),
                             child: Container(
                               decoration: BoxDecoration(
                                   color:greyColor ,
-                                  borderRadius: BorderRadius.circular(8)),
+                                  borderRadius: BorderRadius.circular(0)),
                               child:  Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -365,7 +384,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                 padding: EdgeInsets.only(top:  width(context ) * 0.3),
                 child: SpinKitFadingCube(
                   color: Theme.of(context).primaryColor,
-                  size: width(context) * 0.15,
+                  size: width(context) * 0.10,
                 ),
 
               );

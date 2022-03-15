@@ -14,6 +14,8 @@
   " Thanks " : " Thanks ",
   "?Are You Sure You Want To Logout" : "?Are You Sure You Want To Logout",
   "Contact us" :  "Contact us",
+  "Change Language" :  "Change Language",
+  "Almajed Oud" : "Almajed Oud",
   "-------------------cart-----------------": "---------------------------------",
   "Cart": "Cart",
   "Lorim": "Lorim ipsium is simply dummy text used as a place holder , this text can be replaced with other text .",
@@ -85,6 +87,7 @@
   "City should be mandatory in checkout" : "City should be mandatory in checkout",
   "Tamara" : "Tamara",
   "Apple Pay" : "Apple Pay",
+  "Edit" : "Edit",
   "-------------------Location-----------------": "---------------------------------",
   "Location": "Location",
   "Type here to search": "Type here to search",
@@ -125,6 +128,8 @@
   "Send Code": "Send Code",
   "Personal Information": "Personal Information",
   "Saudi Arabia": "Saudi Arabia",
+  "kuwait" : "kuwait",
+  "United Arab Emirates" : "United Arab Emirates",
   "Your Phone Number": "Your Phone Number",
   "We will send you a verification code to your phone number": "We will send you a verification code to your phone number",
   "Confirmation": "Confirmation",
@@ -165,6 +170,8 @@
   "Instagram": "Instagram",
   "App Version": "App Version",
   "Settings" : "Settings",
+  "Select Language" : "Select Language",
+  "Select Country" :  "Select Country",
   "-------------------thanks-----------------": "---------------------------------",
   "Thanks": "Thanks",
   "for choosing us": "for choosing us",
@@ -286,7 +293,18 @@
   "Remove": "Remove",
   "Input code number" : "Input code number",
   "There is no enough balance" : "There is not enough balance to complete the transaction",
-  "Credit/Debit Card" : "Credit Card"
+  "Credit/Debit Card" : "Credit Card",
+  "Please select payment method" : "Please select payment method to continue your purchase process",
+  "Delivered Address" : "Delivered Address",
+
+  "-------------------- Orders  Status--------" :"------------------------------",
+  "Delivered" : "Delivered",
+  "Processing" :  "Processing",
+  "Pending" : "Pending",
+  "Canceled" : "Canceled",
+  "New" : "New",
+  "Dispatched" : "Dispatched",
+  "closed" : "closed"
 }
 
 

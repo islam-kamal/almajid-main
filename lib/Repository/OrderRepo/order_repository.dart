@@ -80,7 +80,7 @@ class OrderRepository {
             'Accept': 'application/json',
           })));
       if (response.statusCode == 200) {
-        errorDialog(context: context, text: translator.translate(  "Your order created successfully"));
+    //    errorDialog(context: context, text: translator.translate(  "Your order created successfully"));
         return response.data;
       } else {
         Navigator.pop(context);

@@ -57,8 +57,10 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
         child: Scaffold(
             appBar: AppBar(
               centerTitle: true,
+              backgroundColor: whiteColor,
               title: Text(
                translator.translate( "Receipt of the request"),
+                style: TextStyle(color:mainColor , fontWeight: FontWeight.normal),
               ),
               automaticallyImplyLeading: false,
             ),

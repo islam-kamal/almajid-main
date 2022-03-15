@@ -42,31 +42,31 @@ class _CartBadgeState extends State<CartBadge> {
         return _isLoading
             ? CircularProgressIndicator()
             : InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => CartScreen()));
-                },
-                child: Badge(
-                  badgeColor: cartBadgeColor,
-                  animationType: BadgeAnimationType.slide,
-                  toAnimate: true,
-                  position: BadgePosition.topEnd(top: 5, end: 7),
-                  badgeContent: Text(
-                    _count.toString(),
-                    style: TextStyle(color: mainColor),
-                  ),
-                  child: IconButton(
-                    icon: Icon(
-                      MaterialCommunityIcons.cart,
-                      color: widget.iconColor,
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => CartScreen()));
-                    },
-                  ),
-                ),
-              );
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => CartScreen()));
+          },
+          child: Badge(
+            badgeColor: cartBadgeColor,
+            animationType: BadgeAnimationType.slide,
+            toAnimate: true,
+            position: BadgePosition.topEnd(top: 5, end: 7),
+            badgeContent: Text(
+              _count.toString(),
+              style: TextStyle(color: mainColor),
+            ),
+            child: IconButton(
+              icon: Icon(
+                MaterialCommunityIcons.cart,
+                color: mainColor,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => CartScreen()));
+              },
+            ),
+          ),
+        );
       },
     );
   }

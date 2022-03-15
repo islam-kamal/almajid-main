@@ -40,6 +40,8 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
   final home_bloc = HomeBloc(null);
   var product_image;
   var _subject;
+  var percentage;
+
   List<product_model.Items> related_product_list = [];
   @override
   void initState() {
@@ -121,7 +123,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
           category_id: StaticData.data['weekly-deal']['id'],
           offset: 1
       ));
-     home_bloc.add(GetTestahelCollectionEvent(
+      home_bloc.add(GetTestahelCollectionEvent(
           category_id: StaticData.data['testahel-collection']['id'],
           offset: 1
       ));
@@ -136,21 +138,21 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
           if (snapshot.hasData) {
             if (snapshot.data.isEmpty) {
               return no_data_widget(
-                context: context,
-                image_status: true
+                  context: context,
+                  image_status: true
               );
             } else {
-             if(widget.type ==  'related products'){
-               snapshot.data.clear();
-               related_product_list.forEach((element) {
-                 snapshot.data.add(element) ;
-               });
-             }
+              if(widget.type ==  'related products'){
+                snapshot.data.clear();
+                related_product_list.forEach((element) {
+                  snapshot.data.add(element) ;
+                });
+              }
               return  Container(
                   width: width(context),
-                 height: isLandscape(context) ? 2 * height(context) * .30 : height(context) * .30,
+                  height: isLandscape(context) ? 2 * height(context) * .30 : height(context) * .30,
                   child: ListView.builder(
-                    shrinkWrap: true,
+                      shrinkWrap: true,
                       itemCount: snapshot.data.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
@@ -173,17 +175,24 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                             minimal_price = element.value;
                           }
                         });
+
+
                         if(startDate ==null || endDate ==null ){
-                          new_price = null;
+                          new_price = minimal_price;
+                          if(double.parse(minimal_price) < double.parse(snapshot.data[index].price.toString()))
+                          percentage = (1 - (double.parse(minimal_price)  / snapshot.data[index].price) )* 100;
+
                         }
                         else{
                           if(StaticData.isCurrentDateInRange(startDate,endDate)
                               && double.parse(special_price) <= double.parse(minimal_price)
                               && double.parse(special_price).toStringAsFixed(2) !=  snapshot.data[index].price ) {
                             new_price = special_price;
+                            percentage = (1 - (double.parse(new_price)  / snapshot.data[index].price) )* 100;
 
                           }else if(double.parse(special_price) > double.parse(minimal_price)){
                             new_price = minimal_price;
+                            percentage = (1 - (double.parse(new_price)  / snapshot.data[index].price) )* 100;
                           }
                           else {
                             new_price = null;
@@ -229,7 +238,6 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                 },
                                                 child:  Container(
                                                   width: width(context) * .35,
-                                                  //   height: isLandscape(context) ? 2 * height(context) * .12 : height(context) * .12,
                                                   decoration: BoxDecoration(
                                                       image: DecorationImage(
                                                           image: NetworkImage(
@@ -242,7 +250,6 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                               flex: 2,
                                               child:   Container(
                                                 width: width(context) * .35,
-                                                //   height: isLandscape(context) ? 2 * height(context) * .08 : height(context) * .08,
                                                 color: whiteColor,
                                                 child: Column(
                                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -307,16 +314,16 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                               )),
                                           Expanded(
                                               flex: 1,
-                                              child:  snapshot.data[index].extensionAttributes.stockItem.isInStock ?
+                                              child:  snapshot.data[index].extensionAttributes.stockItem.qty >= 1 ?
                                               AddProductToCartWidget(
                                                 product_sku: snapshot.data[index].sku,
                                                 product_quantity:   1,
                                                 instock_status: snapshot.data[index].extensionAttributes.stockItem.isInStock,
                                                 scaffoldKey: widget.homeScaffoldKey,
                                                 btn_height: width(context) * .08,
-                                                btn_width: width(context) * .37,
+                                                btn_width: width(context) * .33,
                                                 text_size: 0.017,
-                                                home_shape: true,
+                                                home_shape: false,
                                                 product_image: product_image,
                                                 product_id:  snapshot.data[index].id,
 
@@ -337,7 +344,8 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                     children: [
                                                       customDescriptionText(
                                                           context: context,
-                                                          text: translator.translate("Out Of Stock"),                                                    percentageOfHeight:  0.017,
+                                                          text: translator.translate("Out Of Stock"),
+                                                          percentageOfHeight:  0.017,
                                                           textColor: mainColor) ,
                                                     ],),
                                                 ) ,
@@ -349,7 +357,8 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                       ),
 
                                       // ------------------ here ----------------------
-                                      snapshot.data[index].extensionAttributes.stockItem.isInStock ?     CustomWishList(
+                                      snapshot.data[index].extensionAttributes.stockItem.qty >=1 ?
+                                      percentage ==null ?  CustomWishList(
                                         color: redColor,
                                         product_id:
                                         snapshot.data[index].id,
@@ -361,6 +370,33 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                         context: context,
                                         screen:
                                         CustomCircleNavigationBar(),
+                                      ) :
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          percentage== null ? Container():    Container(
+                                            width: width(context) * 0.1,
+                                            decoration: BoxDecoration(
+                                              color: greyColor,
+                                              borderRadius: BorderRadius.circular(5)
+                                            ),
+
+                                            child: Text("${percentage.round()} %",style: TextStyle(color: mainColor),textAlign: TextAlign.center,),
+                                          ),
+                                          CustomWishList(
+                                            color: redColor,
+                                            product_id:
+                                            snapshot.data[index].id,
+                                            qty: snapshot
+                                                .data[index]
+                                                .extensionAttributes
+                                                .stockItem
+                                                .qty,
+                                            context: context,
+                                            screen:
+                                            CustomCircleNavigationBar(),
+                                          )
+                                        ],
                                       ) : Container(),
                                     ],
                                   ),

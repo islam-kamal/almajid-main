@@ -8,16 +8,16 @@ import 'package:fluttertoast/fluttertoast.dart';
 class AddProductToCartWidget extends StatefulWidget {
   var product_quantity, product_sku, instock_status,btn_width,btn_height,text_size ,
       home_shape , product_image , product_id , add_wishlist_to_cart ,
-   product_details_page;
+      product_details_page;
   GlobalKey<ScaffoldState> scaffoldKey;
 
   AddProductToCartWidget(
       {this.product_quantity,
-      this.product_sku,
-      this.instock_status,
-      this.scaffoldKey,
-      this.btn_width,
-      this.btn_height,
+        this.product_sku,
+        this.instock_status,
+        this.scaffoldKey,
+        this.btn_width,
+        this.btn_height,
         this.text_size,
         this.home_shape = true,
         this.product_image,
@@ -65,7 +65,8 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
           } else {
             _isLoading = false;
           }
-        } else if (state is ErrorLoadingProduct &&
+        }
+        else if (state is ErrorLoadingProduct &&
             state.indicator == 'detail_add_to_cart' &&
             widget.product_sku == state.sku) {
           _isLoading = false;
@@ -112,59 +113,59 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
           ),
         )
             : Container(
-                alignment: Alignment.center,
-                padding: !widget.product_details_page ? EdgeInsets.all(0) :EdgeInsets.all(4),
-                child: StaggerAnimation(
-                  buttonController: _loginButtonController.view,
-                  btn_height: widget.btn_height,
-                  btn_width: widget.btn_width,
-                  text_size: widget.text_size,
-                  product_details_page: widget.product_details_page,
-                  image: "assets/icons/right-arrow.png",
-                  titleButton: "Add TO Cart",
-                  home_shape: widget.home_shape,
+          alignment: Alignment.center,
+          padding: !widget.product_details_page ? EdgeInsets.all(0) :EdgeInsets.all(0),
+          child: StaggerAnimation(
+            buttonController: _loginButtonController.view,
+            btn_height: widget.btn_height,
+            btn_width: widget.btn_width,
+            text_size: widget.text_size,
+            product_details_page: widget.product_details_page,
+            image: "assets/icons/right-arrow.png",
+            titleButton: "Add TO Cart",
+            home_shape: widget.home_shape,
 
-                  //    isResetScreen:false,
-                  onTap: widget.instock_status == false
-                      ? () {
-                          Flushbar(
-                            messageText: Container(
-                              width: StaticData.get_width(context) * 0.7,
-                              child: Wrap(
-                                children: [
-                                  Text(
-                                    translator.translate(
-                                        "There is no quantity of this product in stock"),
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(color: whiteColor),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            flushbarPosition: FlushbarPosition.BOTTOM,
-                            backgroundColor: redColor,
-                            flushbarStyle: FlushbarStyle.FLOATING,
-                            duration: Duration(seconds: 3),
-                          )..show(widget.scaffoldKey.currentState.context);
-                        }
-                      : ()async {
-                    if(widget.add_wishlist_to_cart){
-                      wishlist_bloc.add(AddToCarFromWishListEvent(
-                          context: context, qty: 1,
-                          wishlist_product_id: widget.product_id)
-                      );
-                    }else{
-                      shoppingCartBloc.add(AddProductToCartEvent(
-                          context: context,
-                          product_quantity: widget.product_quantity,
-                          product_sku: widget.product_sku,
-                          indictor: 'detail_add_to_cart'));
-                    }
-
-
-                        },
+            //    isResetScreen:false,
+            onTap: widget.instock_status == false
+                ? () {
+              Flushbar(
+                messageText: Container(
+                  width: StaticData.get_width(context) * 0.7,
+                  child: Wrap(
+                    children: [
+                      Text(
+                        translator.translate(
+                            "There is no quantity of this product in stock"),
+                        textDirection: TextDirection.rtl,
+                        style: TextStyle(color: whiteColor),
+                      ),
+                    ],
+                  ),
                 ),
-              );
+                flushbarPosition: FlushbarPosition.BOTTOM,
+                backgroundColor: redColor,
+                flushbarStyle: FlushbarStyle.FLOATING,
+                duration: Duration(seconds: 3),
+              )..show(widget.scaffoldKey.currentState.context);
+            }
+                : ()async {
+              if(widget.add_wishlist_to_cart){
+                wishlist_bloc.add(AddToCarFromWishListEvent(
+                    context: context, qty: 1,
+                    wishlist_product_id: widget.product_id)
+                );
+              }else{
+                shoppingCartBloc.add(AddProductToCartEvent(
+                    context: context,
+                    product_quantity: widget.product_quantity,
+                    product_sku: widget.product_sku,
+                    indictor: 'detail_add_to_cart'));
+              }
+
+
+            },
+          ),
+        );
       },
     );
   }

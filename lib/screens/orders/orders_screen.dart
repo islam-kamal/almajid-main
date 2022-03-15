@@ -7,6 +7,7 @@ import 'package:almajidoud/screens/orders/widgets/no_orders_widget.dart';
 import 'package:almajidoud/screens/orders/widgets/orders_header.dart';
 import 'package:almajidoud/screens/orders/widgets/single_order_item.dart';
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 class OrdersScreen extends StatefulWidget {
   var increment_id;
   OrdersScreen({this.increment_id});
@@ -28,7 +29,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
           body: WillPopScope(
             onWillPop: (){
-              customAnimatedPushNavigation(context, CustomCircleNavigationBar(page_index: 4,));
+              customAnimatedPushNavigation(context, CustomCircleNavigationBar(page_index: 3,));
             },
             child: Directionality(
               textDirection: translator.activeLanguageCode =='ar'? TextDirection.rtl : TextDirection.ltr,
@@ -48,7 +49,14 @@ class _OrdersScreenState extends State<OrdersScreen> {
                             bloc: orderBloc,
                             builder: (context,state){
                               if(state is Loading){
-                                return ShimmerNotification(
+                                return Padding(
+                                  padding: EdgeInsets.only(top: width(context) * 0.4, ),
+                                  child: Center(
+                                    child: SpinKitFadingCube(
+                                      color: Theme.of(context).primaryColor,
+                                      size: width(context) * 0.1,
+                                    ),
+                                  ),
                                 );
                               }else if(state is Done){
                                 return StreamBuilder<AllOrdersModel>(
@@ -56,12 +64,26 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                     builder: (context,snapshot){
                                       switch (snapshot.connectionState) {
                                         case ConnectionState.none:
-                                          return ShimmerNotification(
+                                          return Padding(
+                                            padding: EdgeInsets.only(top: width(context) * 0.4, ),
+                                            child: Center(
+                                              child: SpinKitFadingCube(
+                                                color: Theme.of(context).primaryColor,
+                                                size: width(context) * 0.1,
+                                              ),
+                                            ),
                                           );
                                         case ConnectionState.done:
                                           return Text('');
                                         case ConnectionState.waiting:
-                                          return ShimmerNotification(
+                                          return Padding(
+                                            padding: EdgeInsets.only(top: width(context) * 0.4, ),
+                                            child: Center(
+                                              child: SpinKitFadingCube(
+                                                color: Theme.of(context).primaryColor,
+                                                size: width(context) * 0.1,
+                                              ),
+                                            ),
                                           );
                                         case ConnectionState.active:
                                           if (snapshot.hasError) {
@@ -105,4 +127,5 @@ class _OrdersScreenState extends State<OrdersScreen> {
       ),
     );
   }
+
 }

@@ -37,14 +37,15 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
           child: Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              title: Text( translator.translate("Our Locations")),
+              backgroundColor: whiteColor,
+              title: Text( translator.translate("Our Locations"),style: TextStyle(fontWeight: FontWeight.normal,color: mainColor,),),
               leading: IconButton(
                 onPressed: (){
                   customAnimatedPushNavigation(context, CustomCircleNavigationBar(
                     page_index: MyApp.app_langauge =='ar' ? 4 : 0,
                   ));
                 },
-                icon: Icon(Icons.arrow_back_ios),
+                icon: Icon(Icons.arrow_back_ios,color: mainColor,),
               ),
 
             ),

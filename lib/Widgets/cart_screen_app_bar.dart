@@ -37,76 +37,52 @@ class CartScreenAppBarState extends State<CartScreenAppBar> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.only(
-            right: width(context) * .05,
-            left: width(context) * .05,
-            bottom: isLandscape(context)
-                ? 2 * height(context) * .01
-                : height(context) * .01),
         width: width(context),
-        color: mainColor,
-        //   height: isLandscape(context) ? 2 * height(context) * 0.08 : height(context) * .08, //0.08
+        color: whiteColor,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
+        Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+        child:      Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                widget.right_icon == null
-                    ? GestureDetector(
-                        onTap: widget.onTapCategoryDrawer,
-                        child: Image.asset(
-                          "assets/icons/category.png",
-                          height: isLandscape(context)
-                              ? 2 * height(context) * .04
-                              : height(context) * .04,
-                        ),
-                      )
-                    : GestureDetector(
+                GestureDetector(
                         onTap: () {
                           customPushNamedNavigation(context, widget.screen);
                         },
                         child: Icon(
                           Icons.navigate_before,
-                          color: whiteColor,
+                          color: mainColor,
                           size: 30,
                         ),
                       ),
-                widget.category_name == null
-                    ? AutoSearchClass()
-                    : Text(
+
+                Text(
                         widget.category_name,
                         style: TextStyle(
-                            color: whiteColor,
+                            color: mainColor,
                             fontSize: AlmajedFont.primary_font_size),
                       ),
-                widget.category_name != null || widget.home_logo == true
-                    ? widget.left_icon == null
-                        ? GestureDetector(
+
+                GestureDetector(
                             onTap: () {
                               customAnimatedPushNavigation(
                                   context, CustomCircleNavigationBar());
                             },
                             child: Image.asset(
                               "assets/icons/logo.png",
+                              color: mainColor,
                               height: isLandscape(context)
                                   ? 2 * height(context) * .03
                                   : height(context) * .03,
                             ))
-                        : GestureDetector(
-                            onTap: () {
-                              customAnimatedPushNavigation(
-                                  context, NotificationsScreen());
-                            },
-                            child: Image.asset(
-                              widget.left_icon,
-                              height: isLandscape(context)
-                                  ? 2 * height(context) * .03
-                                  : height(context) * .03,
-                            ),
-                          )
-                    : Container(),
+
               ],
+            ),
+        ),
+            Divider(color:mainColor,
+              thickness: 1,
             ),
           ],
         ),

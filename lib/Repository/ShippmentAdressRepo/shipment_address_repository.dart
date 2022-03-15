@@ -99,6 +99,8 @@ class ShipmentAddressRepository {
       if (response.statusCode == 200) {
         if (StaticData.vistor_value != 'visitor' &&
             !StaticData.chosse_address_status) {
+
+
           final newAddressresponse = await dio.put(
               "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/customers/me/address",
               data: {

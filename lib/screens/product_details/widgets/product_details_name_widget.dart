@@ -9,33 +9,42 @@ productDetailsNameWidget({BuildContext context , String product_name , Widget ca
       ? TextDirection.ltr
           : TextDirection.rtl,
       child:Container(
-    padding: EdgeInsets.only(
-        right: width(context) * .05, left: width(context) * .05),
-    child: Row(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+    Padding(
+    padding: EdgeInsets.symmetric(horizontal: 10),
+        child:   Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            InkWell(
-              child: Icon(Icons.arrow_back_ios),
-              onTap: (){
-                category_screen== null?  customAnimatedPushNavigation(context, CustomCircleNavigationBar())
-                   : customAnimatedPushNavigation(context, category_screen) ;
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                InkWell(
+                  child: Icon(Icons.arrow_back_ios),
+                  onTap: (){
+                    category_screen== null?  customAnimatedPushNavigation(context, CustomCircleNavigationBar())
+                        : customAnimatedPushNavigation(context, category_screen) ;
+                  },
+                ),
+                Container(
+                  width: width(context) * .7,
+                  child: customDescriptionText(
+                      context: context,
+                      maxLines: 2,
+                      text: product_name??"",
+                      percentageOfHeight: .020),
+                )
+              ],
             ),
-            Container(
-            width: width(context) * .7,
-              child: customDescriptionText(
-                  context: context,
-                  maxLines: 2,
-                  text: product_name??"",
-                  percentageOfHeight: .020),
-            )
+            CartBadge(iconColor: Colors.black,)
           ],
+        ) ),
+        Divider(color:mainColor,
+          thickness: 1,
         ),
-        CartBadge(iconColor: Colors.black,)
       ],
-    ),
+    )
       ) );
 }

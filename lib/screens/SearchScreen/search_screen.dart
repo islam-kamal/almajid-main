@@ -27,6 +27,8 @@ class _SearchScreenState extends State<SearchScreen> {
   var product_image;
   GlobalKey<ScaffoldState> scaffold_key = GlobalKey();
   final search_bloc = SearchBloc(null);
+  var percentage;
+
   @override
   void initState() {
     controller = TextEditingController();
@@ -128,20 +130,23 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 }
                                               });
                                               if(startDate ==null || endDate ==null ){
-                                                new_price = null;
+                                                new_price = minimal_price;
+                                                if(double.parse(minimal_price) < double.parse(snapshot.data.items[index].price.toString()))
+                                                  percentage = (1 - (double.parse(minimal_price)  / snapshot.data.items[index].price) )* 100;
                                               }
                                               else{
                                                 if(StaticData.isCurrentDateInRange(startDate,endDate)
                                                     && double.parse(special_price) <= double.parse(minimal_price)
                                                     && double.parse(special_price).toStringAsFixed(2) !=  snapshot.data.items[index].price ) {
                                                   new_price = special_price;
-
+                                                  percentage = (1 - (double.parse(new_price)  / snapshot.data.items[index].price) )* 100;
                                                 }else if(double.parse(special_price) > double.parse(minimal_price)){
                                                   new_price = minimal_price;
-                                                }
-                                                else  if(double.parse(special_price) > double.parse(minimal_price)){
-                                                  new_price = null;
+                                                  percentage = (1 - (double.parse(new_price)  / snapshot.data.items[index].price) )* 100;
 
+                                                }
+                                                else{
+                                                  new_price = null;
                                                 }
 
                                               }
@@ -175,21 +180,35 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                           width: width(context) * .95,
                                                                           child: Row(
                                                                             children: [
-                                                                              Container(
-                                                                                margin: EdgeInsets.only(right: 3,left: 3),
-                                                                                width: width(context) * .3,
-                                                                                height: isLandscape(context)
-                                                                                    ? 2 * height(context) * .16
-                                                                                    : height(context) * .16,
-                                                                                decoration: BoxDecoration(
-                                                                                    color: backGroundColor,
-                                                                                    borderRadius: BorderRadius.circular(15),
-                                                                                    image: DecorationImage(
-                                                                                        image: NetworkImage(
-                                                                                          product_image??'',
-                                                                                        ),
-                                                                                        fit: BoxFit.fill)),
-                                                                              ) ,
+                                                                              Stack(
+                                                                                children: [
+                                                                                  Container(
+                                                                                    margin: EdgeInsets.only(right: 3,left: 3),
+                                                                                    width: width(context) * .3,
+                                                                                    height: isLandscape(context)
+                                                                                        ? 2 * height(context) * .16
+                                                                                        : height(context) * .16,
+                                                                                    decoration: BoxDecoration(
+                                                                                        color: backGroundColor,
+                                                                                        borderRadius: BorderRadius.circular(15),
+                                                                                        image: DecorationImage(
+                                                                                            image: NetworkImage(
+                                                                                              product_image??'',
+                                                                                            ),
+                                                                                            fit: BoxFit.fill)),
+                                                                                  ),
+                                                                                  percentage== null ? Container():    Container(
+                                                                                    width: width(context) * 0.15,
+                                                                                    decoration: BoxDecoration(
+                                                                                        color: greyColor,
+                                                                                        borderRadius: BorderRadius.circular(5)
+                                                                                    ),
+
+                                                                                    child: Text("${percentage.round()} %",style: TextStyle(color: mainColor),textAlign: TextAlign.center,),
+                                                                                  ),
+                                                                                ],
+                                                                              )
+                                                                        ,
 
                                                                               Directionality(
                                                                                   textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.ltr :TextDirection.rtl,
@@ -201,7 +220,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                       crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                                                                                       children: [
-                                                                                        snapshot.data.items[index].extensionAttributes.stockItem.isInStock?     CustomWishList(
+                                                                                        snapshot.data.items[index].extensionAttributes.stockItem.qty >= 0?     CustomWishList(
                                                                                           color: redColor,
                                                                                           product_id: snapshot.data.items[index].id,
                                                                                           qty: snapshot.data.items[index].extensionAttributes.stockItem.qty,
@@ -290,7 +309,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                           child:      Row(
                                                                                             mainAxisAlignment: MainAxisAlignment.center,
                                                                                             children: [
-                                                                                              snapshot.data.items[index].extensionAttributes.stockItem.isInStock?
+                                                                                              snapshot.data.items[index].extensionAttributes.stockItem.qty >=0?
                                                                                               AddProductToCartWidget(
                                                                                                 product_sku: snapshot.data.items[index].sku,
                                                                                                 product_quantity:   1,

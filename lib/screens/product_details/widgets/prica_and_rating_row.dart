@@ -25,7 +25,7 @@ priceAndRatingRow({BuildContext context , var new_price ,var old_price, var mini
                              old_price.toString()  :
                               double.parse(minimal_price).toStringAsFixed(2)
                                   : double.parse(new_price)} ",
-                          size: StaticData.get_height(context) * .020,
+                          size: StaticData.get_height(context) * .024,
                           color: blackColor,
                           maxLines: 2,
                           weight: FontWeight.bold,

@@ -32,9 +32,7 @@ class _ApplePayScreenState extends State<ApplePayScreen> {
      super.initState();
   }
   void onApplePayResult(paymentResult) {
-    // debugPrint(paymentResult.toString());
     final token = json.decode(paymentResult["token"]);
-    // debugPrint("after extracted data");
 
     final Future<http.Response> response = payment_repository.getPayfortApplePayValidation(
       apple_data: token["data"],

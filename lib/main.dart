@@ -1,5 +1,6 @@
 
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
+import 'package:almajidoud/screens/intro/language_country_screen.dart';
 
 import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
@@ -64,9 +65,6 @@ class MyApp extends StatefulWidget{
 }
 
 class _MyAppState extends State<MyApp> {
-
-
-
 
   Locale local;
   Key key = UniqueKey();

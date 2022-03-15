@@ -182,7 +182,7 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                                               child: Column(
                                                                                 crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                                                                                 children: [
-                                                                                  snapshot.data.items[index].extensionAttributes.stockItem.isInStock ?   CustomWishList(
+                                                                                  snapshot.data.items[index].extensionAttributes.stockItem.qty >= 0 ?   CustomWishList(
                                                                                     color: redColor,
                                                                                     product_id: snapshot.data.items[index].id,
                                                                                     qty: snapshot.data.items[index].extensionAttributes.stockItem.qty,
@@ -236,7 +236,7 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                                                       return _isLoading
                                                                                           ? CircularProgressIndicator(
                                                                                       )
-                                                                                          :  snapshot.data.items[index].extensionAttributes.stockItem.isInStock ? InkWell(
+                                                                                          :  snapshot.data.items[index].extensionAttributes.stockItem.qty >= 0 ? InkWell(
                                                                                               onTap: () {
                                                                                                       shoppingCartBloc.add(AddProductToCartEvent(context: context, product_quantity: snapshot.data.items[index].extensionAttributes.stockItem.qty, product_sku: snapshot.data.items[index].sku, indictor: 'search_add_to_cart'));
                                                                                                     },

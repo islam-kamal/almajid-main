@@ -14,6 +14,7 @@ class singleCategoryProductItem extends StatelessWidget {
   TextEditingController qty_controller = new TextEditingController();
   Items product;
   Widget category_screen;
+  var percentage;
 
   GlobalKey<ScaffoldState> scafffoldKey;
   singleCategoryProductItem({this.product, this.scafffoldKey,this.category_screen});
@@ -51,15 +52,21 @@ class singleCategoryProductItem extends StatelessWidget {
       }
     });
     if(startDate ==null || endDate ==null ){
-      new_price = null;
+      new_price = minimal_price;
+      if(double.parse(minimal_price) < double.parse(product.price.toString()))
+        percentage = (1 - (double.parse(minimal_price)  / product.price) )* 100;
+
     }else{
       if(StaticData.isCurrentDateInRange(startDate,endDate)
           && double.parse(special_price) <= double.parse(minimal_price)
           && double.parse(special_price).toStringAsFixed(2) !=  product.price ) {
         new_price = special_price;
+        percentage = (1 - (double.parse(new_price)  / product.price) )* 100;
 
       }else if(double.parse(special_price) > double.parse(minimal_price)){
         new_price = minimal_price;
+        percentage = (1 - (double.parse(new_price)  / product.price) )* 100;
+
       }
       else {
         new_price = null;
@@ -67,7 +74,6 @@ class singleCategoryProductItem extends StatelessWidget {
       }
 
     }
-
     return InkWell(
       onTap: (){
         customAnimatedPushNavigation(context, ProductDetailsScreen(
@@ -91,21 +97,35 @@ class singleCategoryProductItem extends StatelessWidget {
 
                           child: Row(
                             children: [
-                              Container(
-                                margin: EdgeInsets.only(right: 3, left: 3),
-                                width: width(context) * .3,
-                                height: isLandscape(context)
-                                    ? 2 * height(context) * .16
-                                    : height(context) * .16,
-                                decoration: BoxDecoration(
-                                    color: backGroundColor,
-                                    borderRadius: BorderRadius.circular(15),
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                          product_image??'',
-                                        ),
-                                        fit: BoxFit.fill)),
+                              Stack(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(right: 3, left: 3),
+                                    width: width(context) * .3,
+                                    height: isLandscape(context)
+                                        ? 2 * height(context) * .16
+                                        : height(context) * .16,
+                                    decoration: BoxDecoration(
+                                        color: backGroundColor,
+                                        borderRadius: BorderRadius.circular(15),
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                              product_image??'',
+                                            ),
+                                            fit: BoxFit.fill)),
+                                  ),
+                                  percentage== null ? Container():       Container(
+                                    width: width(context) * 0.15,
+                                    decoration: BoxDecoration(
+                                        color: greyColor,
+                                        borderRadius: BorderRadius.circular(5)
+                                    ),
+
+                                    child: Text("${percentage.round()} %",style: TextStyle(color: mainColor),textAlign: TextAlign.center,),
+                                  ),
+                                ],
                               ),
+
                               Directionality(
                                   textDirection:
                                   translator.activeLanguageCode == 'ar'
@@ -124,7 +144,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                           ? CrossAxisAlignment.end
                                           : CrossAxisAlignment.start,
                                       children: [
-                                        product.extensionAttributes.stockItem.isInStock ?     CustomWishList(
+                                        product.extensionAttributes.stockItem.qty >=1 ?     CustomWishList(
                                           color: redColor,
                                           product_id: product.id,
                                           qty: product
@@ -142,9 +162,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                            maxLines: 2,
                                            text: product.name,
                                        ),
-                                       alignment:translator.activeLanguageCode ==
-                                           'en'
-                                           ? Alignment.centerLeft :  Alignment.centerRight,
+                                       alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
                                      ),
                                    ),
                                         Row(
@@ -212,7 +230,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                      child:    Row(
                                        mainAxisAlignment: MainAxisAlignment.center,
                                        children: [
-                                         product.extensionAttributes.stockItem.isInStock ?     AddProductToCartWidget(
+                                         product.extensionAttributes.stockItem.qty >=1 ?     AddProductToCartWidget(
                                            product_sku: product.sku,
                                            product_quantity:   1,
                                            instock_status: product.extensionAttributes.stockItem.isInStock,

@@ -10,7 +10,7 @@ sendCodeTopHeader({BuildContext context}) {
             ? 2 * height(context) * .01
             : height(context) * .01),
     width: width(context),
-    color: mainColor,
+    color: whiteColor,
     height: isLandscape(context)
         ? 2 * height(context) * .07
         : height(context) * .07,
@@ -23,7 +23,7 @@ sendCodeTopHeader({BuildContext context}) {
           },
           child: Icon(
             Icons.navigate_before,
-            color: whiteColor,
+            color: mainColor,
             size: 30,
           ),
         ),

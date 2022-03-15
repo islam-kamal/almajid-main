@@ -19,6 +19,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:almajidoud/screens/WishList/add_wishlist_item_to_cart.dart';
+
 class WishListScreen extends StatefulWidget {
   @override
   _WishListScreenState createState() => _WishListScreenState();
@@ -28,6 +29,8 @@ class _WishListScreenState extends State<WishListScreen> {
   List<String> gallery = new List<String>();
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   var product_image;
+  var percentage;
+
   @override
   void initState() {
     wishlist_bloc.add(getAllWishList_click());
@@ -99,18 +102,14 @@ class _WishListScreenState extends State<WishListScreen> {
                                   );
                                 } else if (state.indicator == 'remove_fav') {
                                   return Center(
-                                    child: CircularProgressIndicator(
-                                    ),
+                                    child: CircularProgressIndicator(),
                                   );
                                 } else if (state.indicator == 'add_cart') {
                                   return Center(
-                                    child: CircularProgressIndicator(
-                                    ),
+                                    child: CircularProgressIndicator(),
                                   );
                                 }
-                              }
-
-                              else if (state is Done) {
+                              } else if (state is Done) {
                                 if (state.indicator == 'get_fav') {
                                   var data = state.model as GetAllWishListModel;
                                   if (data.items == null ||
@@ -124,52 +123,77 @@ class _WishListScreenState extends State<WishListScreen> {
                                           if (snapshot.data == null) {
                                             return Container();
                                           } else {
-
                                             return ListView.builder(
                                                 shrinkWrap: true,
                                                 itemCount:
                                                     snapshot.data.itemsCount,
                                                 itemBuilder: (context, index) {
-                                                  snapshot.data.items[index].product.customAttributes.forEach((element) {
-                                                    if (element.attributeCode == 'thumbnail') {
-                                                      product_image = element.value;
+                                                  snapshot.data.items[index]
+                                                      .product.customAttributes
+                                                      .forEach((element) {
+                                                    if (element.attributeCode ==
+                                                        'thumbnail') {
+                                                      product_image =
+                                                          element.value;
                                                     }
                                                   });
                                                   String special_price;
-                                                  var new_price , minimal_price;
-                                                  DateTime startDate , endDate ;
-                                                  snapshot.data.items[index].product.customAttributes.forEach((element) {
-                                                    if(element.attributeCode == "thumbnail")
-                                                      product_image = element.value;
-                                                    else if(element.attributeCode == "special_from_date"){
-                                                      startDate = DateTime.parse(element.value.toString().substring(0,10));
-                                                    }
-                                                    else  if(element.attributeCode == "special_to_date"){
-                                                      endDate = DateTime.parse(element.value.toString().substring(0,10));
-                                                    }
-                                                    else    if(element.attributeCode == 'special_price'){
-                                                      special_price = element.value;
-                                                    }
-                                                    else if( element.attributeCode == 'minimal_price'){
-                                                      minimal_price = element.value;
+                                                  var new_price, minimal_price;
+                                                  DateTime startDate, endDate;
+                                                  snapshot.data.items[index]
+                                                      .product.customAttributes
+                                                      .forEach((element) {
+                                                    if (element.attributeCode ==
+                                                        "thumbnail")
+                                                      product_image =
+                                                          element.value;
+                                                    else if (element
+                                                            .attributeCode ==
+                                                        "special_from_date") {
+                                                      startDate =
+                                                          DateTime.parse(element
+                                                              .value
+                                                              .toString()
+                                                              .substring(
+                                                                  0, 10));
+                                                    } else if (element
+                                                            .attributeCode ==
+                                                        "special_to_date") {
+                                                      endDate = DateTime.parse(
+                                                          element.value
+                                                              .toString()
+                                                              .substring(
+                                                                  0, 10));
+                                                    } else if (element
+                                                            .attributeCode ==
+                                                        'special_price') {
+                                                      special_price =
+                                                          element.value;
+                                                    } else if (element
+                                                            .attributeCode ==
+                                                        'minimal_price') {
+                                                      minimal_price =
+                                                          element.value;
                                                     }
                                                   });
-                                                  if(startDate ==null || endDate ==null ){
-                                                    new_price = null;
-                                                  }else{
-                                                    if(StaticData.isCurrentDateInRange(startDate,endDate)
-                                                        && double.parse(special_price) <= double.parse(minimal_price)
-                                                        && double.parse(special_price).toStringAsFixed(2) !=  snapshot.data.items[index].product.price ) {
+                                                  if (startDate == null || endDate == null) {
+                                                    new_price = minimal_price;
+                                                    if(double.parse(minimal_price) < double.parse( snapshot.data.items[index].product.price.toString()))
+                                                      percentage = (1 - (double.parse(minimal_price)  /  snapshot.data.items[index].product.price) )* 100;
+
+                                                  } else {
+                                                    if (StaticData.isCurrentDateInRange(startDate, endDate) &&
+                                                        double.parse(special_price) <=double.parse(minimal_price) &&
+                                                        double.parse(special_price).toStringAsFixed(2) !=
+                                                            snapshot.data.items[index].product.price) {
                                                       new_price = special_price;
-
-                                                    }else if(double.parse(special_price) > double.parse(minimal_price)){
+                                                      percentage = (1 - (double.parse(new_price)  / snapshot.data.items[index].product.price) )* 100;
+                                                    } else if (double.parse(special_price) > double.parse(minimal_price)) {
                                                       new_price = minimal_price;
-                                                    }
-                                                    else {
+                                                      percentage = (1 - (double.parse(new_price)  / snapshot.data.items[index].product.price) )* 100;
+                                                    } else {
                                                       new_price = null;
-
                                                     }
-
                                                   }
 
                                                   return InkWell(
@@ -177,10 +201,17 @@ class _WishListScreenState extends State<WishListScreen> {
                                                         customAnimatedPushNavigation(
                                                             context,
                                                             ProductDetailsScreen(
-                                                              product_id: snapshot.data.items[index].product.id,
+                                                              product_id:
+                                                                  snapshot
+                                                                      .data
+                                                                      .items[
+                                                                          index]
+                                                                      .product
+                                                                      .id,
                                                             ));
                                                       },
-                                                      child: Stack(children: [
+                                                      child: Stack(
+                                                          children: [
                                                         Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -198,112 +229,119 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                         width: width(context) * .95,
                                                                         child: Row(
                                                                           children: [
-                                                                            Container(
-                                                                              margin: EdgeInsets.only(right: 3, left: 3),
-                                                                              height: isLandscape(context) ? 2 * height(context) * .14 : height(context) * .14,
-                                                                              width: StaticData.get_width(context) * .3,
-                                                                              decoration: BoxDecoration(color: backGroundColor,
-                                                                                  borderRadius: BorderRadius.circular(15),
-                                                                                  image: DecorationImage(
-                                                                                      image: NetworkImage(
-                                                                                          "${Urls.BASE_URL}/pub/media/catalog/product/${product_image}"), fit: BoxFit.fill)),
-                                                                            ),
-                                                                    Directionality(
-                                                                      textDirection:
-                                                                      translator.activeLanguageCode == 'ar'
-                                                                          ? TextDirection.ltr
-                                                                          : TextDirection.rtl,
-                                                                      child:     Container(
-                                                                              padding: EdgeInsets.only(right: width(context) * .02, left: width(context) * .02),
-                                                                              width: width(context) * .6,
-                                                                             height: isLandscape(context) ? 2 * height(context) * .15 : height(context) * .15,
-                                                                              child: Column(
-                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-                                                                                children: [
-                                                                                  CustomWishList(
-                                                                                    color: redColor,
-                                                                                    product_id: snapshot.data.items[index].product.id,
-                                                                                    qty: snapshot.data.items[index].qty,
-                                                                                    context: context,
-                                                                                    screen: WishListScreen(),
-                                                                                    scafffoldKey: _scaffoldKey,
-                                                                                    in_wishlist: true,
+                                                                            Stack(
+                                                                              children: [
+                                                                                Container(
+                                                                                  margin: EdgeInsets.only(right: 3, left: 3),
+                                                                                  height: isLandscape(context) ? 2 * height(context) * .14 : height(context) * .14,
+                                                                                  width: StaticData.get_width(context) * .3,
+                                                                                  decoration: BoxDecoration(
+                                                                                      color: backGroundColor, borderRadius: BorderRadius.circular(15),
+                                                                                      image: DecorationImage(image: NetworkImage("${Urls.BASE_URL}/pub/media/catalog/product/${product_image}"),
+                                                                                          fit: BoxFit.fill)),
+                                                                                ),
+                                                                                percentage== null ? Container():    Container(
+                                                                                  width: width(context) * 0.15,
+                                                                                  decoration: BoxDecoration(
+                                                                                      color: greyColor,
+                                                                                      borderRadius: BorderRadius.circular(5)
                                                                                   ),
-                                                                                  Padding(
-                                                                                    padding: EdgeInsets.only(right: 5,left: 5),
-                                                                                    child:    Align(
-                                                                                      child:   customDescriptionText(
-                                                                                        context: context,
-                                                                                        textColor: mainColor,
-                                                                                        maxLines: 2,
-                                                                                        text: snapshot.data.items[index].product.name,
-                                                                                      ),
-                                                                                      alignment:translator.activeLanguageCode ==
-                                                                                          'en'
-                                                                                          ? Alignment.centerLeft :  Alignment.centerRight,
+
+                                                                                  child: Text("${percentage.round()} %",style: TextStyle(color: mainColor),textAlign: TextAlign.center,),
+                                                                                ),
+                                                                              ],
+                                                                            )
+                                                                           ,
+                                                                            Directionality(
+                                                                              textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.ltr : TextDirection.rtl,
+                                                                              child: Container(
+                                                                                padding: EdgeInsets.only(right: width(context) * .02, left: width(context) * .02),
+                                                                                width: width(context) * .6,
+                                                                                height: isLandscape(context) ? 2 * height(context) * .17 : height(context) * .17,
+                                                                                child: Column(
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                                                                                  children: [
+                                                                                    CustomWishList(
+                                                                                      color: redColor,
+                                                                                      product_id: snapshot.data.items[index].product.id,
+                                                                                      qty: snapshot.data.items[index].qty,
+                                                                                      context: context,
+                                                                                      screen: WishListScreen(),
+                                                                                      scafffoldKey: _scaffoldKey,
+                                                                                      in_wishlist: true,
                                                                                     ),
-                                                                                  ),
-                                                                                  Row(
-                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                    children: [
-
-                                                                                      Row(
-                                                                                        children: [
-                                                                                          Wrap(
-                                                                                            children: [
-                                                                                              Row(
-                                                                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                                                                crossAxisAlignment: CrossAxisAlignment.end,
-                                                                                                children: [
-                                                                                                  MyText(
-                                                                                                    text: "${new_price == null ?snapshot.data.items[index].product.price.toStringAsFixed(2) : double.parse(new_price)} ",
-                                                                                                    size: StaticData.get_height(context) * .017,
-                                                                                                    color: blackColor,
-                                                                                                    maxLines: 2,
-                                                                                                    weight: FontWeight.bold,
-                                                                                                  ),
-                                                                                                  MyText(
-                                                                                                    text: " ${MyApp.country_currency}",
-                                                                                                    size: StaticData.get_height(context) * .011,
-                                                                                                    color: blackColor,
-                                                                                                    maxLines: 2,
-                                                                                                    weight: FontWeight.normal,
-                                                                                                  ),
-                                                                                                ],
-                                                                                              ),
-                                                                                            ],
-                                                                                          ),
-                                                                                          SizedBox(width: width(context) * 0.03,),
-                                                                                          new_price == null ?  Container()   :       Text(
-                                                                                            "${snapshot.data.items[index].product.price} ${MyApp.country_currency}",
-                                                                                            style: TextStyle(
-                                                                                                decoration: TextDecoration.lineThrough,
-                                                                                                fontSize: StaticData.get_height(context)  * .011,
-                                                                                                color: old_price_color),
-                                                                                          ),
-                                                                                        ],
+                                                                                    Padding(
+                                                                                      padding: EdgeInsets.only(right: 5, left: 5),
+                                                                                      child: Align(
+                                                                                        child: customDescriptionText(
+                                                                                          context: context,
+                                                                                          textColor: mainColor,
+                                                                                          maxLines: 2,
+                                                                                          text: snapshot.data.items[index].product.name,
+                                                                                        ),
+                                                                                        alignment: translator.activeLanguageCode == 'en' ? Alignment.centerLeft : Alignment.centerRight,
                                                                                       ),
-
-                                                                                      RatingBar.readOnly(
-                                                                                        initialRating: 5.0,
-                                                                                        maxRating: 5,
-                                                                                        isHalfAllowed: true,
-                                                                                        halfFilledIcon: Icons.star_half,
-                                                                                        filledIcon: Icons.star,
-                                                                                        emptyIcon: Icons.star_border,
-                                                                                        size: StaticData.get_width(context) * 0.03,
-                                                                                        filledColor: (snapshot.data.items[index].product.visibility.toDouble() >= 1) ? Colors.yellow.shade700 : Colors.yellow.shade700,
-                                                                                      ),
-                                                                                    ],
-                                                                                  ),
-                                                                                  AddWishlistItemToCart(
-                                                                                    product_id:snapshot.data.items[index].id ,
-                                                                                  )
-                                                                                ],
+                                                                                    ),
+                                                                                    Row(
+                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                      children: [
+                                                                                        Row(
+                                                                                          children: [
+                                                                                            Wrap(
+                                                                                              children: [
+                                                                                                Row(
+                                                                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                                                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                                                                                  children: [
+                                                                                                    MyText(
+                                                                                                      text: "${new_price == null ? snapshot.data.items[index].product.price.toStringAsFixed(2) : double.parse(new_price)} ",
+                                                                                                      size: StaticData.get_height(context) * .017,
+                                                                                                      color: blackColor,
+                                                                                                      maxLines: 2,
+                                                                                                      weight: FontWeight.bold,
+                                                                                                    ),
+                                                                                                    MyText(
+                                                                                                      text: " ${MyApp.country_currency}",
+                                                                                                      size: StaticData.get_height(context) * .011,
+                                                                                                      color: blackColor,
+                                                                                                      maxLines: 2,
+                                                                                                      weight: FontWeight.normal,
+                                                                                                    ),
+                                                                                                  ],
+                                                                                                ),
+                                                                                              ],
+                                                                                            ),
+                                                                                            SizedBox(
+                                                                                              width: width(context) * 0.03,
+                                                                                            ),
+                                                                                            new_price == null
+                                                                                                ? Container()
+                                                                                                : Text(
+                                                                                                    "${snapshot.data.items[index].product.price} ${MyApp.country_currency}",
+                                                                                                    style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: StaticData.get_height(context) * .011, color: old_price_color),
+                                                                                                  ),
+                                                                                          ],
+                                                                                        ),
+                                                                                        RatingBar.readOnly(
+                                                                                          initialRating: 5.0,
+                                                                                          maxRating: 5,
+                                                                                          isHalfAllowed: true,
+                                                                                          halfFilledIcon: Icons.star_half,
+                                                                                          filledIcon: Icons.star,
+                                                                                          emptyIcon: Icons.star_border,
+                                                                                          size: StaticData.get_width(context) * 0.03,
+                                                                                          filledColor: (snapshot.data.items[index].product.visibility.toDouble() >= 1) ? Colors.yellow.shade700 : Colors.yellow.shade700,
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                    AddWishlistItemToCart(
+                                                                                      product_id: snapshot.data.items[index].id,
+                                                                                    )
+                                                                                  ],
+                                                                                ),
                                                                               ),
-                                                                            ),
-                                                                      )
+                                                                            )
                                                                           ],
                                                                         ),
                                                                         decoration: BoxDecoration(color: backGroundColor))),
@@ -324,8 +362,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                           );
                                         } else {
                                           return Center(
-                                            child: CircularProgressIndicator(
-                                            ),
+                                            child: CircularProgressIndicator(),
                                           );
                                         }
                                       },
@@ -352,9 +389,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                     flushbarStyle: FlushbarStyle.FLOATING,
                                   ).show(_scaffoldKey.currentState.context);
                                 }
-                              }
-
-                              else if (state is ErrorLoading) {
+                              } else if (state is ErrorLoading) {
                                 if (state.indicator == 'get_fav') {
                                   return no_data_widget(context: context);
                                 } else if (state.indicator == 'remove_fav') {
@@ -363,7 +398,8 @@ class _WishListScreenState extends State<WishListScreen> {
                                   Flushbar(
                                     messageText: Container(
                                       child: Text(
-                                        translator.translate("The wishlist item does not exist."),
+                                        translator.translate(
+                                            "The wishlist item does not exist."),
                                         maxLines: 2,
                                         textAlign: TextAlign.end,
                                         textDirection: TextDirection.rtl,
@@ -378,8 +414,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                 }
                               } else {
                                 return Center(
-                                  child: CircularProgressIndicator(
-                                  ),
+                                  child: CircularProgressIndicator(),
                                 );
                               }
                             },
@@ -398,41 +433,36 @@ class _WishListScreenState extends State<WishListScreen> {
     if (response) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => super.widget));
-    } else {
-    }
+    } else {}
   }
 
-
   Widget positionedRemove({int itemId}) {
-    return   Directionality(
-        textDirection:
-        translator.activeLanguageCode == 'ar'
-        ? TextDirection.ltr
+    return Directionality(
+        textDirection: translator.activeLanguageCode == 'ar'
+            ? TextDirection.ltr
             : TextDirection.rtl,
-        child:   Positioned(
-      top: width(context) * 0.15,
-      right:translator.activeLanguageCode == 'ar'
-          ?  0 : null,
-          left:translator.activeLanguageCode == 'ar'
-              ?  null : 0,
-      child: Container(
-        height: 30,
-        width: 30,
-        child: MaterialButton(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0)),
-            padding: EdgeInsets.all(0.0),
-            color: mainColor,
-            child: Icon(
-              Icons.clear,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              wishlist_bloc
-                  .add(removeFromWishListEvent(wishlist_item_id: itemId));
-              //       delete_cart_item(wishlist_item_id: itemId),
-            }),
-      ),
+        child: Positioned(
+          top: width(context) * 0.20,
+          right: translator.activeLanguageCode == 'ar' ? 0 : null,
+          left: translator.activeLanguageCode == 'ar' ? null : 0,
+          child: Container(
+            height: 30,
+            width: 30,
+            child: MaterialButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0)),
+                padding: EdgeInsets.all(0.0),
+                color: mainColor,
+                child: Icon(
+                  Icons.clear,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  wishlist_bloc
+                      .add(removeFromWishListEvent(wishlist_item_id: itemId));
+                  //       delete_cart_item(wishlist_item_id: itemId),
+                }),
+          ),
         ));
   }
 }

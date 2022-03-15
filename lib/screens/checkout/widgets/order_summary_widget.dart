@@ -28,128 +28,134 @@ orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments 
   });
 
 
-  return Column(
-    children: [
-      Container(
-        width: width(context) * .9,
-        child: customDescriptionText(
-            context: context,
-            text: "Order Summary",
-            textAlign: TextAlign.start,
-            fontWeight: FontWeight.bold,
-            percentageOfHeight: .022),
-      ),
-      responsiveSizedBox(context: context, percentageOfHeight: .02),
-      Container(
+  return ListView(
+    shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      children: [
+        Container(
           width: width(context) * .9,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              customDescriptionText(
-                  context: context,
-                  text: "Subtotal",
-                  textAlign: TextAlign.start,
-                  percentageOfHeight: .020),
-              customDescriptionText(
-                  context: context,
-                  text: " ${MyApp.country_currency} ${subtotal} ",
-                  textAlign: TextAlign.start,
-                  percentageOfHeight: .020),
-            ],
-          )),
-      responsiveSizedBox(context: context, percentageOfHeight: .015),
-      discount == null ? Container() :   Container(
-          width: width(context) * .9,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              customDescriptionText(
-                  context: context,
-                  text: "Discount",
-                  textAlign: TextAlign.start,
-                  percentageOfHeight: .020),
-              customDescriptionText(
-                  context: context,
-                  text:  " ${MyApp.country_currency} ${discount} ",
-                  textAlign: TextAlign.start,
-                  percentageOfHeight: .020),
-            ],
-          )),
-      responsiveSizedBox(context: context, percentageOfHeight: .015),
-      Container(
-          width: width(context) * .9,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              customDescriptionText(
-                  context: context,
-                  text: "VAT",
-                  textAlign: TextAlign.start,
-                  percentageOfHeight: .020),
-              customDescriptionText(
-                  context: context,
-                  text: " ${MyApp.country_currency} ${vat} ",
-                  textAlign: TextAlign.start,
-                  percentageOfHeight: .020),
-            ],
-          )),
-      responsiveSizedBox(context: context, percentageOfHeight: .015),
-      Container(
-          width: width(context) * .9,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              customDescriptionText(
-                  context: context,
-                  text: "Shipping",
-                  textAlign: TextAlign.start,
-                  percentageOfHeight: .020),
-              customDescriptionText(
-                  context: context,
-                  text: shipping== 0 ? translator.translate("Free") : " ${MyApp.country_currency} ${shipping} ",
-                  textAlign: TextAlign.start,
-                  percentageOfHeight: .020),
-            ],
-          )),
+          child: customDescriptionText(
+              context: context,
+              text: "Order Summary",
+              textAlign: TextAlign.start,
+              fontWeight: FontWeight.bold,
+              percentageOfHeight: .022),
+        ),
+        responsiveSizedBox(context: context, percentageOfHeight: .02),
+        Container(
+            width: width(context) * .9,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-      responsiveSizedBox(context: context, percentageOfHeight: .015),
-     cash == 'الدفع عند الإستلام' || cash == "Cash On Delivery" ? Container(
-          width: width(context) * .9,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              customDescriptionText(
-                  context: context,
-                  text: "Payment Fees",
-                  textAlign: TextAlign.start,
-                  percentageOfHeight: .020),
-              customDescriptionText(
-                  context: context,
-                  text: payment_fees== 0 ? translator.translate("Free") : " ${MyApp.country_currency} ${payment_fees} ",
-                  textAlign: TextAlign.start,
-                  percentageOfHeight: .020),
-            ],
-          )) : Container()  ,
-      Divider(color: greyColor),
-      Container(
-          width: width(context) * .9,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              customDescriptionText(
-                  context: context,
-                  text: "Total to pay",
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-                  percentageOfHeight: .020),
-              customDescriptionText(
-                  context: context,
-                  text: "${MyApp.country_currency} $grand_total",
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-                  percentageOfHeight: .020),
-            ],
-          )),
-    ],
+              children: [
+                customDescriptionText(
+                    context: context,
+                    text: "Subtotal",
+                    textAlign: TextAlign.start,
+                    percentageOfHeight: .020),
+                customDescriptionText(
+                    context: context,
+                    text: " ${subtotal} ${MyApp.country_currency}   ",
+                    textAlign: TextAlign.start,
+                    percentageOfHeight: .020),
+              ],
+            )),
+        responsiveSizedBox(context: context, percentageOfHeight: .015),
+        discount == null ? Container() :   Container(
+            width: width(context) * .9,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                customDescriptionText(
+                    context: context,
+                    text: "Discount",
+                    textAlign: TextAlign.start,
+                    percentageOfHeight: .020),
+                customDescriptionText(
+                    context: context,
+                    text:  " ${discount} ${MyApp.country_currency}   ",
+                    textAlign: TextAlign.start,
+                    percentageOfHeight: .020),
+              ],
+            )),
+        responsiveSizedBox(context: context, percentageOfHeight: .015),
+        Container(
+            width: width(context) * .9,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                customDescriptionText(
+                    context: context,
+                    text: "VAT",
+                    textAlign: TextAlign.start,
+                    percentageOfHeight: .020),
+                customDescriptionText(
+                    context: context,
+                    text: " ${vat} ${MyApp.country_currency}   ",
+                    textAlign: TextAlign.start,
+                    percentageOfHeight: .020),
+              ],
+            )),
+        responsiveSizedBox(context: context, percentageOfHeight: .015),
+        Container(
+            width: width(context) * .9,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                customDescriptionText(
+                    context: context,
+                    text: "Shipping",
+                    textAlign: TextAlign.start,
+                    percentageOfHeight: .020),
+                customDescriptionText(
+                    context: context,
+                    text: shipping== 0 ? translator.translate("Free") : " ${shipping} ${MyApp.country_currency}   ",
+                    textAlign: TextAlign.start,
+                    percentageOfHeight: .020),
+              ],
+            )),
+
+        responsiveSizedBox(context: context, percentageOfHeight: .015),
+        cash == 'الدفع عند الإستلام' || cash == "Cash On Delivery" ? Container(
+            width: width(context) * .9,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                customDescriptionText(
+                    context: context,
+                    text: "Payment Fees",
+                    textAlign: TextAlign.start,
+                    percentageOfHeight: .020),
+                customDescriptionText(
+                    context: context,
+                    text: payment_fees== 0 ? translator.translate("Free") : " ${payment_fees} ${MyApp.country_currency}   ",
+                    textAlign: TextAlign.start,
+                    percentageOfHeight: .020),
+              ],
+            )) : Container()  ,
+        Divider(color: greyColor),
+        Container(
+            width: width(context) * .9,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                customDescriptionText(
+                    context: context,
+                    text: "Total to pay",
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
+                    percentageOfHeight: .020),
+                customDescriptionText(
+                    context: context,
+                    text: " $grand_total ${MyApp.country_currency}  ",
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
+                    percentageOfHeight: .020),
+              ],
+            )),
+
+      ],
+
   );
 }

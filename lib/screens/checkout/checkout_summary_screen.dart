@@ -58,12 +58,10 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
     _loginButtonController = AnimationController(
         duration: const Duration(milliseconds: 3000), vsync: this);
 
-    if(Platform.isIOS){
-      _payClient = Pay.withAssets([
-        'apple_pay/default_payment_profile_apple_pay.json'
-      ]);
+    if (Platform.isIOS) {
+      _payClient =
+          Pay.withAssets(['apple_pay/default_payment_profile_apple_pay.json']);
     }
-
 
     super.initState();
   }
@@ -96,7 +94,6 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
 
   @override
   Widget build(BuildContext context) {
-    print("widget.payment_method : ${widget.payment_method}");
     return WillPopScope(
       onWillPop: () async {
         if (_show) {
@@ -110,8 +107,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
               child: Scaffold(
         key: _drawerKey,
         backgroundColor: whiteColor,
-        body: SingleChildScrollView(
-            child: BlocListener<OrderBloc, AppState>(
+        body: BlocListener<OrderBloc, AppState>(
           bloc: orderBloc,
           listener: (context, state) {
             if (state is Loading) {
@@ -304,108 +300,155 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
               }
             }
           },
-          child: Column(
-            children: [
-              checkoutHeader(context: context),
-              responsiveSizedBox(context: context, percentageOfHeight: .02),
-              topPageIndicator(context: context,
-                  isPayment: true,
-                  isAddress: true,
-                  indicatorWidth: 1,
-                  isSummary: true),
-              responsiveSizedBox(context: context, percentageOfHeight: .02),
-              Container(
-                width: width(context),
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                height: isLandscape(context)
-                    ? 2 * height(context) * .23
-                    : height(context) * .23,
-                child: ListView.builder(
-                  itemCount:
-                      widget.guestShipmentAddressModel.totals.items.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      children: [
-                        singleProductSummaryCard(
-                            context: context,
-                            prod_name: widget.guestShipmentAddressModel.totals
-                                .items[index].name,
-                            prod_price: widget.guestShipmentAddressModel.totals
-                                .items[index].rowTotalInclTax,
-                            prod_qty: widget.guestShipmentAddressModel.totals
-                                .items[index].qty,
-                            prod_image: widget
-                                .guestShipmentAddressModel
-                                .totals
-                                .items[index]
-                                .extensionAttributes['product_image']),
-                        SizedBox(width: width(context) * .05)
-                      ],
-                    );
-                  },
-                ),
-              ),
-              responsiveSizedBox(context: context, percentageOfHeight: .01),
-              Container(
-                  width: width(context) * .9,
-                  child: Divider(
-                    color: greyColor,
-                  )),
-              singleOrderSummaryItem(
-                  context: context,
-                  isAddress: true,
-                  title: "Address",
-                  details: StaticData.order_address),
-              Container(
-                  width: width(context) * .9,
-                  child: Divider(
-                    color: greyColor,
-                  )),
-              singleOrderSummaryItem(
-                  context: context,
-                  title: "Payment Method",
-                  details: "${widget.payment_method == "Split into 3 payments, without fees with Tamara" ? translator.translate("Tamara")
-                          : widget.payment_method =="Credit Card" ? translator.translate("Credit/Debit Card")  : widget.payment_method} ",
-                  guestShipmentAddressModel: widget.guestShipmentAddressModel),
-              Container(
-                  width: width(context) * .9,
-                  child: Divider(
-                    color: greyColor,
-                  )),
-              orderSummaryWidget(
-                  context: context,
-                  total_segments:
-                      widget.guestShipmentAddressModel.totals.totalSegments,
-                  cash: widget.payment_method),
-              responsiveSizedBox(context: context, percentageOfHeight: .04),
-              doneButton(context: context)
-            ],
-          ),
-        )),
+          child: Container(
+              height: height(context),
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: checkoutHeader(context: context,title: "Summary"),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 0),
+                      child: topPageIndicator(
+                          context: context,
+                          isPayment: true,
+                          isAddress: true,
+                          indicatorWidth: 1,
+                          isSummary: true),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      width: width(context),
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: ListView.builder(
+                        itemCount: widget
+                            .guestShipmentAddressModel.totals.items.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return   singleProductSummaryCard(
+                              context: context,
+                              prod_name: widget.guestShipmentAddressModel
+                                  .totals.items[index].name,
+                              prod_price: widget.guestShipmentAddressModel
+                                  .totals.items[index].rowTotalInclTax,
+                              prod_qty: widget.guestShipmentAddressModel
+                                  .totals.items[index].qty,
+                              prod_image: widget
+                                  .guestShipmentAddressModel
+                                  .totals
+                                  .items[index]
+                                  .extensionAttributes['product_image']);
+                        },
+                      ),
+                    ),
+                  ),
+
+                  Expanded(
+                    flex:2,
+                    child:  Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                              width: width(context) * .9,
+                              child: Divider(
+                                color: greyColor,
+                                thickness: 2,
+                              )),
+                          singleOrderSummaryItem(
+                              context: context,
+                              isAddress: true,
+                              title: "Address",
+                              details: StaticData.order_address),
+                          Container(
+                              width: width(context) * .9,
+                              child: Divider(
+                                color: greyColor,
+                                thickness: 2,
+                              )),
+                        ],
+                      ),
+
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+
+                          singleOrderSummaryItem(
+                              context: context,
+                              title: "Payment Method",
+                              details:
+                              "${widget.payment_method == "Split into 3 payments, without fees with Tamara" ? translator.translate("Tamara") : widget.payment_method == "Credit Card" ? translator.translate("Credit/Debit Card") : widget.payment_method} ",
+                              guestShipmentAddressModel:
+                              widget.guestShipmentAddressModel),
+                          Container(
+                              width: width(context) * .9,
+                              child: Divider(
+                                color: greyColor,
+                                thickness: 2,
+                              )),
+                        ],
+                      ),
+                    )
+                  ),
+
+                  Expanded(
+                    flex: 4,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                      child: ListView(
+
+                        children: [
+
+                          orderSummaryWidget(
+                              context: context,
+                              total_segments: widget
+                                  .guestShipmentAddressModel.totals.totalSegments,
+                              cash: widget.payment_method),
+                        ],
+                      ),
+                    )
+                  ),
+                  // responsiveSizedBox(context: context, percentageOfHeight: .04),
+                  Expanded(flex: 1, child: doneButton(context: context))
+                ],
+              )),
+        ),
         bottomSheet: _showBottomSheet(),
       ))),
     );
   }
 
-  doneButton({BuildContext context,}) {
+  doneButton({
+    BuildContext context,
+  }) {
     return StaggerAnimation(
-      titleButton: translator.translate("Place Order"),
-      buttonController: _loginButtonController.view,
-      btn_width: width(context) * .7,
-      checkout_color: true,
-      onTap: () async {
-        await sharedPreferenceManager
-            .readString(CachingKey.CHOSSED_PAYMENT_METHOD)
-            .then((value) {
-          if (value == 'stc_pay') {
-            customAnimatedPushNavigation(context, StcPayPhoneScreen());
-          } else {
-            orderBloc.add(CreateOrderEvent(context: context));
-          }
-        });
-      },
-    );
+        titleButton: translator.translate("Place Order"),
+        buttonController: _loginButtonController.view,
+        btn_width: width(context) ,
+        checkout_color: true,
+        product_details_page:true ,
+        onTap: () async {
+          await sharedPreferenceManager
+              .readString(CachingKey.CHOSSED_PAYMENT_METHOD)
+              .then((value) {
+            if (value == 'stc_pay') {
+              customAnimatedPushNavigation(context, StcPayPhoneScreen());
+            } else {
+              orderBloc.add(CreateOrderEvent(context: context));
+            }
+          });
+        },
+      );
   }
 
   Future<String> getQuote() async {
@@ -463,14 +506,15 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                             ],
                           )),
                       SizedBox(height: width(context) * 0.1),
-
                       FutureBuilder<bool>(
                         future: _payClient.userCanPay(PayProvider.apple_pay),
                         builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
                             if (snapshot.data == true) {
                               return ApplePayButton(
-                                paymentConfigurationAsset: 'apple_pay/default_payment_profile_apple_pay.json',
+                                paymentConfigurationAsset:
+                                    'apple_pay/default_payment_profile_apple_pay.json',
                                 paymentItems: _paymentItems,
                                 style: ApplePayButtonStyle.black,
                                 type: ApplePayButtonType.buy,
@@ -490,9 +534,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                                 loadingIndicator: const Center(
                                   child: CircularProgressIndicator(),
                                 ),
-                                onPressed: (){
-
-                                },
+                                onPressed: () {},
                               );
                             }
                           }
@@ -504,7 +546,6 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                           );
                         },
                       ),
-
                       const SizedBox(height: 15)
                     ],
                   ),
@@ -520,9 +561,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
     setState(() {
       apple_pay_loading = true;
     });
-    // debugPrint(paymentResult.toString());
     final token = json.decode(paymentResult["token"]);
-    // debugPrint("after extracted data");
 
     final Future<http.Response> response =
         payment_repository.getPayfortApplePayValidation(
