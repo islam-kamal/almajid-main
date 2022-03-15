@@ -2,6 +2,8 @@ import 'dart:io';
 
 
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ProfileImage extends StatefulWidget {
   @override
@@ -82,7 +84,7 @@ class ProfileImageState extends State<ProfileImage> {
                     ],
                   ),
                 ),
-              /*  Container(
+              /*Container(
                   padding: EdgeInsets.only(
                       bottom: isLandscape(context)
                           ? 2 * height(context) * .04

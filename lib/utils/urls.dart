@@ -3,8 +3,8 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/foundation.dart';
 
 class Urls {
-  static  bool isDebugMode = kDebugMode;
-/*
+
+  /*
 //test BASE_URL
   static final String BASE_URL = "https://test.almajed4oud.com";
 //test ADMIN_TOKEN
