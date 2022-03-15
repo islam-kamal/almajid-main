@@ -195,8 +195,9 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                             percentage = (1 - (double.parse(new_price)  / snapshot.data[index].price) )* 100;
                           }
                           else {
-                            new_price = null;
-
+                            if(!StaticData.isCurrentDateInRange(startDate,endDate) ){
+                              new_price = minimal_price;
+                            }
                           }
 
                         }
