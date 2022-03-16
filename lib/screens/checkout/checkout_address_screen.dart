@@ -51,7 +51,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
   //------------------------ get saved address --------------------------
   var saved_address_currentIndex = 1;
-  var chossed_address_id;
   List<Item> saved_address_generateItems(int numberOfItems) {
     return List.generate(numberOfItems, (int index) {
       return Item(
@@ -540,11 +539,12 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                                                         onChanged: (val) {
                                                           setState(() {
                                                             saved_address_currentIndex = val;
-                                                            chossed_address_id = snapshot.data[index].id;
+                                                            StaticData.chossed_address_id = snapshot.data[index].id;
+                                                            sharedPreferenceManager.writeData(CachingKey.CHOSSED_ADDRESS_ID, StaticData.chossed_address_id);
+
                                                             shipmentAddressBloc.add(AddressDetailsEvent(
                                                                 address_id: snapshot.data[index].id
                                                             ));
-                                                            sharedPreferenceManager.writeData(CachingKey.CHOSSED_ADDRESS_ID, chossed_address_id);
 
 
                                                             item.isExpanded = false;
@@ -830,7 +830,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               errorText: snapshot.error,
 
             ),
-            validator: chossed_address_id != null ? null :(value) {
+            validator: StaticData.chossed_address_id != null ? null :(value) {
               if (value == null || value.isEmpty) {
                 return '${translator.translate("Please enter")} ${translator.translate("Frist Name")}';
               }
@@ -882,7 +882,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               errorText: snapshot.error,
 
             ),
-            validator: chossed_address_id != null ? null :(value) {
+            validator: StaticData.chossed_address_id != null ? null :(value) {
               if (value == null || value.isEmpty) {
                 return '${translator.translate("Please enter")} ${translator.translate("Last Name")}';
               }
@@ -934,7 +934,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               errorText: snapshot.error,
 
             ),
-            validator: chossed_address_id != null ? null :(value) {
+            validator: StaticData.chossed_address_id != null ? null :(value) {
         Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
         RegExp regex = new RegExp(pattern);
@@ -1001,7 +1001,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     errorText: snapshot.error,
 
                   ),
-                  validator: chossed_address_id != null ? null :(value) {
+                  validator: StaticData.chossed_address_id != null ? null :(value) {
                     Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+965|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';
                     RegExp regex = new RegExp(pattern);
 
@@ -1055,7 +1055,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     errorText: snapshot.error,
 
                   ),
-                  validator: chossed_address_id != null ? null :(value) {
+                  validator: StaticData.chossed_address_id != null ? null :(value) {
                     Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+965|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';
                     RegExp regex = new RegExp(pattern);
 
@@ -1125,7 +1125,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               errorText: snapshot.error,
 
             ),
-            validator:chossed_address_id != null ? null : (value) {
+            validator:StaticData.chossed_address_id != null ? null : (value) {
               if (value == null || value.isEmpty) {
                 return '${translator.translate("Please enter")} ${translator.translate("Shippment Address")}';
               }
@@ -1422,11 +1422,13 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                   onTap: (){
                     setState(() {
                       edit_address_status = true;
-                      chossed_address_id = cardModel.id;
+                      StaticData.chossed_address_id = cardModel.id;
+                      print("chossed_address_id : ${StaticData.chossed_address_id}");
+                      sharedPreferenceManager.writeData(CachingKey.CHOSSED_ADDRESS_ID, StaticData.chossed_address_id);
+
                       shipmentAddressBloc.add(AddressDetailsEvent(
                           address_id: cardModel.id
                       ));
-                      sharedPreferenceManager.writeData(CachingKey.CHOSSED_ADDRESS_ID, chossed_address_id);
                       StaticData.chosse_address_status = true;
 
                     });

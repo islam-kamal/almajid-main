@@ -22,6 +22,7 @@ class StaticData {
   static String order_payment_refused_reason = '';
   static String discount_amount;
   static int selectedIndex = 0;
+  static int chossed_address_id;
 
 
   //order payment
