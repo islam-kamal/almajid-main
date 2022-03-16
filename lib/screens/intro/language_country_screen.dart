@@ -262,7 +262,6 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                     }else{
                                       if(saved_country_name == country_name){
                                         cartRepository.create_quote(context: context);
-
                                         MyApp.restartApp(context);
                                       }else{
                                         sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);

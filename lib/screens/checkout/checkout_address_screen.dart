@@ -1349,6 +1349,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                   selected_address_id = cardModel.id;
                   selected_address_status = ! selected_address_status;
                   setState(() {
+                    StaticData.chossed_address_id = cardModel.id;
                     frist_name = cardModel.firstname;
                     last_name = cardModel.lastname;
                     phone = cardModel.telephone;
