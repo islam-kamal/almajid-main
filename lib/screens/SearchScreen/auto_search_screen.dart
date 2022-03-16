@@ -182,10 +182,10 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                                               child: Column(
                                                                                 crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                                                                                 children: [
-                                                                                  snapshot.data.items[index].extensionAttributes.stockItem.qty >= 0 ?   CustomWishList(
+                                                                                  snapshot.data.items[index].extensionAttributes.stockQty >= 0 ?   CustomWishList(
                                                                                     color: redColor,
                                                                                     product_id: snapshot.data.items[index].id,
-                                                                                    qty: snapshot.data.items[index].extensionAttributes.stockItem.qty,
+                                                                                    qty: snapshot.data.items[index].extensionAttributes.stockQty,
                                                                                     context: context,
                                                                                     screen: AutoSearchScreen(),
                                                                                   ) : Container(),

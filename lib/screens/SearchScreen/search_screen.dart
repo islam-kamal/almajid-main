@@ -224,10 +224,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                       crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                                                                                       children: [
-                                                                                        snapshot.data.items[index].extensionAttributes.stockItem.qty >= 0?     CustomWishList(
+                                                                                        snapshot.data.items[index].extensionAttributes.stockQty >= 0?     CustomWishList(
                                                                                           color: redColor,
                                                                                           product_id: snapshot.data.items[index].id,
-                                                                                          qty: snapshot.data.items[index].extensionAttributes.stockItem.qty,
+                                                                                          qty: snapshot.data.items[index].extensionAttributes.stockQty,
                                                                                           context: context,
                                                                                           screen: SearchScreen(),
 
@@ -313,7 +313,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                           child:      Row(
                                                                                             mainAxisAlignment: MainAxisAlignment.center,
                                                                                             children: [
-                                                                                              snapshot.data.items[index].extensionAttributes.stockItem.qty >=0?
+                                                                                              snapshot.data.items[index].extensionAttributes.stockQty >=0?
                                                                                               AddProductToCartWidget(
                                                                                                 product_sku: snapshot.data.items[index].sku,
                                                                                                 product_quantity:   1,

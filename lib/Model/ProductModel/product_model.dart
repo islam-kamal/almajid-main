@@ -188,7 +188,7 @@ class ExtensionAttributes {
   List<CategoryLinks> categoryLinks;
   StockItem stockItem;
   List<Reviews> reviews;
-
+  var stockQty;
   ExtensionAttributes(
       {this.websiteIds, this.categoryLinks, this.stockItem, this.reviews});
 
@@ -209,6 +209,7 @@ class ExtensionAttributes {
         reviews.add(new Reviews.fromJson(v));
       });
     }
+    stockQty = json['stock_qty'];
   }
 
   Map<String, dynamic> toJson() {
@@ -224,6 +225,7 @@ class ExtensionAttributes {
     if (this.reviews != null) {
       data['reviews'] = this.reviews.map((v) => v.toJson()).toList();
     }
+    data['stock_qty'] = this.stockQty;
     return data;
   }
 }

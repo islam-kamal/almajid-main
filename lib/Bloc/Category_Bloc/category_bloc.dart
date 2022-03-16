@@ -15,6 +15,9 @@ class CategoryBloc extends Bloc<AppEvent, AppState> with Validator{
   get categories_subject {
     return _category_subject;
   }
+  void set_category_subject(var value){
+    _category_subject.sink.add(value);
+  }
 
   BehaviorSubject<String> categories_search_value = new BehaviorSubject<String>();
   get get_categories_search_value{

@@ -147,11 +147,11 @@ class singleCategoryProductItem extends StatelessWidget {
                                           ? CrossAxisAlignment.end
                                           : CrossAxisAlignment.start,
                                       children: [
-                                        product.extensionAttributes.stockItem.qty >=1 ?     CustomWishList(
+                                        product.extensionAttributes.stockQty >=1 ?     CustomWishList(
                                           color: redColor,
                                           product_id: product.id,
                                           qty: product
-                                              .extensionAttributes.stockItem.qty,
+                                              .extensionAttributes.stockQty,
                                           context: context,
                                           screen: CategoryProductsScreen(),
                                           scafffoldKey: scafffoldKey,
@@ -233,7 +233,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                      child:    Row(
                                        mainAxisAlignment: MainAxisAlignment.center,
                                        children: [
-                                         product.extensionAttributes.stockItem.qty >=1 ?     AddProductToCartWidget(
+                                         product.extensionAttributes.stockQty >=1 ?     AddProductToCartWidget(
                                            product_sku: product.sku,
                                            product_quantity:   1,
                                            instock_status: product.extensionAttributes.stockItem.isInStock,
