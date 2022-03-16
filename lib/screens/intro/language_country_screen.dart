@@ -20,14 +20,13 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
 
   List<Country> countries = [];
   var language_list = [];
-  var country_name = MyApp.app_location == 'sa'
-      ? 'Saudi Arabia'
-      : MyApp.app_location == 'uae'
-          ? 'United Arab Emirates'
-          : 'kuwait';
+  var country_name = MyApp.app_location == 'sa' ? 'Saudi Arabia' : MyApp.app_location == 'uae'
+          ? 'United Arab Emirates' : 'kuwait';
+  var saved_country_name;
 
   @override
   void initState() {
+     saved_country_name =country_name;
     countries
         .add(Country(name: 'Saudi Arabia', photo: "assets/flag/saudi.png"));
     countries.add(Country(name: 'kuwait', photo: "assets/flag/kuwait.png"));
@@ -210,46 +209,18 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                                   setState(() {
                                                     country_name =
                                                         countries[index].name;
-                                                    MyApp.app_location =
-                                                        country_name ==
-                                                                'Saudi Arabia'
-                                                            ? 'sa'
-                                                            : country_name ==
-                                                                    "United Arab Emirates"
-                                                                ? 'uae'
-                                                                : 'kw';
-                                                    MyApp
-                                                        .country_currency = MyApp
-                                                                .app_location ==
-                                                            'sa'
-                                                        ? translator
-                                                            .translate("SAR")
-                                                        : MyApp.app_location ==
-                                                                'uae'
-                                                            ? translator
-                                                                .translate(
-                                                                    "AED")
-                                                            : translator
-                                                                .translate(
-                                                                    "KWD");
+                                                    MyApp.app_location = country_name == 'Saudi Arabia' ? 'sa'
+                                                            : country_name == "United Arab Emirates" ? 'uae' : 'kw';
+                                                    MyApp.country_currency = MyApp.app_location == 'sa' ? translator.translate("SAR")
+                                                        : MyApp.app_location == 'uae'
+                                                            ? translator.translate("AED")
+                                                            : translator.translate("KWD");
                                                     sharedPreferenceManager
-                                                        .writeData(
-                                                            CachingKey
-                                                                .USER_COUNTRY_CODE,
-                                                            MyApp.app_location);
-
-                                                    sharedPreferenceManager
-                                                        .removeData(CachingKey
-                                                            .CART_QUOTE);
-                                                    sharedPreferenceManager
-                                                        .removeData(CachingKey
-                                                            .GUEST_CART_QUOTE);
-                                                    sharedPreferenceManager
-                                                        .removeData(CachingKey
-                                                            .AUTH_TOKEN);
-                                                    sharedPreferenceManager
-                                                        .removeData(CachingKey
-                                                            .CUSTOMER_ID);
+                                                        .writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location);
+                                                    sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
+                                                    sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
+                                                    sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
+                                                    sharedPreferenceManager.removeData(CachingKey.CUSTOMER_ID);
                                                   });
                                                 },
                                                 child: new Container(
@@ -270,9 +241,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                                                 color:
                                                                     greyColor,
                                                                 width: 3)),
-                                                    child: Image.asset(
-                                                        countries[index]
-                                                            .photo)),
+                                                    child: Image.asset(countries[index].photo)),
                                               ),
                                               Text(countries[index].name.tr())
                                             ],
@@ -290,11 +259,16 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                     if(StaticData.vistor_value == 'visitor'){
                                       MyApp.restartApp(context);
                                     }else{
-                                      sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
-                                      sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
-                                      sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
-                                      sharedPreferenceManager.removeData(CachingKey.CUSTOMER_ID);
-                                      customAnimatedPushNavigation(context, SignInScreen());
+                                      if(saved_country_name == country_name){
+                                        MyApp.restartApp(context);
+                                      }else{
+                                        sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
+                                        sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
+                                        sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
+                                        sharedPreferenceManager.removeData(CachingKey.CUSTOMER_ID);
+                                        customAnimatedPushNavigation(context, SignInScreen());
+                                      }
+
                                     }
                                     /*   Navigator.push(
                                         context,
