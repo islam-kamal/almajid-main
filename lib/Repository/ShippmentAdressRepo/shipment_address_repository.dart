@@ -22,7 +22,7 @@ class ShipmentAddressRepository {
     });
 
     try {
-      print("await sharedPreferenceManager.readString(CachingKey.CHOSSED_ADDRESS_ID) : ${StaticData.chossed_address_id}");
+      // print("await sharedPreferenceManager.readString(CachingKey.CHOSSED_ADDRESS_ID) : ${StaticData.chossed_address_id}");
       final response = await dio.post(
           StaticData.vistor_value == 'visitor'
               ? "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${StaticData.vistor_value == 'visitor' ? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE) : await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/shipping-information"

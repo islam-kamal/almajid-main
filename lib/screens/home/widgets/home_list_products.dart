@@ -147,7 +147,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                 related_product_list.forEach((element) {
                   snapshot.data.add(element) ;
                 });
-                print(" snapshot.data : ${ snapshot.data}");
+                // print(" snapshot.data : ${ snapshot.data}");
               }
               return Container(
                   width: width(context),

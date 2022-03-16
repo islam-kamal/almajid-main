@@ -9,7 +9,7 @@ class CategoryRepository {
   static SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();
 
   Future<CategoryModel> getCategoriesList() async {
-    print("${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/categories");
+    // print("${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/categories");
     Map<String, String> headers = {
       //'lang': translator.activeLanguageCode,
       'Content-Type': 'application/json',
