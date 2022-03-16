@@ -1,4 +1,6 @@
+import 'package:almajidoud/Bloc/Category_Bloc/category_bloc.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
+import 'package:almajidoud/Repository/CategoryRepo/category_repository.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'dart:ui' as ui;
@@ -282,7 +284,8 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                             child: Padding(
                               padding: EdgeInsets.only(bottom: 10),
                               child: GestureDetector(
-                                onTap: () {
+                                onTap: ()async {
+
                                   if (widget.type == 'settings') {
                                     Navigator.push(
                                         context,
@@ -296,12 +299,17 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                                 )));
                                   } else {
                                     cartRepository.create_quote(context: context);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              CustomCircleNavigationBar()),
-                                    );
+
+                                await    categoryRepository.getCategoriesList().then((value){
+                                      categoryBloc.set_category_subject(value);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CustomCircleNavigationBar()),
+                                      );
+                                    });
+
                                   }
                                 },
                                 child: Container(
@@ -341,6 +349,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
     });
     MyApp.setLocale(context, Locale('${lang}'));
     sharedPreferenceManager.writeData(CachingKey.APP_LANGUAGE, lang);
+
     cartRepository.updateCartLanguage(context: context);
   }
 }

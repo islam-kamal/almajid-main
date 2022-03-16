@@ -73,6 +73,12 @@ class Urls {
   static final String PTIVACY_URL = '$BASE_URL/${MyApp.app_langauge}-${MyApp.app_location}/privacy-policy-cookie-restriction-mode-mobile';
   static final String FAQS_URL = '$BASE_URL/${MyApp.app_langauge}-${MyApp.app_location}/help-faqs-mobile';
 
+  static final String SHIPPING_URL = '$BASE_URL/${MyApp.app_langauge}-${MyApp.app_location}/shipping-and-delivery-policy-mobile';
+  static final String CANCELLATIONS_URL = '$BASE_URL/${MyApp.app_langauge}-${MyApp.app_location}/payment-and-cancellations-mobile';
+  static final String VAT_URL = '$BASE_URL/${MyApp.app_langauge}-${MyApp.app_location}/vat-ksa-mobile';
+  static final String PERMITS_URL = '$BASE_URL/${MyApp.app_langauge}-${MyApp.app_location}/news-media-mobile';
+
+
 
   static final String CREATE_PRODUCT_REVIEW = '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/reviews/';
 

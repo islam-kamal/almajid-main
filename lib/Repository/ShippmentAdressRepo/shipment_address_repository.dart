@@ -22,6 +22,7 @@ class ShipmentAddressRepository {
     });
 
     try {
+      print("await sharedPreferenceManager.readString(CachingKey.CHOSSED_ADDRESS_ID) : ${StaticData.chossed_address_id}");
       final response = await dio.post(
           StaticData.vistor_value == 'visitor'
               ? "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${StaticData.vistor_value == 'visitor' ? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE) : await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/shipping-information"
@@ -29,6 +30,8 @@ class ShipmentAddressRepository {
           data: {
             "addressInformation": {
               "shipping_address": {
+                "customer_address_id" :  StaticData.vistor_value == 'visitor'
+                    ? null : StaticData.chossed_address_id,
                 "region": await sharedPreferenceManager.readString(
                     translator.activeLanguageCode == 'ar'
                         ? CachingKey.REGION_AR
@@ -57,6 +60,8 @@ class ShipmentAddressRepository {
                 "telephone": "${shipmentAddressBloc.phone_controller.value}"
               },
               "billing_address": {
+                "customer_address_id" :  StaticData.vistor_value == 'visitor'
+                    ? null : StaticData.chossed_address_id,
                 "region": await sharedPreferenceManager.readString(
                     translator.activeLanguageCode == 'ar'
                         ? CachingKey.REGION_AR
@@ -154,7 +159,8 @@ class ShipmentAddressRepository {
             errorDialog(
                 context: context, text: newAddressresponse.data['message']);
           }
-        } else {
+        }
+        else {
           final jsonData = response.data;
           GuestShipmentAddressModel guestShipmentAddressModel =
               GuestShipmentAddressModel.fromJson(
@@ -169,8 +175,7 @@ class ShipmentAddressRepository {
     }
   }
 
-  Future<List<AddressModel>> get_all_saved_addresses(
-      {BuildContext context}) async {
+  Future<List<AddressModel>> get_all_saved_addresses({BuildContext context}) async {
     try {
       final response = await dio.get(
           '${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/customers/me/address/search?customer_id=${await sharedPreferenceManager.readInteger(CachingKey.CUSTOMER_ID)}&searchCriteria',
