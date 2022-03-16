@@ -158,7 +158,44 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     text:translator.translate( "Privacy And Policy"),
                                     isContainMoreIcon: true,
                                     onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "Privacy And Policy",url: Urls.PTIVACY_URL,)));
+                                      Navigator.of(context).push(MaterialPageRoute(builder:
+                                          (BuildContext context) => WebView(title: "Privacy And Policy",url: Urls.PTIVACY_URL,)));
+                                    }),
+
+                                singleAccountItem(
+                                    context: context,
+                                    iconPath: "assets/icons/tracking.png",
+                                    text:translator.translate( "Shipping, Exchange, and Return"),
+                                    isContainMoreIcon: true,
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "Shipping, Exchange, and Return",url: Urls.SHIPPING_URL,)));
+                                    }),
+                                singleAccountItem(
+                                    context: context,
+                                    iconPath: "assets/icons/cancelled.png",
+                                    text:translator.translate("Payment & Cancellations" ),
+                                    isContainMoreIcon: true,
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder:
+                                          (BuildContext context) => WebView(title: "Payment & Cancellations" ,url: Urls.CANCELLATIONS_URL,)));
+                                    }),
+                                singleAccountItem(
+                                    context: context,
+                                    iconPath: "assets/icons/vat.png",
+                                    text:translator.translate("VAT_certification" ),
+                                    isContainMoreIcon: true,
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder:
+                                          (BuildContext context) => WebView(title: "VAT_certification" ,url: Urls.VAT_URL,)));
+                                    }),
+                                singleAccountItem(
+                                    context: context,
+                                    iconPath: "assets/icons/verified.png",
+                                    text:translator.translate("Official Permits" ),
+                                    isContainMoreIcon: true,
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder:
+                                          (BuildContext context) => WebView(title:"Official Permits",url: Urls.PERMITS_URL,)));
                                     }),
 
                                 singleAccountItem(

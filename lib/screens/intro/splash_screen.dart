@@ -73,10 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
       StaticData.vistor_value = 'visitor';
     }
 
-
-    new CircularProgressIndicator(
-
-    );
+    new CircularProgressIndicator();
     await categoryBloc.add(getAllCategories());
     readJson(token);
     await Future.delayed(Duration(seconds: 3));

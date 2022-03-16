@@ -179,7 +179,12 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
 
 
                         if(startDate ==null || endDate ==null ){
-                          new_price = minimal_price;
+                          if(double.parse(minimal_price) == double.parse(snapshot.data[index].price.toString())){
+                            new_price = null;
+                          }else{
+                            new_price = minimal_price;
+                          }
+
                           if(double.parse(minimal_price) < double.parse(snapshot.data[index].price.toString()))
                           percentage = (1 - (double.parse(minimal_price)  / snapshot.data[index].price) )* 100;
 
@@ -194,6 +199,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                             new_price = minimal_price;
                             percentage = (1 - (double.parse(new_price)  / snapshot.data[index].price) )* 100;
                           }
+
                           else {
                             if(!StaticData.isCurrentDateInRange(startDate,endDate) ){
                               new_price = minimal_price;
@@ -203,6 +209,8 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                           }
 
                         }
+
+
                         snapshot.data[index] == null? product_image ='' : snapshot.data[index].customAttributes.forEach((element) {
                           if(element.attributeCode == "thumbnail")
                             product_image = element.value;
@@ -316,7 +324,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                               )),
                                           Expanded(
                                               flex: 1,
-                                              child:  snapshot.data[index].extensionAttributes.stockItem.qty >= 1 ?
+                                              child:  snapshot.data[index].extensionAttributes.stockQty >= 1 ?
                                               AddProductToCartWidget(
                                                 product_sku: snapshot.data[index].sku,
                                                 product_quantity:   1,
@@ -359,7 +367,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                       ),
 
                                       // ------------------ here ----------------------
-                                      snapshot.data[index].extensionAttributes.stockItem.qty >=1 ?
+                                      snapshot.data[index].extensionAttributes.stockQty >=1 ?
                                       percentage ==null ?  CustomWishList(
                                         color: redColor,
                                         product_id:

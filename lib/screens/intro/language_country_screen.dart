@@ -295,8 +295,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                                           : 0,
                                                 )));
                                   } else {
-                                    cartRepository.create_quote(
-                                        context: context);
+                                    cartRepository.create_quote(context: context);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

@@ -174,7 +174,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                 context: context,
                                 product_name: snapshot.data[0].name,
                                 prod_id:  snapshot.data[0].id,
-                                prod_qty:  snapshot.data[0].extensionAttributes.stockItem.qty),
+                                prod_qty:  snapshot.data[0].extensionAttributes.stockQty),
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .01),
                             descriptionAndShareRow(
@@ -258,7 +258,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                                   0.10,
                                               onPressed: () {
                                                 setState(() {
-                                                  if (qty == snapshot.data[0].extensionAttributes.stockItem.qty) {
+                                                  if (qty == snapshot.data[0].extensionAttributes.stockQty) {
                                                     errorDialog(
                                                       context: context,
                                                       text:
@@ -334,7 +334,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                           bottom: 0,
                           right: 0,
                           left: 0,
-                          child:    snapshot.data[0].extensionAttributes.stockItem.qty >=0 ?
+                          child:    snapshot.data[0].extensionAttributes.stockQty >=0 ?
                           AddProductToCartWidget(
                             product_sku: snapshot.data[0].sku,
                             product_quantity:  StaticData.product_qty ,

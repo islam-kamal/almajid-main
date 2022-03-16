@@ -356,6 +356,7 @@ class CartRepository {
       Navigator.pop(context);
     }
   }
+
   Future<bool> updateCartLanguage({BuildContext context}) async {
     Dio dio = new Dio();
     try {
