@@ -65,6 +65,7 @@ class CartRepository {
 
   Future<AddCartModel> add_product_to_cart_FUN(
       {BuildContext context, var product_quantity, var product_sku}) async {
+    print("sssssssss : ${ "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/quote/is_active/"}");
     Dio dio = new Dio();
     String url =
         "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/quote/is_active/"

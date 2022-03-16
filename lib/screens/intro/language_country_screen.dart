@@ -287,7 +287,8 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                 onTap: ()async {
 
                                   if (widget.type == 'settings') {
-                                    Navigator.push(
+                                    MyApp.restartApp(context);
+                                 /*   Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
@@ -296,7 +297,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                                       MyApp.app_langauge == 'ar'
                                                           ? 4
                                                           : 0,
-                                                )));
+                                                )));*/
                                   } else {
                                     cartRepository.create_quote(context: context);
 
