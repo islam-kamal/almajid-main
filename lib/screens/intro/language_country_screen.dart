@@ -287,8 +287,16 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                 onTap: ()async {
 
                                   if (widget.type == 'settings') {
-                                    MyApp.restartApp(context);
-                                 /*   Navigator.push(
+                                    if(StaticData.vistor_value == 'visitor'){
+                                      MyApp.restartApp(context);
+                                    }else{
+                                      sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
+                                      sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
+                                      sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
+                                      sharedPreferenceManager.removeData(CachingKey.CUSTOMER_ID);
+                                      customAnimatedPushNavigation(context, SignInScreen());
+                                    }
+                                    /*   Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
