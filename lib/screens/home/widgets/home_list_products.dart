@@ -368,7 +368,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
 
                                       // ------------------ here ----------------------
                                       snapshot.data[index].extensionAttributes.stockQty >=1 ?
-                                      percentage ==null ?  CustomWishList(
+                                      percentage ==null || percentage == 0 ?  CustomWishList(
                                         color: redColor,
                                         product_id:
                                         snapshot.data[index].id,

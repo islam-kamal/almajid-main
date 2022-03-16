@@ -257,9 +257,12 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
 
                                   if (widget.type == 'settings') {
                                     if(StaticData.vistor_value == 'visitor'){
+
                                       MyApp.restartApp(context);
                                     }else{
                                       if(saved_country_name == country_name){
+                                        cartRepository.create_quote(context: context);
+
                                         MyApp.restartApp(context);
                                       }else{
                                         sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
