@@ -197,6 +197,14 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                       Navigator.of(context).push(MaterialPageRoute(builder:
                                           (BuildContext context) => WebView(title:"Official Permits",url: Urls.PERMITS_URL,)));
                                     }),
+                                singleAccountItem(
+                                    context: context,
+                                    iconPath: "assets/icons/help.png",
+                                    text: "Help Center",
+                                    isContainMoreIcon: true,
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: 'Contact us',url: Urls.CONTACT_US_URL,)));
+                                    }),
 
                                 singleAccountItem(
                                     context: context,
@@ -240,18 +248,4 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
 
 
-  void _changeLang({String lang}) async {
-    setState(() {
-      translator.setNewLanguage(
-        context,
-        newLanguage: '${lang}',
-        remember: true,
-        restart: true,
-      );
-
-    });
-    MyApp.setLocale(context, Locale('${lang}'));
-    sharedPreferenceManager.writeData(CachingKey.APP_LANGUAGE, lang);
-    cartRepository.updateCartLanguage(context: context);
-  }
 }

@@ -46,16 +46,29 @@ class _WebViewState extends State<WebView> {
                 }),
 
           ),
-      body: Builder(builder: (BuildContext context) {
-        return flutter.WebView(
-          initialUrl: widget.url,
-          javascriptMode: flutter.JavascriptMode.unrestricted,
-          onWebViewCreated: (webViewController) {
-            _controller = webViewController;
-          },
-          gestureNavigationEnabled: true,
-        );
-      }),
+      body: Stack(
+        children: [
+          Builder(builder: (BuildContext context) {
+            return flutter.WebView(
+              initialUrl: widget.url,
+              javascriptMode: flutter.JavascriptMode.unrestricted,
+              onWebViewCreated: (webViewController) {
+                _controller = webViewController;
+              },
+              onPageFinished: (finish){
+                setState(() {
+                  isLoading = false;
+                });
+              },
+              gestureNavigationEnabled: true,
+            );
+          }),
+          isLoading ? Center( child: CircularProgressIndicator(),)
+              : Stack(),
+        ],
+      )
+
+
     );
   }
 }
