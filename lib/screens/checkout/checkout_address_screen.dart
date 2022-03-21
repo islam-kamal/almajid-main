@@ -270,7 +270,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                         if(state.indicator == "GetAllAddressesEvent"){
                         }else{
                           var data = state.model as GuestShipmentAddressModel;
-
                           customAnimatedPushNavigation(context,CheckoutPaymentScreen(
                             guestShipmentAddressModel: data,
                           ));
@@ -1424,7 +1423,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     setState(() {
                       edit_address_status = true;
                       StaticData.chossed_address_id = cardModel.id;
-                      // print("chossed_address_id : ${StaticData.chossed_address_id}");
                       sharedPreferenceManager.writeData(CachingKey.CHOSSED_ADDRESS_ID, StaticData.chossed_address_id);
 
                       shipmentAddressBloc.add(AddressDetailsEvent(

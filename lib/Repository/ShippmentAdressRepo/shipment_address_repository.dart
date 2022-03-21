@@ -22,7 +22,6 @@ class ShipmentAddressRepository {
     });
 
     try {
-      // print("await sharedPreferenceManager.readString(CachingKey.CHOSSED_ADDRESS_ID) : ${StaticData.chossed_address_id}");
       final response = await dio.post(
           StaticData.vistor_value == 'visitor'
               ? "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${StaticData.vistor_value == 'visitor' ? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE) : await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/shipping-information"
@@ -259,6 +258,27 @@ class ShipmentAddressRepository {
                 'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}',
           },
         ));
+  }
+
+  Future<bool> delete_address({var address_id})async{
+    Dio dio = new Dio();
+    try {
+      final response = await dio.delete(
+          "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest//V1/mstore/customers/me/address/${address_id}",
+          options: Options(
+              headers: Map<String, String>.from({
+                'Authorization':
+                'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}',
+                'content-type': 'application/json',
+                'Accept': 'application/json',
+              })));
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        return null;
+      }
+    } catch (e) {
+    }
   }
 }
 
