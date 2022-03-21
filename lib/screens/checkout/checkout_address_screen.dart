@@ -455,149 +455,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
 
 
-  Widget get_saved_addresses(){
-    return Container(
-        padding: EdgeInsets.all(10),
-        width: MediaQuery.of(context).size.width * 0.9,
-        child: ExpansionPanelList(
-          expansionCallback: (int index, bool isExpanded) {
-            setState(() {
-              saved_address_data[index].isExpanded = !isExpanded;
-              address_search_field_Status = !address_search_field_Status;
-            });
-          },
-          children: saved_address_data.map<ExpansionPanel>((Item item) {
-            return ExpansionPanel(
-              headerBuilder: (BuildContext context, bool isExpanded) {
-                return ListTile(
-                  title: Text(item.headerValue),
-                  subtitle:  address_search_field_Status ? null : TextFormField(
-                  controller: address_controller,
-                  onChanged: (value){
-                    setState(() {
-                      address_search_text = address_controller.value.text;
-
-                    });
-                  },
-
-                  style: TextStyle(color: mainColor,
-                    fontSize:AlmajedFont.primary_font_size,
-                  ),
-                  cursorColor: greyColor,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    contentPadding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-
-                    hintText: translator.translate("Search By Address" ),
-                    hintStyle: TextStyle(color: Colors.grey, fontSize:AlmajedFont.secondary_font_size,),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(color: greenColor)),
-                  ),
-                ),
-                );
-              },
-              body: Container(
-                  height: MediaQuery.of(context).size.width / 2.5,
-                  child: FutureBuilder<List<AddressModel>>(
-                    future: all_addresses,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        if (snapshot.hasData) {
-                          if (snapshot.data.length != 0) {
-                            return Directionality(
-                                textDirection: translator.activeLanguageCode == 'ar'?TextDirection.rtl : TextDirection.ltr,
-                                child:  Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                        child:  ListView.builder(
-                                          scrollDirection: Axis.vertical,
-                                          shrinkWrap: true,
-                                          itemCount: snapshot.data.length,
-                                          itemBuilder:
-                                              (BuildContext context, int index) {
-
-                                            return snapshot.data[index].street[0].toLowerCase().contains(address_search_text) ?
-                                            Directionality(
-                                              textDirection: MyApp.app_langauge == 'ar'? TextDirection.rtl :  TextDirection.ltr,
-                                              child:Container(
-                                                  padding: EdgeInsets.only(
-                                                      right: 10, left: 10),
-                                                  child: Column(
-                                                    children: <Widget>[
-                                                      RadioListTile(
-                                                        groupValue: saved_address_currentIndex,
-                                                        title: Text(
-                                                            "${snapshot.data[index].region.region} ,${snapshot.data[index].street[0]}",
-                                                            style: TextStyle(fontSize: AlmajedFont.secondary_font_size)
-                                                        ),
-                                                        value: snapshot.data[index].id,
-                                                        onChanged: (val) {
-                                                          setState(() {
-                                                            saved_address_currentIndex = val;
-                                                            StaticData.chossed_address_id = snapshot.data[index].id;
-                                                            sharedPreferenceManager.writeData(CachingKey.CHOSSED_ADDRESS_ID, StaticData.chossed_address_id);
-
-                                                            shipmentAddressBloc.add(AddressDetailsEvent(
-                                                                address_id: snapshot.data[index].id
-                                                            ));
-
-
-                                                            item.isExpanded = false;
-                                                            address_search_field_Status = true;
-                                                            address_controller.clear();
-                                                            address_search_text = '';
-
-                                                            saved_address_header_item.add( "${snapshot.data[index].region.region} ,${snapshot.data[index].street[0]}");
-
-                                                            item.headerValue =
-                                                                saved_address_header_item.last;
-                                                            StaticData.chosse_address_status = true;
-                                                          });
-                                                        },
-                                                      ),
-                                                      Divider(
-                                                        color: Color(0xFFDADADA),
-                                                      )
-                                                    ],
-                                                  )),
-                                            )
-                                                  : Container();
-                                          },
-                                        ))
-                                  ],
-                                )
-                            );
-                          } else {
-                            return Container(
-                              child: Text(
-                                  translator.translate("There is no saved addresses")),
-                            );
-                          }
-                        } else {
-                          return Container(
-                            child: Text(translator.translate("There is no saved addresses")),
-                          );
-                        }
-                      }
-
-                      // By default, show a loading spinner.
-                      return Center(
-                        child: CircularProgressIndicator(
-
-                        ),
-                      );
-                    },
-                  )),
-              isExpanded: item.isExpanded,
-            );
-          }).toList(),
-        ));
-  }
-
   Widget get_cities({var current_adress_city_id, var city_name}){
     if(current_adress_city_id != null){
       sharedPreferenceManager.writeData(CachingKey.REGION_ID, current_adress_city_id.toString());
@@ -1316,7 +1173,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               return Padding(
                 padding: EdgeInsets.all(width * 0.02),
                 child:  singlePaymentCard(
-                        cardModel: data[index], index: data[index].id)
+                    cardModel: data[index], index: data[index].id)
+
+
               );
             }));
   }
@@ -1346,9 +1205,11 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               onTap: () {
                 setState(() {
                   selected_address_id = cardModel.id;
+                  StaticData.chossed_address_id = cardModel.id;
+
+                  print("StaticData.chossed_address_id : ${StaticData.chossed_address_id}");
                   selected_address_status = ! selected_address_status;
                   setState(() {
-                    StaticData.chossed_address_id = cardModel.id;
                     frist_name = cardModel.firstname;
                     last_name = cardModel.lastname;
                     phone = cardModel.telephone;
@@ -1373,8 +1234,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             )
             ),
           Expanded(
-            flex: 4,
+            flex: 5,
             child:    Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
             Padding(
             padding: EdgeInsets.all( 5),
@@ -1417,23 +1279,35 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             ),
           ),
             Expanded(
-                flex: 1,
-                child:   InkWell(
-                  onTap: (){
-                    setState(() {
-                      edit_address_status = true;
-                      StaticData.chossed_address_id = cardModel.id;
-                      sharedPreferenceManager.writeData(CachingKey.CHOSSED_ADDRESS_ID, StaticData.chossed_address_id);
+                flex: 2,
+                child:   Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: (){
+                        setState(() {
+                          edit_address_status = true;
+                          StaticData.chossed_address_id = cardModel.id;
+                          sharedPreferenceManager.writeData(CachingKey.CHOSSED_ADDRESS_ID, StaticData.chossed_address_id);
 
-                      shipmentAddressBloc.add(AddressDetailsEvent(
-                          address_id: cardModel.id
-                      ));
-                      StaticData.chosse_address_status = true;
+                          shipmentAddressBloc.add(AddressDetailsEvent(
+                              address_id: cardModel.id
+                          ));
+                          StaticData.chosse_address_status = true;
 
-                    });
-                  },
-                  child:  Icon(Icons.edit) ,
-                ))
+                        });
+                      },
+                      child:  Icon(Icons.edit) ,
+                    ),
+                    InkWell(
+                      onTap: (){
+                        delete_address_item(address_id: cardModel.id);
+                      },
+                      child:  Icon(Icons.delete,color: redColor,) ,
+                    )
+                  ],
+                )
+            )
 
 
     ],
@@ -1442,6 +1316,48 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
       ),
     );
+  }
+
+
+  Widget positionedRemoveAddress({int addressId}) {
+    return Directionality(
+        textDirection:
+        translator.activeLanguageCode == 'ar'
+            ? TextDirection.ltr
+            : TextDirection.rtl,
+        child:  Positioned(
+          top: width(context) * 0.15,
+          right:translator.activeLanguageCode == 'ar'
+              ?  0 : null,
+          left:translator.activeLanguageCode == 'ar'
+              ?  null : 0,
+          child: Container(
+            height: 30,
+            width: 30,
+            child: MaterialButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0)),
+                padding: EdgeInsets.all(0.0),
+                color: mainColor,
+                child: Icon(
+                  Icons.clear,
+                  color: Colors.white,
+                ),
+                onPressed: () => {
+                  delete_address_item(address_id: addressId),
+                }),
+          ),
+        )  );
+  }
+
+  void delete_address_item({var address_id}) async {
+    final response = await shipmentAddressRepository.delete_address(
+      address_id: address_id,
+    );
+    if (response) {
+      shipmentAddressBloc.add(GetAllAddressesEvent());
+    } else {
+    }
   }
 
 }

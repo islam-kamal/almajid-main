@@ -204,49 +204,6 @@ class ShipmentAddressRepository {
     }
   }
 
-  Future<AddressModel> add_new_address({BuildContext context}) async {
-    return NetworkUtil.internal()
-        .put(AddressModel(), Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/customers/me/address',
-            headers: Map<String, String>.from({
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'Authorization':
-                  'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}',
-            }),
-            body: {
-          "customer_id":
-              await sharedPreferenceManager.readInteger(CachingKey.CUSTOMER_ID),
-          "address": {
-            "customer_id": await sharedPreferenceManager
-                .readInteger(CachingKey.CUSTOMER_ID),
-            "region": {
-              "region_code": await sharedPreferenceManager.readString(
-                  translator.activeLanguageCode == 'ar'
-                      ? CachingKey.REGION_AR
-                      : CachingKey.REGION_EN),
-              "region": await sharedPreferenceManager.readString(
-                  translator.activeLanguageCode == 'ar'
-                      ? CachingKey.REGION_AR
-                      : CachingKey.REGION_EN),
-              "region_id": await sharedPreferenceManager
-                  .readString(CachingKey.REGION_ID),
-            },
-            "region_id":
-                await sharedPreferenceManager.readString(CachingKey.REGION_ID),
-            "country_id": "SA",
-            "street": ["${shipmentAddressBloc.street_controller.value}"],
-            "telephone": "${shipmentAddressBloc.phone_controller.value}",
-            "postcode": "10577",
-            "city": await sharedPreferenceManager.readString(
-                translator.activeLanguageCode == 'ar'
-                    ? CachingKey.REGION_AR
-                    : CachingKey.REGION_EN),
-            "firstname": "${shipmentAddressBloc.frist_name_controller.value}",
-            "lastname": "${shipmentAddressBloc.last_name_controller.value}",
-          }
-        });
-  }
-
   Future<AddressModel> get_addresss_details({var address_id}) async {
     return NetworkUtil().get(AddressModel(),
         "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest//V1/mstore/customers/me/address/${address_id}",

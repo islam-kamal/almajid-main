@@ -43,17 +43,6 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
         yield ErrorLoading(model: response,indicator: 'GuestAddAdress');
       }
     }
-    else if(event is AddNewAdressEvent){
-      yield Loading(model: null,indicator: 'AddNewAdress');
-      var response = await shipmentAddressRepository.add_new_address(
-          context: event.context
-      );
-      if(response.message == null){
-        yield Done(model:response,indicator: 'AddNewAdress');
-      }else {
-        yield ErrorLoading(model: response,indicator: 'AddNewAdress');
-      }
-    }
 
     else if(event is AddressDetailsEvent){
       yield Loading();
@@ -70,12 +59,11 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
     else if (event is GetAllAddressesEvent) {
       yield Loading(indicator: 'GetAllAddressesEvent');
       final response = await shipmentAddressRepository.get_all_saved_addresses(context: event.context);
-
-      if (response.isEmpty ) {
+      if (response == null ) {
         yield ErrorLoading(indicator: 'GetAllAddressesEvent');
 
       } else {
-        yield Done(indicator: 'GetAllAddressesEvent');
+        yield Done(general_model:response ,indicator: 'GetAllAddressesEvent');
 
       }
     }
