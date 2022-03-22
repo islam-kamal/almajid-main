@@ -1,6 +1,7 @@
 import 'package:almajidoud/utils/colors.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:webview_flutter/webview_flutter.dart' as flutter;
 
 
@@ -63,7 +64,11 @@ class _WebViewState extends State<WebView> {
               gestureNavigationEnabled: true,
             );
           }),
-          isLoading ? Center( child: CircularProgressIndicator(),)
+          isLoading ? Center(
+              child: SpinKitFadingCube(
+                color: Theme.of(context).primaryColor,
+                size: 30.0,
+              ))
               : Stack(),
         ],
       )

@@ -342,6 +342,9 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                       );
                                     });
                                   }
+
+                                  MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
+                                      : MyApp.app_location == 'uae'? translator.translate("AED") : translator.translate("KWD");
                                 },
                                 child: Container(
                                     width: width(context) * .9,

@@ -291,6 +291,33 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             //divider(context: context),
                             responsiveSizedBox(context: context, percentageOfHeight: .03),
 
+                            snapshot.data[0].price >=99 ? Container(
+                              padding: EdgeInsets.symmetric(vertical: 10,horizontal:10),
+                              child:Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                Expanded(
+                                  flex:3,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(translator.translate("Divide your bill into 3 installments of")
+
+                                    ),
+                                    SizedBox(width: 5,),
+                                    Text(" ${(double.parse(new_price) /3).toStringAsFixed(2)} ${MyApp.country_currency}   " + translator.translate("without interest with") ),
+
+
+                                  ],
+                                ),),
+                              Expanded(
+                              flex:1,
+                              child:    Image.asset("assets/icons/tamara_details.png")
+
+                              )
+                                ],
+                              )
+                            ) : Container(),
                             //how to use
                             ProductUseTabBar(
                               description: description_use,
