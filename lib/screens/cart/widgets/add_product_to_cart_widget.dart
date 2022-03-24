@@ -72,7 +72,7 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
           _isLoading = false;
           var data = state.model as AddCartModel;
           Fluttertoast.showToast(
-              msg: '${data.message}',
+              msg: '${translator.translate(data.message)}',
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.TOP,
               timeInSecForIosWeb: 1,

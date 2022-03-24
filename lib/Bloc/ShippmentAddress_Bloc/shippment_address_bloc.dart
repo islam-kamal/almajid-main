@@ -67,6 +67,30 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
 
       }
     }
+
+    else if(event is AddClientAdressEvent){
+      yield Loading(model: null,indicator: 'AddClientAdressEvent');
+      var response = await shipmentAddressRepository.add_addresses(
+          context: event.context
+      );
+      if(response.message == null){
+        yield Done(model:response,indicator: 'AddClientAdressEvent');
+      }else {
+        yield ErrorLoading(model: response,indicator: 'AddClientAdressEvent');
+      }
+    }
+
+    else if(event is EditClientAdressEvent){
+      yield Loading(model: null,indicator: 'EditClientAdressEvent');
+      var response = await shipmentAddressRepository.add_addresses(
+          context: event.context
+      );
+      if(response.message == null){
+        yield Done(model:response,indicator: 'EditClientAdressEvent');
+      }else {
+        yield ErrorLoading(model: response,indicator: 'EditClientAdressEvent');
+      }
+    }
   }
 
   @override

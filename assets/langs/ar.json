@@ -55,6 +55,8 @@
   "Free" : "مجانى",
   "Payment Fees" : "رسوم التوصيل",
   "Shipping" : "رسوم الشحن",
+  "Product that you are trying to add is not available" :  "المنتج غير متوفر",
+
   "-------------------checkout-----------------": "---------------------------------",
   "Checkout": "الدفع",
   "Address": "العنوان",

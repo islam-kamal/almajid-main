@@ -291,7 +291,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             //divider(context: context),
                             responsiveSizedBox(context: context, percentageOfHeight: .03),
 
-                            snapshot.data[0].price >=99 ? Container(
+                            double.parse(new_price) >=99 ? Container(
                               padding: EdgeInsets.symmetric(vertical: 10,horizontal:10),
                               child:Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,

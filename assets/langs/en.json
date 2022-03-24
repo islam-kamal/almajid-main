@@ -48,6 +48,7 @@
   "Discount" : "Discount",
   "TAX(15%)": "TAX(15%)",
   "Grand Total": "Grand Total",
+  "Product that you are trying to add is not available" :  "Product that you are trying to add is not available",
   "-------------------checkout-----------------": "---------------------------------",
   "Checkout": "Checkout",
   "Address": "Address",
