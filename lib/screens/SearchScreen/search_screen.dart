@@ -81,7 +81,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.asset('assets/images/search.png',
+                                Image.asset('assets/images/search_back.png',
                                   height: width(context) * 0.5,),
                                 Text(
                                     translator.translate( "Search for items")

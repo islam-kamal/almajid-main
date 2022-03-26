@@ -115,6 +115,7 @@ class ShipmentAddressRepository {
       print("2");
       if (response.statusCode == 200) {
         print("3");
+/*
         if (StaticData.vistor_value != 'visitor' &&
             !StaticData.chosse_address_status) {
           print("4");
@@ -178,21 +179,22 @@ class ShipmentAddressRepository {
           }
         }
         else {
+*/
 
-          print("9");
+          print("4");
           final jsonData = response.data;
           GuestShipmentAddressModel guestShipmentAddressModel =
               GuestShipmentAddressModel.fromJson(
                   Map<String, dynamic>.from(jsonData));
-          print("10");
+          print("5");
           return guestShipmentAddressModel;
-        }
+       // }
       } else {
-        print("11");
+        print("6");
         errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      print("12 : ${e.toString()}");
+      print("7 : ${e.toString()}");
 
       //  errorDialog(context: context, text: e.toString());
     }

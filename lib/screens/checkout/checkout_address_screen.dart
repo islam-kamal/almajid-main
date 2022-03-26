@@ -49,26 +49,13 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   Future<List<CityModel>> cities_list;
 //--------------------------------------------------------------
 
-  //------------------------ get saved address --------------------------
-  var saved_address_currentIndex = 1;
-  List<Item> saved_address_generateItems(int numberOfItems) {
-    return List.generate(numberOfItems, (int index) {
-      return Item(
-        headerValue: saved_address_header_item[index],
-      );
-    });
-  }
-  List saved_address_header_item = [translator.activeLanguageCode == 'ar'? 'اختيار من العناوين المحفوظة' : 'Chosse From Saved Address'];
-  List<Item> saved_address_data;
-  //-----------------------------------------------------
+
 
   TextEditingController city_controller = TextEditingController();
   String city_search_text='';
   bool city_search_field_Status = true;
-
+  bool delete_address_status = false;
   TextEditingController address_controller = TextEditingController();
-  String address_search_text='';
-  bool address_search_field_Status = true;
 
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   FocusNode fieldNode = FocusNode();
@@ -87,7 +74,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
     get_frist_city();
     _data = generateItems(1);
 
-    saved_address_data = saved_address_generateItems(1);
 
 
     _loginButtonController = AnimationController(
@@ -141,7 +127,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             backgroundColor: whiteColor,
             body: BlocListener<ShipmentAddressBloc,AppState>(
                   bloc: shipmentAddressBloc,
-                  listener: (context,state){
+                  listener: (context,state)  {
                     if (state is Loading) {
                       if(state.indicator == "address_detials"){
                         _playAnimation();
@@ -150,10 +136,16 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                       }else if (state.indicator == 'GuestAddAdress'){
                         _playAnimation();
                       }
+                      else if (state.indicator == 'AddClientAdressEvent'){
+                        _playAnimation();
+                      }
+                      else if (state.indicator == 'EditClientAdressEvent'){
+                        _playAnimation();
+                      }
                     }
                     else if (state is ErrorLoading) {
                       _stopAnimation();
-                      if(state.indicator == "address_detials"){
+                      if(state.indicator == "address_detials" ){
                         var data = state.model as AddressModel;
                         Flushbar(
                           messageText: Row(
@@ -266,6 +258,24 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                      shipmentAddressBloc.street_controller.value = street;
                    });
                       }
+                      else if (state.indicator == 'AddClientAdressEvent'){
+                        all_addresses = shipmentAddressRepository.get_all_saved_addresses(
+                            context: context).whenComplete((){
+                          setState(() {
+                            add_new_address_status = false;
+                          });
+                        });
+
+                      }
+                      else if (state.indicator == 'EditClientAdressEvent'){
+                        all_addresses = shipmentAddressRepository.get_all_saved_addresses(
+                            context: context).whenComplete((){
+                          setState(() {
+                            edit_address_status = false;
+                          });
+                        });
+
+                      }
                       else {
                         if(state.indicator == "GetAllAddressesEvent"){
                         }else{
@@ -294,30 +304,34 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                           ),
                         ),
 
-                        !edit_address_status ?         StaticData.vistor_value == 'visitor' ?  Expanded(
+                        StaticData.vistor_value == 'visitor' ?  Expanded(
                           flex: 9,
                           child:base_checkout_address(),
                         )
-                            :      Expanded(
+                            :   add_new_address_status ? Expanded(
                           flex: 9,
-                          child:  StaticData.saved_addresses_count == 0? Container():          show_all_avaliable_addresses(),
+                          child:base_checkout_address(),
                         )
-                            :  Expanded(
+                            : edit_address_status ? Expanded(
+                            flex: 9,
+                            child: SingleChildScrollView(
+                              child: checkout_address(
+                                  frist_name: frist_name,
+                                  last_name: last_name,
+                                  street: street,
+                                  phone: phone,
+                                  address_city_id: address_city_id,
+                                  city_name: addres_city_name
+                              ) ,
+                            )
+
+                        )
+                            : Expanded(
                           flex: 9,
-                      child: SingleChildScrollView(
-                        child: StaticData.chosse_address_status ? checkout_address(
-                            frist_name: frist_name,
-                            last_name: last_name,
-                            street: street,
-                            phone: phone,
-                            address_city_id: address_city_id,
-                            city_name: addres_city_name
-                        ) : base_checkout_address(),
-                      )
+                          child:  StaticData.saved_addresses_count == 0 ? Container():
+                          show_all_avaliable_addresses(),
+                        ),
 
-                    ),
-
-                        //  nextButton(context: context)
                         Expanded(
                             flex: 1,
                             child:    addressNextButton(context: context)
@@ -995,15 +1009,20 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   }
 
 
-  addressNextButton({BuildContext context,}) {
+  addressNextButton({BuildContext context}) {
     return StaggerAnimation(
-      titleButton: translator.translate("Next"),
+      titleButton: add_new_address_status ?translator.translate( "Save")
+          : edit_address_status ? translator.translate( "Update" )
+          : translator.translate("Next"),
       buttonController: _loginButtonController.view,
       btn_width: width(context) ,
       checkout_color: true,
         product_details_page :true,
       onTap: () {
+        print("_____1");
+        //used when i select one address from list of addresses
         if(selected_address_id != null){
+          print("_____2");
           StaticData.order_address = addres_city_name +
               " , " //use this to show address in CheckoutSummaryScreen
                   "${shipmentAddressBloc.street_controller.value == null
@@ -1012,8 +1031,12 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
           shipmentAddressBloc.add(
               GuestAddAdressEvent(context: context)
           );
-        }else{
+        }
+        else{
+          print("_____3");
+          //used when edit address
           if (_formKey.currentState.validate() ) {
+            print("_____4");
             if(addres_city_name == null){
               errorDialog(
                   context: context,
@@ -1021,18 +1044,38 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               );
             }
             else{
-              StaticData.order_address = addres_city_name +
-                  " , " //use this to show address in CheckoutSummaryScreen
+              print("_____5");
+              StaticData.order_address = addres_city_name + " , " //use this to show address in CheckoutSummaryScreen
                       "${shipmentAddressBloc.street_controller.value == null
                       ? street
                       : shipmentAddressBloc.street_controller.value }";
-              shipmentAddressBloc.add(
-                  GuestAddAdressEvent(context: context)
-              );
+              if(edit_address_status){
+                print("_____5-1--------------");
+                shipmentAddressBloc.add(
+                    EditClientAdressEvent(context: context)
+                );
+              }else{
+                print("_____5-2--------------");
+                print("StaticData.vistor_value : ${StaticData.vistor_value}");
+                if(StaticData.vistor_value == 'visitor' ){
+                  print("_____5-3--------------");
+                  shipmentAddressBloc.add(
+                      GuestAddAdressEvent(context: context)
+                  );
+                }else{
+                  print("_____5-4--------------");
+                  shipmentAddressBloc.add(
+                      AddClientAdressEvent(context: context)
+                  );
+                }
+
+              }
+
             }
 
           }
-          else if(frist_name !=null  ){
+          else if(frist_name != null  ){
+            print("_____6");
             StaticData.order_address = addres_city_name +
                 " , " //use this to show address in CheckoutSummaryScreen
                     "${shipmentAddressBloc.street_controller.value == null
@@ -1043,6 +1086,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             );
 
           }else{
+            print("_____7");
           }
         }
 
@@ -1072,7 +1116,14 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                               edit_address_status = false;
                             });
                           }else{
-                            Navigator.of(context).pop();
+                            if(add_new_address_status){
+                              setState(() {
+                                add_new_address_status = false;
+                              });
+                            }else{
+                              Navigator.of(context).pop();
+                            }
+
                           }
 
 
@@ -1091,7 +1142,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                       StaticData.vistor_value == 'visitor' ?  SizedBox():      GestureDetector(
                         onTap: () {
                           setState(() {
-                            edit_address_status = true;
+                            add_new_address_status = true;
+                         //   edit_address_status = true;
                             StaticData.chosse_address_status = false;
                             frist_name = null;
                             last_name = null;
@@ -1126,7 +1178,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
 
   Widget show_all_avaliable_addresses (){
-    return FutureBuilder<List<AddressModel>>(
+    return delete_address_status ?  SpinKitFadingCube(
+      color: Theme.of(context).primaryColor,
+      size: 30.0,
+    ) : FutureBuilder<List<AddressModel>>(
       future: all_addresses,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
@@ -1172,7 +1227,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             itemBuilder: (BuildContext context, int index) {
               return Padding(
                 padding: EdgeInsets.all(width * 0.02),
-                child:  singlePaymentCard(
+                child:  singleAddressCard(
                     cardModel: data[index], index: data[index].id)
 
 
@@ -1181,7 +1236,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   }
 
 
-  Widget singlePaymentCard({AddressModel cardModel, int index}) {
+  Widget singleAddressCard({AddressModel cardModel, int index}) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -1301,9 +1356,12 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     ),
                     InkWell(
                       onTap: (){
+                        setState(() {
+                          delete_address_status = true;
+                        });
                         delete_address_item(address_id: cardModel.id);
                       },
-                      child:  Icon(Icons.delete,color: redColor,) ,
+                      child:Icon(Icons.delete,color: redColor,) ,
                     )
                   ],
                 )
@@ -1351,11 +1409,17 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   }
 
   void delete_address_item({var address_id}) async {
+
     final response = await shipmentAddressRepository.delete_address(
       address_id: address_id,
     );
     if (response) {
-      shipmentAddressBloc.add(GetAllAddressesEvent());
+      all_addresses = shipmentAddressRepository.get_all_saved_addresses(
+          context: context).whenComplete((){
+        setState(() {
+          delete_address_status = false;
+        });
+      });
     } else {
     }
   }
