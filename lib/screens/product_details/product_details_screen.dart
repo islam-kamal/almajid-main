@@ -312,7 +312,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                 ),),
                               Expanded(
                               flex:1,
-                              child:    Image.asset("assets/icons/tamara_details.png")
+                              child:  translator.activeLanguageCode == 'ar' ?
+                                    Image.asset("assets/images/tamara_ar.png") :
+                                     Image.asset("assets/images/tamara_en.png")
 
                               )
                                 ],

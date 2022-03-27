@@ -256,7 +256,8 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                                         countries[index]
                                                             .photo)),
                                               ),
-                                              Text(countries[index].name.tr())
+                                              Text(countries[index].name == "United Arab Emirates"
+                                                  ? "United Arab Emirates".tr() : countries[index].name.tr())
                                             ],
                                           ),
                                         );
@@ -268,23 +269,6 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                               child: GestureDetector(
                                 onTap: () async {
                                   if (widget.type == 'settings') {
-                                    /*      if(StaticData.vistor_value == 'visitor'){
-
-                                      MyApp.restartApp(context);
-                                    }else{
-                                      if(saved_country_name == country_name){
-                                        cartRepository.create_quote(context: context);
-                                        MyApp.restartApp(context);
-                                      }
-                                      else{
-                                        sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
-                                        sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
-                                        sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
-                                        sharedPreferenceManager.removeData(CachingKey.CUSTOMER_ID);
-                                        customAnimatedPushNavigation(context, SignInScreen());
-                                      }
-
-                                    }*/
                                     if(StaticData.vistor_value == 'visitor'){
                                       if (saved_country_name == country_name) {
                                       } else {
