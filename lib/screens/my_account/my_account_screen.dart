@@ -34,7 +34,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   String _currentLang = "";
   String _imagePath;
   File _pickedImage;
-
+  bool finance_status=false;
   @override
   void initState() {
     _getUseData();
@@ -126,8 +126,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     text:   translator.translate("Settings"),
                                     isContainMoreIcon: true,
                                     onTap: () {
-                                /*      final newLang = _currentLang == 'en'?'ar':'en';
-                                      _changeLang(lang: newLang);*/
                                       customPushNamedNavigation(
                                           context, LanguageCountryScreen(
                                         type: 'settings' ,
@@ -145,60 +143,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
                                 singleAccountItem(
                                     context: context,
-                                    iconPath: "assets/icons/about_us.png",
-                                    text: translator.translate("About US"),
-                                    isContainMoreIcon: true,
-                                    onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "About US",url: Urls.ABOUT_US_URL,)));
-                                    }),
-
-                                singleAccountItem(
-                                    context: context,
-                                    iconPath: "assets/icons/privacy.png",
-                                    text:translator.translate( "Privacy And Policy"),
-                                    isContainMoreIcon: true,
-                                    onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder:
-                                          (BuildContext context) => WebView(title: "Privacy And Policy",url: Urls.PTIVACY_URL,)));
-                                    }),
-
-                                singleAccountItem(
-                                    context: context,
-                                    iconPath: "assets/icons/tracking.png",
-                                    text:translator.translate( "Shipping, Exchange, and Return"),
-                                    isContainMoreIcon: true,
-                                    onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "Shipping, Exchange, and Return",url: Urls.SHIPPING_URL,)));
-                                    }),
-                                singleAccountItem(
-                                    context: context,
-                                    iconPath: "assets/icons/cancelled.png",
-                                    text:translator.translate("Payment & Cancellations" ),
-                                    isContainMoreIcon: true,
-                                    onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder:
-                                          (BuildContext context) => WebView(title: "Payment & Cancellations" ,url: Urls.CANCELLATIONS_URL,)));
-                                    }),
-                                singleAccountItem(
-                                    context: context,
-                                    iconPath: "assets/icons/vat.png",
-                                    text:translator.translate("VAT_certification" ),
-                                    isContainMoreIcon: true,
-                                    onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder:
-                                          (BuildContext context) => WebView(title: "VAT_certification" ,url: Urls.VAT_URL,)));
-                                    }),
-                                singleAccountItem(
-                                    context: context,
-                                    iconPath: "assets/icons/verified.png",
-                                    text:translator.translate("Official Permits" ),
-                                    isContainMoreIcon: true,
-                                    onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder:
-                                          (BuildContext context) => WebView(title:"Official Permits",url: Urls.PERMITS_URL,)));
-                                    }),
-                                singleAccountItem(
-                                    context: context,
                                     iconPath: "assets/icons/help.png",
                                     text: "Help Center",
                                     isContainMoreIcon: true,
@@ -214,6 +158,122 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     onTap: () {
                                       Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "FAQs",url: Urls.FAQS_URL,)));
                                     }),
+
+                                Container(
+                                  width: width(context) * .95,
+                                  padding:translator.activeLanguageCode == 'ar'? EdgeInsets.only(right: width(context)*0.08)
+                                      :EdgeInsets.only(left: width(context)*0.08),
+                                  child:     ListView(
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading:  Image(
+                                              image: AssetImage('assets/icons/shield.png'),
+                                              width: isLandscape(context)
+                                                  ? 2 * height(context) * .025
+                                                  : height(context) * .025
+                                          ),
+                                          contentPadding: EdgeInsets.symmetric(horizontal: 2),
+                                          minLeadingWidth : 10,
+                                          title: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                flex: 3,
+                                                child: customDescriptionText(
+                                                    context: context,
+                                                    text:"Policies and Information".tr(),
+                                                    percentageOfHeight: .022,
+                                                    textAlign: translator.activeLanguageCode == 'ar'?
+                                                    TextAlign.right : TextAlign.left),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: IconButton(
+                                                  icon: Icon(Icons.keyboard_arrow_down,size: 30,color: mainColor,),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          subtitle: (finance_status)? Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+
+                                              singleAccountItem(
+                                                  context: context,
+                                                  iconPath: "assets/icons/about_us.png",
+                                                  text: translator.translate("About US"),
+                                                  percentageOfHeight: .018,
+                                                  isContainMoreIcon: true,
+                                                  onTap: () {
+                                                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "About US",url: Urls.ABOUT_US_URL,)));
+                                                  }),
+
+                                              singleAccountItem(
+                                                  context: context,
+                                                  iconPath: "assets/icons/privacy.png",
+                                                  text:translator.translate( "Privacy And Policy"),
+                                                  percentageOfHeight: .018,
+                                                  isContainMoreIcon: true,
+                                                  onTap: () {
+                                                    Navigator.of(context).push(MaterialPageRoute(builder:
+                                                        (BuildContext context) => WebView(title: "Privacy And Policy",url: Urls.PTIVACY_URL,)));
+                                                  }),
+
+                                              singleAccountItem(
+                                                  context: context,
+                                                  iconPath: "assets/icons/tracking.png",
+                                                  percentageOfHeight: .018,
+                                                  text:translator.translate( "Shipping, Exchange, and Return"),
+                                                  isContainMoreIcon: true,
+                                                  onTap: () {
+                                                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => WebView(title: "Shipping, Exchange, and Return",url: Urls.SHIPPING_URL,)));
+                                                  }),
+                                              singleAccountItem(
+                                                  context: context,
+                                                  iconPath: "assets/icons/cancelled.png",
+                                                  percentageOfHeight: .018,
+                                                  text:translator.translate("Payment & Cancellations" ),
+                                                  isContainMoreIcon: true,
+                                                  onTap: () {
+                                                    Navigator.of(context).push(MaterialPageRoute(builder:
+                                                        (BuildContext context) => WebView(title: "Payment & Cancellations" ,url: Urls.CANCELLATIONS_URL,)));
+                                                  }),
+                                              singleAccountItem(
+                                                  context: context,
+                                                  iconPath: "assets/icons/vat.png",
+                                                  text:translator.translate("VAT_certification" ),
+                                                  isContainMoreIcon: true,
+                                                  percentageOfHeight: .018,
+                                                  onTap: () {
+                                                    Navigator.of(context).push(MaterialPageRoute(builder:
+                                                        (BuildContext context) => WebView(title: "VAT_certification" ,url: Urls.VAT_URL,)));
+                                                  }),
+                                              singleAccountItem(
+                                                  context: context,
+                                                  iconPath: "assets/icons/verified.png",
+                                                  percentageOfHeight: .018,
+                                                  text:translator.translate("Official Permits" ),
+                                                  isContainMoreIcon: true,
+                                                  onTap: () {
+                                                    Navigator.of(context).push(MaterialPageRoute(builder:
+                                                        (BuildContext context) => WebView(title:"Official Permits",url: Urls.PERMITS_URL,)));
+                                                  }),
+                                            ],
+                                          ): null,
+                                          onTap: (){
+                                            setState(() {
+                                              finance_status = !finance_status;
+                                            });
+                                          },
+
+                                        ),
+
+                                      ]),
+
+                                ),
+
                                 StaticData.vistor_value == 'visitor'
                                     ? logButton(context: context, type: "Sign In")
                                     : logButton(context: context, type: "Logout"),
