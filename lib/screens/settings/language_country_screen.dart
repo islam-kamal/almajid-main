@@ -5,6 +5,8 @@ import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigatio
 import 'package:almajidoud/utils/file_export.dart';
 import 'dart:ui' as ui;
 
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 class LanguageCountryScreen extends StatefulWidget {
   String type;
   LanguageCountryScreen({this.type});
@@ -26,7 +28,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
           ? 'United Arab Emirates'
           : 'kuwait';
   var saved_country_name;
-
+  bool loading = false;
   @override
   void initState() {
     saved_country_name = country_name;
@@ -207,7 +209,9 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                           Expanded(
                               flex: 3,
                               child: Center(
-                                  child: ListView.builder(
+                                  child:Directionality(
+                                      textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+                                      child: ListView.builder(
                                       shrinkWrap: true,
                                       scrollDirection: Axis.horizontal,
                                       itemCount: countries.length,
@@ -261,13 +265,18 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                             ],
                                           ),
                                         );
-                                      }))),
+                                      })
+                                  )
+                              )),
                           Expanded(
                             flex: 1,
                             child: Padding(
                               padding: EdgeInsets.only(bottom: 10),
                               child: GestureDetector(
                                 onTap: () async {
+                                  setState(() {
+                                    loading = true;
+                                  });
                                   if (widget.type == 'settings') {
                                     if(StaticData.vistor_value == 'visitor'){
                                       if (saved_country_name == country_name) {
@@ -275,20 +284,10 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                         sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
                                         cartRepository.create_quote(context: context);
                                       }
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CustomCircleNavigationBar(
-                                                    page_index:
-                                                    MyApp.app_langauge == 'ar'
-                                                        ? 4
-                                                        : 0,
-                                                  )));
-                                    }
-                                    else{
-                                      if (saved_country_name == country_name) {
-                                        cartRepository.create_quote(context: context);
+                                      await categoryRepository
+                                          .getCategoriesList()
+                                          .then((value) {
+                                        categoryBloc.set_category_subject(value);
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
@@ -299,6 +298,27 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                                           ? 4
                                                           : 0,
                                                     )));
+                                      });
+
+                                    }
+                                    else{
+                                      if (saved_country_name == country_name) {
+                                        cartRepository.create_quote(context: context);
+                                        await categoryRepository
+                                            .getCategoriesList()
+                                            .then((value) {
+                                          categoryBloc.set_category_subject(value);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      CustomCircleNavigationBar(
+                                                        page_index: MyApp.app_langauge == 'ar'
+                                                            ? 4
+                                                            : 0,
+                                                      )));
+                                        });
+
                                       } else {
                                         sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location);
                                         sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
@@ -311,8 +331,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
 
                                   }
                                   else {
-                                    cartRepository.create_quote(
-                                        context: context);
+                                    cartRepository.create_quote(context: context);
 
                                     await categoryRepository
                                         .getCategoriesList()
@@ -322,15 +341,29 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                CustomCircleNavigationBar()),
+                                                CustomCircleNavigationBar(
+                                                )),
                                       );
                                     });
                                   }
 
                                   MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
                                       : MyApp.app_location == 'uae'? translator.translate("AED") : translator.translate("KWD");
+
+                                  setState(() {
+                                    loading = false;
+                                  });
                                 },
-                                child: Container(
+                                child:loading ?   Container(
+                                  height: 100,
+                                  child: Center(
+                                    child: SpinKitFadingCube(
+                                      color: Theme.of(context).primaryColor,
+                                      size: 30.0,
+                                    ),
+                                  ),
+                                )
+                                    :  Container(
                                     width: width(context) * .9,
                                     decoration: BoxDecoration(
                                         color: mainColor,

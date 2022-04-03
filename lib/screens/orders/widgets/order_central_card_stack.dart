@@ -42,7 +42,7 @@ orderCentralCardStack({BuildContext context, OrderItems order_details}) {
             ),
             responsiveSizedBox(context: context, percentageOfHeight: .01),
            Container(
-             height: width(context) * 0.45,
+             height:order_details.items.length ==1 ? width(context) * 0.25 :  width(context) * 0.45,
               child: ListView.builder(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
@@ -102,7 +102,7 @@ orderCentralCardStack({BuildContext context, OrderItems order_details}) {
                             )
                           ],
                         ),
-                 index ==order_details.items.length? Container():       Divider(color: white_gray_color,)
+                 index ==order_details.items.length || order_details.items.length ==1? Container():       Divider(color: white_gray_color,)
                       ],
                     );
                   },
@@ -139,7 +139,8 @@ orderCentralCardStack({BuildContext context, OrderItems order_details}) {
                   width: width(context) * 0.7,
                   child: customDescriptionText(
                       context: context,
-                      text: "${order_details.billingAddress.street[0]??''} , ${order_details.billingAddress.city??''}",
+                      text: "${order_details.billingAddress.street[0]??''} , ${order_details.billingAddress.city??''}"
+                          " , ${order_details.billingAddress.region??''}",
                       maxLines: 3,
                       fontWeight: FontWeight.bold,
                       percentageOfHeight: .015,

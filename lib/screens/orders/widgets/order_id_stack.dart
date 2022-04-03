@@ -19,7 +19,6 @@ orderIdStack({BuildContext context,var order_id,var status , var createAt}) {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  //  width: width(context) * .60,
                     child: Row(
                       children: [
                         customDescriptionText(
@@ -39,11 +38,11 @@ orderIdStack({BuildContext context,var order_id,var status , var createAt}) {
                       ],
                     )
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+    Flexible(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
                     Container(
-                  //    width: width(context) * .9,
                       child: customDescriptionText(
                           context: context,
                           text: "${translator.translate("Ordered On")} :  ${createAt??''}",
@@ -53,32 +52,31 @@ orderIdStack({BuildContext context,var order_id,var status , var createAt}) {
                           textColor: mainColor),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: 5),
+                      padding: EdgeInsets.symmetric(vertical: 5,horizontal: 5),
                       decoration: BoxDecoration(
                           color: mainColor,
-
                           borderRadius: BorderRadius.circular(20)),
-                      width: width(context) * .30,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.access_time_outlined,
-                            color: whiteColor,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          customDescriptionText(
-                              context: context,
-                              textColor: whiteColor,
-                              text: "${CustomComponents.order_status(status)??''}"),
-                        ],
+                      child:Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.access_time_outlined,
+                              color: whiteColor,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            customDescriptionText(
+                                context: context,maxLines: 2,
+                                textColor: CustomComponents.order_status_color(status),
+                                text: "${CustomComponents.order_status(status)??''}"),
+                          ],
+                        ),
                       ),
-                    ),
+
                   ],
                 ),
-
+    )
               ],
             ),
           )));

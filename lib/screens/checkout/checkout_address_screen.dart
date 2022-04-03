@@ -50,12 +50,11 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 //--------------------------------------------------------------
 
 
-
   TextEditingController city_controller = TextEditingController();
   String city_search_text='';
   bool city_search_field_Status = true;
   bool delete_address_status = false;
-  TextEditingController address_controller = TextEditingController();
+
 
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   FocusNode fieldNode = FocusNode();
@@ -64,7 +63,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   bool isLoading = false;
   bool edit_address_status = false;
   bool add_new_address_status = false;
-  var frist_name,last_name,phone,street, addres_city_name,address_city_id;
+
+  var frist_name,last_name,phone,street,Neighbourhood, addres_city_name,address_city_id;
 
   Future<List<AddressModel>> all_addresses;
   @override
@@ -250,12 +250,14 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                      last_name = data.lastname;
                      phone = data.telephone;
                      street = data.street[0];
-                     addres_city_name = data.city;
+                     addres_city_name = data.region.region;
                      address_city_id = data.regionId;
+                     Neighbourhood = data.city;
                      shipmentAddressBloc.frist_name_controller.value = frist_name;
                      shipmentAddressBloc.last_name_controller.value = last_name;
                      shipmentAddressBloc.phone_controller.value = phone;
                      shipmentAddressBloc.street_controller.value = street;
+                     shipmentAddressBloc.Neighbourhood_controller.value = Neighbourhood;
                    });
                       }
                       else if (state.indicator == 'AddClientAdressEvent'){
@@ -319,6 +321,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                                   frist_name: frist_name,
                                   last_name: last_name,
                                   street: street,
+                                  Neighbourhood: Neighbourhood,
                                   phone: phone,
                                   address_city_id: address_city_id,
                                   city_name: addres_city_name
@@ -387,23 +390,24 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                   responsiveSizedBox(context: context, percentageOfHeight: .015),
                   phone_addressTextFields(
                       context: context, hint: "Ex: 5xxxxxxxx"),
-                  responsiveSizedBox(
-                      context: context, percentageOfHeight: .015),
 
+                  responsiveSizedBox(context: context, percentageOfHeight: .015),
+                  paymentTitle(context: context, title: "Neighbourhood"),
+                  responsiveSizedBox(context: context, percentageOfHeight: .015),
+                  Neighbourhood_addressTextFields(context: context, hint: "Neighbourhood"),
+
+                  responsiveSizedBox(context: context, percentageOfHeight: .015),
                   paymentTitle(context: context, title: "Street"),
-                  responsiveSizedBox(
-                      context: context, percentageOfHeight: .015),
-                  street_addressTextFields(
-                      context: context, hint: "Street"),
-                  responsiveSizedBox(
-                      context: context, percentageOfHeight: .015),
+                  responsiveSizedBox(context: context, percentageOfHeight: .015),
+                  street_addressTextFields(context: context, hint: "Street"),
+                  responsiveSizedBox(context: context, percentageOfHeight: .015),
                 ],
               ))
       ),
     );
   }
 
-  Widget checkout_address({var frist_name,var last_name,var phone,var street,var city_name,
+  Widget checkout_address({var frist_name,var last_name,var phone,var street,var city_name,var Neighbourhood,
     var address_city_id}){
     return  Container(
         decoration: BoxDecoration(
@@ -426,7 +430,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                 context: context, title: "First Name"),
             responsiveSizedBox(context: context, percentageOfHeight: .01),
             frist_name_addressTextFields(
-                context: context, hint: frist_name,initialValue: frist_name),
+                context: context,hint: frist_name,initialValue: frist_name),
             responsiveSizedBox(context: context, percentageOfHeight: .01),
 
             paymentTitle(
@@ -450,23 +454,24 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             responsiveSizedBox(
                 context: context, percentageOfHeight: .01),
             phone_addressTextFields(
-                context: context, hint: phone==null?"Ex: 5xxxxxxxx" : phone.toString().substring(4)),
-            responsiveSizedBox(
-                context: context, percentageOfHeight: .01),
+                context: context, hint: phone==null?"Ex: 5xxxxxxxx" : phone.toString().substring(4)
+                ,initialValue: phone.toString().substring(4)),
 
+            responsiveSizedBox(context: context, percentageOfHeight: .01),
+            paymentTitle(context: context, title: "Neighbourhood"),
+            responsiveSizedBox(context: context, percentageOfHeight: .01),
+            Neighbourhood_addressTextFields(context: context, hint: Neighbourhood,initialValue: Neighbourhood),
+
+            responsiveSizedBox(context: context, percentageOfHeight: .01),
             paymentTitle(context: context, title: "Street"),
-            responsiveSizedBox(
-                context: context, percentageOfHeight: .01),
-            street_addressTextFields(
-                context: context, hint: street,initialValue: street),
-            responsiveSizedBox(
-                context: context, percentageOfHeight: .01),
+            responsiveSizedBox(context: context, percentageOfHeight: .01),
+            street_addressTextFields(context: context, hint: street,initialValue: street),
+            responsiveSizedBox(context: context, percentageOfHeight: .01),
+
           ],
         ))
     );
   }
-
-
 
 
   Widget get_cities({var current_adress_city_id, var city_name}){
@@ -821,7 +826,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   }
 
   phone_addressTextFields({BuildContext context, String hint,var initialValue}) {
-
     String _countryCode  = MyApp.app_location == 'sa' ?"+966" : MyApp.app_location == 'kw' ? "+965" : "+971";
 
     return StreamBuilder<String>(
@@ -834,12 +838,12 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               CountryCodePicker(
                 onChanged: (Object object)=>_countryCode=object.toString(),
                 initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
-                countryFilter: ['SA', 'KW',],
+                countryFilter: ['SA', 'KW', 'AE'],
                 showFlagDialog: true,
               ),
               Flexible(
                 child: TextFormField(
-                  initialValue: initialValue??'',
+                 initialValue: initialValue??'',
                   keyboardType: TextInputType.number,
                   style: TextStyle(
                       color: mainColor,
@@ -871,13 +875,12 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     errorText: snapshot.error,
 
                   ),
-                  validator: StaticData.chossed_address_id != null ? null :(value) {
+                  validator: /*StaticData.chossed_address_id != null ? null :*/(value) {
                     Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+965|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';
                     RegExp regex = new RegExp(pattern);
-
                     if (value == null || value.isEmpty) {
                       return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
-                    }else  if(!regex.hasMatch(value) || value.length < 8){
+                    }else  if(!regex.hasMatch(value) ){
                       return '${translator.translate("Please enter a correct phone number")} ';
                     }
                     return null;
@@ -888,12 +891,13 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                 ),
               ),
             ],
-          ):Row(
+          )
+              : Row(
             children: [
               Flexible(
                 child: TextFormField(
                   textAlign: TextAlign.left,
-                  initialValue: initialValue??'',
+               initialValue: initialValue??'',
                   keyboardType: TextInputType.number,
                   style: TextStyle(
                       color: mainColor,
@@ -925,13 +929,14 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     errorText: snapshot.error,
 
                   ),
-                  validator: StaticData.chossed_address_id != null ? null :(value) {
+
+                  validator: (value) {
                     Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+965|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';
                     RegExp regex = new RegExp(pattern);
-
                     if (value == null || value.isEmpty) {
                       return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
-                    }else  if(!regex.hasMatch(value) || value.length < 8){
+                    }
+                    else  if(!regex.hasMatch(value) || value.length != 9){
                       return '${translator.translate("Please enter a correct phone number")} ';
 
                     }
@@ -945,7 +950,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               CountryCodePicker(
                 onChanged: (Object object)=>_countryCode=object.toString(),
                 initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
-                countryFilter: ['SA', 'KW', ],
+                countryFilter: ['SA', 'KW', 'AE' ],
                 showFlagDialog: true,
               ),
             ],
@@ -997,7 +1002,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             ),
             validator:StaticData.chossed_address_id != null ? null : (value) {
               if (value == null || value.isEmpty) {
-                return '${translator.translate("Please enter")} ${translator.translate("Shippment Address")}';
+                return '${translator.translate("Please enter")} ${translator.translate("Street")}';
               }
               return null;
             },
@@ -1009,6 +1014,59 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   }
 
 
+  Neighbourhood_addressTextFields({BuildContext context, String hint,var initialValue}) {
+    return StreamBuilder<String>(
+      stream: shipmentAddressBloc.Neighbourhood,
+      builder: (context, snapshot) {
+        return Container(
+          padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
+
+          child: TextFormField(
+            initialValue: initialValue??'',
+            keyboardType: TextInputType.streetAddress,
+            style: TextStyle(
+                color: mainColor,
+                fontSize: isLandscape(context)
+                    ? 2 * height(context) * .02
+                    : height(context) * .02),
+            cursorColor: greyColor.withOpacity(.5),
+            decoration: InputDecoration(
+              hintText: translator.translate(hint??"Shippment Address"),
+              contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
+              hintStyle: TextStyle(
+                  color: mainColor,
+                  fontWeight:initialValue == null ? FontWeight.normal : FontWeight.bold,
+                  fontSize: isLandscape(context)
+                      ? initialValue == null ? 2* height(context) * .016 : 2* height(context) * .018
+                      : initialValue == null ? height(context) * .016 : height(context) * .018),
+              filled: true,
+              fillColor: backGroundColor,
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(3),
+                  borderSide: BorderSide(color: greyColor)),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(3),
+                  borderSide: BorderSide(color: greyColor)),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(3),
+                  borderSide: BorderSide(color: greyColor)),
+              errorText: snapshot.error,
+
+            ),
+            validator:StaticData.chossed_address_id != null ? null : (value) {
+              if (value == null || value.isEmpty) {
+                return '${translator.translate("Please enter")} ${translator.translate("Shippment Address")}';
+              }
+              return null;
+            },
+            onChanged: shipmentAddressBloc.Neighbourhood_change,
+          ),
+        );
+      },
+    );
+  }
+
   addressNextButton({BuildContext context}) {
     return StaggerAnimation(
       titleButton: add_new_address_status ?translator.translate( "Save")
@@ -1019,24 +1077,23 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       checkout_color: true,
         product_details_page :true,
       onTap: () {
-        print("_____1");
         //used when i select one address from list of addresses
         if(selected_address_id != null){
-          print("_____2");
-          StaticData.order_address = addres_city_name +
-              " , " //use this to show address in CheckoutSummaryScreen
-                  "${shipmentAddressBloc.street_controller.value == null
+          //use this to show address in CheckoutSummaryScreen
+          StaticData.order_address = addres_city_name + " , "
+          + "${shipmentAddressBloc.Neighbourhood_controller.value == null
+                  ? Neighbourhood
+                  : shipmentAddressBloc.Neighbourhood_controller.value }"+ " , "
+              + "${shipmentAddressBloc.street_controller.value == null
                   ? street
                   : shipmentAddressBloc.street_controller.value }";
           shipmentAddressBloc.add(
               GuestAddAdressEvent(context: context)
           );
         }
-        else{
-          print("_____3");
+        else {
           //used when edit address
           if (_formKey.currentState.validate() ) {
-            print("_____4");
             if(addres_city_name == null){
               errorDialog(
                   context: context,
@@ -1044,26 +1101,25 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               );
             }
             else{
-              print("_____5");
-              StaticData.order_address = addres_city_name + " , " //use this to show address in CheckoutSummaryScreen
-                      "${shipmentAddressBloc.street_controller.value == null
+              //use this to show address in CheckoutSummaryScreen
+              StaticData.order_address = addres_city_name + " , "
+                  + "${shipmentAddressBloc.Neighbourhood_controller.value == null
+                      ? Neighbourhood
+                      : shipmentAddressBloc.Neighbourhood_controller.value }"+ " , "
+                  +
+                  "${shipmentAddressBloc.street_controller.value == null
                       ? street
                       : shipmentAddressBloc.street_controller.value }";
               if(edit_address_status){
-                print("_____5-1--------------");
                 shipmentAddressBloc.add(
                     EditClientAdressEvent(context: context)
                 );
               }else{
-                print("_____5-2--------------");
-                print("StaticData.vistor_value : ${StaticData.vistor_value}");
                 if(StaticData.vistor_value == 'visitor' ){
-                  print("_____5-3--------------");
                   shipmentAddressBloc.add(
                       GuestAddAdressEvent(context: context)
                   );
                 }else{
-                  print("_____5-4--------------");
                   shipmentAddressBloc.add(
                       AddClientAdressEvent(context: context)
                   );
@@ -1074,19 +1130,28 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             }
 
           }
+        else if(shipmentAddressBloc.phone.length != 9){
+            errorDialog(
+              context: context,
+              text:translator.translate("Please enter a correct phone number"),
+            );
+
+          }
           else if(frist_name != null  ){
-            print("_____6");
-            StaticData.order_address = addres_city_name +
-                " , " //use this to show address in CheckoutSummaryScreen
-                    "${shipmentAddressBloc.street_controller.value == null
+            //use this to show address in CheckoutSummaryScreen
+            StaticData.order_address = addres_city_name + " , "
+                + "${shipmentAddressBloc.Neighbourhood_controller.value == null
+                    ? Neighbourhood
+                    : shipmentAddressBloc.Neighbourhood_controller.value }"+ " , "
+                + "${shipmentAddressBloc.street_controller.value == null
                     ? street
                     : shipmentAddressBloc.street_controller.value }";
             shipmentAddressBloc.add(
                 GuestAddAdressEvent(context: context)
             );
 
-          }else{
-            print("_____7");
+          }
+          else{
           }
         }
 
@@ -1149,6 +1214,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                             last_name = null;
                             phone  = null;
                             street = null;
+                            Neighbourhood = null;
                             addres_city_name = null;
                             address_city_id = null;
                           });
@@ -1262,19 +1328,20 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                   selected_address_id = cardModel.id;
                   StaticData.chossed_address_id = cardModel.id;
 
-                  print("StaticData.chossed_address_id : ${StaticData.chossed_address_id}");
                   selected_address_status = ! selected_address_status;
                   setState(() {
                     frist_name = cardModel.firstname;
                     last_name = cardModel.lastname;
                     phone = cardModel.telephone;
                     street = cardModel.street[0];
-                    addres_city_name = cardModel.city;
+                    addres_city_name = cardModel.region.region;
                     address_city_id = cardModel.regionId;
+                    Neighbourhood = cardModel.city;
                     shipmentAddressBloc.frist_name_controller.value = frist_name;
                     shipmentAddressBloc.last_name_controller.value = last_name;
                     shipmentAddressBloc.phone_controller.value = phone;
                     shipmentAddressBloc.street_controller.value = street;
+                    shipmentAddressBloc.Neighbourhood_controller.value = Neighbourhood;
                     sharedPreferenceManager.writeData(CachingKey.REGION_ID, cardModel.regionId.toString());
                     sharedPreferenceManager.writeData(CachingKey.REGION_EN,  cardModel.region.region);
                     sharedPreferenceManager.writeData(CachingKey.REGION_AR,  cardModel.region.region);

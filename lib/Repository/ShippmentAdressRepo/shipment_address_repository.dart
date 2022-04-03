@@ -21,17 +21,16 @@ class ShipmentAddressRepository {
     });*/
 
     try {
-      print("1");
       print("customer_address_id : ${ StaticData.vistor_value == 'visitor' ? null : StaticData.chossed_address_id}");
-      print("region : ${await sharedPreferenceManager.readString(translator.activeLanguageCode == 'ar' ? CachingKey.REGION_AR : CachingKey.REGION_EN)}");
-      print("region_id : ${ await sharedPreferenceManager.readString(CachingKey.REGION_ID)}");
+      print("region : ${ await sharedPreferenceManager.readString(translator.activeLanguageCode == 'ar' ? CachingKey.REGION_AR : CachingKey.REGION_EN)}");
+      print("region_id : ${await sharedPreferenceManager.readString(CachingKey.REGION_ID)}");
       print("region_code : ${await sharedPreferenceManager.readString(translator.activeLanguageCode == 'ar' ? CachingKey.REGION_AR : CachingKey.REGION_EN)}");
-      print("country_id :  ${ MyApp.app_location == 'sa' ? "SA" :   MyApp.app_location == 'uae' ? "AE" : "KW"}");
-      print("street : ${["${shipmentAddressBloc.street_controller.value}"]}");
-      print("city : ${ await sharedPreferenceManager.readString(translator.activeLanguageCode == 'ar' ? CachingKey.REGION_AR : CachingKey.REGION_EN)}");
+      print("country_id : ${MyApp.app_location == 'sa' ? "SA" :   MyApp.app_location == 'uae' ? "AE" : "KW"}");
+      print("street : ${shipmentAddressBloc.street_controller.value}");
+      print("postcode : ${"10577"}");
+      print("city : ${shipmentAddressBloc.Neighbourhood_controller.value}");
       print("firstname : ${shipmentAddressBloc.frist_name_controller.value}");
-      print("lastname : ${shipmentAddressBloc.last_name_controller.value}");
-      print("email : ${StaticData.vistor_value == 'visitor' ? "${shipmentAddressBloc.email_controller.value}" : await sharedPreferenceManager.readString(CachingKey.EMAIL)}");
+      print("email : ${ StaticData.vistor_value == 'visitor' ? "${shipmentAddressBloc.email_controller.value}" : await sharedPreferenceManager.readString(CachingKey.EMAIL)}");
       print("telephone : ${shipmentAddressBloc.phone_controller.value}");
 
       final response = await dio.post(
@@ -57,10 +56,11 @@ class ShipmentAddressRepository {
                     :   MyApp.app_location == 'uae' ? "AE" : "KW",
                 "street": ["${shipmentAddressBloc.street_controller.value}"],
                 "postcode": "10577",
-                "city": await sharedPreferenceManager.readString(
+               /* "city": await sharedPreferenceManager.readString(
                     translator.activeLanguageCode == 'ar'
                         ? CachingKey.REGION_AR
-                        : CachingKey.REGION_EN),
+                        : CachingKey.REGION_EN),*/
+                "city": shipmentAddressBloc.Neighbourhood_controller.value,
                 "firstname":
                     "${shipmentAddressBloc.frist_name_controller.value}",
                 "lastname": "${shipmentAddressBloc.last_name_controller.value}",
@@ -87,10 +87,11 @@ class ShipmentAddressRepository {
                     :   MyApp.app_location == 'uae' ? "AE" : "KW",
                 "street": ["${shipmentAddressBloc.street_controller.value}"],
                 "postcode": "10577",
-                "city": await sharedPreferenceManager.readString(
+              "city": shipmentAddressBloc.Neighbourhood_controller.value,
+         /*       "city": await sharedPreferenceManager.readString(
                     translator.activeLanguageCode == 'ar'
                         ? CachingKey.REGION_AR
-                        : CachingKey.REGION_EN),
+                        : CachingKey.REGION_EN),*/
                 "firstname":
                     "${shipmentAddressBloc.frist_name_controller.value}",
                 "lastname": "${shipmentAddressBloc.last_name_controller.value}",
@@ -112,89 +113,17 @@ class ShipmentAddressRepository {
                           'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}',
                       'content-type': 'application/json'
                     })));
-      print("2");
       if (response.statusCode == 200) {
-        print("3");
-/*
-        if (StaticData.vistor_value != 'visitor' &&
-            !StaticData.chosse_address_status) {
-          print("4");
-
-          final newAddressresponse = await dio.put(
-              "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/customers/me/address",
-              data: {
-                "customer_id": await sharedPreferenceManager
-                    .readInteger(CachingKey.CUSTOMER_ID),
-                "address": {
-                  "customer_id": await sharedPreferenceManager
-                      .readInteger(CachingKey.CUSTOMER_ID),
-                  "region": {
-                    "region_code": await sharedPreferenceManager.readString(
-                        translator.activeLanguageCode == 'ar'
-                            ? CachingKey.REGION_AR
-                            : CachingKey.REGION_EN),
-                    "region": await sharedPreferenceManager.readString(
-                        translator.activeLanguageCode == 'ar'
-                            ? CachingKey.REGION_AR
-                            : CachingKey.REGION_EN),
-                    "region_id": await sharedPreferenceManager
-                        .readString(CachingKey.REGION_ID),
-                  },
-                  "region_id": await sharedPreferenceManager
-                      .readString(CachingKey.REGION_ID),
-                  "country_id": MyApp.app_location == 'sa' ? "SA"
-                      :   MyApp.app_location == 'uae' ? "AE" : "KW",
-                  "street": ["${shipmentAddressBloc.street_controller.value}"],
-                  "telephone": "${shipmentAddressBloc.phone_controller.value}",
-                  "postcode": "10577",
-                  "city": await sharedPreferenceManager.readString(
-                      translator.activeLanguageCode == 'ar'
-                          ? CachingKey.REGION_AR
-                          : CachingKey.REGION_EN),
-                  "firstname":
-                      "${shipmentAddressBloc.frist_name_controller.value}",
-                  "lastname":
-                      "${shipmentAddressBloc.last_name_controller.value}",
-                }
-              },
-              options: Options(
-                  headers: Map<String, String>.from({
-                'Authorization':
-                    'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}',
-                'content-type': 'application/json'
-              })));
-          print("5");
-          if (newAddressresponse.statusCode == 200) {
-            print("6");
-            final jsonData = response.data;
-            GuestShipmentAddressModel guestShipmentAddressModel =
-                GuestShipmentAddressModel.fromJson(
-                    Map<String, dynamic>.from(jsonData));
-            print("7");
-            return guestShipmentAddressModel;
-          } else {
-            print("8");
-            errorDialog(
-                context: context, text: newAddressresponse.data['message']);
-          }
-        }
-        else {
-*/
-
-          print("4");
           final jsonData = response.data;
           GuestShipmentAddressModel guestShipmentAddressModel =
               GuestShipmentAddressModel.fromJson(
                   Map<String, dynamic>.from(jsonData));
-          print("5");
           return guestShipmentAddressModel;
-       // }
+
       } else {
-        print("6");
         errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
-      print("7 : ${e.toString()}");
 
       //  errorDialog(context: context, text: e.toString());
     }
@@ -294,10 +223,12 @@ class ShipmentAddressRepository {
             "street": ["${shipmentAddressBloc.street_controller.value}"],
             "telephone": "${shipmentAddressBloc.phone_controller.value}",
             "postcode": "10577",
-            "city": await sharedPreferenceManager.readString(
+ /*           "city": await sharedPreferenceManager.readString(
                 translator.activeLanguageCode == 'ar'
                     ? CachingKey.REGION_AR
-                    : CachingKey.REGION_EN),
+                    : CachingKey.REGION_EN),*/
+            "city": shipmentAddressBloc.Neighbourhood_controller.value,
+
             "firstname":
             "${shipmentAddressBloc.frist_name_controller.value}",
             "lastname":
@@ -349,10 +280,12 @@ class ShipmentAddressRepository {
             "street": ["${shipmentAddressBloc.street_controller.value}"],
             "telephone": "${shipmentAddressBloc.phone_controller.value}",
             "postcode": "10577",
-            "city": await sharedPreferenceManager.readString(
+            "city": shipmentAddressBloc.Neighbourhood_controller.value,
+
+            /* "city": await sharedPreferenceManager.readString(
                 translator.activeLanguageCode == 'ar'
                     ? CachingKey.REGION_AR
-                    : CachingKey.REGION_EN),
+                    : CachingKey.REGION_EN),*/
             "firstname":
             "${shipmentAddressBloc.frist_name_controller.value}",
             "lastname":

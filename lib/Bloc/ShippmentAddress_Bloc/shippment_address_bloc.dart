@@ -10,20 +10,21 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
   final email_controller = BehaviorSubject<String>();
   final phone_controller = BehaviorSubject<String>();
   final street_controller = BehaviorSubject<String>();
-
+  final Neighbourhood_controller = BehaviorSubject<String>();
 
   Function(String) get frist_name_change => frist_name_controller.sink.add;
   Function(String) get last_name_change  => last_name_controller.sink.add;
   Function(String) get email_change  => email_controller.sink.add;
   Function(String) get phone_change  => phone_controller.sink.add;
   Function(String) get street_change  => street_controller.sink.add;
+  Function(String) get Neighbourhood_change  => Neighbourhood_controller.sink.add;
 
   Stream<String> get frist_name => frist_name_controller.stream.transform(input_text_validator);
   Stream<String> get last_name => last_name_controller.stream.transform(input_text_validator);
   Stream<String> get  email =>  email_controller.stream.transform(email_validator);
   Stream<String> get  phone =>  phone_controller.stream.transform(phone_validator);
   Stream<String> get  street =>  street_controller.stream.transform(input_text_validator);
-
+  Stream<String> get  Neighbourhood =>  Neighbourhood_controller.stream.transform(input_text_validator);
 
   BehaviorSubject<AddressModel> _address_details_subject = new BehaviorSubject<AddressModel>();
   get address_details_subject{

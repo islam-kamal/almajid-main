@@ -9,12 +9,12 @@ singleProductSummaryCard({BuildContext context,var prod_name,var prod_image, var
        Expanded(
          flex: 3,
          child:  Container(
-         width: width(context) * .4,
+       //  width: width(context) * .4,
          decoration: BoxDecoration(
              borderRadius: BorderRadius.circular(20),
              image: DecorationImage(
                  image: NetworkImage("${Urls.BASE_URL}/pub/media/catalog/product/${prod_image}"),
-                 fit: BoxFit.fill)),
+                 fit: BoxFit.contain)),
        ),),
     Expanded(
       flex: 1,
