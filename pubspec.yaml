@@ -80,7 +80,7 @@ dependencies:
   country_code_picker: ^2.0.0
   image_cropper: ^1.5.0
   pay: ^1.0.5
-
+  intl_phone_field: ^3.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

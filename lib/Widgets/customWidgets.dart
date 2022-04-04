@@ -86,113 +86,6 @@ class CustomComponents{
   }
 
 
-/*
-  static void applePayBottomSheet({BuildContext context, var total}) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width ;
-   var _paymentItems = [
-      PaymentItem(
-        label: 'Total',
-        amount: total.toString(),
-        status: PaymentItemStatus.final_price,
-      )
-    ];
-    showModalBottomSheet<void>(
-        context: context,
-        shape: OutlineInputBorder(
-          borderRadius: new BorderRadius.only(
-              topLeft: const Radius.circular(20.0),
-              topRight: const Radius.circular(20.0)),
-        ),
-        builder: (BuildContext context) {
-          return  Directionality(
-              textDirection: translator.currentLanguage =='ar'?TextDirection.rtl : TextDirection.ltr,
-              child:Container(
-                height: width * 0.6,
-                child:  Column(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        padding: EdgeInsets.only(left: width * .075, right: width * .075, ),
-                        alignment: translator.currentLanguage =='ar'?Alignment.centerRight : Alignment.centerLeft,
-                        child:   Image.asset( "assets/icons/apple pay.png",
-                            height: MediaQuery.of(context).size.height*.13
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child:  Container(
-                          width: StaticData.get_width(context) * .9,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              customDescriptionText(
-                                  context: context,
-                                  text: "Total to pay",
-                                  fontWeight: FontWeight.bold,
-                                  textAlign: TextAlign.start,
-                                  percentageOfHeight: .020),
-                              customDescriptionText(
-                                  context: context,
-                                  text: "${MyApp.country_currency} $total",
-                                  fontWeight: FontWeight.bold,
-                                  textAlign: TextAlign.start,
-                                  percentageOfHeight: .020),
-                            ],
-                          )),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child:      ApplePayButton(
-                        paymentConfigurationAsset: 'apple_pay/default_payment_profile_apple_pay.json',
-                        paymentItems: _paymentItems,
-                        style: ApplePayButtonStyle.black,
-                        type: ApplePayButtonType.buy,
-                        margin: const EdgeInsets.only(top: 15.0),
-                        onPaymentResult: onApplePayResult,
-                        loadingIndicator: const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ));
-        }
-
-    );
-  }
- static void onApplePayResult(paymentResult,{BuildContext context , var order_incremental_id}) {
-    debugPrint(paymentResult.toString());
-    final token = json.decode(paymentResult["token"]);
-    debugPrint("after extracted data");
-
-    final Future<http.Response> response = payment_repository.getPayfortApplePayValidation(
-      apple_data: token["data"],
-      apple_signature: token["signature"],
-      apple_publicKeyHash: token["header"]["publicKeyHash"],
-      apple_transactionId:token["header"]["transactionId"],
-      apple_ephemeralPublicKey: token["header"]["ephemeralPublicKey"],
-      apple_displayName: "Almajed",
-      apple_network: paymentResult["paymentMethod"]["network"],
-      apple_version: token["version"],
-      order_id: order_incremental_id,
-    );
-
-    response.then((res) {
-      final extractedData = json.decode(res.body) as Map<String, dynamic>;
-      if (extractedData["status"]) {
-        customAnimatedPushNavigation(context, SubmitSuccessfulScreen(
-          order_id: order_incremental_id,
-        ));
-      }else{
-        customAnimatedPushNavigation(context, SubmitFaieldScreen());
-      }
-    });
-  }
-*/
 
   static String order_status(String status){
     switch(status){
@@ -217,8 +110,185 @@ class CustomComponents{
       case "closed":
         return translator.translate("closed");
         break;
+
+      case "dispatched_01":
+        return translator.translate("dispatched_01");
+        break;
+      case "in_transit":
+        return translator.translate("in_transit");
+        break;
+      case "rejected":
+        return translator.translate("rejected");
+        break;
+      case "rejected_by_ajeek":
+        return translator.translate("rejected_by_ajeek");
+        break;
+      case "rejected_by_customer":
+        return translator.translate("rejected_by_customer");
+        break;
+      case "not_delivered":
+        return translator.translate("not_delivered");
+        break;
+      case "invoiced":
+        return translator.translate("invoiced");
+        break;
+      case "fraud":
+        return translator.translate("fraud");
+        break;
+      case "confirmed101":
+        return translator.translate("confirmed101");
+        break;
+      case "returned_to_almajed":
+        return translator.translate("returned_to_almajed");
+        break;
+      case "canceled_by_al_majed":
+        return translator.translate("canceled_by_al_majed");
+        break;
+      case "pending_payment":
+        return translator.translate("pending_payment");
+        break;
+      case "payment_review":
+        return translator.translate("payment_review");
+        break;
+
+      case "holded":
+        return translator.translate("holded");
+        break;
+      case "delivered":
+        return translator.translate("order_delivered");
+        break;
+      case "complete":
+        return translator.translate("complete");
+        break;
+      case "collected_by_customer":
+        return translator.translate("collected_by_customer");
+        break;
+      case "return_01":
+        return translator.translate("return_01");
+        break;
+      case "payfort_fort_failed":
+        return translator.translate("payfort_fort_failed");
+        break;
+      case "pending_paypal":
+        return translator.translate("pending_paypal");
+        break;
+      case "paypal_canceled_reversal":
+        return translator.translate("paypal_canceled_reversal");
+        break;
+      case "paypal_reversed":
+        return translator.translate("paypal_reversed");
+        break;
+      case "redbox_portable_failed":
+        return translator.translate("redbox_portable_failed");
+        break;
+      case "redbox_portable_expired":
+        return translator.translate("redbox_portable_expired");
+        break;
+
     }
 
   }
 
+  static Color order_status_color(String status){
+    switch(status){
+      case "order_delivered":
+        return greenColor;
+        break;
+      case "processing":
+        return Colors.yellow;
+        break;
+      case "pending":
+        return Colors.yellow;
+        break;
+      case "canceled":
+        return Colors.red;
+        break;
+      case "payfort_fort_new":
+        return Colors.blue;
+        break;
+      case "ready_to_dispatched":
+        return Colors.purple;
+        break;
+      case "closed":
+        return Colors.black;
+        break;
+
+      case "dispatched_01":
+        return Colors.purple;
+        break;
+      case "in_transit":
+        return Colors.orangeAccent;
+        break;
+      case "rejected":
+        return Colors.red;
+        break;
+      case "rejected_by_ajeek":
+        return Colors.red;
+        break;
+      case "rejected_by_customer":
+        return Colors.red;
+        break;
+      case "not_delivered":
+        return Colors.yellow;
+        break;
+      case "invoiced":
+        return Colors.lightGreenAccent;
+        break;
+      case "fraud":
+        return Colors.redAccent;
+        break;
+      case "confirmed101":
+        return Colors.greenAccent;
+        break;
+      case "returned_to_almajed":
+        return Colors.lightGreenAccent;
+        break;
+      case "canceled_by_al_majed":
+        return Colors.redAccent;
+        break;
+      case "pending_payment":
+        return Colors.orange;
+        break;
+      case "payment_review":
+        return Colors.orange;
+        break;
+
+      case "holded":
+        return Colors.orange;
+        break;
+      case "delivered":
+        return greenColor;
+        break;
+      case "complete":
+        return Colors.greenAccent;
+        break;
+      case "collected_by_customer":
+        return Colors.lightGreen;
+        break;
+      case "return_01":
+        return Colors.indigo;
+        break;
+      case "payfort_fort_failed":
+        return Colors.redAccent;
+        break;
+      case "pending_paypal":
+        return Colors.orange;
+        break;
+      case "paypal_canceled_reversal":
+        return Colors.redAccent;
+        break;
+      case "paypal_reversed":
+        return Colors.orange;
+        break;
+
+      case "redbox_portable_failed":
+        return Colors.redAccent;
+        break;
+      case "redbox_portable_expired":
+        return Colors.redAccent;
+        break;
+
+    }
+
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:almajidoud/screens/product_details/widgets/descriptionAndShareRow.dart';
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:flutter/gestures.dart';
 
 class ProductUseTabBar extends StatelessWidget{
   var  how_to_use ,  description ;
@@ -48,14 +49,9 @@ class ProductUseTabBar extends StatelessWidget{
                 descriptionAndShareRow(
                     context: context,
                     description: translator.translate( "shipping&returns"),
-
                 ),
 
-
-
-
               ],
-
               // physics: NeverScrollableScrollPhysics(),
             ),
           )),

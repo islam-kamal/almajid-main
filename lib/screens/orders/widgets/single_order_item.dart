@@ -124,8 +124,9 @@ singleOrderItem({BuildContext context , OrderItems order ,var order_increment_id
                                     customDescriptionText(
                                         context: context,
                                         text: "${CustomComponents.order_status(order.status)}",
-                                        textColor: Colors.red,
-                                        fontWeight: FontWeight.bold)
+                                        textColor:CustomComponents.order_status_color(order.status),
+                                        percentageOfHeight: .017,
+                                        fontWeight: FontWeight.normal)
                                   ],
                                 ),
                               ),

@@ -6,7 +6,7 @@ descriptionAndShareRow({BuildContext context , String description }) {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          padding: EdgeInsets.all(width(context) * .05),
+          padding: EdgeInsets.symmetric(horizontal: width(context) * .05,vertical: 5),
           width: width(context) ,
           child: customDescriptionText(
               context: context,

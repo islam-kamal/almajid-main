@@ -3,6 +3,7 @@ import 'package:almajidoud/Bloc/ShippmentAddress_Bloc/shippment_address_bloc.dar
 import 'package:almajidoud/Model/CartModel/cart_details_model.dart';
 import 'package:almajidoud/Model/CartModel/cart_details_model.dart'
 as cart_details_model;
+import 'package:almajidoud/Model/ShipmentAddressModel/client/address_model.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/Widgets/cart_screen_app_bar.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
@@ -85,6 +86,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                     }
                     else if(state is Done){
                       if(state.indicator == "GetAllAddressesEvent"){
+                        var data = state.general_model as List<AddressModel>;
                         _stopAnimation();
                         customAnimatedPushNavigation(context, CheckoutAddressScreen());
                       }

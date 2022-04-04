@@ -210,6 +210,15 @@ class GetAllAddressesEvent extends AppEvent{
   BuildContext context;
   GetAllAddressesEvent({this.context});
 }
+class AddClientAdressEvent  extends AppEvent{
+  BuildContext context;
+  AddClientAdressEvent({this.context});
+}
+class EditClientAdressEvent  extends AppEvent{
+  BuildContext context;
+  EditClientAdressEvent({this.context});
+}
+
 //Orders
 class CreateOrderEvent extends AppEvent{
   BuildContext context;

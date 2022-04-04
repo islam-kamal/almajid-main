@@ -43,12 +43,12 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    _currentIndex = Platform.isAndroid ? widget.guestShipmentAddressModel.paymentMethods[2].code
-         : widget.guestShipmentAddressModel.paymentMethods[0].code;
-    sharedPreferenceManager.writeData(
-        CachingKey.CHOSSED_PAYMENT_METHOD, _currentIndex);
-    payment_method_name =Platform.isAndroid ? widget.guestShipmentAddressModel.paymentMethods[2].title
-         : widget.guestShipmentAddressModel.paymentMethods[0].title;
+
+    _currentIndex = widget.guestShipmentAddressModel.paymentMethods[0].code;
+    sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, _currentIndex);
+    payment_method_name = widget.guestShipmentAddressModel.paymentMethods[0].title;
+
+
     border = OutlineInputBorder(
       borderSide: BorderSide(
         color: Colors.grey.withOpacity(0.7),
@@ -251,7 +251,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                       flex: 1,
                       child: GestureDetector(
                         onTap: () {
-                          if (_currentIndex == "stc_pay" ||
+                          if ( _currentIndex == "tap" ||
+                          _currentIndex == "stc_pay" ||
                               _currentIndex == 'tamara_pay_by_instalments' ||
                               _currentIndex == 'cashondelivery' ||
                               _currentIndex == 'mestores_applepay') {
@@ -356,7 +357,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
               image = "credit card.png";
               break;
             case 'tap':
-              image = "credit card.png";
+              image = "tap.png";
               break;
             case 'mestores_applepay':
               image = "apple pay.png";
@@ -409,7 +410,6 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                             CachingKey.CHOSSED_PAYMENT_METHOD,
                             paymentMethods[index].code);
                         payment_method_name = paymentMethods[index].title;
-
                         _currentIndex = val;
                       });
                     },

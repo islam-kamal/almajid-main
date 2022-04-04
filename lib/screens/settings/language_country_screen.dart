@@ -5,6 +5,8 @@ import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigatio
 import 'package:almajidoud/utils/file_export.dart';
 import 'dart:ui' as ui;
 
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 class LanguageCountryScreen extends StatefulWidget {
   String type;
   LanguageCountryScreen({this.type});
@@ -20,13 +22,16 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
 
   List<Country> countries = [];
   var language_list = [];
-  var country_name = MyApp.app_location == 'sa' ? 'Saudi Arabia' : MyApp.app_location == 'uae'
-          ? 'United Arab Emirates' : 'kuwait';
+  var country_name = MyApp.app_location == 'sa'
+      ? 'Saudi Arabia'
+      : MyApp.app_location == 'uae'
+          ? 'United Arab Emirates'
+          : 'kuwait';
   var saved_country_name;
-
+  bool loading = false;
   @override
   void initState() {
-     saved_country_name =country_name;
+    saved_country_name = country_name;
     countries
         .add(Country(name: 'Saudi Arabia', photo: "assets/flag/saudi.png"));
     countries.add(Country(name: 'kuwait', photo: "assets/flag/kuwait.png"));
@@ -126,59 +131,68 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                           Expanded(
                             flex: 2,
                             child: Center(
-                                child:    Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                   InkWell(
-                                        onTap: () {
-                                          if(MyApp.app_langauge == 'en'){
-                                            final newLang ='ar';
-                                            _changeLang(lang: newLang);
-                                          }else{
-
-                                          }
-                                        },
-                                        child: new Container(
-                                          width: width(context) * 0.2,
-                                          height: width(context) * 0.2,
-                                          alignment: Alignment.center,
-                                          decoration: new BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              border:  MyApp.app_langauge == 'ar' ? Border.all(color: mainColor,width: 3) : Border.all(color: greyColor,width: 3)
-                                          ),
-                                          child:  new Text("عربى",
-                                            style: new TextStyle(color: mainColor, ),
-                                            textAlign: TextAlign.center,),
-                                        ),
+                                child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    if (MyApp.app_langauge == 'en') {
+                                      final newLang = 'ar';
+                                      _changeLang(lang: newLang);
+                                    } else {}
+                                  },
+                                  child: new Container(
+                                    width: width(context) * 0.2,
+                                    height: width(context) * 0.2,
+                                    alignment: Alignment.center,
+                                    decoration: new BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: MyApp.app_langauge == 'ar'
+                                            ? Border.all(
+                                                color: mainColor, width: 3)
+                                            : Border.all(
+                                                color: greyColor, width: 3)),
+                                    child: new Text(
+                                      "عربى",
+                                      style: new TextStyle(
+                                        color: mainColor,
                                       ),
-                                      SizedBox(width: width(context) * 0.1,),
-                                    InkWell(
-                                        onTap: () {
-                                          if(MyApp.app_langauge == 'ar'){
-                                            final newLang ='en';
-                                            _changeLang(lang: newLang);
-                                          }else{
-
-                                          }
-
-                                        },
-                                        child: new Container(
-                                          width: width(context) * 0.2,
-                                          height: width(context) * 0.2,
-                                          alignment: Alignment.center,
-                                          decoration: new BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              border:   MyApp.app_langauge == 'ar' ? Border.all(color: greyColor,width: 3) : Border.all(color: mainColor,width: 3)
-                                          ),
-                                          child: new Text("English",
-                                            style: new TextStyle(color: mainColor, ),
-                                            textAlign: TextAlign.center,),// You can add a Icon instead of text also, like below.
-                                        ),
-                                      ),
-
-                                    ],
-                                  )
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
                                 ),
+                                SizedBox(
+                                  width: width(context) * 0.1,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    if (MyApp.app_langauge == 'ar') {
+                                      final newLang = 'en';
+                                      _changeLang(lang: newLang);
+                                    } else {}
+                                  },
+                                  child: new Container(
+                                    width: width(context) * 0.2,
+                                    height: width(context) * 0.2,
+                                    alignment: Alignment.center,
+                                    decoration: new BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: MyApp.app_langauge == 'ar'
+                                            ? Border.all(
+                                                color: greyColor, width: 3)
+                                            : Border.all(
+                                                color: mainColor, width: 3)),
+                                    child: new Text(
+                                      "English",
+                                      style: new TextStyle(
+                                        color: mainColor,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ), // You can add a Icon instead of text also, like below.
+                                  ),
+                                ),
+                              ],
+                            )),
                           ),
                           Divider(
                             color: mainColor,
@@ -195,7 +209,9 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                           Expanded(
                               flex: 3,
                               child: Center(
-                                  child: ListView.builder(
+                                  child:Directionality(
+                                      textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
+                                      child: ListView.builder(
                                       shrinkWrap: true,
                                       scrollDirection: Axis.horizontal,
                                       itemCount: countries.length,
@@ -209,18 +225,17 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                                   setState(() {
                                                     country_name =
                                                         countries[index].name;
-                                                    MyApp.app_location = country_name == 'Saudi Arabia' ? 'sa'
-                                                            : country_name == "United Arab Emirates" ? 'uae' : 'kw';
-                                                    MyApp.country_currency = MyApp.app_location == 'sa' ? translator.translate("SAR")
+                                                    MyApp.app_location =
+                                                        country_name == 'Saudi Arabia' ? 'sa' : country_name ==
+                                                                    "United Arab Emirates" ? 'uae' : 'kw';
+                                                    MyApp.country_currency = MyApp.app_location == 'sa'
+                                                        ? translator.translate("SAR")
                                                         : MyApp.app_location == 'uae'
                                                             ? translator.translate("AED")
                                                             : translator.translate("KWD");
-                                                    sharedPreferenceManager
-                                                        .writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location);
-                                                    sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
-                                                    sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
-                                                    sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
-                                                    sharedPreferenceManager.removeData(CachingKey.CUSTOMER_ID);
+
+
+                                                    shoppingCartBloc.add(GetCartDetailsEvent());
                                                   });
                                                 },
                                                 child: new Container(
@@ -241,63 +256,114 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                                                 color:
                                                                     greyColor,
                                                                 width: 3)),
-                                                    child: Image.asset(countries[index].photo)),
+                                                    child: Image.asset(
+                                                        countries[index]
+                                                            .photo)),
                                               ),
-                                              Text(countries[index].name.tr())
+                                              Text(countries[index].name == "United Arab Emirates"
+                                                  ? "United Arab Emirates".tr() : countries[index].name.tr())
                                             ],
                                           ),
                                         );
-                                      }))),
+                                      })
+                                  )
+                              )),
                           Expanded(
                             flex: 1,
                             child: Padding(
                               padding: EdgeInsets.only(bottom: 10),
                               child: GestureDetector(
-                                onTap: ()async {
-
+                                onTap: () async {
+                                  setState(() {
+                                    loading = true;
+                                  });
                                   if (widget.type == 'settings') {
                                     if(StaticData.vistor_value == 'visitor'){
-
-                                      MyApp.restartApp(context);
-                                    }else{
-                                      if(saved_country_name == country_name){
-                                        cartRepository.create_quote(context: context);
-                                        MyApp.restartApp(context);
-                                      }else{
-                                        sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
+                                      if (saved_country_name == country_name) {
+                                      } else {
                                         sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
+                                        cartRepository.create_quote(context: context);
+                                      }
+                                      await categoryRepository
+                                          .getCategoriesList()
+                                          .then((value) {
+                                        categoryBloc.set_category_subject(value);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CustomCircleNavigationBar(
+                                                      page_index:
+                                                      MyApp.app_langauge == 'ar'
+                                                          ? 4
+                                                          : 0,
+                                                    )));
+                                      });
+
+                                    }
+                                    else{
+                                      if (saved_country_name == country_name) {
+                                        cartRepository.create_quote(context: context);
+                                        await categoryRepository
+                                            .getCategoriesList()
+                                            .then((value) {
+                                          categoryBloc.set_category_subject(value);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      CustomCircleNavigationBar(
+                                                        page_index: MyApp.app_langauge == 'ar'
+                                                            ? 4
+                                                            : 0,
+                                                      )));
+                                        });
+
+                                      } else {
+                                        sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location);
+                                        sharedPreferenceManager.removeData(CachingKey.CART_QUOTE);
                                         sharedPreferenceManager.removeData(CachingKey.AUTH_TOKEN);
                                         sharedPreferenceManager.removeData(CachingKey.CUSTOMER_ID);
                                         customAnimatedPushNavigation(context, SignInScreen());
                                       }
-
                                     }
-                                    /*   Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CustomCircleNavigationBar(
-                                                  page_index:
-                                                      MyApp.app_langauge == 'ar'
-                                                          ? 4
-                                                          : 0,
-                                                )));*/
-                                  } else {
+
+
+                                  }
+                                  else {
                                     cartRepository.create_quote(context: context);
 
-                                await    categoryRepository.getCategoriesList().then((value){
+                                    await categoryRepository
+                                        .getCategoriesList()
+                                        .then((value) {
                                       categoryBloc.set_category_subject(value);
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                CustomCircleNavigationBar()),
+                                                CustomCircleNavigationBar(
+                                                )),
                                       );
                                     });
-
                                   }
+
+                                  MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
+                                      : MyApp.app_location == 'uae'? translator.translate("AED") : translator.translate("KWD");
+
+                                  setState(() {
+                                    loading = false;
+                                  });
                                 },
-                                child: Container(
+                                child:loading ?   Container(
+                                  height: 100,
+                                  child: Center(
+                                    child: SpinKitFadingCube(
+                                      color: Theme.of(context).primaryColor,
+                                      size: 30.0,
+                                    ),
+                                  ),
+                                )
+                                    :  Container(
                                     width: width(context) * .9,
                                     decoration: BoxDecoration(
                                         color: mainColor,

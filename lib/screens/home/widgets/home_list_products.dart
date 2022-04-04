@@ -147,7 +147,6 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                 related_product_list.forEach((element) {
                   snapshot.data.add(element) ;
                 });
-                // print(" snapshot.data : ${ snapshot.data}");
               }
               return Container(
                   width: width(context),
@@ -177,12 +176,12 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                           }
                         });
 
-
                         if(startDate ==null || endDate ==null ){
                           if(double.parse(minimal_price) == double.parse(snapshot.data[index].price.toString())){
                             new_price = null;
                           }else{
                             new_price = minimal_price;
+
                           }
 
                           if(double.parse(minimal_price) < double.parse(snapshot.data[index].price.toString()))

@@ -20,21 +20,22 @@ class CustomCircleNavigationBar extends StatefulWidget {
 class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
   int currentPage = 0;
   final List<Widget> _pages = [
-    translator.activeLanguageCode == 'en' ? MyAccountScreen() : CartScreen(),
+    MyApp.app_langauge == 'en' ? MyAccountScreen() : CartScreen(),
 
-    translator.activeLanguageCode == 'en'
+    MyApp.app_langauge  == 'en'
         ? LocationScreen()
         : SearchScreen(),
     HomeScreen(),
-    translator.activeLanguageCode == 'en'
+    MyApp.app_langauge  == 'en'
         ? SearchScreen()
         : LocationScreen(),
-    translator.activeLanguageCode == 'en' ? CartScreen() : MyAccountScreen(),
+    MyApp.app_langauge  == 'en' ? CartScreen() : MyAccountScreen(),
 
   ];
 
   @override
   void initState() {
+    print("  MyApp.app_langauge : ${  MyApp.app_langauge}");
     currentPage = widget.page_index;
     super.initState();
   }
@@ -60,13 +61,14 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
 
     return Scaffold(
       body: Directionality(
-        textDirection: translator.activeLanguageCode == 'ar'
+        textDirection: MyApp.app_langauge  == 'ar'
             ? ui.TextDirection.rtl
             : ui.TextDirection.ltr,
         child: _pages[currentPage],
       ),
       bottomNavigationBar: CircleBottomNavigationBar(
         initialSelection: currentPage,
+
         // barHeight: viewPadding.bottom > 0 ? barHeightWithNotch : barHeight,
         // arcHeight: viewPadding.bottom > 0 ? arcHeightWithNotch : barHeight,
         // arcHeight: viewPadding.bottom > 0 ? arcHeightWithNotch : barHeight,
@@ -91,7 +93,7 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
 
 List<TabData> getTabsData() {
   return [
-    translator.activeLanguageCode == 'en'
+    MyApp.app_langauge  == 'en'
         ? TabData(
       icon: Icons.menu,
       iconSize: 25,
@@ -100,7 +102,7 @@ List<TabData> getTabsData() {
       icon: Icons.shopping_cart,
       iconSize: 25.0,
     ),
-    translator.activeLanguageCode == 'en'
+    MyApp.app_langauge  == 'en'
         ? TabData(
       icon: Icons.location_on,
       iconSize: 25,
@@ -109,11 +111,13 @@ List<TabData> getTabsData() {
       icon: Icons.search,
       iconSize: 25,
     ),
+
     TabData(
       icon: Icons.home,
       iconSize: 25,
     ),
-    translator.activeLanguageCode == 'en'
+
+    MyApp.app_langauge  == 'en'
         ? TabData(
       icon: Icons.search,
       iconSize: 25,
@@ -122,7 +126,8 @@ List<TabData> getTabsData() {
       icon: Icons.location_on,
       iconSize: 25,
     ),
-    translator.activeLanguageCode == 'en'
+
+    MyApp.app_langauge  == 'en'
         ? TabData(
       icon: Icons.shopping_cart,
       iconSize: 25.0,

@@ -324,7 +324,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                         StaticData.country_code = _countryCode;
                       },
                       initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
-                      countryFilter: ['SA', 'KW', ],
+                      countryFilter: ['SA', 'KW', 'AE' ],
                       showFlagDialog: true,
                     ),
                   ],

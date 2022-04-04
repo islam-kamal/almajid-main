@@ -81,7 +81,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.asset('assets/images/search.png',
+                                Image.asset('assets/images/search_back.png',
                                   height: width(context) * 0.5,),
                                 Text(
                                     translator.translate( "Search for items")
@@ -417,8 +417,9 @@ class _SearchScreenState extends State<SearchScreen> {
                           .add(SearchProductsEvent(search_text: controller.value.text));
                     });
                   },
-                  style: TextStyle(color: greyColor,
+                  style: TextStyle(color: mainColor,
                     fontSize:AlmajedFont.primary_font_size,
+                    decoration: TextDecoration.none
                   ),
                   cursorColor: greyColor,
                   decoration: InputDecoration(
