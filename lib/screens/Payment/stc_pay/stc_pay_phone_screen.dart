@@ -8,6 +8,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:country_list_pick/country_list_pick.dart';
 import 'package:almajidoud/Bloc/Payment_bloc/payment_bloc.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 class StcPayPhoneScreen extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -103,7 +104,8 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
                     duration: Duration(seconds: 3),
                   )..show(_drawerKey.currentState.context);
 
-                } else if (state is Done) {
+                }
+                else if (state is Done) {
                   var data = state.model as StcPayModel;
                   _stopAnimation();
                   //   go to otp verification
@@ -147,7 +149,7 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
                           responsiveSizedBox(
                               context: context, percentageOfHeight: .045),
 
-                         phone_addressTextFields(),
+                          phoneTextFields(),
 
 
                           responsiveSizedBox(context: context, percentageOfHeight: .01),
@@ -165,7 +167,7 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
   }
 
 
-  phone_addressTextFields({BuildContext context, String hint,var initialValue}) {
+/*  phone_addressTextFields({BuildContext context, String hint,var initialValue}) {
     String _countryCode  = MyApp.app_location == 'sa' ?"+966" : MyApp.app_location == 'kw' ? "+965" : "+971";
     return StreamBuilder<String>(
       stream: shipmentAddressBloc.phone,
@@ -298,7 +300,52 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
         );
       },
     );
+  }*/
+
+  phoneTextFields({BuildContext context, String hint,var initialValue}) {
+    String _countryCode  = MyApp.app_location == 'sa' ?"+966" : MyApp.app_location == 'kw' ? "+965" : "+971";
+    return Form(
+      key: _formKey,
+      child: StreamBuilder<String>(
+        stream: shipmentAddressBloc.phone,
+        builder: (context, snapshot) {
+          return Container(
+            padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
+            child: Directionality(
+              textDirection:  TextDirection.ltr ,
+              child: IntlPhoneField(
+                decoration: InputDecoration(
+                  hintText:hint ,
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(3),
+                      borderSide: BorderSide(color: greyColor)),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(3),
+                      borderSide: BorderSide(color: greyColor)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(3),
+                      borderSide: BorderSide(color: greyColor)),
+                  contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
+                ),
+
+                initialCountryCode: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
+                onChanged: (phone) {
+                  shipmentAddressBloc.phone_change(phone.completeNumber);
+                },
+                initialValue: initialValue,
+                countries:  ['SA', 'KW', 'AE'],
+                onCountryChanged: (country) {
+                },
+              ) ,
+            ),
+
+          );
+        },
+      ),
+    );
   }
+
 
   stc_generate_otpButton({BuildContext context,}) {
       return Container(

@@ -56,10 +56,8 @@ class _PhoneNumberState extends State<PhoneNumber> {
                     ),
                   ),
                   onChanged: (phone) {
-                    print(phone.completeNumber);
                   },
                   onCountryChanged: (country) {
-                    print('Country changed to: ' + country.name);
                   },
                 ),
                 SizedBox(

@@ -35,7 +35,6 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
 
   @override
   void initState() {
-    print("  MyApp.app_langauge : ${  MyApp.app_langauge}");
     currentPage = widget.page_index;
     super.initState();
   }

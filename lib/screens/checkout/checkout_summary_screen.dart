@@ -207,16 +207,12 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                                   )));
                           break;
                         case "tap":
-                          sharedPreferenceManager.writeData(
-                              CachingKey.ORDER_INCREMENTAL_ID,
-                              extractedData["increment_id"]);
-                          sharedPreferenceManager.writeData(
-                              CachingKey.TAP_PUBLIC_KEY,
-                              extractedData["payment_config"]["public_key"]);
+                          sharedPreferenceManager.writeData(CachingKey.ORDER_INCREMENTAL_ID, extractedData["increment_id"]);
+                          sharedPreferenceManager.writeData(CachingKey.TAP_PUBLIC_KEY, extractedData["payment_config"]["public_key"]);
                           final Future<http.Response> tap_response =
                               payment_repository.create_token_for_Tap(
-                                  public_key: extractedData["payment_config"]
-                                      ["public_key"]);
+                                  public_key: extractedData["payment_config"]["public_key"]
+                              );
                           tap_response.then((result) {
                             final tap_extractedData = json.decode(result.body)
                                 as Map<String, dynamic>;
@@ -350,7 +346,8 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
 
                   Expanded(
                     flex:2,
-                    child:  Column(
+                    child:   SingleChildScrollView(
+                      child:Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -373,7 +370,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                               )),
                         ],
                       ),
-
+                        )
                   ),
                   Expanded(
                     flex: 1,
