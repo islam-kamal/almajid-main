@@ -21,6 +21,7 @@ import 'package:almajidoud/screens/checkout/Shippment_Address/custom_cities_widg
 import 'package:another_flushbar/flushbar.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class CheckoutAddressScreen extends StatefulWidget{
   @override
@@ -31,6 +32,9 @@ class CheckoutAddressScreen extends StatefulWidget{
 
 }
 class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with TickerProviderStateMixin {
+  GlobalKey<FormState> _formKey = GlobalKey();
+  GlobalKey<FormState> _mobile_formKey = GlobalKey();
+
   //-------------- get cities -----------------------------
   var selected_address_id;
   bool selected_address_status = false;
@@ -48,7 +52,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   List<Item> _data;
   Future<List<CityModel>> cities_list;
 //--------------------------------------------------------------
-
 
   TextEditingController city_controller = TextEditingController();
   String city_search_text='';
@@ -109,7 +112,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
     } on TickerCanceled {
     }
   }
-  final _formKey = GlobalKey<FormState>();
+
 
   @override
   void dispose() {
@@ -258,6 +261,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                      shipmentAddressBloc.phone_controller.value = phone;
                      shipmentAddressBloc.street_controller.value = street;
                      shipmentAddressBloc.Neighbourhood_controller.value = Neighbourhood;
+
+                     edit_address_status = true;
                    });
                       }
                       else if (state.indicator == 'AddClientAdressEvent'){
@@ -827,136 +832,45 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
   phone_addressTextFields({BuildContext context, String hint,var initialValue}) {
     String _countryCode  = MyApp.app_location == 'sa' ?"+966" : MyApp.app_location == 'kw' ? "+965" : "+971";
+    return Form(
+      key: _mobile_formKey,
+      child: StreamBuilder<String>(
+        stream: shipmentAddressBloc.phone,
+        builder: (context, snapshot) {
+          return Container(
+            padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
+            child: Directionality(
+              textDirection:  TextDirection.ltr ,
+              child: IntlPhoneField(
+                decoration: InputDecoration(
+                  hintText:hint ,
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(3),
+                      borderSide: BorderSide(color: greyColor)),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(3),
+                      borderSide: BorderSide(color: greyColor)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(3),
+                      borderSide: BorderSide(color: greyColor)),
+                  contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
-    return StreamBuilder<String>(
-      stream: shipmentAddressBloc.phone,
-      builder: (context, snapshot) {
-        return Container(
-          padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
-          child: translator.activeLanguageCode == 'en'?Row(
-            children: [
-              CountryCodePicker(
-                onChanged: (Object object)=>_countryCode=object.toString(),
-                initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
-                countryFilter: ['SA', 'KW', 'AE'],
-                showFlagDialog: true,
-              ),
-              Flexible(
-                child: TextFormField(
-                 initialValue: initialValue??'',
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(
-                      color: mainColor,
-                      fontSize: isLandscape(context)
-                          ? 2 * height(context) * .02
-                          : height(context) * .02),
-                  cursorColor: greyColor.withOpacity(.5),
-                  decoration: InputDecoration(
-                    hintText: translator.translate(hint??"Ex: 5xxxxxxxx"),
-                    contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-
-                    hintStyle: TextStyle(
-                        color: mainColor,
-                        fontWeight:initialValue == null ? FontWeight.normal : FontWeight.bold,
-                        fontSize: isLandscape(context)
-                            ? initialValue == null ? 2* height(context) * .016 : 2* height(context) * .018
-                            : initialValue == null ? height(context) * .016 : height(context) * .018),
-                    filled: true,
-                    fillColor: whiteColor,
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3),
-                        borderSide: BorderSide(color: greyColor)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3),
-                        borderSide: BorderSide(color: greyColor)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3),
-                        borderSide: BorderSide(color: greyColor)),
-                    errorText: snapshot.error,
-
-                  ),
-                  validator: /*StaticData.chossed_address_id != null ? null :*/(value) {
-                    Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+965|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';
-                    RegExp regex = new RegExp(pattern);
-                    if (value == null || value.isEmpty) {
-                      return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
-                    }else  if(!regex.hasMatch(value) ){
-                      return '${translator.translate("Please enter a correct phone number")} ';
-                    }
-                    return null;
-                  },
-                  onChanged: (text) {
-                    shipmentAddressBloc.phone_change(_countryCode+text);
-                  },
                 ),
-              ),
-            ],
-          )
-              : Row(
-            children: [
-              Flexible(
-                child: TextFormField(
-                  textAlign: TextAlign.left,
-               initialValue: initialValue??'',
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(
-                      color: mainColor,
-                      fontSize: isLandscape(context)
-                          ? 2 * height(context) * .02
-                          : height(context) * .02),
-                  cursorColor: greyColor.withOpacity(.5),
-                  decoration: InputDecoration(
-                    hintText: translator.translate(hint??"Ex: 5xxxxxxxx"),
-                    contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
-                    hintStyle: TextStyle(
-                        color:mainColor,
-                        fontWeight:initialValue == null ? FontWeight.normal : FontWeight.bold,
-                        fontSize: isLandscape(context)
-                            ? initialValue == null ? 2* height(context) * .016 : 2* height(context) * .018
-                            : initialValue == null ? height(context) * .016 : height(context) * .018),
-                    filled: true,
-                    fillColor: whiteColor,
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3),
-                        borderSide: BorderSide(color: greyColor)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3),
-                        borderSide: BorderSide(color: greyColor)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3),
-                        borderSide: BorderSide(color: greyColor)),
-                    errorText: snapshot.error,
+                initialCountryCode: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
+                onChanged: (phone) {
+                  shipmentAddressBloc.phone_change(phone.completeNumber);
+                },
+                initialValue: initialValue,
+                countries:  ['SA', 'KW', 'AE'],
+                onCountryChanged: (country) {
+                },
+              ) ,
+            ),
 
-                  ),
-
-                  validator: (value) {
-                    Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+965|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';
-                    RegExp regex = new RegExp(pattern);
-                    if (value == null || value.isEmpty) {
-                      return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
-                    }
-                    else  if(!regex.hasMatch(value) || value.length != 9){
-                      return '${translator.translate("Please enter a correct phone number")} ';
-
-                    }
-                    return null;
-                  },
-                  onChanged: (text) {
-                    shipmentAddressBloc.phone_change(_countryCode+text);
-                  },
-                ),
-              ),
-              CountryCodePicker(
-                onChanged: (Object object)=>_countryCode=object.toString(),
-                initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
-                countryFilter: ['SA', 'KW', 'AE' ],
-                showFlagDialog: true,
-              ),
-            ],
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -1067,6 +981,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
     );
   }
 
+
   addressNextButton({BuildContext context}) {
     return StaggerAnimation(
       titleButton: add_new_address_status ?translator.translate( "Save")
@@ -1094,49 +1009,52 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
         else {
           //used when edit address
           if (_formKey.currentState.validate() ) {
-            if(addres_city_name == null){
-              errorDialog(
-                  context: context,
-                  text: translator.translate("City should be mandatory in checkout")
-              );
-            }
-            else{
-              //use this to show address in CheckoutSummaryScreen
-              StaticData.order_address = addres_city_name + " , "
-                  + "${shipmentAddressBloc.Neighbourhood_controller.value == null
-                      ? Neighbourhood
-                      : shipmentAddressBloc.Neighbourhood_controller.value }"+ " , "
-                  +
-                  "${shipmentAddressBloc.street_controller.value == null
-                      ? street
-                      : shipmentAddressBloc.street_controller.value }";
-              if(edit_address_status){
-                shipmentAddressBloc.add(
-                    EditClientAdressEvent(context: context)
+            if(_mobile_formKey.currentState.validate()){
+              if(addres_city_name == null){
+                errorDialog(
+                    context: context,
+                    text: translator.translate("City should be mandatory in checkout")
                 );
-              }else{
-                if(StaticData.vistor_value == 'visitor' ){
+              }
+              else{
+                //use this to show address in CheckoutSummaryScreen
+                StaticData.order_address = addres_city_name + " , "
+                    + "${shipmentAddressBloc.Neighbourhood_controller.value == null
+                        ? Neighbourhood
+                        : shipmentAddressBloc.Neighbourhood_controller.value }"+ " , "
+                    +
+                    "${shipmentAddressBloc.street_controller.value == null
+                        ? street
+                        : shipmentAddressBloc.street_controller.value }";
+                if(edit_address_status){
                   shipmentAddressBloc.add(
-                      GuestAddAdressEvent(context: context)
+                      EditClientAdressEvent(context: context)
                   );
                 }else{
-                  shipmentAddressBloc.add(
-                      AddClientAdressEvent(context: context)
-                  );
+                  if(StaticData.vistor_value == 'visitor' ){
+                    shipmentAddressBloc.add(
+                        GuestAddAdressEvent(context: context)
+                    );
+                  }else{
+                    shipmentAddressBloc.add(
+                        AddClientAdressEvent(context: context)
+                    );
+                  }
+
                 }
 
               }
-
             }
 
+
           }
-        else if(shipmentAddressBloc.phone.length != 9){
+  /*      else if(shipmentAddressBloc.phone.length != 9){
             errorDialog(
               context: context,
               text:translator.translate("Please enter a correct phone number"),
             );
 
-          }
+          }*/
           else if(frist_name != null  ){
             //use this to show address in CheckoutSummaryScreen
             StaticData.order_address = addres_city_name + " , "
@@ -1407,14 +1325,14 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                   children: [
                     InkWell(
                       onTap: (){
-                        setState(() {
-                          edit_address_status = true;
+                        setState(()  {
                           StaticData.chossed_address_id = cardModel.id;
                           sharedPreferenceManager.writeData(CachingKey.CHOSSED_ADDRESS_ID, StaticData.chossed_address_id);
 
                           shipmentAddressBloc.add(AddressDetailsEvent(
                               address_id: cardModel.id
                           ));
+
                           StaticData.chosse_address_status = true;
 
                         });

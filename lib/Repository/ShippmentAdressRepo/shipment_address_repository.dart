@@ -33,6 +33,8 @@ class ShipmentAddressRepository {
       print("email : ${ StaticData.vistor_value == 'visitor' ? "${shipmentAddressBloc.email_controller.value}" : await sharedPreferenceManager.readString(CachingKey.EMAIL)}");
       print("telephone : ${shipmentAddressBloc.phone_controller.value}");
 
+
+
       final response = await dio.post(
           StaticData.vistor_value == 'visitor'
               ? "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/${StaticData.vistor_value == 'visitor' ? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE) : await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/shipping-information"
@@ -113,6 +115,9 @@ class ShipmentAddressRepository {
                           'Bearer ${await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN)}',
                       'content-type': 'application/json'
                     })));
+      print("response.body : ${response.data}");
+      print("response.requestOptions : ${response.requestOptions}");
+      print("response.statusCode : ${response.statusCode}");
       if (response.statusCode == 200) {
           final jsonData = response.data;
           GuestShipmentAddressModel guestShipmentAddressModel =

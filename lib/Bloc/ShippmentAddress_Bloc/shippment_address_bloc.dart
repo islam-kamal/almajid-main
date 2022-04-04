@@ -38,6 +38,7 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
       var response = await shipmentAddressRepository.add_addresses(
         context: event.context
       );
+      print("response : ${response}");
       if(response.message == null){
         yield Done(model:response,indicator: 'GuestAddAdress');
       }else {
