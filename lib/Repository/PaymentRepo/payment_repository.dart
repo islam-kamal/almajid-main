@@ -105,6 +105,8 @@ class PaymentRepository {
 
   Future<http.Response> create_token_for_Tap({var public_key}) async {
   //  final info = NetworkInfo();
+    print("StaticData.expiry_date : ${StaticData.expiry_date}");
+    print("StaticData.expiry_date : ${"20" + StaticData.expiry_date}");
     var exp_month = StaticData.expiry_date.substring(2);
     var exp_year = "20" + StaticData.expiry_date.substring(0,2);
     try {

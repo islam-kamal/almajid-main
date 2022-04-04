@@ -43,10 +43,16 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   void initState() {
-
-    _currentIndex = widget.guestShipmentAddressModel.paymentMethods[0].code;
+    widget.guestShipmentAddressModel.paymentMethods.forEach((element) {
+      if(element.code == "cashondelivery"){
+        _currentIndex = element.code;
+        sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, _currentIndex);
+        payment_method_name = element.title;
+      }
+    });
+    /*_currentIndex = widget.guestShipmentAddressModel.paymentMethods[0].code;
     sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, _currentIndex);
-    payment_method_name = widget.guestShipmentAddressModel.paymentMethods[0].title;
+    payment_method_name = widget.guestShipmentAddressModel.paymentMethods[0].title;*/
 
 
     border = OutlineInputBorder(
@@ -88,7 +94,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                     ),
                     Expanded(
                       flex: 1,
-                      child: _currentIndex == 'aps_fort_cc'
+                      child: _currentIndex == 'aps_fort_cc' || _currentIndex == "tap"
                           ? Row(
                               children: [
                                 IconButton(
@@ -113,7 +119,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                               context: context, title: "Payment Method"),
                     ),
 
-                    _currentIndex == 'aps_fort_cc'
+                    _currentIndex == 'aps_fort_cc' || _currentIndex == "tap"
                         ? Expanded(
                             flex: 8,
                             child: Directionality(
@@ -239,7 +245,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                                 )))
                         : Expanded(
                             flex: 8,
-                            child: _currentIndex == 'aps_fort_cc'
+                            child: _currentIndex == 'aps_fort_cc' || _currentIndex == "tap"
                                 ? Container()
                                 : paymentMethodCard(
                                     context: context,
@@ -251,7 +257,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                       flex: 1,
                       child: GestureDetector(
                         onTap: () {
-                          if ( _currentIndex == "tap" ||
+                          if ( /*_currentIndex == "tap" ||*/
                           _currentIndex == "stc_pay" ||
                               _currentIndex == 'tamara_pay_by_instalments' ||
                               _currentIndex == 'cashondelivery' ||
@@ -273,10 +279,10 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                           
                           } else {
                             if (formKey.currentState.validate()) {
-                              StaticData.card_number =
-                                  cardNumber.replaceAll(' ', '');
+                              StaticData.card_number = cardNumber.replaceAll(' ', '');
                               StaticData.card_holder_name = cardHolderName;
                               StaticData.card_security_code = cvvCode;
+                              print("@@@StaticData.expiry_date : ${expiryDate}");
                               StaticData.expiry_date = expiryDate[3] +
                                   expiryDate[4] +
                                   expiryDate[0] +
@@ -288,7 +294,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                                     guestShipmentAddressModel:
                                         widget.guestShipmentAddressModel,
                                     payment_method: payment_method_name,
-                                  ));
+                                  )
+                              );
                             } else {}
                           }
                         },
