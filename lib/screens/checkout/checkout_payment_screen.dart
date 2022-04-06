@@ -41,6 +41,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
   var payment_method_name;
   OutlineInputBorder border;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  var toRemove_apple_pay = [];
   @override
   void initState() {
     widget.guestShipmentAddressModel.paymentMethods.forEach((element) {
@@ -49,9 +50,11 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
         sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, _currentIndex);
         payment_method_name = element.title;
       }  else if(!StaticData.apple_pay_activation && element.code == "mestores_applepay" ){
-        widget.guestShipmentAddressModel.paymentMethods.remove(element);
+        toRemove_apple_pay.add(element);
       }
     });
+    widget.guestShipmentAddressModel.paymentMethods.removeWhere((e) => toRemove_apple_pay.contains(e));
+
     /*_currentIndex = widget.guestShipmentAddressModel.paymentMethods[0].code;
     sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, _currentIndex);
     payment_method_name = widget.guestShipmentAddressModel.paymentMethods[0].title;*/
