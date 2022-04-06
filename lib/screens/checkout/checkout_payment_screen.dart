@@ -48,6 +48,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
         _currentIndex = element.code;
         sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, _currentIndex);
         payment_method_name = element.title;
+      }  else if(!StaticData.apple_pay_activation && element.code == "mestores_applepay" ){
+        widget.guestShipmentAddressModel.paymentMethods.remove(element);
       }
     });
     /*_currentIndex = widget.guestShipmentAddressModel.paymentMethods[0].code;

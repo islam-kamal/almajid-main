@@ -91,6 +91,8 @@ class _SplashScreenState extends State<SplashScreen> {
     StaticData.data = await json.decode(utf8.decode(response.bodyBytes));
     StaticData.gallery = StaticData.data["slider"];
 
+    StaticData.apple_pay_activation = StaticData.data["apple-pay"];
+
     StaticData.gallery.forEach((element) {
       StaticData.slider.add(SliderImage(
         id: element['id'],

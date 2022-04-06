@@ -42,6 +42,7 @@ class StaticData {
   static List<dynamic> gallery = [];
   static List<SliderImage> slider = [];
   static  var data ;
+  static bool apple_pay_activation = false;
 
   static Map<String,dynamic> staticBanner;
 
