@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-noNotificationsWidget({BuildContext context}){
+noNotificationsWidget({BuildContext? context}){
   return Container(
     color: whiteColor,
     child: Column(

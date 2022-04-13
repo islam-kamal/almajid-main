@@ -1,7 +1,7 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-singleAccountItem({BuildContext context, String text, String iconPath,
-  Function onTap, bool isContainMoreIcon: false, double percentageOfHeight }) {
+singleAccountItem({BuildContext? context, String? text, String? iconPath,
+  VoidCallback? onTap, bool isContainMoreIcon: false, double? percentageOfHeight }) {
   return Container(
     padding: EdgeInsets.symmetric(vertical: 2),
     width: width(context) * .8,

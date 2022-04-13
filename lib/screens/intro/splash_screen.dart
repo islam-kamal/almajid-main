@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
       try {
         checkAuthentication(await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN));
       } catch (e) {
-        checkAuthentication(null);
+        checkAuthentication(null!);
       }
     });
   }

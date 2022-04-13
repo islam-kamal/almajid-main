@@ -2,7 +2,7 @@ import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-topHeader({BuildContext context}) {
+topHeader({BuildContext? context}) {
   return Container(
     padding: EdgeInsets.only(
         right: width(context) * .05,
@@ -19,7 +19,7 @@ topHeader({BuildContext context}) {
           onTap: () {
             StaticData.vistor_value = "visitor";
             cartRepository.create_quote(context: context);
-            customAnimatedPushNavigation(context, CustomCircleNavigationBar());
+            customAnimatedPushNavigation(context!, CustomCircleNavigationBar());
           },
           child: Icon(
             Icons.navigate_before,

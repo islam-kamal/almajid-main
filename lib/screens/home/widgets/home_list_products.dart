@@ -217,7 +217,6 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                             product_image = element.value;
                         });
                         if(  snapshot.data![index] == null){
-
                         }else{
                           if(snapshot.data![index].status == 1){
                             return Padding(
@@ -417,6 +416,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                             );
                           }
                           else{
+
                           }
                         }
 

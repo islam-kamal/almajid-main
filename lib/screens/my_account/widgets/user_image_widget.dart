@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:almajidoud/utils/file_export.dart';
 
 userImageWidget(
-    {BuildContext context, File imagePath, Function onTapAddImage}) {
+    {BuildContext? context, File? imagePath, VoidCallback? onTapAddImage}) {
   final String _defaultImage = "https://cdn1.vectorstock.com/i/thumb-large/62/60/default-avatar-photo-placeholder-profile-image-vector-21666260.jpg";
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -38,7 +38,7 @@ userImageWidget(
                                   image: DecorationImage(
                                       image:  imagePath == null
                                           ? NetworkImage(_defaultImage)
-                                          : FileImage(imagePath),
+                                          : FileImage(imagePath) as ImageProvider,
                                       fit: BoxFit.cover),
                                 ),
                               ),

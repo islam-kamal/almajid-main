@@ -1,11 +1,11 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-orderDetailsHeader({BuildContext context}){
+orderDetailsHeader({BuildContext? context}){
   return   Container(
     padding: EdgeInsets.only(top: height(context)*.05 , right: width(context)*.05 , left: width(context)*.05),
     child:Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-      GestureDetector(onTap: (){Navigator.of(context).pop();},
+      GestureDetector(onTap: (){Navigator.of(context!).pop();},
           child: Icon(Icons.arrow_back_ios , color: mainColor,)) ,
       customDescriptionText(context: context , text: translator.translate("Orders Details") ,
           textColor: mainColor , percentageOfHeight: .025) ,

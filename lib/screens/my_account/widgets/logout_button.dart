@@ -1,7 +1,7 @@
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/my_account/widgets/logout_dialog.dart';
 import 'package:almajidoud/screens/orders/order_sucessful_dialog.dart';
-logButton({BuildContext context ,var type}){
+logButton({BuildContext? context ,var type}){
   return  Container(width: width(context)*.8,child:
   GestureDetector(onTap: ()async{
     if(type == "Logout"){
@@ -10,7 +10,7 @@ logButton({BuildContext context ,var type}){
         user_name = value;
       });
       return  showDialog(
-        context: context,
+        context: context!,
         barrierDismissible: false,
         builder: (BuildContext context){
        return LogoutDialog(
@@ -18,7 +18,7 @@ logButton({BuildContext context ,var type}){
         );
         });
     }else{
-      customAnimatedPushNavigation(context, SignInScreen());
+      customAnimatedPushNavigation(context!, SignInScreen());
     }
 
 

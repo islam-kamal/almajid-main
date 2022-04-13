@@ -32,8 +32,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   String _email = "";
   String _userName = "";
   String _currentLang = "";
-  String _imagePath;
-  File _pickedImage;
+  String? _imagePath;
+  File? _pickedImage;
   bool finance_status=false;
   @override
   void initState() {
@@ -47,7 +47,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     _userName = await sharedPreferenceManager.readString(CachingKey.USER_NAME);
     _imagePath = await sharedPreferenceManager.readString(CachingKey.PROFILE_IMAGE);
     if(_imagePath !='' ){
-      _pickedImage = File(_imagePath);
+      _pickedImage = File(_imagePath!);
     }
     setState(() {});
   }
@@ -191,7 +191,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                               Expanded(
                                                 flex: 1,
                                                 child: IconButton(
-                                                  icon: Icon(Icons.keyboard_arrow_down,size: 30,color: mainColor,),
+                                                  icon: Icon(Icons.keyboard_arrow_down,size: 30,color: mainColor,), onPressed: () {  },
                                                 ),
                                               ),
                                             ],
@@ -290,7 +290,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           children: [
                             ScreenAppBar(
                               onTapCategoryDrawer: () {
-                                _drawerKey.currentState.openDrawer();
+                                _drawerKey.currentState!.openDrawer();
                               },
                               category_name: translator.translate("My Account"),
                               // left_icon: "",

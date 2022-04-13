@@ -1,4 +1,4 @@
-import 'package:almajidoud/Model/OrderMode/order_model.dart';
+import 'package:almajidoud/Model/OrderModel/order_model.dart';
 import 'package:almajidoud/Repository/OrderRepo/order_repository.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/orders/widgets/orders_details_header.dart';
@@ -9,7 +9,7 @@ import 'package:almajidoud/screens/orders/widgets/order_central_card_stack.dart'
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class OrderDetailsScreen extends StatefulWidget{
-  OrderItems order_details;
+  OrderItems? order_details;
   OrderDetailsScreen({this.order_details});
   @override
   State<StatefulWidget> createState() {
@@ -34,16 +34,16 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
               children: [
                 orderBottomButtonsStack(
                     context: context,
-                currency: widget.order_details.orderCurrencyCode,
-                total_payment: widget.order_details.baseGrandTotal,
-                  order_id: widget.order_details.entityId,
+                currency: widget.order_details!.orderCurrencyCode,
+                total_payment: widget.order_details!.baseGrandTotal,
+                  order_id: widget.order_details!.entityId,
                 ),
 
                 orderIdStack(
                     context: context,
-                    status: widget.order_details.status,
-                order_id: widget.order_details.incrementId,
-                createAt: widget.order_details.createdAt
+                    status: widget.order_details!.status,
+                order_id: widget.order_details!.incrementId,
+                createAt: widget.order_details!.createdAt
                 ),
 
                 orderCentralCardStack(
@@ -56,7 +56,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   }
 
 
-  orderBottomButtonsStack({BuildContext context ,var total_payment, var currency, var order_id}) {
+  orderBottomButtonsStack({BuildContext? context ,var total_payment, var currency, var order_id}) {
 
     return Container(
       height: isLandscape(context) ? 2 * height(context) : height(context),
@@ -121,7 +121,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       order_id:order_id
                   ).whenComplete(() {
                     customAnimatedPushNavigation(
-                        context,
+                        context!,
                         CustomCircleNavigationBar(
                           page_index:translator.activeLanguageCode == 'ar'
                               ? 0 : 4,
@@ -137,7 +137,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   decoration: BoxDecoration(color:reoder_loading ? whiteColor : greenColor),
                   child: reoder_loading ? Center(
                     child: SpinKitFadingCube(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context!).primaryColor,
                       size: width(context) * 0.08,
                     ),
                   ) : Center(

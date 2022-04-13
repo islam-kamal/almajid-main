@@ -22,8 +22,9 @@ class NotificationsScreenState extends State<NotificationsScreen> {
     return NetworkIndicator(
         child: PageContainer(
             child: WillPopScope(
-      onWillPop: () {
+      onWillPop: () async{
         customPushNamedNavigation(context, HomeScreen());
+        return null!;
       },
       child: Scaffold(
         key: _drawerKey,

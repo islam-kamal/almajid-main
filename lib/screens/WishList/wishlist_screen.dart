@@ -26,7 +26,7 @@ class WishListScreen extends StatefulWidget {
 }
 
 class _WishListScreenState extends State<WishListScreen> {
-  List<String> gallery = new List<String>();
+  List<String> gallery = [];
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   var product_image;
   var percentage;
@@ -46,7 +46,7 @@ class _WishListScreenState extends State<WishListScreen> {
                 backgroundColor: whiteColor,
                 body: WillPopScope(
                   onWillPop: () {
-                    translator.activeLanguageCode == 'ar'
+                   return translator.activeLanguageCode == 'ar'
                         ? customAnimatedPushNavigation(
                             context,
                             CustomCircleNavigationBar(
@@ -109,11 +109,12 @@ class _WishListScreenState extends State<WishListScreen> {
                                     child: CircularProgressIndicator(),
                                   );
                                 }
-                              } else if (state is Done) {
+                              }
+                              else if (state is Done) {
                                 if (state.indicator == 'get_fav') {
                                   var data = state.model as GetAllWishListModel;
                                   if (data.items == null ||
-                                      data.items.isEmpty) {
+                                      data.items!.isEmpty) {
                                     return Container();
                                   } else {
                                     return StreamBuilder<GetAllWishListModel>(
@@ -126,10 +127,10 @@ class _WishListScreenState extends State<WishListScreen> {
                                             return ListView.builder(
                                                 shrinkWrap: true,
                                                 itemCount:
-                                                    snapshot.data.itemsCount,
+                                                    snapshot.data!.itemsCount,
                                                 itemBuilder: (context, index) {
-                                                  snapshot.data.items[index]
-                                                      .product.customAttributes
+                                                  snapshot.data!.items![index]
+                                                      .product!.customAttributes!
                                                       .forEach((element) {
                                                     if (element.attributeCode ==
                                                         'thumbnail') {
@@ -137,11 +138,11 @@ class _WishListScreenState extends State<WishListScreen> {
                                                           element.value;
                                                     }
                                                   });
-                                                  String special_price;
+                                                  String? special_price;
                                                   var new_price, minimal_price;
-                                                  DateTime startDate, endDate;
-                                                  snapshot.data.items[index]
-                                                      .product.customAttributes
+                                                  DateTime? startDate, endDate;
+                                                  snapshot.data!.items![index]
+                                                      .product!.customAttributes!
                                                       .forEach((element) {
                                                     if (element.attributeCode ==
                                                         "thumbnail")
@@ -176,25 +177,26 @@ class _WishListScreenState extends State<WishListScreen> {
                                                           element.value;
                                                     }
                                                   });
-                                                  if (startDate == null || endDate == null) {
+                                                  if (startDate! == null || endDate == null) {
                                                     new_price = minimal_price;
-                                                    if(double.parse(minimal_price) < double.parse( snapshot.data.items[index].product.price.toString()))
-                                                      percentage = (1 - (double.parse(minimal_price)  /  snapshot.data.items[index].product.price) )* 100;
+                                                    if(double.parse(minimal_price) < double.parse(
+                                                        snapshot.data!.items![index].product!.price.toString()))
+                                                      percentage = (1 - (double.parse(minimal_price)  /  snapshot.data!.items![index].product!.price) )* 100;
 
                                                   } else {
-                                                    if (StaticData.isCurrentDateInRange(startDate, endDate) &&
-                                                        double.parse(special_price) <=double.parse(minimal_price) &&
-                                                        double.parse(special_price).toStringAsFixed(2) !=
-                                                            snapshot.data.items[index].product.price) {
+                                                    if (StaticData.isCurrentDateInRange(startDate!, endDate!) &&
+                                                        double.parse(special_price!) <=double.parse(minimal_price) &&
+                                                        double.parse(special_price!).toStringAsFixed(2) !=
+                                                            snapshot.data!.items![index].product!.price) {
                                                       new_price = special_price;
-                                                      percentage = (1 - (double.parse(new_price)  / snapshot.data.items[index].product.price) )* 100;
-                                                    } else if (double.parse(special_price) > double.parse(minimal_price)) {
+                                                      percentage = (1 - (double.parse(new_price)  / snapshot.data!.items![index].product!.price) )* 100;
+                                                    } else if (double.parse(special_price!) > double.parse(minimal_price)) {
                                                       new_price = minimal_price;
-                                                      percentage = (1 - (double.parse(new_price)  / snapshot.data.items[index].product.price) )* 100;
+                                                      percentage = (1 - (double.parse(new_price)  / snapshot.data!.items![index].product!.price) )* 100;
                                                     } else {
-                                                      if(!StaticData.isCurrentDateInRange(startDate,endDate) ){
+                                                      if(!StaticData.isCurrentDateInRange(startDate!,endDate!) ){
                                                         new_price = minimal_price;
-                                                        percentage = (1 - (double.parse(new_price)  / snapshot.data.items[index].product.price) )* 100;
+                                                        percentage = (1 - (double.parse(new_price)  / snapshot.data!.items![index].product!.price) )* 100;
 
                                                       }
                                                     }
@@ -207,10 +209,10 @@ class _WishListScreenState extends State<WishListScreen> {
                                                             ProductDetailsScreen(
                                                               product_id:
                                                                   snapshot
-                                                                      .data
-                                                                      .items[
+                                                                      .data!
+                                                                      .items![
                                                                           index]
-                                                                      .product
+                                                                      .product!
                                                                       .id,
                                                             ));
                                                       },
@@ -268,8 +270,8 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                   children: [
                                                                                     CustomWishList(
                                                                                       color: redColor,
-                                                                                      product_id: snapshot.data.items[index].product.id,
-                                                                                      qty: snapshot.data.items[index].qty,
+                                                                                      product_id: snapshot.data!.items![index].product!.id,
+                                                                                      qty: snapshot.data!.items![index].qty,
                                                                                       context: context,
                                                                                       screen: WishListScreen(),
                                                                                       scafffoldKey: _scaffoldKey,
@@ -282,7 +284,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                           context: context,
                                                                                           textColor: mainColor,
                                                                                           maxLines: 2,
-                                                                                          text: snapshot.data.items[index].product.name,
+                                                                                          text: snapshot.data!.items![index].product!.name,
                                                                                         ),
                                                                                         alignment: translator.activeLanguageCode == 'en' ? Alignment.centerLeft : Alignment.centerRight,
                                                                                       ),
@@ -299,7 +301,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                                   crossAxisAlignment: CrossAxisAlignment.end,
                                                                                                   children: [
                                                                                                     MyText(
-                                                                                                      text: "${new_price == null ? snapshot.data.items[index].product.price.toStringAsFixed(2) : double.parse(new_price)} ",
+                                                                                                      text: "${new_price == null ? snapshot.data!.items![index].product!.price.toStringAsFixed(2) : double.parse(new_price)} ",
                                                                                                       size: StaticData.get_height(context) * .017,
                                                                                                       color: blackColor,
                                                                                                       maxLines: 2,
@@ -322,7 +324,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                             new_price == null
                                                                                                 ? Container()
                                                                                                 : Text(
-                                                                                                    "${snapshot.data.items[index].product.price} ${MyApp.country_currency}",
+                                                                                                    "${snapshot.data!.items![index].product!.price} ${MyApp.country_currency}",
                                                                                                     style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: StaticData.get_height(context) * .011, color: old_price_color),
                                                                                                   ),
                                                                                           ],
@@ -335,12 +337,12 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                           filledIcon: Icons.star,
                                                                                           emptyIcon: Icons.star_border,
                                                                                           size: StaticData.get_width(context) * 0.03,
-                                                                                          filledColor: (snapshot.data.items[index].product.visibility.toDouble() >= 1) ? Colors.yellow.shade700 : Colors.yellow.shade700,
+                                                                                          filledColor: (snapshot.data!.items![index].product!.visibility.toDouble() >= 1) ? Colors.yellow.shade700 : Colors.yellow.shade700,
                                                                                         ),
                                                                                       ],
                                                                                     ),
                                                                                     AddWishlistItemToCart(
-                                                                                      product_id: snapshot.data.items[index].id,
+                                                                                      product_id: snapshot.data!.items![index].id,
                                                                                     )
                                                                                   ],
                                                                                 ),
@@ -355,7 +357,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                         ),
                                                         positionedRemove(
                                                             itemId: data
-                                                                .items[index]
+                                                                .items![index]
                                                                 .id),
                                                       ]));
                                                 });
@@ -391,9 +393,10 @@ class _WishListScreenState extends State<WishListScreen> {
                                     backgroundColor: greenColor,
                                     duration: Duration(seconds: 2),
                                     flushbarStyle: FlushbarStyle.FLOATING,
-                                  ).show(_scaffoldKey.currentState.context);
+                                  ).show(_scaffoldKey.currentState!.context);
                                 }
-                              } else if (state is ErrorLoading) {
+                              }
+                              else if (state is ErrorLoading) {
                                 if (state.indicator == 'get_fav') {
                                   return no_data_widget(context: context);
                                 } else if (state.indicator == 'remove_fav') {
@@ -414,9 +417,10 @@ class _WishListScreenState extends State<WishListScreen> {
                                     backgroundColor: greenColor,
                                     duration: Duration(seconds: 2),
                                     flushbarStyle: FlushbarStyle.FLOATING,
-                                  )..show(_scaffoldKey.currentState.context);
+                                  )..show(_scaffoldKey.currentState!.context);
                                 }
-                              } else {
+                              }
+                              else {
                                 return Center(
                                   child: CircularProgressIndicator(),
                                 );
@@ -434,13 +438,13 @@ class _WishListScreenState extends State<WishListScreen> {
     final response = await wishListRepository.removeProudctToWishList(
       wishlist_item_id: wishlist_item_id,
     );
-    if (response) {
+    if (response!) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => super.widget));
     } else {}
   }
 
-  Widget positionedRemove({int itemId}) {
+  Widget positionedRemove({int? itemId}) {
     return Directionality(
         textDirection: translator.activeLanguageCode == 'ar'
             ? TextDirection.ltr

@@ -1,7 +1,7 @@
 import 'package:almajidoud/utils/file_export.dart';
 
 class LogoutDialog extends StatefulWidget {
-  final String name;
+  final String? name;
   LogoutDialog({this.name});
   @override
   State<StatefulWidget> createState() {

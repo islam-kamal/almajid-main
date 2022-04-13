@@ -1,7 +1,7 @@
 import 'package:almajidoud/screens/auth/sing_in_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-sendCodeTopHeader({BuildContext context}) {
+sendCodeTopHeader({BuildContext? context}) {
   return Container(
     padding: EdgeInsets.only(
         right: width(context) * .05,

@@ -12,7 +12,7 @@ import 'package:intro_slider/slide_object.dart';
 import 'package:intro_slider/scrollbar_behavior_enum.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 class IntroScreen extends StatefulWidget {
-  IntroScreen({Key key}) : super(key: key);
+  IntroScreen({Key? key}) : super(key: key);
 
   @override
   IntroScreenState createState() => new IntroScreenState();

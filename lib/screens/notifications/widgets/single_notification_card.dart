@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-singleNotificationCard({BuildContext context , int index }){
+singleNotificationCard({BuildContext? context , int? index }){
   return  Row(mainAxisAlignment: MainAxisAlignment.center,
     children: [Column(
       children: [
@@ -14,7 +14,7 @@ singleNotificationCard({BuildContext context , int index }){
                 child:Center(child:   Column(
                   mainAxisAlignment:MainAxisAlignment.start,
                   children: [
-                    Container(decoration: BoxDecoration(color:index.isEven ?  Colors.purpleAccent  :
+                    Container(decoration: BoxDecoration(color:index!.isEven ?  Colors.purpleAccent  :
                     index == 2 ? Colors.blue :Colors.green , shape: BoxShape.circle),
                       height: isLandscape(context) ? 2* height(context)*.07 : height(context)*.07,width: width(context)*.2,
                       child: Center(child:Image.asset("assets/icons/notifi.png" , height:

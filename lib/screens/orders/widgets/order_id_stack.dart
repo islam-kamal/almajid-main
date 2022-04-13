@@ -1,7 +1,7 @@
 import 'package:almajidoud/Widgets/customWidgets.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-orderIdStack({BuildContext context,var order_id,var status , var createAt}) {
+orderIdStack({BuildContext? context,var order_id,var status , var createAt}) {
 
   return Directionality(
       textDirection: translator.activeLanguageCode =='ar'? TextDirection.rtl : TextDirection.ltr,
@@ -68,7 +68,7 @@ orderIdStack({BuildContext context,var order_id,var status , var createAt}) {
                             ),
                             customDescriptionText(
                                 context: context,maxLines: 2,
-                                textColor: CustomComponents.order_status_color(status),
+                                textColor: CustomComponents.order_status_color(status)!,
                                 text: "${CustomComponents.order_status(status)??''}"),
                           ],
                         ),

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 
 class HomeSlider extends StatefulWidget {
-  List<SliderImage> gallery ;
+  List<SliderImage>? gallery ;
   var height;
   HomeSlider({this.gallery,this.height});
   @override
@@ -42,7 +42,7 @@ class _HomeSlider_State extends State<HomeSlider> {
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 children: [
                   CarouselSlider(
-                    items: widget.gallery.map((item) => Card(
+                    items: widget.gallery!.map((item) => Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0),
                       ),
@@ -92,8 +92,8 @@ class _HomeSlider_State extends State<HomeSlider> {
                     bottom: -MediaQuery.of(context).size.width *0.06,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: widget.gallery.map((url) {
-                        int index =  widget.gallery.indexOf(url);
+                      children: widget.gallery!.map((url) {
+                        int index =  widget.gallery!.indexOf(url);
                         return  Container(
                           width: 16.0,
                           height: 4.0,

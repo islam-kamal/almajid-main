@@ -1,7 +1,7 @@
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-noOrdersWidget({BuildContext context}){
+noOrdersWidget({BuildContext? context}){
   return Center(
     child: Column(
       children: [

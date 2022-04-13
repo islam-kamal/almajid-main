@@ -14,7 +14,7 @@ class AddWishlistItemToCart extends StatefulWidget{
 }
 class AddWishlistItemToCartState extends State<AddWishlistItemToCart> with TickerProviderStateMixin{
   bool _isLoading = false;
-  AnimationController _loginButtonController;
+  late AnimationController _loginButtonController;
   @override
   void initState() {
     _loginButtonController = AnimationController(
@@ -54,7 +54,7 @@ class AddWishlistItemToCartState extends State<AddWishlistItemToCart> with Ticke
               textColor: Colors.white,
               fontSize: 16.0);
 
-          state = null;
+          state = null!;
         } else if (state is DoneWishListToCartAdded &&
             state.indicator == 'add_wishlist_item_to_cart' &&
             widget.product_id == state.id) {
@@ -79,7 +79,7 @@ class AddWishlistItemToCartState extends State<AddWishlistItemToCart> with Ticke
           alignment: Alignment.center,
           padding: EdgeInsets.all(4),
           child: StaggerAnimation(
-            buttonController: _loginButtonController.view,
+            buttonController: _loginButtonController,
             btn_height:  width(context) * .08,
             btn_width: width(context) * .45,
             text_size: 0.017,

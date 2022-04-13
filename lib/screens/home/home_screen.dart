@@ -144,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               ScreenAppBar(
                                 onTapCategoryDrawer: () {
-                                  _drawerKey.currentState.openDrawer();
+                                  _drawerKey.currentState!.openDrawer();
                                 },
                                 home_logo: true,
 

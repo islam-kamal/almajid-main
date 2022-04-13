@@ -15,7 +15,7 @@ class StoreLocatorScreen extends StatefulWidget{
 }
 
 class StoreLocatorScreenState extends State<StoreLocatorScreen>{
-  TextEditingController controller ;
+  TextEditingController? controller ;
   String search_text='';
   GlobalKey<ScaffoldState> scaffold_key = GlobalKey();
   @override
@@ -29,10 +29,11 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
     return NetworkIndicator(
       child: PageContainer(
         child: WillPopScope(
-          onWillPop: (){
+          onWillPop: ()async{
             customAnimatedPushNavigation(context, CustomCircleNavigationBar(
               page_index: MyApp.app_langauge =='ar' ? 4 : 0,
             ));
+            return null!;
           },
           child: Scaffold(
             appBar: AppBar(
@@ -86,11 +87,11 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                           } else {
                             return ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: snapshot.data.length,
+                                itemCount: snapshot.data!.length,
                                 itemBuilder: (context, index) {
-                                  return snapshot.data[index] == null
+                                  return snapshot.data![index] == null
                                       ? Container()
-                                      :  snapshot.data[index].city.toString().toLowerCase().contains(search_text)
+                                      :  snapshot.data![index].city.toString().toLowerCase().contains(search_text)
                                       ? Column(
                                     children: [
                                       Padding(
@@ -118,7 +119,7 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                                                             context: context,
                                                             textColor: mainColor,
                                                             maxLines: 2,
-                                                            text: snapshot.data[index].city,
+                                                            text: snapshot.data![index].city,
                                                           ),
                                                           Text("    |    "),
                                                           Container(
@@ -128,7 +129,7 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                                                               context: context,
                                                               textColor: mainColor,
                                                               maxLines: 1,
-                                                              text: snapshot.data[index].name,
+                                                              text: snapshot.data![index].name,
                                                             ),
                                                           )
                                                         ],
@@ -156,7 +157,7 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                                                               context: context,
                                                               textColor: mainColor,
                                                               maxLines: 1,
-                                                              text: snapshot.data[index].address,
+                                                              text: snapshot.data![index].address,
                                                             ),
                                                           )
                                                         ],
@@ -184,7 +185,7 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                                                               context: context,
                                                               textColor: mainColor,
                                                               maxLines: 1,
-                                                              text: snapshot.data[index].phone,
+                                                              text: snapshot.data![index].phone,
                                                             ),
                                                           )
                                                         ],
@@ -198,7 +199,7 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                                                           MaterialPageRoute(
                                                               builder: (BuildContext context) => WebView(
                                                                 title: "Our Locations",
-                                                                url: snapshot.data[index].website,
+                                                                url: snapshot.data![index].website,
                                                               ))
                                                       );
 
@@ -217,7 +218,7 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
 
                                       ),
                                       // for last element can appear
-                                      snapshot.data.length == index ? Container(
+                                      snapshot.data!.length == index ? Container(
                                         height: width(context) ,
                                       ) : Container()
                                     ],
@@ -272,7 +273,7 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                   controller: controller,
                   onChanged: (value){
                     setState(() {
-                      search_text = controller.value.text;
+                      search_text = controller!.value.text;
 
                     });
                   },
@@ -287,7 +288,7 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                       icon: Icon(
                         Icons.search,
                         size: 20,
-                      ),
+                      ), onPressed: () {  },
 
                     ),
                     hintText: translator.translate("Search By City Name"),

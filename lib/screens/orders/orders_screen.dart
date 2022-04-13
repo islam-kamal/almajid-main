@@ -1,7 +1,7 @@
 import 'package:almajidoud/Base/Shimmer/list_shimmer.dart';
 import 'package:almajidoud/Base/Shimmer/shimmer_notification.dart';
 import 'package:almajidoud/Bloc/Order_Bloc/order_bloc.dart';
-import 'package:almajidoud/Model/OrderMode/order_model.dart';
+import 'package:almajidoud/Model/OrderModel/order_model.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/orders/widgets/no_orders_widget.dart';
 import 'package:almajidoud/screens/orders/widgets/orders_header.dart';
@@ -28,8 +28,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
         child: Scaffold(
 
           body: WillPopScope(
-            onWillPop: (){
+            onWillPop: ()async{
               customAnimatedPushNavigation(context, CustomCircleNavigationBar(page_index: 3,));
+              return null!;
             },
             child: Directionality(
               textDirection: translator.activeLanguageCode =='ar'? TextDirection.rtl : TextDirection.ltr,
@@ -91,16 +92,16 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                               child: Text(snapshot.error.toString()),
                                             );
                                           }
-                                          else if (snapshot.data.items.length > 0) {
+                                          else if (snapshot.data!.items!.length > 0) {
                                             return  ListView.builder(
                                               padding: EdgeInsets.zero,
-                                              itemCount: snapshot.data.items.length ,
+                                              itemCount: snapshot.data!.items!.length ,
                                               shrinkWrap: true,
                                               //     physics: NeverScrollableScrollPhysics(),
                                               itemBuilder: (context, index) {
                                                 return singleOrderItem(
                                                     context: context,
-                                                    order: snapshot.data.items[index],
+                                                    order: snapshot.data!.items![index],
                                                 order_increment_id: widget.increment_id);
                                               },
                                             );

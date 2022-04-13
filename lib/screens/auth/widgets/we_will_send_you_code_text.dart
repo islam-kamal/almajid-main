@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-weWillSendYouCode({BuildContext context}) {
+weWillSendYouCode({BuildContext? context}) {
   return Container(
     width: width(context) ,
     child: customDescriptionText(

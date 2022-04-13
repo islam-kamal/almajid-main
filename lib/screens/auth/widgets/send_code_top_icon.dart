@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-sendCodeTopIcon({BuildContext context}){
+sendCodeTopIcon({BuildContext? context}){
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [

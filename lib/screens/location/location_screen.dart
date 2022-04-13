@@ -113,9 +113,9 @@ class _LocationScreenState extends State<LocationScreen> {
                                 iconSize: 42,
 
                                 underline: SizedBox(),
-                                onChanged: (String newValue) {
+                                onChanged: (String? newValue) {
                                   setState(() {
-                                    dropdownCountryValue = newValue;
+                                    dropdownCountryValue = newValue!;
                                     MyApp.app_location = newValue == 'Saudi Arabia' ? 'sa'
                                         :newValue =="United Arab Emirates" ? 'uae' :  'kw';
                                     MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
@@ -162,7 +162,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   children: [
                     ScreenAppBar(
                       onTapCategoryDrawer: () {
-                        _drawerKey.currentState.openDrawer();
+                        _drawerKey.currentState!.openDrawer();
                       },
                       home_logo: true,
                     ),

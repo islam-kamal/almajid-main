@@ -4,7 +4,7 @@ import 'package:almajidoud/screens/auth/sign_up_screen.dart';
 import 'package:almajidoud/screens/auth/sing_in_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-topAuthButtons({BuildContext context, bool isSignUp: true}) {
+topAuthButtons({BuildContext? context, bool? isSignUp: true}) {
   return Row(
     children: [
       GestureDetector(

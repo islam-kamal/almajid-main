@@ -14,8 +14,8 @@ class ProfileImage extends StatefulWidget {
 }
 
 class ProfileImageState extends State<ProfileImage> {
-  String _imagePath;
-  File _pickedImage;
+  String? _imagePath;
+  File? _pickedImage;
 
   @override
   void initState() {
@@ -72,7 +72,7 @@ class ProfileImageState extends State<ProfileImage> {
                                     image: DecorationImage(
                                         image: _pickedImage == null
                                             ? NetworkImage(_defaultImage)
-                                            : FileImage(_pickedImage),
+                                            : FileImage(_pickedImage!)  as ImageProvider,
                                         fit: BoxFit.cover),
                                   ),
                                 ),
@@ -245,7 +245,7 @@ class ProfileImageState extends State<ProfileImage> {
                                                       .removeData(CachingKey
                                                           .PROFILE_IMAGE);
                                                   setState(() {
-                                                    _pickedImage = null;
+                                                    _pickedImage = null!;
                                                   });
                                                   Navigator.pop(ctx);
 

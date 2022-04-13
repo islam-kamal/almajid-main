@@ -1,16 +1,16 @@
-import 'package:almajidoud/Model/OrderMode/order_model.dart';
+import 'package:almajidoud/Model/OrderModel/order_model.dart';
 import 'package:almajidoud/Widgets/customWidgets.dart';
 import 'package:almajidoud/custom_widgets/custom_animated_push_navigation.dart';
 import 'package:almajidoud/screens/orders/order_details_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-singleOrderItem({BuildContext context , OrderItems order ,var order_increment_id}) {
+singleOrderItem({BuildContext? context , OrderItems? order ,var order_increment_id}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       GestureDetector(
         onTap: () {
-          customAnimatedPushNavigation(context, OrderDetailsScreen(
+          customAnimatedPushNavigation(context!, OrderDetailsScreen(
             order_details: order,
           ));
         },
@@ -60,7 +60,7 @@ singleOrderItem({BuildContext context , OrderItems order ,var order_increment_id
                                           maxLines: 1,
                                           fontWeight: FontWeight.normal,
                                           percentageOfHeight: .025,
-                                          text: " # ${order.incrementId}",
+                                          text: " # ${order!.incrementId}",
                                           textAlign: TextAlign.start),
                                     ],
                                   ),
@@ -124,7 +124,7 @@ singleOrderItem({BuildContext context , OrderItems order ,var order_increment_id
                                     customDescriptionText(
                                         context: context,
                                         text: "${CustomComponents.order_status(order.status)}",
-                                        textColor:CustomComponents.order_status_color(order.status),
+                                        textColor:CustomComponents.order_status_color(order.status)!,
                                         percentageOfHeight: .017,
                                         fontWeight: FontWeight.normal)
                                   ],

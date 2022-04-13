@@ -35,4 +35,4 @@ class SearchBloc extends Bloc<AppEvent,AppState>{
 
 }
 
-final search_bloc = SearchBloc(null!);
+SearchBloc search_bloc = SearchBloc(null!);

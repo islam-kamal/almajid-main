@@ -1,10 +1,10 @@
-import 'package:almajidoud/Model/OrderMode/order_model.dart';
+import 'package:almajidoud/Model/OrderModel/order_model.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/cupertino.dart';
 
-orderCentralCardStack({BuildContext context, OrderItems order_details}) {
+orderCentralCardStack({BuildContext? context, OrderItems? order_details}) {
   var payment_method = '';
-  order_details.extensionAttributes.paymentAdditionalInfo.forEach((element) {
+  order_details!.extensionAttributes!.paymentAdditionalInfo!.forEach((element) {
     if(element.key == "method_title"){
       payment_method  =element.value == "Split into 3 payments, without fees with Tamara" ? "Tamara" : element.value;
     }
@@ -42,11 +42,11 @@ orderCentralCardStack({BuildContext context, OrderItems order_details}) {
             ),
             responsiveSizedBox(context: context, percentageOfHeight: .01),
            Container(
-             height:order_details.items.length ==1 ? width(context) * 0.25 :  width(context) * 0.45,
+             height:order_details.items!.length ==1 ? width(context) * 0.25 :  width(context) * 0.45,
               child: ListView.builder(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
-                  itemCount: order_details.items.length,
+                  itemCount: order_details.items!.length,
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
@@ -58,7 +58,7 @@ orderCentralCardStack({BuildContext context, OrderItems order_details}) {
                                 height: isLandscape(context) ? 2 * height(context) * .08 : height(context) * .08,
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
-                                        image: NetworkImage("${Urls.BASE_URL}/pub/media/catalog/product/${order_details.items[index].extensionAttributes['product_image']}"),
+                                        image: NetworkImage("${Urls.BASE_URL}/pub/media/catalog/product/${order_details.items![index].extensionAttributes['product_image']}"),
                                         fit: BoxFit.cover)),
                               ),),
 
@@ -71,7 +71,7 @@ orderCentralCardStack({BuildContext context, OrderItems order_details}) {
                                       Container(
                                         child:   customDescriptionText(
                                             context: context,
-                                            text: "${order_details.items[index].name}",
+                                            text: "${order_details.items![index].name}",
                                             maxLines: 3,
                                             textAlign: TextAlign.start,
                                             percentageOfHeight: .023),
@@ -82,13 +82,13 @@ orderCentralCardStack({BuildContext context, OrderItems order_details}) {
                                            children: [
                                              customDescriptionText(
                                                  context: context,
-                                                 text: "${translator.translate("Quantity")} :   ${order_details.items[index].qtyOrdered} ",
+                                                 text: "${translator.translate("Quantity")} :   ${order_details.items![index].qtyOrdered} ",
                                                  percentageOfHeight: .020),
                                              SizedBox(width: width(context) *0.04,),
                                              customDescriptionText(
                                                  context: context,
                                                  text:
-                                                 "${translator.translate("price")} : ${order_details.items[index].baseRowTotal} ${order_details.orderCurrencyCode}",
+                                                 "${translator.translate("price")} : ${order_details.items![index].baseRowTotal} ${order_details.orderCurrencyCode}",
                                                  percentageOfHeight: .020,
                                                  fontWeight: FontWeight.normal),
 
@@ -102,7 +102,7 @@ orderCentralCardStack({BuildContext context, OrderItems order_details}) {
                             )
                           ],
                         ),
-                 index ==order_details.items.length || order_details.items.length ==1? Container():       Divider(color: white_gray_color,)
+                 index ==order_details.items!.length || order_details.items!.length ==1? Container():       Divider(color: white_gray_color,)
                       ],
                     );
                   },
@@ -139,8 +139,8 @@ orderCentralCardStack({BuildContext context, OrderItems order_details}) {
                   width: width(context) * 0.7,
                   child: customDescriptionText(
                       context: context,
-                      text: "${order_details.billingAddress.street[0]??''} , ${order_details.billingAddress.city??''}"
-                          " , ${order_details.billingAddress.region??''}",
+                      text: "${order_details.billingAddress!.street![0]??''} , ${order_details.billingAddress!.city??''}"
+                          " , ${order_details.billingAddress!.region??''}",
                       maxLines: 3,
                       fontWeight: FontWeight.bold,
                       percentageOfHeight: .015,

@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-topSlider({BuildContext context , List gallery}) {
+topSlider({BuildContext? context , List? gallery}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [

@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-passwordTopHeader({BuildContext context, bool isResetScreen: false}) {
+passwordTopHeader({BuildContext? context, bool isResetScreen: false}) {
   return Container(
     padding: EdgeInsets.symmetric(horizontal: width(context) * .05),
     width: width(context),
@@ -13,7 +13,7 @@ passwordTopHeader({BuildContext context, bool isResetScreen: false}) {
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.of(context).pop();
+            Navigator.of(context!).pop();
           },
           child: Icon(
             Icons.navigate_before,
@@ -29,7 +29,7 @@ passwordTopHeader({BuildContext context, bool isResetScreen: false}) {
             : SizedBox(),
         GestureDetector(
             onTap: () {
-              Navigator.of(context).pop();
+              Navigator.of(context!).pop();
             },
             child: Image.asset(
               "assets/icons/notifi.png",

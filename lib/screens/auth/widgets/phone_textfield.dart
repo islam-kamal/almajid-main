@@ -1,11 +1,11 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-phoneTextField({BuildContext context , String hint
-  , bool isPasswordField : false  , bool containPrefixIcon : false  , IconData prefixIcon , code , Function onTapPrefix}){
+phoneTextField({BuildContext? context , String? hint
+  , bool isPasswordField : false  , bool containPrefixIcon : false  , IconData? prefixIcon , code , VoidCallback? onTapPrefix}){
   return     Container(width: width(context)*.8,
       child: TextField(decoration: InputDecoration(
 
-          prefixIcon: containPrefixIcon == false ?null : GestureDetector(onTap: onTapPrefix ,
+          prefixIcon: containPrefixIcon == false ?null : GestureDetector(onTap: onTapPrefix! ,
               child: Container(height: 40,width: 80,
                   child: Center(child: Text(code)))),
           hintText: hint , suffixIcon :

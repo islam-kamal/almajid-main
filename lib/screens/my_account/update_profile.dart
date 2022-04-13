@@ -18,16 +18,16 @@ class UpdateProfile extends StatefulWidget {
 class _UpdateProfileState extends State<UpdateProfile> {
   final FocusNode _lastNameFocusNode = FocusNode();
   final FocusNode _phoneNumberFocusNode = FocusNode();
-  TextEditingController _firstNameController;
-  TextEditingController _lastNameController;
-  TextEditingController _phoneController;
-  String _firstName = '';
-  String _lastName = '';
-  String _userName = '';
-  String _email;
-  String _phoneNumber;
+  TextEditingController? _firstNameController;
+  TextEditingController? _lastNameController;
+  TextEditingController? _phoneController;
+  String? _firstName = '';
+  String? _lastName = '';
+  String? _userName = '';
+  String? _email;
+  String? _phoneNumber;
   final _formKey = GlobalKey<FormState>();
-  bool _isLoading = false;
+  bool? _isLoading = false;
 
 
   @override
@@ -40,7 +40,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     _email = await sharedPreferenceManager.readString(CachingKey.EMAIL);
     _userName = await sharedPreferenceManager.readString(CachingKey.USER_NAME);
     if(_userName !=''){
-      List<String> fullName = _userName.split(' ');
+      List<String> fullName = _userName!.split(' ');
       _firstName = fullName[0];
       _lastName = fullName[1];
       _firstNameController = new TextEditingController(text: _firstName);
@@ -55,20 +55,20 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
 
   void _submitForm() async {
-    final isValid = _formKey.currentState.validate();
+    final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
       setState(() {
         _isLoading = true;
       });
-      _formKey.currentState.save();
+      _formKey.currentState!.save();
       try {
         final _token = await sharedPreferenceManager.readString(CachingKey.AUTH_TOKEN);
         final result = await  AuthenticationRepository.updateUserProfile(firstName: _firstName,lastName: _lastName,
         email: _email,phone:_phoneNumber,token: _token);
         if(result){
           // save the new info
-          await sharedPreferenceManager.writeData(CachingKey.USER_NAME, _firstName +' '+ _lastName);
+          await sharedPreferenceManager.writeData(CachingKey.USER_NAME, _firstName! +' '+ _lastName!);
           await sharedPreferenceManager.writeData(CachingKey.MOBILE_NUMBER, _phoneNumber);
           Fluttertoast.showToast(
               msg: "account updated successfully",
@@ -80,7 +80,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
               fontSize: 16.0
           );
         }else{
-          List<String> fullName = _userName.split(' ');
+          List<String> fullName = _userName!.split(' ');
           _firstName = fullName[0];
           _lastName = fullName[1];
           Fluttertoast.showToast(
@@ -93,7 +93,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
               fontSize: 16.0
           );
         }
-        Navigator.of(context).pop({'full_name':_firstName + ' ' +  _lastName});
+        Navigator.of(context).pop({'full_name':_firstName! + ' ' +  _lastName!});
 
       } catch (error) {
         errorDialog(context: context, text: 'something went wrong');
@@ -132,7 +132,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           child: TextFormField(
                             key: ValueKey('first_name'),
                             validator: (value) {
-                              if (value.isEmpty) {
+                              if (value!.isEmpty) {
                                 return 'first name cannot be null';
                               }
                               return null;
@@ -159,7 +159,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           child: TextFormField(
                             key: ValueKey('last_name'),
                             validator: (value) {
-                              if (value.isEmpty) {
+                              if (value!.isEmpty) {
                                 return 'last name cannot be null';
                               }
                               return null;
@@ -186,7 +186,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                             key: ValueKey('phone number'),
                             focusNode: _phoneNumberFocusNode,
                             validator: (value) {
-                              if (value.isEmpty) {
+                              if (value!.isEmpty) {
                                 return 'Please enter a valid phone number';
                               }
                               return null;
@@ -212,7 +212,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             SizedBox(width: 10),
-                            _isLoading
+                            _isLoading!
                                 ? CircularProgressIndicator(
 
                             )

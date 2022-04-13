@@ -3,7 +3,7 @@ import 'package:almajidoud/screens/auth/sign_up_screen.dart';
 import 'package:almajidoud/screens/auth/sing_in_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-alreadyHaveAnAccount({BuildContext context, bool isSignUp: true}) {
+alreadyHaveAnAccount({BuildContext? context, bool? isSignUp: true}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
