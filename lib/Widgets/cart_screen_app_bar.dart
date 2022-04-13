@@ -9,12 +9,12 @@ import 'package:circle_bottom_navigation_bar/circle_bottom_navigation_bar.dart';
 import 'package:flutter/scheduler.dart';
 
 class CartScreenAppBar extends StatefulWidget {
-  Function onTapCategoryDrawer;
-  final String left_icon;
-  final String right_icon;
-  final String category_name;
-  Widget screen;
-  final bool home_logo;
+  Function? onTapCategoryDrawer;
+  final String? left_icon;
+  final String? right_icon;
+  final String? category_name;
+  Widget? screen;
+  final bool? home_logo;
   CartScreenAppBar(
       {this.onTapCategoryDrawer,
       this.left_icon,
@@ -59,7 +59,7 @@ class CartScreenAppBarState extends State<CartScreenAppBar> {
                       ),
 
                 Text(
-                        widget.category_name,
+                        widget!.category_name!,
                         style: TextStyle(
                             color: mainColor,
                             fontSize: AlmajedFont.primary_font_size),

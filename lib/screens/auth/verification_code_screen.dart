@@ -16,14 +16,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
 class VerificationCodeScreen extends StatefulWidget {
-  final String email;
-  final String newEmail;
-  final bool isGuestCheckOut;
-  final String user_phone;
-  final String route;
+  final String? email;
+  final String? newEmail;
+  final bool? isGuestCheckOut;
+  final String? user_phone;
+  final String? route;
 
   const VerificationCodeScreen({
-    Key key,
+    Key? key,
     @required this.email,
     this.newEmail = "",
     this.isGuestCheckOut,
@@ -40,29 +40,29 @@ class _OtpState extends State<VerificationCodeScreen>
   // Constants
   var otp_code;
   final int time = 180;
-  AnimationController _controller;
+ late AnimationController _controller;
   bool _isLoading = false;
   // Variables
-  Size _screenSize;
-  int _currentDigit;
-  int _firstDigit;
-  int _secondDigit;
-  int _thirdDigit;
-  int _fourthDigit;
+  Size? _screenSize;
+  int? _currentDigit;
+  int? _firstDigit;
+  int? _secondDigit;
+  int? _thirdDigit;
+  int? _fourthDigit;
 
-  Timer timer;
-  int totalTimeInSeconds;
-  bool _hideResendButton;
+  Timer? timer;
+  int? totalTimeInSeconds;
+  bool? _hideResendButton;
 
-  String userName = "";
-  bool didReadNotifications = false;
-  int unReadNotificationsCount = 0;
+  String? userName = "";
+  bool? didReadNotifications = false;
+  int? unReadNotificationsCount = 0;
 
-  String number;
+  String? number;
 
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
-  AnimationController _loginButtonController;
+  late AnimationController _loginButtonController;
   bool isLoading = false;
 
   Future<Null> _playAnimation() async {
@@ -104,7 +104,7 @@ class _OtpState extends State<VerificationCodeScreen>
           ..addStatusListener((status) {
             if (status == AnimationStatus.dismissed) {
               setState(() {
-                _hideResendButton = !_hideResendButton;
+                _hideResendButton = !_hideResendButton!;
               });
             }
           });
@@ -124,7 +124,7 @@ class _OtpState extends State<VerificationCodeScreen>
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: new Container(
-            width: _screenSize.width,
+            width: _screenSize!.width,
 //        padding: new EdgeInsets.only(bottom: 16.0),
             child: _getInputPart,
           ),
@@ -155,7 +155,7 @@ class _OtpState extends State<VerificationCodeScreen>
   }
 
   // Returns "Otp keyboard input Button"
-  Widget _otpKeyboardInputButton({String label, VoidCallback onPressed}) {
+  Widget _otpKeyboardInputButton({String? label, VoidCallback? onPressed}) {
     return new Material(
       color: Colors.transparent,
       child: new InkWell(
@@ -169,7 +169,7 @@ class _OtpState extends State<VerificationCodeScreen>
           ),
           child: new Center(
             child: new Text(
-              label,
+              label!,
               style: new TextStyle(
                 fontSize: 30.0,
                 color: mainColor,
@@ -182,7 +182,7 @@ class _OtpState extends State<VerificationCodeScreen>
   }
 
   // Returns "Otp keyboard action Button"
-  _otpKeyboardActionButton({Widget label, VoidCallback onPressed}) {
+  _otpKeyboardActionButton({Widget? label, VoidCallback? onPressed}) {
     return new InkWell(
       onTap: onPressed,
       borderRadius: new BorderRadius.circular(40.0),
@@ -246,10 +246,10 @@ class _OtpState extends State<VerificationCodeScreen>
           oldString.substring(index + 1);
     }
 
-    for (int i = StaticData.country_code.length; i < number.length - 3; i++) {
-      number = replaceCharAt(number, i, "*");
+    for (int i = StaticData.country_code.length; i < number!.length - 3; i++) {
+      number = replaceCharAt(number!, i, "*");
     }
-    return number;
+    return number!;
   }
 
   // Returns "Appbar"
@@ -334,10 +334,10 @@ class _OtpState extends State<VerificationCodeScreen>
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            _otpTextField(_firstDigit),
-            _otpTextField(_secondDigit),
-            _otpTextField(_thirdDigit),
-            _otpTextField(_fourthDigit),
+            _otpTextField(_firstDigit!),
+            _otpTextField(_secondDigit!),
+            _otpTextField(_thirdDigit!),
+            _otpTextField(_fourthDigit!),
           ],
 
         ));
@@ -353,7 +353,7 @@ class _OtpState extends State<VerificationCodeScreen>
         _getVerificationCodeLabel,
         _getEmailLabel,
         _getInputField,
-        _hideResendButton ? _getTimerText : _getResendButton,
+        _hideResendButton! ? _getTimerText : _getResendButton,
         _getOtpKeyboard
       ],
     );
@@ -364,7 +364,7 @@ class _OtpState extends State<VerificationCodeScreen>
     return Container(
       height: 32,
       child: new Offstage(
-        offstage: !_hideResendButton,
+        offstage: !_hideResendButton!,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -384,7 +384,7 @@ class _OtpState extends State<VerificationCodeScreen>
     return InkWell(
       onTap: () {
         clearOtp();
-        _hideResendButton = !_hideResendButton;
+        _hideResendButton = !_hideResendButton!;
         forgetPassword_bloc.add(resendOtpClick(route: widget.route));
       },
       child: Container(
@@ -424,7 +424,7 @@ class _OtpState extends State<VerificationCodeScreen>
           _getOtpConfirmationButton,
           responsiveSizedBox(context: context, percentageOfHeight: .02),
           new Container(
-              height: _screenSize.width - 80,
+              height: _screenSize!.width - 80,
               child: new Column(
                 children: <Widget>[
                   new Expanded(
@@ -552,7 +552,6 @@ class _OtpState extends State<VerificationCodeScreen>
               ? orderBloc
               : forgetPassword_bloc,
           listener: (context, state) async {
-            var data = state.model as AuthenticationModel;
             if (state is Loading) {
               if (state.indicator == 'checkOtpClick') {
                 _playAnimation();
@@ -675,7 +674,7 @@ class OtpTimer extends StatelessWidget {
   OtpTimer(this.controller, this.fontSize, this.timeColor);
 
   String get timerString {
-    Duration duration = controller.duration * controller.value;
+    Duration duration = controller.duration! * controller.value;
     if (duration.inHours > 0) {
       return '${duration.inHours}:${duration.inMinutes % 60}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
     }
@@ -683,15 +682,15 @@ class OtpTimer extends StatelessWidget {
   }
 
   Duration get duration {
-    Duration duration = controller.duration;
-    return duration;
+    Duration? duration = controller.duration;
+    return duration!;
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
         animation: controller,
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext? context, Widget? child) {
           return new Text(
             timerString,
             style: new TextStyle(

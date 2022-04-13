@@ -21,7 +21,7 @@ class CategoryRepository {
 
 
   Future<ProductModel> getCategoryProducts(
-      {String category_id, int offset}) async {
+      {String? category_id, int? offset}) async {
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',

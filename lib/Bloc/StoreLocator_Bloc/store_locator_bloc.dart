@@ -12,7 +12,7 @@ class StoreLocatorBloc extends Bloc<AppEvent,AppState>{
 
 
   void drainStream() {
-    _store_locator_subject.value = null;
+    _store_locator_subject.value = null!;
   }
 
   @override
@@ -32,4 +32,4 @@ class StoreLocatorBloc extends Bloc<AppEvent,AppState>{
 
 }
 
-final store_locator_bloc = StoreLocatorBloc(null);
+final store_locator_bloc = StoreLocatorBloc(null!);

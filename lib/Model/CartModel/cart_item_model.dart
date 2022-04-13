@@ -1,5 +1,5 @@
 class CartItemModel {
-  CartItem cartItem;
+  CartItem? cartItem;
 
   CartItemModel({this.cartItem});
 
@@ -12,7 +12,7 @@ class CartItemModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.cartItem != null) {
-      data['cartItem'] = this.cartItem.toJson();
+      data['cartItem'] = this.cartItem!.toJson();
     }
     return data;
   }

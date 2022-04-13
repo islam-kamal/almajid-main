@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-paymentTextFields({BuildContext context, String hint}) {
+paymentTextFields({BuildContext? context, String? hint}) {
   return Container(
     padding: EdgeInsets.only(
         right: width(context) * .05, left: width(context) * .05),
@@ -15,7 +15,7 @@ paymentTextFields({BuildContext context, String hint}) {
               : height(context) * .02),
       cursorColor: greyColor.withOpacity(.5),
       decoration: InputDecoration(
-        hintText: translator.translate(hint),
+        hintText: translator.translate(hint!),
         hintStyle: TextStyle(
             color: greyColor.withOpacity(.5),
             fontWeight: FontWeight.bold,

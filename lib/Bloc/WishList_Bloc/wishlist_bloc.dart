@@ -22,7 +22,7 @@ class WishListBloc extends Bloc<AppEvent,AppState>  {
 
   @override
   void drainStream() {
-    _wishlist_subject.value = null;
+    _wishlist_subject.value = null!;
   }
 
 
@@ -66,7 +66,7 @@ class WishListBloc extends Bloc<AppEvent,AppState>  {
       var response =await wishlistRepository.getAllWishListItems();
       if(response.message == "The consumer isn't authorized to access %resources."){
       }else{
-        if(response.items.isNotEmpty){
+        if(response.items!.isNotEmpty){
           _wishlist_subject.sink.add(response);
 
           yield  Done(model: response , indicator: 'get_fav');
@@ -93,4 +93,4 @@ class WishListBloc extends Bloc<AppEvent,AppState>  {
 
 
 }
-final wishlist_bloc = WishListBloc(null);
+final wishlist_bloc = WishListBloc(null!);

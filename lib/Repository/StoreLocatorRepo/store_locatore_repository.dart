@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 
 class StoreLocatorReopistory {
   static SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();
-  Future<List<StoreLocatorModel>> get_stores_locators() async {
+  Future<List<StoreLocatorModel>?> get_stores_locators() async {
     Dio dio = new Dio();
     try {
       Map<String, String> headers = {

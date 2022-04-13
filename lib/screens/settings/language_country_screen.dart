@@ -406,7 +406,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
 }
 
 class Country {
-  String name;
-  String photo;
+  String? name;
+  String? photo;
   Country({this.name, this.photo});
 }

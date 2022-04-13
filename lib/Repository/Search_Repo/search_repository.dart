@@ -10,7 +10,7 @@ import 'package:almajidoud/utils/file_export.dart';
 class SearchRepository {
   static SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();
 
-  Future<ProductModel> search_products_fun({String search_text ,var offset}) async {
+  Future<ProductModel> search_products_fun({String? search_text ,var offset}) async {
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',

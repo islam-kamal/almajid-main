@@ -15,7 +15,7 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
     with TickerProviderStateMixin {
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
-  AnimationController _loginButtonController;
+  late AnimationController _loginButtonController;
   bool isLoading = false;
   @override
   void initState() {
@@ -85,7 +85,7 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
                     backgroundColor: redColor,
                     flushbarStyle: FlushbarStyle.FLOATING,
                     duration: Duration(seconds: 6),
-                  )..show(_drawerKey.currentState.context);
+                  )..show(_drawerKey.currentState!.context);
                 }
                 else if (state is Done) {
                   var data = state.model as ResetPasswordModel;
@@ -123,7 +123,7 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
                     flushbarPosition: FlushbarPosition.BOTTOM,
                     backgroundColor: greenColor,
                     flushbarStyle: FlushbarStyle.FLOATING,
-                  )..show(_drawerKey.currentState.context);
+                  )..show(_drawerKey.currentState!.context);
                 }
               },
               child: Directionality(
@@ -183,14 +183,14 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
   }
 
   ResetPasswordButton({
-    BuildContext context,
+    BuildContext? context,
   }) {
     return Container(
       alignment: Alignment.centerRight,
       padding: EdgeInsets.all(10),
       child: StaggerAnimation(
         titleButton: translator.translate("Done"),
-        buttonController: _loginButtonController.view,
+        buttonController: _loginButtonController,
         btn_width: width(context) * .3,
         btn_height: width(context) * .1,
         isResetScreen: true,
@@ -201,7 +201,7 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
     );
   }
 
-  passwordTextField({BuildContext context, String hint}) {
+  passwordTextField({BuildContext? context, String? hint}) {
     return StreamBuilder<String>(
       stream: forgetPassword_bloc.password,
       builder: (context, snapshot) {
@@ -220,7 +220,7 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
             cursorColor: greyColor.withOpacity(.5),
             onChanged: forgetPassword_bloc.password_change,
             decoration: InputDecoration(
-              hintText: translator.translate(hint),
+              hintText: translator.translate(hint!),
               hintStyle: TextStyle(
                   color: greyColor.withOpacity(1),
                   fontWeight: FontWeight.bold,
@@ -245,7 +245,7 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
     );
   }
 
-  confirmPasswordTextField({BuildContext context, String hint}) {
+  confirmPasswordTextField({BuildContext? context, String? hint}) {
     return StreamBuilder<String>(
       stream: forgetPassword_bloc.confirm_password,
       builder: (context, snapshot) {
@@ -264,7 +264,7 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
             cursorColor: greyColor.withOpacity(.5),
             onChanged: forgetPassword_bloc.confirm_password_change,
             decoration: InputDecoration(
-              hintText: translator.translate(hint),
+              hintText: translator.translate(hint!),
               hintStyle: TextStyle(
                   color: greyColor.withOpacity(1),
                   fontWeight: FontWeight.bold,

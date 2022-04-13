@@ -12,7 +12,7 @@ class CustomTextField extends StatefulWidget {
   final int maxLines ;
   bool isPrefixIconComplex ;
   final bool isSearchTextField;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final TextInputType inputType;
   CustomTextField(
 
@@ -31,7 +31,7 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  String _errorMessage(String str) {
+  String? _errorMessage(String str) {
     switch (widget.hint) {
       case 'Enter your name':
         return 'Name is empty !';

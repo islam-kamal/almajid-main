@@ -1,11 +1,12 @@
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
-void FlushbarWidget({ BuildContext context ,  GlobalKey<ScaffoldState> scaffoldKey , var text }){
+
+void FlushbarWidget({ BuildContext? context ,  GlobalKey<ScaffoldState>? scaffoldKey , var text }){
   Flushbar(
     messageText: Row(
       children: [
         Container(
-          width: StaticData.get_width(context) * 0.7,
+          width: StaticData.get_width(context!) * 0.7,
           child: Wrap(
             children: [
               Text(
@@ -28,5 +29,5 @@ void FlushbarWidget({ BuildContext context ,  GlobalKey<ScaffoldState> scaffoldK
     backgroundColor: redColor,
     flushbarStyle: FlushbarStyle.FLOATING,
     duration: Duration(seconds: 3),
-  )..show(scaffoldKey.currentState.context);
+  )..show(scaffoldKey!.currentState!.context);
 }

@@ -40,11 +40,11 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
 
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
-    String user_phone;
+    String? user_phone;
     //send otp Api handle
     if (event is sendOtpClick) {
       yield Loading(model: null);
-      var response = await AuthenticationRepository.sendVerificationCode(event.phone,event.route);
+      var response = await AuthenticationRepository.sendVerificationCode(event.phone!,event.route!);
       if (response.success == "true") {
         sharedPreferenceManager.writeData(
             CachingKey.FORGET_PASSWORD_PHONE, event.phone);
@@ -60,7 +60,7 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
           .readString(CachingKey.FORGET_PASSWORD_PHONE)
           .then((value) => user_phone = value);
       var response = await AuthenticationRepository.checkOtpCode(
-          user_phone, event.otp_code,event.route);
+          user_phone!, event.otp_code!,event.route!);
       if (response.success == "true") {
         sharedPreferenceManager.writeData(CachingKey.AUTH_TOKEN, response.token);
       yield Done(model: response, indicator: 'checkOtpClick');
@@ -72,7 +72,7 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
     else if (event is resendOtpClick) {
       yield Loading(model: null, indicator: 'resendOtpClick');
       await sharedPreferenceManager.readString(CachingKey.FORGET_PASSWORD_PHONE).then((value) => user_phone = value);
-      var response = await AuthenticationRepository.resendOtp( user_phone,event.route);
+      var response = await AuthenticationRepository.resendOtp( user_phone!,event.route!);
 
       if (response.success == "true") {
         yield Done(model: response, indicator: 'resendOtpClick');
@@ -91,7 +91,7 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
         yield ErrorLoading(model: response,message: translator.translate("Passwords are not identical"));
 
       }else{
-         response = await AuthenticationRepository.changePassword(user_phone, password_controller.value, );
+         response = await AuthenticationRepository.changePassword(user_phone!, password_controller.value, );
 
          if (response.succeess == "true") {
            yield Done(model: response);
@@ -111,4 +111,4 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
   }
 }
 
-final forgetPassword_bloc = new ForgetPasswordBloc(null);
+final forgetPassword_bloc = new ForgetPasswordBloc(null!);

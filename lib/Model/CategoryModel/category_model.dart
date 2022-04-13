@@ -3,14 +3,14 @@ import 'package:almajidoud/Base/network-mappers.dart';
 
 
 class CategoryModel extends BaseMappable{
-  int id;
-  int parentId;
-  String name;
-  bool isActive;
-  int position;
-  int level;
-  int productCount;
-  List<ChildrenData> childrenData;
+  int? id;
+  int? parentId;
+  String? name;
+  bool? isActive;
+  int? position;
+  int? level;
+  int? productCount;
+  List<ChildrenData>? childrenData;
 
   CategoryModel(
       {this.id,
@@ -31,9 +31,9 @@ class CategoryModel extends BaseMappable{
     level = json['level'];
     productCount = json['product_count'];
     if (json['children_data'] != null) {
-      childrenData = new List<ChildrenData>();
+      childrenData = [];
       json['children_data'].forEach((v) {
-        childrenData.add(new ChildrenData.fromJson(v));
+        childrenData!.add(new ChildrenData.fromJson(v));
       });
     }
   }
@@ -48,7 +48,7 @@ class CategoryModel extends BaseMappable{
     data['level'] = this.level;
     data['product_count'] = this.productCount;
     if (this.childrenData != null) {
-      data['children_data'] = this.childrenData.map((v) => v.toJson()).toList();
+      data['children_data'] = this.childrenData?.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -63,9 +63,9 @@ class CategoryModel extends BaseMappable{
     level = json['level'];
     productCount = json['product_count'];
     if (json['children_data'] != null) {
-      childrenData = new List<ChildrenData>();
+      childrenData = [];
       json['children_data'].forEach((v) {
-        childrenData.add(new ChildrenData.fromJson(v));
+        childrenData!.add(new ChildrenData.fromJson(v));
       });
     }
     return CategoryModel(id: id,childrenData: childrenData,isActive: isActive,
@@ -74,14 +74,14 @@ class CategoryModel extends BaseMappable{
 }
 
 class ChildrenData {
-  int id;
-  int parentId;
-  String name;
-  bool isActive;
-  int position;
-  int level;
-  int productCount;
-  List<CategoryChildrenData> childrenData;
+  int? id;
+  int? parentId;
+  String? name;
+  bool? isActive;
+  int? position;
+  int? level;
+  int? productCount;
+  List<CategoryChildrenData>? childrenData;
 
   ChildrenData(
       {this.id,
@@ -102,9 +102,9 @@ class ChildrenData {
     level = json['level'];
     productCount = json['product_count'];
     if (json['children_data'] != null) {
-      childrenData = new List<CategoryChildrenData>();
+      childrenData = [];
       json['children_data'].forEach((v) {
-        childrenData.add(new CategoryChildrenData.fromJson(v));
+        childrenData!.add(new CategoryChildrenData.fromJson(v));
       });
     }
   }
@@ -119,21 +119,21 @@ class ChildrenData {
     data['level'] = this.level;
     data['product_count'] = this.productCount;
     if (this.childrenData != null) {
-      data['children_data'] = this.childrenData.map((v) => v.toJson()).toList();
+      data['children_data'] = this.childrenData!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class CategoryChildrenData {
-  int id;
-  int parentId;
-  String name;
-  bool isActive;
-  int position;
-  int level;
-  int productCount;
-  List<SubCategoryChildrenData> childrenData;
+  int? id;
+  int? parentId;
+  String? name;
+  bool? isActive;
+  int? position;
+  int? level;
+  int? productCount;
+  List<SubCategoryChildrenData>? childrenData;
 
   CategoryChildrenData(
       {this.id,
@@ -154,9 +154,9 @@ class CategoryChildrenData {
     level = json['level'];
     productCount = json['product_count'];
     if (json['children_data'] != null) {
-      childrenData = new List<Null>();
+      childrenData = [];
       json['children_data'].forEach((v) {
-        childrenData.add(new SubCategoryChildrenData.fromJson(v));
+        childrenData!.add(new SubCategoryChildrenData.fromJson(v));
       });
     }
   }
@@ -171,21 +171,21 @@ class CategoryChildrenData {
     data['level'] = this.level;
     data['product_count'] = this.productCount;
     if (this.childrenData != null) {
-      data['children_data'] = this.childrenData.map((v) => v.toJson()).toList();
+      data['children_data'] = this.childrenData!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class SubCategoryChildrenData {
-  int id;
-  int parentId;
-  String name;
-  bool isActive;
-  int position;
-  int level;
-  int productCount;
-  List<SubCategoryChildrenData> childrenData;
+  int? id;
+  int? parentId;
+  String? name;
+  bool? isActive;
+  int? position;
+  int? level;
+  int? productCount;
+  List<SubCategoryChildrenData>? childrenData;
 
   SubCategoryChildrenData(
       {this.id,
@@ -206,9 +206,9 @@ class SubCategoryChildrenData {
     level = json['level'];
     productCount = json['product_count'];
     if (json['children_data'] != null) {
-      childrenData = new List<SubCategoryChildrenData>();
+      childrenData = [];
       json['children_data'].forEach((v) {
-        childrenData.add(new SubCategoryChildrenData.fromJson(v));
+        childrenData!.add(new SubCategoryChildrenData.fromJson(v));
       });
     }
   }
@@ -223,7 +223,7 @@ class SubCategoryChildrenData {
     data['level'] = this.level;
     data['product_count'] = this.productCount;
     if (this.childrenData != null) {
-      data['children_data'] = this.childrenData.map((v) => v.toJson()).toList();
+      data['children_data'] = this.childrenData!.map((v) => v.toJson()).toList();
     }
     return data;
   }

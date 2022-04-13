@@ -1,17 +1,17 @@
 import 'dart:convert';
 
+import 'package:almajidoud/Model/OrderModel/order_model.dart';
+import 'package:almajidoud/Model/OrderModel/reorder_model.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:dio/dio.dart';
 import 'package:almajidoud/utils/file_export.dart';
-import 'package:almajidoud/Model/OrderMode/order_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
-import 'package:almajidoud/Model/OrderMode/reorder_model.dart';
 import 'dart:io' show Platform;
 
 class OrderRepository {
-  Future<String> create_guest_order({BuildContext context}) async {
+  Future<String?> create_guest_order({BuildContext? context}) async {
     Dio dio = new Dio();
     try {
       final response = await dio.put(
@@ -28,7 +28,7 @@ class OrderRepository {
         sharedPreferenceManager.writeData(CachingKey.ORDER_ID, response.data);
         return response.data;
       } else {
-        Navigator.pop(context);
+        Navigator.pop(context!);
         errorDialog(context: context, text: response.data['message']);
       }
 
@@ -36,7 +36,7 @@ class OrderRepository {
     }
   }
 
-  Future<String> create_client_order({BuildContext context}) async {
+  Future<String?> create_client_order({BuildContext? context}) async {
     Dio dio = new Dio();
     try {
       final response = await dio.post(
@@ -55,7 +55,7 @@ class OrderRepository {
         sharedPreferenceManager.writeData(CachingKey.ORDER_ID, response.data);
         return response.data;
       } else {
-        Navigator.pop(context);
+        Navigator.pop(context!);
         errorDialog(context: context, text: response.data['message']);
       }
 
@@ -65,7 +65,7 @@ class OrderRepository {
   }
 
 
-  Future<ReorderModel> re_order({BuildContext context, order_id}) async {
+  Future<ReorderModel?> re_order({BuildContext? context, order_id}) async {
     Dio dio = new Dio();
     try {
       final response = await dio.post(
@@ -83,7 +83,7 @@ class OrderRepository {
     //    errorDialog(context: context, text: translator.translate(  "Your order created successfully"));
         return response.data;
       } else {
-        Navigator.pop(context);
+        Navigator.pop(context!);
         errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {

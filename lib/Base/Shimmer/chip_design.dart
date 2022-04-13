@@ -2,11 +2,11 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/material.dart';
 
 class ChipDesign extends StatelessWidget {
-  final String label;
-  final Color color;
+  final String? label;
+  final Color? color;
   final txtColor;
 
-  const ChipDesign({Key key, this.label, this.color, this.txtColor})
+  const ChipDesign({ Key? key, this.label, this.color, this.txtColor})
       : super(key: key);
 
   @override
@@ -17,7 +17,7 @@ class ChipDesign extends StatelessWidget {
            color: mainColor
          )),
         label: Text(
-          label,
+          label!,
           style: TextStyle(color:txtColor, fontFamily: 'Cairo'),
         ),
         backgroundColor: color,

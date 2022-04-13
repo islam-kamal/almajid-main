@@ -17,7 +17,7 @@ class WishListRepository {
         headers: headers);
   }
 
-  Future<List<WishlistItemModel>> getWishListIDS(BuildContext context)async{
+  Future<List<WishlistItemModel>?> getWishListIDS(BuildContext context)async{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Dio dio = new Dio();
     try {
@@ -37,7 +37,7 @@ class WishListRepository {
             .toList();
         List<Map> wishlist_data = [];
         temp.forEach((i) {
-          wishlist_data.add({i.id.toString():i.product.id});
+          wishlist_data.add({i.id.toString():i.product?.id});
         });
        await sharedPreferenceManager.setListOfMaps(wishlist_data, 'wishlist_data_ids');
         return temp;
@@ -49,7 +49,7 @@ class WishListRepository {
     }
   }
 
-  Future<bool> addProudctToWishList({BuildContext context ,var product_id, var product_qty})async {
+  Future<bool?> addProudctToWishList({BuildContext? context ,var product_id, var product_qty})async {
     Dio dio = new Dio();
     try {
       final response = await dio.put(
@@ -76,7 +76,7 @@ class WishListRepository {
     }
   }
 
-  Future<bool> removeProudctToWishList({BuildContext context ,var wishlist_item_id})async {
+  Future<bool?> removeProudctToWishList({BuildContext? context ,var wishlist_item_id})async {
     Dio dio = new Dio();
     try {
       final response = await dio.post(
@@ -98,7 +98,7 @@ class WishListRepository {
     }
   }
 
-  Future<bool> add_product_from_wishlist_to_cart({BuildContext context, var wishlist_product_id , var product_qty})async{
+  Future<bool?> add_product_from_wishlist_to_cart({BuildContext? context, var wishlist_product_id , var product_qty})async{
     Dio dio = new Dio();
     String url =
         "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/quote/is_active/"
@@ -193,7 +193,7 @@ class WishListRepository {
       try {
         //create_quote
         final response = await dio.post(
-            Urls.BASE_URL + StaticData.vistor_value == 'visitor'
+            Urls.BASE_URL + StaticData.vistor_value! == 'visitor'
                 ? Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/'
                 : Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/carts/mine',
             options: Options(

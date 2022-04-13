@@ -1,8 +1,8 @@
 import 'package:almajidoud/Base/network-mappers.dart';
 
 class ReorderModel extends BaseMappable{
-  bool success;
-  String message;
+  bool? success;
+  String? message;
 
   ReorderModel({this.success, this.message});
 

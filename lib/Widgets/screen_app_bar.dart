@@ -8,12 +8,12 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/scheduler.dart';
 
 class ScreenAppBar extends StatefulWidget {
-  Function onTapCategoryDrawer;
-  final String left_icon;
-  final String right_icon;
-  final String category_name;
-  Widget screen;
-  final bool home_logo;
+  VoidCallback? onTapCategoryDrawer;
+  final String? left_icon;
+  final String? right_icon;
+  final String? category_name;
+  Widget? screen;
+  final bool? home_logo;
   ScreenAppBar(
       {this.onTapCategoryDrawer,
         this.left_icon,
@@ -48,7 +48,7 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                 children: [
                   widget.right_icon == null
                       ? GestureDetector(
-                    onTap: widget.onTapCategoryDrawer,
+                    onTap: widget?.onTapCategoryDrawer,
                     child: Image.asset(
                       "assets/icons/category.png",
                       height: isLandscape(context)
@@ -72,7 +72,7 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                     child:  widget.category_name == null
                       ?  MyTextField(controller, focusNode)
                       : Text(
-                    widget.category_name,
+                    widget.category_name!,
                     style: TextStyle(
                         color: blackColor,
                         fontSize: AlmajedFont.primary_font_size),
@@ -92,7 +92,7 @@ class ScreenAppBarState extends State<ScreenAppBar> {
 
                     },
                     child: Image.asset(
-                      widget.left_icon,
+                      widget.left_icon!,
                       height: isLandscape(context)
                           ? 2 * height(context) * .03
                           : height(context) * .03,
@@ -105,7 +105,7 @@ class ScreenAppBarState extends State<ScreenAppBar> {
             Divider(color:mainColor,
               thickness: 1,
             ),
-            widget.home_logo ?  CategoriesTap() : Container(),
+            widget.home_logo! ?  CategoriesTap() : Container(),
           ],
         ),
       ),

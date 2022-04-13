@@ -19,9 +19,9 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 class HomeListProducts extends StatefulWidget {
-  final String type;
-  GlobalKey<ScaffoldState> homeScaffoldKey;
-  Items items;
+  final String? type;
+  GlobalKey<ScaffoldState>? homeScaffoldKey;
+  Items? items;
   HomeListProducts({this.type, this.homeScaffoldKey,this.items});
   @override
   State<StatefulWidget> createState() {
@@ -32,12 +32,12 @@ class HomeListProducts extends StatefulWidget {
 
 class HomeListProductsState extends State<HomeListProducts> with TickerProviderStateMixin{
   TextEditingController qty_controller = new TextEditingController();
-  String cvv;
+  String? cvv;
   var sku;
 
-  AnimationController _loginButtonController;
+ late AnimationController _loginButtonController;
   bool isLoading = false;
-  final home_bloc = HomeBloc(null);
+  final home_bloc = HomeBloc(null!);
   var product_image;
   var _subject;
   var percentage;
@@ -66,10 +66,10 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
         break;
 
       case 'related products':
-        widget.items.productLinks.forEach((element) async {
+        widget.items!.productLinks!.forEach((element) async {
           if(element.linkType == "related"){
             var response = await categoryRepository.getProduct(sku: element.linkedProductSku);
-            related_product_list.add(response.items.isNotEmpty ?response.items[0] : null);
+            related_product_list.add(response!.items!.isNotEmpty ?response!.items![0] : null!);
             home_bloc.related_products_subject.sink.add(response.items);
           }else{
 
@@ -136,16 +136,16 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
         stream: _subject,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data.isEmpty) {
+            if (snapshot.data!.isEmpty) {
               return no_data_widget(
                   context: context,
                   image_status: true
               );
             } else {
               if(widget.type ==  'related products'){
-                snapshot.data.clear();
+                snapshot.data!.clear();
                 related_product_list.forEach((element) {
-                  snapshot.data.add(element) ;
+                  snapshot.data!.add(element) ;
                 });
               }
               return Container(
@@ -153,13 +153,14 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                   height: isLandscape(context) ? 2 * height(context) * .30 : height(context) * .30,
                   child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: snapshot.data.length,
+                      itemCount: snapshot.data!.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        String special_price;
+
+                        String? special_price;
                         var new_price , minimal_price;
-                        DateTime startDate , endDate ;
-                        snapshot.data[index]==null ? null :   snapshot.data[index].customAttributes.forEach((element) {
+                        DateTime? startDate , endDate ;
+                        snapshot.data![index]==null ? null :   snapshot.data![index].customAttributes!.forEach((element) {
                           if(element.attributeCode == "thumbnail")
                             product_image = element.value;
                           else if(element.attributeCode == "special_from_date"){
@@ -176,33 +177,33 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                           }
                         });
 
-                        if(startDate ==null || endDate ==null ){
-                          if(double.parse(minimal_price) == double.parse(snapshot.data[index].price.toString())){
+                        if(startDate! ==null || endDate! ==null ){
+                          if(double.parse(minimal_price) == double.parse(snapshot.data![index].price.toString())){
                             new_price = null;
                           }else{
                             new_price = minimal_price;
 
                           }
 
-                          if(double.parse(minimal_price) < double.parse(snapshot.data[index].price.toString()))
-                          percentage = (1 - (double.parse(minimal_price)  / snapshot.data[index].price) )* 100;
+                          if(double.parse(minimal_price) < double.parse(snapshot.data![index].price.toString()))
+                          percentage = (1 - (double.parse(minimal_price)  / snapshot.data![index].price) )* 100;
 
                         }
                         else{
-                          if(StaticData.isCurrentDateInRange(startDate,endDate)
-                              && double.parse(special_price) <= double.parse(minimal_price)
-                              && double.parse(special_price).toStringAsFixed(2) !=  snapshot.data[index].price ) {
+                          if(StaticData.isCurrentDateInRange(startDate!,endDate!)
+                              && double.parse(special_price!) <= double.parse(minimal_price)
+                              && double.parse(special_price!).toStringAsFixed(2) !=  snapshot.data![index].price ) {
                             new_price = special_price;
-                            percentage = (1 - (double.parse(new_price)  / snapshot.data[index].price) )* 100;
-                          }else if(double.parse(special_price) > double.parse(minimal_price)){
+                            percentage = (1 - (double.parse(new_price)  / snapshot.data![index].price) )* 100;
+                          }else if(double.parse(special_price!) > double.parse(minimal_price)){
                             new_price = minimal_price;
-                            percentage = (1 - (double.parse(new_price)  / snapshot.data[index].price) )* 100;
+                            percentage = (1 - (double.parse(new_price)  / snapshot.data![index].price) )* 100;
                           }
 
                           else {
-                            if(!StaticData.isCurrentDateInRange(startDate,endDate) ){
+                            if(!StaticData.isCurrentDateInRange(startDate!,endDate!) ){
                               new_price = minimal_price;
-                              percentage = (1 - (double.parse(new_price)  / snapshot.data[index].price) )* 100;
+                              percentage = (1 - (double.parse(new_price)  / snapshot.data![index].price) )* 100;
 
                             }
                           }
@@ -210,14 +211,15 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                         }
 
 
-                        snapshot.data[index] == null? product_image ='' : snapshot.data[index].customAttributes.forEach((element) {
+                        snapshot.data![index] == null? product_image ='' :
+                        snapshot.data![index].customAttributes!.forEach((element) {
                           if(element.attributeCode == "thumbnail")
                             product_image = element.value;
                         });
-                        if(  snapshot.data[index] == null){
+                        if(  snapshot.data![index] == null){
 
                         }else{
-                          if(snapshot.data[index].status == 1){
+                          if(snapshot.data![index].status == 1){
                             return Padding(
                               padding: EdgeInsets.only(left: 5, right: 5,),
                               child: Neumorphic(
@@ -243,7 +245,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                               flex: 2,
                                               child: GestureDetector(
                                                 onTap: () {
-                                                  customAnimatedPushNavigation(context, ProductDetailsScreen(product_id: snapshot.data[index].id,));
+                                                  customAnimatedPushNavigation(context, ProductDetailsScreen(product_id: snapshot.data![index].id,));
                                                 },
                                                 child:  Container(
                                                   width: width(context) * .35,
@@ -267,7 +269,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                     customDescriptionText(
                                                         context: context,
                                                         textColor: mainColor,
-                                                        text: snapshot.data[index].name,
+                                                        text: snapshot.data![index].name,
                                                         maxLines: 2,
                                                         percentageOfHeight: .017),
 
@@ -285,8 +287,8 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                                     MyText(
                                                                       text: "${
                                                                           new_price == null ?
-                                                                          double.parse(snapshot.data[index].price.toString()) <  double.parse(minimal_price) ?
-                                                                          snapshot.data[index].price.toStringAsFixed(2)  :
+                                                                          double.parse(snapshot.data![index].price.toString()) <  double.parse(minimal_price) ?
+                                                                          snapshot.data![index].price.toStringAsFixed(2)  :
                                                                           double.parse(minimal_price).toStringAsFixed(2)
                                                                               : double.parse(new_price)} ",                                                                size: StaticData.get_height(context) * .017,
                                                                       color: blackColor,
@@ -306,7 +308,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                             ),
                                                             SizedBox(width: width(context) * 0.03,),
                                                             new_price == null ?  Container()   :       Text(
-                                                              "${snapshot.data[index].price} ${MyApp.country_currency}",
+                                                              "${snapshot.data![index].price} ${MyApp.country_currency}",
                                                               style: TextStyle(
                                                                   decoration: TextDecoration.lineThrough,
                                                                   fontSize: StaticData.get_height(context)  * .011,
@@ -323,18 +325,18 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                               )),
                                           Expanded(
                                               flex: 1,
-                                              child:  snapshot.data[index].extensionAttributes.stockQty >= 1 ?
+                                              child:  snapshot.data![index].extensionAttributes!.stockQty >= 1 ?
                                               AddProductToCartWidget(
-                                                product_sku: snapshot.data[index].sku,
+                                                product_sku: snapshot.data![index].sku,
                                                 product_quantity:   1,
-                                                instock_status: snapshot.data[index].extensionAttributes.stockItem.isInStock,
+                                                instock_status: snapshot.data![index].extensionAttributes!.stockItem!.isInStock,
                                                 scaffoldKey: widget.homeScaffoldKey,
                                                 btn_height: width(context) * .08,
                                                 btn_width: width(context) * .33,
                                                 text_size: 0.017,
                                                 home_shape: false,
                                                 product_image: product_image,
-                                                product_id:  snapshot.data[index].id,
+                                                product_id:  snapshot.data![index].id,
 
                                               ) :
                                               Container(
@@ -366,15 +368,15 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                       ),
 
                                       // ------------------ here ----------------------
-                                      snapshot.data[index].extensionAttributes.stockQty >=1 ?
+                                      snapshot.data![index].extensionAttributes!.stockQty >=1 ?
                                       percentage ==null || percentage == 0 ?  CustomWishList(
                                         color: redColor,
                                         product_id:
-                                        snapshot.data[index].id,
+                                        snapshot.data![index].id,
                                         qty: snapshot
-                                            .data[index]
-                                            .extensionAttributes
-                                            .stockItem
+                                            .data![index]
+                                            .extensionAttributes!
+                                            .stockItem!
                                             .qty,
                                         context: context,
                                         screen:
@@ -395,11 +397,11 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                           CustomWishList(
                                             color: redColor,
                                             product_id:
-                                            snapshot.data[index].id,
+                                            snapshot.data![index].id,
                                             qty: snapshot
-                                                .data[index]
-                                                .extensionAttributes
-                                                .stockItem
+                                                .data![index]
+                                                .extensionAttributes!
+                                                .stockItem!
                                                 .qty,
                                             context: context,
                                             screen:

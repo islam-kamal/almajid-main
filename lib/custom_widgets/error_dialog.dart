@@ -2,9 +2,9 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void errorDialog({BuildContext context, String text, Function function}) {
+void errorDialog({BuildContext? context, String? text, Function? function}) {
   showDialog(
-      context: context,
+      context: context!,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -40,7 +40,7 @@ void errorDialog({BuildContext context, String text, Function function}) {
                   color: blackColor,
                 ),
               ),
-              onPressed: function ?? () => Navigator.pop(context),
+              onPressed: () =>  function==null ? Navigator.pop(context) : function,
             )
           ],
         );

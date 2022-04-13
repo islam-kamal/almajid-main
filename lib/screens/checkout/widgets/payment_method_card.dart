@@ -1,7 +1,7 @@
 import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-singleSmallCard({BuildContext context, String image :"", String title}) {
+singleSmallCard({BuildContext? context, String image :"", String? title}) {
   return Container(
     height: isLandscape(context)
         ? 2 * height(context) * .05
@@ -23,6 +23,4 @@ singleSmallCard({BuildContext context, String image :"", String title}) {
   );
 }
 
-singleRadioButton({BuildContext context, bool radioValue: false}) {
-  return  Radio(value:radioValue , onChanged: (v){} , activeColor: Colors.blue) ;
-}
+

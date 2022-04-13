@@ -9,7 +9,7 @@ class AddCartModel extends BaseMappable{
   var productType;
   var quoteId;
   var message;
-  Parameters parameters;
+  Parameters? parameters;
   AddCartModel(
       {this.itemId,
         this.sku,
@@ -62,8 +62,8 @@ class AddCartModel extends BaseMappable{
 
 }
 class Parameters {
-  String fieldName;
-  String fieldValue;
+  String? fieldName;
+  String? fieldValue;
 
   Parameters({this.fieldName, this.fieldValue});
 

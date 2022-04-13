@@ -10,7 +10,6 @@ import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigatio
 import 'package:almajidoud/screens/Payment/Constants.dart';
 import 'package:almajidoud/screens/Payment/payfort/payfort_payment_screen.dart';
 import 'package:almajidoud/screens/checkout/widgets/checkout_header.dart';
-import 'package:almajidoud/screens/checkout/widgets/done_button.dart';
 import 'package:almajidoud/screens/checkout/widgets/order_summary_widget.dart';
 import 'package:almajidoud/screens/checkout/widgets/single_order_summary_item.dart';
 import 'package:almajidoud/screens/checkout/widgets/single_product_summary_card.dart';
@@ -27,7 +26,7 @@ import 'package:almajidoud/screens/Payment/apple_pay/apple_pay_screen.dart';
 import 'package:pay/pay.dart';
 
 class CheckoutSummaryScreen extends StatefulWidget {
-  GuestShipmentAddressModel guestShipmentAddressModel;
+  GuestShipmentAddressModel? guestShipmentAddressModel;
   var payment_method;
   CheckoutSummaryScreen(
       {this.guestShipmentAddressModel, this.payment_method = ''});
@@ -42,16 +41,16 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
     with TickerProviderStateMixin {
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   FocusNode fieldNode = FocusNode();
-  bool _show = false;
-  AnimationController _loginButtonController;
+  bool? _show = false;
+late  AnimationController _loginButtonController;
   bool isLoading = false;
   bool apple_pay_loading = false;
-  String _quoteId;
+  String? _quoteId;
 
   var grand_total;
   var increment_order_id;
   var _paymentItems;
-  Pay _payClient;
+  Pay? _payClient;
   @override
   void initState() {
     getQuote().then((value) => _quoteId = value);
@@ -96,10 +95,12 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        if (_show) {
+
+        if (_show!) {
           return false;
         } else {
           Navigator.pop(context);
+          return null!;
         }
       },
       child: NetworkIndicator(
@@ -146,7 +147,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                   backgroundColor: redColor,
                   flushbarStyle: FlushbarStyle.FLOATING,
                   duration: Duration(seconds: 6),
-                )..show(_drawerKey.currentState.context);
+                )..show(_drawerKey.currentState!.context);
               }
             }
             else if (state is Done) {
@@ -192,8 +193,8 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
 
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => PayfortPaymentScreen(
-                                    amount: widget.guestShipmentAddressModel
-                                        .totals.baseGrandTotal
+                                    amount: widget.guestShipmentAddressModel!
+                                        .totals!.baseGrandTotal
                                         .toString(),
                                     merchantIdentifier: merchantIdentifier,
                                     accessCode: accessCode,
@@ -255,7 +256,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                                 backgroundColor: redColor,
                                 flushbarStyle: FlushbarStyle.FLOATING,
                                 duration: Duration(seconds: 6),
-                              )..show(_drawerKey.currentState.context);
+                              )..show(_drawerKey.currentState!.context);
                             }
                           });
                           break;
@@ -273,7 +274,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                             _show = true;
                           });
 
-                          widget.guestShipmentAddressModel.totals.totalSegments
+                          widget.guestShipmentAddressModel!.totals!.totalSegments!
                               .forEach((element) {
                             if (element.code == "grand_total") {
                               grand_total = double.parse(
@@ -323,21 +324,21 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                       padding: EdgeInsets.symmetric(horizontal: 5),
                       child: ListView.builder(
                         itemCount: widget
-                            .guestShipmentAddressModel.totals.items.length,
+                            .guestShipmentAddressModel!.totals!.items!.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           return   singleProductSummaryCard(
                               context: context,
-                              prod_name: widget.guestShipmentAddressModel
-                                  .totals.items[index].name,
-                              prod_price: widget.guestShipmentAddressModel
-                                  .totals.items[index].rowTotalInclTax,
-                              prod_qty: widget.guestShipmentAddressModel
-                                  .totals.items[index].qty,
+                              prod_name: widget.guestShipmentAddressModel!
+                                  .totals!.items![index].name,
+                              prod_price: widget.guestShipmentAddressModel!
+                                  .totals!.items![index].rowTotalInclTax,
+                              prod_qty: widget.guestShipmentAddressModel!
+                                  .totals!.items![index].qty,
                               prod_image: widget
-                                  .guestShipmentAddressModel
-                                  .totals
-                                  .items[index]
+                                  .guestShipmentAddressModel!
+                                  .totals!
+                                  .items![index]
                                   .extensionAttributes['product_image']);
                         },
                       ),
@@ -409,7 +410,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                           orderSummaryWidget(
                               context: context,
                               total_segments: widget
-                                  .guestShipmentAddressModel.totals.totalSegments,
+                                  .guestShipmentAddressModel!.totals!.totalSegments,
                               cash: widget.payment_method),
                         ],
                       ),
@@ -425,12 +426,10 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
     );
   }
 
-  doneButton({
-    BuildContext context,
-  }) {
+  doneButton({BuildContext? context,}) {
     return StaggerAnimation(
         titleButton: translator.translate("Place Order"),
-        buttonController: _loginButtonController.view,
+        buttonController: _loginButtonController,
         btn_width: width(context) ,
         checkout_color: true,
         product_details_page:true ,
@@ -439,7 +438,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
               .readString(CachingKey.CHOSSED_PAYMENT_METHOD)
               .then((value) {
             if (value == 'stc_pay') {
-              customAnimatedPushNavigation(context, StcPayPhoneScreen());
+              customAnimatedPushNavigation(context!, StcPayPhoneScreen());
             } else {
               orderBloc.add(CreateOrderEvent(context: context));
             }
@@ -455,7 +454,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
   }
 
   Widget _showBottomSheet() {
-    if (_show) {
+    if (_show!) {
       return BottomSheet(
         onClosing: () {
           _stopAnimation();
@@ -504,7 +503,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                           )),
                       SizedBox(height: width(context) * 0.1),
                       FutureBuilder<bool>(
-                        future: _payClient.userCanPay(PayProvider.apple_pay),
+                        future: _payClient!.userCanPay(PayProvider.apple_pay),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.done) {
@@ -532,6 +531,9 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
                                   child: CircularProgressIndicator(),
                                 ),
                                 onPressed: () {},
+                                paymentConfigurationAsset: '',
+                                onPaymentResult: (Map<String, dynamic> result) {  },
+                                paymentItems: [],
                               );
                             }
                           }
@@ -550,7 +552,7 @@ class CheckoutSummaryScreenState extends State<CheckoutSummaryScreen>
         },
       );
     } else {
-      return null;
+      return null!;
     }
   }
 

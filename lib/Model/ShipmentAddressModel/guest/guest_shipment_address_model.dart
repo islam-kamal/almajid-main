@@ -1,17 +1,17 @@
 import 'package:almajidoud/Base/network-mappers.dart';
 
 class GuestShipmentAddressModel extends BaseMappable{
-  List<PaymentMethods> paymentMethods;
-  Totals totals;
-  String message;
-  Parameters parameters;
+  List<PaymentMethods>? paymentMethods;
+  Totals? totals;
+  String? message;
+  Parameters? parameters;
   GuestShipmentAddressModel({this.paymentMethods, this.totals,this.message,this.parameters});
 
   GuestShipmentAddressModel.fromJson(Map<String, dynamic> json) {
     if (json['payment_methods'] != null) {
-      paymentMethods = new List<PaymentMethods>();
+      paymentMethods = [];
       json['payment_methods'].forEach((v) {
-        paymentMethods.add(new PaymentMethods.fromJson(v));
+        paymentMethods!.add(new PaymentMethods.fromJson(v));
       });
     }
     totals =
@@ -26,10 +26,10 @@ class GuestShipmentAddressModel extends BaseMappable{
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.paymentMethods != null) {
       data['payment_methods'] =
-          this.paymentMethods.map((v) => v.toJson()).toList();
+          this.paymentMethods!.map((v) => v.toJson()).toList();
     }
     if (this.totals != null) {
-      data['totals'] = this.totals.toJson();
+      data['totals'] = this.totals!.toJson();
     }
 
     return data;
@@ -38,9 +38,9 @@ class GuestShipmentAddressModel extends BaseMappable{
   @override
   Mappable fromJson(Map<String, dynamic> json) {
     if (json['payment_methods'] != null) {
-      paymentMethods = new List<PaymentMethods>();
+      paymentMethods = [];
       json['payment_methods'].forEach((v) {
-        paymentMethods.add(new PaymentMethods.fromJson(v));
+        paymentMethods!.add(new PaymentMethods.fromJson(v));
       });
     }
     totals =
@@ -96,8 +96,8 @@ class Totals {
   var baseCurrencyCode;
   var quoteCurrencyCode;
   var itemsQty;
-  List<Items> items;
-  List<TotalSegments> totalSegments;
+  List<Items>? items;
+  List<TotalSegments>? totalSegments;
 
   Totals(
       {this.grandTotal,
@@ -151,15 +151,15 @@ class Totals {
     quoteCurrencyCode = json['quote_currency_code'];
     itemsQty = json['items_qty'];
     if (json['items'] != null) {
-      items = new List<Items>();
+      items = [];
       json['items'].forEach((v) {
-        items.add(new Items.fromJson(v));
+        items!.add(new Items.fromJson(v));
       });
     }
     if (json['total_segments'] != null) {
-      totalSegments = new List<TotalSegments>();
+      totalSegments = [];
       json['total_segments'].forEach((v) {
-        totalSegments.add(new TotalSegments.fromJson(v));
+        totalSegments!.add(new TotalSegments.fromJson(v));
       });
     }
   }
@@ -190,11 +190,11 @@ class Totals {
     data['quote_currency_code'] = this.quoteCurrencyCode;
     data['items_qty'] = this.itemsQty;
     if (this.items != null) {
-      data['items'] = this.items.map((v) => v.toJson()).toList();
+      data['items'] = this.items!.map((v) => v.toJson()).toList();
     }
     if (this.totalSegments != null) {
       data['total_segments'] =
-          this.totalSegments.map((v) => v.toJson()).toList();
+          this.totalSegments!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -304,7 +304,7 @@ class TotalSegments {
   var code;
   var title;
   var value;
-  ExtensionAttributes extensionAttributes;
+  ExtensionAttributes? extensionAttributes;
   var area;
 
   TotalSegments(
@@ -326,7 +326,7 @@ class TotalSegments {
     data['title'] = this.title;
     data['value'] = this.value;
     if (this.extensionAttributes != null) {
-      data['extension_attributes'] = this.extensionAttributes.toJson();
+      data['extension_attributes'] = this.extensionAttributes!.toJson();
     }
     data['area'] = this.area;
     return data;
@@ -334,15 +334,15 @@ class TotalSegments {
 }
 
 class ExtensionAttributes {
-  List<TaxGrandtotalDetails> taxGrandtotalDetails;
+  List<TaxGrandtotalDetails>? taxGrandtotalDetails;
 
   ExtensionAttributes({this.taxGrandtotalDetails});
 
   ExtensionAttributes.fromJson(Map<String, dynamic> json) {
     if (json['tax_grandtotal_details'] != null) {
-      taxGrandtotalDetails = new List<TaxGrandtotalDetails>();
+      taxGrandtotalDetails = [];
       json['tax_grandtotal_details'].forEach((v) {
-        taxGrandtotalDetails.add(new TaxGrandtotalDetails.fromJson(v));
+        taxGrandtotalDetails!.add(new TaxGrandtotalDetails.fromJson(v));
       });
     }
   }
@@ -351,7 +351,7 @@ class ExtensionAttributes {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.taxGrandtotalDetails != null) {
       data['tax_grandtotal_details'] =
-          this.taxGrandtotalDetails.map((v) => v.toJson()).toList();
+          this.taxGrandtotalDetails!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -359,7 +359,7 @@ class ExtensionAttributes {
 
 class TaxGrandtotalDetails {
   var amount;
-  List<Rates> rates;
+  List<Rates>? rates;
   var groupId;
 
   TaxGrandtotalDetails({this.amount, this.rates, this.groupId});
@@ -367,9 +367,9 @@ class TaxGrandtotalDetails {
   TaxGrandtotalDetails.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
     if (json['rates'] != null) {
-      rates = new List<Rates>();
+      rates = [];
       json['rates'].forEach((v) {
-        rates.add(new Rates.fromJson(v));
+        rates!.add(new Rates.fromJson(v));
       });
     }
     groupId = json['group_id'];
@@ -379,7 +379,7 @@ class TaxGrandtotalDetails {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['amount'] = this.amount;
     if (this.rates != null) {
-      data['rates'] = this.rates.map((v) => v.toJson()).toList();
+      data['rates'] = this.rates!.map((v) => v.toJson()).toList();
     }
     data['group_id'] = this.groupId;
     return data;
@@ -406,8 +406,8 @@ class Rates {
 }
 
 class Parameters {
-  String fieldName;
-  Null fieldValue;
+  String? fieldName;
+  String? fieldValue;
 
   Parameters({this.fieldName, this.fieldValue});
 

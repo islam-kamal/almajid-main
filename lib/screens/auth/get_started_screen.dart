@@ -8,8 +8,8 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
 
 class GetStartedScreen extends StatefulWidget {
-  final String token;
-  final String route;
+  final String? token;
+  final String? route;
   GetStartedScreen({this.token,this.route});
   @override
   GetStartedScreenState createState() => new GetStartedScreenState();
@@ -19,7 +19,7 @@ class GetStartedScreenState extends State<GetStartedScreen>
     with TickerProviderStateMixin {
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
-  AnimationController _loginButtonController;
+  AnimationController? _loginButtonController;
   bool isLoading = false;
   @override
   void initState() {
@@ -34,14 +34,14 @@ class GetStartedScreenState extends State<GetStartedScreen>
       setState(() {
         isLoading = true;
       });
-      await _loginButtonController.forward();
+      await _loginButtonController!.forward();
     } on TickerCanceled {
     }
   }
 
   Future<Null> _stopAnimation() async {
     try {
-      await _loginButtonController.reverse();
+      await _loginButtonController!.reverse();
       setState(() {
         isLoading = false;
       });
@@ -52,7 +52,7 @@ class GetStartedScreenState extends State<GetStartedScreen>
   @override
   void dispose() {
     // TODO: implement dispose
-    _loginButtonController.dispose();
+    _loginButtonController!.dispose();
     super.dispose();
   }
 
@@ -101,7 +101,7 @@ class GetStartedScreenState extends State<GetStartedScreen>
                         backgroundColor: redColor,
                         flushbarStyle: FlushbarStyle.FLOATING,
                         duration: Duration(seconds: 6),
-                      )..show(_drawerKey.currentState.context);
+                      )..show(_drawerKey!.currentState!.context);
                     }
                     else if (state is Done) {
                       _stopAnimation();
@@ -174,10 +174,10 @@ class GetStartedScreenState extends State<GetStartedScreen>
     );
   }
 
-  getStartedButton({BuildContext context, bool isSignUp: true}) {
+  getStartedButton({BuildContext? context, bool isSignUp: true}) {
     return StaggerAnimation(
       titleButton:translator.translate( "Get Started",),
-      buttonController: _loginButtonController.view,
+      buttonController: _loginButtonController!,
       btn_width: width(context) * .7,
       onTap: () {
         signIn_bloc.add(UserInfoClick(

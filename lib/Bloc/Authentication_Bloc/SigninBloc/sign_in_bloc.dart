@@ -47,10 +47,10 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
           token: event.token,
       );
       if(response != null){
-        sharedPreferenceManager.writeData(CachingKey.USER_NAME, response.firstname +' '+ response.lastname );
+        sharedPreferenceManager.writeData(CachingKey.USER_NAME, response.firstname! +' '+ response.lastname! );
         sharedPreferenceManager.writeData(CachingKey.CUSTOMER_ID, response.id );
         sharedPreferenceManager.writeData(CachingKey.EMAIL, response.email );
-        final mobileElement = response.customAttributes.firstWhere((element) => element.attributeCode == 'mobile_number');
+        final mobileElement = response.customAttributes!.firstWhere((element) => element.attributeCode == 'mobile_number');
         sharedPreferenceManager.writeData(CachingKey.MOBILE_NUMBER, mobileElement.value );
         await _updateUserToken(customerId: response.id);
         yield Done(model:response);
@@ -63,18 +63,18 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
   @override
   void dispose() {
     // TODO: implement dispose
-    email_controller?.close();
-    password_controller?.close();
+    email_controller.close();
+    password_controller.close();
 
   }
 
-  void _updateUserToken({int customerId}) async{
+   _updateUserToken({int? customerId}) async{
     //get the current device token
-    String deviceToken  = await FirebaseMessaging.instance.getToken();
+    String? deviceToken  = await FirebaseMessaging.instance.getToken();
     await AuthenticationRepository.updateDeviceToken(customerId: customerId,deviceToken: deviceToken);
   }
 
 
 
 }
-final signIn_bloc = SigninBloc(null);
+final signIn_bloc = SigninBloc(null!);

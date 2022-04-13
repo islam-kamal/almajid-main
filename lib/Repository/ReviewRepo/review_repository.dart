@@ -40,7 +40,7 @@ class ReviewsRepository {
     headers: headers);
   }
 
-  Future<List<ProductReviewModel>> getProductReviews({BuildContext context , var product_sku}) async{
+  Future<List<ProductReviewModel>?> getProductReviews({BuildContext? context , var product_sku}) async{
 
     String Review_Url = Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/products/${product_sku}/reviews/';
     Dio dio = new Dio();

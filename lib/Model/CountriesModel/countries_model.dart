@@ -4,12 +4,12 @@ import 'package:almajidoud/Base/network-mappers.dart';
 
 
 class CountriesModel extends BaseMappable{
-  String id;
-  String twoLetterAbbreviation;
-  String threeLetterAbbreviation;
-  String fullNameLocale;
-  String fullNameEnglish;
-  List<AvailableRegions> availableRegions;
+  String? id;
+  String? twoLetterAbbreviation;
+  String? threeLetterAbbreviation;
+  String? fullNameLocale;
+  String? fullNameEnglish;
+  List<AvailableRegions>? availableRegions;
 
   CountriesModel(
       {this.id,
@@ -26,9 +26,9 @@ class CountriesModel extends BaseMappable{
     fullNameLocale = json['full_name_locale'];
     fullNameEnglish = json['full_name_english'];
     if (json['available_regions'] != null) {
-      availableRegions = new List<AvailableRegions>();
+      availableRegions = [];
       json['available_regions'].forEach((v) {
-        availableRegions.add(new AvailableRegions.fromJson(v));
+        availableRegions!.add(new AvailableRegions.fromJson(v));
       });
     }
   }
@@ -42,7 +42,7 @@ class CountriesModel extends BaseMappable{
     data['full_name_english'] = this.fullNameEnglish;
     if (this.availableRegions != null) {
       data['available_regions'] =
-          this.availableRegions.map((v) => v.toJson()).toList();
+          this.availableRegions!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -55,9 +55,9 @@ class CountriesModel extends BaseMappable{
     fullNameLocale = json['full_name_locale'];
     fullNameEnglish = json['full_name_english'];
     if (json['available_regions'] != null) {
-      availableRegions = new List<AvailableRegions>();
+      availableRegions = [];
       json['available_regions'].forEach((v) {
-        availableRegions.add(new AvailableRegions.fromJson(v));
+        availableRegions!.add(new AvailableRegions.fromJson(v));
       });
     }
     return CountriesModel(id: id,twoLetterAbbreviation: twoLetterAbbreviation,threeLetterAbbreviation: threeLetterAbbreviation,
@@ -66,9 +66,9 @@ class CountriesModel extends BaseMappable{
 }
 
 class AvailableRegions {
-  String id;
-  String code;
-  String name;
+  String? id;
+  String? code;
+  String? name;
 
   AvailableRegions({this.id, this.code, this.name});
 

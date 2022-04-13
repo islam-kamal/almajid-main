@@ -1,4 +1,3 @@
-import 'package:almajidoud/Model/OffersModel/offer_model.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/Model/CountriesModel/countries_model.dart';
@@ -7,7 +6,7 @@ import 'package:almajidoud/Model/CityModel/city_model.dart';
 class CountriesRepository {
   static SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();
 
-  Future<List<CountriesModel>> getCountriesList() async {
+  Future<List<CountriesModel>?> getCountriesList() async {
     Dio dio = new Dio();
     try {
       Map<String, String> headers = {
@@ -22,7 +21,7 @@ class CountriesRepository {
       if (response.statusCode == 200) {
         final jsonresponse = response.data;
         if (jsonresponse == null) {
-          return null;
+          return null!;
         } else {
           List<CountriesModel> temp = (jsonresponse as List)
               .map((f) => CountriesModel.fromJson(f))
@@ -36,7 +35,7 @@ class CountriesRepository {
 
   }
 
-   Future<List<CityModel>> get_cities({BuildContext context}) async {
+   Future<List<CityModel>?> get_cities({BuildContext? context}) async {
     Dio dio = new Dio();
     try {
       final response = await dio.get(

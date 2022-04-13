@@ -29,11 +29,11 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
   var   tax , subtotal, grandtotal;
   var product_image;
   var edit_cart_status = false;
-  SharedPreferences sharedPreferences;
+  SharedPreferences? sharedPreferences;
   var qty;
-  AnimationController _loginButtonController;
+ late AnimationController _loginButtonController;
   bool isLoading = false;
-  ShoppingCartBloc shoppingCartBloc = new ShoppingCartBloc(null);
+  ShoppingCartBloc shoppingCartBloc = new ShoppingCartBloc(null!);
 
   var discount_amount = '';
   @override
@@ -126,10 +126,10 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                         else if (state is Done) {
                                           var data = state.model as CartDetailsModel;
                                           if (data.message?.isEmpty != null ||
-                                              data.items == null || data.items.length == 0) {
+                                              data.items == null || data.items!.length == 0) {
                                             return no_data_widget(context: context);
                                           } else {
-                                            data.totalSegments.forEach((element) {
+                                            data.totalSegments!.forEach((element) {
                                               if(element.code == "discount"){
                                                 discount_amount = element.value.toString();
                                               }else if(element.code == "tax"){
@@ -145,7 +145,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                 ListView.builder(
                                                     shrinkWrap: true,
                                                     physics: NeverScrollableScrollPhysics(),
-                                                    itemCount: data.items.length,
+                                                    itemCount: data.items!.length,
                                                     scrollDirection: Axis.vertical,
                                                     itemBuilder: (context, index) {
 
@@ -157,15 +157,15 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                             ),
                                                             singleCartItem(
                                                                 context: context,
-                                                                item: data.items[index],
-                                                                image: "${Urls.BASE_URL}/media/catalog/product/cache/089af6965a318f5bf47750f284c40786"+data.items[index].extensionAttributes.productImage
+                                                                item: data.items![index],
+                                                                image: "${Urls.BASE_URL}/media/catalog/product/cache/089af6965a318f5bf47750f284c40786"+data.items![index].extensionAttributes!.productImage
                                                             ),
                                                             SizedBox(
                                                               height: width(context) * .002,
                                                             ),
                                                           ]),
                                                           positionedRemove(
-                                                              itemId: data.items[index].itemId),
+                                                              itemId: data.items![index].itemId),
                                                         ],
                                                       );
                                                     }),
@@ -323,7 +323,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                   children: [
                                     CartScreenAppBar(
                                       onTapCategoryDrawer: () {
-                                        _scaffoldKey.currentState.openDrawer();
+                                        _scaffoldKey.currentState!.openDrawer();
                                       },
                                       right_icon: 'cart',
                                       screen: CustomCircleNavigationBar(
@@ -346,15 +346,15 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
     );
   }
 
-  proceedToCheckoutButton({BuildContext context}) {
+  proceedToCheckoutButton({BuildContext? context}) {
     return StaggerAnimation(
       titleButton: translator.translate("Proceed to checkout"),
-      buttonController: _loginButtonController.view,
+      buttonController: _loginButtonController,
       btn_width: width(context) * .8,
       checkout_color: true,
       onTap: () {
         if(StaticData.vistor_value == 'visitor' ){
-          customAnimatedPushNavigation(context, CheckoutAddressScreen());
+          customAnimatedPushNavigation(context!, CheckoutAddressScreen());
 
         }else{
           shipmentAddressBloc.add(
@@ -369,18 +369,18 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
     final response = await cartRepository.delete_product_from_cart(
       item_id: cart_item_id,
     );
-    if (response) {
+    if (response!) {
       shoppingCartBloc.add(GetCartDetailsEvent());
     } else {
     }
   }
 
-  singleCartItem({BuildContext context, cart_details_model.Items item,String image}) {
+  singleCartItem({BuildContext? context, cart_details_model.Items? item,String? image}) {
     List<String> qantity_numbers = [];
     for (int i = 1; i < 20; i++) {
       qantity_numbers.add(i.toString());
     }
-    qty =item.qty;
+    qty =item!.qty;
     return Directionality(
         textDirection: translator.activeLanguageCode == 'ar'
             ? TextDirection.rtl
@@ -471,7 +471,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                   MaterialButton(
                                                     height: 5,
                                                     minWidth:
-                                                    StaticData.get_width(context) *
+                                                    StaticData.get_width(context!) *
                                                         0.15,
                                                     onPressed: () async {
                                                       if (qty == 20) {
@@ -530,7 +530,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                             duration:
                                                             Duration(seconds: 3),
                                                           )..show(_scaffoldKey
-                                                              .currentState.context);
+                                                              .currentState!.context);
                                                         } else {
                                                           shoppingCartBloc.add(GetCartDetailsEvent());
                                                         }
@@ -557,7 +557,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
 
                                                   MaterialButton(
                                                     height: 5,
-                                                    minWidth: StaticData.get_width(context) * 0.15,
+                                                    minWidth: StaticData.get_width(context!) * 0.15,
 
                                                     onPressed: qty <= 1 ? (){} :() async {
                                                       setState(() {
@@ -610,7 +610,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                           duration:
                                                           Duration(seconds: 3),
                                                         )..show(_scaffoldKey
-                                                            .currentState.context);
+                                                            .currentState!.context);
                                                       } else {
                                                         shoppingCartBloc.add(GetCartDetailsEvent());
                                                       }
@@ -646,7 +646,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
         ));
   }
 
-  Widget positionedRemove({int itemId}) {
+  Widget positionedRemove({int? itemId}) {
     return Directionality(
         textDirection:
         translator.activeLanguageCode == 'ar'

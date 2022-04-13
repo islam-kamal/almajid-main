@@ -19,4 +19,4 @@ class LanguageBloc extends Bloc<AppEvent,AppState>{
 
 }
 
-LanguageBloc languageBloc = new LanguageBloc(null);
+LanguageBloc languageBloc = new LanguageBloc(null!);

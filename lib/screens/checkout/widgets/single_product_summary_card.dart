@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-singleProductSummaryCard({BuildContext context,var prod_name,var prod_image, var prod_price, var prod_qty}) {
+singleProductSummaryCard({BuildContext? context,var prod_name,var prod_image, var prod_price, var prod_qty}) {
   return Container(
     width: width(context) * .4,
     child: Column(

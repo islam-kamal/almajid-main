@@ -2,11 +2,11 @@ import 'package:almajidoud/utils/file_export.dart';
 
 
 class AuthenticationModel extends BaseMappable{
-  String success;
-  String errormsg;
-  String successmsg;
-  String customurl;
-  String token;
+  String? success;
+  String? errormsg;
+  String? successmsg;
+  String? customurl;
+  String? token;
   AuthenticationModel({this.success, this.errormsg, this.successmsg, this.customurl,this.token});
 
   AuthenticationModel.fromJson(Map<String, dynamic> json) {

@@ -11,7 +11,7 @@ class ShipmentAddressRepository {
   Dio dio = new Dio();
 
   // use to make Add Shipping and billing address for client and guest
-  Future<GuestShipmentAddressModel> add_addresses({BuildContext context}) async {
+  Future<GuestShipmentAddressModel?> add_addresses({BuildContext? context}) async {
 /*    var _post_code;
     Map<String, String> postcode_ities = {'Riyadh': '11564', 'Abha': '61321'};
     postcode_ities.forEach((key, value) {
@@ -117,7 +117,7 @@ class ShipmentAddressRepository {
     }
   }
 
-  Future<List<AddressModel>> get_all_saved_addresses({BuildContext context}) async {
+  Future<List<AddressModel>?> get_all_saved_addresses({BuildContext? context}) async {
     try {
       final response = await dio.get(
           '${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/customers/me/address/search?customer_id=${await sharedPreferenceManager.readInteger(CachingKey.CUSTOMER_ID)}&searchCriteria',
@@ -160,7 +160,7 @@ class ShipmentAddressRepository {
         ));
   }
 
-  Future<bool> delete_address({var address_id})async{
+  Future<bool?> delete_address({var address_id})async{
     Dio dio = new Dio();
     try {
       final response = await dio.delete(
@@ -182,7 +182,7 @@ class ShipmentAddressRepository {
   }
 
 
-  Future<AddressModel> add_client_address({BuildContext context}) async{
+  Future<AddressModel?> add_client_address({BuildContext? context}) async{
 
     final response = await dio.put(
         "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/customers/me/address",
@@ -238,7 +238,7 @@ class ShipmentAddressRepository {
   }
 
 
-  Future<AddressModel> edit_client_address({BuildContext context}) async{
+  Future<AddressModel?> edit_client_address({BuildContext? context}) async{
 
     final response = await dio.put(
         "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/customers/me/address",

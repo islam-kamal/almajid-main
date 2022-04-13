@@ -1,23 +1,23 @@
 import 'package:almajidoud/Base/network-mappers.dart';
 
 class GuestCartDetailsModel extends BaseMappable {
-  int id;
-  String createdAt;
-  String updatedAt;
-  bool isActive;
-  bool isVirtual;
-  int itemsCount;
-  int itemsQty;
-  Customer customer;
-  BillingAddress billingAddress;
-  String reservedOrderId;
-  int origOrderId;
-  Currency currency;
-  bool customerIsGuest;
-  bool customerNoteNotify;
-  int customerTaxClassId;
-  int storeId;
-  ExtensionAttributes extensionAttributes;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  bool? isActive;
+  bool? isVirtual;
+  int? itemsCount;
+  int? itemsQty;
+  Customer? customer;
+  BillingAddress? billingAddress;
+  String? reservedOrderId;
+  int? origOrderId;
+  Currency? currency;
+  bool? customerIsGuest;
+  bool? customerNoteNotify;
+  int? customerTaxClassId;
+  int? storeId;
+  ExtensionAttributes? extensionAttributes;
 
   GuestCartDetailsModel(
       {this.id,
@@ -76,22 +76,22 @@ class GuestCartDetailsModel extends BaseMappable {
     data['items_count'] = this.itemsCount;
     data['items_qty'] = this.itemsQty;
     if (this.customer != null) {
-      data['customer'] = this.customer.toJson();
+      data['customer'] = this.customer!.toJson();
     }
     if (this.billingAddress != null) {
-      data['billing_address'] = this.billingAddress.toJson();
+      data['billing_address'] = this.billingAddress!.toJson();
     }
     data['reserved_order_id'] = this.reservedOrderId;
     data['orig_order_id'] = this.origOrderId;
     if (this.currency != null) {
-      data['currency'] = this.currency.toJson();
+      data['currency'] = this.currency!.toJson();
     }
     data['customer_is_guest'] = this.customerIsGuest;
     data['customer_note_notify'] = this.customerNoteNotify;
     data['customer_tax_class_id'] = this.customerTaxClassId;
     data['store_id'] = this.storeId;
     if (this.extensionAttributes != null) {
-      data['extension_attributes'] = this.extensionAttributes.toJson();
+      data['extension_attributes'] = this.extensionAttributes!.toJson();
     }
     return data;
   }
@@ -133,9 +133,9 @@ class GuestCartDetailsModel extends BaseMappable {
 }
 
 class Customer {
-  Null email;
-  Null firstname;
-  Null lastname;
+  String? email;
+  String? firstname;
+  String? lastname;
 
   Customer({this.email, this.firstname, this.lastname});
 
@@ -155,20 +155,20 @@ class Customer {
 }
 
 class BillingAddress {
-  int id;
-  String region;
-  int regionId;
-  String regionCode;
-  String countryId;
-  List<String> street;
-  String telephone;
-  String postcode;
-  String city;
-  String firstname;
-  String lastname;
-  String email;
-  int sameAsBilling;
-  int saveInAddressBook;
+  int? id;
+  String? region;
+  int? regionId;
+  String? regionCode;
+  String? countryId;
+  List<String>? street;
+  String? telephone;
+  String? postcode;
+  String? city;
+  String? firstname;
+  String? lastname;
+  String? email;
+  int? sameAsBilling;
+  int? saveInAddressBook;
 
   BillingAddress(
       {this.id,
@@ -224,14 +224,14 @@ class BillingAddress {
 }
 
 class Currency {
-  String globalCurrencyCode;
-  String baseCurrencyCode;
-  String storeCurrencyCode;
-  String quoteCurrencyCode;
-  int storeToBaseRate;
-  int storeToQuoteRate;
-  int baseToGlobalRate;
-  int baseToQuoteRate;
+  String? globalCurrencyCode;
+  String? baseCurrencyCode;
+  String? storeCurrencyCode;
+  String? quoteCurrencyCode;
+  int? storeToBaseRate;
+  int? storeToQuoteRate;
+  int? baseToGlobalRate;
+  int? baseToQuoteRate;
 
   Currency(
       {this.globalCurrencyCode,
@@ -269,7 +269,7 @@ class Currency {
 }
 
 class ExtensionAttributes {
-  AmAcartQuoteEmail amAcartQuoteEmail;
+  AmAcartQuoteEmail? amAcartQuoteEmail;
 
   ExtensionAttributes({this.amAcartQuoteEmail});
 
@@ -282,15 +282,15 @@ class ExtensionAttributes {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.amAcartQuoteEmail != null) {
-      data['am_acart_quote_email'] = this.amAcartQuoteEmail.toJson();
+      data['am_acart_quote_email'] = this.amAcartQuoteEmail!.toJson();
     }
     return data;
   }
 }
 
 class AmAcartQuoteEmail {
-  int quoteEmailId;
-  int quoteId;
+  int? quoteEmailId;
+  int? quoteId;
 
   AmAcartQuoteEmail({this.quoteEmailId, this.quoteId});
 

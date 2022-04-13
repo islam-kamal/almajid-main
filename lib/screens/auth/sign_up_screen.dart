@@ -26,12 +26,12 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen>
     with TickerProviderStateMixin {
   String _countryCode = "+966";
-  bool _passwordVisible;
+  bool? _passwordVisible;
 
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   final _formKey = GlobalKey<FormState>();
 
-  AnimationController _loginButtonController;
+  late AnimationController _loginButtonController;
   bool isLoading = false;
   @override
   void initState() {
@@ -113,7 +113,7 @@ class _SignUpScreenState extends State<SignUpScreen>
           backgroundColor: redColor,
           flushbarStyle: FlushbarStyle.FLOATING,
           duration: Duration(seconds: 6),
-        )..show(_drawerKey.currentState.context);
+        )..show(_drawerKey.currentState!.context);
 
       } else if (state is Done) {
         _stopAnimation();
@@ -189,13 +189,13 @@ class _SignUpScreenState extends State<SignUpScreen>
     )) );
   }
 
-  signButton({BuildContext context, bool isSignUp: true}) {
+  signButton({BuildContext? context, bool isSignUp: true}) {
     return StaggerAnimation(
       titleButton: isSignUp == true ?   translator.translate("Sign Up") : translator.translate("Sign In"),
-      buttonController: _loginButtonController.view,
+      buttonController: _loginButtonController,
       btn_width: width(context) * .7,
       onTap: () {
-        if (_formKey.currentState.validate() ) {
+        if (_formKey.currentState!.validate() ) {
           signUpBloc.add(click());
         }
 
@@ -205,7 +205,7 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 
 
-  frist_nameTextField({BuildContext context, String hint,}) {
+  frist_nameTextField({BuildContext? context, String? hint,}) {
     return StreamBuilder<String>(
       stream: signUpBloc.fristname,
       builder: (context, snapshot) {
@@ -213,8 +213,8 @@ class _SignUpScreenState extends State<SignUpScreen>
             width: width(context) * .8,
             child: TextFormField(
                 decoration: InputDecoration(
-                  hintText: translator.translate(hint),
-                  errorText: snapshot.error,
+                  hintText: translator.translate(hint!),
+                  errorText: snapshot.error.toString(),
                   contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
                 ),
@@ -233,7 +233,7 @@ class _SignUpScreenState extends State<SignUpScreen>
 
   }
 
-  last_nameTextField({BuildContext context, String hint,}) {
+  last_nameTextField({BuildContext? context, String? hint,}) {
     return StreamBuilder<String>(
       stream: signUpBloc.lastname,
       builder: (context, snapshot) {
@@ -241,8 +241,8 @@ class _SignUpScreenState extends State<SignUpScreen>
             width: width(context) * .8,
             child: TextFormField(
               decoration: InputDecoration(
-                hintText: translator.translate(hint),
-                errorText: snapshot.error,
+                hintText: translator.translate(hint!),
+                errorText: snapshot.error.toString(),
                 contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
               ),
@@ -261,7 +261,7 @@ class _SignUpScreenState extends State<SignUpScreen>
 
   }
 
-  emailTextField({BuildContext context, String hint,}) {
+  emailTextField({BuildContext? context, String? hint,}) {
     return StreamBuilder<String>(
       stream: signUpBloc.email,
       builder: (context, snapshot) {
@@ -269,8 +269,8 @@ class _SignUpScreenState extends State<SignUpScreen>
             width: width(context) * .8,
             child: TextFormField(
               decoration: InputDecoration(
-                hintText: translator.translate(hint),
-                errorText: snapshot.error,
+                hintText: translator.translate(hint!),
+                errorText: snapshot.error.toString(),
                 contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
               ),
@@ -304,7 +304,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                         child: TextFormField(
                           decoration: InputDecoration(
                             hintText: translator.translate("Phone"),
-                            errorText: snapshot.error,
+                            errorText: snapshot.error.toString(),
                             contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
                           ),
@@ -336,8 +336,8 @@ class _SignUpScreenState extends State<SignUpScreen>
         });
   }
 
-  passwordTextField({BuildContext context, String hint, bool isPasswordField: false,
-        bool containPrefixIcon: false, IconData prefixIcon}) {
+  passwordTextField({BuildContext? context, String? hint, bool isPasswordField: false,
+        bool containPrefixIcon: false, IconData? prefixIcon}) {
 
     return StreamBuilder<String>(
         stream: signUpBloc.password,
@@ -345,22 +345,22 @@ class _SignUpScreenState extends State<SignUpScreen>
           return Container(
               width: width(context) * .8,
               child: TextFormField(
-                  obscureText:!_passwordVisible,
+                  obscureText:!_passwordVisible!,
                   decoration: InputDecoration(
                       prefixIcon: containPrefixIcon == false ? null : Icon(prefixIcon),
-                    errorText: snapshot.error,
+                    errorText: snapshot.error.toString(),
                     contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
-                    hintText: translator.translate(hint),
+                    hintText: translator.translate(hint!),
           suffixIcon: IconButton(
           icon: Icon(
           // Based on passwordVisible state choose the icon
-          _passwordVisible ? Icons.visibility_off : Icons.visibility,
+          _passwordVisible! ? Icons.visibility_off : Icons.visibility,
           ),
           onPressed: () {
           // Update the state i.e. toogle the state of passwordVisible variable
           setState(() {
-          _passwordVisible = !_passwordVisible;
+          _passwordVisible = !_passwordVisible!;
           });
           },
           ),

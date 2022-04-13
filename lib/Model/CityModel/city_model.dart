@@ -1,7 +1,7 @@
 class CityModel {
-  String title;
-  String value;
-  String label;
+  String? title;
+  String? value;
+  String? label;
 
   CityModel({this.title, this.value, this.label});
 

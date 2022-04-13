@@ -87,7 +87,7 @@ class CustomComponents{
 
 
 
-  static String order_status(String status){
+  static String? order_status(String status){
     switch(status){
       case "order_delivered":
         return translator.translate("Delivered");
@@ -189,7 +189,7 @@ class CustomComponents{
 
   }
 
-  static Color order_status_color(String status){
+  static Color? order_status_color(String? status){
     switch(status){
       case "order_delivered":
         return greenColor;

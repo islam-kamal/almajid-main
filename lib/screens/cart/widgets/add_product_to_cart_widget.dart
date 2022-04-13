@@ -9,7 +9,7 @@ class AddProductToCartWidget extends StatefulWidget {
   var product_quantity, product_sku, instock_status,btn_width,btn_height,text_size ,
       home_shape , product_image , product_id , add_wishlist_to_cart ,
       product_details_page;
-  GlobalKey<ScaffoldState> scaffoldKey;
+  GlobalKey<ScaffoldState>? scaffoldKey;
 
   AddProductToCartWidget(
       {this.product_quantity,
@@ -35,7 +35,7 @@ class AddProductToCartWidget extends StatefulWidget {
 
 class AddProductToCartWidgetState extends State<AddProductToCartWidget>
     with TickerProviderStateMixin {
-  AnimationController _loginButtonController;
+ late AnimationController _loginButtonController;
   bool isLoading = false;
   bool _isLoading = false;
 
@@ -80,7 +80,7 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
               textColor: Colors.white,
               fontSize: 16.0);
 
-          state = null;
+          state = null!;
         } else if (state is DoneProductAdded &&
             state.indicator == 'detail_add_to_cart' &&
             widget.product_sku == state.sku) {
@@ -116,7 +116,7 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
           alignment: Alignment.center,
           padding: !widget.product_details_page ? EdgeInsets.all(0) :EdgeInsets.all(0),
           child: StaggerAnimation(
-            buttonController: _loginButtonController.view,
+            buttonController: _loginButtonController,
             btn_height: widget.btn_height,
             btn_width: widget.btn_width,
             text_size: widget.text_size,
@@ -146,7 +146,7 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
                 backgroundColor: redColor,
                 flushbarStyle: FlushbarStyle.FLOATING,
                 duration: Duration(seconds: 3),
-              )..show(widget.scaffoldKey.currentState.context);
+              )..show(widget.scaffoldKey!.currentState!.context);
             }
                 : ()async {
               if(widget.add_wishlist_to_cart){

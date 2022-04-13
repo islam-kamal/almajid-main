@@ -1,11 +1,11 @@
 import 'package:almajidoud/utils/file_export.dart';
 
 class ComplainModel extends BaseMappable{
-  bool status;
-  int code;
-  String msg;
-  Data data;
-  Errors errors;
+  bool? status;
+  int? code;
+  String? msg;
+  Data? data;
+  Errors? errors;
   ComplainModel({this.status, this.code, this.msg, this.data,this.errors});
 
   ComplainModel.fromJson(Map<String, dynamic> json) {
@@ -21,10 +21,10 @@ class ComplainModel extends BaseMappable{
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     if (this.errors != null) {
-      data['errors'] = this.errors.toJson();
+      data['errors'] = this.errors!.toJson();
     }
     return data;
   }
@@ -36,7 +36,7 @@ class ComplainModel extends BaseMappable{
     msg = json['msg'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
     errors = json['errors'] != null ? new Errors.fromJson(json['errors']) : null;
-    if(status){
+    if(status!){
       return ComplainModel(status: status,msg: msg,code: code,data: data);
     }else{
       return ComplainModel(status: status,msg: msg,code: code,errors: errors);
@@ -111,7 +111,7 @@ class Data {
 }
 
 class Errors {
-  List<String> message;
+  List<String>? message;
 
   Errors({this.message});
 

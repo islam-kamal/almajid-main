@@ -1,11 +1,11 @@
 import 'package:almajidoud/Base/network-mappers.dart';
 
 class StcPayModel extends BaseMappable{
-bool status;
-String message;
-Result result;
-Parameters parameters;
-String trace;
+bool? status;
+String? message;
+Result? result;
+Parameters? parameters;
+String? trace;
 
 StcPayModel({this.status, this.message, this.result,this.parameters,this.trace});
 
@@ -25,10 +25,10 @@ Map<String, dynamic> toJson() {
   data['status'] = this.status;
   data['message'] = this.message;
   if (this.result != null) {
-    data['result'] = this.result.toJson();
+    data['result'] = this.result!.toJson();
   }
   if (this.parameters != null) {
-    data['parameters'] = this.parameters.toJson();
+    data['parameters'] = this.parameters!.toJson();
   }
   data['trace'] = this.trace;
   return data;
@@ -49,8 +49,8 @@ Map<String, dynamic> toJson() {
 }
 
 class Result {
-  String otpReference;
-  String paymentReference;
+  String? otpReference;
+  String? paymentReference;
 
   Result({this.otpReference, this.paymentReference});
 
@@ -68,8 +68,8 @@ class Result {
 }
 
 class Parameters {
-  String fieldName;
-  String fieldValue;
+  String? fieldName;
+  String? fieldValue;
 
   Parameters({this.fieldName, this.fieldValue});
 

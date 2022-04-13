@@ -20,7 +20,7 @@ class LocalNotificationService {
             ));
 
     _notificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (String route) async {
+        onSelectNotification: (String? route) async {
       if (route != null) {
         // Navigator.of(context).pushNamed(route);
         if (StaticData.vistor_value != "visitor") {
@@ -46,7 +46,7 @@ class LocalNotificationService {
           android: AndroidNotificationDetails(
             "easyapproach",
             "easyapproach channel",
-            'easyapproach description',
+            channelDescription: 'easyapproach description',
             importance: Importance.max,
             priority: Priority.high,
             ongoing: true,
@@ -57,8 +57,8 @@ class LocalNotificationService {
 
       await _notificationsPlugin.show(
         id,
-        message.notification.title,
-        message.notification.body,
+        message.notification!.title,
+        message.notification!.body,
         notificationDetails,
         payload: message.data["route"],
       );

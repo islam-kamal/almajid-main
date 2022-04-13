@@ -1,7 +1,7 @@
 import 'package:almajidoud/utils/file_export.dart';
 
 Widget no_data_widget(
-    {BuildContext context,
+    {BuildContext? context,
     var message = "No Products Yet !",
     var token_status,
     var image_status = false}) {
@@ -38,7 +38,7 @@ Widget no_data_widget(
         token_status == 'token_expire'
             ? InkWell(
                 onTap: () {
-                  customAnimatedPushNavigation(context, SignInScreen());
+                  customAnimatedPushNavigation(context!, SignInScreen());
                 },
                 child: Container(
                     width: width(context) * .8,

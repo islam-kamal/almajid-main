@@ -14,7 +14,7 @@ class _ShimmerChipState extends State<ShimmerChip> {
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
       baseColor: greyColor,
-      highlightColor: Colors.grey[350],
+      highlightColor: Colors.grey![350]!,
       child: ChipDesign(
         color: greyColor,
         label: '                  ',

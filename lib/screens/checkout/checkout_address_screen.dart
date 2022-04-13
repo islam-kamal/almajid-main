@@ -8,16 +8,12 @@ import 'package:almajidoud/Repository/ShippmentAdressRepo/shipment_address_repos
 import 'package:almajidoud/Widgets/customText.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/screens/checkout/checkout_payment_screen.dart';
-import 'package:almajidoud/screens/checkout/widgets/address_card.dart';
 import 'package:almajidoud/screens/checkout/widgets/checkout_header.dart';
-import 'package:almajidoud/screens/checkout/widgets/next_button.dart';
 import 'package:almajidoud/screens/checkout/widgets/page_title.dart';
 import 'package:almajidoud/screens/checkout/widgets/payment_tilte.dart';
 import 'package:almajidoud/screens/checkout/widgets/top_page_indicator.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/Bloc/ShippmentAddress_Bloc/shippment_address_bloc.dart';
-import 'package:almajidoud/screens/checkout/Shippment_Address/custom_saved_addresses_widget.dart';
-import 'package:almajidoud/screens/checkout/Shippment_Address/custom_cities_widget.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -49,8 +45,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
     });
   }
   List header_item = [translator.activeLanguageCode == 'ar'? 'اختيار المدينة' : 'Chosse City'];
-  List<Item> _data;
-  Future<List<CityModel>> cities_list;
+  List<Item>? _data;
+  Future<List<CityModel>>? cities_list;
 //--------------------------------------------------------------
 
   TextEditingController city_controller = TextEditingController();
@@ -62,18 +58,19 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   FocusNode fieldNode = FocusNode();
 
-  AnimationController _loginButtonController;
+  late AnimationController _loginButtonController;
   bool isLoading = false;
   bool edit_address_status = false;
   bool add_new_address_status = false;
 
   var frist_name,last_name,phone,street,Neighbourhood, addres_city_name,address_city_id;
 
-  Future<List<AddressModel>> all_addresses;
+  Future<List<AddressModel>>? all_addresses;
   @override
   void initState() {
-    StaticData.vistor_value == 'visitor' ? null :  all_addresses = shipmentAddressRepository.get_all_saved_addresses(context: context);
-    cities_list= countriesRepository.get_cities(context: context);
+    StaticData.vistor_value == 'visitor' ? null :
+    all_addresses = shipmentAddressRepository.get_all_saved_addresses(context: context) as Future<List<AddressModel>>?;
+    cities_list= countriesRepository.get_cities(context: context) as Future<List<CityModel>>?;
     get_frist_city();
     _data = generateItems(1);
 
@@ -86,7 +83,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   }
 
   void get_frist_city()async{
-    await cities_list.then((value){
+    await cities_list!.then((value){
       _currentIndex=  value[1].value;
 
     });
@@ -177,7 +174,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                           backgroundColor: redColor,
                           flushbarStyle: FlushbarStyle.FLOATING,
                           duration: Duration(seconds: 6),
-                        )..show(_drawerKey.currentState.context);
+                        )..show(_drawerKey.currentState!.context);
                       }else{
                         if(StaticData.vistor_value != 'visitor'){
                           var data = state.model as AddressModel;
@@ -208,7 +205,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                             backgroundColor: redColor,
                             flushbarStyle: FlushbarStyle.FLOATING,
                             duration: Duration(seconds: 6),
-                          )..show(_drawerKey.currentState.context);
+                          )..show(_drawerKey.currentState!.context);
                         }else{
                           var data = state.model as GuestShipmentAddressModel;
                           Flushbar(
@@ -238,7 +235,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                             backgroundColor: redColor,
                             flushbarStyle: FlushbarStyle.FLOATING,
                             duration: Duration(seconds: 6),
-                          )..show(_drawerKey.currentState.context);
+                          )..show(_drawerKey.currentState!.context);
                         }
                       }
 
@@ -252,8 +249,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                      frist_name = data.firstname;
                      last_name = data.lastname;
                      phone = data.telephone;
-                     street = data.street[0];
-                     addres_city_name = data.region.region;
+                     street = data.street![0];
+                     addres_city_name = data.region!.region;
                      address_city_id = data.regionId;
                      Neighbourhood = data.city;
                      shipmentAddressBloc.frist_name_controller.value = frist_name;
@@ -271,7 +268,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                           setState(() {
                             add_new_address_status = false;
                           });
-                        });
+                        }) as Future<List<AddressModel>>?;
 
                       }
                       else if (state.indicator == 'EditClientAdressEvent'){
@@ -280,7 +277,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                           setState(() {
                             edit_address_status = false;
                           });
-                        });
+                        }) as Future<List<AddressModel>>?;
 
                       }
                       else {
@@ -494,11 +491,11 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
         child: ExpansionPanelList(
           expansionCallback: (int index, bool isExpanded) {
             setState(() {
-              _data[index].isExpanded = !isExpanded;
+              _data![index].isExpanded = !isExpanded;
               city_search_field_Status = !city_search_field_Status;
             });
           },
-          children: _data.map<ExpansionPanel>((Item item) {
+          children: _data!.map<ExpansionPanel>((Item item) {
             return ExpansionPanel(
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
@@ -537,41 +534,41 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
-                          if (snapshot.data.length != 0) {
+                          if (snapshot.data!.length != 0) {
                             return  ListView.builder(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
-                              itemCount: snapshot.data.length,
+                              itemCount: snapshot.data!.length,
                               itemBuilder: (BuildContext context, int index) {
 
                                 if(index ==0){
                                   return Container();
                                 }
                                 if(MyApp.app_langauge == 'ar'){
-                                  return snapshot.data[index].label.toLowerCase().contains(city_search_text) ?
+                                  return snapshot.data![index].label!.toLowerCase().contains(city_search_text) ?
                                   Directionality(
                                     textDirection: MyApp.app_langauge == 'ar'? TextDirection.rtl :  TextDirection.ltr,
                                     child: Container(
                                         padding: EdgeInsets.only(right: 10, left: 10),
                                         child: Column(
                                           children: <Widget>[
-                                            RadioListTile(
+                                            RadioListTile<String?>(
                                               groupValue:  _currentIndex,
                                               title: Text(
-                                                "${translator.activeLanguageCode == 'ar'? snapshot.data[index].label :snapshot.data[index].title}",
+                                                "${translator.activeLanguageCode == 'ar'? snapshot.data![index].label :snapshot.data![index].title}",
                                                 textDirection: MyApp.app_langauge == 'ar'? TextDirection.rtl :  TextDirection.ltr,
                                               ),
-                                              value: snapshot.data[index].value,
+                                              value: snapshot.data![index].value,
                                               onChanged: (val) {
 
                                                 _currentIndex = val;
-                                                city_id = snapshot.data[index].value;
-                                                addres_city_name  = translator.activeLanguageCode == 'ar'? snapshot.data[index].label
-                                                    : snapshot.data[index].title;
-                                                address_city_id = snapshot.data[index].value.toString();
-                                                sharedPreferenceManager.writeData(CachingKey.REGION_ID, snapshot.data[index].value.toString());
-                                                sharedPreferenceManager.writeData(CachingKey.REGION_EN,  snapshot.data[index].title);
-                                                sharedPreferenceManager.writeData(CachingKey.REGION_AR,  snapshot.data[index].label);
+                                                city_id = snapshot.data![index].value;
+                                                addres_city_name  = translator.activeLanguageCode == 'ar'? snapshot.data![index].label
+                                                    : snapshot.data![index].title;
+                                                address_city_id = snapshot.data![index].value.toString();
+                                                sharedPreferenceManager.writeData(CachingKey.REGION_ID, snapshot.data![index].value.toString());
+                                                sharedPreferenceManager.writeData(CachingKey.REGION_EN,  snapshot.data![index].title);
+                                                sharedPreferenceManager.writeData(CachingKey.REGION_AR,  snapshot.data![index].label);
 
                                                 item.isExpanded = false;
                                                 city_search_field_Status = true;
@@ -579,8 +576,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                                                 city_search_text = '';
 
 
-                                                header_item.add( translator.activeLanguageCode == 'ar'? snapshot.data[index].label
-                                                    :  snapshot.data[index].title);
+                                                header_item.add( translator.activeLanguageCode == 'ar'? snapshot.data![index].label
+                                                    :  snapshot.data![index].title);
                                                 setState(() {
                                                   item.headerValue =
                                                       header_item.last;
@@ -595,7 +592,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                                   ) : Container();
                                 }
                                 else{
-                                  return snapshot.data[index].title.toLowerCase().contains(city_search_text) ?
+                                  return snapshot.data![index].title!.toLowerCase().contains(city_search_text) ?
                                   Directionality(
                                     textDirection: MyApp.app_langauge == 'ar'? TextDirection.rtl :  TextDirection.ltr,
                                     child:Container(
@@ -603,31 +600,31 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                                             right: 10, left: 10),
                                         child: Column(
                                           children: <Widget>[
-                                            RadioListTile(
+                                            RadioListTile<String?>(
                                               groupValue:  _currentIndex,
                                               title: Text(
-                                                "${translator.activeLanguageCode == 'ar'? snapshot.data[index].label :snapshot.data[index].title}",
+                                                "${translator.activeLanguageCode == 'ar'? snapshot.data![index].label :snapshot.data![index].title}",
                                                 textDirection:MyApp.app_langauge == 'ar'? TextDirection.rtl :  TextDirection.ltr,
                                               ),
-                                              value: snapshot.data[index].value,
+                                              value: snapshot.data![index].value,
                                               onChanged: (val) {
 
                                                 _currentIndex = val;
-                                                city_id = snapshot.data[index].value;
-                                                addres_city_name  = translator.activeLanguageCode == 'ar'? snapshot.data[index].label
-                                                    : snapshot.data[index].title;
-                                                address_city_id = snapshot.data[index].value.toString();
-                                                sharedPreferenceManager.writeData(CachingKey.REGION_ID, snapshot.data[index].value.toString());
-                                                sharedPreferenceManager.writeData(CachingKey.REGION_EN,  snapshot.data[index].title);
-                                                sharedPreferenceManager.writeData(CachingKey.REGION_AR,  snapshot.data[index].label);
+                                                city_id = snapshot.data![index].value;
+                                                addres_city_name  = translator.activeLanguageCode == 'ar'? snapshot.data![index].label
+                                                    : snapshot.data![index].title;
+                                                address_city_id = snapshot.data![index].value.toString();
+                                                sharedPreferenceManager.writeData(CachingKey.REGION_ID, snapshot.data![index].value.toString());
+                                                sharedPreferenceManager.writeData(CachingKey.REGION_EN,  snapshot.data![index].title);
+                                                sharedPreferenceManager.writeData(CachingKey.REGION_AR,  snapshot.data![index].label);
 
                                                 item.isExpanded = false;
                                                 city_search_field_Status = true;
                                                 city_controller.clear();
                                                 city_search_text = '';
 
-                                                header_item.add( translator.activeLanguageCode == 'ar'? snapshot.data[index].label
-                                                    :  snapshot.data[index].title);
+                                                header_item.add( translator.activeLanguageCode == 'ar'? snapshot.data![index].label
+                                                    :  snapshot.data![index].title);
                                                 setState(() {
                                                   item.headerValue =
                                                       header_item.last;
@@ -664,14 +661,14 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                       );
                     },
                   )),
-              isExpanded: item.isExpanded,
+              isExpanded: item.isExpanded!,
             );
           }).toList(),
         )   ));
   }
 
 
-  frist_name_addressTextFields({BuildContext context, String hint , var initialValue}) {
+  frist_name_addressTextFields({BuildContext? context, String? hint , var initialValue}) {
     return StreamBuilder<String>(
       stream: shipmentAddressBloc.frist_name,
       builder: (context, snapshot) {
@@ -707,7 +704,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3),
                   borderSide: BorderSide(color: greyColor)),
-              errorText: snapshot.error,
+              errorText: snapshot.error.toString(),
 
             ),
             validator: StaticData.chossed_address_id != null ? null :(value) {
@@ -723,7 +720,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
     );
   }
 
-  last_name_addressTextFields({BuildContext context, String hint,var initialValue}) {
+  last_name_addressTextFields({BuildContext? context, String? hint,var initialValue}) {
     return StreamBuilder<String>(
       stream: shipmentAddressBloc.last_name,
       builder: (context, snapshot) {
@@ -759,7 +756,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3),
                   borderSide: BorderSide(color: greyColor)),
-              errorText: snapshot.error,
+              errorText: snapshot.error.toString(),
 
             ),
             validator: StaticData.chossed_address_id != null ? null :(value) {
@@ -775,7 +772,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
     );
   }
 
-  email_addressTextFields({BuildContext context, String hint}) {
+  email_addressTextFields({BuildContext? context, String? hint}) {
     return StreamBuilder<String>(
       stream: shipmentAddressBloc.email,
       builder: (context, snapshot) {
@@ -811,14 +808,14 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3),
                   borderSide: BorderSide(color: greyColor)),
-              errorText: snapshot.error,
+              errorText: snapshot.error.toString(),
 
             ),
             validator: StaticData.chossed_address_id != null ? null :(value) {
-        Pattern pattern =
+        var pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
         RegExp regex = new RegExp(pattern);
-              if (!regex.hasMatch(value)) {
+              if (!regex.hasMatch(value!)) {
                 return '${translator.translate("Please enter")} ${translator.translate("Email")}';
               }
               return null;
@@ -830,7 +827,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
     );
   }
 
-  phone_addressTextFields({BuildContext context, String hint,var initialValue}) {
+  phone_addressTextFields({BuildContext? context, String? hint,var initialValue}) {
     String _countryCode  = MyApp.app_location == 'sa' ?"+966" : MyApp.app_location == 'kw' ? "+965" : "+971";
     return Form(
       key: _mobile_formKey,
@@ -874,7 +871,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
     );
   }
 
-  street_addressTextFields({BuildContext context, String hint,var initialValue}) {
+  street_addressTextFields({BuildContext? context, String? hint,var initialValue}) {
     return StreamBuilder<String>(
       stream: shipmentAddressBloc.street,
       builder: (context, snapshot) {
@@ -911,7 +908,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3),
                   borderSide: BorderSide(color: greyColor)),
-              errorText: snapshot.error,
+              errorText: snapshot.error.toString(),
 
             ),
             validator:StaticData.chossed_address_id != null ? null : (value) {
@@ -928,7 +925,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   }
 
 
-  Neighbourhood_addressTextFields({BuildContext context, String hint,var initialValue}) {
+  Neighbourhood_addressTextFields({BuildContext? context, String? hint,var initialValue}) {
     return StreamBuilder<String>(
       stream: shipmentAddressBloc.Neighbourhood,
       builder: (context, snapshot) {
@@ -965,7 +962,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3),
                   borderSide: BorderSide(color: greyColor)),
-              errorText: snapshot.error,
+              errorText: snapshot.error.toString(),
 
             ),
             validator:StaticData.chossed_address_id != null ? null : (value) {
@@ -982,12 +979,12 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   }
 
 
-  addressNextButton({BuildContext context}) {
+  addressNextButton({BuildContext? context}) {
     return StaggerAnimation(
       titleButton: add_new_address_status ?translator.translate( "Save")
           : edit_address_status ? translator.translate( "Update" )
           : translator.translate("Next"),
-      buttonController: _loginButtonController.view,
+      buttonController: _loginButtonController,
       btn_width: width(context) ,
       checkout_color: true,
         product_details_page :true,
@@ -1008,8 +1005,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
         }
         else {
           //used when edit address
-          if (_formKey.currentState.validate() ) {
-            if(_mobile_formKey.currentState.validate()){
+          if (_formKey.currentState!.validate() ) {
+            if(_mobile_formKey.currentState!.validate()){
               if(addres_city_name == null){
                 errorDialog(
                     context: context,
@@ -1048,13 +1045,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
 
           }
-  /*      else if(shipmentAddressBloc.phone.length != 9){
-            errorDialog(
-              context: context,
-              text:translator.translate("Please enter a correct phone number"),
-            );
 
-          }*/
           else if(frist_name != null  ){
             //use this to show address in CheckoutSummaryScreen
             StaticData.order_address = addres_city_name + " , "
@@ -1170,9 +1161,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
-            if (snapshot.data.length != 0) {
+            if (snapshot.data!.length != 0) {
               return listViewOfAdressesCards(
-                data: snapshot.data
+                data: snapshot.data!
               );
             } else {
               return Container(
@@ -1199,7 +1190,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
     );
   }
 
-  Widget listViewOfAdressesCards({List<AddressModel> data}) {
+  Widget listViewOfAdressesCards({List<AddressModel>? data}) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -1207,7 +1198,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
         child: ListView.builder(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            itemCount: data.length,
+            itemCount: data!.length,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
                 padding: EdgeInsets.all(width * 0.02),
@@ -1220,7 +1211,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   }
 
 
-  Widget singleAddressCard({AddressModel cardModel, int index}) {
+  Widget singleAddressCard({AddressModel? cardModel, int? index}) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -1243,7 +1234,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                 child: InkWell(
               onTap: () {
                 setState(() {
-                  selected_address_id = cardModel.id;
+                  selected_address_id = cardModel!.id;
                   StaticData.chossed_address_id = cardModel.id;
 
                   selected_address_status = ! selected_address_status;
@@ -1251,8 +1242,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     frist_name = cardModel.firstname;
                     last_name = cardModel.lastname;
                     phone = cardModel.telephone;
-                    street = cardModel.street[0];
-                    addres_city_name = cardModel.region.region;
+                    street = cardModel.street![0];
+                    addres_city_name = cardModel.region!.region;
                     address_city_id = cardModel.regionId;
                     Neighbourhood = cardModel.city;
                     shipmentAddressBloc.frist_name_controller.value = frist_name;
@@ -1261,8 +1252,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                     shipmentAddressBloc.street_controller.value = street;
                     shipmentAddressBloc.Neighbourhood_controller.value = Neighbourhood;
                     sharedPreferenceManager.writeData(CachingKey.REGION_ID, cardModel.regionId.toString());
-                    sharedPreferenceManager.writeData(CachingKey.REGION_EN,  cardModel.region.region);
-                    sharedPreferenceManager.writeData(CachingKey.REGION_AR,  cardModel.region.region);
+                    sharedPreferenceManager.writeData(CachingKey.REGION_EN,  cardModel.region!.region);
+                    sharedPreferenceManager.writeData(CachingKey.REGION_AR,  cardModel.region!.region);
 
                   });
                 });
@@ -1285,7 +1276,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                 context: context,
                 textColor: mainColor,
                 maxLines: 2,
-                text: "${cardModel.firstname} ${cardModel.lastname}",
+                text: "${cardModel!.firstname} ${cardModel!.lastname}",
               ),
               alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
             ),
@@ -1309,7 +1300,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                       context: context,
                       textColor: mainColor,
                       maxLines: 2,
-                      text: "${cardModel.street[0]} , ${cardModel.region.region}" ,
+                      text: "${cardModel.street![0]} , ${cardModel.region!.region}" ,
 
                     ),
                     alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
@@ -1362,7 +1353,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   }
 
 
-  Widget positionedRemoveAddress({int addressId}) {
+  Widget positionedRemoveAddress({int? addressId}) {
     return Directionality(
         textDirection:
         translator.activeLanguageCode == 'ar'
@@ -1398,13 +1389,13 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
     final response = await shipmentAddressRepository.delete_address(
       address_id: address_id,
     );
-    if (response) {
+    if (response!) {
       all_addresses = shipmentAddressRepository.get_all_saved_addresses(
           context: context).whenComplete((){
         setState(() {
           delete_address_status = false;
         });
-      });
+      }) as Future<List<AddressModel>>?;
     } else {
     }
   }
@@ -1417,9 +1408,9 @@ class Item {
     this.isExpanded = false,
   });
 
-  String expandedValue;
-  String headerValue;
-  bool isExpanded;
+  String? expandedValue;
+  String? headerValue;
+  bool? isExpanded;
 }
 
 

@@ -6,23 +6,23 @@ import 'package:almajidoud/Model/ProductModel/product_model.dart'
 as product_model;
 
 class StaticData {
-  static List<Map> wishlist_items;
-  static List<Map> product_images_list;
+  static List<Map>? wishlist_items;
+  static List<Map>? product_images_list;
   static List<Map> product_images_map  = [];
   static String country_code ='+966';
-  static String vistor_value;
+  static String? vistor_value;
   static String user_token = '';
-  static int product_id ;
+  static int? product_id ;
   static String order_status = 'accepted';
   static int home_category_index = 0;
   static var user_mobile_number = '';
-  static int saved_addresses_count;
+  static int? saved_addresses_count;
   static bool chosse_address_status = false;
   static String order_address = '';
   static String order_payment_refused_reason = '';
-  static String discount_amount;
-  static int selectedIndex = 0;
-  static int chossed_address_id;
+  static String? discount_amount;
+  static int? selectedIndex = 0;
+  static int? chossed_address_id;
 
 
   //order payment
@@ -34,7 +34,7 @@ class StaticData {
 //reviews
   static var review_product_sku;
   static int product_qty = 1;
- static Future<List<AddressModel>> saved_addresses;
+ static Future<List<AddressModel>>? saved_addresses;
 
 
 
@@ -44,7 +44,7 @@ class StaticData {
   static  var data ;
   static bool apple_pay_activation = false;
 
-  static Map<String,dynamic> staticBanner;
+  static Map<String,dynamic>? staticBanner;
 
   static  bool isCurrentDateInRange(DateTime startDate, DateTime endDate) {
     final currentDate = DateTime.now();
@@ -69,7 +69,7 @@ class StaticData {
 
   static int TOTAL_AMOUNT = 0;
   static int CART_ITEMS_NUMBER = 0;
-  static List CART_IDS;
+  static List? CART_IDS;
   static List<ProductModel> cartProductList = [];
   static shoppingCart(ProductModel cartProductDetailsHelper) {
     cartProductList.add(cartProductDetailsHelper);

@@ -12,11 +12,11 @@ class AuthenticationRepository {
       SharedPreferenceManager();
 
   static Future<AuthenticationModel> signUp(
-      {String mobile,
-      String firstname,
-      String email,
-      String password,
-      String lastname}) async {
+      {String? mobile,
+      String? firstname,
+      String? email,
+      String? password,
+      String? lastname}) async {
     FormData formData = FormData.fromMap({
       "mobile": mobile,
       "password": password,
@@ -31,8 +31,8 @@ class AuthenticationRepository {
         body: formData);
   }
 
-  static Future<String> signIn(
-      {BuildContext context, String email, String password}) async {
+  static Future<String?> signIn(
+      {BuildContext? context, String? email, String? password}) async {
     Dio dio = new Dio();
     try {
       final response = await dio.post(
@@ -43,19 +43,19 @@ class AuthenticationRepository {
       if (response.statusCode == 200) {
         return StaticData.user_token = response.data;
       } else {
-        return null;
+        return null!;
       }
     } catch (e) {
     }
   }
 
-  static Future<UserInfoModel> get_user_info({String token}) {
+  static Future<UserInfoModel> get_user_info({String? token}) {
     return NetworkUtil.internal().get(UserInfoModel(),
         "/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/customers/me",
         headers: Map<String, String>.from({
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'Bearer ${token}'
+          'Authorization': 'Bearer ${token!}'
         }));
   }
 
@@ -132,11 +132,11 @@ class AuthenticationRepository {
   }
 
   static Future<bool> updateUserProfile(
-      {String firstName,
-      String lastName,
-      String email,
-      String phone,
-      String token}) async {
+      {String? firstName,
+      String? lastName,
+      String? email,
+      String? phone,
+      String? token}) async {
     final payload = convert.jsonEncode({
       "customer": {
         "email": email,
@@ -166,8 +166,8 @@ class AuthenticationRepository {
   }
 
   static Future<bool> updateDeviceToken({
-    int customerId,
-    String deviceToken,
+    int? customerId,
+    String? deviceToken,
   }) async {
     final payload =
         convert.jsonEncode({"customerId": customerId, "token": deviceToken});

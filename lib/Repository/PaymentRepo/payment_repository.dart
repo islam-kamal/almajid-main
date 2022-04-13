@@ -16,7 +16,7 @@ class PaymentRepository {
   static SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();
   Dio dio = new Dio();
 
-  Future<StcPayModel> stc_pay_genertate_otp({BuildContext context , var phone_number}) async {
+  Future<StcPayModel?> stc_pay_genertate_otp({BuildContext? context , var phone_number}) async {
 
     Map<String, String> headers = StaticData.vistor_value == 'visitor'? {
       'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ class PaymentRepository {
     }
   }
 
-  Future<http.Response> stc_pay_validate_otp({BuildContext context , var phone_number , var otpReference , var otp ,
+  Future<http.Response?> stc_pay_validate_otp({BuildContext? context , var phone_number , var otpReference , var otp ,
     var paymentReference}) async {
     Map<String, String> headers = StaticData.vistor_value == 'visitor'? {
       'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ class PaymentRepository {
         return response;
 
       } else {
-        Navigator.pop(context);
+        Navigator.pop(context!);
         errorDialog(context: context, text: response.body);
       }
     } catch (e) {

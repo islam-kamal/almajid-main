@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-cartTopSlider({BuildContext context}) {
+cartTopSlider({BuildContext? context}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [

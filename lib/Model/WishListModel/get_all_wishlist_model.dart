@@ -5,9 +5,9 @@ class GetAllWishListModel extends BaseMappable{
   var customerId;
   var sharingCode;
   var itemsCount;
-  List<Items> items;
+  List<Items>? items;
   var message;
-  Parameters parameters;
+  Parameters? parameters;
   GetAllWishListModel(
       {this.customerId, this.sharingCode, this.itemsCount, this.items,this.message, this.parameters});
 
@@ -16,9 +16,9 @@ class GetAllWishListModel extends BaseMappable{
     sharingCode = json['sharing_code'];
     itemsCount = json['items_count'];
     if (json['items'] != null) {
-      items = new List<Items>();
+      items = [];
       json['items'].forEach((v) {
-        items.add(new Items.fromJson(v));
+        items!.add(new Items.fromJson(v));
       });
     }
   }
@@ -29,7 +29,7 @@ class GetAllWishListModel extends BaseMappable{
     data['sharing_code'] = this.sharingCode;
     data['items_count'] = this.itemsCount;
     if (this.items != null) {
-      data['items'] = this.items.map((v) => v.toJson()).toList();
+      data['items'] = this.items!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -40,9 +40,9 @@ class GetAllWishListModel extends BaseMappable{
     sharingCode = json['sharing_code'];
     itemsCount = json['items_count'];
     if (json['items'] != null) {
-      items = new List<Items>();
+      items = [];
       json['items'].forEach((v) {
-        items.add(new Items.fromJson(v));
+        items!.add(new Items.fromJson(v));
       });
     }
     message = json['message'];
@@ -57,7 +57,7 @@ class GetAllWishListModel extends BaseMappable{
 class Items {
   var id;
   var qty;
-  Product product;
+  Product? product;
 
   Items({this.id, this.qty, this.product});
 
@@ -73,7 +73,7 @@ class Items {
     data['id'] = this.id;
     data['qty'] = this.qty;
     if (this.product != null) {
-      data['product'] = this.product.toJson();
+      data['product'] = this.product!.toJson();
     }
     return data;
   }
@@ -105,9 +105,9 @@ class Product {
   var typeId;
   var createdAt;
   var updatedAt;
-  List<ProductLinks> productLinks;
-  List<TierPrices> tierPrices;
-  List<CustomAttributes> customAttributes;
+  List<ProductLinks>? productLinks;
+  List<TierPrices>? tierPrices;
+  List<CustomAttributes>? customAttributes;
 
   Product(
       {this.id,
@@ -136,21 +136,21 @@ class Product {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     if (json['product_links'] != null) {
-      productLinks = new List<ProductLinks>();
+      productLinks = [];
       json['product_links'].forEach((v) {
-        productLinks.add(new ProductLinks.fromJson(v));
+        productLinks!.add(new ProductLinks.fromJson(v));
       });
     }
     if (json['tier_prices'] != null) {
-      tierPrices = new List<Null>();
+      tierPrices = [];
       json['tier_prices'].forEach((v) {
-        tierPrices.add(new TierPrices.fromJson(v));
+        tierPrices!.add(new TierPrices.fromJson(v));
       });
     }
     if (json['custom_attributes'] != null) {
-      customAttributes = new List<CustomAttributes>();
+      customAttributes = [];
       json['custom_attributes'].forEach((v) {
-        customAttributes.add(new CustomAttributes.fromJson(v));
+        customAttributes!.add(new CustomAttributes.fromJson(v));
       });
     }
   }
@@ -168,14 +168,14 @@ class Product {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     if (this.productLinks != null) {
-      data['product_links'] = this.productLinks.map((v) => v.toJson()).toList();
+      data['product_links'] = this.productLinks!.map((v) => v.toJson()).toList();
     }
     if (this.tierPrices != null) {
-      data['tier_prices'] = this.tierPrices.map((v) => v.toJson()).toList();
+      data['tier_prices'] = this.tierPrices!.map((v) => v.toJson()).toList();
     }
     if (this.customAttributes != null) {
       data['custom_attributes'] =
-          this.customAttributes.map((v) => v.toJson()).toList();
+          this.customAttributes!.map((v) => v.toJson()).toList();
     }
     return data;
   }

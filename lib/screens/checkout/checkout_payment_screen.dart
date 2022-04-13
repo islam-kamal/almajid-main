@@ -9,7 +9,6 @@ import 'package:almajidoud/screens/checkout/widgets/page_title.dart';
 import 'package:almajidoud/screens/checkout/widgets/payment_method_card.dart';
 import 'package:almajidoud/screens/checkout/widgets/payment_text_field.dart';
 import 'package:almajidoud/screens/checkout/widgets/payment_tilte.dart';
-import 'package:almajidoud/screens/checkout/widgets/save_card_details.dart';
 import 'package:almajidoud/screens/checkout/widgets/top_page_indicator.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
@@ -17,7 +16,7 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'dart:io' show Platform;
 
 class CheckoutPaymentScreen extends StatefulWidget {
-  GuestShipmentAddressModel guestShipmentAddressModel;
+  GuestShipmentAddressModel? guestShipmentAddressModel;
   CheckoutPaymentScreen({this.guestShipmentAddressModel});
   @override
   State<StatefulWidget> createState() {
@@ -39,21 +38,22 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
   bool useGlassMorphism = false;
   bool useBackgroundImage = false;
   var payment_method_name;
-  OutlineInputBorder border;
+  OutlineInputBorder? border;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   var toRemove_apple_pay = [];
   @override
   void initState() {
-    widget.guestShipmentAddressModel.paymentMethods.forEach((element) {
+    widget.guestShipmentAddressModel!.paymentMethods?.forEach((element) {
       if(element.code == "cashondelivery"){
         _currentIndex = element.code;
         sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, _currentIndex);
         payment_method_name = element.title;
       }  else if(!StaticData.apple_pay_activation && element.code == "mestores_applepay" ){
+        print("1");
         toRemove_apple_pay.add(element);
       }
     });
-    widget.guestShipmentAddressModel.paymentMethods.removeWhere((e) => toRemove_apple_pay.contains(e));
+    widget.guestShipmentAddressModel!.paymentMethods?.removeWhere((e) => toRemove_apple_pay.contains(e));
 
     /*_currentIndex = widget.guestShipmentAddressModel.paymentMethods[0].code;
     sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, _currentIndex);
@@ -255,7 +255,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                                 : paymentMethodCard(
                                     context: context,
                                     paymentMethods: widget
-                                        .guestShipmentAddressModel
+                                        .guestShipmentAddressModel!
                                         .paymentMethods)),
 
                     Expanded(
@@ -277,13 +277,13 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                                   context,
                                   CheckoutSummaryScreen(
                                     guestShipmentAddressModel:
-                                    widget.guestShipmentAddressModel,
+                                    widget.guestShipmentAddressModel!,
                                     payment_method: payment_method_name,
                                   ));
                             }
                           
                           } else {
-                            if (formKey.currentState.validate()) {
+                            if (formKey.currentState!.validate()) {
                               StaticData.card_number = cardNumber.replaceAll(' ', '');
                               StaticData.card_holder_name = cardHolderName;
                               StaticData.card_security_code = cvvCode;
@@ -296,7 +296,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                                   context,
                                   CheckoutSummaryScreen(
                                     guestShipmentAddressModel:
-                                        widget.guestShipmentAddressModel,
+                                        widget.guestShipmentAddressModel!,
                                     payment_method: payment_method_name,
                                   )
                               );
@@ -324,15 +324,15 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
     );
   }
 
-  paymentMethodCard({BuildContext context, List<PaymentMethods> paymentMethods}) {
+  paymentMethodCard({BuildContext? context, List<PaymentMethods>? paymentMethods}) {
     var toRemove = [];
     var image;
-    paymentMethods.forEach((element) {
+    paymentMethods!.forEach((element) {
       if (element.code == "aps_fort_vault") {
         toRemove.add(element);
       }
 
-      if (widget.guestShipmentAddressModel.totals.grandTotal < 99) {
+      if (widget.guestShipmentAddressModel!.totals?.grandTotal < 99) {
         if (element.code == "tamara_pay_by_instalments" ||
             element.code == "tamara_pay_later") {
           toRemove.add(element);
@@ -384,7 +384,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                     unselectedWidgetColor: mainColor,
                     disabledColor: mainColor,
                   ),
-                  child: RadioListTile(
+                  child: RadioListTile<String>(
                     groupValue: _currentIndex,
                     contentPadding: const EdgeInsets.all(5.0),
                     dense: true,

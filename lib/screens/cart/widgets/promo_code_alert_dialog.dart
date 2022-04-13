@@ -3,10 +3,10 @@ import 'package:almajidoud/custom_widgets/responsive_sized_box.dart';
 import 'package:almajidoud/custom_widgets/custom_description_text.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-Future promoCodeAlertDialog({BuildContext base_context , GlobalKey<ScaffoldState> scafffoldKey}) {
+Future promoCodeAlertDialog({BuildContext? base_context , GlobalKey<ScaffoldState>? scafffoldKey}) {
   TextEditingController controller = new TextEditingController();
   return showDialog<void>(
-    context: base_context,
+    context: base_context!,
     builder: (BuildContext context) {
       return AlertDialog(
         contentPadding: EdgeInsets.zero,
@@ -109,7 +109,7 @@ Future promoCodeAlertDialog({BuildContext base_context , GlobalKey<ScaffoldState
     },
   );
 }
-dotsRow({BuildContext context}){
+dotsRow({BuildContext? context}){
   return Container(width: width(context),child: Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -146,7 +146,7 @@ dotsRow({BuildContext context}){
     )
   ],),) ;
 }
-singleDot({BuildContext context}){
+singleDot({BuildContext? context}){
   return Container(color: mainColor,height: 3,width: 4
   );
 }

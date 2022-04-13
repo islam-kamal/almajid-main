@@ -4,7 +4,7 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 class NetworkIndicatorWithoutImage extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
   const NetworkIndicatorWithoutImage({this.child});
   @override
   _NetworkIndicatorWithoutImageState createState() => _NetworkIndicatorWithoutImageState();
@@ -43,4 +43,4 @@ class _NetworkIndicatorWithoutImageState extends State<NetworkIndicatorWithoutIm
         } else {
           return child;
         }
-      }, builder: (BuildContext context) {return widget.child;},);}}
+      }, builder: (BuildContext context) {return widget.child!;},);}}

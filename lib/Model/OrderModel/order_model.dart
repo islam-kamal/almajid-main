@@ -1,17 +1,17 @@
 import 'package:almajidoud/Base/network-mappers.dart';
 
 class AllOrdersModel extends BaseMappable{
-  List<OrderItems> items;
-  SearchCriteria searchCriteria;
+  List<OrderItems>? items;
+  SearchCriteria? searchCriteria;
   var totalCount;
   var message;
   AllOrdersModel({this.items, this.searchCriteria, this.totalCount,this.message});
 
   AllOrdersModel.fromJson(Map<String, dynamic> json) {
     if (json['items'] != null) {
-      items = new List<OrderItems>();
+      items = [];
       json['items'].forEach((v) {
-        items.add(new OrderItems.fromJson(v));
+        items!.add(new OrderItems.fromJson(v));
       });
     }
     searchCriteria = json['search_criteria'] != null
@@ -24,10 +24,10 @@ class AllOrdersModel extends BaseMappable{
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.items != null) {
-      data['items'] = this.items.map((v) => v.toJson()).toList();
+      data['items'] = this.items!.map((v) => v.toJson()).toList();
     }
     if (this.searchCriteria != null) {
-      data['search_criteria'] = this.searchCriteria.toJson();
+      data['search_criteria'] = this.searchCriteria!.toJson();
     }
     data['total_count'] = this.totalCount;
     data['message'] = this.message;
@@ -37,9 +37,9 @@ class AllOrdersModel extends BaseMappable{
   @override
   Mappable fromJson(Map<String, dynamic> json) {
     if (json['items'] != null) {
-      items = new List<OrderItems>();
+      items = [];
       json['items'].forEach((v) {
-        items.add(new OrderItems.fromJson(v));
+        items!.add(new OrderItems.fromJson(v));
       });
     }
     searchCriteria = json['search_criteria'] != null
@@ -109,11 +109,11 @@ class OrderItems {
   var updatedAt;
   var weight;
   var xForwardedFor;
-  List<Items> items;
-  BillingAddress billingAddress;
-  Payment payment;
-  List<StatusHistories> statusHistories;
-  ExtensionAttributes extensionAttributes;
+  List<Items>? items;
+  BillingAddress? billingAddress;
+  Payment? payment;
+  List<StatusHistories>? statusHistories;
+  ExtensionAttributes? extensionAttributes;
 
   OrderItems(
       {this.baseCurrencyCode,
@@ -241,9 +241,9 @@ class OrderItems {
     weight = json['weight'];
     xForwardedFor = json['x_forwarded_for'];
     if (json['items'] != null) {
-      items = new List<Items>();
+      items = [];
       json['items'].forEach((v) {
-        items.add(new Items.fromJson(v));
+        items!.add(new Items.fromJson(v));
       });
     }
     billingAddress = json['billing_address'] != null
@@ -252,9 +252,9 @@ class OrderItems {
     payment =
     json['payment'] != null ? new Payment.fromJson(json['payment']) : null;
     if (json['status_histories'] != null) {
-      statusHistories = new List<StatusHistories>();
+      statusHistories = [];
       json['status_histories'].forEach((v) {
-        statusHistories.add(new StatusHistories.fromJson(v));
+        statusHistories!.add(new StatusHistories.fromJson(v));
       });
     }
     extensionAttributes = json['extension_attributes'] != null
@@ -326,20 +326,20 @@ class OrderItems {
     data['weight'] = this.weight;
     data['x_forwarded_for'] = this.xForwardedFor;
     if (this.items != null) {
-      data['items'] = this.items.map((v) => v.toJson()).toList();
+      data['items'] = this.items!.map((v) => v.toJson()).toList();
     }
     if (this.billingAddress != null) {
-      data['billing_address'] = this.billingAddress.toJson();
+      data['billing_address'] = this.billingAddress!.toJson();
     }
     if (this.payment != null) {
-      data['payment'] = this.payment.toJson();
+      data['payment'] = this.payment!.toJson();
     }
     if (this.statusHistories != null) {
       data['status_histories'] =
-          this.statusHistories.map((v) => v.toJson()).toList();
+          this.statusHistories!.map((v) => v.toJson()).toList();
     }
     if (this.extensionAttributes != null) {
-      data['extension_attributes'] = this.extensionAttributes.toJson();
+      data['extension_attributes'] = this.extensionAttributes!.toJson();
     }
     return data;
   }
@@ -565,7 +565,7 @@ class BillingAddress {
   var region;
   var regionCode;
   var regionId;
-  List<String> street;
+  List<String>? street;
   var telephone;
 
   BillingAddress(
@@ -623,7 +623,7 @@ class BillingAddress {
 
 class Payment {
   var accountStatus;
-  List<String> additionalInformation;
+  List<String>? additionalInformation;
   var amountOrdered;
   var baseAmountOrdered;
   var baseShippingAmount;
@@ -687,11 +687,11 @@ class Payment {
 }
 
 class ExtensionAttributes {
-  List<ShippingAssignments> shippingAssignments;
-  List<PaymentAdditionalInfo> paymentAdditionalInfo;
-  List<AppliedTaxes> appliedTaxes;
-  List<ItemAppliedTaxes> itemAppliedTaxes;
-  bool convertingFromQuote;
+  List<ShippingAssignments>? shippingAssignments;
+  List<PaymentAdditionalInfo>? paymentAdditionalInfo;
+  List<AppliedTaxes>? appliedTaxes;
+  List<ItemAppliedTaxes>? itemAppliedTaxes;
+  bool? convertingFromQuote;
 
   ExtensionAttributes(
       {this.shippingAssignments,
@@ -702,27 +702,27 @@ class ExtensionAttributes {
 
   ExtensionAttributes.fromJson(Map<String, dynamic> json) {
     if (json['shipping_assignments'] != null) {
-      shippingAssignments = new List<ShippingAssignments>();
+      shippingAssignments = [];
       json['shipping_assignments'].forEach((v) {
-        shippingAssignments.add(new ShippingAssignments.fromJson(v));
+        shippingAssignments!.add(new ShippingAssignments.fromJson(v));
       });
     }
     if (json['payment_additional_info'] != null) {
-      paymentAdditionalInfo = new List<PaymentAdditionalInfo>();
+      paymentAdditionalInfo = [];
       json['payment_additional_info'].forEach((v) {
-        paymentAdditionalInfo.add(new PaymentAdditionalInfo.fromJson(v));
+        paymentAdditionalInfo!.add(new PaymentAdditionalInfo.fromJson(v));
       });
     }
     if (json['applied_taxes'] != null) {
-      appliedTaxes = new List<AppliedTaxes>();
+      appliedTaxes = [];
       json['applied_taxes'].forEach((v) {
-        appliedTaxes.add(new AppliedTaxes.fromJson(v));
+        appliedTaxes!.add(new AppliedTaxes.fromJson(v));
       });
     }
     if (json['item_applied_taxes'] != null) {
-      itemAppliedTaxes = new List<ItemAppliedTaxes>();
+      itemAppliedTaxes = [];
       json['item_applied_taxes'].forEach((v) {
-        itemAppliedTaxes.add(new ItemAppliedTaxes.fromJson(v));
+        itemAppliedTaxes!.add(new ItemAppliedTaxes.fromJson(v));
       });
     }
     convertingFromQuote = json['converting_from_quote'];
@@ -732,18 +732,18 @@ class ExtensionAttributes {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.shippingAssignments != null) {
       data['shipping_assignments'] =
-          this.shippingAssignments.map((v) => v.toJson()).toList();
+          this.shippingAssignments!.map((v) => v.toJson()).toList();
     }
     if (this.paymentAdditionalInfo != null) {
       data['payment_additional_info'] =
-          this.paymentAdditionalInfo.map((v) => v.toJson()).toList();
+          this.paymentAdditionalInfo!.map((v) => v.toJson()).toList();
     }
     if (this.appliedTaxes != null) {
-      data['applied_taxes'] = this.appliedTaxes.map((v) => v.toJson()).toList();
+      data['applied_taxes'] = this.appliedTaxes!.map((v) => v.toJson()).toList();
     }
     if (this.itemAppliedTaxes != null) {
       data['item_applied_taxes'] =
-          this.itemAppliedTaxes.map((v) => v.toJson()).toList();
+          this.itemAppliedTaxes!.map((v) => v.toJson()).toList();
     }
     data['converting_from_quote'] = this.convertingFromQuote;
     return data;
@@ -751,8 +751,8 @@ class ExtensionAttributes {
 }
 
 class ShippingAssignments {
-  Shipping shipping;
-  List<OrderItems> items;
+  Shipping? shipping;
+  List<OrderItems>? items;
 
   ShippingAssignments({this.shipping, this.items});
 
@@ -761,9 +761,9 @@ class ShippingAssignments {
         ? new Shipping.fromJson(json['shipping'])
         : null;
     if (json['items'] != null) {
-      items = new List<OrderItems>();
+      items = [];
       json['items'].forEach((v) {
-        items.add(new OrderItems.fromJson(v));
+        items!.add(new OrderItems.fromJson(v));
       });
     }
   }
@@ -771,19 +771,19 @@ class ShippingAssignments {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.shipping != null) {
-      data['shipping'] = this.shipping.toJson();
+      data['shipping'] = this.shipping!.toJson();
     }
     if (this.items != null) {
-      data['items'] = this.items.map((v) => v.toJson()).toList();
+      data['items'] = this.items!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Shipping {
-  BillingAddress address;
-  String method;
-  Total total;
+  BillingAddress? address;
+  String? method;
+  Total? total;
 
   Shipping({this.address, this.method, this.total});
 
@@ -798,27 +798,27 @@ class Shipping {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.address != null) {
-      data['address'] = this.address.toJson();
+      data['address'] = this.address!.toJson();
     }
     data['method'] = this.method;
     if (this.total != null) {
-      data['total'] = this.total.toJson();
+      data['total'] = this.total!.toJson();
     }
     return data;
   }
 }
 
 class Total {
-  var baseShippingAmount;
-  var baseShippingDiscountAmount;
-  var baseShippingDiscountTaxCompensationAmnt;
-  var baseShippingInclTax;
-  var baseShippingTaxAmount;
-  var shippingAmount;
-  var shippingDiscountAmount;
-  var shippingDiscountTaxCompensationAmount;
-  var shippingInclTax;
-  var shippingTaxAmount;
+  int? baseShippingAmount;
+  int? baseShippingDiscountAmount;
+  int? baseShippingDiscountTaxCompensationAmnt;
+  int? baseShippingInclTax;
+  int? baseShippingTaxAmount;
+  int? shippingAmount;
+  int? shippingDiscountAmount;
+  int? shippingDiscountTaxCompensationAmount;
+  int? shippingInclTax;
+  int? shippingTaxAmount;
 
   Total(
       {this.baseShippingAmount,
@@ -915,7 +915,7 @@ class AppliedTaxes {
 
 class ItemAppliedTaxes {
   var type;
-  List<AppliedTaxes> appliedTaxes;
+  List<AppliedTaxes>? appliedTaxes;
   var itemId;
 
   ItemAppliedTaxes({this.type, this.appliedTaxes, this.itemId});
@@ -923,9 +923,9 @@ class ItemAppliedTaxes {
   ItemAppliedTaxes.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     if (json['applied_taxes'] != null) {
-      appliedTaxes = new List<AppliedTaxes>();
+      appliedTaxes = [];
       json['applied_taxes'].forEach((v) {
-        appliedTaxes.add(new AppliedTaxes.fromJson(v));
+        appliedTaxes!.add(new AppliedTaxes.fromJson(v));
       });
     }
     itemId = json['item_id'];
@@ -935,7 +935,7 @@ class ItemAppliedTaxes {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['type'] = this.type;
     if (this.appliedTaxes != null) {
-      data['applied_taxes'] = this.appliedTaxes.map((v) => v.toJson()).toList();
+      data['applied_taxes'] = this.appliedTaxes!.map((v) => v.toJson()).toList();
     }
     data['item_id'] = this.itemId;
     return data;
@@ -943,7 +943,7 @@ class ItemAppliedTaxes {
 }
 
 class SearchCriteria {
-  List<FilterGroups> filterGroups;
+  List<FilterGroups>? filterGroups;
   var pageSize;
   var currentPage;
 
@@ -951,9 +951,9 @@ class SearchCriteria {
 
   SearchCriteria.fromJson(Map<String, dynamic> json) {
     if (json['filter_groups'] != null) {
-      filterGroups = new List<FilterGroups>();
+      filterGroups = [];
       json['filter_groups'].forEach((v) {
-        filterGroups.add(new FilterGroups.fromJson(v));
+        filterGroups!.add(new FilterGroups.fromJson(v));
       });
     }
     pageSize = json['page_size'];
@@ -963,7 +963,7 @@ class SearchCriteria {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.filterGroups != null) {
-      data['filter_groups'] = this.filterGroups.map((v) => v.toJson()).toList();
+      data['filter_groups'] = this.filterGroups?.map((v) => v.toJson()).toList();
     }
     data['page_size'] = this.pageSize;
     data['current_page'] = this.currentPage;
@@ -972,15 +972,15 @@ class SearchCriteria {
 }
 
 class FilterGroups {
-  List<Filters> filters;
+  List<Filters>? filters;
 
   FilterGroups({this.filters});
 
   FilterGroups.fromJson(Map<String, dynamic> json) {
     if (json['filters'] != null) {
-      filters = new List<Filters>();
+      filters = [];
       json['filters'].forEach((v) {
-        filters.add(new Filters.fromJson(v));
+        filters!.add(new Filters.fromJson(v));
       });
     }
   }
@@ -988,7 +988,7 @@ class FilterGroups {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.filters != null) {
-      data['filters'] = this.filters.map((v) => v.toJson()).toList();
+      data['filters'] = this.filters!.map((v) => v.toJson()).toList();
     }
     return data;
   }

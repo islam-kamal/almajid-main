@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-paymentTitle({BuildContext context, String title: ""}) {
+paymentTitle({BuildContext? context, String title: ""}) {
   return Row(
     children: [
       Container(

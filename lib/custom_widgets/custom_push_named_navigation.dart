@@ -1,10 +1,10 @@
   import 'package:almajidoud/utils/file_export.dart';
-  customPushNamedNavigation( BuildContext context , Widget screen ){
+  customPushNamedNavigation( BuildContext? context , Widget? screen ){
   return Navigator.pushReplacement(
-    context,
+    context!,
     PageRouteBuilder(
       pageBuilder: (context, animation1, animation2) {
-        return screen ;
+        return screen! ;
       },
       transitionsBuilder:
           (context, animation8, animation15, child) {

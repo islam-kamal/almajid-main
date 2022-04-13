@@ -3,17 +3,17 @@ import 'package:almajidoud/utils/file_export.dart';
 
 
 class SearchModel extends BaseMappable{
-  List<Items> items;
-  SearchCriteria searchCriteria;
+  List<Items>? items;
+  SearchCriteria? searchCriteria;
   var totalCount;
 
   SearchModel({this.items, this.searchCriteria, this.totalCount});
 
   SearchModel.fromJson(Map<String, dynamic> json) {
     if (json['items'] != null) {
-      items = new List<Items>();
+      items = [];
       json['items'].forEach((v) {
-        items.add(new Items.fromJson(v));
+        items!.add(new Items.fromJson(v));
       });
     }
     searchCriteria = json['search_criteria'] != null
@@ -25,10 +25,10 @@ class SearchModel extends BaseMappable{
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.items != null) {
-      data['items'] = this.items.map((v) => v.toJson()).toList();
+      data['items'] = this.items!.map((v) => v.toJson()).toList();
     }
     if (this.searchCriteria != null) {
-      data['search_criteria'] = this.searchCriteria.toJson();
+      data['search_criteria'] = this.searchCriteria!.toJson();
     }
     data['total_count'] = this.totalCount;
     return data;
@@ -37,9 +37,9 @@ class SearchModel extends BaseMappable{
   @override
   Mappable fromJson(Map<String, dynamic> json) {
     if (json['items'] != null) {
-      items = new List<Items>();
+      items = [];
       json['items'].forEach((v) {
-        items.add(new Items.fromJson(v));
+        items!.add(new Items.fromJson(v));
       });
     }
     searchCriteria = json['search_criteria'] != null
@@ -62,12 +62,12 @@ class Items {
   var createdAt;
   var updatedAt;
   var weight;
-  ExtensionAttributes extensionAttributes;
-  List<ProductLinks> productLinks;
-  List<Options> options;
-  List<MediaGalleryEntries> mediaGalleryEntries;
-  List<TierPrices> tierPrices;
-  List<CustomAttributes> customAttributes;
+  ExtensionAttributes? extensionAttributes;
+  List<ProductLinks>? productLinks;
+  List<Options>? options;
+  List<MediaGalleryEntries>? mediaGalleryEntries;
+  List<TierPrices>? tierPrices;
+  List<CustomAttributes>? customAttributes;
 
   Items(
       {this.id,
@@ -104,33 +104,33 @@ class Items {
         ? new ExtensionAttributes.fromJson(json['extension_attributes'])
         : null;
     if (json['product_links'] != null) {
-      productLinks = new List<ProductLinks>();
+      productLinks = [];
       json['product_links'].forEach((v) {
-        productLinks.add(new ProductLinks.fromJson(v));
+        productLinks!.add(new ProductLinks.fromJson(v));
       });
     }
     if (json['options'] != null) {
-      options = new List<Options>();
+      options = [];
       json['options'].forEach((v) {
-        options.add(new Options.fromJson(v));
+        options!.add(new Options.fromJson(v));
       });
     }
     if (json['media_gallery_entries'] != null) {
-      mediaGalleryEntries = new List<MediaGalleryEntries>();
+      mediaGalleryEntries = [];
       json['media_gallery_entries'].forEach((v) {
-        mediaGalleryEntries.add(new MediaGalleryEntries.fromJson(v));
+        mediaGalleryEntries!.add(new MediaGalleryEntries.fromJson(v));
       });
     }
     if (json['tier_prices'] != null) {
-      tierPrices = new List<Null>();
+      tierPrices = [];
       json['tier_prices'].forEach((v) {
-        tierPrices.add(new TierPrices.fromJson(v));
+        tierPrices!.add(new TierPrices.fromJson(v));
       });
     }
     if (json['custom_attributes'] != null) {
-      customAttributes = new List<CustomAttributes>();
+      customAttributes = [];
       json['custom_attributes'].forEach((v) {
-        customAttributes.add(new CustomAttributes.fromJson(v));
+        customAttributes!.add(new CustomAttributes.fromJson(v));
       });
     }
   }
@@ -149,34 +149,34 @@ class Items {
     data['updated_at'] = this.updatedAt;
     data['weight'] = this.weight;
     if (this.extensionAttributes != null) {
-      data['extension_attributes'] = this.extensionAttributes.toJson();
+      data['extension_attributes'] = this.extensionAttributes!.toJson();
     }
     if (this.productLinks != null) {
-      data['product_links'] = this.productLinks.map((v) => v.toJson()).toList();
+      data['product_links'] = this.productLinks!.map((v) => v.toJson()).toList();
     }
     if (this.options != null) {
-      data['options'] = this.options.map((v) => v.toJson()).toList();
+      data['options'] = this.options!.map((v) => v.toJson()).toList();
     }
     if (this.mediaGalleryEntries != null) {
       data['media_gallery_entries'] =
-          this.mediaGalleryEntries.map((v) => v.toJson()).toList();
+          this.mediaGalleryEntries!.map((v) => v.toJson()).toList();
     }
     if (this.tierPrices != null) {
-      data['tier_prices'] = this.tierPrices.map((v) => v.toJson()).toList();
+      data['tier_prices'] = this.tierPrices!.map((v) => v.toJson()).toList();
     }
     if (this.customAttributes != null) {
       data['custom_attributes'] =
-          this.customAttributes.map((v) => v.toJson()).toList();
+          this.customAttributes!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class ExtensionAttributes {
-  List<int> websiteIds;
-  List<CategoryLinks> categoryLinks;
-  StockItem stockItem;
-  List<Reviews> reviews;
+  List<int>? websiteIds;
+  List<CategoryLinks>? categoryLinks;
+  StockItem? stockItem;
+  List<Reviews>? reviews;
 
   ExtensionAttributes(
       {this.websiteIds, this.categoryLinks, this.stockItem, this.reviews});
@@ -184,18 +184,18 @@ class ExtensionAttributes {
   ExtensionAttributes.fromJson(Map<String, dynamic> json) {
     websiteIds = json['website_ids'].cast<int>();
     if (json['category_links'] != null) {
-      categoryLinks = new List<CategoryLinks>();
+      categoryLinks = [];
       json['category_links'].forEach((v) {
-        categoryLinks.add(new CategoryLinks.fromJson(v));
+        categoryLinks?.add(new CategoryLinks.fromJson(v));
       });
     }
     stockItem = json['stock_item'] != null
         ? new StockItem.fromJson(json['stock_item'])
         : null;
     if (json['reviews'] != null) {
-      reviews = new List<Reviews>();
+      reviews = [];
       json['reviews'].forEach((v) {
-        reviews.add(new Reviews.fromJson(v));
+        reviews?.add(new Reviews.fromJson(v));
       });
     }
   }
@@ -205,13 +205,13 @@ class ExtensionAttributes {
     data['website_ids'] = this.websiteIds;
     if (this.categoryLinks != null) {
       data['category_links'] =
-          this.categoryLinks.map((v) => v.toJson()).toList();
+          this.categoryLinks?.map((v) => v.toJson()).toList();
     }
     if (this.stockItem != null) {
-      data['stock_item'] = this.stockItem.toJson();
+      data['stock_item'] = this.stockItem?.toJson();
     }
     if (this.reviews != null) {
-      data['reviews'] = this.reviews.map((v) => v.toJson()).toList();
+      data['reviews'] = this.reviews?.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -450,7 +450,7 @@ class MediaGalleryEntries {
   var label;
   var position;
   var disabled;
-  List<String> types;
+  List<String>? types;
   var file;
 
   MediaGalleryEntries(
@@ -505,15 +505,15 @@ class CustomAttributes {
 }
 
 class SearchCriteria {
-  List<FilterGroups> filterGroups;
+  List<FilterGroups>? filterGroups;
 
   SearchCriteria({this.filterGroups});
 
   SearchCriteria.fromJson(Map<String, dynamic> json) {
     if (json['filter_groups'] != null) {
-      filterGroups = new List<FilterGroups>();
+      filterGroups = [];
       json['filter_groups'].forEach((v) {
-        filterGroups.add(new FilterGroups.fromJson(v));
+        filterGroups!.add(new FilterGroups.fromJson(v));
       });
     }
   }
@@ -521,22 +521,22 @@ class SearchCriteria {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.filterGroups != null) {
-      data['filter_groups'] = this.filterGroups.map((v) => v.toJson()).toList();
+      data['filter_groups'] = this.filterGroups!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class FilterGroups {
-  List<Filters> filters;
+  List<Filters>? filters;
 
   FilterGroups({this.filters});
 
   FilterGroups.fromJson(Map<String, dynamic> json) {
     if (json['filters'] != null) {
-      filters = new List<Filters>();
+      filters = [];
       json['filters'].forEach((v) {
-        filters.add(new Filters.fromJson(v));
+        filters!.add(new Filters.fromJson(v));
       });
     }
   }
@@ -544,7 +544,7 @@ class FilterGroups {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.filters != null) {
-      data['filters'] = this.filters.map((v) => v.toJson()).toList();
+      data['filters'] = this.filters!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -610,7 +610,7 @@ class TierPrices{
 }
 
 class Parameters {
-  String resources;
+  String? resources;
 
   Parameters({this.resources});
 

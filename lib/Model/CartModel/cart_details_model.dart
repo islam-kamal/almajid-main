@@ -25,10 +25,10 @@ class CartDetailsModel extends BaseMappable{
   var baseCurrencyCode;
   var quoteCurrencyCode;
   var itemsQty;
-  List<Items> items;
-  List<TotalSegments> totalSegments;
+  List<Items>? items;
+  List<TotalSegments>? totalSegments;
   var message;
-  Parameters parameters;
+  Parameters? parameters;
   CartDetailsModel(
       {this.grandTotal,
         this.baseGrandTotal,
@@ -86,13 +86,13 @@ class CartDetailsModel extends BaseMappable{
     if (json['items'] != null) {
       items = <Items>[];
       json['items'].forEach((v) {
-        items.add(new Items.fromJson(v));
+        items!.add(new Items.fromJson(v));
       });
     }
     if (json['total_segments'] != null) {
       totalSegments = <TotalSegments>[];
       json['total_segments'].forEach((v) {
-        totalSegments.add(new TotalSegments.fromJson(v));
+        totalSegments!.add(new TotalSegments.fromJson(v));
       });
       message = json['message'];
       parameters = json['parameters'] != null
@@ -127,11 +127,11 @@ class CartDetailsModel extends BaseMappable{
     data['quote_currency_code'] = this.quoteCurrencyCode;
     data['items_qty'] = this.itemsQty;
     if (this.items != null) {
-      data['items'] = this.items.map((v) => v.toJson()).toList();
+      data['items'] = this.items!.map((v) => v.toJson()).toList();
     }
     if (this.totalSegments != null) {
       data['total_segments'] =
-          this.totalSegments.map((v) => v.toJson()).toList();
+          this.totalSegments!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -164,13 +164,13 @@ class CartDetailsModel extends BaseMappable{
     if (json['items'] != null) {
       items = <Items>[];
       json['items'].forEach((v) {
-        items.add(new Items.fromJson(v));
+        items!.add(new Items.fromJson(v));
       });
     }
     if (json['total_segments'] != null) {
       totalSegments = <TotalSegments>[];
       json['total_segments'].forEach((v) {
-        totalSegments.add(new TotalSegments.fromJson(v));
+        totalSegments!.add(new TotalSegments.fromJson(v));
       });
       message = json['message'];
       parameters = json['parameters'] != null
@@ -229,7 +229,7 @@ class Items {
   var options;
   var weeeTaxAppliedAmount;
   var weeeTaxApplied;
-  ExtensionAttributes extensionAttributes;
+  ExtensionAttributes? extensionAttributes;
   var name;
 
   Items(
@@ -306,7 +306,7 @@ class Items {
     data['weee_tax_applied_amount'] = this.weeeTaxAppliedAmount;
     data['weee_tax_applied'] = this.weeeTaxApplied;
     if (this.extensionAttributes != null) {
-      data['extension_attributes'] = this.extensionAttributes.toJson();
+      data['extension_attributes'] = this.extensionAttributes!.toJson();
     }
     data['name'] = this.name;
     return data;
@@ -362,9 +362,9 @@ class TotalSegments {
 }
 
 class TaxGrandtotalDetails {
-  double amount;
-  List<Rates> rates;
-  int groupId;
+  double? amount;
+  List<Rates>? rates;
+  int? groupId;
 
   TaxGrandtotalDetails({this.amount, this.rates, this.groupId});
 
@@ -373,7 +373,7 @@ class TaxGrandtotalDetails {
     if (json['rates'] != null) {
       rates = <Rates>[];
       json['rates'].forEach((v) {
-        rates.add(new Rates.fromJson(v));
+        rates!.add(new Rates.fromJson(v));
       });
     }
     groupId = json['group_id'];
@@ -383,7 +383,7 @@ class TaxGrandtotalDetails {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['amount'] = this.amount;
     if (this.rates != null) {
-      data['rates'] = this.rates.map((v) => v.toJson()).toList();
+      data['rates'] = this.rates!.map((v) => v.toJson()).toList();
     }
     data['group_id'] = this.groupId;
     return data;

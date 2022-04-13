@@ -11,13 +11,13 @@ class CountriesBloc extends Bloc<AppEvent, AppState> with Validator{
   }
 
   void drainStream() {
-    _countries_subject.value = null;
+    _countries_subject.value = null!;
   }
   void get_countries() async{
     var response =await countriesRepository.getCountriesList(
     );
 
-    _countries_subject.sink.add(response);
+    _countries_subject.sink.add(response!);
   }
 
   //chosse aqar  value from radio button in bottom sheet
@@ -39,4 +39,4 @@ class CountriesBloc extends Bloc<AppEvent, AppState> with Validator{
   }
 }
 
-CountriesBloc countriesBloc = new CountriesBloc(null);
+CountriesBloc countriesBloc = new CountriesBloc(null!);

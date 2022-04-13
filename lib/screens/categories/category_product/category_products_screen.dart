@@ -15,8 +15,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:almajidoud/Repository/CategoryRepo/category_repository.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 class CategoryProductsScreen extends StatefulWidget {
-  final String category_id;
-  final String category_name;
+  final String? category_id;
+  final String? category_name;
   var category_index;
   CategoryProductsScreen({this.category_id,this.category_name,this.category_index});
   @override
@@ -27,7 +27,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   //var offset = 0;
   // The controller for the ListView
 
-  ScrollController _controller;
+  ScrollController? _controller;
   int _page = 1;
   int _limit = 20;
   bool _hasNextPage = true;
@@ -44,7 +44,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
           offset: _page
       );
       setState(() {
-        _posts = res.items;
+        _posts = res.items!;
       });
     } catch (err) {
     }
@@ -57,7 +57,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
     if (_hasNextPage == true &&
         _isFirstLoadRunning == false &&
         _isLoadMoreRunning == false &&
-        _controller.position.extentAfter < 300) {
+        _controller!.position.extentAfter < 300) {
       setState(() {
         _isLoadMoreRunning = true; // Display a progress indicator at the bottom
       });
@@ -68,7 +68,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
             offset: _page
         );
 
-        final List fetchedPosts = res.items;
+        final List fetchedPosts = res.items!;
         if (fetchedPosts.length > 0) {
           setState(() {
             _posts.addAll(fetchedPosts);
@@ -90,7 +90,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   }
 
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-  final product_bloc = ProductBloc(null);
+  final product_bloc = ProductBloc(null!);
 
   @override
   void initState() {
@@ -100,7 +100,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   }
   @override
   void dispose() {
-    _controller.removeListener(_loadMore);
+    _controller!.removeListener(_loadMore);
     super.dispose();
   }
 

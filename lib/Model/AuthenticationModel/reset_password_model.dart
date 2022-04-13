@@ -1,10 +1,10 @@
 import 'package:almajidoud/Base/network-mappers.dart';
 
 class ResetPasswordModel extends BaseMappable{
-  String succeess;
-  String errormsg;
-  String successmsg;
-  String customurl;
+  String? succeess;
+  String? errormsg;
+  String? successmsg;
+  String? customurl;
 
   ResetPasswordModel(
       {this.succeess, this.errormsg, this.successmsg, this.customurl});

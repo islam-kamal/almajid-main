@@ -37,7 +37,7 @@ class StoreLocatorModel extends BaseMappable {
   var scheduleString;
   var markerUrl;
   var popupHtml;
-  List<Attributes> attributes;
+  List<Attributes>? attributes;
   var scheduleArray;
 
   StoreLocatorModel(
@@ -118,9 +118,9 @@ class StoreLocatorModel extends BaseMappable {
     markerUrl = json['marker_url'];
     popupHtml = json['popup_html'];
     if (json['attributes'] != null) {
-      attributes = <Null>[];
+      attributes = [];
       json['attributes'].forEach((v) {
-        attributes.add(new Attributes.fromJson(v));
+        attributes!.add(new Attributes.fromJson(v));
       });
     }
     scheduleArray = json['schedule_array'];
@@ -165,7 +165,7 @@ class StoreLocatorModel extends BaseMappable {
     data['marker_url'] = this.markerUrl;
     data['popup_html'] = this.popupHtml;
     if (this.attributes != null) {
-      data['attributes'] = this.attributes.map((v) => v.toJson()).toList();
+      data['attributes'] = this.attributes!.map((v) => v.toJson()).toList();
     }
     data['schedule_array'] = this.scheduleArray;
     return data;
@@ -210,9 +210,9 @@ class StoreLocatorModel extends BaseMappable {
     markerUrl = json['marker_url'];
     popupHtml = json['popup_html'];
     if (json['attributes'] != null) {
-      attributes = <Null>[];
+      attributes = [];
       json['attributes'].forEach((v) {
-        attributes.add(new Attributes.fromJson(v));
+        attributes!.add(new Attributes.fromJson(v));
       });
     }
     scheduleArray = json['schedule_array'];
@@ -238,5 +238,6 @@ class Attributes{
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
+    return data;
   }
 }

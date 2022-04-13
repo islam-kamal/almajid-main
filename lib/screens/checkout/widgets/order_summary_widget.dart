@@ -1,7 +1,7 @@
 import 'package:almajidoud/Model/ShipmentAddressModel/guest/guest_shipment_address_model.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments ,var cash   }) {
+orderSummaryWidget({BuildContext? context ,   List<TotalSegments>? total_segments ,var cash   }) {
   var grand_total, subtotal, vat ,shipping, payment_fees=0 , discount;
   if(cash == 'الدفع عند الإستلام' || cash == "Cash On Delivery"){
     if(MyApp.app_location == 'sa') payment_fees= 15;
@@ -9,7 +9,7 @@ orderSummaryWidget({BuildContext context ,   List<TotalSegments> total_segments 
     if(MyApp.app_location == 'uae') payment_fees= 11;
   }
 
-  total_segments.forEach((element) {
+  total_segments!.forEach((element) {
     if(element.code ==  "grand_total"){
       grand_total = double.parse((element.value + payment_fees).toStringAsFixed(2));
     }

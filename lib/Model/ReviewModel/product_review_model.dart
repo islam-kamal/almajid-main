@@ -1,20 +1,20 @@
 import 'package:almajidoud/Base/network-mappers.dart';
 
 class ProductReviewModel extends BaseMappable{
-  int id;
-  String title;
-  String detail;
-  String nickname;
-  List<Ratings> ratings;
-  String reviewEntity;
-  int reviewType;
-  int reviewStatus;
-  String createdAt;
-  int entityPkValue;
-  int storeId;
-  List<int> stores;
-  String message;
-  String trace;
+  int? id;
+  String? title;
+  String? detail;
+  String? nickname;
+  List<Ratings>? ratings;
+  String? reviewEntity;
+  int? reviewType;
+  int? reviewStatus;
+  String? createdAt;
+  int? entityPkValue;
+  int? storeId;
+  List<int>? stores;
+  String? message;
+  String? trace;
   ProductReviewModel(
       {this.id,
         this.title,
@@ -36,9 +36,9 @@ class ProductReviewModel extends BaseMappable{
     detail = json['detail'];
     nickname = json['nickname'];
     if (json['ratings'] != null) {
-      ratings = new List<Ratings>();
+      ratings = [];
       json['ratings'].forEach((v) {
-        ratings.add(new Ratings.fromJson(v));
+        ratings!.add(new Ratings.fromJson(v));
       });
     }
     reviewEntity = json['review_entity'];
@@ -59,7 +59,7 @@ class ProductReviewModel extends BaseMappable{
     data['detail'] = this.detail;
     data['nickname'] = this.nickname;
     if (this.ratings != null) {
-      data['ratings'] = this.ratings.map((v) => v.toJson()).toList();
+      data['ratings'] = this.ratings!.map((v) => v.toJson()).toList();
     }
     data['review_entity'] = this.reviewEntity;
     data['review_type'] = this.reviewType;
@@ -80,9 +80,9 @@ class ProductReviewModel extends BaseMappable{
     detail = json['detail'];
     nickname = json['nickname'];
     if (json['ratings'] != null) {
-      ratings = new List<Ratings>();
+      ratings = [];
       json['ratings'].forEach((v) {
-        ratings.add(new Ratings.fromJson(v));
+        ratings!.add(new Ratings.fromJson(v));
       });
     }
     reviewEntity = json['review_entity'];
@@ -114,11 +114,11 @@ class ProductReviewModel extends BaseMappable{
 }
 
 class Ratings {
-  int voteId;
-  int ratingId;
-  String ratingName;
-  int percent;
-  int value;
+  int? voteId;
+  int? ratingId;
+  String? ratingName;
+  int? percent;
+  int? value;
 
   Ratings(
       {this.voteId, this.ratingId, this.ratingName, this.percent, this.value});

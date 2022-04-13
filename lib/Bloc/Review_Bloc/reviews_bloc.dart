@@ -15,7 +15,7 @@ class ReviewsBloc extends Bloc<AppEvent, AppState> with Validator{
 
 
   void drainStream() {
-    _product_reviews_subject.value = null;
+    _product_reviews_subject.value = null!;
   }
 
   @override
@@ -51,4 +51,4 @@ class ReviewsBloc extends Bloc<AppEvent, AppState> with Validator{
   }
 }
 
-ReviewsBloc reviewsBloc = new ReviewsBloc(null);
+ReviewsBloc reviewsBloc = new ReviewsBloc(null!);

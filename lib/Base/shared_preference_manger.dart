@@ -4,29 +4,29 @@ import 'package:almajidoud/Base/enumeration.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceManager {
-  SharedPreferences sharedPreferences;
+  SharedPreferences? sharedPreferences;
 
   Future<bool> removeData(CachingKey key) async {
     sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.remove(key.value);
+    return sharedPreferences!.remove(key.value);
   }
 
   Future<bool> logout() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.clear();
+    return sharedPreferences!.clear();
   }
 
-  Future<bool> writeData(CachingKey key, value) async {
+  Future<Future> writeData(CachingKey key, value) async {
     sharedPreferences = await SharedPreferences.getInstance();
-    Future returnedValue;
+    Future? returnedValue;
     if (value is String) {
-      returnedValue = sharedPreferences.setString(key.value, value);
+      returnedValue = sharedPreferences!.setString(key.value, value);
     } else if (value is int) {
-      returnedValue = sharedPreferences.setInt(key.value, value);
+      returnedValue = sharedPreferences!.setInt(key.value, value);
     } else if (value is bool) {
-      returnedValue = sharedPreferences.setBool(key.value, value);
+      returnedValue = sharedPreferences!.setBool(key.value, value);
     } else if (value is double) {
-      returnedValue = sharedPreferences.setDouble(key.value, value);
+      returnedValue = sharedPreferences!.setDouble(key.value, value);
     } else {
       return Future.error(NotValidCacheTypeException());
     }
@@ -35,22 +35,22 @@ class SharedPreferenceManager {
 
   Future<bool> readBoolean(CachingKey key) async {
     sharedPreferences = await SharedPreferences.getInstance();
-    return Future.value(sharedPreferences.getBool(key.value) ?? false);
+    return Future.value(sharedPreferences!.getBool(key.value) ?? false);
   }
 
   Future<double> readDouble(CachingKey key) async {
     sharedPreferences = await SharedPreferences.getInstance();
-    return Future.value(sharedPreferences.getDouble(key.value) ?? 0.0);
+    return Future.value(sharedPreferences!.getDouble(key.value) ?? 0.0);
   }
 
   Future<int> readInteger(CachingKey key) async {
     sharedPreferences = await SharedPreferences.getInstance();
-    return Future.value(sharedPreferences.getInt(key.value) ?? 0);
+    return Future.value(sharedPreferences!.getInt(key.value) ?? 0);
   }
 
   Future<String> readString(CachingKey key) async {
     sharedPreferences = await SharedPreferences.getInstance();
-    return Future.value(sharedPreferences.getString(key.value) ?? "");
+    return Future.value(sharedPreferences!.getString(key.value) ?? "");
   }
 
 

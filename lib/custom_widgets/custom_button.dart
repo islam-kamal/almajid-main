@@ -9,7 +9,7 @@ class CustomButton extends StatelessWidget {
   final String text;
   final Color textColor;
   final double fontSize;
-  final Function onTapButton;
+  final VoidCallback?  onTapButton;
   final FontWeight fontWieght;
   CustomButton(
       {this.percentageOfHeight: .08,

@@ -8,10 +8,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class AppPushNotifications {
-  BuildContext context;
-  AppPushNotifications({this.context});
-  FirebaseMessaging _firebaseMessaging;
-  GlobalKey<NavigatorState> navigatorKey;
+  BuildContext? context;
+  AppPushNotifications({this.context });
+  FirebaseMessaging? _firebaseMessaging;
+  GlobalKey<NavigatorState>? navigatorKey;
 
   static StreamController<Map<String, dynamic>> _onMessageStreamController =
   StreamController.broadcast();
@@ -37,7 +37,7 @@ class AppPushNotifications {
   }
 
   void requestPermissions() {
-    _firebaseMessaging.requestPermission(
+    _firebaseMessaging!.requestPermission(
       alert: true,
       badge: true,
       sound: true,
@@ -45,18 +45,18 @@ class AppPushNotifications {
 
   }
 
-  Future<String> getFcmToken() async {
-    sharedPreferenceManager.writeData(CachingKey.FIREBASE_TOKEN, await _firebaseMessaging.getToken());
-    return await _firebaseMessaging.getToken();
+  Future<String?> getFcmToken() async {
+    sharedPreferenceManager.writeData(CachingKey.FIREBASE_TOKEN, await _firebaseMessaging!.getToken());
+    return await _firebaseMessaging!.getToken();
   }
 
   void notificationListeners() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification;
-      AndroidNotification android = message.notification?.android;
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
     });
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      Navigator.pushReplacement(context, MaterialPageRoute(
+      Navigator.pushReplacement(context!, MaterialPageRoute(
           builder: (context)=>CustomCircleNavigationBar()));
     });
 

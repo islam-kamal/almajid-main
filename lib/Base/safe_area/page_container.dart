@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 
 class PageContainer extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
   const PageContainer({this.child});
 
   @override
@@ -19,7 +19,7 @@ class PageContainer extends StatelessWidget {
             },
             child: Directionality(
             textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
-    child: child,
+    child: child!,
             )),
         ));
   }

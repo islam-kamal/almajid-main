@@ -13,7 +13,7 @@ class CartRepository {
   static SharedPreferenceManager sharedPreferenceManager =
       SharedPreferenceManager();
 
-  Future<void> create_quote({BuildContext context}) async {
+  Future<void> create_quote({BuildContext? context}) async {
     Dio dio = new Dio();
     try {
       final response = await dio.post(
@@ -63,7 +63,7 @@ class CartRepository {
     }
   }
 
-  Future<AddCartModel> add_product_to_cart_FUN({BuildContext context, var product_quantity, var product_sku}) async {
+  Future<AddCartModel?> add_product_to_cart_FUN({BuildContext? context, var product_quantity, var product_sku}) async {
 
     Dio dio = new Dio();
     String url =
@@ -174,7 +174,7 @@ class CartRepository {
       try {
         //create_quote
         final response = await dio.post(
-            Urls.BASE_URL + StaticData.vistor_value == 'visitor'
+            Urls.BASE_URL + StaticData.vistor_value! == 'visitor'
                 ? Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/guest-carts/'
                 : Urls.BASE_URL + '/${MyApp.app_langauge}-${MyApp.app_location}/rest/V1/carts/mine',
             options: Options(
@@ -278,8 +278,8 @@ class CartRepository {
               }));
   }
 
-  Future<bool> delete_product_from_cart(
-      {BuildContext context, var item_id}) async {
+  Future<bool?> delete_product_from_cart(
+      {BuildContext? context, var item_id}) async {
     Dio dio = new Dio();
     try {
       final response = await dio.delete(
@@ -306,8 +306,8 @@ class CartRepository {
     }
   }
 
-  Future<bool> apply_promo_code_to_cart(
-      {BuildContext context, var promo_code}) async {
+  Future<bool?> apply_promo_code_to_cart(
+      {BuildContext? context, var promo_code}) async {
     Dio dio = new Dio();
     try {
       final response = await dio.put(
@@ -326,14 +326,14 @@ class CartRepository {
       if (response.statusCode == 200) {
         return response.data;
       } else {
-        Navigator.pop(context);
+        Navigator.pop(context!);
         errorDialog(context: context, text: response.data['message']);
       }
     } catch (e) {
     }
   }
 
-  Future<bool> delete_promo_code_from_cart({BuildContext context}) async {
+  Future<bool?> delete_promo_code_from_cart({BuildContext? context}) async {
     Dio dio = new Dio();
     try {
       final response = await dio.delete(
@@ -352,14 +352,14 @@ class CartRepository {
       if (response.statusCode == 200) {
         return response.data;
       } else {
-        Navigator.pop(context);
+        Navigator.pop(context!);
       }
     } catch (e) {
-      Navigator.pop(context);
+      Navigator.pop(context!);
     }
   }
 
-  Future<bool> updateCartLanguage({BuildContext context}) async {
+  Future<bool?> updateCartLanguage({BuildContext? context}) async {
     Dio dio = new Dio();
     try {
       final isMask = StaticData.vistor_value == 'visitor'?1:0;

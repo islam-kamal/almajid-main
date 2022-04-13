@@ -21,7 +21,7 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   final _formKey = GlobalKey<FormState>();
 
-  AnimationController _loginButtonController;
+   late AnimationController _loginButtonController;
   bool isLoading = false;
   @override
   void initState() {
@@ -103,7 +103,7 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
           backgroundColor: redColor,
           flushbarStyle: FlushbarStyle.FLOATING,
           duration: Duration(seconds: 3),
-        )..show(_drawerKey.currentState.context);
+        )..show(_drawerKey.currentState!.context);
 
       }
       else if (state is Done) {
@@ -205,7 +205,7 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
                       child: TextFormField(
                           decoration: InputDecoration(
                             hintText: translator.translate("Phone"),
-                            errorText: snapshot.error,
+                            errorText: snapshot.error.toString(),
                           ),
                           onChanged:  forgetPassword_bloc.mobile_change,
                           validator: (value) {
@@ -227,19 +227,19 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
         });
   }
 
-  forgetPasswordButton({BuildContext context,}) {
+  forgetPasswordButton({BuildContext? context,}) {
     return Container(
       alignment: Alignment.centerRight,
       padding: EdgeInsets.all(10),
       child: StaggerAnimation(
         titleButton: translator.translate("Send") ,
-        buttonController: _loginButtonController.view,
+        buttonController: _loginButtonController!,
         btn_width: width(context) * .3,
         btn_height:  width(context) * .1,
 
        isResetScreen:false,
         onTap: () {
-          if (_formKey.currentState.validate() ) {
+          if (_formKey.currentState!.validate() ) {
             StaticData.user_mobile_number = StaticData.country_code + forgetPassword_bloc.mobile_controller.value;
             forgetPassword_bloc.add(sendOtpClick(
                 phone: StaticData.user_mobile_number,

@@ -13,7 +13,7 @@ class _SliderSimmerState extends State<SliderSimmer> {
   Widget build(BuildContext context) {
     return   Shimmer.fromColors(
       baseColor: greyColor,
-      highlightColor: Colors.grey[350],
+      highlightColor: Colors.grey![350]!,
       child: Container(
         height:  StaticData.get_height(context)/4.5,
         width: StaticData.get_width(context) * 0.9,

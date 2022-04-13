@@ -13,7 +13,7 @@ class SearchBloc extends Bloc<AppEvent,AppState>{
 
 
   void drainStream() {
-    _search_products_subject.value = null;
+    _search_products_subject.value = null!;
   }
 
   @override
@@ -35,4 +35,4 @@ class SearchBloc extends Bloc<AppEvent,AppState>{
 
 }
 
-final search_bloc = SearchBloc(null);
+final search_bloc = SearchBloc(null!);

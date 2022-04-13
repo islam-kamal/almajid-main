@@ -4,14 +4,14 @@ import 'package:almajidoud/screens/checkout/checkout_payment_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 singleOrderSummaryItem(
-    {BuildContext context,
+    {BuildContext? context,
     String title: "",
     String details: "",
-    Function onTapChange,
+    VoidCallback? onTapChange,
     String image: "",
     bool isAddress: false,
-    bool rValue,
-    GuestShipmentAddressModel guestShipmentAddressModel}) {
+    bool? rValue,
+    GuestShipmentAddressModel? guestShipmentAddressModel}) {
   return Column(
     children: [
       Container(
@@ -62,10 +62,10 @@ singleOrderSummaryItem(
                     onTap: () {
                       if (title == "Address") {
                         customAnimatedPushNavigation(
-                            context, CheckoutAddressScreen());
+                            context!, CheckoutAddressScreen());
                       } else {
                         customAnimatedPushNavigation(
-                            context,
+                            context!,
                             CheckoutPaymentScreen(
                               guestShipmentAddressModel:
                                   guestShipmentAddressModel,

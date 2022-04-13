@@ -14,7 +14,7 @@ class PaymentBloc extends Bloc<AppEvent, AppState> with Validator{
           context: event.context,
           phone_number: event.phone
       );
-      if (response.result != null) {
+      if (response?.result != null) {
         yield Done(model: response,);
       }else{
         yield ErrorLoading(model: response,);
@@ -24,4 +24,4 @@ class PaymentBloc extends Bloc<AppEvent, AppState> with Validator{
   }
 }
 
-PaymentBloc paymentBloc = new PaymentBloc(null);
+PaymentBloc paymentBloc = new PaymentBloc(null!);

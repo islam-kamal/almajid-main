@@ -4,8 +4,8 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SettingsDrawer extends StatefulWidget {
-  final FocusNode node;
-  SettingsDrawer({Key key, this.node}) : super(key: key);
+  final FocusNode? node;
+  SettingsDrawer({Key? key, this.node}) : super(key: key);
   @override
   _SettingsDrawerState createState() => _SettingsDrawerState();
 }
@@ -18,12 +18,12 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   @override
   void initState() {
     super.initState();
-    widget.node.unfocus();
+    widget.node!.unfocus();
   }
 
   @override
   void dispose() {
-    widget.node.requestFocus();
+    widget.node!.requestFocus();
     super.dispose();
   }
 
@@ -58,14 +58,14 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                               }
                               else if (state is Done) {
                                 var data = state.model as CategoryModel;
-                                if (data.childrenData == null || data.childrenData.isEmpty) {
+                                if (data.childrenData == null || data.childrenData!.isEmpty) {
                                   return Container();
                                 } else {
                                   return StreamBuilder<CategoryModel>(
                                     stream: categoryBloc.categories_subject,
                                     builder: (context, snapshot) {
                                       if (snapshot.hasData) {
-                                        if (snapshot.data.childrenData.isEmpty) {
+                                        if (snapshot.data!.childrenData!.isEmpty) {
                                           return Container();
                                         } else {
                                           return Column(
@@ -78,7 +78,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                       context: context,
                                                       textAlign: TextAlign.start,
                                                       textColor: mainColor,
-                                                      text: "${snapshot.data.name}",
+                                                      text: "${snapshot.data!.name}",
                                                       percentageOfHeight: .025)),
                                               Divider(
                                                 color: mainColor,
@@ -91,14 +91,14 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                   _isExpanded[index] = !isExpanded;
                                                 }),
                                                 children: [
-                                                  for (int i = 0; i < snapshot.data.childrenData.length; i++)
-                                                    if(snapshot.data.childrenData[i].isActive == true)
+                                                  for (int i = 0; i < snapshot.data!.childrenData!.length; i++)
+                                                    if(snapshot.data!.childrenData![i].isActive == true)
                                                       ExpansionPanel(
                                                         headerBuilder: (_, isExpanded) {
                                                           return Center(
                                                             child:  InkWell(
                                                                 onTap: (){
-                                                                  var parentItem = snapshot.data.childrenData[i];
+                                                                  var parentItem = snapshot.data!.childrenData![i];
                                                                   customAnimatedPushNavigation(
                                                                       context,
                                                                       CategoryProductsScreen(
@@ -114,7 +114,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                                   margin: const EdgeInsets.all(6.0),
                                                                   padding: const EdgeInsets.all(10.0),
                                                                   width: double.infinity,
-                                                                  child: Text(snapshot.data.childrenData[i].name),
+                                                                  child: Text(snapshot.data!.childrenData![i].name!),
                                                                 )
                                                             ),
                                                           );
@@ -123,9 +123,9 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                             shrinkWrap: true,
                                                             padding: EdgeInsets.all(5),
                                                             physics: NeverScrollableScrollPhysics(),
-                                                            itemCount:  snapshot.data.childrenData[i].childrenData.length ,
+                                                            itemCount:  snapshot.data!.childrenData![i].childrenData!.length ,
                                                             itemBuilder: (context,ind){
-                                                              if(snapshot.data.childrenData[i].childrenData[ind].isActive == true)
+                                                              if(snapshot.data!.childrenData![i].childrenData![ind].isActive == true){
                                                                 return InkWell(
                                                                     child: Padding(
                                                                       padding: EdgeInsets.only(
@@ -136,7 +136,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                                             margin: const EdgeInsets.all(3.0),
                                                                             padding: const EdgeInsets.all(10.0),
                                                                             width: double.infinity,
-                                                                            child: Text(snapshot.data.childrenData[i].childrenData[ind].name),
+                                                                            child: Text(snapshot.data!.childrenData![i].childrenData![ind].name!),
                                                                           )
 
                                                                       ),
@@ -146,8 +146,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                                       customAnimatedPushNavigation(
                                                                           context,
                                                                           CategoryProductsScreen(
-                                                                            category_id: snapshot.data.childrenData[i].childrenData[ind].id.toString(),
-                                                                            category_name: snapshot.data.childrenData[i].childrenData[ind].name,
+                                                                            category_id: snapshot.data!.childrenData![i].childrenData![ind].id.toString(),
+                                                                            category_name: snapshot.data!.childrenData![i].childrenData![ind].name,
 
                                                                           )
 
@@ -155,6 +155,12 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
 
 
                                                                     });
+                                                              }
+
+                                                              else{  //used for null safety not from code
+                                                                return Container();
+                                                              }
+
                                                             }),
                                                         isExpanded: _isExpanded[i],
                                                         canTapOnHeader: false,

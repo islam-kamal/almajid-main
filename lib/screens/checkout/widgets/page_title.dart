@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-pageTitle({BuildContext context, String title: ""}) {
+pageTitle({BuildContext? context, String title: ""}) {
   return Row(
     children: [
       Container(

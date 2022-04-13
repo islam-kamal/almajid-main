@@ -18,7 +18,7 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   final _formKey = GlobalKey<FormState>();
 
-  AnimationController _loginButtonController;
+ late  AnimationController _loginButtonController;
   bool isLoading = false;
   @override
   void initState() {
@@ -100,7 +100,7 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                     backgroundColor: redColor,
                     flushbarStyle: FlushbarStyle.FLOATING,
                     duration: Duration(seconds: 3),
-                  )..show(_drawerKey.currentState.context);
+                  )..show(_drawerKey.currentState!.context);
 
                 }
                 else if (state is Done) {
@@ -215,7 +215,7 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                       child: TextFormField(
                           decoration: InputDecoration(
                             hintText: translator.translate("Phone"),
-                            errorText: snapshot.error,
+                            errorText: snapshot.error.toString(),
                             contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
                           ),
@@ -238,12 +238,12 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
          );
         }));
   }
-  LoginUsingPhoneButton({BuildContext context,}) {
+  LoginUsingPhoneButton({BuildContext? context,}) {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.all(10),
       child: StaggerAnimation(
-        buttonController: _loginButtonController.view,
+        buttonController: _loginButtonController!,
         btn_width:  width(context) * .2,
         btn_height:  isLandscape(context) ? 2 * height(context) * .08 : height(context) * .08,
         widget:  Container(
@@ -256,7 +256,7 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
           ),
         ),
         onTap: () {
-          if (_formKey.currentState.validate() ) {
+          if (_formKey.currentState!.validate() ) {
             StaticData.user_mobile_number = StaticData.country_code + forgetPassword_bloc.mobile_controller.value;
             forgetPassword_bloc.add(sendOtpClick(
                 phone: StaticData.user_mobile_number,

@@ -3,9 +3,9 @@ import 'package:almajidoud/utils/static_data.dart';
 import 'package:another_flushbar/flushbar.dart';
 
 class FlushbarWidget extends StatelessWidget{
-  final String message;
-  BuildContext context;
-  GlobalKey<ScaffoldState> scaffoldKey;
+  final String? message;
+  BuildContext? context;
+  GlobalKey<ScaffoldState>? scaffoldKey;
   FlushbarWidget({this.message,this.context,this.scaffoldKey});
   @override
   Widget build(BuildContext context) {

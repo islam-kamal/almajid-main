@@ -11,31 +11,31 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:rating_bar/rating_bar.dart';
 
 class singleCategoryProductItem extends StatelessWidget {
-  TextEditingController qty_controller = new TextEditingController();
-  Items product;
-  Widget category_screen;
+  TextEditingController? qty_controller = new TextEditingController();
+  Items? product;
+  Widget? category_screen;
   var percentage;
 
-  GlobalKey<ScaffoldState> scafffoldKey;
+  GlobalKey<ScaffoldState>? scafffoldKey;
   singleCategoryProductItem({this.product, this.scafffoldKey,this.category_screen});
   @override
   Widget build(BuildContext context) {
-    List<String> gallery = new List<String>();
-    product.mediaGalleryEntries.forEach((element) {
+    List<String> gallery = [];
+    product!.mediaGalleryEntries!.forEach((element) {
       gallery
           .add(ProductImages.getProductImageUrlByName(imageName: element.file));
     });
     var product_image;
-    product.customAttributes.forEach((element) {
+    product!.customAttributes!.forEach((element) {
       if(element.attributeCode == "thumbnail")
         product_image = element.value;
     });
 
 
-    String special_price;
+    String? special_price;
     var new_price , minimal_price;
-    DateTime startDate , endDate ;
-    product.customAttributes.forEach((element) {
+    DateTime? startDate , endDate ;
+    product!.customAttributes!.forEach((element) {
       if(element.attributeCode == "thumbnail")
         product_image = element.value;
       else if(element.attributeCode == "special_from_date"){
@@ -53,25 +53,25 @@ class singleCategoryProductItem extends StatelessWidget {
     });
     if(startDate ==null || endDate ==null ){
       new_price = minimal_price;
-      if(double.parse(minimal_price) < double.parse(product.price.toString()))
-        percentage = (1 - (double.parse(minimal_price)  / product.price) )* 100;
+      if(double.parse(minimal_price) < double.parse(product!.price.toString()))
+        percentage = (1 - (double.parse(minimal_price)  / product!.price) )* 100;
 
     }else{
-      if(StaticData.isCurrentDateInRange(startDate,endDate)
-          && double.parse(special_price) <= double.parse(minimal_price)
-          && double.parse(special_price).toStringAsFixed(2) !=  product.price ) {
+      if(StaticData.isCurrentDateInRange(startDate!,endDate!)
+          && double.parse(special_price!) <= double.parse(minimal_price)
+          && double.parse(special_price!).toStringAsFixed(2) !=  product!.price ) {
         new_price = special_price;
-        percentage = (1 - (double.parse(new_price)  / product.price) )* 100;
+        percentage = (1 - (double.parse(new_price)  / product!.price) )* 100;
 
-      }else if(double.parse(special_price) > double.parse(minimal_price)){
+      }else if(double.parse(special_price!) > double.parse(minimal_price)){
         new_price = minimal_price;
-        percentage = (1 - (double.parse(new_price)  / product.price) )* 100;
+        percentage = (1 - (double.parse(new_price)  / product!.price) )* 100;
 
       }
       else {
-        if(!StaticData.isCurrentDateInRange(startDate,endDate) ){
+        if(!StaticData.isCurrentDateInRange(startDate!,endDate!) ){
           new_price = minimal_price;
-          percentage = (1 - (double.parse(new_price)  / product.price) )* 100;
+          percentage = (1 - (double.parse(new_price)  / product!.price) )* 100;
 
         }
       }
@@ -80,8 +80,8 @@ class singleCategoryProductItem extends StatelessWidget {
     return InkWell(
       onTap: (){
         customAnimatedPushNavigation(context, ProductDetailsScreen(
-            product_id:product.id,
-          category_screen: category_screen,
+            product_id:product!.id,
+          category_screen: category_screen!,
         ));
       },
       child: Directionality(
@@ -147,14 +147,13 @@ class singleCategoryProductItem extends StatelessWidget {
                                           ? CrossAxisAlignment.end
                                           : CrossAxisAlignment.start,
                                       children: [
-                                        product.extensionAttributes.stockQty >=1 ?     CustomWishList(
+                                        product!.extensionAttributes!.stockQty >=1 ?     CustomWishList(
                                           color: redColor,
-                                          product_id: product.id,
-                                          qty: product
-                                              .extensionAttributes.stockQty,
+                                          product_id: product!.id,
+                                          qty: product!.extensionAttributes!.stockQty,
                                           context: context,
                                           screen: CategoryProductsScreen(),
-                                          scafffoldKey: scafffoldKey,
+                                          scafffoldKey: scafffoldKey!,
                                         ) : Container(),
                                         Padding(
                                      padding: EdgeInsets.only(right: 5,left: 5),
@@ -163,7 +162,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                            context: context,
                                            textColor: mainColor,
                                            maxLines: 2,
-                                           text: product.name,
+                                           text: product!.name,
                                        ),
                                        alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
                                      ),
@@ -183,8 +182,8 @@ class singleCategoryProductItem extends StatelessWidget {
                                                       children: [
                                                         MyText(
                                                           text: "${new_price == null ?
-                                                          double.parse(product.price.toString()) <  double.parse(minimal_price) ?
-                                                          product.price.toStringAsFixed(2)  :
+                                                          double.parse(product!.price.toString()) <  double.parse(minimal_price) ?
+                                                          product!.price.toStringAsFixed(2)  :
                                                           double.parse(minimal_price).toStringAsFixed(2)
                                                               : double.parse(new_price)} ",                                                          size: StaticData.get_height(context) * .017,
                                                           color: blackColor,
@@ -204,7 +203,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                                 ),
                                                 SizedBox(width: width(context) * 0.02,),
                                                 new_price == null ?  Container()   :       Text(
-                                                  "${product.price.toStringAsFixed(2)} ${MyApp.country_currency}",
+                                                  "${product!.price.toStringAsFixed(2)} ${MyApp.country_currency}",
                                                   style: TextStyle(
                                                       decoration: TextDecoration.lineThrough,
                                                       fontSize: StaticData.get_height(context)  * .014,
@@ -224,7 +223,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                               StaticData.get_width(context) *
                                                   0.03,
                                               filledColor:
-                                              product.extensionAttributes.reviews.isEmpty    ? greyColor
+                                              product!.extensionAttributes!.reviews!.isEmpty    ? greyColor
                                                   : Colors.yellow.shade700,
                                             ),
                                           ],
@@ -233,17 +232,17 @@ class singleCategoryProductItem extends StatelessWidget {
                                      child:    Row(
                                        mainAxisAlignment: MainAxisAlignment.center,
                                        children: [
-                                         product.extensionAttributes.stockQty >=1 ?     AddProductToCartWidget(
-                                           product_sku: product.sku,
+                                         product!.extensionAttributes!.stockQty >=1 ?     AddProductToCartWidget(
+                                           product_sku: product!.sku,
                                            product_quantity:   1,
-                                           instock_status: product.extensionAttributes.stockItem.isInStock,
+                                           instock_status: product!.extensionAttributes!.stockItem!.isInStock,
                                            scaffoldKey: scafffoldKey,
                                            btn_height: width(context) * .08,
                                            btn_width: width(context) * .45,
                                            text_size: 0.017,
                                            home_shape: false,
                                            product_image: product_image,
-                                           product_id: product.id,
+                                           product_id: product!.id,
                                          )
                                              : Container(
                                            height: width(context) * .08,

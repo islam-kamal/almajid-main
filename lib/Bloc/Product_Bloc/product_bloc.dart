@@ -35,7 +35,7 @@ class ProductBloc extends Bloc<AppEvent, AppState> {
           offset: event.offset
       );
       if (response.message == null) {
-        response.items.isEmpty?_cat_products_subject : _categoryProducts_list.addAll(response.items);
+        response.items!.isEmpty?_cat_products_subject : _categoryProducts_list.addAll(response.items!);
         _cat_products_subject.sink.add(_categoryProducts_list);
         yield Done(model: response);
       } else if (response.message != null) {
@@ -47,4 +47,4 @@ class ProductBloc extends Bloc<AppEvent, AppState> {
   }
 }
 
-final product_bloc = ProductBloc(null);
+final product_bloc = ProductBloc(null!);

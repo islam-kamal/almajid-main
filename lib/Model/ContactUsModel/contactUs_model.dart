@@ -1,10 +1,10 @@
 import 'package:almajidoud/utils/file_export.dart';
 
 class ContactUsModel extends BaseMappable {
-  bool status;
-  int code;
-  String msg;
-  List<Data> data;
+  bool? status;
+  int? code;
+  String? msg;
+  List<Data>? data;
 
   ContactUsModel({this.status, this.code, this.msg, this.data});
 
@@ -13,9 +13,9 @@ class ContactUsModel extends BaseMappable {
     code = json['code'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = new List<Data>();
+      data = [];
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
   }
@@ -26,7 +26,7 @@ class ContactUsModel extends BaseMappable {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -37,9 +37,9 @@ class ContactUsModel extends BaseMappable {
     code = json['code'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = new List<Data>();
+      data = [];
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
     return ContactUsModel(status: status, msg: msg, code: code, data: data);
@@ -47,15 +47,15 @@ class ContactUsModel extends BaseMappable {
 }
 
 class Data {
-  int id;
-  String name;
-  String email;
-  String message;
-  int msgNum;
-  String status;
-  User user;
-  CreateDates createDates;
-  UpdateDates updateDates;
+  int? id;
+  String? name;
+  String? email;
+  String? message;
+  int? msgNum;
+  String? status;
+  User? user;
+  CreateDates? createDates;
+  UpdateDates? updateDates;
 
   Data(
       {this.id,
@@ -93,26 +93,26 @@ class Data {
     data['msg_num'] = this.msgNum;
     data['status'] = this.status;
     if (this.user != null) {
-      data['user'] = this.user.toJson();
+      data['user'] = this.user!.toJson();
     }
     if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
+      data['create_dates'] = this.createDates!.toJson();
     }
     if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
+      data['update_dates'] = this.updateDates!.toJson();
     }
     return data;
   }
 }
 
 class User {
-  int id;
-  String name;
-  String email;
-  String phone;
-  String type;
-  Null promoCode;
-  Null address;
+  int? id;
+  String? name;
+  String? email;
+  String? phone;
+  String? type;
+  String? promoCode;
+  String? address;
 
   User(
       {this.id,
@@ -147,7 +147,7 @@ class User {
 }
 
 class CreateDates {
-  String createdAtHuman;
+  String? createdAtHuman;
 
   CreateDates({this.createdAtHuman});
 
@@ -163,7 +163,7 @@ class CreateDates {
 }
 
 class UpdateDates {
-  String updatedAtHuman;
+  String? updatedAtHuman;
 
   UpdateDates({this.updatedAtHuman});
 

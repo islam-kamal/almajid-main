@@ -34,7 +34,7 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
   }
   @override
   void dispose() {
-    _products_details_subject = null;
+    _products_details_subject?.close();
   }
   final _newArrivalsProducts_list = <Items>[];
   final _bestSellerProducts_list = <Items>[];
@@ -50,7 +50,7 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
           offset: event.offset
       );
       if (response.message == null) {
-        response.items.isEmpty?_new_arrivals_products_subject : _newArrivalsProducts_list.addAll(response.items);
+        response.items!.isEmpty?_new_arrivals_products_subject : _newArrivalsProducts_list.addAll(response.items!);
         _new_arrivals_products_subject.sink.add(_newArrivalsProducts_list);
         yield Done(model: response);
       } else if (response.message != null) {
@@ -66,7 +66,7 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
           offset: event.offset
       );
       if (response.message == null) {
-        response.items.isEmpty?_best_seller_products_subject : _bestSellerProducts_list.addAll(response.items);
+        response.items!.isEmpty?_best_seller_products_subject : _bestSellerProducts_list.addAll(response.items!);
         _best_seller_products_subject.sink.add(_bestSellerProducts_list);
         yield Done(model: response);
       } else if (response.message != null) {
@@ -80,7 +80,7 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
           offset: event.offset
       );
       if (response.message == null) {
-        response.items.isEmpty?_weekly_deal_products_subject : _weekly_dealProducts_list.addAll(response.items);
+        response.items!.isEmpty?_weekly_deal_products_subject : _weekly_dealProducts_list.addAll(response.items!);
         _weekly_deal_products_subject.sink.add(_weekly_dealProducts_list);
         yield Done(model: response);
       } else if (response.message != null) {
@@ -95,7 +95,8 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
           offset: event.offset
       );
       if (response.message == null) {
-        response.items.isEmpty?_testahel_collection_products_subject : _testahel_collection_Products_list.addAll(response.items);
+        response.items!.isEmpty?_testahel_collection_products_subject :
+        _testahel_collection_Products_list.addAll(response.items!);
         _testahel_collection_products_subject.sink.add(_testahel_collection_Products_list);
         yield Done(model: response);
       } else if (response.message != null) {
@@ -125,4 +126,4 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
   }
 }
 
-final home_bloc = HomeBloc(null);
+final home_bloc = HomeBloc(null!);

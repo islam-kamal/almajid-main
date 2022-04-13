@@ -1,7 +1,7 @@
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/scheduler.dart';
 
-checkoutHeader({BuildContext context, String title}) {
+checkoutHeader({BuildContext? context, String? title}) {
   return  SingleChildScrollView(
       child:Container(
 
@@ -16,7 +16,7 @@ checkoutHeader({BuildContext context, String title}) {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.of(context).pop();
+                Navigator.of(context!).pop();
 
               },
               child: Icon(

@@ -1,10 +1,10 @@
 import 'package:almajidoud/utils/file_export.dart';
 
 class ProfileModel extends BaseMappable{
-  bool status;
-  int code;
-  String msg;
-  Data data;
+  bool? status;
+  int? code;
+  String? msg;
+  Data? data;
 
   ProfileModel({this.status, this.code, this.msg, this.data});
 
@@ -21,7 +21,7 @@ class ProfileModel extends BaseMappable{
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }

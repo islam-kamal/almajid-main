@@ -16,7 +16,7 @@ class _ShimmerAdState extends State<ShimmerAd> {
       children: [
         Shimmer.fromColors(
           baseColor: greyColor,
-          highlightColor: Colors.grey[350],
+          highlightColor: Colors.grey![350]!,
           child: Container(
             margin: EdgeInsets.only(right: 20),
             height: 95,
@@ -32,7 +32,7 @@ class _ShimmerAdState extends State<ShimmerAd> {
             children: [
               Shimmer.fromColors(
                 baseColor: greyColor,
-                highlightColor: Colors.grey[350],
+                highlightColor: Colors.grey![350]!,
                 child: ChipDesign(
                   color: greyColor,
                   label: '                                                  ',
@@ -42,7 +42,7 @@ class _ShimmerAdState extends State<ShimmerAd> {
               Row(children: [
                 Shimmer.fromColors(
                   baseColor: greyColor,
-                  highlightColor: Colors.grey[350],
+                  highlightColor: Colors.grey![350]!,
                   child: ChipDesign(
                     color: greyColor,
                     label: '                  ',
@@ -53,7 +53,7 @@ class _ShimmerAdState extends State<ShimmerAd> {
                   margin: EdgeInsets.only(right: 5),
                   child: Shimmer.fromColors(
                     baseColor: greyColor,
-                    highlightColor: Colors.grey[350],
+                    highlightColor: Colors.grey![350]!,
                     child: ChipDesign(
                       color: greyColor,
                       label: '                 ',

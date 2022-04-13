@@ -66,6 +66,6 @@ class SignUpBloc extends Bloc<AppEvent,AppState> with Validator{
 
 }
 
-SignUpBloc signUpBloc = new SignUpBloc(null);
+SignUpBloc signUpBloc = new SignUpBloc(null!);
 
 

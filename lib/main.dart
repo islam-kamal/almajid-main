@@ -52,22 +52,23 @@ class MyApp extends StatefulWidget{
   _MyAppState createState() => _MyAppState();
 
   static void setLocale(BuildContext context, Locale newLocale) {
-    _MyAppState state = context.findAncestorStateOfType();
+    _MyAppState?  state = context.findAncestorStateOfType();
+
     app_langauge = newLocale.languageCode;
-    state.setState(() => state.local = newLocale);
+    state?.setState(() => state.local = newLocale);
   }
 
   static void restartApp(BuildContext context) {
 
-    context.findAncestorStateOfType<_MyAppState>().restartApp();
+    context.findAncestorStateOfType<_MyAppState>()?.restartApp();
 
   }
 }
 
 class _MyAppState extends State<MyApp> {
 
-  Locale local;
-  Key key = UniqueKey();
+  Locale? local;
+  Key? key = UniqueKey();
   void restartApp() {
     setState(() {
       get_Static_data();

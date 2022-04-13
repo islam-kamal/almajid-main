@@ -1,10 +1,10 @@
 import 'package:almajidoud/utils/file_export.dart';
 
 class RateAndReviewModel extends BaseMappable{
-  bool status;
-  int code;
-  String msg;
-  Data data;
+  bool? status;
+  int? code;
+  String? msg;
+  Data? data;
 
   RateAndReviewModel({this.status, this.code, this.msg, this.data});
 
@@ -21,7 +21,7 @@ class RateAndReviewModel extends BaseMappable{
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
@@ -45,9 +45,9 @@ class Data {
   var comment;
   var product;
   var userId;
-  User user;
-  CreateDates createDates;
-  UpdateDates updateDates;
+  User? user;
+  CreateDates? createDates;
+  UpdateDates? updateDates;
 
   Data(
       {this.id,
@@ -91,13 +91,13 @@ class Data {
     data['product'] = this.product;
     data['user_id'] = this.userId;
     if (this.user != null) {
-      data['user'] = this.user.toJson();
+      data['user'] = this.user!.toJson();
     }
     if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
+      data['create_dates'] = this.createDates!.toJson();
     }
     if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
+      data['update_dates'] = this.updateDates!.toJson();
     }
     return data;
   }
@@ -153,7 +153,7 @@ class User {
 }
 
 class CreateDates {
-  String createdAtHuman;
+  String? createdAtHuman;
 
   CreateDates({this.createdAtHuman});
 
@@ -169,7 +169,7 @@ class CreateDates {
 }
 
 class UpdateDates {
-  String updatedAtHuman;
+  String? updatedAtHuman;
 
   UpdateDates({this.updatedAtHuman});
 

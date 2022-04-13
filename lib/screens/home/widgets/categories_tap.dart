@@ -17,7 +17,7 @@ class CategoriesTap extends StatefulWidget{
 }
 
 class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMixin{
-  TabController _controller;
+  TabController? _controller;
 
   @override
   void initState() {
@@ -25,7 +25,7 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
   }
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
   @override
@@ -44,7 +44,7 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
           }
           else if (state is Done) {
             var data = state.model as CategoryModel;
-            if (data.childrenData == null || data.childrenData.isEmpty) {
+            if (data.childrenData == null || data.childrenData!.isEmpty) {
               return Container();
             } else {
 
@@ -55,7 +55,7 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                     if (snapshot.data == null) {
                       return Container();
                     } else {
-                      _controller = TabController(length: snapshot.data.childrenData.length, vsync: this);
+                      _controller = TabController(length: snapshot.data!.childrenData!.length, vsync: this);
 
                       return Container(
                           width: width(context),
@@ -69,7 +69,7 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                             // indicatorColor: mainColor ,
 
 
-                            tabs: snapshot.data.childrenData.map((item) {
+                            tabs: snapshot.data!.childrenData!.map((item) {
 
                               if(item.isActive == true)
                                 return GestureDetector(
@@ -78,7 +78,7 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                                         context, CategoryProductsScreen(
                                       category_id: item.id.toString(),
                                       category_name: item.name,
-                                      category_index: _controller.index,
+                                      category_index: _controller!.index,
                                     ));
 
                                   },

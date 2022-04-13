@@ -1,10 +1,10 @@
 import 'package:almajidoud/utils/file_export.dart';
 
 class SortModel extends BaseMappable{
-  bool status;
-  int code;
-  String msg;
-  Data data;
+  bool? status;
+  int? code;
+  String? msg;
+  Data? data;
 
   SortModel({this.status, this.code, this.msg, this.data});
 
@@ -21,7 +21,7 @@ class SortModel extends BaseMappable{
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
@@ -37,16 +37,16 @@ class SortModel extends BaseMappable{
 }
 
 class Data {
-  List<Products> products;
-  Meta meta;
+  List<Products>? products;
+  Meta? meta;
 
   Data({this.products, this.meta});
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['products'] != null) {
-      products = new List<Products>();
+      products = [];
       json['products'].forEach((v) {
-        products.add(new Products.fromJson(v));
+        products!.add(new Products.fromJson(v));
       });
     }
     meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
@@ -55,10 +55,10 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.products != null) {
-      data['products'] = this.products.map((v) => v.toJson()).toList();
+      data['products'] = this.products!.map((v) => v.toJson()).toList();
     }
     if (this.meta != null) {
-      data['meta'] = this.meta.toJson();
+      data['meta'] = this.meta!.toJson();
     }
     return data;
   }
@@ -85,19 +85,19 @@ class Products {
   var notes;
   var sizeId;
   var brandId;
-  Size size;
-  Brand brand;
+  Size? size;
+  Brand? brand;
   var code;
   var mostSelling;
   var numberArrangementUnitsSameItem;
   var countRates;
   var totalRate;
   var inFavorite;
-  SubCategory subCategory;
-  List<Files> files;
-  List<Rates> rates;
-  CreateDates createDates;
-  UpdateDates updateDates;
+  SubCategory? subCategory;
+  List<Files>? files;
+  List<Rates>? rates;
+  CreateDates? createDates;
+  UpdateDates? updateDates;
 
   Products(
       {this.id,
@@ -165,15 +165,15 @@ class Products {
         ? new SubCategory.fromJson(json['sub_category'])
         : null;
     if (json['files'] != null) {
-      files = new List<Files>();
+      files = [];
       json['files'].forEach((v) {
-        files.add(new Files.fromJson(v));
+        files!.add(new Files.fromJson(v));
       });
     }
     if (json['rates'] != null) {
-      rates = new List<Rates>();
+      rates = [];
       json['rates'].forEach((v) {
-        rates.add(new Rates.fromJson(v));
+        rates!.add(new Rates.fromJson(v));
       });
     }
     createDates = json['create_dates'] != null
@@ -206,10 +206,10 @@ class Products {
     data['size_id'] = this.sizeId;
     data['brand_id'] = this.brandId;
     if (this.size != null) {
-      data['size'] = this.size.toJson();
+      data['size'] = this.size!.toJson();
     }
     if (this.brand != null) {
-      data['brand'] = this.brand.toJson();
+      data['brand'] = this.brand!.toJson();
     }
     data['code'] = this.code;
     data['most_selling'] = this.mostSelling;
@@ -219,32 +219,32 @@ class Products {
     data['total_rate'] = this.totalRate;
     data['in_favorite'] = this.inFavorite;
     if (this.subCategory != null) {
-      data['sub_category'] = this.subCategory.toJson();
+      data['sub_category'] = this.subCategory!.toJson();
     }
     if (this.files != null) {
-      data['files'] = this.files.map((v) => v.toJson()).toList();
+      data['files'] = this.files!.map((v) => v.toJson()).toList();
     }
     if (this.rates != null) {
-      data['rates'] = this.rates.map((v) => v.toJson()).toList();
+      data['rates'] = this.rates!.map((v) => v.toJson()).toList();
     }
     if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
+      data['create_dates'] = this.createDates!.toJson();
     }
     if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
+      data['update_dates'] = this.updateDates!.toJson();
     }
     return data;
   }
 }
 
 class Size {
-  int id;
-  String name;
-  int active;
-  String nameAr;
-  String nameEn;
-  CreateDates createDates;
-  UpdateDates updateDates;
+  int? id;
+  String? name;
+  int? active;
+  String? nameAr;
+  String? nameEn;
+  CreateDates? createDates;
+  UpdateDates? updateDates;
 
   Size(
       {this.id,
@@ -277,23 +277,23 @@ class Size {
     data['name_ar'] = this.nameAr;
     data['name_en'] = this.nameEn;
     if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
+      data['create_dates'] = this.createDates!.toJson();
     }
     if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
+      data['update_dates'] = this.updateDates!.toJson();
     }
     return data;
   }
 }
 
 class Brand {
-  int id;
-  String name;
-  int active;
-  String nameAr;
-  String nameEn;
-  CreateDates createDates;
-  UpdateDates updateDates;
+  int? id;
+  String? name;
+  int? active;
+  String? nameAr;
+  String? nameEn;
+  CreateDates? createDates;
+  UpdateDates? updateDates;
 
   Brand(
       {this.id,
@@ -326,10 +326,10 @@ class Brand {
     data['name_ar'] = this.nameAr;
     data['name_en'] = this.nameEn;
     if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
+      data['create_dates'] = this.createDates!.toJson();
     }
     if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
+      data['update_dates'] = this.updateDates!.toJson();
     }
     return data;
   }
@@ -340,9 +340,9 @@ class SubCategory {
   var id;
   var name;
   var cover;
-  Category category;
-  CreateDates createDates;
-  UpdateDates updateDates;
+  Category? category;
+  CreateDates? createDates;
+  UpdateDates? updateDates;
 
   SubCategory(
       {this.id,
@@ -373,13 +373,13 @@ class SubCategory {
     data['name'] = this.name;
     data['cover'] = this.cover;
     if (this.category != null) {
-      data['category'] = this.category.toJson();
+      data['category'] = this.category!.toJson();
     }
     if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
+      data['create_dates'] = this.createDates!.toJson();
     }
     if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
+      data['update_dates'] = this.updateDates!.toJson();
     }
     return data;
   }
@@ -389,9 +389,9 @@ class Category {
   var id;
   var name;
   var cover;
-  List<SubCategory> subCategory;
-  CreateDates createDates;
-  UpdateDates updateDates;
+  List<SubCategory>? subCategory;
+  CreateDates? createDates;
+  UpdateDates? updateDates;
 
   Category(
       {this.id,
@@ -406,9 +406,9 @@ class Category {
     name = json['name'];
     cover = json['cover'];
     if (json['sub_category'] != null) {
-      subCategory = new List<SubCategory>();
+      subCategory = [];
       json['sub_category'].forEach((v) {
-        subCategory.add(new SubCategory.fromJson(v));
+        subCategory!.add(new SubCategory.fromJson(v));
       });
     }
     createDates = json['create_dates'] != null
@@ -425,13 +425,13 @@ class Category {
     data['name'] = this.name;
     data['cover'] = this.cover;
     if (this.subCategory != null) {
-      data['sub_category'] = this.subCategory.map((v) => v.toJson()).toList();
+      data['sub_category'] = this.subCategory!.map((v) => v.toJson()).toList();
     }
     if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
+      data['create_dates'] = this.createDates!.toJson();
     }
     if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
+      data['update_dates'] = this.updateDates!.toJson();
     }
     return data;
   }
@@ -455,7 +455,7 @@ class CreateDates {
 }
 
 class UpdateDates {
-  String updatedAtHuman;
+  String? updatedAtHuman;
 
   UpdateDates({this.updatedAtHuman});
 
@@ -471,10 +471,10 @@ class UpdateDates {
 }
 
 class Files {
-  int id;
-  String url;
-  CreateDates createDates;
-  UpdateDates updateDates;
+  int? id;
+  String? url;
+  CreateDates? createDates;
+  UpdateDates? updateDates;
 
   Files({this.id, this.url, this.createDates, this.updateDates});
 
@@ -494,10 +494,10 @@ class Files {
     data['id'] = this.id;
     data['url'] = this.url;
     if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
+      data['create_dates'] = this.createDates!.toJson();
     }
     if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
+      data['update_dates'] = this.updateDates!.toJson();
     }
     return data;
   }
@@ -512,9 +512,9 @@ class Rates {
   var comment;
   var product;
   var userId;
-  User user;
-  CreateDates createDates;
-  UpdateDates updateDates;
+  User? user;
+  CreateDates? createDates;
+  UpdateDates? updateDates;
 
   Rates(
       {this.id,
@@ -558,13 +558,13 @@ class Rates {
     data['product'] = this.product;
     data['user_id'] = this.userId;
     if (this.user != null) {
-      data['user'] = this.user.toJson();
+      data['user'] = this.user!.toJson();
     }
     if (this.createDates != null) {
-      data['create_dates'] = this.createDates.toJson();
+      data['create_dates'] = this.createDates!.toJson();
     }
     if (this.updateDates != null) {
-      data['update_dates'] = this.updateDates.toJson();
+      data['update_dates'] = this.updateDates!.toJson();
     }
     return data;
   }

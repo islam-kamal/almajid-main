@@ -4,7 +4,7 @@ import 'package:almajidoud/screens/cart/widgets/promo_code_alert_dialog.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 class PromoCodeWidget extends StatefulWidget {
-  GlobalKey<ScaffoldState> scafffoldKey;
+  GlobalKey<ScaffoldState>? scafffoldKey;
   PromoCodeWidget({this.scafffoldKey});
   @override
   State<StatefulWidget> createState() {

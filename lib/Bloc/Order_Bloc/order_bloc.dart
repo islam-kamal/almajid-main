@@ -1,5 +1,5 @@
 
-import 'package:almajidoud/Model/OrderMode/order_model.dart';
+import 'package:almajidoud/Model/OrderModel/order_model.dart';
 import 'package:almajidoud/Repository/OrderRepo/order_repository.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:rxdart/rxdart.dart';
@@ -8,7 +8,7 @@ import 'package:rxdart/rxdart.dart';
 class OrderBloc extends Bloc<AppEvent, AppState> {
   OrderBloc(AppState initialState) : super(initialState);
 
-  BehaviorSubject<AllOrdersModel> _all_orders_subject = new BehaviorSubject<AllOrdersModel>();
+  BehaviorSubject<AllOrdersModel?> _all_orders_subject = new BehaviorSubject<AllOrdersModel>();
   get all_orders_subject{
     return _all_orders_subject;
   }
@@ -32,7 +32,7 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
       await  response.then((value){order_id = value;});
       if(order_id == null){
        // yield ErrorLoading(indicator: 'CreateOrder-$quoteId');
-        customAnimatedPushNavigation(event.context, SubmitFaieldScreen(
+        customAnimatedPushNavigation(event.context!, SubmitFaieldScreen(
           reason: translator.translate("There is no enough balance"),
           faield_type: 'PaymentFailed',
 
@@ -65,4 +65,4 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
 }
 
 
-OrderBloc orderBloc = new OrderBloc(null);
+OrderBloc orderBloc = new OrderBloc(null!);

@@ -6,7 +6,7 @@ import 'package:almajidoud/utils/file_export.dart';
 
 Future showCustomAlertDialog(
 
-    {BuildContext context,
+    {BuildContext? context,
       bool withSecondTitle : false ,
       String secondTitle : "" ,
       Widget icon : const Icon(Icons.close),
@@ -16,9 +16,9 @@ Future showCustomAlertDialog(
     bool withTwoButtons: false,
       int  maxLines : 2 ,
     String secondButtoText : "" ,
-    Function onTapSecondButton}) {
+      VoidCallback ? onTapSecondButton}) {
   return showDialog<void>(
-    context: context,
+    context: context!,
     builder: (BuildContext context) {
       return AlertDialog(
         backgroundColor: whiteColor,

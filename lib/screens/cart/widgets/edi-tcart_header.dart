@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-editCartHeader({BuildContext context, var item_id}) {
+editCartHeader({BuildContext? context, var item_id}) {
 
   return Container(
     padding: EdgeInsets.only(
@@ -22,7 +22,7 @@ editCartHeader({BuildContext context, var item_id}) {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pop(context!);
               },
               child: Icon(
                 Icons.navigate_before,

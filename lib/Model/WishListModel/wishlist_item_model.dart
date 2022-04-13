@@ -1,7 +1,7 @@
 class WishlistItemModel {
   var id;
   var qty;
-  Product product;
+  Product? product;
 
   WishlistItemModel({this.id, this.qty, this.product});
 
@@ -17,7 +17,7 @@ class WishlistItemModel {
     data['id'] = this.id;
     data['qty'] = this.qty;
     if (this.product != null) {
-      data['product'] = this.product.toJson();
+      data['product'] = this.product!.toJson();
     }
     return data;
   }
@@ -34,9 +34,9 @@ class Product {
   var typeId;
   var createdAt;
   var updatedAt;
-  List<ProductLinks> productLinks;
-  List<TierPrices> tierPrices;
-  List<CustomAttributes> customAttributes;
+  List<ProductLinks>? productLinks;
+  List<TierPrices>? tierPrices;
+  List<CustomAttributes>? customAttributes;
 
   Product(
       {this.id,
@@ -65,21 +65,21 @@ class Product {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     if (json['product_links'] != null) {
-      productLinks = new List<ProductLinks>();
+      productLinks = [];
       json['product_links'].forEach((v) {
-        productLinks.add(new ProductLinks.fromJson(v));
+        productLinks!.add(new ProductLinks.fromJson(v));
       });
     }
     if (json['tier_prices'] != null) {
-      tierPrices = new List<Null>();
+      tierPrices = [];
       json['tier_prices'].forEach((v) {
-        tierPrices.add(new TierPrices.fromJson(v));
+        tierPrices!.add(new TierPrices.fromJson(v));
       });
     }
     if (json['custom_attributes'] != null) {
-      customAttributes = new List<CustomAttributes>();
+      customAttributes = [];
       json['custom_attributes'].forEach((v) {
-        customAttributes.add(new CustomAttributes.fromJson(v));
+        customAttributes!.add(new CustomAttributes.fromJson(v));
       });
     }
   }
@@ -97,14 +97,14 @@ class Product {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     if (this.productLinks != null) {
-      data['product_links'] = this.productLinks.map((v) => v.toJson()).toList();
+      data['product_links'] = this.productLinks!.map((v) => v.toJson()).toList();
     }
     if (this.tierPrices != null) {
-      data['tier_prices'] = this.tierPrices.map((v) => v.toJson()).toList();
+      data['tier_prices'] = this.tierPrices!.map((v) => v.toJson()).toList();
     }
     if (this.customAttributes != null) {
       data['custom_attributes'] =
-          this.customAttributes.map((v) => v.toJson()).toList();
+          this.customAttributes!.map((v) => v.toJson()).toList();
     }
     return data;
   }

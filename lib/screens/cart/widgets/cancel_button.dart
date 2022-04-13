@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-cancelButton({BuildContext context}) {
+cancelButton({BuildContext? context}) {
   return Container(
       width: width(context) * .8,
       decoration: BoxDecoration(

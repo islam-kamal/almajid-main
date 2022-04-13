@@ -4,20 +4,24 @@ import 'package:almajidoud/utils/static_data.dart';
 import 'package:flutter/material.dart';
 
 class StaggerAnimation extends StatelessWidget {
-  final VoidCallback onTap;
-  final String titleButton;
-  final double btn_width;
-  final double btn_height;
-  final bool isResetScreen;
-  final String image;
-  final double text_size;
-  final bool home_shape;
-  Widget widget;
+  final VoidCallback? onTap;
+  final String? titleButton;
+  final double? btn_width;
+  final double? btn_height;
+  final bool? isResetScreen;
+  final String? image;
+  final double? text_size;
+  final bool? home_shape;
+  Widget? widget;
   var product_details_page;
-  final bool checkout_color;
+  final bool? checkout_color;
+
+   final  AnimationController? buttonController;
+  final Animation<EdgeInsets> containerCircleAnimation;
+  final Animation buttonSqueezeanimation;
   StaggerAnimation(
-      {Key key,
-      this.buttonController,
+      {Key? key,
+       this.buttonController,
       this.onTap,
       this.titleButton = "Sign In",
       this.btn_width,
@@ -34,7 +38,7 @@ class StaggerAnimation extends StatelessWidget {
           end: 50.0,
         ).animate(
           CurvedAnimation(
-            parent: buttonController,
+            parent: buttonController!,
             curve: const Interval(
               0.0,
               0.150,
@@ -46,7 +50,7 @@ class StaggerAnimation extends StatelessWidget {
           end: const EdgeInsets.only(bottom: 0.0),
         ).animate(
           CurvedAnimation(
-            parent: buttonController,
+            parent: buttonController!,
             curve: const Interval(
               0.500,
               0.800,
@@ -56,12 +60,9 @@ class StaggerAnimation extends StatelessWidget {
         ),
         super(key: key);
 
-  final AnimationController buttonController;
-  final Animation<EdgeInsets> containerCircleAnimation;
-  final Animation buttonSqueezeanimation;
 
-  Widget _buildAnimation(BuildContext context, Widget child) {
-    double height = MediaQuery.of(context).size.height;
+  Widget _buildAnimation(BuildContext? context, Widget? child) {
+    double height = MediaQuery.of(context!).size.height;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -71,13 +72,13 @@ class StaggerAnimation extends StatelessWidget {
             ? FractionalOffset.center
             : FractionalOffset.bottomRight,
         decoration: BoxDecoration(
-          color: home_shape
-              ? checkout_color
+          color: home_shape!
+              ? checkout_color!
                   ? greenColor
                   : Theme.of(context).primaryColor
               : null,
-          border: home_shape ? null : Border.all(color: mainColor),
-          borderRadius: home_shape
+          border: home_shape! ? null : Border.all(color: mainColor),
+          borderRadius: home_shape!
               ? const BorderRadius.all(Radius.circular(0.0))
               : product_details_page
                   ? const BorderRadius.all(Radius.circular(0.0))
@@ -95,19 +96,19 @@ class StaggerAnimation extends StatelessWidget {
                 ? Container(
                     width: width(context) * .9,
                     decoration: BoxDecoration(
-                        color: home_shape ? mainColor : null,
+                        color: home_shape! ? mainColor : null,
                         borderRadius: BorderRadius.circular(8)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.shopping_cart,
-                            color: home_shape ? whiteColor : mainColor),
+                            color: home_shape! ? whiteColor : mainColor),
                         SizedBox(width: 10),
                         customDescriptionText(
                             context: context,
                             text: "Add To Cart",
-                            percentageOfHeight: text_size,
-                            textColor: home_shape ? whiteColor : mainColor),
+                            percentageOfHeight: text_size!,
+                            textColor: home_shape! ? whiteColor : mainColor),
                       ],
                     ),
                     height: isLandscape(context)
@@ -123,7 +124,7 @@ class StaggerAnimation extends StatelessWidget {
                                 ? width(context) * .8
                                 : width(context) * .45,
                             decoration: BoxDecoration(
-                                color: checkout_color ? greenColor : blackColor,
+                                color: checkout_color! ? greenColor : blackColor,
                                 borderRadius: BorderRadius.circular(30)),
                             child: Center(
                               child: Row(
@@ -134,12 +135,12 @@ class StaggerAnimation extends StatelessWidget {
                                           context: context,
                                           text: isResetScreen == null
                                               ? titleButton
-                                              : isResetScreen
+                                              : isResetScreen!
                                                   ? "Done"
                                                   : "Send",
                                           textColor: whiteColor)
                                       : Center(
-                                          child: Image.asset(image,
+                                          child: Image.asset(image!,
                                               height: isLandscape(context)
                                                   ? 2 *
                                                       StaticData.get_height(
@@ -210,7 +211,7 @@ class StaggerAnimation extends StatelessWidget {
                                 children: [
                                   customDescriptionText(
                                       context: context,
-                                      text: isResetScreen ? "Done" : "Send",
+                                      text: isResetScreen! ? "Done" : "Send",
                                       textColor: whiteColor),
                                   SizedBox(width: width(context) * .03),
                                   Container(
@@ -263,10 +264,10 @@ class StaggerAnimation extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext? context) {
     return AnimatedBuilder(
       builder: _buildAnimation,
-      animation: buttonController,
+      animation: buttonController!,
     );
   }
 }

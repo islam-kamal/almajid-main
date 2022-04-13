@@ -1,8 +1,8 @@
 import 'package:almajidoud/Base/network-mappers.dart';
 
 class SignInModel extends BaseMappable{
-  String message;
-  String trace;
+  String? message;
+  String? trace;
 
   SignInModel({this.message, this.trace});
 

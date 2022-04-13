@@ -7,13 +7,13 @@ class AppLocalization{
   final Locale locale;
   AppLocalization(this.locale);
 
-  static AppLocalization of(BuildContext context){
+  static AppLocalization? of(BuildContext context){
     return Localizations.of<AppLocalization>(context, AppLocalization);
   }
 
   static const LocalizationsDelegate<AppLocalization> delegate = _AppLocaliztionsDelegate();
 
-  Map<String,String> _localizationString;
+  Map<String,String>? _localizationString;
 
   Future<bool> load()async{
     String jsonString = await rootBundle.loadString('Lang/${locale.languageCode}.json');
@@ -25,7 +25,7 @@ class AppLocalization{
   }
 
   String translate(String key){
-    return _localizationString[key];
+    return _localizationString![key]!;
   }
 }
 

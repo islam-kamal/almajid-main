@@ -41,10 +41,10 @@ class CategoryBloc extends Bloc<AppEvent, AppState> with Validator{
     if (event is getAllCategories) {
       yield Loading();
       final response = await categoryRepository.getCategoriesList();
-      if (response.childrenData != null || response.childrenData.isNotEmpty) {
+      if (response.childrenData != null || response.childrenData!.isNotEmpty) {
         _category_subject.sink.add(response);
         yield Done(model: response);
-      } else if (response.childrenData == null || response.childrenData.isEmpty) {
+      } else if (response.childrenData == null || response.childrenData!.isEmpty) {
         yield ErrorLoading(model: response);
       }
     }
@@ -54,4 +54,4 @@ class CategoryBloc extends Bloc<AppEvent, AppState> with Validator{
 
 }
 
-CategoryBloc categoryBloc = new CategoryBloc(null);
+CategoryBloc categoryBloc = new CategoryBloc(null!);

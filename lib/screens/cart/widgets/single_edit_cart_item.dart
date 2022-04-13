@@ -1,7 +1,7 @@
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/Model/CartModel/cart_details_model.dart' as cart_details_model;
 
-singleEditCartItem({BuildContext context, bool checkValue: false,cart_details_model.Items item}) {
+singleEditCartItem({BuildContext? context, bool checkValue: false,cart_details_model.Items? item}) {
 
 
   return Row(
@@ -59,7 +59,7 @@ singleEditCartItem({BuildContext context, bool checkValue: false,cart_details_mo
                                 context: context,
                                 textColor: mainColor,
                                 maxLines: 2,
-                                text: item.name??'',
+                                text: item!.name??'',
                                 textAlign: TextAlign.start),
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .01),

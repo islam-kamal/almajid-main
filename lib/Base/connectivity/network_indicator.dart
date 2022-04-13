@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 
 class NetworkIndicator extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
   const NetworkIndicator({this.child});
   @override
   _NetworkIndicatorState createState() => _NetworkIndicatorState();
@@ -120,7 +120,7 @@ class _NetworkIndicatorState extends State<NetworkIndicator> {
         }
       },
       builder: (BuildContext context) {
-        return widget.child;
+        return widget.child!;
       },
     );
   }

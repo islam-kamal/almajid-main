@@ -32,7 +32,7 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
           product_sku: event.product_sku,
           product_quantity: event.product_quantity);
 
-      if (response.message != null) {
+      if (response?.message != null) {
         yield ErrorLoadingProduct(sku: event.product_sku, model: response, indicator: event.indictor);
       } else {
         yield DoneProductAdded(sku: event.product_sku, model: response, indicator: event.indictor);
@@ -79,7 +79,7 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
           backgroundColor: redColor,
           flushbarStyle: FlushbarStyle.FLOATING,
           duration: Duration(seconds: 3),
-        )..show(event.scafffoldKey.currentState.context);
+        )..show(event.scafffoldKey!.currentState!.context);
       } else {
         Flushbar(
           messageText: Container(
@@ -97,8 +97,8 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
           backgroundColor: greenColor,
           flushbarStyle: FlushbarStyle.FLOATING,
           duration: Duration(seconds: 1),
-        )..show(event.scafffoldKey.currentState.context).whenComplete((){
-          customAnimatedPushNavigation(event.context, CartScreen());
+        )..show(event.scafffoldKey!.currentState!.context).whenComplete((){
+          customAnimatedPushNavigation(event.context!, CartScreen());
 
         });
 
@@ -126,7 +126,7 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
           backgroundColor: redColor,
           flushbarStyle: FlushbarStyle.FLOATING,
           duration: Duration(seconds: 3),
-        )..show(event.scafffoldKey.currentState.context);
+        )..show(event.scafffoldKey!.currentState!.context);
 
       } else {
         Flushbar(
@@ -147,9 +147,9 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
           backgroundColor: greenColor,
           flushbarStyle: FlushbarStyle.FLOATING,
           duration: Duration(seconds: 1),
-        )..show(event.scafffoldKey.currentState.context).whenComplete((){
+        )..show(event.scafffoldKey!.currentState!.context).whenComplete((){
           // shoppingCartBloc.add(GetCartDetailsEvent());
-          customAnimatedPushNavigation(event.context, CartScreen());
+          customAnimatedPushNavigation(event.context!, CartScreen());
 
         });
 
@@ -161,4 +161,4 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
   }
 }
 
-ShoppingCartBloc shoppingCartBloc = new ShoppingCartBloc(null);
+ShoppingCartBloc shoppingCartBloc = new ShoppingCartBloc(null!);

@@ -1,23 +1,23 @@
 import 'package:almajidoud/Base/network-mappers.dart';
 
 class UserInfoModel extends BaseMappable {
-  int id;
-  int groupId;
-  String createdAt;
-  String updatedAt;
-  String createdIn;
-  String email;
-  String firstname;
-  String lastname;
-  int storeId;
-  int websiteId;
-  List<Addresses> addresses;
-  int disableAutoGroupChange;
-  ExtensionAttributes extensionAttributes;
-  List<CustomAttributes> customAttributes;
-  String message;
-  Parameters parameters;
-  String trace;
+  int? id;
+  int? groupId;
+  String? createdAt;
+  String? updatedAt;
+  String? createdIn;
+  String? email;
+  String? firstname;
+  String? lastname;
+  int? storeId;
+  int? websiteId;
+  List<Addresses>? addresses;
+  int? disableAutoGroupChange;
+  ExtensionAttributes? extensionAttributes;
+  List<CustomAttributes>? customAttributes;
+  String? message;
+  Parameters? parameters;
+  String? trace;
   UserInfoModel(
       {this.id,
         this.groupId,
@@ -49,9 +49,9 @@ class UserInfoModel extends BaseMappable {
     storeId = json['store_id'];
     websiteId = json['website_id'];
     if (json['addresses'] != null) {
-      addresses = new List<Addresses>();
+      addresses = [];
       json['addresses'].forEach((v) {
-        addresses.add(new Addresses.fromJson(v));
+        addresses!.add(new Addresses.fromJson(v));
       });
     }
     disableAutoGroupChange = json['disable_auto_group_change'];
@@ -59,9 +59,9 @@ class UserInfoModel extends BaseMappable {
         ? new ExtensionAttributes.fromJson(json['extension_attributes'])
         : null;
     if (json['custom_attributes'] != null) {
-      customAttributes = new List<CustomAttributes>();
+      customAttributes = [];
       json['custom_attributes'].forEach((v) {
-        customAttributes.add(new CustomAttributes.fromJson(v));
+        customAttributes!.add(new CustomAttributes.fromJson(v));
       });
     }
     message = json['message'];
@@ -84,19 +84,19 @@ class UserInfoModel extends BaseMappable {
     data['store_id'] = this.storeId;
     data['website_id'] = this.websiteId;
     if (this.addresses != null) {
-      data['addresses'] = this.addresses.map((v) => v.toJson()).toList();
+      data['addresses'] = this.addresses!.map((v) => v.toJson()).toList();
     }
     data['disable_auto_group_change'] = this.disableAutoGroupChange;
     if (this.extensionAttributes != null) {
-      data['extension_attributes'] = this.extensionAttributes.toJson();
+      data['extension_attributes'] = this.extensionAttributes!.toJson();
     }
     if (this.customAttributes != null) {
       data['custom_attributes'] =
-          this.customAttributes.map((v) => v.toJson()).toList();
+          this.customAttributes!.map((v) => v.toJson()).toList();
     }
     data['message'] = this.message;
     if (this.parameters != null) {
-      data['parameters'] = this.parameters.toJson();
+      data['parameters'] = this.parameters!.toJson();
     }
     data['trace'] = this.trace;
 
@@ -117,9 +117,9 @@ class UserInfoModel extends BaseMappable {
     storeId = json['store_id'];
     websiteId = json['website_id'];
     if (json['addresses'] != null) {
-      addresses = new List<Addresses>();
+      addresses = [];
       json['addresses'].forEach((v) {
-        addresses.add(new Addresses.fromJson(v));
+        addresses!.add(new Addresses.fromJson(v));
       });
     }
     disableAutoGroupChange = json['disable_auto_group_change'];
@@ -127,9 +127,9 @@ class UserInfoModel extends BaseMappable {
         ? new ExtensionAttributes.fromJson(json['extension_attributes'])
         : null;
     if (json['custom_attributes'] != null) {
-      customAttributes = new List<CustomAttributes>();
+      customAttributes = [];
       json['custom_attributes'].forEach((v) {
-        customAttributes.add(new CustomAttributes.fromJson(v));
+        customAttributes!.add(new CustomAttributes.fromJson(v));
       });
     }
     message = json['message'];
@@ -164,7 +164,7 @@ class UserInfoModel extends BaseMappable {
 }
 
 class ExtensionAttributes {
-  bool isSubscribed;
+  bool? isSubscribed;
 
   ExtensionAttributes({this.isSubscribed});
 
@@ -180,8 +180,8 @@ class ExtensionAttributes {
 }
 
 class CustomAttributes {
-  String attributeCode;
-  String value;
+  String? attributeCode;
+  String? value;
 
   CustomAttributes({this.attributeCode, this.value});
 
@@ -199,7 +199,7 @@ class CustomAttributes {
 }
 
 class Addresses {
-  bool isSubscribed;
+  bool? isSubscribed;
 
   Addresses({this.isSubscribed});
 
@@ -216,7 +216,7 @@ class Addresses {
 
 
 class Parameters {
-  String resources;
+  String? resources;
 
   Parameters({this.resources});
 
