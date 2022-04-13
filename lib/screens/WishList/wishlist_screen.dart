@@ -425,6 +425,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                   child: CircularProgressIndicator(),
                                 );
                               }
+                              return Container();
                             },
                           ),
                         ),

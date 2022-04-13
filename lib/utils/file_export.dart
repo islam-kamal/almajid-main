@@ -15,8 +15,7 @@ export 'package:syncfusion_flutter_sliders/sliders.dart';
 export 'package:pie_chart/pie_chart.dart';
 export 'package:smooth_star_rating/smooth_star_rating.dart';
 export 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-export 'package:grouped_checkbox/grouped_checkbox.dart';
-export 'package:carousel_pro/carousel_pro.dart';
+
 export 'package:localize_and_translate/localize_and_translate.dart';
 export  'package:flutter_neumorphic/flutter_neumorphic.dart';
 

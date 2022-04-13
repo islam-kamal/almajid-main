@@ -2,7 +2,7 @@ import 'package:almajidoud/custom_widgets/cart_badge.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-productDetailsNameWidget({BuildContext context , String product_name , Widget category_screen}) {
+productDetailsNameWidget({BuildContext? context , String? product_name , Widget? category_screen}) {
   return     Directionality(
       textDirection:
       translator.activeLanguageCode == 'en'
@@ -24,8 +24,8 @@ productDetailsNameWidget({BuildContext context , String product_name , Widget ca
                 InkWell(
                   child: Icon(Icons.arrow_back_ios),
                   onTap: (){
-                    category_screen== null?  customAnimatedPushNavigation(context, CustomCircleNavigationBar())
-                        : customAnimatedPushNavigation(context, category_screen) ;
+                    category_screen== null?  customAnimatedPushNavigation(context!, CustomCircleNavigationBar())
+                        : customAnimatedPushNavigation(context!, category_screen) ;
                   },
                 ),
                 Container(

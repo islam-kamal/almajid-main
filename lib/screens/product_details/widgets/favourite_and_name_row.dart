@@ -2,7 +2,7 @@ import 'package:almajidoud/screens/WishList/custom_wishlist.dart';
 import 'package:almajidoud/screens/product_details/product_details_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
-favouriteAndNameRow({BuildContext context, String product_name , var prod_id, var prod_qty}) {
+favouriteAndNameRow({BuildContext? context, String? product_name , var prod_id, var prod_qty}) {
   return   Directionality(
       textDirection:
       translator.activeLanguageCode == 'en'

@@ -1,12 +1,7 @@
-import 'package:almajidoud/Bloc/Search_Bloc/search_bloc.dart';
-import 'package:almajidoud/custom_widgets/cart_badge.dart';
-import 'package:almajidoud/screens/SearchScreen/auto_search_class.dart';
-import 'package:almajidoud/screens/SearchScreen/search_screen.dart';
+
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
-import 'package:almajidoud/screens/cart/widgets/promo_code_alert_dialog.dart';
 import 'package:almajidoud/utils/file_export.dart';
-import 'package:circle_bottom_navigation_bar/circle_bottom_navigation_bar.dart';
-import 'package:flutter/scheduler.dart';
+
 
 class CartScreenAppBar extends StatefulWidget {
   Function? onTapCategoryDrawer;

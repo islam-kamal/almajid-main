@@ -1,7 +1,7 @@
 import 'package:almajidoud/utils/file_export.dart';
 
 singleRatingWidget({
-  BuildContext context,
+  BuildContext? context,
   var title,
   var detail,
   var nickname,

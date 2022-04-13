@@ -13,7 +13,7 @@ class SubmitSuccessfulScreen extends StatefulWidget{
 
 }
 class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with TickerProviderStateMixin{
-  AnimationController _loginButtonController ;
+  AnimationController? _loginButtonController ;
   bool isLoading = false;
 
   @override
@@ -28,14 +28,14 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
       setState(() {
         isLoading = true;
       });
-      await _loginButtonController.forward();
+      await _loginButtonController!.forward();
     } on TickerCanceled {
     }
   }
 
   Future<Null> _stopAnimation() async {
     try {
-      await _loginButtonController.reverse();
+      await _loginButtonController!.reverse();
       setState(() {
         isLoading = false;
       });
@@ -46,7 +46,7 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
   @override
   void dispose() {
     // TODO: implement dispose
-    _loginButtonController.dispose();
+    _loginButtonController!.dispose();
     super.dispose();
   }
 
@@ -81,7 +81,7 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
                             style: Theme.of(context)
                                 .textTheme
                                 .headline6
-                                .copyWith(fontWeight: FontWeight.bold),
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8),
                           Text(
@@ -117,7 +117,7 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
 
                       StaggerAnimation(
                         titleButton: translator.translate("Continue").toUpperCase(),
-                        buttonController: _loginButtonController.view,
+                        buttonController: _loginButtonController,
 
                         onTap: () {
                           shoppingCartBloc.add(GetCartDetailsEvent());

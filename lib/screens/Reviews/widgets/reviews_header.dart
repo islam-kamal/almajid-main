@@ -2,7 +2,7 @@ import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigatio
 import 'package:almajidoud/screens/product_details/product_details_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/Reviews/add_review_screen.dart';
-reviewsHeader({BuildContext context, String title , var product_id}) {
+reviewsHeader({BuildContext? context, String? title , var product_id}) {
   return Directionality(
       textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl :TextDirection.ltr ,
       child: Container(
@@ -22,7 +22,7 @@ reviewsHeader({BuildContext context, String title , var product_id}) {
       children: [
         GestureDetector(
           onTap: () {
-            customAnimatedPushNavigation(context,ProductDetailsScreen(
+            customAnimatedPushNavigation(context!,ProductDetailsScreen(
                 product_id :product_id
             ));
           },

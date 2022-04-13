@@ -19,7 +19,7 @@ import 'package:almajidoud/screens/product_details/widgets/product_use_tabBar.da
 
 class ProductDetailsScreen extends StatefulWidget {
   var product_id;
-  Widget category_screen;
+  Widget? category_screen;
   ProductDetailsScreen({this.product_id,this.category_screen});
   @override
   _ProductDetailsScreenState createState() => _ProductDetailsScreenState();
@@ -27,13 +27,13 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen>
     with TickerProviderStateMixin {
-  List<SliderImage> product_images ;
+  List<SliderImage>? product_images ;
   var selected_size = 0;
   var qty=1;
   var description;
   var product_image;
   var positioned_status = false;
-  final home_bloc = HomeBloc(null);
+  final home_bloc = HomeBloc(null!);
   bool releated_products = false;
   var percentage;
   @override
@@ -66,22 +66,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                 return no_data_widget(context: context);
               }
               else {
-                if(snapshot.data.isEmpty){
+                if(snapshot.data!.isEmpty){
                   return  no_data_widget(context: context);
                 }
                 else{
                   product_images = [];
-                  snapshot.data[0].mediaGalleryEntries.forEach((element) {
-                    product_images.add(
+                  snapshot.data![0].mediaGalleryEntries!.forEach((element) {
+                    product_images!.add(
                         SliderImage(
                             url: "${Urls.BASE_URL}/media/catalog/product" + element.file
                         )
                     );
                   });
-                  String special_price;
+                  String? special_price;
                   var new_price , minimal_price , description_use , title , how_to_use;
-                  DateTime startDate , endDate ;
-                  snapshot.data[0].customAttributes.forEach((element) {
+                  DateTime? startDate , endDate ;
+                  snapshot.data![0].customAttributes!.forEach((element) {
                     if(element.attributeCode ==  "description"){
                       description = element.value;
                     }
@@ -109,26 +109,26 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                   });
                   if(startDate ==null || endDate ==null ) {
                     new_price = minimal_price;
-                    if(double.parse(minimal_price) < double.parse(snapshot.data[0].price.toString()))
-                      percentage = (1 - (double.parse(minimal_price)  / snapshot.data[0].price) )* 100;
+                    if(double.parse(minimal_price) < double.parse(snapshot.data![0].price.toString()))
+                      percentage = (1 - (double.parse(minimal_price)  / snapshot.data![0].price) )* 100;
 
                   }
                   else{
-                    if(StaticData.isCurrentDateInRange(startDate,endDate)
-                        && double.parse(special_price) <= double.parse(minimal_price)
-                        && double.parse(special_price).toStringAsFixed(2) != snapshot.data[0].price ) {
+                    if(StaticData.isCurrentDateInRange(startDate!,endDate!)
+                        && double.parse(special_price!) <= double.parse(minimal_price)
+                        && double.parse(special_price!).toStringAsFixed(2) != snapshot.data![0].price ) {
                       new_price = special_price;
-                      percentage = (1 - (double.parse(new_price)  / snapshot.data[0].price) )* 100;
+                      percentage = (1 - (double.parse(new_price)  / snapshot.data![0].price) )* 100;
 
-                    }else if(double.parse(special_price) > double.parse(minimal_price)){
+                    }else if(double.parse(special_price!) > double.parse(minimal_price)){
                       new_price = minimal_price;
-                      percentage = (1 - (double.parse(new_price)  / snapshot.data[0].price) )* 100;
+                      percentage = (1 - (double.parse(new_price)  / snapshot.data![0].price) )* 100;
 
                     }
                     else {
-                      if(!StaticData.isCurrentDateInRange(startDate,endDate) ){
+                      if(!StaticData.isCurrentDateInRange(startDate! , endDate!) ){
                         new_price = minimal_price;
-                        percentage = (1 - (double.parse(new_price)  / snapshot.data[0].price) )* 100;
+                        percentage = (1 - (double.parse(new_price)  / snapshot.data![0].price) )* 100;
 
                       }
 
@@ -136,7 +136,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
 
                   }
 
-                  snapshot.data[0].productLinks.forEach((element) {
+                  snapshot.data![0].productLinks!.forEach((element) {
                     if(element.linkType == "related"){
                       releated_products = true;
                     }
@@ -148,7 +148,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                           children: [
                             productDetailsNameWidget(
                                 context: context,
-                                product_name: snapshot.data[0].name,
+                                product_name: snapshot.data![0].name,
                                 category_screen: widget.category_screen
                             ),
                             Stack(
@@ -172,9 +172,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                 context: context, percentageOfHeight: .05),
                             favouriteAndNameRow(
                                 context: context,
-                                product_name: snapshot.data[0].name,
-                                prod_id:  snapshot.data[0].id,
-                                prod_qty:  snapshot.data[0].extensionAttributes.stockQty),
+                                product_name: snapshot.data![0].name,
+                                prod_id:  snapshot.data![0].id,
+                                prod_qty:  snapshot.data![0].extensionAttributes!.stockQty),
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .01),
                             descriptionAndShareRow(
@@ -187,17 +187,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                               context: context,
                               new_price: new_price ,
                               minimal_price: minimal_price,
-                              old_price: snapshot.data[0].price.toStringAsFixed(2),
-                              review_status:  snapshot.data[0].extensionAttributes.reviews.isEmpty ? false : true,
+                              old_price: snapshot.data![0].price.toStringAsFixed(2),
+                              review_status:  snapshot.data![0].extensionAttributes!.reviews!.isEmpty ? false : true,
 
                             ),
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .02),
                             vatAndReviewsRow(
                               context: context,
-                              product_sku: snapshot.data[0].sku,
-                              product_id: snapshot.data[0].id,
-                              review_status:  snapshot.data[0].extensionAttributes.reviews.isEmpty? false : true,
+                              product_sku: snapshot.data![0].sku,
+                              product_id: snapshot.data![0].id,
+                              review_status:  snapshot.data![0].extensionAttributes!.reviews!.isEmpty? false : true,
                             ),
                             divider(context: context),
                             responsiveSizedBox(
@@ -258,7 +258,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                                   0.10,
                                               onPressed: () {
                                                 setState(() {
-                                                  if (qty == snapshot.data[0].extensionAttributes.stockQty) {
+                                                  if (qty == snapshot.data![0].extensionAttributes!.stockQty) {
                                                     errorDialog(
                                                       context: context,
                                                       text:
@@ -338,8 +338,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                       context: context, percentageOfHeight: .015),
                                   writeReviewButton(
                                     context: context,
-                                    product_suk: snapshot.data[0].sku,
-                                    product_id: snapshot.data[0].id,
+                                    product_suk: snapshot.data![0].sku,
+                                    product_id: snapshot.data![0].id,
                                   ),
                                   responsiveSizedBox(
                                       context: context, percentageOfHeight: .005),
@@ -353,7 +353,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             HomeListProducts(
                               type: 'related products',
                               homeScaffoldKey: _product_details_scaffoldKey,
-                              items: snapshot.data[0],
+                              items: snapshot.data![0],
                             ),
                             responsiveSizedBox(context: context, percentageOfHeight: .2),
                           ],
@@ -363,17 +363,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                           bottom: 0,
                           right: 0,
                           left: 0,
-                          child:    snapshot.data[0].extensionAttributes.stockQty >=0 ?
+                          child:    snapshot.data![0].extensionAttributes!.stockQty >=0 ?
                           AddProductToCartWidget(
-                            product_sku: snapshot.data[0].sku,
+                            product_sku: snapshot.data![0].sku,
                             product_quantity:  StaticData.product_qty ,
-                            instock_status: snapshot.data[0].extensionAttributes.stockItem.isInStock,
+                            instock_status: snapshot.data![0].extensionAttributes!.stockItem!.isInStock,
                             scaffoldKey: _product_details_scaffoldKey,
                             btn_height: width(context) * .16,
                            btn_width: width(context) ,
                             text_size: .025,
                             product_image: product_image,
-                            product_id: snapshot.data[0].id,
+                            product_id: snapshot.data![0].id,
                             product_details_page: true,
                           )  :
                           Container(

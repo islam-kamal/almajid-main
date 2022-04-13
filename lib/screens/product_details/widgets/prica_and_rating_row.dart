@@ -2,7 +2,7 @@ import 'package:almajidoud/Widgets/customText.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:rating_bar/rating_bar.dart';
 
-priceAndRatingRow({BuildContext context , var new_price ,var old_price, var minimal_price ,bool review_status}) {
+priceAndRatingRow({BuildContext? context , var new_price ,var old_price, var minimal_price ,bool? review_status}) {
   return Container(
     padding: EdgeInsets.only(
         right: width(context) * .05, left: width(context) * .05),
@@ -25,14 +25,14 @@ priceAndRatingRow({BuildContext context , var new_price ,var old_price, var mini
                              old_price.toString()  :
                               double.parse(minimal_price).toStringAsFixed(2)
                                   : double.parse(new_price)} ",
-                          size: StaticData.get_height(context) * .024,
+                          size: StaticData.get_height(context!) * .024,
                           color: blackColor,
                           maxLines: 2,
                           weight: FontWeight.bold,
                         ),
                         MyText(
                           text: " ${MyApp.country_currency}",
-                          size: StaticData.get_height(context) * .011,
+                          size: StaticData.get_height(context!) * .011,
                           color: blackColor,
                           maxLines: 2,
                           weight: FontWeight.normal,
@@ -61,7 +61,7 @@ priceAndRatingRow({BuildContext context , var new_price ,var old_price, var mini
           filledIcon: Icons.star,
           emptyIcon: Icons.star_border,
           size: StaticData.get_width(context) * 0.03,
-          filledColor: review_status ? Colors.yellow.shade700 : greyColor,
+          filledColor: review_status! ? Colors.yellow.shade700 : greyColor,
         )
       ],
     ),

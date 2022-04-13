@@ -15,7 +15,7 @@ class SubmitFaieldScreen extends StatefulWidget{
 
 }
 class SubmitFaieldScreenState extends State<SubmitFaieldScreen> with TickerProviderStateMixin{
-  AnimationController _loginButtonController ;
+  AnimationController? _loginButtonController ;
   bool isLoading = false;
 
   @override
@@ -29,7 +29,7 @@ class SubmitFaieldScreenState extends State<SubmitFaieldScreen> with TickerProvi
   @override
   void dispose() {
     // TODO: implement dispose
-    _loginButtonController.dispose();
+    _loginButtonController!.dispose();
     super.dispose();
   }
 
@@ -65,7 +65,7 @@ class SubmitFaieldScreenState extends State<SubmitFaieldScreen> with TickerProvi
                             style: Theme.of(context)
                                 .textTheme
                                 .headline6
-                                .copyWith(fontWeight: FontWeight.bold),
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8),
                           Text(

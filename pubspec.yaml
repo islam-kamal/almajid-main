@@ -22,6 +22,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  flutter_keyboard_visibility: ^5.2.0
   clippy_flutter: 2.0.0-nullsafety.1
   syncfusion_flutter_sliders:
   pie_chart:
@@ -81,6 +83,8 @@ dependencies:
   image_cropper:
   pay:
   intl_phone_field:
+  smooth_star_rating_null_safety:
+
 
 dev_dependencies:
   flutter_test:

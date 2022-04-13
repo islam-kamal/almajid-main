@@ -8,7 +8,7 @@ import 'dart:ui' as ui;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LanguageCountryScreen extends StatefulWidget {
-  String type;
+  String? type;
   LanguageCountryScreen({this.type});
   @override
   State<StatefulWidget> createState() {
@@ -54,6 +54,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
       onWillPop: () async {
         if (widget.type == 'settings') {
           customAnimatedPushNavigation(context, MyAccountScreen());
+          return null!;
         } else {
           return false;
         }
@@ -223,8 +224,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                               InkWell(
                                                 onTap: () {
                                                   setState(() {
-                                                    country_name =
-                                                        countries[index].name;
+                                                    country_name = countries[index].name!;
                                                     MyApp.app_location =
                                                         country_name == 'Saudi Arabia' ? 'sa' : country_name ==
                                                                     "United Arab Emirates" ? 'uae' : 'kw';
@@ -257,11 +257,10 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                                                     greyColor,
                                                                 width: 3)),
                                                     child: Image.asset(
-                                                        countries[index]
-                                                            .photo)),
+                                                        countries[index].photo!)),
                                               ),
                                               Text(countries[index].name == "United Arab Emirates"
-                                                  ? "United Arab Emirates".tr() : countries[index].name.tr())
+                                                  ? "United Arab Emirates".tr() : countries[index].name!.tr())
                                             ],
                                           ),
                                         );
@@ -389,7 +388,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
     );
   }
 
-  void _changeLang({String lang}) async {
+  void _changeLang({String? lang}) async {
     setState(() {
       translator.setNewLanguage(
         context,

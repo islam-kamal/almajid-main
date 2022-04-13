@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/Reviews/product_reviews_screen.dart';
-writeReviewButton({BuildContext context , var product_suk , var product_id}) {
+writeReviewButton({BuildContext? context , var product_suk , var product_id}) {
   return GestureDetector(
     onTap: (){
       customPushNamedNavigation(context,ProductReviewsScreen(

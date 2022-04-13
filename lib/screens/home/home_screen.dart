@@ -9,7 +9,6 @@ import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/home/widgets/categories_tap.dart';
 import 'package:almajidoud/screens/home/widgets/home_list_products.dart';
 import 'package:almajidoud/screens/home/widgets/title_text.dart';
-import 'package:almajidoud/screens/home/widgets/top_slider.dart';
 import 'package:almajidoud/screens/product_details/product_details_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:http/http.dart' as http;

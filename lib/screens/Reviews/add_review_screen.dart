@@ -33,7 +33,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
 
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
-  AnimationController _loginButtonController;
+  AnimationController? _loginButtonController;
   bool isLoading = false;
 
   Future<Null> _playAnimation() async {
@@ -41,14 +41,14 @@ class _AddReviewScreenState extends State<AddReviewScreen>
       setState(() {
         isLoading = true;
       });
-      await _loginButtonController.forward();
+      await _loginButtonController!.forward();
     } on TickerCanceled {
     }
   }
 
   Future<Null> _stopAnimation() async {
     try {
-      await _loginButtonController.reverse();
+      await _loginButtonController!.reverse();
       setState(() {
         isLoading = false;
       });
@@ -59,7 +59,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
   @override
   void dispose() {
     // TODO: implement dispose
-    _loginButtonController.dispose();
+    _loginButtonController!.dispose();
     super.dispose();
   }
 
@@ -96,7 +96,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
                   backgroundColor: redColor,
                   flushbarStyle: FlushbarStyle.FLOATING,
                   duration: Duration(seconds: 3),
-                )..show(_drawerKey.currentState.context);
+                )..show(_drawerKey.currentState!.context);
               }
 
             } else if (state is Done) {
@@ -192,10 +192,10 @@ class _AddReviewScreenState extends State<AddReviewScreen>
                                         percentageOfHeight: .03),
                                     StaggerAnimation(
                                       titleButton: "Submit",
-                                      buttonController: _loginButtonController.view,
+                                      buttonController: _loginButtonController,
                                       btn_width: width(context) * .7,
                                       onTap: () {
-                                        if (_formKey.currentState.validate()) {
+                                        if (_formKey.currentState!.validate()) {
                                           reviewsBloc.add(CreateReviewEvent(
                                               product_id: widget.product_id,
                                               nickname: nickname.text,
@@ -221,7 +221,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
     ));
   }
 
-  addReviewsHeader({BuildContext context , var product_id}) {
+  addReviewsHeader({BuildContext? context , var product_id}) {
     return Container(
       padding: EdgeInsets.only(
           right: width(context) * .05,
@@ -239,7 +239,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
         children: [
           GestureDetector(
             onTap: () {
-              customAnimatedPushNavigation(context, ProductReviewsScreen(
+              customAnimatedPushNavigation(context!, ProductReviewsScreen(
                 product_id: product_id,
               ));
             },
@@ -260,7 +260,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
     );
   }
 
-  textRateYourExperience({BuildContext context}) {
+  textRateYourExperience({BuildContext? context}) {
     return customDescriptionText(
         context: context,
         textColor: mainColor,
@@ -269,7 +269,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
         percentageOfHeight: .03);
   }
 
-  reviewText({BuildContext context}) {
+  reviewText({BuildContext? context}) {
     return Container(
       padding: EdgeInsets.only(
           right: width(context) * .05, left: width(context) * .05),
@@ -287,7 +287,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
     );
   }
 
-  singleReviewItem({BuildContext context, String text, double rating}) {
+  singleReviewItem({BuildContext? context, String? text, double? rating}) {
     return Container(
       padding: EdgeInsets.only(
           right: width(context) * .05, left: width(context) * .05),
@@ -325,9 +325,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
     );
   }
 
-  nickNameTextField({
-    BuildContext context,
-  }) {
+  nickNameTextField({BuildContext? context,}) {
     return Container(
       padding: EdgeInsets.only(
           right: width(context) * .05, left: width(context) * .05),
@@ -369,9 +367,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
     );
   }
 
-  summaryTextField({
-    BuildContext context,
-  }) {
+  summaryTextField({BuildContext? context,}) {
     return Container(
       padding: EdgeInsets.only(
           right: width(context) * .05, left: width(context) * .05),
@@ -414,7 +410,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
   }
 
   reviewTextField({
-    BuildContext context,
+    BuildContext? context,
   }) {
     return Container(
       padding: EdgeInsets.only(

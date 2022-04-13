@@ -17,12 +17,12 @@ import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:http/http.dart' as http;
 
 class StcVerificationCodeScreen extends StatefulWidget {
-  final String user_phone;
-  final String route;
-  final String OtpReference;
-  final String paymentReference;
+  final String? user_phone;
+  final String? route;
+  final String? OtpReference;
+  final String? paymentReference;
   const StcVerificationCodeScreen(
-      {Key key,
+      {Key? key,
         this.user_phone,
         this.route,
         this.OtpReference,
@@ -40,30 +40,30 @@ class _OtpState extends State<StcVerificationCodeScreen>
   // Constants
   var otp_code;
   final int time = 180;
-  AnimationController _controller;
+  AnimationController? _controller;
   bool _isLoading = false;
   // Variables
-  Size _screenSize;
-  int _currentDigit;
-  int _firstDigit;
-  int _secondDigit;
-  int _thirdDigit;
-  int _fourthDigit;
-  int _fifthDigit;
+  Size? _screenSize;
+  int? _currentDigit;
+  int? _firstDigit;
+  int? _secondDigit;
+  int? _thirdDigit;
+  int? _fourthDigit;
+  int? _fifthDigit;
 
-  Timer timer;
-  int totalTimeInSeconds;
-  bool _hideResendButton;
+  Timer? timer;
+  int? totalTimeInSeconds;
+  bool? _hideResendButton;
 
-  String userName = "";
-  bool didReadNotifications = false;
-  int unReadNotificationsCount = 0;
+  String? userName = "";
+  bool? didReadNotifications = false;
+  int? unReadNotificationsCount = 0;
 
-  String number;
+  String? number;
 
-  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  GlobalKey<ScaffoldState>? _drawerKey = GlobalKey();
 
-  AnimationController _loginButtonController;
+  AnimationController? _loginButtonController;
   bool isLoading = false;
 
   Future<Null> _playAnimation() async {
@@ -71,14 +71,14 @@ class _OtpState extends State<StcVerificationCodeScreen>
       setState(() {
         isLoading = true;
       });
-      await _controller.forward();
+      await _controller!.forward();
     } on TickerCanceled {
     }
   }
 
   Future<Null> _stopAnimation() async {
     try {
-      await _controller.reverse();
+      await _controller!.reverse();
       setState(() {
         isLoading = false;
       });
@@ -90,7 +90,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
   void dispose() {
     // TODO: implement dispose
     //  _loginButtonController.dispose();
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -106,12 +106,12 @@ class _OtpState extends State<StcVerificationCodeScreen>
       ..addStatusListener((status) {
         if (status == AnimationStatus.dismissed) {
           setState(() {
-            _hideResendButton = !_hideResendButton;
+            _hideResendButton = !_hideResendButton!;
           });
         }
       });
-    _controller.reverse(
-        from: _controller.value == 0.0 ? 1.0 : _controller.value);
+    _controller!.reverse(
+        from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
     _startCountdown();
     /* _loginButtonController = AnimationController(
         duration: const Duration(milliseconds: 3000), vsync: this);*/
@@ -130,7 +130,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
                 child: Directionality(
                   textDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr,
                   child: new Container(
-                    width: _screenSize.width,
+                    width: _screenSize!.width,
                     child: _getInputPart,
                   ),
                 )
@@ -160,7 +160,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
   }
 
   // Returns "Otp keyboard input Button"
-  Widget _otpKeyboardInputButton({String label, VoidCallback onPressed}) {
+  Widget _otpKeyboardInputButton({String? label, VoidCallback? onPressed}) {
     return new Material(
       color: Colors.transparent,
       child: new InkWell(
@@ -174,7 +174,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
           ),
           child: new Center(
             child: new Text(
-              label,
+              label!,
               style: new TextStyle(
                 fontSize: 30.0,
                 color: mainColor,
@@ -187,7 +187,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
   }
 
   // Returns "Otp keyboard action Button"
-  _otpKeyboardActionButton({Widget label, VoidCallback onPressed}) {
+  _otpKeyboardActionButton({Widget? label, VoidCallback? onPressed}) {
     return new InkWell(
       onTap: onPressed,
       borderRadius: new BorderRadius.circular(40.0),
@@ -245,8 +245,8 @@ class _OtpState extends State<StcVerificationCodeScreen>
       _hideResendButton = true;
       totalTimeInSeconds = time;
     });
-    _controller.reverse(
-        from: _controller.value == 0.0 ? 1.0 : _controller.value);
+    _controller!.reverse(
+        from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
   }
 
   void clearOtp() {
@@ -266,10 +266,10 @@ class _OtpState extends State<StcVerificationCodeScreen>
           oldString.substring(index + 1);
     }
 
-    for (int i = StaticData.country_code.length; i < number.length - 3; i++) {
-      number = replaceCharAt(number, i, "*");
+    for (int i = StaticData.country_code.length; i < number!.length - 3; i++) {
+      number = replaceCharAt(number!, i, "*");
     }
-    return number;
+    return number!;
   }
 
   // Returns "Appbar"
@@ -343,11 +343,11 @@ class _OtpState extends State<StcVerificationCodeScreen>
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            _otpTextField(_firstDigit),
-            _otpTextField(_secondDigit),
-            _otpTextField(_thirdDigit),
-            _otpTextField(_fourthDigit),
-            _otpTextField(_fifthDigit),
+            _otpTextField(_firstDigit!),
+            _otpTextField(_secondDigit!),
+            _otpTextField(_thirdDigit!),
+            _otpTextField(_fourthDigit!),
+            _otpTextField(_fifthDigit!),
           ],
         ));
   }
@@ -392,7 +392,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
 
                 )),
           ),),
-        _hideResendButton ? _getTimerText : _getResendButton,
+        _hideResendButton! ? _getTimerText : _getResendButton,
         _getOtpKeyboard
       ],
     );
@@ -403,7 +403,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
     return Container(
       height: 32,
       child: new Offstage(
-        offstage: !_hideResendButton,
+        offstage: !_hideResendButton!,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -411,7 +411,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
             new SizedBox(
               width: 5.0,
             ),
-            OtpTimer(_controller, 15.0, Colors.black)
+            OtpTimer(_controller!, 15.0, Colors.black)
           ],
         ),
       ),
@@ -424,7 +424,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
       onTap: () {
         clearOtp();
         controller.clear();
-        _hideResendButton = !_hideResendButton;
+        _hideResendButton = !_hideResendButton!;
         forgetPassword_bloc.add(resendOtpClick(route: widget.route));
         _startCountdown();
       },
@@ -464,7 +464,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
               _getOtpConfirmationButton,
               responsiveSizedBox(context: context, percentageOfHeight: .02),
               new Container(
-                  height: _screenSize.width - 80,
+                  height: _screenSize!.width - 80,
                   child: new Column(
                     children: <Widget>[
                       new Expanded(
@@ -589,7 +589,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
       onTap: otp_code == null
           ? () {}
           : () {
-        final Future<http.Response> response = payment_repository.stc_pay_validate_otp(
+        final Future<http.Response?> response = payment_repository.stc_pay_validate_otp(
             context: context,
             phone_number: widget.user_phone,
             otp: otp_code,
@@ -597,7 +597,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
             paymentReference: widget.paymentReference);
         response.then((response) {
           final extractedData =
-          json.decode(response.body) as Map<String, dynamic>;
+          json.decode(response!.body) as Map<String, dynamic>;
           if (extractedData["status"]) {
             orderBloc.add(CreateOrderEvent(context: context));
           }
@@ -665,7 +665,7 @@ class _OtpState extends State<StcVerificationCodeScreen>
                   backgroundColor: redColor,
                   flushbarStyle: FlushbarStyle.FLOATING,
                   duration: Duration(seconds: 6),
-                )..show(_drawerKey.currentState.context);
+                )..show(_drawerKey!.currentState!.context);
               }
 
               //   customAnimatedPushNavigation(context, GetStartedScreen());
@@ -718,7 +718,7 @@ class OtpTimer extends StatelessWidget {
   OtpTimer(this.controller, this.fontSize, this.timeColor);
 
   String get timerString {
-    Duration duration = controller.duration * controller.value;
+    Duration duration = controller.duration! * controller.value;
     if (duration.inHours > 0) {
       return '${duration.inHours}:${duration.inMinutes % 60}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
     }
@@ -726,7 +726,7 @@ class OtpTimer extends StatelessWidget {
   }
 
   Duration get duration {
-    Duration duration = controller.duration;
+    Duration duration = controller.duration!;
     return duration;
   }
 
@@ -734,7 +734,7 @@ class OtpTimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedBuilder(
         animation: controller,
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext? context, Widget? child) {
           return new Text(
             timerString,
             style: new TextStyle(

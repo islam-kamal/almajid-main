@@ -84,7 +84,7 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                     } else if (state is Done) {
                       var data = state.model as ProductModel;
 
-                      if (data.items == null || data.items.isEmpty) {
+                      if (data.items == null || data.items!.isEmpty) {
                         return no_data_widget(context: context);
                       } else {
                         return StreamBuilder<ProductModel>(
@@ -96,26 +96,26 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                               } else {
                                 return ListView.builder(
                                     shrinkWrap: true,
-                                    itemCount: snapshot.data.items.length,
+                                    itemCount: snapshot.data!.items!.length,
                                     itemBuilder: (context, index) {
-                                      List<String> gallery = new List<String>();
+                                      List<String> gallery = [];
                                       snapshot
-                                          .data.items[index].mediaGalleryEntries
+                                          .data!.items![index].mediaGalleryEntries!
                                           .forEach((element) {
                                         gallery.add(ProductImages
                                             .getProductImageUrlByName(
                                                 imageName: element.file));
                                       });
-                                      if (index >= snapshot.data.items.length) {
+                                      if (index >= snapshot.data!.items!.length) {
                                         return MyLoader(25, 25);
                                       } else {
-                                        return snapshot.data.items[index] ==
+                                        return snapshot.data!.items![index] ==
                                                 null
                                             ? Container()
-                                            : snapshot.data.items[index].status == 1? InkWell(
+                                            : snapshot.data!.items![index].status == 1? InkWell(
                                             onTap: (){
                                           customAnimatedPushNavigation(context,ProductDetailsScreen(
-                                            product_id: snapshot.data.items[index].id,
+                                            product_id: snapshot.data!.items![index].id,
                                           )
                                           );
                                         },
@@ -164,7 +164,7 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                                           borderRadius: BorderRadius.circular(15),
                                                                           image: DecorationImage(
                                                                               image: NetworkImage(
-                                                                                snapshot.data.items[index].customAttributes[0].value,
+                                                                                snapshot.data!.items![index].customAttributes![0].value,
                                                                               ),
                                                                               fit: BoxFit.fill)),
                                                                     ),
@@ -182,24 +182,28 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                                               child: Column(
                                                                                 crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                                                                                 children: [
-                                                                                  snapshot.data.items[index].extensionAttributes.stockQty >= 0 ?   CustomWishList(
+                                                                                  snapshot.data!.items![index].extensionAttributes!.stockQty >= 0 ?   CustomWishList(
                                                                                     color: redColor,
-                                                                                    product_id: snapshot.data.items[index].id,
-                                                                                    qty: snapshot.data.items[index].extensionAttributes.stockQty,
+                                                                                    product_id: snapshot.data!.items![index].id,
+                                                                                    qty: snapshot.data!.items![index].extensionAttributes!.stockQty,
                                                                                     context: context,
                                                                                     screen: AutoSearchScreen(),
                                                                                   ) : Container(),
                                                                                   responsiveSizedBox(context: context, percentageOfHeight: .01),
                                                                                   Padding(
                                                                                     padding: EdgeInsets.only(right: 5, left: 5),
-                                                                                    child: customDescriptionText(context: context, textColor: mainColor, maxLines: 2, text: snapshot.data.items[index].name, textAlign: translator.activeLanguageCode == 'ar' ? TextAlign.start : TextAlign.end),
+                                                                                    child: customDescriptionText(context: context, textColor: mainColor, maxLines: 2,
+                                                                                        text: snapshot.data!.items![index].name, textAlign: translator.activeLanguageCode == 'ar' ?
+                                                                                        TextAlign.start : TextAlign.end),
                                                                                   ),
                                                                                   responsiveSizedBox(context: context, percentageOfHeight: .01),
                                                                                   Row(
                                                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                     children: [
                                                                                       Container(
-                                                                                        child: customDescriptionText(context: context, textColor: mainColor, text: "${snapshot.data.items[index].price} ${MyApp.country_currency}", textAlign: TextAlign.start, fontWeight: FontWeight.bold),
+                                                                                        child: customDescriptionText(context: context, textColor: mainColor,
+                                                                                            text: "${snapshot.data!.items![index].price} ${MyApp.country_currency}",
+                                                                                            textAlign: TextAlign.start, fontWeight: FontWeight.bold),
                                                                                       ),
                                                                                       RatingBar.readOnly(
                                                                                         initialRating: 5.0,
@@ -209,7 +213,8 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                                                         filledIcon: Icons.star,
                                                                                         emptyIcon: Icons.star_border,
                                                                                         size: StaticData.get_width(context) * 0.03,
-                                                                                        filledColor: snapshot.data.items[index].extensionAttributes.reviews.isEmpty ? greyColor : Colors.yellow.shade700,
+                                                                                        filledColor: snapshot.data!.items![index].extensionAttributes!.reviews!.isEmpty ?
+                                                                                        greyColor : Colors.yellow.shade700,
                                                                                       ),
                                                                                     ],
                                                                                   ),
@@ -218,27 +223,33 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                                                     bloc: shoppingCartBloc,
                                                                                     builder: (context, state) {
                                                                                       if (state is ProductLoading && state.indicator == 'search_add_to_cart') {
-                                                                                        if (snapshot.data.items[index].sku == state.sku) {
+                                                                                        if (snapshot.data!.items![index].sku == state.sku) {
                                                                                           _isLoading = true;
                                                                                         } else {
                                                                                           _isLoading = false;
                                                                                         }
-                                                                                      } else if (state is ErrorLoadingProduct && state.indicator == 'search_add_to_cart' && snapshot.data.items[index].sku == state.sku) {
+                                                                                      } else if (state is ErrorLoadingProduct && state.indicator == 'search_add_to_cart'
+                                                                                          && snapshot.data!.items![index].sku == state.sku) {
                                                                                         _isLoading = false;
                                                                                         var data = state.model as AddCartModel;
                                                                                         Fluttertoast.showToast(msg: '${data.message}', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP, timeInSecForIosWeb: 1, backgroundColor: Colors.redAccent, textColor: Colors.white, fontSize: 16.0);
-                                                                                        state = null;
-                                                                                      } else if (state is DoneProductAdded && state.indicator == 'search_add_to_cart' && snapshot.data.items[index].sku == state.sku) {
+                                                                                        state = null!;
+                                                                                      } else if (state is DoneProductAdded && state.indicator == 'search_add_to_cart'
+                                                                                          && snapshot.data!.items![index].sku == state.sku) {
                                                                                         _isLoading = false;
-                                                                                        Fluttertoast.showToast(msg: 'product added successfully to cart', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP, timeInSecForIosWeb: 1, backgroundColor: Colors.green, textColor: Colors.white, fontSize: 16.0);
+                                                                                        Fluttertoast.showToast(msg: 'product added successfully to cart',
+                                                                                            toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.TOP, timeInSecForIosWeb: 1,
+                                                                                            backgroundColor: Colors.green, textColor: Colors.white, fontSize: 16.0);
                                                                                       }
 
                                                                                       return _isLoading
                                                                                           ? CircularProgressIndicator(
                                                                                       )
-                                                                                          :  snapshot.data.items[index].extensionAttributes.stockItem.qty >= 0 ? InkWell(
+                                                                                          :  snapshot.data!.items![index].extensionAttributes!.stockItem!.qty >= 0 ? InkWell(
                                                                                               onTap: () {
-                                                                                                      shoppingCartBloc.add(AddProductToCartEvent(context: context, product_quantity: snapshot.data.items[index].extensionAttributes.stockItem.qty, product_sku: snapshot.data.items[index].sku, indictor: 'search_add_to_cart'));
+                                                                                                      shoppingCartBloc.add(AddProductToCartEvent(context: context,
+                                                                                                          product_quantity: snapshot.data!.items![index].extensionAttributes!.stockItem!.qty,
+                                                                                                          product_sku: snapshot.data!.items![index].sku, indictor: 'search_add_to_cart'));
                                                                                                     },
                                                                                               child: Container(
                                                                                                 width: width(context) * .4,
@@ -289,7 +300,7 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                   ],
                                                 )
 
-                                      ) ) : null;
+                                      ) ) : null!;
                                       }
                                     });
                               }

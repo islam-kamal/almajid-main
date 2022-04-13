@@ -18,7 +18,7 @@ class TamaraPaymentScreen extends StatefulWidget {
 }
 
 class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
-  WebViewController _webController;
+  WebViewController? _webController;
   bool _loadingPayment = true;
   String _responseStatus = STATUS_LOADING;
 
@@ -28,7 +28,7 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
   }
 
   void getData() {
-    _webController.evaluateJavascript("document.body.innerText").then((data) {
+    _webController!.evaluateJavascript("document.body.innerText").then((data) {
       var decodedJSON = jsonDecode(data);
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
       final responseCode = responseJSON["response_code"];
@@ -71,6 +71,7 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
     return WillPopScope(
         onWillPop: (){
           customAnimatedPushNavigation(context, CustomCircleNavigationBar());
+          return null!;
         },
         child: SafeArea(
       child: Scaffold(
@@ -84,7 +85,7 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
                   javascriptMode: JavascriptMode.unrestricted,
                   onWebViewCreated: (controller) {
                     _webController = controller;
-                    _webController.loadUrl(
+                    _webController!.loadUrl(
                         new Uri.dataFromString(_loadHTML(), mimeType: 'text/html')
                             .toString());
                   },
@@ -105,8 +106,8 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
                       setState(() {
                         _loadingPayment = true;
                       });
-                      var data = await _webController
-                          .evaluateJavascript("document.body.innerText");
+                      var data = await _webController!
+                          .runJavascriptReturningResult("document.body.innerText");
                       var decodedJSON = jsonDecode(data);
                       Map<String, dynamic> responseJSON = {};
                       if (Platform.isAndroid) {

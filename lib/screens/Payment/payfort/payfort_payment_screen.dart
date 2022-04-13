@@ -11,16 +11,16 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../Constants.dart';
 import 'dart:io' show Platform;
 class PayfortPaymentScreen extends StatefulWidget {
-  final String amount;
-  final String merchantIdentifier;
-  final String accessCode;
-  final String merchantReference;
-  final String language;
-  final String serviceCommand;
-  final String returnUrl;
-  final String signature;
-  final String url;
-  final String order_number;
+  final String? amount;
+  final String? merchantIdentifier;
+  final String? accessCode;
+  final String? merchantReference;
+  final String? language;
+  final String? serviceCommand;
+  final String? returnUrl;
+  final String? signature;
+  final String? url;
+  final String? order_number;
   PayfortPaymentScreen(
       {this.amount,
       this.merchantIdentifier,
@@ -38,7 +38,7 @@ class PayfortPaymentScreen extends StatefulWidget {
 }
 
 class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
-  WebViewController _webController;
+  WebViewController? _webController;
   bool _loadingPayment = true;
   String _responseStatus = STATUS_LOADING;
 
@@ -65,7 +65,7 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
   }
 
   void getData() {
-    _webController.evaluateJavascript("document.body.innerText").then((data) {
+    _webController!.evaluateJavascript("document.body.innerText").then((data) {
       var decodedJSON = jsonDecode(data);
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
       final responseCode = responseJSON["response_code"];
@@ -107,6 +107,7 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
     return WillPopScope(
         onWillPop: (){
       customAnimatedPushNavigation(context, CustomCircleNavigationBar());
+      return null!;
     },
     child: SafeArea(
       child: Scaffold(
@@ -120,7 +121,7 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
               javascriptMode: JavascriptMode.unrestricted,
               onWebViewCreated: (controller) {
                 _webController = controller;
-                _webController.loadUrl(
+                _webController!.loadUrl(
                     new Uri.dataFromString(_loadHTML(), mimeType: 'text/html')
                         .toString());
               },
@@ -145,7 +146,7 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
                   setState(() {
                     _loadingPayment = true;
                   });
-                  var data = await _webController
+                  var data = await _webController!
                       .evaluateJavascript("document.body.innerText");
                   var decodedJSON = jsonDecode(data);
 

@@ -420,7 +420,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                           }
                         }
 
-
+                        return Container();
                       })
               );
             }

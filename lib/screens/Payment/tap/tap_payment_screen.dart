@@ -21,7 +21,7 @@ class TapPaymentScreen extends StatefulWidget {
 }
 
 class _TapPaymentScreenState extends State<TapPaymentScreen> {
-  WebViewController _webController;
+  WebViewController? _webController;
   bool _loadingPayment = true;
   String _responseStatus = STATUS_LOADING;
 
@@ -40,7 +40,7 @@ class _TapPaymentScreenState extends State<TapPaymentScreen> {
   }
 
   void getData() {
-    _webController.evaluateJavascript("document.body.innerText").then((data) {
+    _webController!.runJavascriptReturningResult("document.body.innerText").then((data) {
       var decodedJSON = jsonDecode(data);
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
       final responseCode = responseJSON["response_code"];
@@ -92,7 +92,7 @@ class _TapPaymentScreenState extends State<TapPaymentScreen> {
               javascriptMode: JavascriptMode.unrestricted,
               onWebViewCreated: (controller) {
                 _webController = controller;
-                _webController.loadUrl(
+                _webController!.loadUrl(
                     new Uri.dataFromString(_loadHTML(), mimeType: 'text/html')
                         .toString());
               },
@@ -115,8 +115,8 @@ class _TapPaymentScreenState extends State<TapPaymentScreen> {
                   setState(() {
                     _loadingPayment = true;
                   });
-                  var data = await _webController
-                      .evaluateJavascript("document.body.innerText");
+                  var data = await _webController!
+                      .runJavascriptReturningResult("document.body.innerText");
                   final decodedJSON = jsonDecode(data);
 
                   Map<String, dynamic> responseJSON = {};
@@ -180,8 +180,8 @@ class _TapPaymentScreenState extends State<TapPaymentScreen> {
 }
 
 class PaymentResult {
-  bool status;
-  String reason;
+  bool? status;
+  String? reason;
 
   PaymentResult({this.status, this.reason});
 

@@ -18,7 +18,7 @@ class AutoSearchClass extends StatefulWidget {
 }
 
 class _HomePageState extends State<AutoSearchClass> {
-  product_model.Items _selectedItem;
+  product_model.Items? _selectedItem;
 
   @override
   void initState() {
@@ -34,11 +34,11 @@ class _HomePageState extends State<AutoSearchClass> {
           stream: search_bloc.search_products_subject,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data.items == null) {
+              if (snapshot.data!.items == null) {
                 return Container();
               } else {
                 return SearchWidget<product_model.Items>(
-                  dataList: snapshot.data.items,
+                  dataList: snapshot.data!.items,
                   hideSearchBoxWhenItemSelected: true,
                   listContainerHeight: MediaQuery.of(context).size.height / 4,
                   queryBuilder: (query, list) {
@@ -51,7 +51,6 @@ class _HomePageState extends State<AutoSearchClass> {
                   popupListItemBuilder: (item) {
                     return PopupListItemWidget(item);
                   },
-                  selectedItemBuilder: (selectedItem, deleteSelectedItem) {},
                   // widget customization
                   noItemsFoundWidget: NoItemsFound(),
                   textFieldBuilder: (controller, focusNode) {
@@ -136,7 +135,7 @@ class NoItemsFound extends StatelessWidget {
       translator.translate("There is no products"),
       style: TextStyle(
         fontSize: 16,
-        color: Colors.grey[900].withOpacity(0.7),
+        color: Colors.grey[900]?.withOpacity(0.7),
       ),
     );
   }

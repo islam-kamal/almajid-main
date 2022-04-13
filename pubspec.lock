@@ -385,12 +385,26 @@ packages:
     source: hosted
     version: "1.1.0"
   flutter_keyboard_visibility:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_keyboard_visibility
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.0"
+    version: "5.2.0"
+  flutter_keyboard_visibility_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_keyboard_visibility_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  flutter_keyboard_visibility_web:
+    dependency: transitive
+    description:
+      name: flutter_keyboard_visibility_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   flutter_layout_grid:
     dependency: transitive
     description:
@@ -602,6 +616,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3"
+  keyboard_visibility:
+    dependency: transitive
+    description:
+      name: keyboard_visibility
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.6"
   localize_and_translate:
     dependency: "direct main"
     description:
@@ -902,7 +923,7 @@ packages:
       name: search_widget
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.0"
   share:
     dependency: "direct main"
     description:
@@ -985,6 +1006,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
+  smooth_star_rating_null_safety:
+    dependency: "direct main"
+    description:
+      name: smooth_star_rating_null_safety
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4+2"
   source_span:
     dependency: transitive
     description:

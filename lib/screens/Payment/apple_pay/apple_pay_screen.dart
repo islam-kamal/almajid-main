@@ -9,9 +9,9 @@ import 'package:http/http.dart' as http;
 import 'dart:io' show Platform;
 
 class ApplePayScreen extends StatefulWidget {
-  final String order_increment_id;
+  final String? order_increment_id;
   var grand_total;
-  ApplePayScreen({Key key,this.order_increment_id,this.grand_total}) : super(key: key);
+  ApplePayScreen({Key? key,this.order_increment_id,this.grand_total}) : super(key: key);
 
   @override
   _ApplePayScreenState createState() => _ApplePayScreenState();

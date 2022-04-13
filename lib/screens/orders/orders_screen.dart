@@ -115,6 +115,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                               }else if(state is ErrorLoading){
                                 return no_data_widget(context: context);
                               }
+                              return Container();
                             },
                           )
                       ),

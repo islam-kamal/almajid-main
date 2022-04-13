@@ -42,7 +42,8 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
                     if (state is Loading) {
                       if(state.indicator ==  'GetProductReviews')
                       return Center(child: ShimmerNotification(),);
-                    } else if (state is Done) {
+                    }
+                    else if (state is Done) {
                       if(state.indicator ==  'GetProductReviews')
                       return StreamBuilder<List<ProductReviewModel>>(
                         stream: reviewsBloc.product_reviews_subject,
@@ -97,8 +98,7 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
                                                     customDescriptionText(
                                                         context: context,
                                                         percentageOfHeight: .05,
-                                                        text: snapshot.data
-                                                                    .length >
+                                                        text: snapshot.data!.length >
                                                                 0
                                                             ? "5.0"
                                                             : "0.0",
@@ -111,7 +111,7 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
 
                                                     SmoothStarRating(
                                                       rating:
-                                                          snapshot.data.length >
+                                                          snapshot.data!.length >
                                                                   0
                                                               ? 5.0
                                                               : 0.0,
@@ -144,30 +144,30 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
                                           ];
                                         },
                                         body: Container(
-                                          color: snapshot.data.isEmpty ? whiteColor :backGroundColor,
+                                          color: snapshot.data!.isEmpty ? whiteColor :backGroundColor,
                                           height: height(context) * .7,
                                           padding: EdgeInsets.only(
                                               top: width(context) * .05,
                                               right: width(context) * .02,
                                               left: width(context) * .02),
-                                          child: snapshot.data.isEmpty
+                                          child: snapshot.data!.isEmpty
                                               ? no_data_widget(
                                                   context: context,
                                                   message: translator.translate("No Reviews Yet!"))
                                               : ListView.builder(
                                                   itemCount:
-                                                      snapshot.data.length,
+                                                      snapshot.data!.length,
                                                   itemBuilder:
                                                       (context, index) {
                                                     return singleRatingWidget(
                                                         context: context,
                                                         nickname: snapshot
-                                                            .data[index]
+                                                            .data![index]
                                                             .nickname,
                                                         detail: snapshot
-                                                            .data[index].detail,
+                                                            .data![index].detail,
                                                         createdAt: snapshot
-                                                            .data[index]
+                                                            .data![index]
                                                             .createdAt);
                                                   },
                                                 ),
@@ -191,15 +191,18 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
                           }
                         },
                       );
-                    } else if (state is ErrorLoading) {
+                    }
+                    else if (state is ErrorLoading) {
                       if(state.indicator ==  'GetProductReviews')
                       return Container();
-                    } else {
+                    }
+                    else {
                       return Center(
                         child: CircularProgressIndicator(
                         ),
                       );
                     }
+                    return Container();
                   },
                 ),
               ],

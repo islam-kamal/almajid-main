@@ -13,7 +13,6 @@ import 'package:almajidoud/screens/my_account/widgets/user_image_widget.dart';
 import 'package:almajidoud/screens/my_account/widgets/user_name.dart';
 import 'package:almajidoud/screens/web_view/webview.dart';
 import 'package:almajidoud/utils/file_export.dart';
-import 'package:almajidoud/screens/my_account/register_bottom_sheet.dart';
 import 'package:almajidoud/screens/orders/orders_screen.dart';
 import 'package:almajidoud/screens/WishList/wishlist_screen.dart';
 import 'package:image_picker/image_picker.dart';

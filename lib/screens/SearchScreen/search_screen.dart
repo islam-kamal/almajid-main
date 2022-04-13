@@ -22,11 +22,11 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  TextEditingController controller ;
+  TextEditingController? controller ;
   String search_text='';
   var product_image;
   GlobalKey<ScaffoldState> scaffold_key = GlobalKey();
-  final search_bloc = SearchBloc(null);
+  final search_bloc = SearchBloc(null!);
   var percentage;
 
   @override
@@ -103,17 +103,17 @@ class _SearchScreenState extends State<SearchScreen> {
                                     } else {
                                       return ListView.builder(
                                             shrinkWrap: true,
-                                            itemCount: snapshot.data.items.length,
+                                            itemCount: snapshot.data!.items!.length,
                                             itemBuilder: (context, index) {
-                                              List<String> gallery = new List<String>();
-                                              snapshot.data.items[index].mediaGalleryEntries.forEach((element) {
+                                              List<String> gallery = [];
+                                              snapshot.data!.items![index].mediaGalleryEntries!.forEach((element) {
                                                 gallery.add(ProductImages.getProductImageUrlByName(imageName: element.file));
                                               });
 
-                                              String special_price;
+                                              String? special_price;
                                               var new_price , minimal_price;
-                                              DateTime startDate , endDate ;
-                                              snapshot.data.items[index].customAttributes.forEach((element) {
+                                              DateTime? startDate , endDate ;
+                                              snapshot.data!.items![index].customAttributes!.forEach((element) {
                                                 if(element.attributeCode == "thumbnail")
                                                   product_image = element.value;
                                                 else if(element.attributeCode == "special_from_date"){
@@ -131,39 +131,39 @@ class _SearchScreenState extends State<SearchScreen> {
                                               });
                                               if(startDate ==null || endDate ==null ){
                                                 new_price = minimal_price;
-                                                if(double.parse(minimal_price) < double.parse(snapshot.data.items[index].price.toString()))
-                                                  percentage = (1 - (double.parse(minimal_price)  / snapshot.data.items[index].price) )* 100;
+                                                if(double.parse(minimal_price) < double.parse(snapshot.data!.items![index].price.toString()))
+                                                  percentage = (1 - (double.parse(minimal_price)  / snapshot.data!.items![index].price) )* 100;
                                               }
                                               else{
-                                                if(StaticData.isCurrentDateInRange(startDate,endDate)
-                                                    && double.parse(special_price) <= double.parse(minimal_price)
-                                                    && double.parse(special_price).toStringAsFixed(2) !=  snapshot.data.items[index].price ) {
+                                                if(StaticData.isCurrentDateInRange(startDate! ,endDate!)
+                                                    && double.parse(special_price!) <= double.parse(minimal_price)
+                                                    && double.parse(special_price!).toStringAsFixed(2) !=  snapshot.data!.items![index].price ) {
                                                   new_price = special_price;
-                                                  percentage = (1 - (double.parse(new_price)  / snapshot.data.items[index].price) )* 100;
-                                                }else if(double.parse(special_price) > double.parse(minimal_price)){
+                                                  percentage = (1 - (double.parse(new_price)  / snapshot.data!.items![index].price) )* 100;
+                                                }else if(double.parse(special_price!) > double.parse(minimal_price)){
                                                   new_price = minimal_price;
-                                                  percentage = (1 - (double.parse(new_price)  / snapshot.data.items[index].price) )* 100;
+                                                  percentage = (1 - (double.parse(new_price)  / snapshot.data!.items![index].price) )* 100;
 
                                                 }
                                                 else{
-                                                  if(!StaticData.isCurrentDateInRange(startDate,endDate) ){
+                                                  if(!StaticData.isCurrentDateInRange(startDate! ,endDate!) ){
                                                     new_price = minimal_price;
-                                                    percentage = (1 - (double.parse(new_price)  / snapshot.data.items[index].price) )* 100;
+                                                    percentage = (1 - (double.parse(new_price)  / snapshot.data!.items![index].price) )* 100;
 
                                                   }
                                                 }
 
                                               }
-                                              if (index >= snapshot.data.items.length) {
+                                              if (index >= snapshot.data!.items!.length) {
                                                 return MyLoader(25, 25);
                                               }
                                               else {
-                                                return snapshot.data.items[index] == null
+                                                return snapshot.data!.items![index] == null
                                                     ? Container()
-                                                    :  snapshot.data.items[index].status == 1 ?InkWell(
+                                                    :  snapshot.data!.items![index].status == 1 ?InkWell(
                                                   onTap: (){
                                                     customAnimatedPushNavigation(context,ProductDetailsScreen(
-                                                      product_id: snapshot.data.items[index].id,
+                                                      product_id: snapshot.data!.items![index].id!,
                                                     )
                                                     );
                                                   },
@@ -224,10 +224,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                       crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                                                                                       children: [
-                                                                                        snapshot.data.items[index].extensionAttributes.stockQty >= 0?     CustomWishList(
+                                                                                        snapshot.data!.items![index].extensionAttributes!.stockQty >= 0?     CustomWishList(
                                                                                           color: redColor,
-                                                                                          product_id: snapshot.data.items[index].id,
-                                                                                          qty: snapshot.data.items[index].extensionAttributes.stockQty,
+                                                                                          product_id: snapshot.data?.items![index].id,
+                                                                                          qty: snapshot.data!.items![index].extensionAttributes?.stockQty,
                                                                                           context: context,
                                                                                           screen: SearchScreen(),
 
@@ -239,7 +239,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                               context: context,
                                                                                               textColor: mainColor,
                                                                                               maxLines: 2,
-                                                                                              text: snapshot.data.items[index].name,
+                                                                                              text: snapshot.data!.items![index].name,
                                                                                             ),
                                                                                             alignment:translator.activeLanguageCode ==
                                                                                                 'en'
@@ -261,8 +261,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                                         MyText(
                                                                                                           text: "${
                                                                                                               new_price == null ?
-                                                                                                              double.parse(snapshot.data.items[index].price.toString()) <  double.parse(minimal_price) ?
-                                                                                                              snapshot.data.items[index].price.toStringAsFixed(2)  :
+                                                                                                              double.parse(snapshot.data!.items![index].price.toString()) <  double.parse(minimal_price) ?
+                                                                                                              snapshot.data!.items![index].price.toStringAsFixed(2)  :
                                                                                                               double.parse(minimal_price).toStringAsFixed(2)
                                                                                                                   : double.parse(new_price)} ",
                                                                                                           size: StaticData.get_height(context) * .017,
@@ -283,7 +283,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                                 ),
                                                                                                 SizedBox(width: width(context) * 0.03,),
                                                                                                 new_price == null ?  Container()   : Text(
-                                                                                                  "${snapshot.data.items[index].price} ${MyApp.country_currency}",
+                                                                                                  "${snapshot.data!.items![index].price} ${MyApp.country_currency}",
                                                                                                   style: TextStyle(
                                                                                                       decoration: TextDecoration.lineThrough,
                                                                                                       fontSize: StaticData.get_height(context)  * .011,
@@ -300,7 +300,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                               emptyIcon: Icons.star_border,
                                                                                               size: StaticData.get_width(context) * 0.03,
                                                                                               filledColor:
-                                                                                              snapshot.data.items[index].extensionAttributes.reviews.isEmpty
+                                                                                              snapshot.data!.items![index].extensionAttributes!.reviews!.isEmpty
                                                                                                   ? greyColor
                                                                                                   : Colors.yellow.shade700,
                                                                                             ),
@@ -313,18 +313,18 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                           child:      Row(
                                                                                             mainAxisAlignment: MainAxisAlignment.center,
                                                                                             children: [
-                                                                                              snapshot.data.items[index].extensionAttributes.stockQty >=0?
+                                                                                              snapshot.data!.items![index].extensionAttributes!.stockQty >=0?
                                                                                               AddProductToCartWidget(
-                                                                                                product_sku: snapshot.data.items[index].sku,
+                                                                                                product_sku: snapshot.data!.items![index].sku,
                                                                                                 product_quantity:   1,
-                                                                                                instock_status: snapshot.data.items[index].extensionAttributes.stockItem.isInStock,
+                                                                                                instock_status: snapshot.data!.items![index].extensionAttributes!.stockItem!.isInStock,
                                                                                                 scaffoldKey: scaffold_key,
                                                                                                 btn_height: width(context) * .08,
                                                                                                 btn_width: width(context) * .35,
                                                                                                 text_size: 0.017,
                                                                                                 home_shape: false,
                                                                                                 product_image: product_image,
-                                                                                                product_id:  snapshot.data.items[index].id,
+                                                                                                product_id:  snapshot.data!.items![index].id,
                                                                                               )
                                                                                                   :   Container(
                                                                                                 height: width(context) * .08,
@@ -360,12 +360,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                                             ],
                                                           )
                                                       ),
-                                                      snapshot.data.items.length ==index ?    Container(
+                                                      snapshot.data!.items!.length ==index ?    Container(
                                                         height: width(context) ,
                                                       ) : Container()
                                                     ],
                                                   ),
-                                                ) : null ;
+                                                ) : null! ;
                                               }
 
                                             });
@@ -412,9 +412,9 @@ class _SearchScreenState extends State<SearchScreen> {
                   controller: controller,
                   onChanged: (value){
                     setState(() {
-                      search_text = controller.value.text;
+                      search_text = controller!.value.text;
                       search_bloc
-                          .add(SearchProductsEvent(search_text: controller.value.text));
+                          .add(SearchProductsEvent(search_text: controller!.value.text));
                     });
                   },
                   style: TextStyle(color: mainColor,
@@ -429,7 +429,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       icon: Icon(
                         Icons.search,
                         size: 20,
-                      ),
+                      ), onPressed: () {  },
 
                     ),
                     hintText: translator.translate("What Are You Loking For ? "),

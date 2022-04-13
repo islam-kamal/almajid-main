@@ -22,7 +22,7 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   final _formKey = GlobalKey<FormState>();
 
-  AnimationController _loginButtonController;
+  AnimationController? _loginButtonController;
   bool isLoading = false;
   @override
   void initState() {
@@ -38,14 +38,14 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
       setState(() {
         isLoading = true;
       });
-      await _loginButtonController.forward();
+      await _loginButtonController!.forward();
     } on TickerCanceled {
     }
   }
 
   Future<Null> _stopAnimation() async {
     try {
-      await _loginButtonController.reverse();
+      await _loginButtonController!.reverse();
       setState(() {
         isLoading = false;
       });
@@ -55,8 +55,8 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
 
   @override
   void dispose() {
-    forgetPassword_bloc.mobile_controller.value = null;
-    _loginButtonController.dispose();
+    forgetPassword_bloc.mobile_controller.close();
+    _loginButtonController!.dispose();
     super.dispose();
   }
 
@@ -102,7 +102,7 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
                     backgroundColor: redColor,
                     flushbarStyle: FlushbarStyle.FLOATING,
                     duration: Duration(seconds: 3),
-                  )..show(_drawerKey.currentState.context);
+                  )..show(_drawerKey.currentState!.context);
 
                 }
                 else if (state is Done) {
@@ -111,8 +111,8 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
                   //   go to otp verification
         customAnimatedPushNavigation(context, StcVerificationCodeScreen(
           user_phone: StaticData.user_mobile_number,
-          OtpReference: data.result.otpReference,
-          paymentReference: data.result.paymentReference,
+          OtpReference: data.result!.otpReference,
+          paymentReference: data.result!.paymentReference,
         ));
                 }
               },
@@ -167,142 +167,8 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
   }
 
 
-/*  phone_addressTextFields({BuildContext context, String hint,var initialValue}) {
-    String _countryCode  = MyApp.app_location == 'sa' ?"+966" : MyApp.app_location == 'kw' ? "+965" : "+971";
-    return StreamBuilder<String>(
-      stream: shipmentAddressBloc.phone,
-      builder: (context, snapshot) {
-        return  Form(
-            key: _formKey,
-            child: Container(
-          padding: EdgeInsets.only(right: width(context) * .025, left: width(context) * .025),
-          child: translator.activeLanguageCode == 'en'?Row(
-            children: [
-              CountryCodePicker(
-                onChanged: (Object object)=>_countryCode=object.toString(),
-                initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
-                countryFilter: ['SA', 'KW', 'AE'],
-                showFlagDialog: true,
-              ),
-              Flexible(
-                child: TextFormField(
-                  initialValue: initialValue??'',
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(
-                      color: mainColor,
-                      fontSize: isLandscape(context)
-                          ? 2 * height(context) * .02
-                          : height(context) * .02),
-                  cursorColor: greyColor.withOpacity(.5),
-                  decoration: InputDecoration(
-                    hintText: translator.translate(hint??"Ex: 5xxxxxxxx"),
-                    contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
-                    hintStyle: TextStyle(
-                        color: mainColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: isLandscape(context)
-                            ? 2 * height(context) * .018
-                            : height(context) * .018),
-                    filled: true,
-                    fillColor: whiteColor,
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3),
-                        borderSide: BorderSide(color: greyColor)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3),
-                        borderSide: BorderSide(color: greyColor)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3),
-                        borderSide: BorderSide(color: greyColor)),
-                    errorText: snapshot.error,
-
-                  ),
-                  validator: (value) {
-                    Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+965|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';
-                    RegExp regex = new RegExp(pattern);
-
-                    if (value == null || value.isEmpty) {
-                      return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
-                    }else  if(!regex.hasMatch(value) || value.length < 8){
-                      return '${translator.translate("Please enter a correct phone number")} ';
-                    }
-                    return null;
-                  },
-                  onChanged: (text) {
-                    shipmentAddressBloc.phone_change(_countryCode+text);
-                  },
-                ),
-              ),
-            ],
-          ):Row(
-            children: [
-              Flexible(
-                child: TextFormField(
-                  textAlign: TextAlign.left,
-                  initialValue: initialValue??'',
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(
-                      color: mainColor,
-                      fontSize: isLandscape(context)
-                          ? 2 * height(context) * .02
-                          : height(context) * .02),
-                  cursorColor: greyColor.withOpacity(.5),
-                  decoration: InputDecoration(
-                    hintText: translator.translate(hint??"Ex: 5xxxxxxxx"),
-                    contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-
-                    hintStyle: TextStyle(
-                        color: greyColor.withOpacity(.5),
-                        fontWeight: FontWeight.bold,
-                        fontSize: isLandscape(context)
-                            ? 2 * height(context) * .018
-                            : height(context) * .018),
-                    filled: true,
-                    fillColor: whiteColor,
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3),
-                        borderSide: BorderSide(color: greyColor)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3),
-                        borderSide: BorderSide(color: greyColor)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3),
-                        borderSide: BorderSide(color: greyColor)),
-                    errorText: snapshot.error,
-
-                  ),
-                  validator:(value) {
-                    Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+965|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';
-                    RegExp regex = new RegExp(pattern);
-
-                    if (value == null || value.isEmpty) {
-                      return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
-                    }else  if(!regex.hasMatch(value) || value.length < 8){
-                      return '${translator.translate("Please enter a correct phone number")} ';
-
-                    }
-                    return null;
-                  },
-                  onChanged: (text) {
-                    shipmentAddressBloc.phone_change(_countryCode+text);
-                  },
-                ),
-              ),
-              CountryCodePicker(
-                onChanged: (Object object)=>_countryCode=object.toString(),
-                initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
-                countryFilter: ['SA', 'KW', 'AE'],
-                showFlagDialog: true,
-              ),
-            ],
-          )),
-        );
-      },
-    );
-  }*/
-
-  phoneTextFields({BuildContext context, String hint,var initialValue}) {
+  phoneTextFields({BuildContext? context, String? hint,var initialValue}) {
     String _countryCode  = MyApp.app_location == 'sa' ?"+966" : MyApp.app_location == 'kw' ? "+965" : "+971";
     return Form(
       key: _formKey,
@@ -347,18 +213,18 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
   }
 
 
-  stc_generate_otpButton({BuildContext context,}) {
+  stc_generate_otpButton({BuildContext? context,}) {
       return Container(
         alignment: Alignment.centerRight,
         padding: EdgeInsets.all(10),
         child: StaggerAnimation(
           titleButton: translator.translate("Send") ,
-          buttonController: _loginButtonController.view,
+          buttonController: _loginButtonController,
           btn_width: width(context) * .3,
           btn_height:  width(context) * .1,
           isResetScreen:false,
           onTap: () {
-            if (_formKey.currentState.validate() ) {
+            if (_formKey.currentState!.validate() ) {
               StaticData.user_mobile_number = shipmentAddressBloc.phone_controller.value;
               paymentBloc.add(StcSendVerificationCodeEvent(
                   context :context,
@@ -374,7 +240,7 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
 
 
 
-  stcpPayPhoneHeader({BuildContext context,}) {
+  stcpPayPhoneHeader({BuildContext? context,}) {
     return Container(
       padding: EdgeInsets.only(
         right: width(context) * .05,
@@ -391,7 +257,7 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.of(context).pop();
+              Navigator.of(context!).pop();
             },
             child: Icon(
               Icons.navigate_before,

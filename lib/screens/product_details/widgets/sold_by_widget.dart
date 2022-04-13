@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 
-soldByWidget({BuildContext context}){
+soldByWidget({BuildContext? context}){
   return Container(padding: EdgeInsets.only(right: width(context)*.05 , left: width(context)*.05),
     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
       Container(child: customDescriptionText(context: context

@@ -1,6 +1,6 @@
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:html/parser.dart' show parse;
-descriptionAndShareRow({BuildContext context , String description }) {
+descriptionAndShareRow({BuildContext? context , String? description }) {
   return Container(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -10,7 +10,7 @@ descriptionAndShareRow({BuildContext context , String description }) {
           width: width(context) ,
           child: customDescriptionText(
               context: context,
-              text: _parseHtmlString(description),
+              text: _parseHtmlString(description!),
               textAlign: TextAlign.start,
               maxLines: 10,
               textHeight: 1.5,
@@ -23,6 +23,6 @@ descriptionAndShareRow({BuildContext context , String description }) {
 }
 String _parseHtmlString(String htmlString) {
   var document = parse(htmlString);
-  String parsedString = parse(document.body.text).documentElement.text;
+  String parsedString = parse(document.body!.text).documentElement!.text;
   return parsedString.replaceAll('.' ,'\n');
 }
