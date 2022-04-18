@@ -203,7 +203,7 @@ class _SignInScreenState extends State<SignInScreen>
                 ),
                 onChanged: signIn_bloc.password_change,
                 validator: (value) {
-                  if (value!.length < 8 || value!.isEmpty) {
+                  if (value!.length < 8 || value.isEmpty) {
                     return '${translator.translate("Please enter")} ${translator.translate("Password")}';
                   }
                   return null;

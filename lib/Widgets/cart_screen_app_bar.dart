@@ -54,7 +54,7 @@ class CartScreenAppBarState extends State<CartScreenAppBar> {
                       ),
 
                 Text(
-                        widget!.category_name!,
+                        widget.category_name!,
                         style: TextStyle(
                             color: mainColor,
                             fontSize: AlmajedFont.primary_font_size),

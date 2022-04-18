@@ -50,7 +50,7 @@ class StaggerAnimation extends StatelessWidget {
           end: const EdgeInsets.only(bottom: 0.0),
         ).animate(
           CurvedAnimation(
-            parent: buttonController!,
+            parent: buttonController,
             curve: const Interval(
               0.500,
               0.800,

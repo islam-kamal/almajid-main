@@ -24,4 +24,4 @@ class PaymentBloc extends Bloc<AppEvent, AppState> with Validator{
   }
 }
 
-PaymentBloc paymentBloc = new PaymentBloc(null!);
+PaymentBloc paymentBloc = new PaymentBloc(Start());

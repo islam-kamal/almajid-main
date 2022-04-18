@@ -233,7 +233,7 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
       padding: EdgeInsets.all(10),
       child: StaggerAnimation(
         titleButton: translator.translate("Send") ,
-        buttonController: _loginButtonController!,
+        buttonController: _loginButtonController,
         btn_width: width(context) * .3,
         btn_height:  width(context) * .1,
 

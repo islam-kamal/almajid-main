@@ -23,18 +23,21 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_keyboard_visibility: ^5.2.0
+  smooth_star_rating_null_safety:
+  #smooth_star_rating:
+  #flutter_keyboard_visibility: ^5.2.0
   clippy_flutter: 2.0.0-nullsafety.1
   syncfusion_flutter_sliders:
   pie_chart:
-  smooth_star_rating:
+  csslib: ^0.17.1
+  html: ^0.15.0
   dashed_container:
   material_design_icons_flutter:
   grouped_checkbox:
   custom_switch:
   carousel_pro:
   dotted_border:
- # bottom_personalized_dot_bar:
+  bottom_personalized_dot_bar:
   localize_and_translate:
   intro_slider:
   flutter_neumorphic:
@@ -44,12 +47,11 @@ dependencies:
   flutter_offline:
   circle_bottom_navigation_bar:
   spincircle_bottom_bar:
-  #country_code_picker:
+  country_code_picker:
   country_list_pick:
-#  flushbar:
   another_flushbar:
   shimmer:
-  search_widget:
+ # search_widget:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -65,25 +67,26 @@ dependencies:
   firebase_auth:
   http:
   carousel_slider:
-  rating_bar:
+  #rating_bar:
+  flutter_rating_bar: ^4.0.0
   share:
-  flutter_html:
+  #flutter_html:
+  flutter_html: ^2.2.1
   flutter_credit_card:
-  webview_flutter:
+  webview_flutter: 2.0.13
   image_picker:
   path_provider:
   path:
-  flutter_icons:
+  #flutter_icons:
   network_info_plus:
   flutter_spinkit:
   flutter_slidable:
   badges:
   flutter_local_notifications:
-  country_code_picker:
   image_cropper:
-  pay:
+  pay: 1.0.5
   intl_phone_field:
-  smooth_star_rating_null_safety:
+
 
 
 dev_dependencies:
@@ -91,7 +94,21 @@ dev_dependencies:
     sdk: flutter
 
 dependency_overrides:
-  flutter_svg: 0.22.0
+  path_drawing: ^0.5.0
+  dotted_border: 2.0.0-nullsafety.0
+  flutter_svg: 0.22.0 #1.0.3
+  firebase_messaging_platform_interface: 3.1.6
+  firebase_crashlytics_platform_interface: 3.1.13
+  cloud_firestore_platform_interface: 5.4.13
+  firebase_auth_platform_interface: 6.1.11
+  firebase_storage_platform_interface: 4.0.14
+  cloud_functions_platform_interface: 5.0.21
+  firebase_analytics_platform_interface: 3.0.5
+  firebase_remote_config_platform_interface: 1.0.5
+  firebase_dynamic_links_platform_interface: 0.2.0+5
+  firebase_performance_platform_interface: 0.1.0+5
+  firebase_app_installations_platform_interface: 0.1.0+6
+  flutter_icons_null_safety:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

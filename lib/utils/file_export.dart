@@ -13,7 +13,6 @@ export  'package:almajidoud/custom_widgets/custom_build_body.dart';
 export 'package:clippy_flutter/clippy_flutter.dart';
 export 'package:syncfusion_flutter_sliders/sliders.dart';
 export 'package:pie_chart/pie_chart.dart';
-export 'package:smooth_star_rating/smooth_star_rating.dart';
 export 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 export 'package:localize_and_translate/localize_and_translate.dart';
@@ -58,7 +57,6 @@ export 'package:almajidoud/screens/cart/cart_screen.dart';
 export 'package:almajidoud/screens/location/location_screen.dart';
 export 'package:almajidoud/screens/my_account/my_account_screen.dart';
 export 'package:almajidoud/screens/notifications/notifications_screen.dart';
-export 'package:almajidoud/screens/categories/category_product/widgets/category_products_top_slider.dart';
 export 'package:almajidoud/screens/categories/category_product/widgets/single_category_product_item.dart';
 export 'package:almajidoud/screens/categories/category_product/category_products_screen.dart';
 export 'package:almajidoud/utils/product_images.dart';

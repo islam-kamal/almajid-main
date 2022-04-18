@@ -47,4 +47,4 @@ class ProductBloc extends Bloc<AppEvent, AppState> {
   }
 }
 
-final product_bloc = ProductBloc(null!);
+final product_bloc = ProductBloc(Start());

@@ -8,8 +8,9 @@ import 'package:rxdart/rxdart.dart';
 
 
 class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
-  final AuthenticationRepository _authenticationRepository;
-    SigninBloc(this._authenticationRepository): super(Start());
+/*  final AuthenticationRepository _authenticationRepository;
+    SigninBloc(this._authenticationRepository): super(Start());*/
+  SigninBloc(AppState initialState) : super(initialState);
 
     final email_controller = BehaviorSubject<String>();
     final password_controller = BehaviorSubject<String>();
@@ -77,4 +78,4 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
 
 
 }
-final signIn_bloc = SigninBloc(null!);
+final signIn_bloc = SigninBloc(Start());

@@ -12,8 +12,8 @@ import 'package:almajidoud/screens/product_details/product_details_screen.dart';
 
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:rating_bar/rating_bar.dart';
 
 class AutoSearchScreen extends StatefulWidget {
   @override
@@ -205,7 +205,7 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                                                             text: "${snapshot.data!.items![index].price} ${MyApp.country_currency}",
                                                                                             textAlign: TextAlign.start, fontWeight: FontWeight.bold),
                                                                                       ),
-                                                                                      RatingBar.readOnly(
+                                                                           /*           RatingBar.readOnly(
                                                                                         initialRating: 5.0,
                                                                                         maxRating: 5,
                                                                                         isHalfAllowed: true,
@@ -215,6 +215,21 @@ class _AutoSearchScreenState extends State<AutoSearchScreen> {
                                                                                         size: StaticData.get_width(context) * 0.03,
                                                                                         filledColor: snapshot.data!.items![index].extensionAttributes!.reviews!.isEmpty ?
                                                                                         greyColor : Colors.yellow.shade700,
+                                                                                      ),*/
+                                                                                      RatingBar.builder(
+                                                                                        initialRating:  5.0,
+                                                                                        minRating: 5,
+                                                                                        direction: Axis.horizontal,
+                                                                                        allowHalfRating: true,
+                                                                                        itemCount: 5,
+                                                                                        itemSize: 10.0,
+                                                                                        itemBuilder: (context, _) => Icon(
+                                                                                          Icons.star,
+                                                                                          color: Colors.amber,
+                                                                                        ),
+                                                                                        onRatingUpdate: (rating){
+
+                                                                                        },
                                                                                       ),
                                                                                     ],
                                                                                   ),

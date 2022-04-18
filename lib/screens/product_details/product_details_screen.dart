@@ -33,7 +33,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
   var description;
   var product_image;
   var positioned_status = false;
-  final home_bloc = HomeBloc(null!);
+  final home_bloc = HomeBloc();
   bool releated_products = false;
   var percentage;
   @override

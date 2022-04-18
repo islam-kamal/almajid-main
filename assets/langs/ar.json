@@ -334,5 +334,7 @@
   "paypal_canceled_reversal" : " تم الغاء",
   "paypal_reversed" : "تم الغاء",
   "redbox_portable_failed" : "فشل",
-  "redbox_portable_expired" : "فشل"
+  "redbox_portable_expired" : "فشل",
+
+  "Shopping Now" : "تسوق الأن"
 }

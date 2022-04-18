@@ -65,4 +65,4 @@ class OrderBloc extends Bloc<AppEvent, AppState> {
 }
 
 
-OrderBloc orderBloc = new OrderBloc(null!);
+OrderBloc orderBloc = new OrderBloc(Start());

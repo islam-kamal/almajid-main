@@ -96,11 +96,11 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
 
   @override
   void dispose() async{
-    frist_name_controller?.close();
-    last_name_controller?.close();
+    frist_name_controller.close();
+    last_name_controller.close();
 
   }
 
 
 }
-final shipmentAddressBloc = new ShipmentAddressBloc(null!);
+final shipmentAddressBloc = new ShipmentAddressBloc(Start());

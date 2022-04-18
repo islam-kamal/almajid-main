@@ -8,7 +8,7 @@ class CategoryRepository {
 
   static SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();
 
-  Future<CategoryModel> getCategoriesList() async {
+  Future<CategoryModel?> getCategoriesList() async {
     Map<String, String> headers = {
       //'lang': translator.activeLanguageCode,
       'Content-Type': 'application/json',
@@ -29,8 +29,8 @@ class CategoryRepository {
     };
     return NetworkUtil.internal().get(
         ProductModel(),
-        "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/products?searchCriteria[filterGroups][0][filters][1][field]=category_id&searchCriteria[filterGroups][0][filters][1][value]=${category_id}&searchCriteria[filterGroups][0][filters][1][conditionType]=eq&searchCriteria[sortOrders][0][field]=position&searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[pageSize]=10&searchCriteria[currentPage]=${offset}",
-     //   "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/products?searchCriteria&searchCriteria[filterGroups][0][filters][1][field]=category_id&searchCriteria[filterGroups][0][filters][1][value]=${category_id}&searchCriteria[filterGroups][0][filters][1][conditionType]=eq&searchCriteria[sortOrders][0][field]=position&searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[pageSize]=10&searchCriteria[currentPage]=${offset}",
+   //     "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/products?searchCriteria[filterGroups][0][filters][1][field]=category_id&searchCriteria[filterGroups][0][filters][1][value]=${category_id}&searchCriteria[filterGroups][0][filters][1][conditionType]=eq&searchCriteria[sortOrders][0][field]=position&searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[pageSize]=10&searchCriteria[currentPage]=${offset}",
+       "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/products?searchCriteria[filterGroups][0][filters][1][field]=category_id&searchCriteria[filterGroups][0][filters][1][value]=${category_id}&searchCriteria[filterGroups][0][filters][1][conditionType]=eq&searchCriteria[sortOrders][0][field]=position&searchCriteria[sortOrders][0][direction]=DESC&searchCriteria[pageSize]=10&searchCriteria[currentPage]=${offset}",
         headers: headers);
   }
 

@@ -32,7 +32,7 @@ class _WebViewState extends State<WebView> {
             backgroundColor: whiteColor,
             elevation: 0.0,
             title: Text(
-              translator.translate(widget.title!) ?? '',
+              translator.translate(widget.title!) ,
               style: TextStyle(color: mainColor,fontWeight: FontWeight.normal),
             ),
             leading: IconButton(

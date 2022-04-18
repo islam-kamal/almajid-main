@@ -12,12 +12,12 @@ import 'package:almajidoud/screens/product_details/product_details_screen.dart';
 
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
-import 'package:rating_bar/rating_bar.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:share/share.dart';
 
 class SearchScreen extends StatefulWidget {
 
-  @override
+
   _SearchScreenState createState() => _SearchScreenState();
 }
 
@@ -26,7 +26,7 @@ class _SearchScreenState extends State<SearchScreen> {
   String search_text='';
   var product_image;
   GlobalKey<ScaffoldState> scaffold_key = GlobalKey();
-  final search_bloc = SearchBloc(null!);
+  final search_bloc = SearchBloc();
   var percentage;
 
   @override
@@ -291,19 +291,34 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                                 ),
                                                                                               ],
                                                                                             ),
-                                                                                            RatingBar.readOnly(
+                                                                          /*                  RatingBar.builder(
                                                                                               initialRating: 5.0,
                                                                                               maxRating: 5,
-                                                                                              isHalfAllowed: true,
+                                                                                              allowHalfRating: true,
+                                                                                              size: StaticData.get_width(context) * 0.03,
                                                                                               halfFilledIcon: Icons.star_half,
                                                                                               filledIcon: Icons.star,
                                                                                               emptyIcon: Icons.star_border,
-                                                                                              size: StaticData.get_width(context) * 0.03,
                                                                                               filledColor:
                                                                                               snapshot.data!.items![index].extensionAttributes!.reviews!.isEmpty
                                                                                                   ? greyColor
                                                                                                   : Colors.yellow.shade700,
-                                                                                            ),
+                                                                                            ),*/
+                                                                                RatingBar.builder(
+                                                                                  initialRating:  5.0,
+                                                                                  minRating: 5,
+                                                                                  direction: Axis.horizontal,
+                                                                                  allowHalfRating: true,
+                                                                                  itemCount: 5,
+                                                                                  itemSize: 10.0,
+                                                                                  itemBuilder: (context, _) => Icon(
+                                                                                    Icons.star,
+                                                                                    color: Colors.amber,
+                                                                                  ),
+                                                                              onRatingUpdate: (rating){
+
+                                                                              },
+                                                                                ),
 
 
                                                                                           ],

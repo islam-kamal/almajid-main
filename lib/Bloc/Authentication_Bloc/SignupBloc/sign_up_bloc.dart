@@ -5,8 +5,9 @@ import 'package:almajidoud/utils/static_data.dart';
 import 'package:rxdart/rxdart.dart';
 
 class SignUpBloc extends Bloc<AppEvent,AppState> with Validator{
-  final AuthenticationRepository _authenticationRepository;
-  SignUpBloc(this._authenticationRepository) : super(Start());
+/*  final AuthenticationRepository _authenticationRepository;
+  SignUpBloc(this._authenticationRepository) : super(Start());*/
+  SignUpBloc(AppState initialState) : super(initialState);
 
   final fristname_controller = BehaviorSubject<String>();
   final mobile_controller = BehaviorSubject<String>();
@@ -57,15 +58,15 @@ class SignUpBloc extends Bloc<AppEvent,AppState> with Validator{
 
   @override
   void dispose() {
-    fristname_controller?.close();
-    mobile_controller?.close();
-    email_controller?.close();
-    password_controller?.close();
+    fristname_controller.close();
+    mobile_controller.close();
+    email_controller.close();
+    password_controller.close();
   }
 
 
 }
 
-SignUpBloc signUpBloc = new SignUpBloc(null!);
+SignUpBloc signUpBloc = new SignUpBloc(Start());
 
 

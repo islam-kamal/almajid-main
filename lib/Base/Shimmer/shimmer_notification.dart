@@ -17,7 +17,7 @@ ShimmerNotification({this.length=5});
             padding: EdgeInsets.all(StaticData.get_width(context) * 0.03),
             child: Shimmer.fromColors(
                 baseColor: white_gray_color,
-                highlightColor: Colors.grey![350]!,
+                highlightColor: Colors.grey[350]!,
                 child
                     : Container(
                   decoration: BoxDecoration(

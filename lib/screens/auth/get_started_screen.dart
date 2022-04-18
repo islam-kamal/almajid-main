@@ -101,7 +101,7 @@ class GetStartedScreenState extends State<GetStartedScreen>
                         backgroundColor: redColor,
                         flushbarStyle: FlushbarStyle.FLOATING,
                         duration: Duration(seconds: 6),
-                      )..show(_drawerKey!.currentState!.context);
+                      )..show(_drawerKey.currentState!.context);
                     }
                     else if (state is Done) {
                       _stopAnimation();

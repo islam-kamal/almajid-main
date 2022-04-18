@@ -1,4 +1,5 @@
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 
 singleRatingWidget({
   BuildContext? context,
@@ -46,7 +47,7 @@ singleRatingWidget({
             ),
             SmoothStarRating(
               rating: 5.0,
-              isReadOnly: true,
+             // isReadOnly: true,
               size: height(context) * .02,
               color: Colors.orangeAccent,
               borderColor: Colors.orangeAccent,

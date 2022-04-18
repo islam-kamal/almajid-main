@@ -67,33 +67,30 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
 
                             isScrollable: true,
                             // indicatorColor: mainColor ,
+                            onTap: (index){
 
-
+                              customAnimatedPushNavigation(
+                                  context, CategoryProductsScreen(
+                                category_id: snapshot.data!.childrenData![index].id.toString(), //item.id.toString(),
+                                category_name: snapshot.data!.childrenData![index].name.toString(),//item.name,
+                                category_index: _controller!.index,
+                              ));
+                              },
                             tabs: snapshot.data!.childrenData!.map((item) {
 
                               if(item.isActive == true)
-                                return GestureDetector(
-                                  onTap: () {
-                                    customAnimatedPushNavigation(
-                                        context, CategoryProductsScreen(
-                                      category_id: item.id.toString(),
-                                      category_name: item.name,
-                                      category_index: _controller!.index,
-                                    ));
+                                return    Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
 
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 10),
-
-                                    child: Center(
-                                      child: customDescriptionText(
-                                          context: context,
-                                          text: item.name,
-                                          textColor: widget.category_name == item.name? redColor : mainColor ,
-                                          percentageOfHeight: .015),
-                                    ),
+                                  child: Center(
+                                    child: customDescriptionText(
+                                        context: context,
+                                        text: item.name,
+                                        textColor: widget.category_name == item.name? redColor : mainColor ,
+                                        percentageOfHeight: .015),
                                   ),
                                 );
+
                               else
                                 return Container();
 

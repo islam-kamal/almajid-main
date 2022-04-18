@@ -37,7 +37,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
 
  late AnimationController _loginButtonController;
   bool isLoading = false;
-  final home_bloc = HomeBloc(null!);
+  final home_bloc = HomeBloc();
   var product_image;
   var _subject;
   var percentage;
@@ -69,7 +69,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
         widget.items!.productLinks!.forEach((element) async {
           if(element.linkType == "related"){
             var response = await categoryRepository.getProduct(sku: element.linkedProductSku);
-            related_product_list.add(response!.items!.isNotEmpty ?response!.items![0] : null!);
+            related_product_list.add(response.items!.isNotEmpty ?response.items![0] : null!);
             home_bloc.related_products_subject.sink.add(response.items);
           }else{
 
@@ -177,7 +177,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                           }
                         });
 
-                        if(startDate! ==null || endDate! ==null ){
+                        if(startDate ==null || endDate ==null ){
                           if(double.parse(minimal_price) == double.parse(snapshot.data![index].price.toString())){
                             new_price = null;
                           }else{

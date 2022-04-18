@@ -139,7 +139,7 @@ orderCentralCardStack({BuildContext? context, OrderItems? order_details}) {
                   width: width(context) * 0.7,
                   child: customDescriptionText(
                       context: context,
-                      text: "${order_details.billingAddress!.street![0]??''} , ${order_details.billingAddress!.city??''}"
+                      text: "${order_details.billingAddress!.street![0]} , ${order_details.billingAddress!.city??''}"
                           " , ${order_details.billingAddress!.region??''}",
                       maxLines: 3,
                       fontWeight: FontWeight.bold,

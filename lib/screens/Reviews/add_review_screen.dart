@@ -6,6 +6,7 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/Reviews/thanks_for_review_screen.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 
 class AddReviewScreen extends StatefulWidget {
   var product_id;
@@ -302,8 +303,8 @@ class _AddReviewScreenState extends State<AddReviewScreen>
               fontWeight: FontWeight.bold),
           SizedBox(width: 5),
           SmoothStarRating(
-            rating: rating,
-            isReadOnly: false,
+            rating: rating!,
+           // isReadOnly: false,
             size: height(context) * .045,
             color: Colors.orangeAccent,
             borderColor: Colors.orangeAccent,
@@ -313,7 +314,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
             starCount: 5,
             allowHalfRating: true,
             spacing: 5.0,
-            onRated: (value) {
+            onRatingChanged: (value) {
               setState(() {
                 rating = value;
               });

@@ -16,8 +16,8 @@ import 'package:almajidoud/screens/product_details/widgets/divider.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:rating_bar/rating_bar.dart';
 import 'package:almajidoud/screens/WishList/add_wishlist_item_to_cart.dart';
 
 class WishListScreen extends StatefulWidget {
@@ -329,7 +329,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                                   ),
                                                                                           ],
                                                                                         ),
-                                                                                        RatingBar.readOnly(
+                                                                                   /*     RatingBar.readOnly(
                                                                                           initialRating: 5.0,
                                                                                           maxRating: 5,
                                                                                           isHalfAllowed: true,
@@ -338,6 +338,21 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                           emptyIcon: Icons.star_border,
                                                                                           size: StaticData.get_width(context) * 0.03,
                                                                                           filledColor: (snapshot.data!.items![index].product!.visibility.toDouble() >= 1) ? Colors.yellow.shade700 : Colors.yellow.shade700,
+                                                                                        ),*/
+                                                                                        RatingBar.builder(
+                                                                                          initialRating:  5.0,
+                                                                                          minRating: 5,
+                                                                                          direction: Axis.horizontal,
+                                                                                          allowHalfRating: true,
+                                                                                          itemCount: 5,
+                                                                                         itemSize: 10.0,
+                                                                                          itemBuilder: (context, _) => Icon(
+                                                                                            Icons.star,
+                                                                                            color: Colors.amber,
+                                                                                          ),
+                                                                                          onRatingUpdate: (rating){
+
+                                                                                          },
                                                                                         ),
                                                                                       ],
                                                                                     ),

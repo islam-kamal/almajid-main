@@ -40,7 +40,7 @@ class _TapPaymentScreenState extends State<TapPaymentScreen> {
   }
 
   void getData() {
-    _webController!.runJavascriptReturningResult("document.body.innerText").then((data) {
+    _webController!.evaluateJavascript("document.body.innerText").then((data) {
       var decodedJSON = jsonDecode(data);
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
       final responseCode = responseJSON["response_code"];
@@ -116,7 +116,7 @@ class _TapPaymentScreenState extends State<TapPaymentScreen> {
                     _loadingPayment = true;
                   });
                   var data = await _webController!
-                      .runJavascriptReturningResult("document.body.innerText");
+                      .evaluateJavascript("document.body.innerText");
                   final decodedJSON = jsonDecode(data);
 
                   Map<String, dynamic> responseJSON = {};

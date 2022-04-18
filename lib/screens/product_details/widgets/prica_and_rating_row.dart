@@ -1,6 +1,6 @@
 import 'package:almajidoud/Widgets/customText.dart';
 import 'package:almajidoud/utils/file_export.dart';
-import 'package:rating_bar/rating_bar.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 priceAndRatingRow({BuildContext? context , var new_price ,var old_price, var minimal_price ,bool? review_status}) {
   return Container(
@@ -32,7 +32,7 @@ priceAndRatingRow({BuildContext? context , var new_price ,var old_price, var min
                         ),
                         MyText(
                           text: " ${MyApp.country_currency}",
-                          size: StaticData.get_height(context!) * .011,
+                          size: StaticData.get_height(context) * .011,
                           color: blackColor,
                           maxLines: 2,
                           weight: FontWeight.normal,
@@ -52,7 +52,7 @@ priceAndRatingRow({BuildContext? context , var new_price ,var old_price, var min
               ],
             ),
 
-
+/*
        RatingBar.readOnly(
           initialRating: 5.0,
           maxRating: 5,
@@ -62,7 +62,23 @@ priceAndRatingRow({BuildContext? context , var new_price ,var old_price, var min
           emptyIcon: Icons.star_border,
           size: StaticData.get_width(context) * 0.03,
           filledColor: review_status! ? Colors.yellow.shade700 : greyColor,
-        )
+        )*/
+
+        RatingBar.builder(
+          initialRating:  5.0,
+          minRating: 5,
+          direction: Axis.horizontal,
+          allowHalfRating: true,
+          itemCount: 5,
+          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+          itemBuilder: (context, _) => Icon(
+            Icons.star,
+            color: Colors.amber,
+          ),
+          onRatingUpdate: (rating){
+
+          },
+        ),
       ],
     ),
   );

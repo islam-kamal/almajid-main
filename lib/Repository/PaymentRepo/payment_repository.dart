@@ -10,7 +10,6 @@ import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io' show Platform;
 
-import 'package:network_info_plus/network_info_plus.dart';
 
 class PaymentRepository {
   static SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();

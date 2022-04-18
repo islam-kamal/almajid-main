@@ -33,7 +33,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
   var qty;
  late AnimationController _loginButtonController;
   bool isLoading = false;
-  ShoppingCartBloc shoppingCartBloc = new ShoppingCartBloc(null!);
+  ShoppingCartBloc shoppingCartBloc = new ShoppingCartBloc();
 
   var discount_amount = '';
   @override
@@ -557,7 +557,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
 
                                                   MaterialButton(
                                                     height: 5,
-                                                    minWidth: StaticData.get_width(context!) * 0.15,
+                                                    minWidth: StaticData.get_width(context) * 0.15,
 
                                                     onPressed: qty <= 1 ? (){} :() async {
                                                       setState(() {

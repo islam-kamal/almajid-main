@@ -106,8 +106,7 @@ class _TamaraPaymentScreenState extends State<TamaraPaymentScreen> {
                       setState(() {
                         _loadingPayment = true;
                       });
-                      var data = await _webController!
-                          .runJavascriptReturningResult("document.body.innerText");
+                      var data = await _webController!.evaluateJavascript("document.body.innerText");
                       var decodedJSON = jsonDecode(data);
                       Map<String, dynamic> responseJSON = {};
                       if (Platform.isAndroid) {

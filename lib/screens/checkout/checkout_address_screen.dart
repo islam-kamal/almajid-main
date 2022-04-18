@@ -704,7 +704,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3),
                   borderSide: BorderSide(color: greyColor)),
-              errorText: snapshot.error.toString(),
+          //    errorText: snapshot.error.toString(),
 
             ),
             validator: StaticData.chossed_address_id != null ? null :(value) {
@@ -756,7 +756,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3),
                   borderSide: BorderSide(color: greyColor)),
-              errorText: snapshot.error.toString(),
+            //  errorText: snapshot.error.toString(),
 
             ),
             validator: StaticData.chossed_address_id != null ? null :(value) {
@@ -808,7 +808,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3),
                   borderSide: BorderSide(color: greyColor)),
-              errorText: snapshot.error.toString(),
+          //    errorText: snapshot.error.toString(),
 
             ),
             validator: StaticData.chossed_address_id != null ? null :(value) {
@@ -908,7 +908,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3),
                   borderSide: BorderSide(color: greyColor)),
-              errorText: snapshot.error.toString(),
+             // errorText: snapshot.error.toString(),
 
             ),
             validator:StaticData.chossed_address_id != null ? null : (value) {
@@ -923,7 +923,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       },
     );
   }
-
 
   Neighbourhood_addressTextFields({BuildContext? context, String? hint,var initialValue}) {
     return StreamBuilder<String>(
@@ -962,7 +961,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(3),
                   borderSide: BorderSide(color: greyColor)),
-              errorText: snapshot.error.toString(),
+            //  errorText: snapshot.error.toString(),
 
             ),
             validator:StaticData.chossed_address_id != null ? null : (value) {
@@ -1276,7 +1275,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                 context: context,
                 textColor: mainColor,
                 maxLines: 2,
-                text: "${cardModel!.firstname} ${cardModel!.lastname}",
+                text: "${cardModel!.firstname} ${cardModel.lastname}",
               ),
               alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
             ),

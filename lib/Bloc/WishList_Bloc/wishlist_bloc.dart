@@ -22,7 +22,7 @@ class WishListBloc extends Bloc<AppEvent,AppState>  {
 
   @override
   void drainStream() {
-    _wishlist_subject.value = null!;
+    _wishlist_subject.close();
   }
 
 
@@ -93,4 +93,4 @@ class WishListBloc extends Bloc<AppEvent,AppState>  {
 
 
 }
-final wishlist_bloc = WishListBloc(null!);
+final wishlist_bloc = WishListBloc(Start());

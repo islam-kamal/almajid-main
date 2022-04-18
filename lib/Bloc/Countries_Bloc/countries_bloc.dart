@@ -11,7 +11,7 @@ class CountriesBloc extends Bloc<AppEvent, AppState> with Validator{
   }
 
   void drainStream() {
-    _countries_subject.value = null!;
+    _countries_subject.close();
   }
   void get_countries() async{
     var response =await countriesRepository.getCountriesList(
@@ -39,4 +39,4 @@ class CountriesBloc extends Bloc<AppEvent, AppState> with Validator{
   }
 }
 
-CountriesBloc countriesBloc = new CountriesBloc(null!);
+CountriesBloc countriesBloc = new CountriesBloc(Start());

@@ -4,8 +4,7 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-
+import 'package:flutter_icons_null_safety/flutter_icons_null_safety.dart';
 class CartBadge extends StatefulWidget {
   final Color iconColor;
 
@@ -33,7 +32,7 @@ class _CartBadgeState extends State<CartBadge> {
             _count = 0;
           } else {
             _count = 0;
-            data.items!.forEach((element) => _count += int.parse(element.qty));
+            data.items!.forEach((element) => _count += int.parse(element.qty.toString()));
           }
         }else {
           _isLoading = false;

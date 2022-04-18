@@ -45,7 +45,7 @@ class ScreenAppBarState extends State<ScreenAppBar> {
                 children: [
                   widget.right_icon == null
                       ? GestureDetector(
-                    onTap: widget?.onTapCategoryDrawer,
+                    onTap: widget.onTapCategoryDrawer,
                     child: Image.asset(
                       "assets/icons/category.png",
                       height: isLandscape(context)

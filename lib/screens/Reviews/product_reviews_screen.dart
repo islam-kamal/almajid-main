@@ -4,6 +4,7 @@ import 'package:almajidoud/screens/Reviews/product_reviews_screen.dart';
 import 'package:almajidoud/screens/Reviews/widgets/reviews_chart.dart';
 import 'package:almajidoud/screens/Reviews/widgets/reviews_header.dart';
 import 'package:almajidoud/screens/Reviews/widgets/single_review_item.dart';
+import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 
 class ProductReviewsScreen extends StatefulWidget{
   var product_suk;
@@ -115,7 +116,8 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
                                                                   0
                                                               ? 5.0
                                                               : 0.0,
-                                                      isReadOnly: true,
+                                                     // isReadOnly: true,
+
                                                       size: height(context) *
                                                           .045,
                                                       color:

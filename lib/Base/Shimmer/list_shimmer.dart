@@ -28,7 +28,7 @@ class _ListShimmerState extends State<ListShimmer> {
       itemBuilder: (context, index) {
         return  Shimmer.fromColors(
             baseColor: white_gray_color,
-            highlightColor: Colors.grey![350]!,
+            highlightColor: Colors.grey[350]!,
             child: Padding(
               padding: EdgeInsets.only(right: 5,left: 5),
               child: Container(
@@ -53,7 +53,7 @@ class _ListShimmerState extends State<ListShimmer> {
         itemBuilder: (BuildContext context, int index) {
           return  Shimmer.fromColors(
               baseColor: white_gray_color,
-              highlightColor: Colors.grey![350]!,
+              highlightColor: Colors.grey[350]!,
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Container(

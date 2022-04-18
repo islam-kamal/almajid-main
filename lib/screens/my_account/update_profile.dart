@@ -6,9 +6,8 @@ import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/utils/colors.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:flutter_icons_null_safety/flutter_icons_null_safety.dart';
 class UpdateProfile extends StatefulWidget {
 
   @override

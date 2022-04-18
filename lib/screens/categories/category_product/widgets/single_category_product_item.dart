@@ -8,7 +8,7 @@ import 'package:almajidoud/screens/product_details/product_details_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/WishList/custom_wishlist.dart';
 import 'package:another_flushbar/flushbar.dart';
-import 'package:rating_bar/rating_bar.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class singleCategoryProductItem extends StatelessWidget {
   TextEditingController? qty_controller = new TextEditingController();
@@ -211,7 +211,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                                 ),
                                               ],
                                             ),),
-
+/*
                                             RatingBar.readOnly(
                                               initialRating: 5.0,
                                               maxRating: 5,
@@ -225,6 +225,22 @@ class singleCategoryProductItem extends StatelessWidget {
                                               filledColor:
                                               product!.extensionAttributes!.reviews!.isEmpty    ? greyColor
                                                   : Colors.yellow.shade700,
+                                            ),*/
+
+                                            RatingBar.builder(
+                                              initialRating:  5.0,
+                                              minRating: 5,
+                                              direction: Axis.horizontal,
+                                              allowHalfRating: true,
+                                              itemCount: 5,
+                                              itemSize: 10.0,
+                                              itemBuilder: (context, _) => Icon(
+                                                Icons.star,
+                                                color: Colors.amber,
+                                              ),
+                                              onRatingUpdate: (rating){
+
+                                              },
                                             ),
                                           ],
                                         ),

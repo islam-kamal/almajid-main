@@ -5,11 +5,11 @@ abstract class BaseBloc {
   void dispose() {}
 }
 
-class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
-    with Validator
-    implements BaseBloc {
+class ForgetPasswordBloc extends Bloc<AppEvent, AppState> with Validator implements BaseBloc {
+  ForgetPasswordBloc(AppState initialState) : super(initialState);
+/*
   final AuthenticationRepository _authenticationRepository;
-  ForgetPasswordBloc(this._authenticationRepository) : super(Start());
+  ForgetPasswordBloc(this._authenticationRepository) : super(Start());*/
   SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();
 
   final mobile_controller = BehaviorSubject<String>();
@@ -106,9 +106,9 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState>
 
   @override
   void dispose() {
-    mobile_controller?.close();
-    code_controller?.close();
+    mobile_controller.close();
+    code_controller.close();
   }
 }
 
-final forgetPassword_bloc = new ForgetPasswordBloc(null!);
+final forgetPassword_bloc = new ForgetPasswordBloc(Start());

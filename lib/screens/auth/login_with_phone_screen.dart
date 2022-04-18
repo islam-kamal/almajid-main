@@ -243,7 +243,7 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
       alignment: Alignment.center,
       padding: EdgeInsets.all(10),
       child: StaggerAnimation(
-        buttonController: _loginButtonController!,
+        buttonController: _loginButtonController,
         btn_width:  width(context) * .2,
         btn_height:  isLandscape(context) ? 2 * height(context) * .08 : height(context) * .08,
         widget:  Container(

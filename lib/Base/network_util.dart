@@ -14,8 +14,8 @@ SharedPreferenceManager sharedPreferenceManager =SharedPreferenceManager();
 
   Future<ResponseType> get <ResponseType extends Mappable>(ResponseType responseType, String url,
       {Map<String, dynamic>? headers}) async {
-    
-    var response;
+
+    Response? response ;
     try {
       dio.options.baseUrl = Urls.BASE_URL;
       response = await dio.get(
@@ -26,7 +26,6 @@ SharedPreferenceManager sharedPreferenceManager =SharedPreferenceManager();
           contentType: 'application/json',
         )
       );
-
     } on DioError catch (e) {
       if (e.response != null) {
         response = e.response;
@@ -82,7 +81,6 @@ SharedPreferenceManager sharedPreferenceManager =SharedPreferenceManager();
   ResponseType handleResponse<ResponseType extends Mappable>(Response? response, ResponseType? responseType) {
     final int? statusCode = response!.statusCode;
     if (statusCode! >= 200 && statusCode < 300) {
-
       return Mappable(responseType!, response.toString()) as ResponseType;
     } else {
       return Mappable(responseType!, response.toString()) as ResponseType;

@@ -95,12 +95,12 @@ late  AnimationController _loginButtonController;
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-
         if (_show!) {
           return false;
         } else {
-          Navigator.pop(context);
-          return null!;
+          return true;
+         // Navigator.pop(context);
+         // return null!;
         }
       },
       child: NetworkIndicator(
@@ -453,7 +453,7 @@ late  AnimationController _loginButtonController;
         : await sharedPreferenceManager.readString(CachingKey.CART_QUOTE);
   }
 
-  Widget _showBottomSheet() {
+  Widget? _showBottomSheet() {
     if (_show!) {
       return BottomSheet(
         onClosing: () {
@@ -552,7 +552,7 @@ late  AnimationController _loginButtonController;
         },
       );
     } else {
-      return null!;
+      return null;
     }
   }
 
