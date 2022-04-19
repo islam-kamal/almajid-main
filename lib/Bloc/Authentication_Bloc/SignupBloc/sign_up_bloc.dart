@@ -5,9 +5,11 @@ import 'package:almajidoud/utils/static_data.dart';
 import 'package:rxdart/rxdart.dart';
 
 class SignUpBloc extends Bloc<AppEvent,AppState> with Validator{
-/*  final AuthenticationRepository _authenticationRepository;
-  SignUpBloc(this._authenticationRepository) : super(Start());*/
-  SignUpBloc(AppState initialState) : super(initialState);
+
+  //SignUpBloc(AppState initialState) : super(initialState);
+  SignUpBloc():super(Start()){
+
+  }
 
   final fristname_controller = BehaviorSubject<String>();
   final mobile_controller = BehaviorSubject<String>();
@@ -29,8 +31,28 @@ class SignUpBloc extends Bloc<AppEvent,AppState> with Validator{
 
   Stream<bool> get submitCheck => Rx.combineLatest5(fristname, mobile, email, password,lastname ,(a, b, c, d,e) => true);
 
+  Future<void> _onClick(click event , Emitter<AppState> emit)async{
+    emit( Loading(model: null));
+    var response = await AuthenticationRepository.signUp(
+      firstname:   fristname_controller.value,
+      mobile: StaticData.country_code + mobile_controller.value,
+      email: email_controller.value,
+      password: password_controller.value,
+      lastname:  lastname_controller.value,
+    );
+    if(response.success == "true" ){
+      sharedPreferenceManager.writeData(CachingKey.USER_NAME, fristname_controller.value);
+      sharedPreferenceManager.writeData(CachingKey.FORGET_PASSWORD_PHONE, StaticData.country_code +mobile_controller.value);
+      sharedPreferenceManager.writeData(CachingKey.EMAIL,email_controller.value);
+      StaticData.user_mobile_number = StaticData.country_code +mobile_controller.value;
+      emit( Done(model:response));
+    }
+    else if (response.success == "false"){
+        emit( ErrorLoading(model: response));
+    }
+  }
 
-  @override
+/*  @override
   Stream<AppState> mapEventToState(AppEvent event) async*{
     if(event is click){
       yield Loading(model: null);
@@ -54,7 +76,7 @@ class SignUpBloc extends Bloc<AppEvent,AppState> with Validator{
 
     }
 
-  }
+  }*/
 
   @override
   void dispose() {
@@ -67,6 +89,6 @@ class SignUpBloc extends Bloc<AppEvent,AppState> with Validator{
 
 }
 
-SignUpBloc signUpBloc = new SignUpBloc(Start());
+SignUpBloc signUpBloc = new SignUpBloc();
 
 

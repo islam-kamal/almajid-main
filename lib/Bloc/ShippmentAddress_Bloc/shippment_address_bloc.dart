@@ -3,7 +3,17 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/Model/ShipmentAddressModel/client/address_model.dart';
 import 'package:almajidoud/Repository/ShippmentAdressRepo/shipment_address_repository.dart';
 class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
-  ShipmentAddressBloc(AppState initialState) : super(initialState);
+  ///ShipmentAddressBloc(AppState initialState) : super(initialState);
+
+  ShipmentAddressBloc():super(Start()){
+    on<GuestAddAdressEvent>(_onGuestAddAdress);
+    on<AddressDetailsEvent>(_onAddressDetails);
+    on<GetAllAddressesEvent>(_onGetAllAddresses);
+    on<AddClientAdressEvent>(_onAddClientAdress);
+    on<EditClientAdressEvent>(_onEditClientAdress);
+  }
+
+
 
   final frist_name_controller = BehaviorSubject<String>();
   final last_name_controller = BehaviorSubject<String>();
@@ -31,7 +41,75 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
     return _address_details_subject;
   }
 
-  @override
+
+  Future<void> _onGuestAddAdress(GuestAddAdressEvent event, Emitter<AppState> emit) async {
+    try{
+      emit(Loading());
+      var response = await shipmentAddressRepository.add_addresses(
+          context: event.context
+      );
+      if(response?.message == null){
+        emit(Done(model:response,indicator: 'GuestAddAdress'));
+      }else {
+        emit(ErrorLoading(model: response,indicator: 'GuestAddAdress'));
+      }
+    }catch(e){
+      emit(
+        ErrorLoading(message: "Failed to fetch data. Is your device online ?",
+        ),
+      );
+    }
+  }
+
+  Future<void> _onAddressDetails(AddressDetailsEvent event , Emitter<AppState> emit)async{
+    emit(Loading());
+    var response = await shipmentAddressRepository.get_addresss_details(
+        address_id: event.address_id
+    );
+    if(response.message == null){
+      _address_details_subject.sink.add(response);
+      emit( Done(model: response, indicator: 'address_detials'));
+    }else{
+      emit( ErrorLoading(model: response, indicator: 'address_detials'));
+    }
+  }
+
+  Future<void> _onGetAllAddresses(GetAllAddressesEvent event , Emitter<AppState> emit)async{
+    emit( Loading(indicator: 'GetAllAddressesEvent'));
+    final response = await shipmentAddressRepository.get_all_saved_addresses(context: event.context);
+    if (response == null ) {
+      emit(  ErrorLoading(indicator: 'GetAllAddressesEvent'));
+    } else {
+      emit(  Done(general_model:response ,indicator: 'GetAllAddressesEvent'));
+
+    }
+  }
+
+  Future<void> _onAddClientAdress(AddClientAdressEvent event , Emitter<AppState>  emit)async{
+    emit( Loading(model: null,indicator: 'AddClientAdressEvent'));
+    var response = await shipmentAddressRepository.add_client_address(
+        context: event.context
+    );
+    if(response?.message == null){
+      emit(  Done(model:response,indicator: 'AddClientAdressEvent'));
+    }else {
+      emit(  ErrorLoading(model: response,indicator: 'AddClientAdressEvent'));
+    }
+  }
+
+  Future<void> _onEditClientAdress(EditClientAdressEvent event , Emitter<AppState> emit)async{
+    emit( Loading(model: null,indicator: 'EditClientAdressEvent'));
+    var response = await shipmentAddressRepository.edit_client_address(
+        context: event.context
+    );
+    if(response?.message == null){
+      emit( Done(model:response,indicator: 'EditClientAdressEvent'));
+    }else {
+      emit( ErrorLoading(model: response,indicator: 'EditClientAdressEvent'));
+    }
+  }
+
+/*  @override
   Stream<AppState> mapEventToState(AppEvent event) async*{
     if(event is GuestAddAdressEvent){
       yield Loading(model: null,indicator: 'GuestAddAdress');
@@ -57,6 +135,7 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
         yield ErrorLoading(model: response, indicator: 'address_detials');
       }
     }
+
     else if (event is GetAllAddressesEvent) {
       yield Loading(indicator: 'GetAllAddressesEvent');
       final response = await shipmentAddressRepository.get_all_saved_addresses(context: event.context);
@@ -92,7 +171,7 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
         yield ErrorLoading(model: response,indicator: 'EditClientAdressEvent');
       }
     }
-  }
+  }*/
 
   @override
   void dispose() async{
@@ -103,4 +182,4 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
 
 
 }
-final shipmentAddressBloc = new ShipmentAddressBloc(Start());
+final shipmentAddressBloc = new ShipmentAddressBloc();

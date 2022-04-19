@@ -72,7 +72,7 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
 
     } catch (e) {
       emit(
-        ErrorLoading(message: "Failed to fetch all categories data. Is your device online ?",
+        ErrorLoading(message: "Failed to fetch data. Is your device online ?",
         ),
       );
     }
@@ -97,7 +97,7 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
 
     } catch (e) {
       emit(
-        ErrorLoading(message: "Failed to fetch all categories data. Is your device online ?",
+        ErrorLoading(message: "Failed to fetch data. Is your device online ?",
         ),
       );
     }
@@ -121,7 +121,7 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
 
     } catch (e) {
       emit(
-        ErrorLoading(message: "Failed to fetch all categories data. Is your device online ?",
+        ErrorLoading(message: "Failed to fetch data. Is your device online ?",
         ),
       );
     }
@@ -145,7 +145,7 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
       }
     } catch (e) {
       emit(
-        ErrorLoading(message: "Failed to fetch all categories data. Is your device online ?",
+        ErrorLoading(message: "Failed to fetch data. Is your device online ?",
         ),
       );
     }
@@ -173,7 +173,7 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
       }
     } catch (e) {
       emit(
-        ErrorLoading(message: "Failed to fetch all categories data. Is your device online ?",
+        ErrorLoading(message: "Failed to fetch data. Is your device online ?",
         ),
       );
     }

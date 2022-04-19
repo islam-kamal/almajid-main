@@ -64,7 +64,9 @@ class _NetworkIndicatorState extends State<NetworkIndicator> {
                     vertical: _height * 0.02),
                 child: Builder(
                     builder: (context) => RaisedButton(
-                          onPressed: () {},
+                          onPressed: () {
+
+                          },
                           elevation: 500,
                           shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(25.0)),
@@ -89,11 +91,7 @@ class _NetworkIndicatorState extends State<NetworkIndicator> {
   @override
   Widget build(BuildContext context) {
     return OfflineBuilder(
-      connectivityBuilder: (
-        BuildContext context,
-        ConnectivityResult connectivity,
-        Widget child,
-      ) {
+      connectivityBuilder: (BuildContext context, ConnectivityResult connectivity, Widget child,) {
         if (connectivity == ConnectivityResult.none) {
           final appBar = AppBar(
               backgroundColor: whiteColor,
@@ -116,9 +114,11 @@ class _NetworkIndicatorState extends State<NetworkIndicator> {
             body: _buildBodyItem(),
           );
         } else {
+
           return child;
         }
       },
+
       builder: (BuildContext context) {
         return widget.child!;
       },

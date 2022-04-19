@@ -6,10 +6,15 @@ abstract class BaseBloc {
 }
 
 class ForgetPasswordBloc extends Bloc<AppEvent, AppState> with Validator implements BaseBloc {
-  ForgetPasswordBloc(AppState initialState) : super(initialState);
-/*
-  final AuthenticationRepository _authenticationRepository;
-  ForgetPasswordBloc(this._authenticationRepository) : super(Start());*/
+ // ForgetPasswordBloc(AppState initialState) : super(initialState);
+
+  ForgetPasswordBloc(): super(Start()){
+    on<sendOtpClick>(_onSendOtp);
+    on<checkOtpClick>(_onCheckOtp);
+    on<resendOtpClick>(_onResendOtp);
+    on<changePasswordClick>(_onChangePassword);
+  }
+
   SharedPreferenceManager sharedPreferenceManager = SharedPreferenceManager();
 
   final mobile_controller = BehaviorSubject<String>();
@@ -38,7 +43,72 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState> with Validator impleme
 
   Stream<bool> get submit_check => Rx.combineLatest2(confirm_password, password, (a, b) => true);
 
-  @override
+
+  //send otp Api handle
+  Future<void> _onSendOtp(sendOtpClick event , Emitter<AppState> emit)async{
+    emit( Loading(model: null));
+    var response = await AuthenticationRepository.sendVerificationCode(event.phone!,event.route!);
+    if (response.success == "true") {
+      sharedPreferenceManager.writeData(
+          CachingKey.FORGET_PASSWORD_PHONE, event.phone);
+      emit(  Done(model: response));
+    } else {
+      emit(  ErrorLoading(model: response));
+    }
+  }
+  //check otp Api handle
+  Future<void> _onCheckOtp(checkOtpClick event , Emitter<AppState> emit)async{
+    String? user_phone;
+    emit( Loading(model: null, indicator: 'checkOtpClick'));
+    await sharedPreferenceManager
+        .readString(CachingKey.FORGET_PASSWORD_PHONE)
+        .then((value) => user_phone = value);
+    var response = await AuthenticationRepository.checkOtpCode(
+        user_phone!, event.otp_code!,event.route!);
+    if (response.success == "true") {
+      sharedPreferenceManager.writeData(CachingKey.AUTH_TOKEN, response.token);
+      emit( Done(model: response, indicator: 'checkOtpClick'));
+    } else {
+      emit( ErrorLoading(model: response, indicator: 'checkOtpClick'));
+    }
+  }
+  //resend otp Api handle
+  Future<void> _onResendOtp(resendOtpClick event , Emitter<AppState> emit)async{
+    String? user_phone;
+    emit( Loading(model: null, indicator: 'resendOtpClick'));
+    await sharedPreferenceManager.readString(CachingKey.FORGET_PASSWORD_PHONE).then((value) => user_phone = value);
+    var response = await AuthenticationRepository.resendOtp( user_phone!,event.route!);
+
+    if (response.success == "true") {
+      emit(  Done(model: response, indicator: 'resendOtpClick'));
+    } else {
+      emit(  ErrorLoading(model: response));
+    }
+  }
+  //change password  Api handle
+  Future<void> _onChangePassword(changePasswordClick event , Emitter<AppState> emit)async{
+    String? user_phone;
+    emit( Loading(model: null));
+    await sharedPreferenceManager
+        .readString(CachingKey.FORGET_PASSWORD_PHONE)
+        .then((value) => user_phone = value);
+    var response;
+    if(password_controller.value != confirm_password_controller.value){
+      emit( ErrorLoading(model: response,message: translator.translate("Passwords are not identical")));
+
+    }else{
+      response = await AuthenticationRepository.changePassword(user_phone!, password_controller.value, );
+
+      if (response.succeess == "true") {
+      emit( Done(model: response));
+      } else {
+      emit( ErrorLoading(model: response));
+      }
+    }
+
+  }
+
+/*  @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
     String? user_phone;
     //send otp Api handle
@@ -102,7 +172,7 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState> with Validator impleme
 
     }
 
-  }
+  }*/
 
   @override
   void dispose() {
@@ -111,4 +181,4 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState> with Validator impleme
   }
 }
 
-final forgetPassword_bloc = new ForgetPasswordBloc(Start());
+final forgetPassword_bloc = new ForgetPasswordBloc();
