@@ -3,7 +3,6 @@ import 'package:almajidoud/Repository/CategoryRepo/category_repository.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:rxdart/rxdart.dart';
 class HomeBloc extends Bloc<AppEvent, AppState> {
- // HomeBloc(AppState initialState) : super(initialState);
 
   HomeBloc() : super(Start()) {
     on<GetHomeNewArrivals>(_onGetHomeNewArrivals);
@@ -180,92 +179,6 @@ class HomeBloc extends Bloc<AppEvent, AppState> {
   }
 
 
-/*  @override
-  Stream<AppState> mapEventToState(AppEvent event) async* {
-    if (event is GetHomeNewArrivals) {
-      yield Loading();
-
-      final response = await categoryRepository.getCategoryProducts(
-          category_id: event.category_id,
-          offset: event.offset
-      );
-      if (response.message == null) {
-        response.items!.isEmpty?_new_arrivals_products_subject : _newArrivalsProducts_list.addAll(response.items!);
-        _new_arrivals_products_subject.sink.add(_newArrivalsProducts_list);
-        yield Done(model: response);
-      } else if (response.message != null) {
-        yield ErrorLoading(model: response);
-      }
-    }
-
-    else  if (event is GetHomeBestSeller) {
-      yield Loading();
-
-      final response = await categoryRepository.getCategoryProducts(
-          category_id: event.category_id,
-          offset: event.offset
-      );
-      if (response.message == null) {
-        response.items!.isEmpty?_best_seller_products_subject : _bestSellerProducts_list.addAll(response.items!);
-        _best_seller_products_subject.sink.add(_bestSellerProducts_list);
-        yield Done(model: response);
-      } else if (response.message != null) {
-        yield ErrorLoading(model: response);
-      }
-    }
-
-    else  if (event is GetWeeklyDealSeller) {
-      yield Loading();
-      final response = await categoryRepository.getCategoryProducts(
-          category_id: event.category_id,
-          offset: event.offset
-      );
-      if (response.message == null) {
-        response.items!.isEmpty?_weekly_deal_products_subject : _weekly_dealProducts_list.addAll(response.items!);
-        _weekly_deal_products_subject.sink.add(_weekly_dealProducts_list);
-        yield Done(model: response);
-      } else if (response.message != null) {
-        yield ErrorLoading(model: response);
-      }
-    }
-    else  if (event is GetTestahelCollectionEvent) {
-      yield Loading();
-
-      final response = await categoryRepository.getCategoryProducts(
-          category_id: event.category_id,
-          offset: event.offset
-      );
-      if (response.message == null) {
-        response.items!.isEmpty?_testahel_collection_products_subject :
-        _testahel_collection_Products_list.addAll(response.items!);
-        _testahel_collection_products_subject.sink.add(_testahel_collection_Products_list);
-        yield Done(model: response);
-      } else if (response.message != null) {
-        yield ErrorLoading(model: response);
-      }
-    }
-
-    else if(event is ProductDetailsEvent){
-      var response;
-      if(event.product_id == null){
-         response = await categoryRepository.getProduct(
-            sku: event.product_sku
-        );
-      }else{
-         response = await categoryRepository.getProduct(
-        id: event.product_id
-        );
-      }
-
-      if(response.message == null){
-        _products_details_subject.sink.add(response.items);
-        yield Done(model: response);
-      }else{
-        yield ErrorLoading(model: response);
-      }
-    }
-
-  }*/
 }
 
 final home_bloc = HomeBloc();

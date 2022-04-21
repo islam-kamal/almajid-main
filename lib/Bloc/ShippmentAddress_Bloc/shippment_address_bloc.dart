@@ -3,7 +3,6 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/Model/ShipmentAddressModel/client/address_model.dart';
 import 'package:almajidoud/Repository/ShippmentAdressRepo/shipment_address_repository.dart';
 class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
-  ///ShipmentAddressBloc(AppState initialState) : super(initialState);
 
   ShipmentAddressBloc():super(Start()){
     on<GuestAddAdressEvent>(_onGuestAddAdress);
@@ -109,69 +108,6 @@ class ShipmentAddressBloc extends Bloc<AppEvent,AppState> with Validator{
     }
   }
 
-/*  @override
-  Stream<AppState> mapEventToState(AppEvent event) async*{
-    if(event is GuestAddAdressEvent){
-      yield Loading(model: null,indicator: 'GuestAddAdress');
-      var response = await shipmentAddressRepository.add_addresses(
-        context: event.context
-      );
-      if(response?.message == null){
-        yield Done(model:response,indicator: 'GuestAddAdress');
-      }else {
-        yield ErrorLoading(model: response,indicator: 'GuestAddAdress');
-      }
-    }
-
-    else if(event is AddressDetailsEvent){
-      yield Loading();
-      var response = await shipmentAddressRepository.get_addresss_details(
-        address_id: event.address_id
-      );
-      if(response.message == null){
-        _address_details_subject.sink.add(response);
-        yield Done(model: response, indicator: 'address_detials');
-      }else{
-        yield ErrorLoading(model: response, indicator: 'address_detials');
-      }
-    }
-
-    else if (event is GetAllAddressesEvent) {
-      yield Loading(indicator: 'GetAllAddressesEvent');
-      final response = await shipmentAddressRepository.get_all_saved_addresses(context: event.context);
-      if (response == null ) {
-        yield ErrorLoading(indicator: 'GetAllAddressesEvent');
-
-      } else {
-        yield Done(general_model:response ,indicator: 'GetAllAddressesEvent');
-
-      }
-    }
-
-    else if(event is AddClientAdressEvent){
-      yield Loading(model: null,indicator: 'AddClientAdressEvent');
-      var response = await shipmentAddressRepository.add_client_address(
-          context: event.context
-      );
-      if(response?.message == null){
-        yield Done(model:response,indicator: 'AddClientAdressEvent');
-      }else {
-        yield ErrorLoading(model: response,indicator: 'AddClientAdressEvent');
-      }
-    }
-
-    else if(event is EditClientAdressEvent){
-      yield Loading(model: null,indicator: 'EditClientAdressEvent');
-      var response = await shipmentAddressRepository.edit_client_address(
-          context: event.context
-      );
-      if(response?.message == null){
-        yield Done(model:response,indicator: 'EditClientAdressEvent');
-      }else {
-        yield ErrorLoading(model: response,indicator: 'EditClientAdressEvent');
-      }
-    }
-  }*/
 
   @override
   void dispose() async{

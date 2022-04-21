@@ -100,86 +100,98 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                                         child: Directionality(
                                             textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl :TextDirection.ltr ,
                                             child: Container(
-                                              width: width(context) * .95,
-                                              height: isLandscape(context) ? 2 * height(context) * .18 : height(context) * .18,
-                                              padding: EdgeInsets.only(right: width(context) * .02, left: width(context) * .02),
-                                              decoration: BoxDecoration(color: backGroundColor),
+                                              padding: EdgeInsets.all(width(context) * .05),
+                                              decoration: BoxDecoration(color: backGroundColor,
+                                                border: Border.all(color: greyColor),),
 
                                               child:Column(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 crossAxisAlignment: translator.activeLanguageCode == 'en' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                                                 children: [
-                                                  Padding(
-                                                    padding: EdgeInsets.only(right: 5,left: 5,top: 5),
-                                                    child:  Align(
-                                                      child:   Row(
+                                                 Align(
+                                                   alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
+                                                   child:  Row(
                                                         crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
-                                                          customDescriptionText(
-                                                            context: context,
-                                                            textColor: mainColor,
-                                                            maxLines: 2,
-                                                            text: snapshot.data![index].city,
-                                                          ),
-                                                          Text("    |    "),
-                                                          Container(
-                                                            width: width(context) * 0.6,
+                                                        Expanded(
+                                                          flex:2,
+                                                          child:   customDescriptionText(
+                                                          context: context,
+                                                          textColor: mainColor,
+                                                          maxLines: 2,
+                                                          text: snapshot.data![index].city,
+                                                        ),),
+                                                      Expanded(
+                                                        flex:1,
+                                                        child:Text("    |    ")),
+                                                      Expanded(
+                                                        flex:7,
+                                                        child:   Container(
+                                                           // width: width(context) * 0.6,
                                                             alignment: translator.activeLanguageCode == 'en' ? Alignment.centerLeft :Alignment.centerRight,
                                                             child:  customDescriptionText(
                                                               context: context,
                                                               textColor: mainColor,
-                                                              maxLines: 1,
+                                                              maxLines: 2,
                                                               text: snapshot.data![index].name,
-                                                            ),
+                                                            )  ),
                                                           )
                                                         ],
                                                       ),
-                                                      alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
                                                     ),
-                                                  ),
-                                                  Padding(
-                                                    padding: EdgeInsets.only(right: 5,left: 5),
-                                                    child:  Align(
+
+                                                   Align(
                                                       child:   Row(
                                                         crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
-                                                          customDescriptionText(
+                                                        Expanded(
+                                                        flex:2,
+                                                        child:  customDescriptionText(
                                                             context: context,
                                                             textColor: mainColor,
                                                             maxLines: 2,
                                                             text: translator.translate("Address"),
-                                                          ),
-                                                          Text(" : "),
-                                                          Container(
+                                                        ) ),
+                                                      Expanded(
+                                                        flex:1,
+                                                        child:   Text(" : ")
+                                                      ),
+                                                      Expanded(
+                                                        flex:7,
+                                                        child:   Container(
                                                             width: width(context) * 0.6,
                                                             alignment: translator.activeLanguageCode == 'en' ? Alignment.centerLeft :Alignment.centerRight,
                                                             child:  customDescriptionText(
                                                               context: context,
                                                               textColor: mainColor,
-                                                              maxLines: 1,
+                                                              maxLines: 2,
                                                               text: snapshot.data![index].address,
-                                                            ),
+                                                            )   ),
                                                           )
                                                         ],
                                                       ),
                                                       alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
                                                     ),
-                                                  ),
-                                                  Padding(
-                                                    padding: EdgeInsets.only(right: 5,left: 5),
-                                                    child:  Align(
+
+                                                Align(
                                                       child:   Row(
                                                         crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
-                                                          customDescriptionText(
+                                                        Expanded(
+                                                        flex:2,
+                                                        child: customDescriptionText(
                                                             context: context,
                                                             textColor: mainColor,
                                                             maxLines: 2,
                                                             text: translator.translate("Phone"),
-                                                          ),
-                                                          Text(" : "),
-                                                          Container(
-                                                            width: width(context) * 0.6,
+                                                        )    ),
+                                                  Expanded(
+                                                    flex:1,
+                                                    child:    Text(" : ")
+                                                  ),
+                                                  Expanded(
+                                                    flex:7,
+                                                    child:        Container(
                                                             alignment: translator.activeLanguageCode == 'en' ? Alignment.centerLeft :Alignment.centerRight,
                                                             child:  customDescriptionText(
                                                               context: context,
@@ -187,12 +199,12 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                                                               maxLines: 1,
                                                               text: snapshot.data![index].phone,
                                                             ),
-                                                          )
+                                                    ) )
                                                         ],
                                                       ),
                                                       alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
                                                     ),
-                                                  ),
+
                                                   InkWell(
                                                     onTap: (){
                                                       Navigator.of(context).push(
@@ -204,11 +216,14 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                                                       );
 
                                                     },
-                                                    child: Row(
-                                                      children: [
-                                                        Icon(Icons.pin_drop),
-                                                        Text(translator.translate("Google Maps")),
-                                                      ],
+                                                    child: Padding(
+                                                      padding: EdgeInsets.symmetric(vertical: 5),
+                                                      child: Row(
+                                                        children: [
+                                                          Icon(Icons.pin_drop),
+                                                          Text(translator.translate("Google Maps")),
+                                                        ],
+                                                      ),
                                                     )
                                                   )
                                                 ],
@@ -277,7 +292,7 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
 
                     });
                   },
-                  style: TextStyle(color: greyColor,
+                  style: TextStyle(color: blackColor,
                     fontSize:AlmajedFont.primary_font_size,
                   ),
                   cursorColor: greyColor,

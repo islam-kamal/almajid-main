@@ -9,24 +9,22 @@ import 'package:rxdart/rxdart.dart';
 
 class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
 
-//  SigninBloc(AppState initialState) : super(initialState);
-
     SigninBloc():super(Start()){
       on<click>(_onClick);
       on<UserInfoClick>(_onUserInfo);
     }
 
 
-    final email_controller = BehaviorSubject<String>();
-    final password_controller = BehaviorSubject<String>();
+    final email_controller = BehaviorSubject<String?>();
+    final password_controller = BehaviorSubject<String?>();
 
-    Function(String) get email_change => email_controller.sink.add;
-    Function(String) get password_change => password_controller.sink.add;
+    Function(String?) get email_change => email_controller.sink.add;
+    Function(String?) get password_change => password_controller.sink.add;
 
-    Stream<String> get email => email_controller.stream.transform(email_validator);
-    Stream<String> get password => password_controller.stream.transform(password_validator);
+    Stream<String?> get email => email_controller.stream.transform(email_validator);
+    Stream<String?> get password => password_controller.stream.transform(password_validator);
 
-    Stream<bool> get submit_check => Rx.combineLatest2(email, password, (a, b) => true);
+    Stream<bool?> get submit_check => Rx.combineLatest2(email, password, (a, b) => true);
 
 
     Future<void> _onClick(click event , Emitter<AppState> emit)async{
@@ -62,44 +60,6 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
         emit( ErrorLoading(model: response));
       }
     }
-/*
-
-  @override
-  Stream<AppState> mapEventToState(AppEvent event)async*{
-    if(event is click){
-      yield Loading(model: null);
-      var response = await AuthenticationRepository.signIn(
-        context: event.context,
-          email: email_controller.value,
-         password:  password_controller.value);
-      sharedPreferenceManager.writeData(CachingKey.AUTH_TOKEN,response);
-      if(response != null){
-        yield Done(general_value: response);
-
-      }else{
-        yield ErrorLoading();
-
-      }
-    }
-    else if (event is UserInfoClick){
-      yield Loading(model: null);
-      var response = await AuthenticationRepository.get_user_info(
-          token: event.token,
-      );
-      if(response != null){
-        sharedPreferenceManager.writeData(CachingKey.USER_NAME, response.firstname! +' '+ response.lastname! );
-        sharedPreferenceManager.writeData(CachingKey.CUSTOMER_ID, response.id );
-        sharedPreferenceManager.writeData(CachingKey.EMAIL, response.email );
-        final mobileElement = response.customAttributes!.firstWhere((element) => element.attributeCode == 'mobile_number');
-        sharedPreferenceManager.writeData(CachingKey.MOBILE_NUMBER, mobileElement.value );
-        await _updateUserToken(customerId: response.id);
-        yield Done(model:response);
-      }else{
-        yield ErrorLoading(model: response);
-      }
-    }
-  }
-*/
 
   @override
   void dispose() {

@@ -6,9 +6,8 @@ import 'package:rxdart/rxdart.dart';
 
 class SignUpBloc extends Bloc<AppEvent,AppState> with Validator{
 
-  //SignUpBloc(AppState initialState) : super(initialState);
   SignUpBloc():super(Start()){
-
+    on<click>(_onClick);
   }
 
   final fristname_controller = BehaviorSubject<String>();
@@ -52,31 +51,7 @@ class SignUpBloc extends Bloc<AppEvent,AppState> with Validator{
     }
   }
 
-/*  @override
-  Stream<AppState> mapEventToState(AppEvent event) async*{
-    if(event is click){
-      yield Loading(model: null);
-      var response = await AuthenticationRepository.signUp(
-        firstname:   fristname_controller.value,
-        mobile: StaticData.country_code + mobile_controller.value,
-        email: email_controller.value,
-        password: password_controller.value,
-        lastname:  lastname_controller.value,
-      );
-      if(response.success == "true" ){
-        sharedPreferenceManager.writeData(CachingKey.USER_NAME, fristname_controller.value);
-        sharedPreferenceManager.writeData(CachingKey.FORGET_PASSWORD_PHONE, StaticData.country_code +mobile_controller.value);
-        sharedPreferenceManager.writeData(CachingKey.EMAIL,email_controller.value);
-        StaticData.user_mobile_number = StaticData.country_code +mobile_controller.value;
-        yield Done(model:response);
-      }
-      else if (response.success == "false"){
-        yield ErrorLoading(model: response);
-      }
 
-    }
-
-  }*/
 
   @override
   void dispose() {

@@ -52,17 +52,7 @@ priceAndRatingRow({BuildContext? context , var new_price ,var old_price, var min
               ],
             ),
 
-/*
-       RatingBar.readOnly(
-          initialRating: 5.0,
-          maxRating: 5,
-          isHalfAllowed: true,
-          halfFilledIcon: Icons.star_half,
-          filledIcon: Icons.star,
-          emptyIcon: Icons.star_border,
-          size: StaticData.get_width(context) * 0.03,
-          filledColor: review_status! ? Colors.yellow.shade700 : greyColor,
-        )*/
+
 
         RatingBar.builder(
           initialRating:  5.0,
@@ -70,6 +60,7 @@ priceAndRatingRow({BuildContext? context , var new_price ,var old_price, var min
           direction: Axis.horizontal,
           allowHalfRating: true,
           itemCount: 5,
+          itemSize: 15.0,
           itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
           itemBuilder: (context, _) => Icon(
             Icons.star,

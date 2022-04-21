@@ -10,7 +10,7 @@ mixin Validator {
   var username_validator = StreamTransformer<String, String>.fromHandlers(
       handleData: (username, sink) {
     if (username.length < 1) {
-      sink.addError(translator.translate("username is incorrect"));
+      sink.addError("username is incorrect".tr());
     } else {
       sink.add(username);
     }
@@ -19,7 +19,7 @@ mixin Validator {
   var firstname_validator = StreamTransformer<String, String>.fromHandlers(
       handleData: (username, sink) {
         if (username.length < 1) {
-          sink.addError(translator.translate("first name is incorrect"));
+          sink.addError("first name is incorrect".tr());
         } else {
           sink.add(username);
         }
@@ -27,7 +27,7 @@ mixin Validator {
   var lastname_validator = StreamTransformer<String, String>.fromHandlers(
       handleData: (username, sink) {
         if (username.length < 1) {
-          sink.addError(translator.translate("last name is incorrect"));
+          sink.addError("last name is incorrect".tr());
         } else {
           sink.add(username);
         }
@@ -38,7 +38,7 @@ mixin Validator {
     Pattern pattern = r'^(009665|009715|00965|9665|9715|\+9665||\+9715|\+9655|05|5)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})?$';
       RegExp regex = new RegExp(pattern.toString());
       if (!regex.hasMatch(phone) || phone.length < 8)
-        sink.addError(translator.translate("phone is incorrect!"));
+        sink.addError("phone is incorrect!".tr());
       else {
         if (!phone.startsWith(RegExp(
             r'(009665|009715|00965|9665|9715|\+9665||\+9715|\+965|05|5)'))) {
@@ -60,7 +60,7 @@ mixin Validator {
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = new RegExp(pattern.toString());
     if (!regex.hasMatch(email)) {
-      sink.addError(translator.translate("email is incorrect!"));
+      sink.addError("email is incorrect!".tr());
     } else {
       sink.add(email);
     }
@@ -69,7 +69,7 @@ mixin Validator {
   var password_validator = StreamTransformer<String, String>.fromHandlers(
       handleData: (password, sink) {
     if (password.length < 8 || password.isEmpty) {
-      sink.addError(translator.translate("password is incorrect"));
+      sink.addError("password is incorrect".tr());
     } else {
       sink.add(password);
     }
@@ -78,7 +78,7 @@ mixin Validator {
   var code_validator =
       StreamTransformer<String, String>.fromHandlers(handleData: (code, sink) {
     if (code.length < 4) {
-      sink.addError(translator.translate("otp code is incorrect"));
+      sink.addError("otp code is incorrect".tr());
     } else {
       sink.add(code);
     }
@@ -87,7 +87,7 @@ mixin Validator {
   var input_number_validator =
       StreamTransformer<String, String>.fromHandlers(handleData: (input, sink) {
     if (input.length < 1) {
-      sink.addError(translator.translate("input is incorrect"));
+      sink.addError("input is incorrect".tr());
     } else {
       sink.add(input);
     }
@@ -96,7 +96,7 @@ mixin Validator {
   var input_text_validator =
       StreamTransformer<String, String>.fromHandlers(handleData: (text, sink) {
     if (text.length < 1) {
-      sink.addError(translator.translate("input is incorrect"));
+      sink.addError("input is incorrect".tr());
     } else {
       sink.add(text);
     }

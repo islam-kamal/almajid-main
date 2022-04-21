@@ -25,7 +25,7 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
   }
   @override
   void dispose() {
-    _controller!.dispose();
+    _controller?.dispose();
     super.dispose();
   }
   @override
@@ -38,7 +38,7 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
           if (state is Loading) {
             return Center(
               child: CircularProgressIndicator(
-
+                backgroundColor: blackColor,
               ),
             );
           }
@@ -108,7 +108,7 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                   else {
                     return Center(
                       child: CircularProgressIndicator(
-
+                        backgroundColor: blackColor,
                       ),
                     );
                     ;

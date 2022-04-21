@@ -11,7 +11,8 @@ import 'package:flutter/material.dart';
 class HomeSlider extends StatefulWidget {
   List<SliderImage>? gallery ;
   var height;
-  HomeSlider({this.gallery,this.height});
+  bool product_details_page ;
+  HomeSlider({this.gallery,this.height,this.product_details_page=false  });
   @override
   State<StatefulWidget> createState() {
     return _HomeSlider_State();
@@ -48,14 +49,15 @@ class _HomeSlider_State extends State<HomeSlider> {
                       ),
                       elevation: 0,
                       clipBehavior: Clip.none,
-                      child: InkWell(
+                      child:  InkWell(
                         onTap:  item.id == null ? (){} :(){
                           if(item.type == "product"){
                             customAnimatedPushNavigation(
                                 context, ProductDetailsScreen(
                               product_id: item.id,
                             ));
-                          }else{
+                          }
+                          else{
                             final _catName = translator.activeLanguageCode == 'en'?item.english_name : item.arabic_name;
                             customAnimatedPushNavigation(
                                 context, CategoryProductsScreen(
@@ -66,11 +68,18 @@ class _HomeSlider_State extends State<HomeSlider> {
                           }
 
                         },
-                        child:   Image.network(
+                        child: widget.product_details_page ?  FittedBox(
+                          child: Image.network(
+                          '${item.url}',
+                         width: MediaQuery.of(context).size.width,
+                            height: width(context) *0.90,
+                          ),
+                          fit: BoxFit.fill,
+                        ) :  Image.network(
                           '${item.url}',
                           width: MediaQuery.of(context).size.width,
-                          fit: BoxFit.fill,
                         ),
+
                       ),
 
                     )).toList(),

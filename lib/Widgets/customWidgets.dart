@@ -90,22 +90,22 @@ class CustomComponents{
   static String? order_status(String status){
     switch(status){
       case "order_delivered":
-        return translator.translate("Delivered");
+        return "Delivered".tr();
         break;
       case "processing":
-        return translator.translate("Processing");
+        return "Processing".tr();
         break;
       case "pending":
-        return translator.translate("Pending");
+        return "Pending".tr();
         break;
       case "canceled":
-        return translator.translate("Canceled");
+        return "Canceled".tr();
         break;
       case "payfort_fort_new":
-        return translator.translate("New");
+        return "New".tr();
         break;
       case "ready_to_dispatched":
-        return translator.translate("Dispatched");
+        return "Dispatched".tr();
         break;
       case "closed":
         return translator.translate("closed");

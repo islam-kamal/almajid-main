@@ -33,8 +33,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     child: Column(
                   children: [
                     responsiveSizedBox(context: context, percentageOfHeight: .11),
-                //    titleText(context: context, text: translator.activeLanguageCode == 'ar' ?  StaticData.data['new-arrival']['arabic-title'] : StaticData.data['new-arrival']['english-title']),
-                //    responsiveSizedBox(context: context, percentageOfHeight: .02),
+
                     HomeSlider(
                         gallery:StaticData.slider
                     ),

@@ -1,5 +1,6 @@
 import 'package:almajidoud/screens/SearchScreen/search_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:circle_bottom_navigation_bar/circle_bottom_navigation_bar.dart';
 import 'package:circle_bottom_navigation_bar/widgets/tab_data.dart';
@@ -41,6 +42,7 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
+
     final size = MediaQuery.of(context).size;
     final viewPadding = MediaQuery.of(context).viewPadding;
     double barHeight;
@@ -65,7 +67,81 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
             : ui.TextDirection.ltr,
         child: _pages[currentPage],
       ),
-      bottomNavigationBar: CircleBottomNavigationBar(
+      bottomNavigationBar: BottomNavyBar(
+        selectedIndex: currentPage,
+        showElevation: true,
+        itemCornerRadius: 24,
+        curve: Curves.easeIn,
+        onItemSelected: (index) => setState(() => currentPage = index),
+        items: <BottomNavyBarItem>[
+          MyApp.app_langauge  == 'en'
+              ?   BottomNavyBarItem(
+            icon: Icon(Icons.menu,color: currentPage==0? whiteColor :  blackColor ,),
+            title: Text("My Account".tr(),style: TextStyle(color: currentPage==0?  whiteColor :blackColor ),),
+            activeColor: Colors.black,
+            textAlign: TextAlign.center,
+          ) :
+                  BottomNavyBarItem(
+            icon: Icon(Icons.shopping_cart,color: currentPage==0? whiteColor :  blackColor ,),
+            title: Text('Cart'.tr(),style: TextStyle(color: currentPage==0?  whiteColor :blackColor ),),
+            activeColor:Colors.black,
+            textAlign: TextAlign.center,
+          ),
+
+          MyApp.app_langauge  == 'en'
+              ? BottomNavyBarItem(
+            icon: Icon(Icons.location_on,color: currentPage==1? whiteColor :  blackColor ,),
+            title: Text('Country'.tr(),style: TextStyle(color: currentPage==1?  whiteColor :blackColor ),),
+            activeColor:Colors.black,
+            textAlign: TextAlign.center,
+          ) :
+          BottomNavyBarItem(
+            icon: Icon(Icons.search,color: currentPage==1? whiteColor :  blackColor ,),
+            title: Text('Search'.tr(),style: TextStyle(color: currentPage==1?  whiteColor :blackColor ),),
+            activeColor:Colors.black,
+            textAlign: TextAlign.center,
+          ),
+
+          BottomNavyBarItem(
+            icon: Icon(Icons.home,color: currentPage==2? whiteColor :  blackColor ,),
+            title: Text(
+              'Home'.tr(),style: TextStyle(color: currentPage==2?  whiteColor :blackColor ),
+            ),
+            activeColor:Colors.black,
+            textAlign: TextAlign.center,
+          ),
+
+          MyApp.app_langauge  == 'en'
+              ?   BottomNavyBarItem(
+            icon: Icon(Icons.search,color: currentPage==3? whiteColor :  blackColor ,),
+            title: Text('Search'.tr(),style: TextStyle(color: currentPage==3?  whiteColor :blackColor ),),
+            activeColor:Colors.black,
+            textAlign: TextAlign.center,
+          ) :
+          BottomNavyBarItem(
+            icon: Icon(Icons.location_on,color: currentPage==3? whiteColor :  blackColor ,),
+            title: Text('Country'.tr(),style: TextStyle(color: currentPage==3?  whiteColor :blackColor ),),
+            activeColor:Colors.black,
+            textAlign: TextAlign.center,
+          ),
+
+          MyApp.app_langauge  == 'en'
+              ?   BottomNavyBarItem(
+            icon: Icon(Icons.shopping_cart,color: currentPage==4? whiteColor :  blackColor ,),
+            title: Text('Cart'.tr(),style: TextStyle(color: currentPage==4?  whiteColor :blackColor ),),
+            activeColor:Colors.black,
+            textAlign: TextAlign.center,
+          ) :
+          BottomNavyBarItem(
+            icon: Icon(Icons.menu,color: currentPage==4? whiteColor :  blackColor ,),
+            title: Text("My Account".tr(),style: TextStyle(color: currentPage==4?  whiteColor :blackColor ),),
+            activeColor:Colors.black,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+
+      /*CircleBottomNavigationBar(
         initialSelection: currentPage,
 
         // barHeight: viewPadding.bottom > 0 ? barHeightWithNotch : barHeight,
@@ -85,7 +161,7 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
         inactiveIconColor: mainColor,
         tabs: getTabsData(),
         onTabChangedListener: (index) => setState(() => currentPage = index),
-      ),
+      ),*/
     );
   }
 }

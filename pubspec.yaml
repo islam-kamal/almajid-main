@@ -86,6 +86,7 @@ dependencies:
   image_cropper:
   pay: 1.0.5
   intl_phone_field:
+  bottom_navy_bar:
 
 
 

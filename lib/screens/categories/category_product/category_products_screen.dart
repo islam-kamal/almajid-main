@@ -90,7 +90,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   }
 
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-  final product_bloc = ProductBloc(Start());
+  final product_bloc = ProductBloc();
 
   @override
   void initState() {

@@ -302,7 +302,7 @@
   "Credit/Debit Card" : "بطاقة الدفع الائتمانية",
   "Please select payment method" : "من فضلك قم باختيار احدى وسائل الدفع لاستكمال عملية الشراء الخاصة بك ",
   "Delivered Address" : "عنوان التوصيل",
-
+  "Receipt of the request" : "استلام الطلب",
   "-------------------- Orders  Status--------" :"------------------------------",
   "Delivered" : "تم التوصيل",
   "Processing" :  "جاري المعالجة",
@@ -336,5 +336,6 @@
   "redbox_portable_failed" : "فشل",
   "redbox_portable_expired" : "فشل",
 
-  "Shopping Now" : "تسوق الأن"
+  "Shopping Now" : "تسوق الأن",
+  "Country" : "الدولة"
 }

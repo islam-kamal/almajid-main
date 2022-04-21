@@ -291,19 +291,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                                 ),
                                                                                               ],
                                                                                             ),
-                                                                          /*                  RatingBar.builder(
-                                                                                              initialRating: 5.0,
-                                                                                              maxRating: 5,
-                                                                                              allowHalfRating: true,
-                                                                                              size: StaticData.get_width(context) * 0.03,
-                                                                                              halfFilledIcon: Icons.star_half,
-                                                                                              filledIcon: Icons.star,
-                                                                                              emptyIcon: Icons.star_border,
-                                                                                              filledColor:
-                                                                                              snapshot.data!.items![index].extensionAttributes!.reviews!.isEmpty
-                                                                                                  ? greyColor
-                                                                                                  : Colors.yellow.shade700,
-                                                                                            ),*/
+
                                                                                 RatingBar.builder(
                                                                                   initialRating:  5.0,
                                                                                   minRating: 5,

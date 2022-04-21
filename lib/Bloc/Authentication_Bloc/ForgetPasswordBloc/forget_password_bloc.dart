@@ -6,7 +6,6 @@ abstract class BaseBloc {
 }
 
 class ForgetPasswordBloc extends Bloc<AppEvent, AppState> with Validator implements BaseBloc {
- // ForgetPasswordBloc(AppState initialState) : super(initialState);
 
   ForgetPasswordBloc(): super(Start()){
     on<sendOtpClick>(_onSendOtp);
@@ -107,72 +106,6 @@ class ForgetPasswordBloc extends Bloc<AppEvent, AppState> with Validator impleme
     }
 
   }
-
-/*  @override
-  Stream<AppState> mapEventToState(AppEvent event) async* {
-    String? user_phone;
-    //send otp Api handle
-    if (event is sendOtpClick) {
-      yield Loading(model: null);
-      var response = await AuthenticationRepository.sendVerificationCode(event.phone!,event.route!);
-      if (response.success == "true") {
-        sharedPreferenceManager.writeData(
-            CachingKey.FORGET_PASSWORD_PHONE, event.phone);
-        yield Done(model: response);
-      } else {
-        yield ErrorLoading(model: response);
-      }
-    }
-    //check otp Api handle
-    else if (event is checkOtpClick) {
-      yield Loading(model: null, indicator: 'checkOtpClick');
-      await sharedPreferenceManager
-          .readString(CachingKey.FORGET_PASSWORD_PHONE)
-          .then((value) => user_phone = value);
-      var response = await AuthenticationRepository.checkOtpCode(
-          user_phone!, event.otp_code!,event.route!);
-      if (response.success == "true") {
-        sharedPreferenceManager.writeData(CachingKey.AUTH_TOKEN, response.token);
-      yield Done(model: response, indicator: 'checkOtpClick');
-      } else {
-        yield ErrorLoading(model: response, indicator: 'checkOtpClick');
-      }
-    }
-    //resend otp Api hamdle
-    else if (event is resendOtpClick) {
-      yield Loading(model: null, indicator: 'resendOtpClick');
-      await sharedPreferenceManager.readString(CachingKey.FORGET_PASSWORD_PHONE).then((value) => user_phone = value);
-      var response = await AuthenticationRepository.resendOtp( user_phone!,event.route!);
-
-      if (response.success == "true") {
-        yield Done(model: response, indicator: 'resendOtpClick');
-      } else {
-        yield ErrorLoading(model: response);
-      }
-    }
-
-    else if (event is changePasswordClick) {
-      yield Loading(model: null);
-      await sharedPreferenceManager
-          .readString(CachingKey.FORGET_PASSWORD_PHONE)
-          .then((value) => user_phone = value);
-      var response;
-      if(password_controller.value != confirm_password_controller.value){
-        yield ErrorLoading(model: response,message: translator.translate("Passwords are not identical"));
-
-      }else{
-         response = await AuthenticationRepository.changePassword(user_phone!, password_controller.value, );
-
-         if (response.succeess == "true") {
-           yield Done(model: response);
-         } else {
-           yield ErrorLoading(model: response);
-         }
-      }
-
-    }
-
-  }*/
 
   @override
   void dispose() {

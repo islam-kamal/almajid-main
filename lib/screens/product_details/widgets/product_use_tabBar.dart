@@ -22,9 +22,11 @@ class ProductUseTabBar extends StatelessWidget{
                   pinned: true,
                   floating: true,
                   automaticallyImplyLeading: false,
+                  backgroundColor: blackColor,
                   title: TabBar(
                     isScrollable: true,
                    physics: NeverScrollableScrollPhysics(),
+
                     tabs: [
                       Tab(child: Text(translator.translate("Description"))),
                       Tab(child: Text(translator.translate("How To Use"))),

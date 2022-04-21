@@ -63,7 +63,7 @@ class _WishListScreenState extends State<WishListScreen> {
                     children: [
                       ScreenAppBar(
                         right_icon: 'cart',
-                        category_name: translator.translate("WishList"),
+                        category_name: "WishList".tr(),
                         screen: CustomCircleNavigationBar(
                           page_index:
                               translator.activeLanguageCode == 'ar' ? 4 : 0,
@@ -396,8 +396,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                   Flushbar(
                                     messageText: Container(
                                       child: Text(
-                                        translator.translate(
-                                            "product added suceesfully to cart"),
+                                            "product added suceesfully to cart".tr(),
                                         maxLines: 2,
                                         textAlign: TextAlign.end,
                                         textDirection: TextDirection.rtl,
@@ -420,8 +419,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                   Flushbar(
                                     messageText: Container(
                                       child: Text(
-                                        translator.translate(
-                                            "The wishlist item does not exist."),
+                                            "The wishlist item does not exist.".tr(),
                                         maxLines: 2,
                                         textAlign: TextAlign.end,
                                         textDirection: TextDirection.rtl,

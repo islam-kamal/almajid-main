@@ -5,7 +5,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:almajidoud/utils/file_export.dart';
 
 class CategoryBloc extends Bloc<AppEvent, AppState> with Validator{
- // CategoryBloc(AppState initialState) : super(initialState);
 
   CategoryBloc() : super(Start()) {
     on<getAllCategories>(_onGetAllCategories);
@@ -32,16 +31,6 @@ class CategoryBloc extends Bloc<AppEvent, AppState> with Validator{
 
 
 
-  void drainStream() {
-   // _category_subject.value = null;
-   // _category_product_subject.value = null;
-  }
-
-  void dispose(){
-   // categoryBloc.drainStream();
-    //categoryBloc.dispose();
-
-  }
 
   Future<void> _onGetAllCategories(getAllCategories event, Emitter<AppState> emit) async {
    try {
@@ -63,21 +52,6 @@ class CategoryBloc extends Bloc<AppEvent, AppState> with Validator{
     }
   }
 
-/*  @override
-  Stream<AppState> mapEventToState(AppEvent event) async* {
-    if (event is getAllCategories) {
-      yield Loading();
-      final response = await categoryRepository.getCategoriesList();
-      if (response.childrenData != null || response.childrenData!.isNotEmpty) {
-        _category_subject.sink.add(response);
-        yield Done(model: response);
-      } else if (response.childrenData == null || response.childrenData!.isEmpty) {
-        yield ErrorLoading(model: response);
-      }
-    }
-
-
-  }*/
 
 }
 

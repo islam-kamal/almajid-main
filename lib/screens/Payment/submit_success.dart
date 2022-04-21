@@ -59,7 +59,7 @@ class SubmitSuccessfulScreenState extends State<SubmitSuccessfulScreen> with Tic
               centerTitle: true,
               backgroundColor: whiteColor,
               title: Text(
-               translator.translate( "Receipt of the request"),
+               "Receipt of the request".tr(),
                 style: TextStyle(color:mainColor , fontWeight: FontWeight.normal),
               ),
               automaticallyImplyLeading: false,

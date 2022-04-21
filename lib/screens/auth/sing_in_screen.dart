@@ -146,7 +146,7 @@ class _SignInScreenState extends State<SignInScreen>
   }
 
   emailTextField({BuildContext? context, String? hint,}) {
-    return StreamBuilder<String>(
+    return StreamBuilder<String?>(
       stream: signIn_bloc.email,
       builder: (context, snapshot) {
         return Container(
@@ -176,7 +176,7 @@ class _SignInScreenState extends State<SignInScreen>
   passwordTextField({BuildContext? context, String? hint, bool isPasswordField: false,
     bool containPrefixIcon: false, IconData? prefixIcon}) {
 
-    return StreamBuilder<String>(
+    return StreamBuilder<String?>(
         stream: signIn_bloc.password,
         builder: (context, snapshot) {
           return Container(

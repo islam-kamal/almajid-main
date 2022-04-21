@@ -19,7 +19,7 @@ void FlushbarWidget({ BuildContext? context ,  GlobalKey<ScaffoldState>? scaffol
         ),
         Spacer(),
         Text(
-          translator.translate("Try Again" ),
+          "Try Again".tr(),
           textDirection: TextDirection.rtl,
           style: TextStyle(color: whiteColor),
         ),

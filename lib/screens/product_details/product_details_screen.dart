@@ -156,6 +156,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                 HomeSlider(
                                   gallery: product_images,
                                   height: width(context) *0.90,
+                                  product_details_page: true,
                                 ),
                                 percentage== null ? Container():   Container(
                                   width: width(context) * 0.2,
