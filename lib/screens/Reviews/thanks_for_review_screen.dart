@@ -25,7 +25,7 @@ class ThanksForRatingScreen extends StatelessWidget {
                   customDescriptionText(
                       context: context,
                       textColor: mainColor,
-                      text: translator.translate("Thanks For Your Review !"),
+                      text: "Thanks For Your Review !".tr(),
                       percentageOfHeight: .035),
                   responsiveSizedBox(context: context, percentageOfHeight: .02),
                   responsiveSizedBox(context: context, percentageOfHeight: .05),
@@ -42,7 +42,7 @@ class ThanksForRatingScreen extends StatelessWidget {
                         child: Center(
                             child: customDescriptionText(
                                 context: context,
-                                text: translator.translate("Tell Us More"),
+                                text: "Tell Us More".tr(),
                                 percentageOfHeight: .025,
                                 textColor: whiteColor)),
                         height: isLandscape(context)
@@ -63,7 +63,7 @@ class ThanksForRatingScreen extends StatelessWidget {
                               textColor: greyColor,
                               percentageOfHeight: .027,
                               maxLines: 2,
-                              text: translator.translate("No thanks")),
+                              text: "No thanks".tr()),
                           width: width(context) * .9
                       )),
                 ],

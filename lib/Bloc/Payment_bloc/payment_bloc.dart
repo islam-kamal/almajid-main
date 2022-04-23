@@ -14,6 +14,7 @@ class PaymentBloc extends Bloc<AppEvent, AppState> with Validator{
         context: event.context,
         phone_number: event.phone
     );
+    print("response : ${response}");
     if (response?.result != null) {
       emit(  Done(model: response,));
     }else{

@@ -1,20 +1,27 @@
 import 'package:almajidoud/utils/file_export.dart';
 
 orderDetailsHeader({BuildContext? context}){
-  return   Container(
-    padding: EdgeInsets.only(top: height(context)*.05 , right: width(context)*.05 , left: width(context)*.05),
-    child:Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-      GestureDetector(onTap: (){Navigator.of(context!).pop();},
-          child: Icon(Icons.arrow_back_ios , color: mainColor,)) ,
-      customDescriptionText(context: context , text: translator.translate("Orders Details") ,
-          textColor: mainColor , percentageOfHeight: .025) ,
-      SizedBox()
+  return   Column(
+    children: [
+      Container(
+        padding: EdgeInsets.only(top: height(context)*.05 , right: width(context)*.05 , left: width(context)*.05),
+        child:Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(onTap: (){Navigator.of(context!).pop();},
+                child: Icon(Icons.arrow_back_ios , color: mainColor,)) ,
+            customDescriptionText(context: context , text: translator.translate("Orders Details") ,
+                textColor: mainColor , percentageOfHeight: .025) ,
+            SizedBox()
 
-    ],) ,
-    color: whiteColor,
-    width: width(context),height:
-  isLandscape(context) ?2*height(context)*.12: height(context)*.12 ,) ;
+          ],) ,
+        color: whiteColor,
+        width: width(context),
+        height: isLandscape(context) ?2*height(context)*.12: height(context)*.12 ,),
+      Divider(color:mainColor,
+        thickness: 1,
+      ),
+    ],
+  );
 
 
 }

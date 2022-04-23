@@ -78,6 +78,7 @@ class _HomeSlider_State extends State<HomeSlider> {
                         ) :  Image.network(
                           '${item.url}',
                           width: MediaQuery.of(context).size.width,
+
                         ),
 
                       ),

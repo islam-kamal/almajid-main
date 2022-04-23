@@ -128,7 +128,7 @@ class _SignUpScreenState extends State<SignUpScreen>
             pageBuilder: (context, animation1, animation2) {
               return VerificationCodeScreen(
                 route: "SignUpScreen",
-                user_phone: StaticData.country_code +signUpBloc.mobile_controller.value,
+                user_phone: StaticData.country_code + signUpBloc.mobile_controller.value,
               );
             },
             transitionsBuilder:
@@ -209,24 +209,46 @@ class _SignUpScreenState extends State<SignUpScreen>
     return StreamBuilder<String>(
       stream: signUpBloc.fristname,
       builder: (context, snapshot) {
-        return Container(
-            width: width(context) * .8,
-            child: TextFormField(
+        if(snapshot.hasError) {
+          return Container(
+              width: width(context) * .8,
+              child: TextFormField(
                 decoration: InputDecoration(
                   hintText: translator.translate(hint!),
                   errorText: snapshot.error.toString(),
                   contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
                 ),
-            onChanged:  signUpBloc.fristname_change,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return '${translator.translate("Please enter")} ${translator.translate("First Name")}';
-                }
-                return null;
-              },
-            )
-        );
+                onChanged:  signUpBloc.fristname_change,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '${translator.translate("Please enter")} ${translator.translate("First Name")}';
+                  }
+                  return null;
+                },
+              )
+          );
+        }else{
+          return Container(
+              width: width(context) * .8,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: translator.translate(hint!),
+                 // errorText: snapshot.error.toString(),
+                  contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
+                ),
+                onChanged:  signUpBloc.fristname_change,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '${translator.translate("Please enter")} ${translator.translate("First Name")}';
+                  }
+                  return null;
+                },
+              )
+          );
+        }
+
 
       },
     );
@@ -237,24 +259,46 @@ class _SignUpScreenState extends State<SignUpScreen>
     return StreamBuilder<String>(
       stream: signUpBloc.lastname,
       builder: (context, snapshot) {
-        return Container(
-            width: width(context) * .8,
-            child: TextFormField(
-              decoration: InputDecoration(
-                hintText: translator.translate(hint!),
-                errorText: snapshot.error.toString(),
-                contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        if(snapshot.hasError) {
+          return Container(
+              width: width(context) * .8,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: translator.translate(hint!),
+                  errorText: snapshot.error.toString(),
+                  contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
-              ),
-              onChanged:  signUpBloc.lastname_change,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return '${translator.translate("Please enter")} ${translator.translate("Last Name")}';
-                }
-                return null;
-              },
-            )
-        );
+                ),
+                onChanged:  signUpBloc.lastname_change,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '${translator.translate("Please enter")} ${translator.translate("Last Name")}';
+                  }
+                  return null;
+                },
+              )
+          );
+        }else{
+          return Container(
+              width: width(context) * .8,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: translator.translate(hint!),
+                  //errorText: snapshot.error.toString(),
+                  contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
+                ),
+                onChanged:  signUpBloc.lastname_change,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '${translator.translate("Please enter")} ${translator.translate("Last Name")}';
+                  }
+                  return null;
+                },
+              )
+          );
+        }
+
 
       },
     );
@@ -265,24 +309,46 @@ class _SignUpScreenState extends State<SignUpScreen>
     return StreamBuilder<String>(
       stream: signUpBloc.email,
       builder: (context, snapshot) {
-        return Container(
-            width: width(context) * .8,
-            child: TextFormField(
-              decoration: InputDecoration(
-                hintText: translator.translate(hint!),
-                errorText: snapshot.error.toString(),
-                contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        if(snapshot.hasError){
+          return Container(
+              width: width(context) * .8,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: translator.translate(hint!),
+                  errorText: snapshot.error.toString(),
+                  contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
-              ),
-              onChanged:  signUpBloc.email_change,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return '${translator.translate("Please enter")} ${translator.translate("Email")}';
-                }
-                return null;
-              },
-            )
-        );
+                ),
+                onChanged:  signUpBloc.email_change,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '${translator.translate("Please enter")} ${translator.translate("Email")}';
+                  }
+                  return null;
+                },
+              )
+          );
+        }else{
+          return Container(
+              width: width(context) * .8,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: translator.translate(hint!),
+                //  errorText: snapshot.error.toString(),
+                  contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
+                ),
+                onChanged:  signUpBloc.email_change,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '${translator.translate("Please enter")} ${translator.translate("Email")}';
+                  }
+                  return null;
+                },
+              )
+          );
+        }
+
 
       },
     );
@@ -293,22 +359,23 @@ class _SignUpScreenState extends State<SignUpScreen>
     return  StreamBuilder<String>(
         stream: signUpBloc.mobile,
         builder: (context, snapshot) {
-          return Container(
-            width: width(context) * .8,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Row(
+          if(snapshot.hasError){
+            return Container(
+                width: width(context) * .8,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Row(
                   children: [
                     Expanded(
                         child: TextFormField(
-                          decoration: InputDecoration(
-                            hintText: translator.translate("Phone"),
-                            errorText: snapshot.error.toString(),
-                            contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                            decoration: InputDecoration(
+                              hintText: translator.translate("Phone"),
+                              errorText: snapshot.error.toString(),
+                              contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
-                          ),
-                          onChanged:  signUpBloc.mobile_change,
+                            ),
+                            onChanged:  signUpBloc.mobile_change,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
@@ -332,7 +399,50 @@ class _SignUpScreenState extends State<SignUpScreen>
 
 
 
-          );
+            );
+          }else{
+            return Container(
+                width: width(context) * .8,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: translator.translate("Phone"),
+                       //       errorText: snapshot.error.toString(),
+                              contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
+                            ),
+                            onChanged:  signUpBloc.mobile_change,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
+                              }
+                              return null;
+                            },
+                            keyboardType: TextInputType.number
+                        )
+                    ),
+                    CountryCodePicker(
+                      onChanged: (Object object){
+                        _countryCode=object.toString();
+                        StaticData.country_code = _countryCode;
+                      },
+                      initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
+                      countryFilter: ['SA', 'KW', 'AE' ],
+                      showFlagDialog: true,
+                    ),
+                  ],
+                )
+
+
+
+            );
+          }
+
         });
   }
 
@@ -342,38 +452,74 @@ class _SignUpScreenState extends State<SignUpScreen>
     return StreamBuilder<String>(
         stream: signUpBloc.password,
         builder: (context, snapshot) {
-          return Container(
-              width: width(context) * .8,
-              child: TextFormField(
+          if(snapshot.hasError){
+            return Container(
+                width: width(context) * .8,
+                child: TextFormField(
                   obscureText:!_passwordVisible!,
                   decoration: InputDecoration(
-                      prefixIcon: containPrefixIcon == false ? null : Icon(prefixIcon),
+                    prefixIcon: containPrefixIcon == false ? null : Icon(prefixIcon),
                     errorText: snapshot.error.toString(),
                     contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 
                     hintText: translator.translate(hint!),
-          suffixIcon: IconButton(
-          icon: Icon(
-          // Based on passwordVisible state choose the icon
-          _passwordVisible! ? Icons.visibility_off : Icons.visibility,
-          ),
-          onPressed: () {
-          // Update the state i.e. toogle the state of passwordVisible variable
-          setState(() {
-          _passwordVisible = !_passwordVisible!;
-          });
-          },
-          ),
-          ),
-          onChanged: signUpBloc.password_change,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return '${translator.translate("Please enter")} ${translator.translate("Password")}';
-                  }
-                  return null;
-                },
-              )
-          );
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        // Based on passwordVisible state choose the icon
+                        _passwordVisible! ? Icons.visibility_off : Icons.visibility,
+                      ),
+                      onPressed: () {
+                        // Update the state i.e. toogle the state of passwordVisible variable
+                        setState(() {
+                          _passwordVisible = !_passwordVisible!;
+                        });
+                      },
+                    ),
+                  ),
+                  onChanged: signUpBloc.password_change,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '${translator.translate("Please enter")} ${translator.translate("Password")}';
+                    }
+                    return null;
+                  },
+                )
+            );
+          }else{
+            return Container(
+                width: width(context) * .8,
+                child: TextFormField(
+                  obscureText:!_passwordVisible!,
+                  decoration: InputDecoration(
+                    prefixIcon: containPrefixIcon == false ? null : Icon(prefixIcon),
+                  //  errorText: snapshot.error.toString(),
+                    contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+
+                    hintText: translator.translate(hint!),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        // Based on passwordVisible state choose the icon
+                        _passwordVisible! ? Icons.visibility_off : Icons.visibility,
+                      ),
+                      onPressed: () {
+                        // Update the state i.e. toogle the state of passwordVisible variable
+                        setState(() {
+                          _passwordVisible = !_passwordVisible!;
+                        });
+                      },
+                    ),
+                  ),
+                  onChanged: signUpBloc.password_change,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '${translator.translate("Please enter")} ${translator.translate("Password")}';
+                    }
+                    return null;
+                  },
+                )
+            );
+          }
+
         });
 
 

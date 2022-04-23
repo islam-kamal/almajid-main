@@ -185,45 +185,88 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
     return  StreamBuilder<String>(
         stream: forgetPassword_bloc.mobile,
         builder: (context, snapshot) {
-          return Container(
-              width: width(context) * .8,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Row(
-                children: [
-                  CountryCodePicker(
-                    onChanged: (Object object){
-                      _countryCode=object.toString();
-                      StaticData.country_code = _countryCode;
-                    },
-                    initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
-                    countryFilter: ['SA', 'KW', 'AE' ],
-                    showFlagDialog: true,
-                  ),
-                  Expanded(
-                      child: TextFormField(
-                          decoration: InputDecoration(
-                            hintText: translator.translate("Phone"),
-                            errorText: snapshot.error.toString(),
-                          ),
-                          onChanged:  forgetPassword_bloc.mobile_change,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.number
-                      )
-                  ),
+          if(snapshot.hasError){
+            return Container(
+                width: width(context) * .8,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Row(
+                  children: [
+                    CountryCodePicker(
+                      onChanged: (Object object){
+                        _countryCode=object.toString();
+                        StaticData.country_code = _countryCode;
+                      },
+                      initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
+                      countryFilter: ['SA', 'KW', 'AE' ],
+                      showFlagDialog: true,
+                    ),
+                    Expanded(
+                        child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: translator.translate("Phone"),
+                              errorText: snapshot.error.toString(),
+                            ),
+                            onChanged:  forgetPassword_bloc.mobile_change,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
+                              }
+                              return null;
+                            },
+                            keyboardType: TextInputType.number
+                        )
+                    ),
 
-                ],
-              )
+                  ],
+                )
 
 
 
-          );
+            );
+          }else{
+            return Container(
+                width: width(context) * .8,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Row(
+                  children: [
+                    CountryCodePicker(
+                      onChanged: (Object object){
+                        _countryCode=object.toString();
+                        StaticData.country_code = _countryCode;
+                      },
+                      initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
+                      countryFilter: ['SA', 'KW', 'AE' ],
+                      showFlagDialog: true,
+                    ),
+                    Expanded(
+                        child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: translator.translate("Phone"),
+                             // errorText: snapshot.error.toString(),
+                            ),
+                            onChanged:  forgetPassword_bloc.mobile_change,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
+                              }
+                              return null;
+                            },
+                            keyboardType: TextInputType.number
+                        )
+                    ),
+
+                  ],
+                )
+
+
+
+            );
+          }
+
         });
   }
 

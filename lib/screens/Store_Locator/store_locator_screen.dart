@@ -58,7 +58,6 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                   return <Widget>[
                     SliverAppBar(
                       automaticallyImplyLeading: false,
-                      leading: null,
                       expandedHeight: isLandscape(context)
                           ? 2 * height(context) * .1
                           : height(context) * .1,
@@ -123,7 +122,7 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                                                         ),),
                                                       Expanded(
                                                         flex:1,
-                                                        child:Text("    |    ")),
+                                                        child:Text("    |    ",textAlign: TextAlign.end,)),
                                                       Expanded(
                                                         flex:7,
                                                         child:   Container(
@@ -154,12 +153,12 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                                                         ) ),
                                                       Expanded(
                                                         flex:1,
-                                                        child:   Text(" : ")
+                                                        child:   Text(" : ",textAlign: TextAlign.end,)
                                                       ),
                                                       Expanded(
                                                         flex:7,
                                                         child:   Container(
-                                                            width: width(context) * 0.6,
+                                                          padding: EdgeInsets.symmetric(horizontal: 5),
                                                             alignment: translator.activeLanguageCode == 'en' ? Alignment.centerLeft :Alignment.centerRight,
                                                             child:  customDescriptionText(
                                                               context: context,
@@ -178,7 +177,7 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                                                         crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
                                                         Expanded(
-                                                        flex:2,
+                                                        flex:3,
                                                         child: customDescriptionText(
                                                             context: context,
                                                             textColor: mainColor,

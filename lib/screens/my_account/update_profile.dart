@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:almajidoud/Base/shared_preference_manger.dart';
 import 'package:almajidoud/Repository/AuthenticationRepo/authentication_repository.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
+import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/utils/colors.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/material.dart';
@@ -106,159 +107,156 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:  AppBar(
-        title: Text('Update Profile',style: TextStyle(color: Colors.black),),
-        // Center the title in AppBar with setting center title property to true.
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        leading: leadingWidget(),
-      ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 30,
-                ),
-                Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: TextFormField(
-                            key: ValueKey('first_name'),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'first name cannot be null';
-                              }
-                              return null;
-                            },
-                            textInputAction: TextInputAction.next,
-                            onEditingComplete: () => FocusScope.of(context)
-                                .requestFocus(_lastNameFocusNode),
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                                border: const UnderlineInputBorder(),
-                                filled: true,
-                                prefixIcon: Icon(Icons.person),
-                                labelText: 'First name',
-                                fillColor: whiteColor
-                            ),
-                            onSaved: (value) {
-                              _firstName = value;
-                            },
-                            controller: _firstNameController,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: TextFormField(
-                            key: ValueKey('last_name'),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'last name cannot be null';
-                              }
-                              return null;
-                            },
-                            textInputAction: TextInputAction.next,
-                            onEditingComplete: () => FocusScope.of(context)
-                                .requestFocus(_phoneNumberFocusNode),
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                                border: const UnderlineInputBorder(),
-                                filled: true,
-                                prefixIcon: Icon(Icons.person),
-                                labelText: 'Last name',
-                                fillColor: whiteColor),
-                            onSaved: (value) {
-                               _lastName = value;
-                            },
-                            controller: _lastNameController,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: TextFormField(
-                            key: ValueKey('phone number'),
-                            focusNode: _phoneNumberFocusNode,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter a valid phone number';
-                              }
-                              return null;
-                            },
-                            textInputAction: TextInputAction.next,
-                            onEditingComplete: _submitForm,
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                                border: const UnderlineInputBorder(),
-                                filled: true,
-                                prefixIcon: Icon(Icons.phone_android),
-                                labelText: 'Phone number ex: 00966xxx or 00965xx',
-                                fillColor: whiteColor),
-                            onSaved: (value) {
-                              _phoneNumber = value;
-                            },
-                            controller: _phoneController,
-                          ),
-                        ),
-              Padding(
-                padding: const EdgeInsets.only(top: 30),
-                child:    Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            SizedBox(width: 10),
-                            _isLoading!
-                                ? CircularProgressIndicator(
+    return NetworkIndicator(
+      child: PageContainer(
+      child: Scaffold(
 
-                            )
-                                : InkWell(
-                                    onTap: _submitForm,
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(horizontal: 20),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        border: Border.all(color: mainColor)
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Update',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                color: mainColor,
-                                                fontSize: 17),
+      body:  Directionality(
+        textDirection: translator.activeLanguageCode =='ar'? TextDirection.rtl : TextDirection.ltr,
+        child:     SingleChildScrollView(
+        child: Column(
+          children: [
+            ScreenAppBar(
+              right_icon: 'cart',
+              category_name: "Update Profile".tr(),
+              screen: CustomCircleNavigationBar(page_index: 4,),
 
-                                          ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Icon(
-                                            Feather.user,
-                                            size: 18,
-                                            color: mainColor,
-                                          )
-                                        ],
-                                      ),
-                                    )
-                            ),
-                            SizedBox(width: 20),
-                          ],
-                        ),
-              )
-                      ],
-                    ))
-              ],
             ),
-          ),
-        ],
-      ),
-    );
+            Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: TextFormField(
+                        key: ValueKey('first_name'),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return  "Please enter".tr()+' ' + "First Name".tr();
+                          }
+                          return null;
+                        },
+                        textInputAction: TextInputAction.next,
+                        onEditingComplete: () => FocusScope.of(context)
+                            .requestFocus(_lastNameFocusNode),
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                            border: const UnderlineInputBorder(),
+                            filled: true,
+                            prefixIcon: Icon(Icons.person),
+                            labelText: "First Name".tr(),
+                            fillColor: whiteColor
+                        ),
+                        onSaved: (value) {
+                          _firstName = value;
+                        },
+                        controller: _firstNameController,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: TextFormField(
+                        key: ValueKey('last_name'),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please enter".tr()+' ' + "Last Name".tr();
+                          }
+                          return null;
+                        },
+                        textInputAction: TextInputAction.next,
+                        onEditingComplete: () => FocusScope.of(context)
+                            .requestFocus(_phoneNumberFocusNode),
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                            border: const UnderlineInputBorder(),
+                            filled: true,
+                            prefixIcon: Icon(Icons.person),
+                            labelText: "Last Name".tr(),
+                            fillColor: whiteColor),
+                        onSaved: (value) {
+                          _lastName = value;
+                        },
+                        controller: _lastNameController,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: TextFormField(
+                        key: ValueKey('phone number'),
+                        focusNode: _phoneNumberFocusNode,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please enter".tr()+' ' + "Phone".tr();
+                          }
+                          return null;
+                        },
+                        textInputAction: TextInputAction.next,
+                        onEditingComplete: _submitForm,
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                            border: const UnderlineInputBorder(),
+                            filled: true,
+                            prefixIcon: Icon(Icons.phone_android),
+                            labelText: "Phone".tr(),
+                            fillColor: whiteColor),
+                        onSaved: (value) {
+                          _phoneNumber = value;
+                        },
+                        controller: _phoneController,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child:    Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SizedBox(width: 10),
+                          _isLoading!
+                              ? CircularProgressIndicator(
+
+                          )
+                              : InkWell(
+                              onTap: _submitForm,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(color: mainColor)
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Update".tr(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: mainColor,
+                                          fontSize: 17),
+
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Icon(
+                                      Feather.user,
+                                      size: 18,
+                                      color: mainColor,
+                                    )
+                                  ],
+                                ),
+                              )
+                          ),
+                          SizedBox(width: 20),
+                        ],
+                      ),
+                    )
+                  ],
+                ))
+          ],
+        ),
+      ),)
+                )) );
   }
 
   Widget leadingWidget() {

@@ -117,7 +117,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                             ),
                                             fit: BoxFit.fill)),
                                   ),
-                                  percentage== null ? Container():       Container(
+                                  percentage== null ||  percentage.isNaN || percentage.isInfinite ? Container():       Container(
                                     width: width(context) * 0.15,
                                     decoration: BoxDecoration(
                                         color: greyColor,

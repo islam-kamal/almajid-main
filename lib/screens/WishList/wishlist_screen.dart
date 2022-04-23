@@ -63,7 +63,7 @@ class _WishListScreenState extends State<WishListScreen> {
                     children: [
                       ScreenAppBar(
                         right_icon: 'cart',
-                        category_name: "WishList".tr(),
+                        category_name: "My WishList".tr(),
                         screen: CustomCircleNavigationBar(
                           page_index:
                               translator.activeLanguageCode == 'ar' ? 4 : 0,
@@ -77,7 +77,6 @@ class _WishListScreenState extends State<WishListScreen> {
                             return <Widget>[
                               SliverAppBar(
                                 automaticallyImplyLeading: false,
-                                leading: null,
                                 expandedHeight: isLandscape(context)
                                     ? 2 * height(context) * .2
                                     : height(context) * .2,
@@ -86,8 +85,10 @@ class _WishListScreenState extends State<WishListScreen> {
                                 elevation: 0,
                                 pinned: false,
                                 flexibleSpace: FlexibleSpaceBar(
+
                                   background:
-                                      HomeSlider(gallery: StaticData.slider),
+                                      HomeSlider(gallery: StaticData.slider,),
+
                                 ),
                               )
                             ];
@@ -177,7 +178,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                           element.value;
                                                     }
                                                   });
-                                                  if (startDate! == null || endDate == null) {
+                                                  if (startDate == null || endDate == null) {
                                                     new_price = minimal_price;
                                                     if(double.parse(minimal_price) < double.parse(
                                                         snapshot.data!.items![index].product!.price.toString()))
@@ -246,7 +247,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                       image: DecorationImage(image: NetworkImage("${Urls.BASE_URL}/pub/media/catalog/product/${product_image}"),
                                                                                           fit: BoxFit.fill)),
                                                                                 ),
-                                                                                percentage== null ? Container():    Container(
+                                                                                percentage== null ||  percentage.isNaN || percentage.isInfinite ? Container():    Container(
                                                                                   width: width(context) * 0.15,
                                                                                   decoration: BoxDecoration(
                                                                                       color: greyColor,

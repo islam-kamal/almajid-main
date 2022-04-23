@@ -65,8 +65,8 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
           responsiveSizedBox(context: context, percentageOfHeight: .003),
           Container(
             height: isLandscape(context)
-                ? 2 * height(context) * .35
-                : height(context) * .35,
+                ? 2 * height(context) * .32
+                : height(context) * .32,
             color: whiteColor,
           ),
           responsiveSizedBox(context: context, percentageOfHeight: .447),
@@ -85,7 +85,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           context: context,
                           percentageOfHeight: .02,
                           textColor: mainColor,
-                          text: "${translator.translate("Total to pay")} "),
+                          text: "${"Total to pay".tr()} "),
                       SizedBox(
                         height: 5,
                       ),

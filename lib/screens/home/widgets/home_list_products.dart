@@ -384,7 +384,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          percentage== null ? Container():    Container(
+                                          percentage== null ||  percentage.isNaN || percentage.isInfinite ? Container():    Container(
                                             width: width(context) * 0.1,
                                             decoration: BoxDecoration(
                                               color: greyColor,

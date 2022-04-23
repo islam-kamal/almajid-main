@@ -72,7 +72,8 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
               listener: (context, state) {
                 if (state is Loading) {
                   _playAnimation();
-                } else if (state is ErrorLoading) {
+                }
+                else if (state is ErrorLoading) {
                   var data = state.model as StcPayModel;
                   _stopAnimation();
                   Flushbar(
@@ -248,31 +249,36 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
         top: width(context) * .05,
       ),
       width: width(context),
-      color: mainColor,
+      color: whiteColor,
       height: isLandscape(context)
           ? 2 * height(context) * .09
           : height(context) * .09,
-      child: Row(
-       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
         children: [
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context!).pop();
-            },
-            child: Icon(
-              Icons.navigate_before,
-              color: whiteColor,
-              size: 30,
-            ),
+          Row(
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context!).pop();
+                },
+                child: Icon(
+                  Icons.navigate_before,
+                  color: mainColor,
+                  size: 30,
+                ),
+              ),
+              SizedBox(width: width(context) * .28),
+              customDescriptionText(
+                  context: context,
+                  textColor: mainColor,
+                  fontWeight: FontWeight.bold,
+                  text: "")
+
+
+            ],
           ),
-        SizedBox(width: width(context) * .28),
-        customDescriptionText(
-              context: context,
-              textColor: whiteColor,
-              fontWeight: FontWeight.bold,
-              text: "")
-
-
+          Divider(color: mainColor,   thickness: 1,)
         ],
       ),
     );

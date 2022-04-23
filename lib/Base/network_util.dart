@@ -41,7 +41,7 @@ SharedPreferenceManager sharedPreferenceManager =SharedPreferenceManager();
     try {
       response = await dio.post(url,
           data: body,
-          options: Options(headers: headers!, requestEncoder: encoding ,
+          options: Options(headers: headers, requestEncoder: encoding ,
               followRedirects: false,  validateStatus: (status) { return status! < 500; }));
 
     } on DioError catch (e) {

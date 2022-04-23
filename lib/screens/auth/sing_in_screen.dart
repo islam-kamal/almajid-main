@@ -149,24 +149,47 @@ class _SignInScreenState extends State<SignInScreen>
     return StreamBuilder<String?>(
       stream: signIn_bloc.email,
       builder: (context, snapshot) {
-        return Container(
-            width: width(context) * .8,
-            child: TextFormField(
-              decoration: InputDecoration(
-                hintText: translator.translate(hint!),
-                prefixIcon: Icon(Icons.email_outlined),
-                contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                errorText: snapshot.error.toString(),
-              ),
-              onChanged:  signIn_bloc.email_change,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return '${translator.translate("Please enter")} ${translator.translate("Email")}';
-                }
-                return null;
-              },
-            )
-        );
+        if(snapshot.hasError){
+          return Container(
+              width: width(context) * .8,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: translator.translate(hint!),
+                  prefixIcon: Icon(Icons.email_outlined),
+                  contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                  errorText: snapshot.error.toString(),
+                ),
+                onChanged:  signIn_bloc.email_change,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '${translator.translate("Please enter")} ${translator.translate("Email")}';
+                  }
+                  return null;
+                },
+              )
+          );
+
+        }else{
+          return Container(
+              width: width(context) * .8,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: translator.translate(hint!),
+                  prefixIcon: Icon(Icons.email_outlined),
+                  contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                 // errorText: snapshot.error.toString(),
+                ),
+                onChanged:  signIn_bloc.email_change,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '${translator.translate("Please enter")} ${translator.translate("Email")}';
+                  }
+                  return null;
+                },
+              )
+          );
+
+        }
 
       },
     );
@@ -179,37 +202,74 @@ class _SignInScreenState extends State<SignInScreen>
     return StreamBuilder<String?>(
         stream: signIn_bloc.password,
         builder: (context, snapshot) {
-          return Container(
-              width: width(context) * .8,
-              child: TextFormField(
-                obscureText:!_passwordVisible!,
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.lock_outline),
-                  contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                  errorText: snapshot.error.toString(),
-                  hintText: translator.translate(hint!),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      // Based on passwordVisible state choose the icon
-                      _passwordVisible! ? Icons.visibility_off : Icons.visibility,
+          if(snapshot.hasError) {
+            return Container(
+                width: width(context) * .8,
+                child: TextFormField(
+                  obscureText: !_passwordVisible!,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.lock_outline),
+                    contentPadding: new EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 10.0),
+                    errorText: snapshot.error.toString(),
+                    hintText: translator.translate(hint!),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        // Based on passwordVisible state choose the icon
+                        _passwordVisible! ? Icons.visibility_off : Icons
+                            .visibility,
+                      ),
+                      onPressed: () {
+                        // Update the state i.e. toogle the state of passwordVisible variable
+                        setState(() {
+                          _passwordVisible = !_passwordVisible!;
+                        });
+                      },
                     ),
-                    onPressed: () {
-                      // Update the state i.e. toogle the state of passwordVisible variable
-                      setState(() {
-                        _passwordVisible = !_passwordVisible!;
-                      });
-                    },
                   ),
-                ),
-                onChanged: signIn_bloc.password_change,
-                validator: (value) {
-                  if (value!.length < 8 || value.isEmpty) {
-                    return '${translator.translate("Please enter")} ${translator.translate("Password")}';
-                  }
-                  return null;
-                },
-              )
-          );
+                  onChanged: signIn_bloc.password_change,
+                  validator: (value) {
+                    if (value!.length < 8 || value.isEmpty) {
+                      return '${translator.translate(
+                          "Please enter")} ${translator.translate("Password")}';
+                    }
+                    return null;
+                  },
+                )
+            );
+          }else{
+            return Container(
+                width: width(context) * .8,
+                child: TextFormField(
+                  obscureText:!_passwordVisible!,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.lock_outline),
+                    contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                    hintText: translator.translate(hint!),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        // Based on passwordVisible state choose the icon
+                        _passwordVisible! ? Icons.visibility_off : Icons.visibility,
+                      ),
+                      onPressed: () {
+                        // Update the state i.e. toogle the state of passwordVisible variable
+                        setState(() {
+                          _passwordVisible = !_passwordVisible!;
+                        });
+                      },
+                    ),
+                  ),
+                  onChanged: signIn_bloc.password_change,
+                  validator: (value) {
+                    if (value!.length < 8 || value.isEmpty) {
+                      return '${translator.translate("Please enter")} ${translator.translate("Password")}';
+                    }
+                    return null;
+                  },
+                )
+            );
+          }
+
         });
 
   }

@@ -14,6 +14,7 @@ class ResetPasswordScreen extends StatefulWidget {
 class ResetPasswordScreenState extends State<ResetPasswordScreen>
     with TickerProviderStateMixin {
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  final _formKey = GlobalKey<FormState>();
 
   late AnimationController _loginButtonController;
   bool isLoading = false;
@@ -163,12 +164,19 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
                           //   resetPasswordTextFields(context: context, hint: "Verification Code"),
                           responsiveSizedBox(
                               context: context, percentageOfHeight: .02),
-                          passwordTextField(
-                              context: context, hint: "New Password"),
-                          responsiveSizedBox(
-                              context: context, percentageOfHeight: .02),
-                          confirmPasswordTextField(
-                              context: context, hint: "Retype New Password"),
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            passwordTextField(
+                                context: context, hint: "New Password"),
+                            responsiveSizedBox(
+                                context: context, percentageOfHeight: .02),
+                            confirmPasswordTextField(
+                                context: context, hint: "Re_type The New Password"),
+                          ],
+                        ),
+                      ),
                           responsiveSizedBox(
                               context: context, percentageOfHeight: .10),
                           //  sendAndDoneButton(context: context, isResetScreen: true)
@@ -195,7 +203,9 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
         btn_height: width(context) * .1,
         isResetScreen: true,
         onTap: () {
-          forgetPassword_bloc.add(changePasswordClick());
+          if (_formKey.currentState!.validate() ) {
+            forgetPassword_bloc.add(changePasswordClick());
+          }
         },
       ),
     );
@@ -205,42 +215,99 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
     return StreamBuilder<String>(
       stream: forgetPassword_bloc.password,
       builder: (context, snapshot) {
-        return Container(
-          padding: EdgeInsets.only(
-              right: width(context) * .05, left: width(context) * .05),
-          height: isLandscape(context)
-              ? 2 * height(context) * .08
-              : height(context) * .08,
-          child: TextFormField(
-            style: TextStyle(
-                color: blackColor,
-                fontSize: isLandscape(context)
-                    ? 2 * height(context) * .02
-                    : height(context) * .02),
-            cursorColor: greyColor.withOpacity(.5),
-            onChanged: forgetPassword_bloc.password_change,
-            decoration: InputDecoration(
-              hintText: translator.translate(hint!),
-              hintStyle: TextStyle(
-                  color: greyColor.withOpacity(1),
-                  fontWeight: FontWeight.bold,
+        if(snapshot.hasError){
+          return Container(
+            padding: EdgeInsets.only(
+                right: width(context) * .05, left: width(context) * .05),
+            child: TextFormField(
+              style: TextStyle(
+                  color: blackColor,
                   fontSize: isLandscape(context)
-                      ? 2 * height(context) * .018
-                      : height(context) * .018),
-              filled: true,
-              fillColor: whiteColor,
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(3),
-                  borderSide: BorderSide(color: blackColor)),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(3),
-                  borderSide: BorderSide(color: blackColor)),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(3),
-                  borderSide: BorderSide(color: blackColor)),
+                      ? 2 * height(context) * .02
+                      : height(context) * .02),
+              cursorColor: greyColor.withOpacity(.5),
+              onChanged: forgetPassword_bloc.password_change,
+              decoration: InputDecoration(
+                hintText: translator.translate(hint!),
+                contentPadding: new EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 10.0),
+                hintStyle: TextStyle(
+                    color: greyColor.withOpacity(1),
+                    fontWeight: FontWeight.bold,
+                    fontSize: isLandscape(context)
+                        ? 2 * height(context) * .018
+                        : height(context) * .018),
+                filled: true,
+                fillColor: whiteColor,
+                errorText: snapshot.error.toString(),
+
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(3),
+                    borderSide: BorderSide(color: blackColor)),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(3),
+                    borderSide: BorderSide(color: blackColor)),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(3),
+                    borderSide: BorderSide(color: blackColor)),
+              ),
+              validator: (value) {
+                if (value!.length < 8 || value.isEmpty) {
+                  return '${translator.translate(
+                      "Please enter")} ${translator.translate("Password")}';
+                }
+                return null;
+              },
             ),
-          ),
-        );
+          );
+        }else{
+          return Container(
+            padding: EdgeInsets.only(
+                right: width(context) * .05, left: width(context) * .05),
+            child: TextFormField(
+              style: TextStyle(
+                  color: blackColor,
+                  fontSize: isLandscape(context)
+                      ? 2 * height(context) * .02
+                      : height(context) * .02),
+              cursorColor: greyColor.withOpacity(.5),
+              onChanged: forgetPassword_bloc.password_change,
+              decoration: InputDecoration(
+                hintText: translator.translate(hint!),
+                contentPadding: new EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 10.0),
+                hintStyle: TextStyle(
+                    color: greyColor.withOpacity(1),
+                    fontWeight: FontWeight.bold,
+                    fontSize: isLandscape(context)
+                        ? 2 * height(context) * .018
+                        : height(context) * .018),
+                filled: true,
+                fillColor: whiteColor,
+            //    errorText: snapshot.error.toString(),
+
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(3),
+                    borderSide: BorderSide(color: blackColor)),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(3),
+                    borderSide: BorderSide(color: blackColor)),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(3),
+                    borderSide: BorderSide(color: blackColor)),
+              ),
+              validator: (value) {
+                if (value!.length < 8 || value.isEmpty) {
+                  return '${translator.translate(
+                      "Please enter")} ${translator.translate("Password")}';
+                }
+                return null;
+              },
+            ),
+          );
+        }
+
+
       },
     );
   }
@@ -249,42 +316,101 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen>
     return StreamBuilder<String>(
       stream: forgetPassword_bloc.confirm_password,
       builder: (context, snapshot) {
-        return Container(
-          padding: EdgeInsets.only(
-              right: width(context) * .05, left: width(context) * .05),
-          height: isLandscape(context)
-              ? 2 * height(context) * .08
-              : height(context) * .08,
-          child: TextFormField(
-            style: TextStyle(
-                color: blackColor,
-                fontSize: isLandscape(context)
-                    ? 2 * height(context) * .02
-                    : height(context) * .02),
-            cursorColor: greyColor.withOpacity(.5),
-            onChanged: forgetPassword_bloc.confirm_password_change,
-            decoration: InputDecoration(
-              hintText: translator.translate(hint!),
-              hintStyle: TextStyle(
-                  color: greyColor.withOpacity(1),
-                  fontWeight: FontWeight.bold,
+        if(snapshot.hasError){
+          return Container(
+            padding: EdgeInsets.only(
+                right: width(context) * .05, left: width(context) * .05),
+            child: TextFormField(
+              style: TextStyle(
+                  color: blackColor,
                   fontSize: isLandscape(context)
-                      ? 2 * height(context) * .018
-                      : height(context) * .018),
-              filled: true,
-              fillColor: whiteColor,
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(3),
-                  borderSide: BorderSide(color: blackColor)),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(3),
-                  borderSide: BorderSide(color: blackColor)),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(3),
-                  borderSide: BorderSide(color: blackColor)),
+                      ? 2 * height(context) * .02
+                      : height(context) * .02),
+              cursorColor: greyColor.withOpacity(.5),
+              onChanged: forgetPassword_bloc.confirm_password_change,
+
+              decoration: InputDecoration(
+                hintText: translator.translate(hint!),
+                contentPadding: new EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 10.0),
+                hintStyle: TextStyle(
+                    color: greyColor.withOpacity(1),
+                    fontWeight: FontWeight.bold,
+                    fontSize: isLandscape(context)
+                        ? 2 * height(context) * .018
+                        : height(context) * .018),
+                errorText: snapshot.error.toString(),
+
+                filled: true,
+                fillColor: whiteColor,
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(3),
+                    borderSide: BorderSide(color: blackColor)),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(3),
+                    borderSide: BorderSide(color: blackColor)),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(3),
+                    borderSide: BorderSide(color: blackColor)),
+              ),
+              validator: (value) {
+                if (value!.length < 8 || value.isEmpty) {
+                  return '${translator.translate(
+                      "Please enter")} ${translator.translate("Password")}';
+                }
+                return null;
+              },
             ),
-          ),
-        );
+          );
+        }else{
+          return Container(
+            padding: EdgeInsets.only(
+                right: width(context) * .05, left: width(context) * .05),
+            child: TextFormField(
+              style: TextStyle(
+                  color: blackColor,
+                  fontSize: isLandscape(context)
+                      ? 2 * height(context) * .02
+                      : height(context) * .02),
+              cursorColor: greyColor.withOpacity(.5),
+              onChanged: forgetPassword_bloc.confirm_password_change,
+
+              decoration: InputDecoration(
+                hintText: translator.translate(hint!),
+                contentPadding: new EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 10.0),
+                hintStyle: TextStyle(
+                    color: greyColor.withOpacity(1),
+                    fontWeight: FontWeight.bold,
+                    fontSize: isLandscape(context)
+                        ? 2 * height(context) * .018
+                        : height(context) * .018),
+            //    errorText: snapshot.error.toString(),
+
+                filled: true,
+                fillColor: whiteColor,
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(3),
+                    borderSide: BorderSide(color: blackColor)),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(3),
+                    borderSide: BorderSide(color: blackColor)),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(3),
+                    borderSide: BorderSide(color: blackColor)),
+              ),
+              validator: (value) {
+                if (value!.length < 8 || value.isEmpty) {
+                  return '${translator.translate(
+                      "Please enter")} ${translator.translate("Password")}';
+                }
+                return null;
+              },
+            ),
+          );
+        }
+
+
       },
     );
   }

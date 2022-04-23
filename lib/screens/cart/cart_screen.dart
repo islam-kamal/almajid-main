@@ -30,7 +30,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
   var product_image;
   var edit_cart_status = false;
   SharedPreferences? sharedPreferences;
-  var qty;
+
  late AnimationController _loginButtonController;
   bool isLoading = false;
   ShoppingCartBloc shoppingCartBloc = new ShoppingCartBloc();
@@ -376,6 +376,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
   }
 
   singleCartItem({BuildContext? context, cart_details_model.Items? item,String? image}) {
+    var qty;
     List<String> qantity_numbers = [];
     for (int i = 1; i < 20; i++) {
       qantity_numbers.add(i.toString());

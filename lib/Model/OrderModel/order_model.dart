@@ -809,16 +809,16 @@ class Shipping {
 }
 
 class Total {
-  int? baseShippingAmount;
-  int? baseShippingDiscountAmount;
-  int? baseShippingDiscountTaxCompensationAmnt;
-  int? baseShippingInclTax;
-  int? baseShippingTaxAmount;
-  int? shippingAmount;
-  int? shippingDiscountAmount;
-  int? shippingDiscountTaxCompensationAmount;
-  int? shippingInclTax;
-  int? shippingTaxAmount;
+  var baseShippingAmount;
+  var baseShippingDiscountAmount;
+  var baseShippingDiscountTaxCompensationAmnt;
+  var baseShippingInclTax;
+  var baseShippingTaxAmount;
+  var shippingAmount;
+  var shippingDiscountAmount;
+  var shippingDiscountTaxCompensationAmount;
+  var shippingInclTax;
+  var shippingTaxAmount;
 
   Total(
       {this.baseShippingAmount,

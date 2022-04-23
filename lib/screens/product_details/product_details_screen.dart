@@ -158,7 +158,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                   height: width(context) *0.90,
                                   product_details_page: true,
                                 ),
-                                percentage== null ? Container():   Container(
+                                percentage== null ||  percentage.isNaN || percentage.isInfinite ? Container():   Container(
                                   width: width(context) * 0.2,
                                   decoration: BoxDecoration(
                                       color: greyColor,

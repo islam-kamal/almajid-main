@@ -231,7 +231,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
               ? 2 * height(context) * .062
               : height(context) * .062),
       width: width(context),
-      color: mainColor,
+      color: whiteColor,
       height: isLandscape(context)
           ? 2 * height(context) * .12
           : height(context) * .12,
@@ -246,13 +246,13 @@ class _AddReviewScreenState extends State<AddReviewScreen>
             },
             child: Icon(
               Icons.navigate_before,
-              color: whiteColor,
+              color: mainColor,
               size: 30,
             ),
           ),
           customDescriptionText(
               context: context,
-              textColor: whiteColor,
+              textColor: mainColor,
               text: "Add Review",
               percentageOfHeight: .025),
           SizedBox()
@@ -333,7 +333,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
       child: TextFormField(
         controller: nickname,
         style: TextStyle(
-            color: greyColor.withOpacity(.5),
+            color: mainColor,
             fontSize: isLandscape(context)
                 ? 2 * height(context) * .02
                 : height(context) * .02),
@@ -360,7 +360,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return '${translator.translate("Please enter")} ${translator.translate("NickName")}';
+            return '${"Please enter".tr()} ${"nickName".tr()}';
           }
           return null;
         },
@@ -375,7 +375,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
       child: TextFormField(
         controller: summary,
         style: TextStyle(
-            color: greyColor.withOpacity(.5),
+            color: mainColor,
             fontSize: isLandscape(context)
                 ? 2 * height(context) * .02
                 : height(context) * .02),
@@ -410,16 +410,14 @@ class _AddReviewScreenState extends State<AddReviewScreen>
     );
   }
 
-  reviewTextField({
-    BuildContext? context,
-  }) {
+  reviewTextField({BuildContext? context,}) {
     return Container(
       padding: EdgeInsets.only(
           right: width(context) * .05, left: width(context) * .05),
       child: TextFormField(
         controller: review,
         style: TextStyle(
-            color: greyColor.withOpacity(.5),
+            color: mainColor,
             fontSize: isLandscape(context)
                 ? 2 * height(context) * .02
                 : height(context) * .02),

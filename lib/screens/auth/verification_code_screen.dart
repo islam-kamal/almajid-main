@@ -45,10 +45,10 @@ class _OtpState extends State<VerificationCodeScreen>
   // Variables
   Size? _screenSize;
   int? _currentDigit;
-  int? _firstDigit;
-  int? _secondDigit;
-  int? _thirdDigit;
-  int? _fourthDigit;
+ var _firstDigit;
+  var _secondDigit;
+  var _thirdDigit;
+  var _fourthDigit;
 
   Timer? timer;
   int? totalTimeInSeconds;
@@ -334,10 +334,10 @@ class _OtpState extends State<VerificationCodeScreen>
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            _otpTextField(_firstDigit!),
-            _otpTextField(_secondDigit!),
-            _otpTextField(_thirdDigit!),
-            _otpTextField(_fourthDigit!),
+            _otpTextField(_firstDigit),
+            _otpTextField(_secondDigit),
+            _otpTextField(_thirdDigit),
+            _otpTextField(_fourthDigit),
           ],
 
         ));
