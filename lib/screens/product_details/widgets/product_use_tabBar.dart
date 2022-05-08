@@ -1,4 +1,5 @@
 import 'package:almajidoud/screens/product_details/widgets/descriptionAndShareRow.dart';
+import 'package:almajidoud/screens/product_details/widgets/shippingAndReturnsWidget.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:flutter/gestures.dart';
 
@@ -12,7 +13,7 @@ class ProductUseTabBar extends StatelessWidget{
 
     return Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr,
         child: Container(
-      height: width(context) * 0.5,
+      height: width(context) * 0.6,
       child: DefaultTabController(
           length: 3,
           child: NestedScrollView(
@@ -48,9 +49,9 @@ class ProductUseTabBar extends StatelessWidget{
                     context: context,
                     description: how_to_use??''
                 ),
-                descriptionAndShareRow(
+                shippingAndReturnsWidget(
                     context: context,
-                    description: translator.translate( "shipping&returns"),
+
                 ),
 
               ],

@@ -28,6 +28,7 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
     _controller?.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
 
@@ -66,6 +67,7 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                             labelColor: mainColor,
                             isScrollable: true,
                             // indicatorColor: mainColor ,
+
                             onTap: (index){
 
                               customAnimatedPushNavigation(
