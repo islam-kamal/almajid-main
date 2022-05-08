@@ -64,7 +64,6 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                           child: TabBar(
                             controller: _controller,
                             labelColor: mainColor,
-
                             isScrollable: true,
                             // indicatorColor: mainColor ,
                             onTap: (index){
