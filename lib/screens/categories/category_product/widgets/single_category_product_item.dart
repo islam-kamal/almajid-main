@@ -51,12 +51,20 @@ class singleCategoryProductItem extends StatelessWidget {
         minimal_price = element.value;
       }
     });
+
     if(startDate ==null || endDate ==null ){
-      new_price = minimal_price;
+      if(double.parse(minimal_price) == double.parse(product!.price.toString())){
+        new_price = null;
+      }else{
+        new_price = minimal_price;
+
+      }
+
       if(double.parse(minimal_price) < double.parse(product!.price.toString()))
         percentage = (1 - (double.parse(minimal_price)  / product!.price) )* 100;
 
-    }else{
+    }
+    else{
       if(StaticData.isCurrentDateInRange(startDate!,endDate!)
           && double.parse(special_price!) <= double.parse(minimal_price)
           && double.parse(special_price!).toStringAsFixed(2) !=  product!.price ) {

@@ -12,13 +12,7 @@ class ShipmentAddressRepository {
 
   // use to make Add Shipping and billing address for client and guest
   Future<GuestShipmentAddressModel?> add_addresses({BuildContext? context}) async {
-/*    var _post_code;
-    Map<String, String> postcode_ities = {'Riyadh': '11564', 'Abha': '61321'};
-    postcode_ities.forEach((key, value) {
-      if (key == 'Abha') {
-        _post_code = value;
-      }
-    });*/
+    print(    "add_addresses telephone : ${shipmentAddressBloc.phone_controller.value}");
 
     try {
       final response = await dio.post(
@@ -44,10 +38,7 @@ class ShipmentAddressRepository {
                     :   MyApp.app_location == 'uae' ? "AE" : "KW",
                 "street": ["${shipmentAddressBloc.street_controller.value}"],
                 "postcode": "10577",
-               /* "city": await sharedPreferenceManager.readString(
-                    translator.activeLanguageCode == 'ar'
-                        ? CachingKey.REGION_AR
-                        : CachingKey.REGION_EN),*/
+
                 "city": shipmentAddressBloc.Neighbourhood_controller.value,
                 "firstname":
                     "${shipmentAddressBloc.frist_name_controller.value}",
@@ -76,10 +67,6 @@ class ShipmentAddressRepository {
                 "street": ["${shipmentAddressBloc.street_controller.value}"],
                 "postcode": "10577",
               "city": shipmentAddressBloc.Neighbourhood_controller.value,
-         /*       "city": await sharedPreferenceManager.readString(
-                    translator.activeLanguageCode == 'ar'
-                        ? CachingKey.REGION_AR
-                        : CachingKey.REGION_EN),*/
                 "firstname":
                     "${shipmentAddressBloc.frist_name_controller.value}",
                 "lastname": "${shipmentAddressBloc.last_name_controller.value}",
@@ -183,7 +170,7 @@ class ShipmentAddressRepository {
 
 
   Future<AddressModel?> add_client_address({BuildContext? context}) async{
-
+    print(    "add_client_address telephone : ${shipmentAddressBloc.phone_controller.value}");
     final response = await dio.put(
         "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/customers/me/address",
         data: {
@@ -211,10 +198,6 @@ class ShipmentAddressRepository {
             "street": ["${shipmentAddressBloc.street_controller.value}"],
             "telephone": "${shipmentAddressBloc.phone_controller.value}",
             "postcode": "10577",
- /*           "city": await sharedPreferenceManager.readString(
-                translator.activeLanguageCode == 'ar'
-                    ? CachingKey.REGION_AR
-                    : CachingKey.REGION_EN),*/
             "city": shipmentAddressBloc.Neighbourhood_controller.value,
 
             "firstname":
@@ -239,7 +222,7 @@ class ShipmentAddressRepository {
 
 
   Future<AddressModel?> edit_client_address({BuildContext? context}) async{
-
+print(    "edit_client_address telephone : ${shipmentAddressBloc.phone_controller.value}");
     final response = await dio.put(
         "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/customers/me/address",
         data: {
@@ -269,11 +252,6 @@ class ShipmentAddressRepository {
             "telephone": "${shipmentAddressBloc.phone_controller.value}",
             "postcode": "10577",
             "city": shipmentAddressBloc.Neighbourhood_controller.value,
-
-            /* "city": await sharedPreferenceManager.readString(
-                translator.activeLanguageCode == 'ar'
-                    ? CachingKey.REGION_AR
-                    : CachingKey.REGION_EN),*/
             "firstname":
             "${shipmentAddressBloc.frist_name_controller.value}",
             "lastname":

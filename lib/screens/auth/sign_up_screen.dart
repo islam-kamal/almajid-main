@@ -364,7 +364,8 @@ class _SignUpScreenState extends State<SignUpScreen>
                   children: [
                     Expanded(
                         child: TextFormField(
-                            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly
+                              ,FilteringTextInputFormatter.deny(RegExp(r'^0+')),],
                             decoration: InputDecoration(
 
 

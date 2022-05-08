@@ -204,7 +204,8 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
                     ),
                     Expanded(
                         child: TextFormField(
-                            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly
+                              ,FilteringTextInputFormatter.deny(RegExp(r'^0+')),],
 
                             decoration: InputDecoration(
                               hintText: translator.translate("Phone"),

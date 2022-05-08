@@ -218,6 +218,7 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                     child: TextFormField(
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly
+                          ,FilteringTextInputFormatter.deny(RegExp(r'^0+')),
                         ],
 
                         decoration: InputDecoration(
@@ -267,6 +268,7 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
                     child: TextFormField(
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly
+                          ,FilteringTextInputFormatter.deny(RegExp(r'^0+')),
                         ],
 
                         decoration: InputDecoration(

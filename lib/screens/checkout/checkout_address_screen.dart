@@ -18,6 +18,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 class CheckoutAddressScreen extends StatefulWidget{
@@ -829,7 +830,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   }
 
   phone_addressTextFields({BuildContext? context, String? hint,var initialValue}) {
-    String _countryCode  = MyApp.app_location == 'sa' ?"+966" : MyApp.app_location == 'kw' ? "+965" : "+971";
     return Form(
       key: _mobile_formKey,
       child: StreamBuilder<String>(
@@ -840,10 +840,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             child: Directionality(
               textDirection:  TextDirection.ltr ,
               child: IntlPhoneField(
-                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly,
+                  FilteringTextInputFormatter.deny(RegExp(r'^0+')),],
                 decoration: InputDecoration(
                   hintText:hint ,
-
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(3),
                       borderSide: BorderSide(color: greyColor)),
@@ -859,8 +859,17 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
                 initialCountryCode: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
                 onChanged: (phone) {
-                  shipmentAddressBloc.phone_change(phone.completeNumber);
+                  print("phone : $phone");
+                  print("phone number: ${phone.number}");
+                  print("phone countryCode: ${phone.countryCode}");
+                  print("phone completeNumber: ${phone.completeNumber}");
+                  print("phone countryISOCode: ${phone.countryISOCode}");
+
+                    shipmentAddressBloc.phone_change(phone.completeNumber);
+
+
                 },
+
                 initialValue: initialValue,
                 countries:  ['SA', 'KW', 'AE'],
                 onCountryChanged: (country) {

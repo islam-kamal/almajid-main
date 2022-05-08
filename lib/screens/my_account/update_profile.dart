@@ -194,7 +194,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         textInputAction: TextInputAction.next,
                         onEditingComplete: _submitForm,
                         keyboardType: TextInputType.phone,
-                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly
+                          ,FilteringTextInputFormatter.deny(RegExp(r'^0+')),],
 
                         decoration: InputDecoration(
                             border: const UnderlineInputBorder(),
