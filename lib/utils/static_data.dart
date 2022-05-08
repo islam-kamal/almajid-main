@@ -7,6 +7,7 @@ as product_model;
 
 class StaticData {
   static List<Map>? wishlist_items;
+  static List<Map>? base_product_price_list;
   static List<Map>? product_images_list;
   static List<Map> product_images_map  = [];
   static String country_code ='+966';
@@ -34,7 +35,7 @@ class StaticData {
 //reviews
   static var review_product_sku;
   static int product_qty = 1;
- static Future<List<AddressModel>>? saved_addresses;
+  static late  Future<List<AddressModel>?> saved_addresses;
 
 
 

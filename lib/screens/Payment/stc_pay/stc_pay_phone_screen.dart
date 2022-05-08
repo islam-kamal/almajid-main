@@ -8,6 +8,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:country_list_pick/country_list_pick.dart';
 import 'package:almajidoud/Bloc/Payment_bloc/payment_bloc.dart';
+import 'package:flutter/services.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 class StcPayPhoneScreen extends StatefulWidget{
   @override
@@ -181,6 +182,8 @@ class StcPayPhoneScreenState extends State<StcPayPhoneScreen>with TickerProvider
             child: Directionality(
               textDirection:  TextDirection.ltr ,
               child: IntlPhoneField(
+                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+
                 decoration: InputDecoration(
                   hintText:hint ,
                   enabledBorder: OutlineInputBorder(

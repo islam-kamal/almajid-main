@@ -6,6 +6,7 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:country_list_pick/country_list_pick.dart';
+import 'package:flutter/services.dart';
 
 class LoginWithPhoneScreen extends StatefulWidget {
   @override
@@ -195,47 +196,105 @@ class LoginWithPhoneScreenState extends State<LoginWithPhoneScreen>
     child: StreamBuilder<String>(
         stream: forgetPassword_bloc.mobile,
         builder: (context, snapshot) {
-          return Container(
-              width: width(context) * .8,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Row(
-                children: [
-                  CountryCodePicker(
-                    onChanged: (Object object){
-                      _countryCode=object.toString();
-                      StaticData.country_code = _countryCode;
-                    },
-                    initialSelection: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
-                    countryFilter: ['SA', 'KW', 'AE' ],
-                    showFlagDialog: true,
-                  ),
-                  Expanded(
-                      child: TextFormField(
-                          decoration: InputDecoration(
-                            hintText: translator.translate("Phone"),
-                            errorText: snapshot.error.toString(),
-                            contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+      if(snapshot.hasError) {
+        return Container(
+            width: width(context) * .8,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Row(
+              children: [
+                CountryCodePicker(
+                  onChanged: (Object object) {
+                    _countryCode = object.toString();
+                    StaticData.country_code = _countryCode;
+                  },
+                  initialSelection: MyApp.app_location == 'sa' ? 'SA' : MyApp
+                      .app_location == 'kw' ? 'KW' : 'AE',
+                  countryFilter: ['SA', 'KW', 'AE'],
+                  showFlagDialog: true,
+                ),
+                Expanded(
+                    child: TextFormField(
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
 
-                          ),
-                          onChanged:  forgetPassword_bloc.mobile_change,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return '${translator.translate("Please enter")} ${translator.translate("Phone")}';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.number
-                      )
-                  ),
+                        decoration: InputDecoration(
+                          hintText: translator.translate("Phone"),
+                          errorText: snapshot.error.toString(),
+                          contentPadding: new EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
 
-                ],
-              )
+                        ),
+                        onChanged: forgetPassword_bloc.mobile_change,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return '${translator.translate(
+                                "Please enter")} ${translator.translate(
+                                "Phone")}';
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.number
+                    )
+                ),
+
+              ],
+            )
 
 
+        );
+      }else{
+        return Container(
+            width: width(context) * .8,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Row(
+              children: [
+                CountryCodePicker(
+                  onChanged: (Object object) {
+                    _countryCode = object.toString();
+                    StaticData.country_code = _countryCode;
+                  },
+                  initialSelection: MyApp.app_location == 'sa' ? 'SA' : MyApp
+                      .app_location == 'kw' ? 'KW' : 'AE',
+                  countryFilter: ['SA', 'KW', 'AE'],
+                  showFlagDialog: true,
+                ),
+                Expanded(
+                    child: TextFormField(
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
 
-         );
+                        decoration: InputDecoration(
+                          hintText: translator.translate("Phone"),
+                         // errorText: snapshot.error.toString(),
+                          contentPadding: new EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
+
+                        ),
+                        onChanged: forgetPassword_bloc.mobile_change,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return '${translator.translate(
+                                "Please enter")} ${translator.translate(
+                                "Phone")}';
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.number
+                    )
+                ),
+
+              ],
+            )
+
+
+        );
+      }
         }));
   }
   LoginUsingPhoneButton({BuildContext? context,}) {

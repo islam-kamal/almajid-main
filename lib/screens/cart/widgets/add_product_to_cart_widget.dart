@@ -8,7 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 class AddProductToCartWidget extends StatefulWidget {
   var product_quantity, product_sku, instock_status,btn_width,btn_height,text_size ,
       home_shape , product_image , product_id , add_wishlist_to_cart ,
-      product_details_page;
+      product_details_page,base_product_quantity;
   GlobalKey<ScaffoldState>? scaffoldKey;
 
   AddProductToCartWidget(
@@ -23,7 +23,8 @@ class AddProductToCartWidget extends StatefulWidget {
         this.product_image,
         this.product_id,
         this.product_details_page = false,
-        this.add_wishlist_to_cart = false
+        this.add_wishlist_to_cart = false,
+        this.base_product_quantity
       });
 
   @override
@@ -159,7 +160,10 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
                     context: context,
                     product_quantity: widget.product_quantity,
                     product_sku: widget.product_sku,
-                    indictor: 'detail_add_to_cart'));
+                    indictor: 'detail_add_to_cart',
+                    base_product_quantity: widget.base_product_quantity)
+                );
+
               }
 
 

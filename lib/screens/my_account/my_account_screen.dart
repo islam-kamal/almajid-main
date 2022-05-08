@@ -190,7 +190,13 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                               Expanded(
                                                 flex: 1,
                                                 child: IconButton(
-                                                  icon: Icon(Icons.keyboard_arrow_down,size: 30,color: mainColor,), onPressed: () {  },
+                                                  icon: Icon(Icons.keyboard_arrow_down,size: 30,
+                                                    color: mainColor,),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      finance_status = !finance_status;
+                                                    });
+                                                  },
                                                 ),
                                               ),
                                             ],

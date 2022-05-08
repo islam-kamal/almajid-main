@@ -48,7 +48,7 @@
   "The coupon code isn't valid. Verify the code and try again.": "The coupon code isn't valid. Verify the code and try again.",
   "Sub Total" : "Sub Total",
   "Discount" : "Discount",
-  "TAX(15%)": "TAX(15%)",
+  "TAX": "TAX",
   "Grand Total": "Grand Total",
   "Product that you are trying to add is not available" :  "Product that you are trying to add is not available",
   "-------------------checkout-----------------": "---------------------------------",
@@ -340,7 +340,7 @@
   "redbox_portable_failed" : "Faield",
   "redbox_portable_expired" : "Faield",
 
-  "Shopping Now" : "Shopping Now",
+  "Shopping Now" : "Shop Now",
   "Country" : "Country"
 }
 

@@ -336,7 +336,7 @@ class HomeListProductsState extends State<HomeListProducts> with TickerProviderS
                                                 home_shape: false,
                                                 product_image: product_image,
                                                 product_id:  snapshot.data![index].id,
-
+                                                base_product_quantity:  snapshot.data![index].extensionAttributes!.stockItem!.qty,
                                               ) :
                                               Container(
                                                 height: width(context) * .1,

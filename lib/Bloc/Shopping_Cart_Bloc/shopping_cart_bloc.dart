@@ -57,13 +57,14 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
           context: event.context,
           product_sku: event.product_sku,
           product_quantity: event.product_quantity);
-
-      if (response?.message != null) {
+      if (response!.message != null) {
         emit(ErrorLoadingProduct(sku: event.product_sku, model: response, indicator: event.indictor));
       }
       else {
         emit(DoneProductAdded(sku: event.product_sku, model: response, indicator: event.indictor));
-
+        List<Map> quantity_data = [];
+        quantity_data.add({event.product_sku.toString() : event.base_product_quantity.toString()});
+        await sharedPreferenceManager.setListOfMaps(quantity_data, 'base_product_price_shared');
         //update the car badge
         final cartResponse = await cartRepository.get_cart_details();
         if (cartResponse.message != null) {
@@ -74,7 +75,7 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
 
       }
     } catch (e) {
-      print("e : ${e}");
+      print("eeeeeeeeeeeee : ${e}");
       emit(
         ErrorLoading(message: "Failed to fetch data. Is your device online ?",
         ),

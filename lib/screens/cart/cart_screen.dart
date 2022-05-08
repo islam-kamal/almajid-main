@@ -26,7 +26,7 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   FocusNode fieldNode = FocusNode();
-  var   tax , subtotal, grandtotal;
+  var   tax , subtotal, grandtotal , shipping;
   var product_image;
   var edit_cart_status = false;
   SharedPreferences? sharedPreferences;
@@ -139,6 +139,9 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                               }else if(element.code == "grand_total"){
                                                 grandtotal = element.value;
                                               }
+                                              else if(element.code == "shipping"){
+                                                shipping = element.value;
+                                              }
                                             });
                                             return Column(
                                               children: [
@@ -219,7 +222,8 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                     ],
                                                   ),
                                                 ):Container(),
-                                                Padding(
+                                                data.items![0].taxPercent == 0?   Container()
+                                                    :    Padding(
                                                   padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
                                                   child: Row(
                                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -227,7 +231,12 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                       customDescriptionText(
                                                           context: context,
                                                           textColor: mainColor,
-                                                          text: "TAX(15%)",
+                                                          text: "TAX",
+                                                          percentageOfHeight: .018),
+                                                      customDescriptionText(
+                                                          context: context,
+                                                          textColor: mainColor,
+                                                          text: " (${data.items![0].taxPercent}%) ",
                                                           percentageOfHeight: .018),
                                                       Spacer(),
                                                       customDescriptionText(
@@ -235,6 +244,26 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                           textColor: mainColor,
                                                           text: " ${tax} ${MyApp.country_currency} ",
                                                           percentageOfHeight: .018,
+                                                          fontWeight: FontWeight.bold),
+                                                    ],
+                                                  ),
+                                                ),
+                                                shipping == 0 ? Container() :        Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      customDescriptionText(
+                                                          context: context,
+                                                          textColor: mainColor,
+                                                          text:   "Shipping",
+                                                          percentageOfHeight: .022),
+                                                      Spacer(),
+                                                      customDescriptionText(
+                                                          context: context,
+                                                          textColor: mainColor,
+                                                          text: " ${shipping} ${MyApp.country_currency} ",
+                                                          percentageOfHeight: .022,
                                                           fontWeight: FontWeight.bold),
                                                     ],
                                                   ),

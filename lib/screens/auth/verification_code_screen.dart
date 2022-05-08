@@ -132,7 +132,7 @@ class _OtpState extends State<VerificationCodeScreen>
   }
 
   // Returns "Otp custom text field"
-  Widget _otpTextField(int digit) {
+  Widget _otpTextField(var digit) {
     return new Container(
       width: StaticData.get_width(context) * 0.15,
       height: StaticData.get_width(context) * 0.15,

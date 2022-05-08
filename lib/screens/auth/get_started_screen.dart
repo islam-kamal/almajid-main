@@ -66,7 +66,6 @@ class GetStartedScreenState extends State<GetStartedScreen>
               body: BlocListener<SigninBloc, AppState>(
                   bloc: signIn_bloc,
                   listener: (context, state) {
-                    var data = state.model as UserInfoModel;
                     if (state is Loading) {
                       _playAnimation();
                     }

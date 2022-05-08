@@ -15,11 +15,11 @@ class SigninBloc extends Bloc<AppEvent,AppState> with Validator {
     }
 
 
-    final email_controller = BehaviorSubject<String?>();
-    final password_controller = BehaviorSubject<String?>();
+    final email_controller = BehaviorSubject<String>();
+    final password_controller = BehaviorSubject<String>();
 
-    Function(String?) get email_change => email_controller.sink.add;
-    Function(String?) get password_change => password_controller.sink.add;
+    void Function(String event) get email_change => email_controller.sink.add;
+    void Function(String event) get password_change => password_controller.sink.add;
 
     Stream<String?> get email => email_controller.stream.transform(email_validator);
     Stream<String?> get password => password_controller.stream.transform(password_validator);

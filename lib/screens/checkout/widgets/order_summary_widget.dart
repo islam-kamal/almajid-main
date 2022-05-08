@@ -80,24 +80,29 @@ orderSummaryWidget({BuildContext? context ,   List<TotalSegments>? total_segment
               ],
             )),
         responsiveSizedBox(context: context, percentageOfHeight: .015),
-        Container(
-            width: width(context) * .9,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                customDescriptionText(
-                    context: context,
-                    text: "VAT",
-                    textAlign: TextAlign.start,
-                    percentageOfHeight: .020),
-                customDescriptionText(
-                    context: context,
-                    text: " ${vat} ${MyApp.country_currency}   ",
-                    textAlign: TextAlign.start,
-                    percentageOfHeight: .020),
-              ],
-            )),
-        responsiveSizedBox(context: context, percentageOfHeight: .015),
+        StaticData.vistor_value == 'visitor' &&   MyApp.app_location != 'sa'? Container() :  Column(
+          children: [
+            Container(
+                width: width(context) * .9,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    customDescriptionText(
+                        context: context,
+                        text: "VAT",
+                        textAlign: TextAlign.start,
+                        percentageOfHeight: .020),
+                    customDescriptionText(
+                        context: context,
+                        text: " ${vat} ${MyApp.country_currency}   ",
+                        textAlign: TextAlign.start,
+                        percentageOfHeight: .020),
+                  ],
+                )),
+  responsiveSizedBox(context: context, percentageOfHeight: .015)
+          ],
+        ),
+
         Container(
             width: width(context) * .9,
             child: Row(

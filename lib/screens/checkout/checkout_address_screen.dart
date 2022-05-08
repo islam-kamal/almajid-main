@@ -16,6 +16,7 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/Bloc/ShippmentAddress_Bloc/shippment_address_bloc.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
@@ -46,7 +47,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   }
   List header_item = [translator.activeLanguageCode == 'ar'? 'اختيار المدينة' : 'Chosse City'];
   List<Item>? _data;
-  Future<List<CityModel>>? cities_list;
+  late Future<List<CityModel>?> cities_list;
 //--------------------------------------------------------------
 
   TextEditingController city_controller = TextEditingController();
@@ -65,12 +66,12 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
   var frist_name,last_name,phone,street,Neighbourhood, addres_city_name,address_city_id;
 
-  Future<List<AddressModel>>? all_addresses;
+  late Future<List<AddressModel>?> all_addresses;
   @override
   void initState() {
     StaticData.vistor_value == 'visitor' ? null :
-    all_addresses = shipmentAddressRepository.get_all_saved_addresses(context: context) as Future<List<AddressModel>>?;
-    cities_list= countriesRepository.get_cities(context: context) as Future<List<CityModel>>?;
+    all_addresses = shipmentAddressRepository.get_all_saved_addresses(context: context) as Future<List<AddressModel>?>;
+    cities_list= countriesRepository.get_cities(context: context) as Future<List<CityModel>?>;
     get_frist_city();
     _data = generateItems(1);
 
@@ -83,8 +84,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   }
 
   void get_frist_city()async{
-    await cities_list!.then((value){
-      _currentIndex=  value[1].value;
+    await cities_list.then((value){
+      _currentIndex=  value![1].value;
 
     });
 
@@ -263,21 +264,21 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                    });
                       }
                       else if (state.indicator == 'AddClientAdressEvent'){
-                        all_addresses = shipmentAddressRepository.get_all_saved_addresses(
+                        all_addresses = (shipmentAddressRepository.get_all_saved_addresses(
                             context: context).whenComplete((){
                           setState(() {
                             add_new_address_status = false;
                           });
-                        }) as Future<List<AddressModel>>?;
+                        }) as Future<List<AddressModel>?>);
 
                       }
                       else if (state.indicator == 'EditClientAdressEvent'){
-                        all_addresses = shipmentAddressRepository.get_all_saved_addresses(
+                        all_addresses = (shipmentAddressRepository.get_all_saved_addresses(
                             context: context).whenComplete((){
                           setState(() {
                             edit_address_status = false;
                           });
-                        }) as Future<List<AddressModel>>?;
+                        }) as Future<List<AddressModel>?>);
 
                       }
                       else {
@@ -529,7 +530,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
               },
               body:Container(
                   height: MediaQuery.of(context).size.width / 3,
-                  child: FutureBuilder<List<CityModel>>(
+                  child: FutureBuilder<List<CityModel>?>(
                     future: cities_list,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
@@ -839,8 +840,10 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             child: Directionality(
               textDirection:  TextDirection.ltr ,
               child: IntlPhoneField(
+                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
                   hintText:hint ,
+
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(3),
                       borderSide: BorderSide(color: greyColor)),
@@ -1155,7 +1158,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
     return delete_address_status ?  SpinKitFadingCube(
       color: Theme.of(context).primaryColor,
       size: 30.0,
-    ) : FutureBuilder<List<AddressModel>>(
+    ) : FutureBuilder<List<AddressModel>?>(
       future: all_addresses,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
@@ -1394,7 +1397,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
         setState(() {
           delete_address_status = false;
         });
-      }) as Future<List<AddressModel>>?;
+      }) as Future<List<AddressModel>?>;
     } else {
     }
   }

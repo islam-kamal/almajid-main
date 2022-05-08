@@ -1,22 +1,18 @@
 
 import 'package:almajidoud/Bloc/Authentication_Bloc/SignupBloc/sign_up_bloc.dart';
 import 'package:almajidoud/Model/AuthenticationModel/authentication_model.dart';
-import 'package:almajidoud/custom_widgets/custom_animated_push_navigation.dart';
-import 'package:almajidoud/custom_widgets/flushbar_widget.dart';
+
 import 'package:almajidoud/screens/auth/widgets/already_have_an_account.dart';
-import 'package:almajidoud/screens/auth/widgets/phone_textfield.dart';
 
 import 'package:almajidoud/screens/auth/widgets/top_auth_buttons.dart';
 import 'package:almajidoud/screens/auth/widgets/top_header.dart';
-import 'package:almajidoud/screens/home/home_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/utils/static_data.dart';
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:country_list_pick/country_list_pick.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:almajidoud/custom_widgets/stagger_animation.dart';
 class SignUpScreen extends StatefulWidget {
   @override
@@ -80,7 +76,6 @@ class _SignUpScreenState extends State<SignUpScreen>
       body:  BlocListener<SignUpBloc, AppState>(
         bloc: signUpBloc,
         listener: (context, state) {
-      var data = state.model as AuthenticationModel;
       if (state is Loading) {
         _playAnimation();
       } else if (state is ErrorLoading) {
@@ -369,7 +364,10 @@ class _SignUpScreenState extends State<SignUpScreen>
                   children: [
                     Expanded(
                         child: TextFormField(
+                            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                             decoration: InputDecoration(
+
+
                               hintText: translator.translate("Phone"),
                               errorText: snapshot.error.toString(),
                               contentPadding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),

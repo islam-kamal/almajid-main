@@ -70,7 +70,6 @@ class CartRepository {
         "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/quote/is_active/"
         "${StaticData.vistor_value == 'visitor' ? await sharedPreferenceManager.readString(CachingKey.GUEST_CART_QUOTE)
         : await sharedPreferenceManager.readString(CachingKey.CART_QUOTE)}/${StaticData.vistor_value == 'visitor' ? 1 : 0}";
-print("url : $url");
     final check_quote_response = await dio.get(url,
         options: Options(
           headers: {

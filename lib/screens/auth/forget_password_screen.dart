@@ -8,6 +8,7 @@ import 'package:almajidoud/utils/static_data.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:country_list_pick/country_list_pick.dart';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ForgetPasswordScreen extends StatefulWidget{
@@ -69,7 +70,6 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
           body:  BlocListener<ForgetPasswordBloc, AppState>(
           bloc: forgetPassword_bloc,
         listener: (context, state) {
-      var data = state.model as AuthenticationModel;
       if (state is Loading) {
         _playAnimation();
       }
@@ -204,6 +204,8 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> with TickerP
                     ),
                     Expanded(
                         child: TextFormField(
+                            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+
                             decoration: InputDecoration(
                               hintText: translator.translate("Phone"),
                               errorText: snapshot.error.toString(),

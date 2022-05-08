@@ -145,8 +145,8 @@ BuildContext? context;
 var product_quantity ;
 var product_sku;
 var indictor;
-
-AddProductToCartEvent({this.context,this.product_sku,this.product_quantity,this.indictor});
+var base_product_quantity;
+AddProductToCartEvent({this.context,this.product_sku,this.product_quantity,this.indictor,this.base_product_quantity});
 }
 
 class GetCartDetailsEvent extends AppEvent{

@@ -39,6 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
         value) {
       StaticData.wishlist_items = value;
     });
+
   }
   @override
   void didChangeDependencies() async{
@@ -116,7 +117,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
           customAnimatedPushNavigation(context, CustomCircleNavigationBar(page_index: 2,));
         }else{
-          sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, "sa");
+        //  sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, "sa");
          // await search_bloc.add(SearchProductsEvent(search_text: ''));
 
            search_bloc.add(SearchProductsEvent(search_text: ''));
