@@ -23,7 +23,7 @@ class ReviewsRepository {
               }
             ],
             "review_entity": "product",
-            "review_status": 1,
+            "review_status": 2,
             "entity_pk_value": product_id
           }
         }

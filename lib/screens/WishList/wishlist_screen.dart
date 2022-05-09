@@ -158,9 +158,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                               .toString()
                                                               .substring(
                                                                   0, 10));
-                                                    } else if (element
-                                                            .attributeCode ==
-                                                        "special_to_date") {
+                                                    } else if (element.attributeCode == "special_to_date") {
                                                       endDate = DateTime.parse(
                                                           element.value
                                                               .toString()
@@ -178,13 +176,18 @@ class _WishListScreenState extends State<WishListScreen> {
                                                           element.value;
                                                     }
                                                   });
-                                                  if (startDate == null || endDate == null) {
-                                                    new_price = minimal_price;
-                                                    if(double.parse(minimal_price) < double.parse(
-                                                        snapshot.data!.items![index].product!.price.toString()))
-                                                      percentage = (1 - (double.parse(minimal_price)  /  snapshot.data!.items![index].product!.price) )* 100;
+                                                  if(startDate ==null || endDate ==null ){
+                                                    if(double.parse(minimal_price) == double.parse(snapshot.data!.items![index].product!.price.toString())){
+                                                      new_price = null;
+                                                    }else{
+                                                      new_price = minimal_price;
 
-                                                  } else {
+                                                    }
+
+                                                    if(double.parse(minimal_price) < double.parse(snapshot.data!.items![index].product!.price.toString()))
+                                                      percentage = (1 - (double.parse(minimal_price)  / snapshot.data!.items![index].product!.price) )* 100;
+
+                                                  }else {
                                                     if (StaticData.isCurrentDateInRange(startDate!, endDate!) &&
                                                         double.parse(special_price!) <=double.parse(minimal_price) &&
                                                         double.parse(special_price!).toStringAsFixed(2) !=

@@ -13,7 +13,7 @@ reviewsHeader({BuildContext? context, String? title , var product_id}) {
             ? 2 * height(context) * .002
             : height(context) * .002),
     width: width(context),
-    color: mainColor,
+    color: whiteColor,
     height: isLandscape(context)
         ? 2 * height(context) * .12
         : height(context) * .08,
@@ -28,13 +28,13 @@ reviewsHeader({BuildContext? context, String? title , var product_id}) {
           },
           child: Icon(
             Icons.navigate_before,
-            color: whiteColor,
+            color: mainColor,
             size: 30,
           ),
         ),
         customDescriptionText(
             context: context,
-            textColor: whiteColor,
+            textColor: mainColor,
             text: "Reviews",
             percentageOfHeight: .025),
         GestureDetector(
@@ -47,9 +47,9 @@ reviewsHeader({BuildContext? context, String? title , var product_id}) {
               height: 30,
               width: 30,
               decoration: BoxDecoration(
-                  border: Border.all(color: whiteColor, width: 2),
+                  border: Border.all(color: mainColor, width: 2),
                   shape: BoxShape.circle),
-              child: Center(child: Icon(Icons.add, color: whiteColor)),
+              child: Center(child: Icon(Icons.add, color: mainColor)),
             ) )
       ],
     ),

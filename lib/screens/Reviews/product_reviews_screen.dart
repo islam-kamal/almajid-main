@@ -159,18 +159,14 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
                                               : ListView.builder(
                                                   itemCount:
                                                       snapshot.data!.length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return singleRatingWidget(
+                                                  itemBuilder: (context, index) {
+                                                    return snapshot.data![index].reviewType != 1  ? Container()
+                                                     : singleRatingWidget(
                                                         context: context,
-                                                        nickname: snapshot
-                                                            .data![index]
-                                                            .nickname,
-                                                        detail: snapshot
-                                                            .data![index].detail,
-                                                        createdAt: snapshot
-                                                            .data![index]
-                                                            .createdAt);
+                                                        nickname: snapshot.data![index].nickname,
+                                                        detail: snapshot.data![index].detail,
+                                                        createdAt: snapshot.data![index].createdAt
+                                                    );
                                                   },
                                                 ),
                                         ),

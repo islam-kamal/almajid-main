@@ -107,8 +107,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                     }
 
                   });
-                  if(startDate ==null || endDate ==null ) {
-                    new_price = minimal_price;
+                  if(startDate ==null || endDate ==null ){
+                    if(double.parse(minimal_price) == double.parse(snapshot.data![0].price.toString())){
+                      new_price = null;
+                    }else{
+                      new_price = minimal_price;
+
+                    }
+
                     if(double.parse(minimal_price) < double.parse(snapshot.data![0].price.toString()))
                       percentage = (1 - (double.parse(minimal_price)  / snapshot.data![0].price) )* 100;
 

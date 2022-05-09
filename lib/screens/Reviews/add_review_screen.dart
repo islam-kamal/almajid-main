@@ -67,15 +67,37 @@ class _AddReviewScreenState extends State<AddReviewScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      height: isLandscape(context) ? 2 * height(context) : height(context),
-      child: BlocListener<ReviewsBloc, AppState>(
+      appBar: AppBar(
+        title:   customDescriptionText(
+            context: context,
+            textColor: mainColor,
+            text: "Add Review",
+            percentageOfHeight: .025),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: whiteColor,
+        leading:      GestureDetector(
+          onTap: () {
+            customAnimatedPushNavigation(context, ProductReviewsScreen(
+              product_id: widget.product_id,
+            ));
+          },
+          child: Icon(
+            Icons.navigate_before,
+            color: mainColor,
+            size: 30,
+          ),
+        ),
+
+      ),
+        body:  BlocListener<ReviewsBloc, AppState>(
           bloc: reviewsBloc,
           listener: (context, state) {
             if (state is Loading) {
               if(state.indicator ==  "CreateReview")
               _playAnimation();
-            } else if (state is ErrorLoading) {
+            }
+            else if (state is ErrorLoading) {
               if(state.indicator ==  "CreateReview"){
                 var data = state.model as ProductReviewModel;
                 _stopAnimation();
@@ -117,7 +139,85 @@ class _AddReviewScreenState extends State<AddReviewScreen>
           },
           child: Directionality(
             textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
-            child: SingleChildScrollView(
+            child:SingleChildScrollView(
+              child: Column(
+                children: [
+                  responsiveSizedBox(
+                      context: context,
+                      percentageOfHeight: .02),
+                  textRateYourExperience(context: context),
+                  responsiveSizedBox(
+                      context: context,
+                      percentageOfHeight: .05),
+                  reviewText(context: context),
+                  responsiveSizedBox(
+                      context: context,
+                      percentageOfHeight: .01),
+                  singleReviewItem(
+                      context: context,
+                      rating: ratingSmell,
+                      text: translator.translate("Stability")),
+                  responsiveSizedBox(
+                      context: context,
+                      percentageOfHeight: .01),
+                  singleReviewItem(
+                      context: context,
+                      rating: ratingLongLast,
+                      text: translator.translate("Smell")),
+                  responsiveSizedBox(
+                      context: context,
+                      percentageOfHeight: .01),
+                  singleReviewItem(
+                      context: context,
+                      rating: ratingPrice,
+                      text: translator.translate("Price")),
+                  responsiveSizedBox(
+                      context: context,
+                      percentageOfHeight: .05),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        nickNameTextField(
+                          context: context,
+                        ),
+                        responsiveSizedBox(
+                            context: context,
+                            percentageOfHeight: .01),
+                        summaryTextField(context: context),
+                        responsiveSizedBox(
+                            context: context,
+                            percentageOfHeight: .01),
+                        reviewTextField(
+                          context: context,
+                        ),
+                      ],
+                    ),
+                  ),
+                  responsiveSizedBox(
+                      context: context,
+                      percentageOfHeight: .03),
+                  StaggerAnimation(
+                    titleButton: "Submit",
+                    buttonController: _loginButtonController,
+                    btn_width: width(context) * .7,
+                    onTap: () {
+                      if (_formKey.currentState!.validate()) {
+                        reviewsBloc.add(CreateReviewEvent(
+                            product_id: widget.product_id,
+                            nickname: nickname.text,
+                            title: summary.text,
+                            detail: review.text));
+                      } else {
+                      }
+                    },
+                  )
+
+                ],
+              ),
+            ),
+
+            /*SingleChildScrollView(
               child: Column(
                 children: [
                   addReviewsHeader(context: context,
@@ -216,10 +316,10 @@ class _AddReviewScreenState extends State<AddReviewScreen>
                   ),
                 ],
               ),
-            ),
+            ),*/
           )
       ),
-    ));
+    );
   }
 
   addReviewsHeader({BuildContext? context , var product_id}) {
@@ -341,7 +441,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
         decoration: InputDecoration(
           hintText: translator.translate("nickName"),
           hintStyle: TextStyle(
-              color: greyColor.withOpacity(.5),
+              color: mainColor,
               fontWeight: FontWeight.bold,
               fontSize: isLandscape(context)
                   ? 2 * height(context) * .018
@@ -383,7 +483,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
         decoration: InputDecoration(
           hintText: translator.translate("summary"),
           hintStyle: TextStyle(
-              color: greyColor.withOpacity(.5),
+              color: mainColor,
               fontWeight: FontWeight.bold,
               fontSize: isLandscape(context)
                   ? 2 * height(context) * .018
@@ -425,7 +525,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
         decoration: InputDecoration(
           hintText: translator.translate("Review"),
           hintStyle: TextStyle(
-              color: greyColor.withOpacity(.5),
+              color: mainColor,
               fontWeight: FontWeight.bold,
               fontSize: isLandscape(context)
                   ? 2 * height(context) * .018
