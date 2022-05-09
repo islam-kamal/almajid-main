@@ -31,8 +31,7 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-
-    return Container(
+   return Container(
       child: BlocBuilder(
         bloc: categoryBloc,
         builder: (context, state) {
@@ -57,7 +56,9 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                       return Container();
                     } else {
                       _controller = TabController(length: snapshot.data!.childrenData!.length, vsync: this);
-
+                     if (widget.category_index!=null){
+                       _controller!.animateTo(widget.category_index);
+                     }
                       return Container(
                           width: width(context),
                           height: isLandscape(context) ? 2 * height(context) * .04: height(context) * .04,
@@ -69,7 +70,7 @@ class categoriesTapSate extends State<CategoriesTap> with TickerProviderStateMix
                             // indicatorColor: mainColor ,
 
                             onTap: (index){
-
+_controller!.animateTo(index);
                               customAnimatedPushNavigation(
                                   context, CategoryProductsScreen(
                                 category_id: snapshot.data!.childrenData![index].id.toString(), //item.id.toString(),

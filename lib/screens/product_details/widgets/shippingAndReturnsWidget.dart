@@ -13,10 +13,11 @@ shippingAndReturnsWidget({BuildContext? context}) {
           child: Scrollbar(
             isAlwaysShown: true,
             showTrackOnHover: true,
-            thickness: 15,
+            thickness: 10,
             radius: Radius.circular(20),
             interactive: true,
-            scrollbarOrientation: ScrollbarOrientation.left,
+           // scrollbarOrientation: ScrollbarOrientation.left,
+
             child: ListView.builder(
               itemBuilder:(context, index) {
                 return Material(

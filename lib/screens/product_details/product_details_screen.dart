@@ -298,7 +298,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             //divider(context: context),
                             responsiveSizedBox(context: context, percentageOfHeight: .03),
 
-                            double.parse(new_price) >=99 ? Container(
+                            double.parse(new_price==null?snapshot.data![0].price.toString() : new_price) >=99 ? Container(
                               padding: EdgeInsets.symmetric(vertical: 10,horizontal:10),
                               child:Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -312,7 +312,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
 
                                     ),
                                     SizedBox(width: 5,),
-                                    Text(" ${(double.parse(new_price) /3).toStringAsFixed(2)} ${MyApp.country_currency}   " + translator.translate("without interest with") ),
+                                    Text(" ${(double.parse(new_price==null?snapshot.data![0].price.toString() : new_price) /3).toStringAsFixed(2)} ${MyApp.country_currency}   " + translator.translate("without interest with") ),
 
 
                                   ],
