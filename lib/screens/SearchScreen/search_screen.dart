@@ -130,6 +130,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 }
                                               });
                                               if(startDate ==null || endDate ==null ){
+
                                                 if(double.parse(minimal_price) == double.parse(snapshot.data!.items![index].price.toString())){
                                                   new_price = null;
                                                 }else{
@@ -301,7 +302,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                             ),
 
                                                                                 RatingBar.builder(
-                                                                                  initialRating:  5.0,
+                                                                                  initialRating: snapshot.data!.items![index].extensionAttributes!.reviews!.isEmpty ? 0.0 : 5.0,
                                                                                   minRating: 5,
                                                                                   direction: Axis.horizontal,
                                                                                   allowHalfRating: true,

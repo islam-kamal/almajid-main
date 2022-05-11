@@ -55,13 +55,13 @@ priceAndRatingRow({BuildContext? context , var new_price ,var old_price, var min
 
 
         RatingBar.builder(
-          initialRating:  5.0,
+          initialRating: review_status! ?  5.0 : 0.0,
           minRating: 5,
           direction: Axis.horizontal,
           allowHalfRating: true,
           itemCount: 5,
           itemSize: 15.0,
-          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+          itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
           itemBuilder: (context, _) => Icon(
             Icons.star,
             color: Colors.amber,

@@ -6,6 +6,7 @@ import 'package:almajidoud/utils/file_export.dart';
 import 'package:almajidoud/screens/Reviews/thanks_for_review_screen.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 
 class AddReviewScreen extends StatefulWidget {
@@ -402,9 +403,27 @@ class _AddReviewScreenState extends State<AddReviewScreen>
               percentageOfHeight: .025,
               fontWeight: FontWeight.bold),
           SizedBox(width: 5),
-          SmoothStarRating(
+          RatingBar.builder(
+            initialRating:  rating!,
+          //  minRating: 5,
+            direction: Axis.horizontal,
+            allowHalfRating: true,
+            itemCount: 5,
+            itemSize: 30.0,
+            itemBuilder: (context, _) => Icon(
+              Icons.star,
+              color: Colors.amber,
+            ),
+            onRatingUpdate: (rating){
+
+                rating = rating;
+
+
+            },
+          ),
+     /*     SmoothStarRating(
             rating: rating!,
-           // isReadOnly: false,
+            //isReadOnly: false,
             size: height(context) * .045,
             color: Colors.orangeAccent,
             borderColor: Colors.orangeAccent,
@@ -420,7 +439,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
               });
 
             },
-          ),
+          ),*/
         ],
       ),
     );

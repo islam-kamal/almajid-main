@@ -55,9 +55,6 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
     });
     widget.guestShipmentAddressModel!.paymentMethods?.removeWhere((e) => toRemove_apple_pay.contains(e));
 
-    /*_currentIndex = widget.guestShipmentAddressModel.paymentMethods[0].code;
-    sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, _currentIndex);
-    payment_method_name = widget.guestShipmentAddressModel.paymentMethods[0].title;*/
 
 
     border = OutlineInputBorder(
@@ -262,11 +259,8 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                       flex: 1,
                       child: GestureDetector(
                         onTap: () {
-                          if ( /*_currentIndex == "tap" ||*/
-                          _currentIndex == "stc_pay" ||
-                              _currentIndex == 'tamara_pay_by_instalments' ||
-                              _currentIndex == 'cashondelivery' ||
-                              _currentIndex == 'mestores_applepay') {
+                          if (_currentIndex == "stc_pay" || _currentIndex == 'tamara_pay_by_instalments' ||
+                              _currentIndex == 'cashondelivery' || _currentIndex == 'mestores_applepay') {
                             if(_currentIndex == 'mestores_applepay' && Platform.isAndroid){
                               errorDialog(
                                 context: context,

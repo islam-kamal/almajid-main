@@ -138,7 +138,12 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
 
                               ),
                               Expanded(
-                                  child: ListView.builder(
+                                  child:  _posts.length == 0 ? Center(
+                                    child: no_data_widget(
+                                        context: context,
+                                        message: translator.translate( "No Products Yet !")
+                                    ),
+                                  ):  ListView.builder(
                                       controller: _controller,
                                       shrinkWrap: true,
                                       itemCount: _posts.length,
@@ -169,10 +174,10 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                               if (_hasNextPage == false)
                                 Container(
                                   padding: const EdgeInsets.only(top: 20, bottom: 100),
-                                  color: mainColor,
+                         /*         color: mainColor,
                                   child: Center(
                                     child: Text(translator.translate(  "You have fetched all of the content"),style: TextStyle(color: whiteColor),),
-                                  ),
+                                  ),*/
                                 ),
                             ],
                           ),

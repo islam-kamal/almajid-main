@@ -333,18 +333,9 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                                   ),
                                                                                           ],
                                                                                         ),
-                                                                                   /*     RatingBar.readOnly(
-                                                                                          initialRating: 5.0,
-                                                                                          maxRating: 5,
-                                                                                          isHalfAllowed: true,
-                                                                                          halfFilledIcon: Icons.star_half,
-                                                                                          filledIcon: Icons.star,
-                                                                                          emptyIcon: Icons.star_border,
-                                                                                          size: StaticData.get_width(context) * 0.03,
-                                                                                          filledColor: (snapshot.data!.items![index].product!.visibility.toDouble() >= 1) ? Colors.yellow.shade700 : Colors.yellow.shade700,
-                                                                                        ),*/
+
                                                                                         RatingBar.builder(
-                                                                                          initialRating:  5.0,
+                                                                                          initialRating: 0.0 , // here we should check if product has reviews or not
                                                                                           minRating: 5,
                                                                                           direction: Axis.horizontal,
                                                                                           allowHalfRating: true,

@@ -64,7 +64,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
   bool isLoading = false;
   bool edit_address_status = false;
   bool add_new_address_status = false;
-
+  bool next_button_loading = false;
   var frist_name,last_name,phone,street,Neighbourhood, addres_city_name,address_city_id;
 
   late Future<List<AddressModel>?> all_addresses;
@@ -179,6 +179,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                         )..show(_drawerKey.currentState!.context);
                       }else{
                         if(StaticData.vistor_value != 'visitor'){
+                          setState(() {
+                            next_button_loading = false;
+                          });
                           var data = state.model as AddressModel;
                           Flushbar(
                             messageText: Row(
@@ -209,6 +212,9 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                             duration: Duration(seconds: 6),
                           )..show(_drawerKey.currentState!.context);
                         }else{
+                          setState(() {
+                            next_button_loading = false;
+                          });
                           var data = state.model as GuestShipmentAddressModel;
                           Flushbar(
                             messageText: Row(
@@ -269,6 +275,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                             context: context).whenComplete((){
                           setState(() {
                             add_new_address_status = false;
+                            next_button_loading = false;
+
                           });
                         }) as Future<List<AddressModel>?>);
 
@@ -278,17 +286,27 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                             context: context).whenComplete((){
                           setState(() {
                             edit_address_status = false;
+                            next_button_loading = false;
+
                           });
                         }) as Future<List<AddressModel>?>);
 
                       }
                       else {
                         if(state.indicator == "GetAllAddressesEvent"){
+                          setState(() {
+                            edit_address_status = false;
+                            next_button_loading = false;
+
+                          });
                         }else{
                           var data = state.model as GuestShipmentAddressModel;
                           customAnimatedPushNavigation(context,CheckoutPaymentScreen(
                             guestShipmentAddressModel: data,
                           ));
+                          setState(() {
+                            next_button_loading = false;
+                          });
                         }
                         }
 
@@ -341,7 +359,13 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
                         Expanded(
                             flex: 1,
-                            child:    addressNextButton(context: context)
+                            child:  next_button_loading ?Center(
+                                child: SpinKitFadingCube(
+                                  color: Theme.of(context).primaryColor,
+                                  size: width(context) * 0.1,
+                                ),
+
+                            ) :  addressNextButton(context: context)
                         )
                       ],
                     ),
@@ -859,15 +883,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
                 initialCountryCode: MyApp.app_location == 'sa' ?'SA' : MyApp.app_location == 'kw' ? 'KW' : 'AE',
                 onChanged: (phone) {
-                  print("phone : $phone");
-                  print("phone number: ${phone.number}");
-                  print("phone countryCode: ${phone.countryCode}");
-                  print("phone completeNumber: ${phone.completeNumber}");
-                  print("phone countryISOCode: ${phone.countryISOCode}");
-
                     shipmentAddressBloc.phone_change(phone.completeNumber);
-
-
                 },
 
                 initialValue: initialValue,
@@ -991,6 +1007,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
 
   addressNextButton({BuildContext? context}) {
+
     return StaggerAnimation(
       titleButton: add_new_address_status ?translator.translate( "Save")
           : edit_address_status ? translator.translate( "Update" )
@@ -1000,8 +1017,11 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
       checkout_color: true,
         product_details_page :true,
       onTap: () {
+        setState(() {
+          next_button_loading = true;
+        });
         //used when i select one address from list of addresses
-        if(selected_address_id != null){
+        if(selected_address_id != null && !edit_address_status && !add_new_address_status){
           //use this to show address in CheckoutSummaryScreen
           StaticData.order_address = addres_city_name + " , "
           + "${shipmentAddressBloc.Neighbourhood_controller.value == null
@@ -1124,7 +1144,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                           textColor: mainColor,
                           text: "Address",
                           percentageOfHeight: .025),
-                      StaticData.vistor_value == 'visitor' ?  SizedBox():      GestureDetector(
+                      StaticData.vistor_value == 'visitor' ?  SizedBox():   edit_address_status ?Container() :   GestureDetector(
                         onTap: () {
                           setState(() {
                             add_new_address_status = true;

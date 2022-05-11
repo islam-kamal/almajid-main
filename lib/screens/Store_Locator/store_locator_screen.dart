@@ -91,6 +91,8 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
                                   return snapshot.data![index] == null
                                       ? Container()
                                       :  snapshot.data![index].city.toString().toLowerCase().contains(search_text)
+                                      || snapshot.data![index].name.toString().toLowerCase().contains(search_text)
+                                      || snapshot.data![index].address.toString().toLowerCase().contains(search_text)
                                       ? Column(
                                     children: [
                                       Padding(

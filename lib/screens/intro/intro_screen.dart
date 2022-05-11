@@ -24,65 +24,6 @@ class IntroScreenState extends State<IntroScreen> {
 
   @override
   void initState() {
-/*
-    slides.add(
-      new Slide(
-        styleDescription: TextStyle(  color: whiteColor),
-        styleTitle:TextStyle(color: whiteColor) ,
-        title: translator.translate(""),
-        description: translator.translate(""),
-        backgroundImage:"assets/images/onboard1.png",
-        pathImage: "assets/icons/intro1.png",
-        heightImage:.000100 ,
-        widthImage: .000000000000500 ,
-        backgroundColor: whiteColor,
-      ),
-    );
-    slides.add(
-      new Slide(
-        styleDescription: TextStyle(  color: whiteColor),
-        styleTitle:TextStyle(  color: whiteColor) ,
-        title: translator.translate(""),
-        description:  translator.translate(""),
-        backgroundImage:"assets/images/onboard2.png",
-        pathImage: "assets/icons/intro2.png",
-        heightImage:.000100 ,
-        widthImage: .000000000000500 ,
-        backgroundColor: Color(0xff203152),
-      ),
-    );
-    slides.add(
-      new Slide(
-        styleDescription: TextStyle(  color: whiteColor ),
-        styleTitle:TextStyle(  color: whiteColor) ,
-        title: translator.translate(""),
-        description: translator.translate(""),
-        marginDescription: EdgeInsets.symmetric(horizontal: 50),
-        widgetDescription: InkWell(
-          onTap: (){
-            onDonePress();
-          },
-          child: Padding(
-            padding: EdgeInsets.only(top: MediaQuery.of(context).size.width ),
-            child:  Container(
-              padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-              alignment: Alignment.bottomCenter,
-              decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.60),
-                  borderRadius: BorderRadius.circular(10)
-              ),
-              child: Text("Shopping Now".tr(),style: TextStyle(color: blackColor,fontWeight: FontWeight.bold,fontSize: 18),),
-            ),
-          ),
-        ),
-
-        backgroundImage:"assets/images/onboard3.png",
-        pathImage: "assets/icons/intro3.png",
-        heightImage:.000100 ,
-        widthImage: .000000000000500 ,
-       // backgroundColor: Color(0xff9932CC),
-      ),
-    );*/
     super.initState();
   }
 

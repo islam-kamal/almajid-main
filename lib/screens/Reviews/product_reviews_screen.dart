@@ -62,9 +62,13 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
                                           ? 2 * height(context) * .88
                                           : height(context) * .88,
                                       child: NestedScrollView(
-                                        headerSliverBuilder:
-                                            (BuildContext context,
-                                                bool innerBoxIsScrolled) {
+                                        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                                          int approved_reviews = 0;
+                                          snapshot.data!.forEach((element) {
+                                            if(element.reviewType  == 1){
+                                              approved_reviews++;
+                                            }
+                                          });
                                           return <Widget>[
                                             SliverAppBar(
                                               automaticallyImplyLeading: false,
@@ -99,7 +103,7 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
                                                     customDescriptionText(
                                                         context: context,
                                                         percentageOfHeight: .05,
-                                                        text: snapshot.data!.length >
+                                                        text: approved_reviews >
                                                                 0
                                                             ? "5.0"
                                                             : "0.0",
@@ -111,9 +115,7 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
                                                             .01),
 
                                                     SmoothStarRating(
-                                                      rating:
-                                                          snapshot.data!.length >
-                                                                  0
+                                                      rating: approved_reviews > 0
                                                               ? 5.0
                                                               : 0.0,
                                                      // isReadOnly: true,
@@ -160,7 +162,9 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
                                                   itemCount:
                                                       snapshot.data!.length,
                                                   itemBuilder: (context, index) {
-                                                    return snapshot.data![index].reviewType != 1  ? Container()
+                                                    return snapshot.data![index].reviewType != 1  ? no_data_widget(
+                                                        context: context,
+                                                        message: translator.translate("No Reviews Yet!"))
                                                      : singleRatingWidget(
                                                         context: context,
                                                         nickname: snapshot.data![index].nickname,

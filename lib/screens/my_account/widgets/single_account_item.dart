@@ -5,7 +5,7 @@ singleAccountItem({BuildContext? context, String? text, String? iconPath,
   return Container(
     padding: EdgeInsets.symmetric(vertical: 2),
     width: width(context) * .8,
-    child: GestureDetector(
+    child: InkWell(
       onTap: onTap,
       child: Column(
         children: [

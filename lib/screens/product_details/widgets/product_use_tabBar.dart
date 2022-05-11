@@ -21,7 +21,7 @@ class ProductUseTabBar extends StatelessWidget{
               return <Widget>[
                 new SliverAppBar(
                   pinned: true,
-                  floating: true,
+                  floating: false,
                   automaticallyImplyLeading: false,
                   backgroundColor: blackColor,
                   title: TabBar(
@@ -40,6 +40,7 @@ class ProductUseTabBar extends StatelessWidget{
               ];
             },
             body: TabBarView(
+              physics: ScrollPhysics(),
               children: <Widget>[
                 descriptionAndShareRow(
                     context: context,

@@ -219,24 +219,9 @@ class singleCategoryProductItem extends StatelessWidget {
                                                 ),
                                               ],
                                             ),),
-/*
-                                            RatingBar.readOnly(
-                                              initialRating: 5.0,
-                                              maxRating: 5,
-                                              isHalfAllowed: true,
-                                              halfFilledIcon: Icons.star_half,
-                                              filledIcon: Icons.star,
-                                              emptyIcon: Icons.star_border,
-                                              size:
-                                              StaticData.get_width(context) *
-                                                  0.03,
-                                              filledColor:
-                                              product!.extensionAttributes!.reviews!.isEmpty    ? greyColor
-                                                  : Colors.yellow.shade700,
-                                            ),*/
 
                                             RatingBar.builder(
-                                              initialRating:  5.0,
+                                              initialRating: product!.extensionAttributes!.reviews!.isEmpty ? 0.0 : 5.0,
                                               minRating: 5,
                                               direction: Axis.horizontal,
                                               allowHalfRating: true,
