@@ -216,9 +216,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                       customDescriptionText(
                                                           context: context,
                                                           textColor: mainColor,
-                                                          text: StaticData.app_promo.status! ?
-                                                              MyApp.app_langauge == 'ar' ? StaticData.app_promo.arabicLabel : StaticData.app_promo.englishLabel
-                                                          : "Discount",
+                                                          text: "Discount",
                                                           percentageOfHeight: .018),
                                                       Spacer(),
                                                       customDescriptionText(

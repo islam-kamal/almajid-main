@@ -190,12 +190,11 @@ class singleCategoryProductItem extends StatelessWidget {
                                                       children: [
                                                         MyText(
                                                           text: "${
-                                                              StaticData.price_after_promo(
-                                                                price:new_price == null ?
+                                                            new_price == null ?
                                                           double.parse(product!.price.toString()) <  double.parse(minimal_price) ?
                                                           product!.price.toStringAsFixed(2)  :
                                                           double.parse(minimal_price).toStringAsFixed(2)
-                                                              : double.parse(new_price))} ",                                                          size: StaticData.get_height(context) * .017,
+                                                              : double.parse(new_price)} ",                                                          size: StaticData.get_height(context) * .017,
                                                           color: blackColor,
                                                           maxLines: 2,
                                                           weight: FontWeight.bold,
@@ -212,7 +211,7 @@ class singleCategoryProductItem extends StatelessWidget {
                                                   ],
                                                 ),
                                                 SizedBox(width: width(context) * 0.02,),
-                                                new_price == null &&  StaticData.app_promo.status == false ?  Container()   :       Text(
+                                                new_price == null  ?  Container()   :       Text(
                                                   "${product!.price.toStringAsFixed(2)} ${MyApp.country_currency}",
                                                   style: TextStyle(
                                                       decoration: TextDecoration.lineThrough,

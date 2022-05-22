@@ -69,9 +69,7 @@ orderSummaryWidget({BuildContext? context ,   List<TotalSegments>? total_segment
               children: [
                 customDescriptionText(
                     context: context,
-                    text:StaticData.app_promo.status! ?
-                    MyApp.app_langauge == 'ar' ? StaticData.app_promo.arabicLabel : StaticData.app_promo.englishLabel
-                        : "Discount",
+                    text: "Discount",
                     textAlign: TextAlign.start,
                     percentageOfHeight: .020),
                 customDescriptionText(

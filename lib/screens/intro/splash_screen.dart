@@ -98,16 +98,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
       StaticData.apple_pay_activation = StaticData.data["apple-pay"];
 
-      //---------- app promo ---------------
-      StaticData.app_promo.startDate = StaticData.data["promo"]['start_date'];
-      StaticData.app_promo.endDate = StaticData.data["promo"]['end_date'];
-      StaticData.app_promo.englishLabel = StaticData.data["promo"]['english_label'];
-      StaticData.app_promo.arabicLabel = StaticData.data["promo"]['arabic_label'];
-      StaticData.app_promo.type = StaticData.data["promo"]['type'];
-      StaticData.app_promo.amount = StaticData.data["promo"]['amount'];
-      StaticData.app_promo.status = StaticData.isCurrentDateInRange(
-          DateTime.parse(StaticData.app_promo.startDate.toString().substring(0,10))
-          ,DateTime.parse(StaticData.app_promo.endDate.toString().substring(0,10)));
 
     });
 

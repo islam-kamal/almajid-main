@@ -315,9 +315,8 @@ class HomeListProductsState extends State<HomeListProducts>
                                                                   children: [
                                                                     MyText(
                                                                       text:
-                                                                          "${StaticData.price_after_promo(
-                                                                              price: new_price == null ?
-                                                                              double.parse(snapshot.data![index].price.toString()) < double.parse(minimal_price) ? snapshot.data![index].price.toStringAsFixed(2) : double.parse(minimal_price).toStringAsFixed(2) : double.parse(new_price))} ",
+                                                                          "${new_price == null ?
+                                                                              double.parse(snapshot.data![index].price.toString()) < double.parse(minimal_price) ? snapshot.data![index].price.toStringAsFixed(2) : double.parse(minimal_price).toStringAsFixed(2) : double.parse(new_price)} ",
                                                                       size: StaticData.get_height(
                                                                               context) *
                                                                           .017,
@@ -350,11 +349,7 @@ class HomeListProductsState extends State<HomeListProducts>
                                                                       context) *
                                                                   0.03,
                                                             ),
-                                                            new_price == null &&
-                                                                    StaticData
-                                                                            .app_promo
-                                                                            .status ==
-                                                                        false
+                                                            new_price == null
                                                                 ? Container()
                                                                 : Text(
                                                                     "${snapshot.data![index].price} ${MyApp.country_currency}",
@@ -453,37 +448,7 @@ class HomeListProductsState extends State<HomeListProducts>
 
                                       // ------------------ here ----------------------
                                       snapshot.data![index].extensionAttributes!.stockQty >= 1
-                                          ? StaticData.app_promo.status! ? Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                         Container(
-                                            width: width(context) * 0.1,
-                                            decoration: BoxDecoration(
-                                                color: greyColor,
-                                                borderRadius: BorderRadius.circular(5)),
-                                            child: Text(
-                                              "${StaticData.app_promo.amount.round()} %",
-                                              style: TextStyle(
-                                                  color: mainColor),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                          CustomWishList(
-                                            color: redColor,
-                                            product_id: snapshot
-                                                .data![index].id,
-                                            qty: snapshot
-                                                .data![index]
-                                                .extensionAttributes!
-                                                .stockItem!
-                                                .qty,
-                                            context: context,
-                                            screen:
-                                            CustomCircleNavigationBar(),
-                                          )
-                                        ],
-                                      )
-                                          : percentage == null || percentage == 0
+                                          ?  percentage == null || percentage == 0
                                               ? CustomWishList(
                                                   color: redColor,
                                                   product_id:

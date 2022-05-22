@@ -1,5 +1,4 @@
 import 'package:almajidoud/Model/ProductModel/product_model.dart';
-import 'package:almajidoud/Model/PromoModel/promo_model.dart';
 import 'package:almajidoud/Model/ShipmentAddressModel/client/address_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -45,7 +44,6 @@ class StaticData {
   static List<SliderImage> slider = [];
   static  var data ;
   static bool apple_pay_activation = false;
-  static Promo app_promo = Promo();
 
   static Map<String,dynamic>? staticBanner;
 
@@ -78,11 +76,7 @@ class StaticData {
     cartProductList.add(cartProductDetailsHelper);
   }
 
-  static String? price_after_promo({var price}){
 
-    var new_price = double.parse(price.toString()) - ((double.parse(price.toString()) * StaticData.app_promo.amount )/100);
-    return new_price.toString();
-  }
 
   static void Toast_Short_Message(String x){
     Fluttertoast.showToast(

@@ -306,10 +306,9 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                                   children: [
                                                                                                     MyText(
                                                                                                       text: "${
-                                                                                                          StaticData.price_after_promo(
-                                                                                                            price: new_price == null ?
+                                                                                                        new_price == null ?
                                                                                                             snapshot.data!.items![index].product!.price.toStringAsFixed(2)
-                                                                                                                : double.parse(new_price))} ",
+                                                                                                                : double.parse(new_price)} ",
                                                                                                       size: StaticData.get_height(context) * .017,
                                                                                                       color: blackColor,
                                                                                                       maxLines: 2,
@@ -329,7 +328,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                             SizedBox(
                                                                                               width: width(context) * 0.03,
                                                                                             ),
-                                                                                            new_price == null &&  StaticData.app_promo.status == false
+                                                                                            new_price == null
                                                                                                 ? Container()
                                                                                                 : Text(
                                                                                                     "${snapshot.data!.items![index].product!.price} ${MyApp.country_currency}",

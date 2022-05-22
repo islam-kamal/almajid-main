@@ -215,16 +215,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                             ),
                                                                                             fit: BoxFit.fill)),
                                                                                   ),
-                                                                                  StaticData.app_promo.status! ? Container(
-                                                                                    width: width(context) * 0.15,
-                                                                                    decoration: BoxDecoration(
-                                                                                        color: greyColor,
-                                                                                        borderRadius: BorderRadius.circular(5)
-                                                                                    ),
-
-                                                                                    child: Text("${ StaticData.app_promo.amount.round()} %",style: TextStyle(color: mainColor),textAlign: TextAlign.center,),
-                                                                                  )
-                                                                                      :      percentage== null ||  percentage.isNaN || percentage.isInfinite ? Container():    Container(
+                                                                                      percentage== null ||  percentage.isNaN || percentage.isInfinite ? Container():    Container(
                                                                                     width: width(context) * 0.15,
                                                                                     decoration: BoxDecoration(
                                                                                         color: greyColor,
@@ -283,12 +274,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                                       children: [
                                                                                                         MyText(
                                                                                                           text: "${
-                                                                                                              StaticData.price_after_promo(
-                                                                                                                price:new_price == null ?
+                                                                                                             new_price == null ?
                                                                                                               double.parse(snapshot.data!.items![index].price.toString()) <  double.parse(minimal_price) ?
                                                                                                               snapshot.data!.items![index].price.toStringAsFixed(2)  :
                                                                                                               double.parse(minimal_price).toStringAsFixed(2)
-                                                                                                                  : double.parse(new_price))} ",
+                                                                                                                  : double.parse(new_price)} ",
                                                                                                           size: StaticData.get_height(context) * .017,
                                                                                                           color: blackColor,
                                                                                                           maxLines: 2,
@@ -306,7 +296,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                                   ],
                                                                                                 ),
                                                                                                 SizedBox(width: width(context) * 0.03,),
-                                                                                                new_price == null &&  StaticData.app_promo.status == false ?  Container()   : Text(
+                                                                                                new_price == null ?  Container()   : Text(
                                                                                                   "${snapshot.data!.items![index].price} ${MyApp.country_currency}",
                                                                                                   style: TextStyle(
                                                                                                       decoration: TextDecoration.lineThrough,

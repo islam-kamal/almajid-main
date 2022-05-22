@@ -20,12 +20,11 @@ priceAndRatingRow({BuildContext? context , var new_price ,var old_price, var min
                       children: [
                         MyText(
                           text: "${
-                              StaticData.price_after_promo(
-                                price: new_price == null ?
+                           new_price == null ?
                               double.parse(old_price.toString()) <  double.parse(minimal_price) ?
                              old_price.toString()  :
                               double.parse(minimal_price).toStringAsFixed(2)
-                                  : double.parse(new_price))} ",
+                                  : double.parse(new_price)} ",
                           size: StaticData.get_height(context!) * .024,
                           color: blackColor,
                           maxLines: 2,
@@ -43,7 +42,7 @@ priceAndRatingRow({BuildContext? context , var new_price ,var old_price, var min
                   ],
                 ),
                 SizedBox(width: width(context) * 0.03,),
-                new_price == null &&  StaticData.app_promo.status == false ?  Container()   : Text(
+                new_price == null?  Container()   : Text(
                   "${old_price} ${MyApp.country_currency}",
                   style: TextStyle(
                       decoration: TextDecoration.lineThrough,
