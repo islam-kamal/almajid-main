@@ -115,7 +115,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                               snapshot.data!.items![index].mediaGalleryEntries!.forEach((element) {
                                                 gallery.add(ProductImages.getProductImageUrlByName(imageName: element.file));
                                               });
-
                                               String? special_price;
                                               var new_price , minimal_price;
                                               DateTime? startDate , endDate ;
@@ -183,7 +182,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   },
 
 
-                                                  child: Column(
+                                                  child: StaticData.excludedIds!.contains(snapshot.data!.items![index].sku!) ?  Container()
+                                                        : Column(
                                                     children: [
                                                       Directionality(
                                                           textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl :TextDirection.ltr ,
@@ -381,8 +381,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                         height: width(context) ,
                                                       ) : Container()
                                                     ],
-                                                  ),
-                                                ) : null! ;
+                                                  ) ,
+                                                ) :  Container();
                                               }
 
                                             });
@@ -431,8 +431,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   onChanged: (value){
                     setState(() {
                       search_text = controller!.value.text;
-                      search_bloc
-                          .add(SearchProductsEvent(search_text: controller!.value.text));
+                      search_bloc.add(SearchProductsEvent(search_text: controller!.value.text.toLowerCase()));
                     });
                   },
                   style: TextStyle(color: mainColor,

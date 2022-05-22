@@ -105,9 +105,9 @@ class _PayfortPaymentScreenState extends State<PayfortPaymentScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: (){
+        onWillPop: ()async{
       customAnimatedPushNavigation(context, CustomCircleNavigationBar());
-      return null!;
+      return true;
     },
     child: SafeArea(
       child: Scaffold(

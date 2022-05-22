@@ -25,6 +25,8 @@ class StaticData {
   static int? selectedIndex = 0;
   static int? chossed_address_id;
 
+  //excluded product from app
+ static List<dynamic>? excludedIds;
 
   //order payment
   static String card_number = "";

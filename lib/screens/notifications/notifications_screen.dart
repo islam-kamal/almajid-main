@@ -24,7 +24,7 @@ class NotificationsScreenState extends State<NotificationsScreen> {
             child: WillPopScope(
       onWillPop: () async{
         customPushNamedNavigation(context, HomeScreen());
-        return null!;
+        return true;
       },
       child: Scaffold(
         key: _drawerKey,

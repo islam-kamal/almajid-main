@@ -43,7 +43,7 @@ class AuthenticationRepository {
       if (response.statusCode == 200) {
         return StaticData.user_token = response.data;
       } else {
-        return null!;
+        return response.data;
       }
     } catch (e) {
     }

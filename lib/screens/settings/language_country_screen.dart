@@ -54,7 +54,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
       onWillPop: () async {
         if (widget.type == 'settings') {
           customAnimatedPushNavigation(context, MyAccountScreen());
-          return null!;
+          return true;
         } else {
           return false;
         }

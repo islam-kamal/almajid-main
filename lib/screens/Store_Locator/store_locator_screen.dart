@@ -34,7 +34,7 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
             customAnimatedPushNavigation(context, CustomCircleNavigationBar(
               page_index: MyApp.app_langauge =='ar' ? 4 : 0,
             ));
-            return null!;
+            return true;
           },
           child: Scaffold(
             appBar: AppBar(
