@@ -164,7 +164,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                   height: width(context) *0.90,
                                   product_details_page: true,
                                 ),
-                                percentage== null ||  percentage.isNaN || percentage.isInfinite ? Container():   Container(
+                                StaticData.app_promo.status! ? Container(
+                                  width: width(context) * 0.15,
+                                  decoration: BoxDecoration(
+                                      color: greyColor,
+                                      borderRadius: BorderRadius.circular(5)
+                                  ),
+
+                                  child: Text("${ StaticData.app_promo.amount.round()} %",style: TextStyle(color: mainColor),textAlign: TextAlign.center,),
+                                )
+                                    :  percentage== null ||  percentage.isNaN || percentage.isInfinite ? Container():   Container(
                                   width: width(context) * 0.2,
                                   decoration: BoxDecoration(
                                       color: greyColor,
