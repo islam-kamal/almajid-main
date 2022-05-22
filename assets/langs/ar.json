@@ -347,5 +347,9 @@
   "Shopping Now" : "تسوق الأن",
   "Country" : "الدولة",
   "There is no Stores Yet" : "لا توجد فروع حاليا",
-  "Google Maps" : "جوجل ماب"
+  "Google Maps" : "جوجل ماب",
+
+  "update_app" : "تحديث الماجد للعود",
+  "update_avilable_content" : "نسخة جديدة متاحة من فضلك قم بتحديث التطبيق",
+  "update_now": "تحديث الان"
 }

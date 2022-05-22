@@ -347,7 +347,11 @@
   "redbox_portable_expired" : "Faield",
 
   "Shopping Now" : "Shop Now",
-  "Country" : "Country"
+  "Country" : "Country",
+
+  "update_app" : "Update Almajed For Oud",
+  "update_avilable_content" : "new vesion avaliable please update app",
+  "update_now": "Update Now"
 }
 
 
