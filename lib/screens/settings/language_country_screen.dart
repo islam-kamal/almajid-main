@@ -91,19 +91,27 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
               height: height(context),
               decoration: BoxDecoration(color: small_grey),
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: width(context) * 0.3,
-                    horizontal: width(context) * 0.3),
-                child: Container(
-                  child: Text(
+    padding: EdgeInsets.symmetric(
+    vertical: width(context) * 0.2,
+      horizontal: width(context) * 0.25,
+    ),
+    child:Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset("assets/icons/logo.png",color: mainColor,)
+           /*       Text(
                     translator.translate("Almajed Oud"),
                     style: TextStyle(
                         color: mainColor,
                         fontSize: 22,
                         fontWeight: FontWeight.bold),
-                  ),
-                ),
-              )),
+                  ),*/
+                ],
+              ))
+
+      
+
+          ),
           bottomSheet: BottomSheet(
             onClosing: () {},
             backgroundColor: small_grey,

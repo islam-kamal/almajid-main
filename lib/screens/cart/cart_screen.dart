@@ -70,9 +70,15 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
   }
   @override
   Widget build(BuildContext context) {
-    return NetworkIndicator(
+    return  WillPopScope(
+        onWillPop: ()async=>false,
+    child: NetworkIndicator(
         child: PageContainer(
-            child:  Scaffold(
+            child: Directionality(
+                textDirection: MyApp.app_langauge  == 'ar'
+                    ?TextDirection.rtl
+                    : TextDirection.ltr,
+                child: Scaffold(
               key: _scaffoldKey,
               backgroundColor: whiteColor,
               body: BlocListener<ShipmentAddressBloc,AppState>(
@@ -210,7 +216,9 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                       customDescriptionText(
                                                           context: context,
                                                           textColor: mainColor,
-                                                          text: "Discount",
+                                                          text: StaticData.app_promo.status! ?
+                                                              MyApp.app_langauge == 'ar' ? StaticData.app_promo.arabicLabel : StaticData.app_promo.englishLabel
+                                                          : "Discount",
                                                           percentageOfHeight: .018),
                                                       Spacer(),
                                                       customDescriptionText(
@@ -342,9 +350,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                 )
                             ),
                           ),
-                          Directionality(
-                              textDirection: translator.activeLanguageCode == 'en' ? TextDirection.rtl : TextDirection.ltr,
-                              child: Container(
+                        Container(
                                 height: height(context),
                                 width: width(context),
                                 child: Column(
@@ -362,7 +368,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                     ),
                                   ],
                                 ),
-                              ) ),
+                              ) ,
                         ],
                       ))
               ),
@@ -371,7 +377,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                 node: fieldNode,
               ),
             )
-        )
+            )        ))
     );
   }
 

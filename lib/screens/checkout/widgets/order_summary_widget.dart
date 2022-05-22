@@ -69,7 +69,9 @@ orderSummaryWidget({BuildContext? context ,   List<TotalSegments>? total_segment
               children: [
                 customDescriptionText(
                     context: context,
-                    text: "Discount",
+                    text:StaticData.app_promo.status! ?
+                    MyApp.app_langauge == 'ar' ? StaticData.app_promo.arabicLabel : StaticData.app_promo.englishLabel
+                        : "Discount",
                     textAlign: TextAlign.start,
                     percentageOfHeight: .020),
                 customDescriptionText(
@@ -83,7 +85,7 @@ orderSummaryWidget({BuildContext? context ,   List<TotalSegments>? total_segment
         StaticData.vistor_value == 'visitor' &&   MyApp.app_location != 'sa'? Container() :  Column(
           children: [
             Container(
-                width: width(context) * .9,
+             //   width: width(context) * .9,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -104,7 +106,6 @@ orderSummaryWidget({BuildContext? context ,   List<TotalSegments>? total_segment
         ),
 
         Container(
-            width: width(context) * .9,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -115,7 +116,7 @@ orderSummaryWidget({BuildContext? context ,   List<TotalSegments>? total_segment
                     percentageOfHeight: .020),
                 customDescriptionText(
                     context: context,
-                    text: shipping== 0 ? translator.translate("Free") : " ${shipping} ${MyApp.country_currency}   ",
+                    text: shipping== 0 ? " ${translator.translate("Free")}  " : " ${shipping} ${MyApp.country_currency}   ",
                     textAlign: TextAlign.start,
                     percentageOfHeight: .020),
               ],
@@ -123,7 +124,6 @@ orderSummaryWidget({BuildContext? context ,   List<TotalSegments>? total_segment
 
         responsiveSizedBox(context: context, percentageOfHeight: .015),
         cash == 'الدفع عند الإستلام' || cash == "Cash On Delivery" ? Container(
-            width: width(context) * .9,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -141,7 +141,6 @@ orderSummaryWidget({BuildContext? context ,   List<TotalSegments>? total_segment
             )) : Container()  ,
         Divider(color: greyColor),
         Container(
-            width: width(context) * .9,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

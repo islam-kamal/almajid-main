@@ -42,9 +42,15 @@ class _SearchScreenState extends State<SearchScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return NetworkIndicator(
+    return  WillPopScope(
+        onWillPop: ()async=>false,
+        child: NetworkIndicator(
         child: PageContainer(
-            child: Scaffold(
+            child: Directionality(
+                textDirection: MyApp.app_langauge  == 'ar'
+                    ?TextDirection.rtl
+                    : TextDirection.ltr,
+                child:Scaffold(
               key: scaffold_key,
               backgroundColor: whiteColor,
               body: SingleChildScrollView(
@@ -269,11 +275,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                                       children: [
                                                                                                         MyText(
                                                                                                           text: "${
-                                                                                                              new_price == null ?
+                                                                                                              StaticData.price_after_promo(
+                                                                                                                price:new_price == null ?
                                                                                                               double.parse(snapshot.data!.items![index].price.toString()) <  double.parse(minimal_price) ?
                                                                                                               snapshot.data!.items![index].price.toStringAsFixed(2)  :
                                                                                                               double.parse(minimal_price).toStringAsFixed(2)
-                                                                                                                  : double.parse(new_price)} ",
+                                                                                                                  : double.parse(new_price))} ",
                                                                                                           size: StaticData.get_height(context) * .017,
                                                                                                           color: blackColor,
                                                                                                           maxLines: 2,
@@ -291,7 +298,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                                   ],
                                                                                                 ),
                                                                                                 SizedBox(width: width(context) * 0.03,),
-                                                                                                new_price == null ?  Container()   : Text(
+                                                                                                new_price == null &&  StaticData.app_promo.status == false ?  Container()   : Text(
                                                                                                   "${snapshot.data!.items![index].price} ${MyApp.country_currency}",
                                                                                                   style: TextStyle(
                                                                                                       decoration: TextDecoration.lineThrough,
@@ -402,7 +409,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       )
                     ],
                   )),
-            )));
+            ))
+    )));
   }
 
 

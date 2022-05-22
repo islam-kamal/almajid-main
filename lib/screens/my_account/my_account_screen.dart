@@ -33,7 +33,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   String _currentLang = "";
   String? _imagePath;
   File? _pickedImage;
-  bool finance_status=false;
+  bool policy_status=false;
   @override
   void initState() {
     _getUseData();
@@ -53,9 +53,15 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return NetworkIndicator(
+    return  WillPopScope(
+        onWillPop: ()async=>false,
+        child: NetworkIndicator(
         child: PageContainer(
-            child: Scaffold(
+            child: Directionality(
+              textDirection: MyApp.app_langauge  == 'ar'
+                  ?TextDirection.rtl
+                  : TextDirection.ltr,
+              child:Scaffold(
               backgroundColor: whiteColor,
               key: _drawerKey,
               body: Container(
@@ -77,6 +83,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 StaticData.vistor_value == "visitor"
                                     ? Container()
                                     :     userName(context: context, name: _userName),
+                                SizedBox(height: 5,),
                                 StaticData.vistor_value == "visitor"
                                     ? Container()
                                     :       userEmail(context: context, email: _email),
@@ -136,7 +143,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                     text:translator.translate("Our Locations"),
                                     isContainMoreIcon: true,
                                     onTap: () {
-                                      StoreLocatorScreen();
                                       customAnimatedPushNavigation(context, StoreLocatorScreen());
                                     }),
 
@@ -194,14 +200,14 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                                     color: mainColor,),
                                                   onPressed: () {
                                                     setState(() {
-                                                      finance_status = !finance_status;
+                                                      policy_status = !policy_status;
                                                     });
                                                   },
                                                 ),
                                               ),
                                             ],
                                           ),
-                                          subtitle: (finance_status)? Column(
+                                          subtitle: (policy_status)? Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
 
@@ -269,7 +275,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                           ): null,
                                           onTap: (){
                                             setState(() {
-                                              finance_status = !finance_status;
+                                              policy_status = !policy_status;
                                             });
                                           },
 
@@ -304,11 +310,11 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         ),
                       ),
                     ],
-                  )),
+                  )  ),
               drawer: SettingsDrawer(
                 node: fieldNode,
-              ),
-            )));
+              ),)
+            ))));
   }
 
 

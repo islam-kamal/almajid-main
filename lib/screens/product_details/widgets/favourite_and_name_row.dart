@@ -15,13 +15,13 @@ favouriteAndNameRow({BuildContext? context, String? product_name , var prod_id, 
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          width: width(context) * 0.7,
+        //  width: width(context) * 0.7,
           child: customDescriptionText(
               context: context,
               maxLines: 2,
               text: product_name??"",
               textColor: mainColor,
-              percentageOfHeight: .020),
+              percentageOfHeight: .022),
         ),
         CustomWishList(
           color: redColor,

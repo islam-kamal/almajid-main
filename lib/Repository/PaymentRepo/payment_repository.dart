@@ -37,13 +37,15 @@ class PaymentRepository {
           },
           options: Options(headers: headers));
       if (response.statusCode == 200) {
-        return StcPayModel.fromJson(response.data);
+        print("response.data : ${response.data}");
+       return StcPayModel.fromJson(response.data);
 
 
       } else {
         return response.data;
       }
     } catch (e) {
+      print("e : ${e}");
     }
   }
 

@@ -88,15 +88,30 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> readJson(String token) async {
 
-    final response = await http.get(
+    await http.get(
       Uri.parse("${Urls.BASE_URL}/media/mobile/config.json"
       ),
       headers: {"charset": "utf-8", "Accept-Charset": "utf-8"}
-    );
-    StaticData.data = await json.decode(utf8.decode(response.bodyBytes));
-    StaticData.gallery = StaticData.data["slider"];
+    ).then((value) async {
+      StaticData.data = await json.decode(utf8.decode(value.bodyBytes));
+      StaticData.gallery = StaticData.data["slider"];
 
-    StaticData.apple_pay_activation = StaticData.data["apple-pay"];
+      StaticData.apple_pay_activation = StaticData.data["apple-pay"];
+
+      //---------- app promo ---------------
+      StaticData.app_promo.startDate = StaticData.data["promo"]['start_date'];
+      StaticData.app_promo.endDate = StaticData.data["promo"]['end_date'];
+      StaticData.app_promo.englishLabel = StaticData.data["promo"]['english_label'];
+      StaticData.app_promo.arabicLabel = StaticData.data["promo"]['arabic_label'];
+      StaticData.app_promo.type = StaticData.data["promo"]['type'];
+      StaticData.app_promo.amount = StaticData.data["promo"]['amount'];
+      StaticData.app_promo.status = StaticData.isCurrentDateInRange(
+          DateTime.parse(StaticData.app_promo.startDate.toString().substring(0,10))
+          ,DateTime.parse(StaticData.app_promo.endDate.toString().substring(0,10)));
+
+    });
+
+
 
     StaticData.gallery.forEach((element) {
       StaticData.slider.add(SliderImage(
@@ -134,5 +149,7 @@ class _SplashScreenState extends State<SplashScreen> {
       customAnimatedPushNavigation(context, CustomCircleNavigationBar(page_index: 2,));
     }
   }
+
+
 
 }

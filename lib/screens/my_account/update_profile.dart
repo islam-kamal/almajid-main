@@ -72,7 +72,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
           await sharedPreferenceManager.writeData(CachingKey.USER_NAME, _firstName! +' '+ _lastName!);
           await sharedPreferenceManager.writeData(CachingKey.MOBILE_NUMBER, _phoneNumber);
           Fluttertoast.showToast(
-              msg: "account updated successfully",
+              msg: "account updated successfully".tr(),
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,

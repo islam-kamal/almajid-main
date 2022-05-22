@@ -105,7 +105,11 @@ late  AnimationController _loginButtonController;
       },
       child: NetworkIndicator(
           child: PageContainer(
-              child: Scaffold(
+              child: Directionality(
+                  textDirection: MyApp.app_langauge  == 'ar'
+                      ?TextDirection.rtl
+                      : TextDirection.ltr,
+                  child:Scaffold(
         key: _drawerKey,
         backgroundColor: whiteColor,
         body: BlocListener<OrderBloc, AppState>(
@@ -422,7 +426,7 @@ late  AnimationController _loginButtonController;
               )),
         ),
         bottomSheet: _showBottomSheet(),
-      ))),
+      ))),)
     );
   }
 

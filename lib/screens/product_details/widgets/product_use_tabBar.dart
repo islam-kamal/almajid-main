@@ -39,26 +39,28 @@ class ProductUseTabBar extends StatelessWidget{
                 ),
               ];
             },
-            body: TabBarView(
-              physics: ScrollPhysics(),
-              children: <Widget>[
-                descriptionAndShareRow(
-                    context: context,
-                    description: description??''
-                ),
-                descriptionAndShareRow(
-                    context: context,
-                    description: how_to_use??''
-                ),
-                shippingAndReturnsWidget(
+            body:TabBarView(
+                //    physics: ScrollPhysics(),
+                children: <Widget>[
+                  descriptionAndShareRow(
+                      context: context,
+                      description: description??''
+                  ),
+                  descriptionAndShareRow(
+                      context: context,
+                      description: how_to_use??''
+                  ),
+                  shippingAndReturnsWidget(
                     context: context,
 
-                ),
+                  ),
 
-              ],
-              // physics: NeverScrollableScrollPhysics(),
-            ),
-          )),
+                ],
+                // physics: NeverScrollableScrollPhysics(),
+              ),
+
+          )
+      ),
 
     ));
   }

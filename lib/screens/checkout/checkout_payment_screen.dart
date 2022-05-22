@@ -69,7 +69,11 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
   Widget build(BuildContext context) {
     return NetworkIndicator(
       child: PageContainer(
-        child: Scaffold(
+        child: Directionality(
+          textDirection: MyApp.app_langauge  == 'ar'
+              ?TextDirection.rtl
+              : TextDirection.ltr,
+          child:Scaffold(
             key: _drawerKey,
             backgroundColor: small_grey,
             body: Directionality(
@@ -313,7 +317,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                   ],
                 ),
               ),
-            )),
+            )),)
       ),
     );
   }

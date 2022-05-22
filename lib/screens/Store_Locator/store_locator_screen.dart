@@ -1,5 +1,6 @@
 import 'package:almajidoud/Bloc/StoreLocator_Bloc/store_locator_bloc.dart';
 import 'package:almajidoud/Model/StoreLocatorModel/store_locator_model.dart';
+import 'package:almajidoud/screens/Store_Locator/map_view.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/web_view/webview.dart';
 import 'package:almajidoud/utils/file_export.dart';
@@ -208,12 +209,9 @@ class StoreLocatorScreenState extends State<StoreLocatorScreen>{
 
                                                   InkWell(
                                                     onTap: (){
-                                                      Navigator.of(context).push(
-                                                          MaterialPageRoute(
-                                                              builder: (BuildContext context) => WebView(
-                                                                title: "Our Locations",
-                                                                url: snapshot.data![index].website,
-                                                              ))
+                                                      MapViewModel.openMap(
+                                                        latitude: double.parse(snapshot.data![index].lat),
+                                                        longitude: double.parse(snapshot.data![index].lng)
                                                       );
 
                                                     },

@@ -17,9 +17,15 @@ class _LocationScreenState extends State<LocationScreen> {
       : MyApp.app_location == 'uae' ? 'United Arab Emirates': 'kuwait';
   @override
   Widget build(BuildContext context) {
-    return NetworkIndicator(
+    return  WillPopScope(
+        onWillPop: ()async=>false,
+        child: NetworkIndicator(
         child: PageContainer(
-            child:Scaffold(
+            child:Directionality(
+                textDirection: MyApp.app_langauge  == 'ar'
+                    ?TextDirection.rtl
+                    : TextDirection.ltr,
+                child:Scaffold(
       key: _drawerKey,
       backgroundColor: whiteColor,
       body: Container(
@@ -173,6 +179,6 @@ class _LocationScreenState extends State<LocationScreen> {
       drawer: SettingsDrawer(
         node: fieldNode,
       ),
-    )));
+    )))));
   }
 }

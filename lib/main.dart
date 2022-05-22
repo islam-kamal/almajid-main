@@ -44,6 +44,7 @@ void main() async {
     ),
   );
 }
+
 class MyApp extends StatefulWidget{
   static var app_langauge;
   static var app_location;
