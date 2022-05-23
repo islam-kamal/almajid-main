@@ -726,6 +726,7 @@ as cart_details_model;
 import 'package:almajidoud/Model/ShipmentAddressModel/client/address_model.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/Widgets/cart_screen_app_bar.dart';
+import 'package:almajidoud/Widgets/customText.dart';
 import 'package:almajidoud/custom_widgets/error_dialog.dart';
 import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigation_bar.dart';
 import 'package:almajidoud/screens/cart/widgets/promo_code_widget.dart';
@@ -1105,6 +1106,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
       btn_width: width(context) * .8,
       checkout_color: true,
       onTap: () {
+        _playAnimation();
         if(StaticData.vistor_value == 'visitor' ){
           customAnimatedPushNavigation(context!, CheckoutAddressScreen());
 
@@ -1113,6 +1115,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
               GetAllAddressesEvent(context: context)
           );
         }
+        _stopAnimation();
       },
     );
   }
@@ -1192,7 +1195,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                           percentageOfHeight: .02),
                                       Row(
                                         children: [
-                                          Container(
+                                      item.extensionAttributes?.minimalPrice == null ?    Container(
                                             child: customDescriptionText(
                                                 context: context,
                                                 textColor: mainColor,
@@ -1200,7 +1203,69 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                 " ${item.rowTotalInclTax} ${MyApp.country_currency}",
                                                 textAlign: TextAlign.start,
                                                 fontWeight: FontWeight.bold),
+                                          )
+
+                                          : Row(
+                                        //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Wrap(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                                children: [
+                                                  MyText(
+                                                    text:
+                                                    "${item.extensionAttributes?.minimalPrice}",
+                                                    size: StaticData.get_height(
+                                                        context!) *
+                                                        .017,
+                                                    color:
+                                                    blackColor,
+                                                    maxLines:
+                                                    2,
+                                                    weight: FontWeight
+                                                        .bold,
+                                                  ),
+                                                  SizedBox(width:5),
+                                                  MyText(
+                                                    text:
+                                                    " ${MyApp.country_currency}",
+                                                    size: StaticData.get_height(
+                                                        context) *
+                                                        .011,
+                                                    color:
+                                                    blackColor,
+                                                    maxLines:
+                                                    2,
+                                                    weight: FontWeight
+                                                        .normal,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
+                                          SizedBox(
+                                            width: width(
+                                                context) *
+                                                0.03,
+                                          ),
+                                         Text(
+                                           " ${item.rowTotalInclTax} ${MyApp.country_currency}",
+                                            style: TextStyle(
+                                                decoration:
+                                                TextDecoration
+                                                    .lineThrough,
+                                                fontSize:
+                                                StaticData.get_height(context) *
+                                                    .016,
+                                                color:
+                                                old_price_color),
+                                          ),
+                                        ],
+                                      ),
 
                                         ],
                                       ),

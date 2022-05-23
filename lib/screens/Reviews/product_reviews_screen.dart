@@ -50,6 +50,7 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
                         stream: reviewsBloc.product_reviews_subject,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
+
                             return Container(
                               height: isLandscape(context)
                                   ? 2 * height(context) * .88
@@ -65,7 +66,7 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
                                         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                                           int approved_reviews = 0;
                                           snapshot.data!.forEach((element) {
-                                            if(element.reviewType  == 1){
+                                            if(element.reviewType  != 1){
                                               approved_reviews++;
                                             }
                                           });
@@ -162,9 +163,8 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
                                                   itemCount:
                                                       snapshot.data!.length,
                                                   itemBuilder: (context, index) {
-                                                    return snapshot.data![index].reviewType != 1  ? no_data_widget(
-                                                        context: context,
-                                                        message: translator.translate("No Reviews Yet!"))
+                                                    print("snapshot.data![index].reviewType  : ${snapshot.data![index].reviewType }");
+                                                    return snapshot.data![index].reviewStatus != 1  ? Container()
                                                      : singleRatingWidget(
                                                         context: context,
                                                         nickname: snapshot.data![index].nickname,

@@ -41,8 +41,15 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
   OutlineInputBorder? border;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   var toRemove_apple_pay = [];
+
+  late AnimationController _loginButtonController;
+  bool isLoading = false;
+
   @override
   void initState() {
+    _loginButtonController = AnimationController(
+        duration: const Duration(milliseconds: 3000), vsync: this);
+
     widget.guestShipmentAddressModel!.paymentMethods?.forEach((element) {
       if(element.code == "cashondelivery"){
         _currentIndex = element.code;
@@ -63,6 +70,26 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
         width: 2.0,
       ),
     );
+  }
+
+  Future<Null> _playAnimation() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      await _loginButtonController.forward();
+    } on TickerCanceled {
+    }
+  }
+
+  Future<Null> _stopAnimation() async {
+    try {
+      await _loginButtonController.reverse();
+      setState(() {
+        isLoading = false;
+      });
+    } on TickerCanceled {
+    }
   }
 
   @override
@@ -261,7 +288,56 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
 
                     Expanded(
                       flex: 1,
-                      child: GestureDetector(
+                      child:  StaggerAnimation(
+                        titleButton: translator.translate("Next"),
+                        buttonController: _loginButtonController,
+                        btn_width: width(context) ,
+                        checkout_color: true,
+                        product_details_page:true ,
+                        onTap: () {
+                          _playAnimation();
+                          if (_currentIndex == "stc_pay" || _currentIndex == 'tamara_pay_by_instalments' ||
+                              _currentIndex == 'cashondelivery' || _currentIndex == 'mestores_applepay') {
+                            if(_currentIndex == 'mestores_applepay' && Platform.isAndroid){
+                              errorDialog(
+                                  context: context,
+                                  text: translator.translate("Please select payment method")
+                              );
+                            }else{
+                              customAnimatedPushNavigation(
+                                  context,
+                                  CheckoutSummaryScreen(
+                                    guestShipmentAddressModel:
+                                    widget.guestShipmentAddressModel!,
+                                    payment_method: payment_method_name,
+                                  ));
+                            }
+
+                          } else {
+                            if (formKey.currentState!.validate()) {
+                              StaticData.card_number = cardNumber.replaceAll(' ', '');
+                              StaticData.card_holder_name = cardHolderName;
+                              StaticData.card_security_code = cvvCode;
+                              StaticData.expiry_date = expiryDate[3] +
+                                  expiryDate[4] +
+                                  expiryDate[0] +
+                                  expiryDate[1];
+
+                              customAnimatedPushNavigation(
+                                  context,
+                                  CheckoutSummaryScreen(
+                                    guestShipmentAddressModel:
+                                    widget.guestShipmentAddressModel!,
+                                    payment_method: payment_method_name,
+                                  )
+                              );
+                            } else {}
+                          }
+                          _stopAnimation();
+                        },
+                      )
+
+               /*       GestureDetector(
                         onTap: () {
                           if (_currentIndex == "stc_pay" || _currentIndex == 'tamara_pay_by_instalments' ||
                               _currentIndex == 'cashondelivery' || _currentIndex == 'mestores_applepay') {
@@ -312,7 +388,7 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                             height: isLandscape(context)
                                 ? 2 * height(context) * .065
                                 : height(context) * .065),
-                      ),
+                      ),*/
                     )
                   ],
                 ),

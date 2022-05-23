@@ -11,46 +11,43 @@ orderCentralCardStack({BuildContext? context, OrderItems? order_details}) {
   });
   return Container(
     padding: EdgeInsets.only(
-        top: isLandscape(context)
-            ? 2 * height(context) * .12
-            : height(context) * .12),
+        top: isLandscape(context) ? 2 * height(context) * .12 : height(context) * .15),
     height: isLandscape(context) ? 2 * height(context) : height(context),
     child: Center(
       child: Container(
         padding: EdgeInsets.only(
             right: width(context) * .05, left: width(context) * .05),
-        height: isLandscape(context)
-            ? 2 * height(context) * .6
-            : height(context) * .6,
+        height: isLandscape(context) ? 2 * height(context) * .6 : height(context) * .65,
         width: width(context) * .9,
         decoration: BoxDecoration(
           color: whiteColor,
           border: Border.all(color: mainColor,width: 1),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Column(
-          children: [
-            responsiveSizedBox(context: context, percentageOfHeight: .02),
-            Row(
-              children: [
-                customDescriptionText(
-                    context: context,
-                    text: translator.translate( "Items" ),
-                    percentageOfHeight: .026,
-                    textColor: mainColor),
-              ],
-            ),
-            responsiveSizedBox(context: context, percentageOfHeight: .01),
-           Container(
-             height:order_details.items!.length ==1 ? width(context) * 0.25 :  width(context) * 0.45,
-              child: ListView.builder(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              responsiveSizedBox(context: context, percentageOfHeight: .01),
+              Row(
+                children: [
+                  customDescriptionText(
+                      context: context,
+                      text: translator.translate( "Items" ),
+                      percentageOfHeight: .026,
+                      textColor: mainColor),
+                ],
+              ),
+              responsiveSizedBox(context: context, percentageOfHeight: .01),
+              Container(
+                height:order_details.items!.length ==1 ? width(context) * 0.25 :  width(context) * 0.45,
+                child: ListView.builder(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   itemCount: order_details.items!.length,
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
-                       Row(
+                        Row(
                           children: [
                             Expanded(
                               flex:1,
@@ -78,22 +75,22 @@ orderCentralCardStack({BuildContext? context, OrderItems? order_details}) {
                                       ),
                                       responsiveSizedBox(context: context, percentageOfHeight: .01),
 
-                                         Row(
-                                           children: [
-                                             customDescriptionText(
-                                                 context: context,
-                                                 text: "${translator.translate("Quantity")} :   ${order_details.items![index].qtyOrdered} ",
-                                                 percentageOfHeight: .020),
-                                             SizedBox(width: width(context) *0.04,),
-                                             customDescriptionText(
-                                                 context: context,
-                                                 text:
-                                                 "${translator.translate("price")} : ${order_details.items![index].baseRowTotal} ${order_details.orderCurrencyCode}",
-                                                 percentageOfHeight: .020,
-                                                 fontWeight: FontWeight.normal),
+                                      Row(
+                                        children: [
+                                          customDescriptionText(
+                                              context: context,
+                                              text: "${translator.translate("Quantity")} :   ${order_details.items![index].qtyOrdered} ",
+                                              percentageOfHeight: .020),
+                                          SizedBox(width: width(context) *0.04,),
+                                          customDescriptionText(
+                                              context: context,
+                                              text:
+                                              "${translator.translate("price")} : ${order_details.items![index].baseRowTotal} ${order_details.orderCurrencyCode}",
+                                              percentageOfHeight: .020,
+                                              fontWeight: FontWeight.normal),
 
-                                           ],
-                                         ),
+                                        ],
+                                      ),
 
 
                                     ],
@@ -102,162 +99,163 @@ orderCentralCardStack({BuildContext? context, OrderItems? order_details}) {
                             )
                           ],
                         ),
-                 index ==order_details.items!.length || order_details.items!.length ==1? Container():       Divider(color: white_gray_color,)
+                        index ==order_details.items!.length || order_details.items!.length ==1? Container():       Divider(color: white_gray_color,)
                       ],
                     );
                   },
-                  ),
-            ),
-            responsiveSizedBox(context: context, percentageOfHeight: .01),
-            Container(
-              width: width(context) * .8,
-              child: Divider(
-                thickness: 2,
+                ),
               ),
-            ),
-            responsiveSizedBox(context: context, percentageOfHeight: .01),
-            Row(
-              children: [
-                customDescriptionText(
-                    context: context,
-                    text: "${translator.translate("Delivered Address" )}",
-                    percentageOfHeight: .02,
-                    textColor: mainColor),
-              ],
-            ),
-            responsiveSizedBox(context: context, percentageOfHeight: .005),
-            Row(
-              children: [
-                Icon(
-                  Icons.location_on,
-                  color: mainColor,
+              responsiveSizedBox(context: context, percentageOfHeight: .01),
+              Container(
+                width: width(context) * .8,
+                child: Divider(
+                  thickness: 2,
                 ),
-                SizedBox(
-                  width: 2,
-                ),
-                Container(
-                  width: width(context) * 0.7,
-                  child: customDescriptionText(
+              ),
+              responsiveSizedBox(context: context, percentageOfHeight: .01),
+              Row(
+                children: [
+                  customDescriptionText(
                       context: context,
-                      text: "${order_details.billingAddress!.street![0]} , ${order_details.billingAddress!.city??''}"
-                          " , ${order_details.billingAddress!.region??''}",
-                      maxLines: 3,
+                      text: "${translator.translate("Delivered Address" )}",
+                      percentageOfHeight: .02,
+                      textColor: mainColor),
+                ],
+              ),
+              responsiveSizedBox(context: context, percentageOfHeight: .005),
+              Row(
+                children: [
+                  Icon(
+                    Icons.location_on,
+                    color: mainColor,
+                  ),
+                  SizedBox(
+                    width: 2,
+                  ),
+                  Container(
+                    width: width(context) * 0.7,
+                    child: customDescriptionText(
+                        context: context,
+                        text: "${order_details.billingAddress!.street![0]} , ${order_details.billingAddress!.city??''}"
+                            " , ${order_details.billingAddress!.region??''}",
+                        maxLines: 3,
+                        fontWeight: FontWeight.bold,
+                        percentageOfHeight: .015,
+                        textAlign: TextAlign.start,
+                        textColor: mainColor),
+                  )
+                ],
+              ),
+              responsiveSizedBox(context: context, percentageOfHeight: .005),
+              Row(
+                children: [
+                  customDescriptionText(
+                      context: context,
+                      text: "${translator.translate("Payment method")}",
+                      percentageOfHeight: .02,
+                      textColor: mainColor),
+                ],
+              ),
+              responsiveSizedBox(context: context, percentageOfHeight: .005),
+              Row(
+                children: [
+                  Image.asset(
+                    "assets/icons/credit cards.png",
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: 2,
+                  ),
+                  customDescriptionText(
+                      context: context,
+                      text: "${payment_method}",
                       fontWeight: FontWeight.bold,
                       percentageOfHeight: .015,
                       textAlign: TextAlign.start,
+                      maxLines: 3,
                       textColor: mainColor),
-                )
-              ],
-            ),
-            responsiveSizedBox(context: context, percentageOfHeight: .005),
-            Row(
-              children: [
-               customDescriptionText(
-                    context: context,
-                    text: "${translator.translate("Payment method")}",
-                    percentageOfHeight: .02,
-                    textColor: mainColor),
-              ],
-            ),
-            responsiveSizedBox(context: context, percentageOfHeight: .005),
-            Row(
-              children: [
-                Image.asset(
-                  "assets/icons/credit cards.png",
-                  height: 20,
-                ),
-                SizedBox(
-                  width: 2,
-                ),
-                customDescriptionText(
-                    context: context,
-                    text: "${payment_method}",
-                    fontWeight: FontWeight.bold,
-                    percentageOfHeight: .015,
-                    textAlign: TextAlign.start,
-                    maxLines: 3,
-                    textColor: mainColor),
-              ],
-            ),
-            responsiveSizedBox(context: context, percentageOfHeight: .01),
-            Container(
-              width: width(context) * .8,
-              child: Divider(
-                thickness: 2,
+                ],
               ),
-            ),
-            responsiveSizedBox(context: context, percentageOfHeight: .01),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                customDescriptionText(
-                    context: context,
-                    text: "${translator.translate("Subtotal")}",
-                    percentageOfHeight: .02,
-                    textColor: mainColor),
-                customDescriptionText(
-                    context: context,
-                    text: "${order_details.subtotal} ${MyApp.country_currency}",
-                    percentageOfHeight: .02,
-                    textColor: mainColor,
-                    fontWeight: FontWeight.normal),
-              ],
-            ),
-            responsiveSizedBox(context: context, percentageOfHeight: .005),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                customDescriptionText(
-                    context: context,
-                    text: "${translator.translate("Shippment fees")}",
-                    percentageOfHeight: .02,
-                    textColor: mainColor),
-                customDescriptionText(
-                    context: context,
-                    text: "${order_details.baseShippingAmount} ${MyApp.country_currency}",
-                    percentageOfHeight: .02,
-                    textColor: mainColor,
-                    fontWeight: FontWeight.normal),
-              ],
-            ),
-            responsiveSizedBox(context: context, percentageOfHeight: .005),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                customDescriptionText(
-                    context: context,
-                    text: "${translator.translate("Coupon discount")} ",
-                    percentageOfHeight: .02,
-                    textColor: mainColor),
-                customDescriptionText(
-                    context: context,
-                    text: "${order_details.baseDiscountAmount} ${MyApp.country_currency}",
-                    percentageOfHeight: .02,
-                    textColor: mainColor,
-                    fontWeight: FontWeight.normal),
-              ],
-            ),
-            responsiveSizedBox(context: context, percentageOfHeight: .005),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                customDescriptionText(
-                    context: context,
-                    text: "${translator.translate("VAT")} ",
-                    percentageOfHeight: .02,
-                    textColor: mainColor),
-                customDescriptionText(
-                    context: context,
-                    text: "${order_details.baseTaxAmount} ${MyApp.country_currency}",
-                    percentageOfHeight: .02,
-                    textColor: mainColor,
-                    fontWeight: FontWeight.normal),
-              ],
-            ),
-            responsiveSizedBox(context: context, percentageOfHeight: .009),
+              responsiveSizedBox(context: context, percentageOfHeight: .01),
+              Container(
+                width: width(context) * .8,
+                child: Divider(
+                  thickness: 2,
+                ),
+              ),
+              responsiveSizedBox(context: context, percentageOfHeight: .01),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  customDescriptionText(
+                      context: context,
+                      text: "${translator.translate("Subtotal")}",
+                      percentageOfHeight: .02,
+                      textColor: mainColor),
+                  customDescriptionText(
+                      context: context,
+                      text: "${order_details.subtotal} ${MyApp.country_currency}",
+                      percentageOfHeight: .02,
+                      textColor: mainColor,
+                      fontWeight: FontWeight.normal),
+                ],
+              ),
+              responsiveSizedBox(context: context, percentageOfHeight: .005),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  customDescriptionText(
+                      context: context,
+                      text: "${translator.translate("Shippment fees")}",
+                      percentageOfHeight: .02,
+                      textColor: mainColor),
+                  customDescriptionText(
+                      context: context,
+                      text: "${order_details.baseShippingAmount} ${MyApp.country_currency}",
+                      percentageOfHeight: .02,
+                      textColor: mainColor,
+                      fontWeight: FontWeight.normal),
+                ],
+              ),
+              responsiveSizedBox(context: context, percentageOfHeight: .005),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  customDescriptionText(
+                      context: context,
+                      text: "${translator.translate("Coupon discount")} ",
+                      percentageOfHeight: .02,
+                      textColor: mainColor),
+                  customDescriptionText(
+                      context: context,
+                      text: "${order_details.baseDiscountAmount} ${MyApp.country_currency}",
+                      percentageOfHeight: .02,
+                      textColor: mainColor,
+                      fontWeight: FontWeight.normal),
+                ],
+              ),
+              responsiveSizedBox(context: context, percentageOfHeight: .005),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  customDescriptionText(
+                      context: context,
+                      text: "${translator.translate("VAT")} ",
+                      percentageOfHeight: .02,
+                      textColor: mainColor),
+                  customDescriptionText(
+                      context: context,
+                      text: "${order_details.baseTaxAmount} ${MyApp.country_currency}",
+                      percentageOfHeight: .02,
+                      textColor: mainColor,
+                      fontWeight: FontWeight.normal),
+                ],
+              ),
+              responsiveSizedBox(context: context, percentageOfHeight: .009),
 
-          ],
-        ),
+            ],
+          ),
+        )
 
       ),
     ),

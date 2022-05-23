@@ -1571,6 +1571,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
   @override
   Widget build(BuildContext context) {
+
     return NetworkIndicator(
       child: PageContainer(
         child: Scaffold(
@@ -1580,6 +1581,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                 bloc: shipmentAddressBloc,
                 listener: (context,state)  {
                   if (state is Loading) {
+                    _playAnimation();
                     if(state.indicator == "address_detials"){
                       _playAnimation();
                     }else if(state.indicator == 'AddNewAdress'){
@@ -1693,7 +1695,6 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
 
                   }
                   else if (state is Done) {
-                    _stopAnimation();
                     if(state.indicator == "address_detials"){
                       var data = state.model as AddressModel;
                       setState(() {
@@ -1740,6 +1741,7 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
                         ));
                       }
                     }
+                    _stopAnimation();
 
                   }
                 },

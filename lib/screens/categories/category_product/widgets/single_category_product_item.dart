@@ -169,8 +169,11 @@ class singleCategoryProductItem extends StatelessWidget {
                                        child:   customDescriptionText(
                                            context: context,
                                            textColor: mainColor,
-                                           maxLines: 2,
+                                           maxLines: 3,
                                            text: product!.name,
+                                           fontWeight: FontWeight.normal,
+                                         //  percentageOfHeight: product!.name.toString().length > 15 ? 0.015: 0.019
+
                                        ),
                                        alignment:translator.activeLanguageCode == 'en' ? Alignment.centerLeft :  Alignment.centerRight,
                                      ),

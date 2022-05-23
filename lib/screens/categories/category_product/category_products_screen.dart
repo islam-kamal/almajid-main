@@ -11,6 +11,7 @@ import 'package:almajidoud/screens/home/widgets/categories_tap.dart';
 import 'package:almajidoud/screens/home/widgets/home_slider.dart';
 
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:almajidoud/Repository/CategoryRepo/category_repository.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -29,11 +30,11 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
 
   ScrollController? _controller;
   int _page = 1;
-  int _limit = 20;
   bool _hasNextPage = true;
   bool _isFirstLoadRunning = false;
   bool _isLoadMoreRunning = false;
   List _posts = [];
+  bool _listview_forward_scroll = false;
   void _firstLoad() async {
     setState(() {
       _isFirstLoadRunning = true;
@@ -59,6 +60,8 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
         _isLoadMoreRunning == false &&
         _controller!.position.extentAfter < 300) {
       setState(() {
+        print("_controller!.position.userScrollDirection : ${ (_controller!.position.userScrollDirection == ScrollDirection.forward) }");
+
         _isLoadMoreRunning = true; // Display a progress indicator at the bottom
       });
       _page += 1; // Increase _page by 1
@@ -74,11 +77,11 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
             _posts.addAll(fetchedPosts);
           });
         } else {
-          // This means there is no more data
-          // and therefore, we will not send another GET request
           setState(() {
             _hasNextPage = false;
+
           });
+
         }
       } catch (err) {
       }
@@ -106,6 +109,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return NetworkIndicator(
         child: PageContainer(
             child: Scaffold(
@@ -148,6 +152,17 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                       shrinkWrap: true,
                                       itemCount: _posts.length,
                                       itemBuilder: (context, index) {
+                                        if(      _hasNextPage == false && _controller!.position.userScrollDirection == ScrollDirection.forward){
+                                          WidgetsBinding.instance?.addPostFrameCallback((_){
+
+                                            setState(() {
+                                              _listview_forward_scroll = true;
+                                            });
+                                          });
+
+
+                                        }
+
                                         return   singleCategoryProductItem(
                                           product: _posts[index] ,
                                           scafffoldKey: _drawerKey,
@@ -169,16 +184,16 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                     ),
                                   ),
                                 ),
-
-                              // When nothing else to load
-                              if (_hasNextPage == false)
+      // When nothing else to load
+                              _listview_forward_scroll ? Container():    _hasNextPage == false  ?
                                 Container(
                                   padding: const EdgeInsets.only(top: 20, bottom: 100),
-                         /*         color: mainColor,
+                               color: mainColor,
                                   child: Center(
                                     child: Text(translator.translate(  "You have fetched all of the content"),style: TextStyle(color: whiteColor),),
-                                  ),*/
-                                ),
+                                  ),
+
+                                ) :            Container()
                             ],
                           ),
                         ),

@@ -316,18 +316,20 @@ class Items {
 class ExtensionAttributes {
   var productSku;
   var productImage;
-
+  var minimalPrice;
   ExtensionAttributes({this.productSku, this.productImage});
 
   ExtensionAttributes.fromJson(Map<String, dynamic> json) {
     productSku = json['product_sku'];
     productImage = json['product_image'];
+    minimalPrice = json['minimal_price'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['product_sku'] = this.productSku;
     data['product_image'] = this.productImage;
+    data['minimal_price'] = this.minimalPrice;
     return data;
   }
 }

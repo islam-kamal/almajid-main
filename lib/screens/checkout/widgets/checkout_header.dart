@@ -14,7 +14,7 @@ checkoutHeader({BuildContext? context, String? title}) {
     child:   Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            GestureDetector(
+            InkWell(
               onTap: () {
                 Navigator.of(context!).pop();
 

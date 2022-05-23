@@ -12,7 +12,7 @@ customDescriptionText(
     decoration: null,
     fontStyle: FontStyle.normal,
     int maxLines: 1,
-    double textHeight: 1.0}) {
+    double textHeight: 1.3}) {
   return Text(
     translator.translate(text!),
     textAlign: textAlign,
@@ -25,7 +25,7 @@ customDescriptionText(
         fontWeight: fontWeight,
         color: textColor,
         fontSize: isLandscape(context)
-            ? 2 * height(context) * percentageOfHeight
-            : height(context) * percentageOfHeight),
+            ? 2 * height(context) * (maxLines >1 ? .015 : percentageOfHeight)
+            : height(context) * (maxLines >1 ? .017 :percentageOfHeight)),
   );
 }
