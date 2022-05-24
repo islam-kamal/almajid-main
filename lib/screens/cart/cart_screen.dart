@@ -1195,7 +1195,8 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                           percentageOfHeight: .02),
                                       Row(
                                         children: [
-                                      item.extensionAttributes?.minimalPrice == null ?    Container(
+                                      item.extensionAttributes?.minimalPrice == null
+                                      || item.extensionAttributes?.minimalPrice == '0.0000'?    Container(
                                             child: customDescriptionText(
                                                 context: context,
                                                 textColor: mainColor,
