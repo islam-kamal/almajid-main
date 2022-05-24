@@ -37,10 +37,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
     countries.add(Country(name: 'kuwait', photo: "assets/flag/kuwait.png"));
     countries.add(
         Country(name: "United Arab Emirates", photo: "assets/flag/uae.png"));
-    if ((widget.type == 'settings'
-            ? MyApp.app_langauge
-            : ui.window.locale.languageCode) ==
-        'ar') {
+    if ((widget.type == 'settings' ? MyApp.app_langauge : ui.window.locale.languageCode) == 'ar') {
       MyApp.app_langauge = 'ar';
     } else {
       MyApp.app_langauge = 'en';
@@ -85,7 +82,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                     },
                   ),
                 )
-              : null,
+              : AppBar(),
           body: Container(
               width: width(context),
               height: height(context),
@@ -99,18 +96,10 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Image.asset("assets/icons/logo.png",color: mainColor,)
-           /*       Text(
-                    translator.translate("Almajed Oud"),
-                    style: TextStyle(
-                        color: mainColor,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold),
-                  ),*/
+
                 ],
-              ))
-
-      
-
+              )
+              )
           ),
           bottomSheet: BottomSheet(
             onClosing: () {},
@@ -291,19 +280,14 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                         sharedPreferenceManager.removeData(CachingKey.GUEST_CART_QUOTE);
                                         cartRepository.create_quote(context: context);
                                       }
-                                      await categoryRepository
-                                          .getCategoriesList()
-                                          .then((value) {
+                                      await categoryRepository.getCategoriesList().then((value) {
                                         categoryBloc.set_category_subject(value);
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     CustomCircleNavigationBar(
-                                                      page_index:
-                                                      MyApp.app_langauge == 'ar'
-                                                          ? 4
-                                                          : 0,
+                                                      page_index: MyApp.app_langauge == 'ar' ? 4 : 0,
                                                     )));
                                       });
 
@@ -311,18 +295,14 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                     else{
                                       if (saved_country_name == country_name) {
                                         cartRepository.create_quote(context: context);
-                                        await categoryRepository
-                                            .getCategoriesList()
-                                            .then((value) {
+                                        await categoryRepository.getCategoriesList().then((value) {
                                           categoryBloc.set_category_subject(value);
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       CustomCircleNavigationBar(
-                                                        page_index: MyApp.app_langauge == 'ar'
-                                                            ? 4
-                                                            : 0,
+                                                        page_index: MyApp.app_langauge == 'ar' ? 4 : 0,
                                                       )));
                                         });
 
@@ -337,12 +317,11 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
 
 
                                   }
+
                                   else {
                                     cartRepository.create_quote(context: context);
 
-                                    await categoryRepository
-                                        .getCategoriesList()
-                                        .then((value) {
+                                    await categoryRepository.getCategoriesList().then((value) {
                                       categoryBloc.set_category_subject(value);
                                       Navigator.push(
                                         context,

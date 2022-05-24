@@ -58,9 +58,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         child: NetworkIndicator(
         child: PageContainer(
             child: Directionality(
-              textDirection: MyApp.app_langauge  == 'ar'
-                  ?TextDirection.rtl
-                  : TextDirection.ltr,
+              textDirection: MyApp.app_langauge  == 'ar' ? TextDirection.rtl : TextDirection.ltr,
               child:Scaffold(
               backgroundColor: whiteColor,
               key: _drawerKey,
@@ -310,7 +308,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         ),
                       ),
                     ],
-                  )  ),
+                  )
+              ),
               drawer: SettingsDrawer(
                 node: fieldNode,
               ),)

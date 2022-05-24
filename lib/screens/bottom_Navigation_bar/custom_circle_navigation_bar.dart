@@ -62,9 +62,7 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
 
     return Scaffold(
       body: Directionality(
-        textDirection: MyApp.app_langauge  == 'ar'
-            ? ui.TextDirection.rtl
-            : ui.TextDirection.ltr,
+        textDirection: MyApp.app_langauge  == 'ar' ? ui.TextDirection.rtl : ui.TextDirection.ltr,
         child: _pages[currentPage],
       ),
       bottomNavigationBar: BottomNavyBar(
@@ -73,6 +71,7 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
         itemCornerRadius: 24,
         curve: Curves.easeIn,
         onItemSelected: (index) => setState(() => currentPage = index),
+
         items: <BottomNavyBarItem>[
           MyApp.app_langauge  == 'en'
               ?   BottomNavyBarItem(
@@ -133,7 +132,7 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
             textAlign: TextAlign.center,
           ) :
           BottomNavyBarItem(
-            icon: Icon(Icons.menu,color: currentPage==4? whiteColor :  blackColor ,),
+            icon: Icon(Icons.menu,color: currentPage == 4 ? whiteColor :  blackColor ,),
             title: Text("My Account".tr(),style: TextStyle(color: currentPage==4?  whiteColor :blackColor ),),
             activeColor:Colors.black,
             textAlign: TextAlign.center,
@@ -141,27 +140,6 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
         ],
       ),
 
-      /*CircleBottomNavigationBar(
-        initialSelection: currentPage,
-
-        // barHeight: viewPadding.bottom > 0 ? barHeightWithNotch : barHeight,
-        // arcHeight: viewPadding.bottom > 0 ? arcHeightWithNotch : barHeight,
-        // arcHeight: viewPadding.bottom > 0 ? arcHeightWithNotch : barHeight,
-        barHeight: Platform.isAndroid?width(context) * 0.15:width(context) * 0.2,
-        itemTextOff: viewPadding.bottom > 0 ? 0 : 1,
-        itemTextOn: viewPadding.bottom > 0 ? 0 : 1,
-        circleOutline: 0.0,
-        shadowAllowance: 0.0,
-        barBackgroundColor: whiteColor,
-        arcWidth: 0.0,
-        circleSize: 50.0,
-        blurShadowRadius: 50.0,
-        circleColor: white_gray_color,
-        activeIconColor: mainColor,
-        inactiveIconColor: mainColor,
-        tabs: getTabsData(),
-        onTabChangedListener: (index) => setState(() => currentPage = index),
-      ),*/
     );
   }
 }

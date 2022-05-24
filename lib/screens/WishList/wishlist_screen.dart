@@ -211,29 +211,19 @@ class _WishListScreenState extends State<WishListScreen> {
                                                         customAnimatedPushNavigation(
                                                             context,
                                                             ProductDetailsScreen(
-                                                              product_id:
-                                                                  snapshot
-                                                                      .data!
-                                                                      .items![
-                                                                          index]
-                                                                      .product!
-                                                                      .id,
+                                                              product_id: snapshot.data!.items![index].product!.id,
                                                             ));
                                                       },
                                                       child: Stack(
                                                           children: [
                                                         Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
+                                                          mainAxisAlignment: MainAxisAlignment.center,
                                                           children: [
                                                             Column(
                                                               children: [
                                                                 responsiveSizedBox(
-                                                                    context:
-                                                                        context,
-                                                                    percentageOfHeight:
-                                                                        .02),
+                                                                    context: context,
+                                                                    percentageOfHeight: .02),
                                                                 Neumorphic(
                                                                     child: Container(
                                                                         width: width(context) * .95,
@@ -260,8 +250,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                                                                   child: Text("${percentage.round()} %",style: TextStyle(color: mainColor),textAlign: TextAlign.center,),
                                                                                 ),
                                                                               ],
-                                                                            )
-                                                                           ,
+                                                                            ),
                                                                             Directionality(
                                                                               textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.ltr : TextDirection.rtl,
                                                                               child: Container(
