@@ -2292,7 +2292,8 @@ class CheckoutAddressScreenState extends State<CheckoutAddressScreen> with Ticke
             child: Directionality(
               textDirection:  TextDirection.ltr ,
               child: IntlPhoneField(
-                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly,
+                  FilteringTextInputFormatter.deny(RegExp(r'^0+')),],
                 decoration: InputDecoration(
                   hintText:hint ,
 

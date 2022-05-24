@@ -191,7 +191,10 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                     child: Text(translator.translate(  "You have fetched all of the content"),style: TextStyle(color: whiteColor),),
                                   ),
 
-                                ) :            Container()
+                                ) :            Container(
+                              ),
+
+                              _listview_forward_scroll ? SizedBox(height: 100,) : SizedBox()
                             ],
                           ),
                         ),

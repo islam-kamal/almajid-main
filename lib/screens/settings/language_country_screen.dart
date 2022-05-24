@@ -82,7 +82,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                     },
                   ),
                 )
-              : AppBar(),
+              : null,
           body: Container(
               width: width(context),
               height: height(context),
