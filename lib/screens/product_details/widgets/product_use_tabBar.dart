@@ -14,18 +14,16 @@ class ProductUseTabBar extends StatelessWidget{
     return Directionality(textDirection: MyApp.app_langauge == 'ar' ? TextDirection.rtl : TextDirection.ltr,
         child: Container(
       height: width(context) * 0.6,
-
       child: DefaultTabController(
           length: 3,
           child: NestedScrollView(
-
               physics:NeverScrollableScrollPhysics(),
-
             headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 new SliverAppBar(
                   pinned: true,
                   floating: false,
+
                   automaticallyImplyLeading: false,
                   backgroundColor: blackColor,
 
@@ -45,8 +43,7 @@ class ProductUseTabBar extends StatelessWidget{
               ];
             },
             body:TabBarView(
-               physics: NeverScrollableScrollPhysics(),
-
+              physics: BouncingScrollPhysics(),
                 children: <Widget>[
                 //  DescriptionAndShar(description: description??'',),
                    descriptionAndShareRow(

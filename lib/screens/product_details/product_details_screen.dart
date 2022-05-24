@@ -51,6 +51,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
   void dispose() {
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return NetworkIndicator(
@@ -186,7 +187,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                 context: context, percentageOfHeight: .01),
                             descriptionAndShareRow(
                               context: context,
-                              description:description??'',
+                              description:description_use??'',
                             ),
                             responsiveSizedBox(
                                 context: context, percentageOfHeight: .02),
@@ -329,12 +330,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                             ) : Container(),
                             //how to use
                             ProductUseTabBar(
-                              description: description_use,
+                              description: description,
                               how_to_use: how_to_use,
                             ),
 
-                            responsiveSizedBox(context: context, percentageOfHeight: .03),
-                            responsiveSizedBox(context: context, percentageOfHeight: .03),
+                           // responsiveSizedBox(context: context, percentageOfHeight: .03),
+                           // responsiveSizedBox(context: context, percentageOfHeight: .03),
                             Container(
                               height: height(context) * .1,
                               color: mainColor,
