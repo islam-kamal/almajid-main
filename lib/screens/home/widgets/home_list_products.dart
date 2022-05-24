@@ -288,8 +288,7 @@ class HomeListProductsState extends State<HomeListProducts>
                                                   children: [
                                                     responsiveSizedBox(
                                                         context: context,
-                                                        percentageOfHeight:
-                                                            .008),
+                                                        percentageOfHeight: .008),
                                                     customDescriptionText(
                                                         context: context,
                                                         textColor: mainColor,
@@ -306,12 +305,8 @@ class HomeListProductsState extends State<HomeListProducts>
                                                             Wrap(
                                                               children: [
                                                                 Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .end,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .end,
+                                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                                  crossAxisAlignment: CrossAxisAlignment.end,
                                                                   children: [
                                                                     MyText(
                                                                       text:

@@ -163,7 +163,6 @@ class ProductReviewsScreenState extends State<ProductReviewsScreen> {
                                                   itemCount:
                                                       snapshot.data!.length,
                                                   itemBuilder: (context, index) {
-                                                    print("snapshot.data![index].reviewType  : ${snapshot.data![index].reviewType }");
                                                     return snapshot.data![index].reviewStatus != 1  ? Container()
                                                      : singleRatingWidget(
                                                         context: context,

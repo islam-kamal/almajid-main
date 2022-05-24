@@ -60,8 +60,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
         _isLoadMoreRunning == false &&
         _controller!.position.extentAfter < 300) {
       setState(() {
-        print("_controller!.position.userScrollDirection : ${ (_controller!.position.userScrollDirection == ScrollDirection.forward) }");
-
         _isLoadMoreRunning = true; // Display a progress indicator at the bottom
       });
       _page += 1; // Increase _page by 1

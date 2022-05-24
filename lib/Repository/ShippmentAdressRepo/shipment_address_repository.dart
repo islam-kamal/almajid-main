@@ -12,8 +12,6 @@ class ShipmentAddressRepository {
 
   // use to make Add Shipping and billing address for client and guest
   Future<GuestShipmentAddressModel?> add_addresses({BuildContext? context}) async {
-    print(    "add_addresses telephone : ${shipmentAddressBloc.phone_controller.value}");
-
     try {
       final response = await dio.post(
           StaticData.vistor_value == 'visitor'
@@ -170,7 +168,6 @@ class ShipmentAddressRepository {
 
 
   Future<AddressModel?> add_client_address({BuildContext? context}) async{
-    print(    "add_client_address telephone : ${shipmentAddressBloc.phone_controller.value}");
     final response = await dio.put(
         "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/customers/me/address",
         data: {
@@ -222,7 +219,6 @@ class ShipmentAddressRepository {
 
 
   Future<AddressModel?> edit_client_address({BuildContext? context}) async{
-print(    "edit_client_address telephone : ${shipmentAddressBloc.phone_controller.value}");
     final response = await dio.put(
         "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/customers/me/address",
         data: {

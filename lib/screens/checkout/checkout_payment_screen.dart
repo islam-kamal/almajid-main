@@ -56,7 +56,6 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
         sharedPreferenceManager.writeData(CachingKey.CHOSSED_PAYMENT_METHOD, _currentIndex);
         payment_method_name = element.title;
       }  else if(!StaticData.apple_pay_activation && element.code == "mestores_applepay" ){
-        print("1");
         toRemove_apple_pay.add(element);
       }
     });

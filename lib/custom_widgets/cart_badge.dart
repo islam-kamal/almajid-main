@@ -33,7 +33,6 @@ class _CartBadgeState extends State<CartBadge> {
           } else {
             _count = 0;
             data.items!.forEach((element) => _count += int.parse(element.qty.toString()));
-            print("_count : ${_count}");
           }
         }else {
           _isLoading = false;

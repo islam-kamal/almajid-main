@@ -60,7 +60,6 @@ class SharedPreferenceManager {
     messages.forEach((element) {
       messagesString.add(json.encode(element));
     });
-    print("messagesString : ${messagesString}");
     await sharedPreferences.setStringList(key, messagesString);
   }
 

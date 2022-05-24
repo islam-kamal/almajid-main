@@ -75,7 +75,6 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
 
       }
     } catch (e) {
-      print("eeeeeeeeeeeee : ${e}");
       emit(
         ErrorLoading(message: "Failed to fetch data. Is your device online ?",
         ),
@@ -132,7 +131,6 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
 
       }
     } catch (e) {
-      print("e : ${e}");
       emit(
         ErrorLoading(message: "Failed to fetch data. Is your device online ?",
         ),
@@ -194,7 +192,6 @@ class ShoppingCartBloc extends Bloc<AppEvent, AppState> with Validator {
 
       }
     } catch (e) {
-      print("e : ${e}");
       emit(
         ErrorLoading(message: "Failed to fetch data. Is your device online ?",
         ),
