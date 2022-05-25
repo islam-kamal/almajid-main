@@ -336,58 +336,6 @@ class CheckoutPaymentScreenState extends State<CheckoutPaymentScreen>
                         },
                       )
 
-               /*       GestureDetector(
-                        onTap: () {
-                          if (_currentIndex == "stc_pay" || _currentIndex == 'tamara_pay_by_instalments' ||
-                              _currentIndex == 'cashondelivery' || _currentIndex == 'mestores_applepay') {
-                            if(_currentIndex == 'mestores_applepay' && Platform.isAndroid){
-                              errorDialog(
-                                context: context,
-                                text: translator.translate("Please select payment method") 
-                              );
-                            }else{
-                              customAnimatedPushNavigation(
-                                  context,
-                                  CheckoutSummaryScreen(
-                                    guestShipmentAddressModel:
-                                    widget.guestShipmentAddressModel!,
-                                    payment_method: payment_method_name,
-                                  ));
-                            }
-                          
-                          } else {
-                            if (formKey.currentState!.validate()) {
-                              StaticData.card_number = cardNumber.replaceAll(' ', '');
-                              StaticData.card_holder_name = cardHolderName;
-                              StaticData.card_security_code = cvvCode;
-                              StaticData.expiry_date = expiryDate[3] +
-                                  expiryDate[4] +
-                                  expiryDate[0] +
-                                  expiryDate[1];
-
-                              customAnimatedPushNavigation(
-                                  context,
-                                  CheckoutSummaryScreen(
-                                    guestShipmentAddressModel:
-                                        widget.guestShipmentAddressModel!,
-                                    payment_method: payment_method_name,
-                                  )
-                              );
-                            } else {}
-                          }
-                        },
-                        child: Container(
-                            decoration: BoxDecoration(color: greenColor),
-                            child: Center(
-                                child: customDescriptionText(
-                                    context: context,
-                                    text: "Next",
-                                    percentageOfHeight: .025,
-                                    textColor: whiteColor)),
-                            height: isLandscape(context)
-                                ? 2 * height(context) * .065
-                                : height(context) * .065),
-                      ),*/
                     )
                   ],
                 ),
