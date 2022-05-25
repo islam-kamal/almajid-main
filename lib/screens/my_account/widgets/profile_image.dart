@@ -84,7 +84,7 @@ class ProfileImageState extends State<ProfileImage> {
                     ],
                   ),
                 ),
-              Container(
+             /* Container(
                   padding: EdgeInsets.only(
                       bottom: isLandscape(context)
                           ? 2 * height(context) * .04
@@ -298,7 +298,7 @@ class ProfileImageState extends State<ProfileImage> {
                       ),
                     ],
                   ),
-                ),
+                ),*/
               ],
             )),
       ],
