@@ -12,6 +12,21 @@ class ShipmentAddressRepository {
 
   // use to make Add Shipping and billing address for client and guest
   Future<GuestShipmentAddressModel?> add_addresses({BuildContext? context}) async {
+    var country_id;
+    switch(MyApp.app_location){
+      case  'sa':
+        country_id = "SA";
+        break;
+      case 'kw':
+        country_id= "KW";
+        break;
+      case 'uae':
+        country_id = "AE" ;
+        break;
+      case  'bh':
+        country_id = 'BH';
+        break;
+    }
     try {
       final response = await dio.post(
           StaticData.vistor_value == 'visitor'
@@ -32,8 +47,9 @@ class ShipmentAddressRepository {
                     translator.activeLanguageCode == 'ar'
                         ? CachingKey.REGION_AR
                         : CachingKey.REGION_EN),
-                "country_id": MyApp.app_location == 'sa' ? "SA"
-                    :   MyApp.app_location == 'uae' ? "AE" : "KW",
+      /*          "country_id": MyApp.app_location == 'sa' ? "SA"
+                    :   MyApp.app_location == 'uae' ? "AE" : "KW",*/
+                "country_id":  country_id,
                 "street": ["${shipmentAddressBloc.street_controller.value}"],
                 "postcode": "10577",
 
@@ -60,8 +76,9 @@ class ShipmentAddressRepository {
                     translator.activeLanguageCode == 'ar'
                         ? CachingKey.REGION_AR
                         : CachingKey.REGION_EN),
-                "country_id": MyApp.app_location == 'sa' ? "SA"
-                    :   MyApp.app_location == 'uae' ? "AE" : "KW",
+            /*    "country_id": MyApp.app_location == 'sa' ? "SA"
+                    :   MyApp.app_location == 'uae' ? "AE" : "KW",*/
+                "country_id":  country_id,
                 "street": ["${shipmentAddressBloc.street_controller.value}"],
                 "postcode": "10577",
               "city": shipmentAddressBloc.Neighbourhood_controller.value,
@@ -168,6 +185,21 @@ class ShipmentAddressRepository {
 
 
   Future<AddressModel?> add_client_address({BuildContext? context}) async{
+    var country_id;
+    switch(MyApp.app_location){
+      case  'sa':
+        country_id = "SA";
+        break;
+      case 'kw':
+        country_id= "KW";
+        break;
+      case 'uae':
+        country_id = "AE" ;
+        break;
+      case  'bh':
+        country_id = 'BH';
+        break;
+    }
     final response = await dio.put(
         "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/customers/me/address",
         data: {
@@ -190,8 +222,9 @@ class ShipmentAddressRepository {
             },
             "region_id": await sharedPreferenceManager
                 .readString(CachingKey.REGION_ID),
-            "country_id": MyApp.app_location == 'sa' ? "SA"
-                :   MyApp.app_location == 'uae' ? "AE" : "KW",
+/*            "country_id": MyApp.app_location == 'sa' ? "SA"
+                :   MyApp.app_location == 'uae' ? "AE" : "KW",*/
+            "country_id":  country_id,
             "street": ["${shipmentAddressBloc.street_controller.value}"],
             "telephone": "${shipmentAddressBloc.phone_controller.value}",
             "postcode": "10577",
@@ -219,6 +252,21 @@ class ShipmentAddressRepository {
 
 
   Future<AddressModel?> edit_client_address({BuildContext? context}) async{
+    var country_id;
+    switch(MyApp.app_location){
+      case  'sa':
+        country_id = "SA";
+        break;
+      case 'kw':
+        country_id= "KW";
+        break;
+      case 'uae':
+        country_id = "AE" ;
+        break;
+      case  'bh':
+        country_id = 'BH';
+        break;
+    }
     final response = await dio.put(
         "${Urls.BASE_URL}/${MyApp.app_langauge}-${MyApp.app_location}/index.php/rest/V1/mstore/customers/me/address",
         data: {
@@ -242,8 +290,9 @@ class ShipmentAddressRepository {
             },
             "region_id": await sharedPreferenceManager
                 .readString(CachingKey.REGION_ID),
-            "country_id": MyApp.app_location == 'sa' ? "SA"
-                :   MyApp.app_location == 'uae' ? "AE" : "KW",
+/*            "country_id": MyApp.app_location == 'sa' ? "SA"
+                :   MyApp.app_location == 'uae' ? "AE" : "KW",*/
+            "country_id":  country_id,
             "street": ["${shipmentAddressBloc.street_controller.value}"],
             "telephone": "${shipmentAddressBloc.phone_controller.value}",
             "postcode": "10577",

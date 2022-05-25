@@ -13,8 +13,32 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   FocusNode fieldNode = FocusNode();
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-  var dropdownCountryValue = MyApp.app_location == 'sa' ?      'Saudi Arabia'
-      : MyApp.app_location == 'uae' ? 'United Arab Emirates': 'kuwait';
+  var dropdownCountryValue;
+  String? flag_image;
+/*  var dropdownCountryValue = MyApp.app_location == 'sa' ?      'Saudi Arabia'
+      : MyApp.app_location == 'uae' ? 'United Arab Emirates': 'kuwait';*/
+
+  @override
+  void initState() {
+    switch(MyApp.app_location){
+      case 'sa':
+        dropdownCountryValue = 'Saudi Arabia';
+        flag_image = "assets/flag/saudi.png";
+        break;
+      case 'kw':
+        dropdownCountryValue ='kuwait';
+        flag_image = "assets/flag/kuwait.png";
+        break;
+      case 'uae':
+        dropdownCountryValue = 'United Arab Emirates';
+        flag_image = "assets/flag/uae.png";
+        break;
+      case 'bh':
+        dropdownCountryValue = 'Bahrain';
+        flag_image = "assets/flag/bahrain.png";
+        break;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return  WillPopScope(
@@ -105,8 +129,10 @@ class _LocationScreenState extends State<LocationScreen> {
                               width: width(context)*.1,
                               height: isLandscape(context) ? 2*height(context)*.03: height(context)*.03,
                               child: Image.asset(
-                                  dropdownCountryValue == 'Saudi Arabia'?    "assets/flag/saudi.png"
-                                      : dropdownCountryValue == "United Arab Emirates" ? "assets/flag/uae.png" : "assets/flag/kuwait.png"),
+                                  flag_image!
+                           /*       dropdownCountryValue == 'Saudi Arabia'?    "assets/flag/saudi.png"
+                                      : dropdownCountryValue == "United Arab Emirates" ? "assets/flag/uae.png" :
+                                  "assets/flag/kuwait.png"*/),
                             ) ,
                             SizedBox(width: width(context)*.02,),
                             DropdownButton<String>(
@@ -120,10 +146,29 @@ class _LocationScreenState extends State<LocationScreen> {
                                 onChanged: (String? newValue) {
                                   setState(() {
                                     dropdownCountryValue = newValue!;
-                                    MyApp.app_location = newValue == 'Saudi Arabia' ? 'sa'
+                                    switch(dropdownCountryValue){
+                                      case  'Saudi Arabia':
+                                        MyApp.app_location ='sa';
+                                        MyApp.country_currency = translator.translate("SAR");
+                                        break;
+                                      case 'kuwait':
+                                        MyApp.app_location = 'kw';
+                                        MyApp.country_currency = translator.translate("KWD");
+                                        break;
+                                      case 'United Arab Emirates':
+                                        MyApp.app_location = 'uae';
+                                        MyApp.country_currency = translator.translate("AED");
+                                        break;
+                                      case 'Bahrain':
+                                        MyApp.app_location = 'bh';
+                                        MyApp.country_currency = translator.translate("BHD");
+                                        break;
+                                    }
+                              /*      MyApp.app_location = newValue == 'Saudi Arabia' ? 'sa'
                                         :newValue =="United Arab Emirates" ? 'uae' :  'kw';
                                     MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
                                         : MyApp.app_location == 'uae'? translator.translate("AED") :   translator.translate("KWD");
+                                  */
                                     sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location );
                                     if(StaticData.vistor_value == 'visitor'){
                                       MyApp.restartApp(context);
@@ -140,7 +185,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                 items: <String>[
                                   'Saudi Arabia',
                                   'kuwait',
-                                  "United Arab Emirates"
+                                  "United Arab Emirates",
+                                  "Bahrain"
                                 ].map<DropdownMenuItem<String>>((String value) {
                                   return DropdownMenuItem<String>(
                                       value:  value,

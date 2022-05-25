@@ -84,15 +84,32 @@ class _MyAppState extends State<MyApp> {
   }
   void get_Static_data()async{
     await sharedPreferenceManager.readString(CachingKey.USER_COUNTRY_CODE).then((value){
-      if(value == ''){
-        MyApp.app_location = 'sa';
-        MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
-            : MyApp.app_location == 'uae'? translator.translate("AED") :  translator.translate("KWD");
-      }else{
-        MyApp.app_location = value;
-        MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
-            : MyApp.app_location == 'uae'? translator.translate("AED") : translator.translate("KWD");
+      MyApp.app_location =  value == '' ?  'sa' : value;
+      print("----------- MyApp.app_location  ---------- : ${MyApp.app_location }");
+      switch(MyApp.app_location){
+        case 'sa':
+          MyApp.country_currency = translator.translate("SAR");
+          break;
+        case 'kw':
+          MyApp.country_currency = translator.translate("KWD");
+          break;
+        case 'uae':
+          MyApp.country_currency = translator.translate("AED");
+          break;
+        case 'bh':
+          MyApp.country_currency = translator.translate("BHD");
+          break;
       }
+/*      if(value == ''){
+        MyApp.app_location = 'sa';
+     MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
+            : MyApp.app_location == 'uae'? translator.translate("AED") :  translator.translate("KWD");
+      }
+      else{
+        MyApp.app_location = value;
+       MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
+            : MyApp.app_location == 'uae'? translator.translate("AED") : translator.translate("KWD");
+      }*/
 
     });
     await sharedPreferenceManager.readString(CachingKey.APP_LANGUAGE).then((value){

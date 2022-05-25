@@ -22,21 +22,41 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
 
   List<Country> countries = [];
   var language_list = [];
-  var country_name = MyApp.app_location == 'sa'
+  var country_name;
+/*  var country_name = MyApp.app_location == 'sa'
       ? 'Saudi Arabia'
       : MyApp.app_location == 'uae'
           ? 'United Arab Emirates'
           : 'kuwait';
+  */
   var saved_country_name;
   bool loading = false;
   @override
   void initState() {
+    switch(MyApp.app_location){
+      case 'sa':
+        country_name = 'Saudi Arabia';
+        break;
+      case 'kw':
+        country_name ='kuwait';
+        break;
+      case 'uae':
+        country_name = 'United Arab Emirates';
+        break;
+      case 'bh':
+        country_name = 'Bahrain';
+        break;
+    }
     saved_country_name = country_name;
     countries
         .add(Country(name: 'Saudi Arabia', photo: "assets/flag/saudi.png"));
     countries.add(Country(name: 'kuwait', photo: "assets/flag/kuwait.png"));
     countries.add(
         Country(name: "United Arab Emirates", photo: "assets/flag/uae.png"));
+
+    countries.add(
+        Country(name: "Bahrain", photo: "assets/flag/bahrain.png"));
+
     if ((widget.type == 'settings' ? MyApp.app_langauge : ui.window.locale.languageCode) == 'ar') {
       MyApp.app_langauge = 'ar';
     } else {
@@ -222,16 +242,37 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                                 onTap: () {
                                                   setState(() {
                                                     country_name = countries[index].name!;
-                                                    MyApp.app_location =
+               /*                                     MyApp.app_location =
                                                         country_name == 'Saudi Arabia' ? 'sa' : country_name ==
-                                                                    "United Arab Emirates" ? 'uae' : 'kw';
-                                                    MyApp.country_currency = MyApp.app_location == 'sa'
+                                                                    "United Arab Emirates" ? 'uae' : 'kw';*/
+
+                                                    switch(country_name){
+                                                      case  'Saudi Arabia':
+                                                        MyApp.app_location ='sa';
+                                                        MyApp.country_currency = translator.translate("SAR");
+                                                        break;
+                                                      case 'kuwait':
+                                                        MyApp.app_location = 'kw';
+                                                        MyApp.country_currency = translator.translate("KWD");
+                                                        break;
+                                                      case 'United Arab Emirates':
+                                                        MyApp.app_location = 'uae';
+                                                        MyApp.country_currency = translator.translate("AED");
+                                                        break;
+                                                      case 'Bahrain':
+                                                        MyApp.app_location = 'bh';
+                                                        MyApp.country_currency = translator.translate("BHD");
+                                                        break;
+                                                    }
+                            /*                        MyApp.country_currency = MyApp.app_location == 'sa'
                                                         ? translator.translate("SAR")
                                                         : MyApp.app_location == 'uae'
                                                             ? translator.translate("AED")
                                                             : translator.translate("KWD");
+*/
 
-
+                                                    print("MyApp.app_location : ${MyApp.app_location}");
+                                                    print("MyApp.country_currency : ${MyApp.country_currency}");
                                                     shoppingCartBloc.add(GetCartDetailsEvent());
                                                   });
                                                 },
@@ -333,9 +374,23 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                     });
                                   }
 
-                                  MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
+                            /*      MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
                                       : MyApp.app_location == 'uae'? translator.translate("AED") : translator.translate("KWD");
-
+*/
+                                  switch(MyApp.app_location){
+                                    case 'sa':
+                                      MyApp.country_currency = translator.translate("SAR");
+                                      break;
+                                    case 'kw':
+                                      MyApp.country_currency = translator.translate("KWD");
+                                      break;
+                                    case 'uae':
+                                      MyApp.country_currency = translator.translate("AED");
+                                      break;
+                                    case 'bh':
+                                      MyApp.country_currency = translator.translate("BHD");
+                                      break;
+                                  }
                                   setState(() {
                                     loading = false;
                                   });
