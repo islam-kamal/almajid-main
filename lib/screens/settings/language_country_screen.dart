@@ -329,7 +329,8 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                                 builder: (context) =>
                                                     CustomCircleNavigationBar(
                                                       page_index: MyApp.app_langauge == 'ar' ? 4 : 0,
-                                                    )));
+                                                    ))
+                                        );
                                       });
 
                                     }

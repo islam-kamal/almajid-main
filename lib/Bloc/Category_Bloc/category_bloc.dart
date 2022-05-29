@@ -36,7 +36,9 @@ class CategoryBloc extends Bloc<AppEvent, AppState> with Validator{
    try {
       emit(Loading());
       final response = await categoryRepository.getCategoriesList();
+      print("response : ${response?.toJson()}");
       if (response!.childrenData != null || response.childrenData!.isNotEmpty) {
+
         _category_subject.sink.add(response);
         emit(Done(model: response));
       } else if (response.childrenData == null || response.childrenData!.isEmpty) {

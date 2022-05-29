@@ -732,6 +732,7 @@ import 'package:almajidoud/screens/bottom_Navigation_bar/custom_circle_navigatio
 import 'package:almajidoud/screens/cart/widgets/promo_code_widget.dart';
 import 'package:almajidoud/screens/categories/categories_screen.dart';
 import 'package:almajidoud/screens/checkout/checkout_address_screen.dart';
+import 'package:almajidoud/screens/checkout/widgets/bags_widget.dart';
 import 'package:almajidoud/screens/product_details/widgets/divider.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
@@ -902,6 +903,13 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                         responsiveSizedBox(
                                                             context: context, percentageOfHeight: .02),
                                                         divider(context: context),
+            // --------- Bags Number ----------
+                                         MyApp.app_location == 'sa' || MyApp.app_location == 'kw' ?
+                                               BagsWidget(
+                                                      product_numbers: data.items!.length,
+                                                            ) : Container(),
+                                                        responsiveSizedBox(
+                                                            context: context, percentageOfHeight: .01),
                                                         PromoCodeWidget(
                                                           scafffoldKey: _scaffoldKey,
                                                         ),

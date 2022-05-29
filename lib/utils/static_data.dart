@@ -39,8 +39,9 @@ class StaticData {
   static int product_qty = 1;
   static late  Future<List<AddressModel>?> saved_addresses;
 
-
-
+//bags
+  static bool? bags_request_status = false;
+  static int? bags_number = 0;
 // json data
   static List<dynamic> gallery = [];
   static List<SliderImage> slider = [];

@@ -56,7 +56,7 @@
   "TAX": "الضريبة ",
   "Grand Total": "إجمالي الطلب",
   "Free" : "مجانى",
-  "Payment Fees" : "رسوم التوصيل",
+  "Payment Fees" : "رسوم الدفع عند الاستلام",
   "Shipping" : "رسوم الشحن",
   "Product that you are trying to add is not available" :  "المنتج غير متوفر",
 
@@ -353,5 +353,7 @@
 
   "update_app" : "تحديث الماجد للعود",
   "update_avilable_content" : "نسخة جديدة متاحة من فضلك قم بتحديث التطبيق",
-  "update_now": "تحديث الان"
+  "update_now": "تحديث الان",
+  "Bags Number" : "عدد الأكياس المطلوبة"
+
 }

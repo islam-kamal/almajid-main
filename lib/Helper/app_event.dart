@@ -260,6 +260,11 @@ class RemoveIamgeEvent extends AppEvent{
 
 }
 
+class SendBagsNumberEvent extends AppEvent{
+  int? bags_number;
+  BuildContext? context;
+  SendBagsNumberEvent({this.bags_number,this.context});
+}
 
 
 
