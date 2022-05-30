@@ -92,6 +92,7 @@ class _BagsWidgetState extends State<BagsWidget> {
                    child: Text(items.toString()),
                  );
                }).toList(),
+               menuMaxHeight:  width(context) * .5,
                // After selecting the desired option,it will
                // change button value to selected value
                onChanged: (int? newValue) {
