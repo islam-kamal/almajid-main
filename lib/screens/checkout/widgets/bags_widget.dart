@@ -45,13 +45,11 @@ class _BagsWidgetState extends State<BagsWidget> {
         }else if(state is Done){
           if(state.indicator == "SendBagsNumberEvent"){
             StaticData.bags_request_status = true;
-            print("Done StaticData.bags_request_status : ${StaticData.bags_request_status}");
 
           }
         }else if(state is ErrorLoading){
           if(state.indicator == "SendBagsNumberEvent"){
             StaticData.bags_request_status = false;
-            print(" ErrorLoading StaticData.bags_request_status : ${StaticData.bags_request_status}");
           }
         }
         },

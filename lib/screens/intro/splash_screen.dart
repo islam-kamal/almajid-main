@@ -154,7 +154,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String? buildNumber = packageInfo.buildNumber;
-    print("buildNumber : ${buildNumber}");
     String urlAndroid = "https://play.google.com/store/apps/details?id=com.mobile.Almajed4Oud";
     String urlIos =     "https://apps.apple.com/us/app/almajed-4-oud/id1604357151";
     Dio dio = new Dio();

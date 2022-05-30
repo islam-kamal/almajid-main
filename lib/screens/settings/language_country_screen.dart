@@ -23,12 +23,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
   List<Country> countries = [];
   var language_list = [];
   var country_name;
-/*  var country_name = MyApp.app_location == 'sa'
-      ? 'Saudi Arabia'
-      : MyApp.app_location == 'uae'
-          ? 'United Arab Emirates'
-          : 'kuwait';
-  */
+
   var saved_country_name;
   bool loading = false;
   @override
@@ -242,9 +237,6 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                                 onTap: () {
                                                   setState(() {
                                                     country_name = countries[index].name!;
-               /*                                     MyApp.app_location =
-                                                        country_name == 'Saudi Arabia' ? 'sa' : country_name ==
-                                                                    "United Arab Emirates" ? 'uae' : 'kw';*/
 
                                                     switch(country_name){
                                                       case  'Saudi Arabia':
@@ -264,15 +256,7 @@ class LanguageCountryScreenState extends State<LanguageCountryScreen> {
                                                         MyApp.country_currency = translator.translate("BHD");
                                                         break;
                                                     }
-                            /*                        MyApp.country_currency = MyApp.app_location == 'sa'
-                                                        ? translator.translate("SAR")
-                                                        : MyApp.app_location == 'uae'
-                                                            ? translator.translate("AED")
-                                                            : translator.translate("KWD");
-*/
 
-                                                    print("MyApp.app_location : ${MyApp.app_location}");
-                                                    print("MyApp.country_currency : ${MyApp.country_currency}");
                                                     shoppingCartBloc.add(GetCartDetailsEvent());
                                                   });
                                                 },

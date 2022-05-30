@@ -7,7 +7,6 @@ class BagsRepository{
  static Future<bool?> send_bags_number({BuildContext? context ,var bags_number,})async {
     Dio dio = new Dio();
     try {
-      print("@@bags number : ${bags_number}");
 
       final response = await dio.post(
           StaticData.vistor_value == 'visitor' ?
@@ -26,7 +25,6 @@ class BagsRepository{
                 'Authorization': 'Bearer ${Urls.ADMIN_TOKEN}'
               }
           ));
-      print("bags number : ${response.data}");
       if (response.statusCode == 200) {
         return response.data;
       } else {

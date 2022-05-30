@@ -218,106 +218,6 @@ class _AddReviewScreenState extends State<AddReviewScreen>
               ),
             ),
 
-            /*SingleChildScrollView(
-              child: Column(
-                children: [
-                  addReviewsHeader(context: context,
-                  product_id: widget.product_id),
-                  Container(
-                    height: isLandscape(context)
-                        ? 2 * height(context) * .88
-                        : height(context) * .88,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Container(
-                              height: isLandscape(context)
-                                  ? 2 * height(context) * .88
-                                  : height(context) * .88,
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    responsiveSizedBox(
-                                        context: context,
-                                        percentageOfHeight: .02),
-                                    textRateYourExperience(context: context),
-                                    responsiveSizedBox(
-                                        context: context,
-                                        percentageOfHeight: .05),
-                                    reviewText(context: context),
-                                    responsiveSizedBox(
-                                        context: context,
-                                        percentageOfHeight: .01),
-                                    singleReviewItem(
-                                        context: context,
-                                        rating: ratingSmell,
-                                        text: translator.translate("Stability")),
-                                    responsiveSizedBox(
-                                        context: context,
-                                        percentageOfHeight: .01),
-                                    singleReviewItem(
-                                        context: context,
-                                        rating: ratingLongLast,
-                                        text: translator.translate("Smell")),
-                                    responsiveSizedBox(
-                                        context: context,
-                                        percentageOfHeight: .01),
-                                    singleReviewItem(
-                                        context: context,
-                                        rating: ratingPrice,
-                                        text: translator.translate("Price")),
-                                    responsiveSizedBox(
-                                        context: context,
-                                        percentageOfHeight: .05),
-                                    Form(
-                                      key: _formKey,
-                                      child: Column(
-                                        children: [
-                                          nickNameTextField(
-                                            context: context,
-                                          ),
-                                          responsiveSizedBox(
-                                              context: context,
-                                              percentageOfHeight: .01),
-                                          summaryTextField(context: context),
-                                          responsiveSizedBox(
-                                              context: context,
-                                              percentageOfHeight: .01),
-                                          reviewTextField(
-                                            context: context,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    responsiveSizedBox(
-                                        context: context,
-                                        percentageOfHeight: .03),
-                                    StaggerAnimation(
-                                      titleButton: "Submit",
-                                      buttonController: _loginButtonController,
-                                      btn_width: width(context) * .7,
-                                      onTap: () {
-                                        if (_formKey.currentState!.validate()) {
-                                          reviewsBloc.add(CreateReviewEvent(
-                                              product_id: widget.product_id,
-                                              nickname: nickname.text,
-                                              title: summary.text,
-                                              detail: review.text));
-                                        } else {
-                                        }
-                                      },
-                                    )
-
-                                  ],
-                                ),
-                              )),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),*/
           )
       ),
     );
@@ -421,25 +321,7 @@ class _AddReviewScreenState extends State<AddReviewScreen>
 
             },
           ),
-     /*     SmoothStarRating(
-            rating: rating!,
-            //isReadOnly: false,
-            size: height(context) * .045,
-            color: Colors.orangeAccent,
-            borderColor: Colors.orangeAccent,
-            filledIconData: Icons.star,
-            halfFilledIconData: Icons.star_half,
-            defaultIconData: Icons.star_border,
-            starCount: 5,
-            allowHalfRating: true,
-            spacing: 5.0,
-            onRatingChanged: (value) {
-              setState(() {
-                rating = value;
-              });
 
-            },
-          ),*/
         ],
       ),
     );

@@ -15,8 +15,6 @@ class _LocationScreenState extends State<LocationScreen> {
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   var dropdownCountryValue;
   String? flag_image;
-/*  var dropdownCountryValue = MyApp.app_location == 'sa' ?      'Saudi Arabia'
-      : MyApp.app_location == 'uae' ? 'United Arab Emirates': 'kuwait';*/
 
   @override
   void initState() {
@@ -130,9 +128,7 @@ class _LocationScreenState extends State<LocationScreen> {
                               height: isLandscape(context) ? 2*height(context)*.03: height(context)*.03,
                               child: Image.asset(
                                   flag_image!
-                           /*       dropdownCountryValue == 'Saudi Arabia'?    "assets/flag/saudi.png"
-                                      : dropdownCountryValue == "United Arab Emirates" ? "assets/flag/uae.png" :
-                                  "assets/flag/kuwait.png"*/),
+             ),
                             ) ,
                             SizedBox(width: width(context)*.02,),
                             DropdownButton<String>(
@@ -164,11 +160,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                         MyApp.country_currency = translator.translate("BHD");
                                         break;
                                     }
-                              /*      MyApp.app_location = newValue == 'Saudi Arabia' ? 'sa'
-                                        :newValue =="United Arab Emirates" ? 'uae' :  'kw';
-                                    MyApp.country_currency = MyApp.app_location == 'sa' ?translator.translate("SAR")
-                                        : MyApp.app_location == 'uae'? translator.translate("AED") :   translator.translate("KWD");
-                                  */
+
                                     sharedPreferenceManager.writeData(CachingKey.USER_COUNTRY_CODE, MyApp.app_location );
                                     if(StaticData.vistor_value == 'visitor'){
                                       MyApp.restartApp(context);
