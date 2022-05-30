@@ -758,6 +758,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
   ShoppingCartBloc shoppingCartBloc = new ShoppingCartBloc();
 
   var discount_amount = '';
+
   @override
   void initState() {
     shoppingCartBloc.add(GetCartDetailsEvent());
@@ -871,6 +872,12 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                         shipping = element.value;
                                                       }
                                                     });
+                                                    int? bags_number = 0;
+
+                                                    data.items!.forEach((element) {
+                                                      bags_number = bags_number! + int.parse(element.qty.toString());
+                                                    });
+                                                    print("bags_number : ${bags_number}");
                                                     return Column(
                                                       children: [
                                                         ListView.builder(
@@ -882,6 +889,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
 
                                                               return Stack(
                                                                 children: [
+
                                                                   Column(children: [
                                                                     SizedBox(
                                                                       height: width(context) * .002,
@@ -906,7 +914,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
             // --------- Bags Number ----------
                                          MyApp.app_location == 'sa' || MyApp.app_location == 'kw' ?
                                                BagsWidget(
-                                                      product_numbers: data.items!.length,
+                                                      product_numbers: bags_number,
                                                             ) : Container(),
                                                         responsiveSizedBox(
                                                             context: context, percentageOfHeight: .01),
@@ -957,6 +965,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                             ],
                                                           ),
                                                         ):Container(),
+
                                                         data.items![0].taxPercent == 0?   Container()
                                                             :    Padding(
                                                           padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
@@ -983,6 +992,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                             ],
                                                           ),
                                                         ),
+
                                                         shipping == 0 ? Container() :        Padding(
                                                           padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
                                                           child: Row(
@@ -1003,6 +1013,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                                             ],
                                                           ),
                                                         ),
+
                                                         Padding(
                                                           padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 2.0),
                                                           child: Row(
@@ -1160,7 +1171,8 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                         width: width(context) * .95,
                         child: Row(
                           children: [
-                            Container(
+                            item.extensionAttributes?.minimalPrice == null
+                                || item.extensionAttributes?.minimalPrice == '0.0000'?           Container(
                               margin: EdgeInsets.only(right: 3, left: 3),
                               width: width(context) * .3,
                               height: isLandscape(context)
@@ -1173,7 +1185,31 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                                       image: NetworkImage(
                                           image??   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Og0-LY1uOs7Z3I_sBLafG8F2IbFwRVprrg&usqp=CAU"),
                                       fit: BoxFit.fill)),
-                            ),
+                            ) : Stack(
+                             children: [
+                               Container(
+                                 margin: EdgeInsets.only(right: 3, left: 3),
+                                 width: width(context) * .3,
+                                 height: isLandscape(context)
+                                     ? 2 * height(context) * .15
+                                     : height(context) * .15,
+                                 decoration: BoxDecoration(
+                                     color: backGroundColor,
+                                     borderRadius: BorderRadius.circular(15),
+                                     image: DecorationImage(
+                                         image: NetworkImage(
+                                             image??   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0Og0-LY1uOs7Z3I_sBLafG8F2IbFwRVprrg&usqp=CAU"),
+                                         fit: BoxFit.fill)),
+                               ),
+                               positionedPercentage(
+                                 percentage: (1 -
+                                     (double.parse(item.extensionAttributes?.minimalPrice ) /
+                                         double.parse(item.rowTotalInclTax.toString()))) *
+                                     100
+
+                               )
+                             ],
+                           ),
                             Directionality(
                                 textDirection:
                                 translator.activeLanguageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
@@ -1481,9 +1517,9 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
             : TextDirection.rtl,
         child:  Positioned(
           top: width(context) * 0.15,
-          right:translator.activeLanguageCode == 'ar'
-              ?  0 : null,
           left:translator.activeLanguageCode == 'ar'
+              ?  0 : null,
+          right:translator.activeLanguageCode == 'ar'
               ?  null : 0,
           child: Container(
             height: 30,
@@ -1505,5 +1541,29 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
   }
 
 
+
+  Widget positionedPercentage({var percentage}) {
+    return Directionality(
+        textDirection:
+        translator.activeLanguageCode == 'ar'
+            ? TextDirection.ltr
+            : TextDirection.rtl,
+        child:  Positioned(
+            top: width(context) * 0.05,
+            right:translator.activeLanguageCode == 'ar'
+                ?  0 : null,
+            left:translator.activeLanguageCode == 'ar'
+                ?  null : 0,
+            child: Container(
+                width: width(context) * 0.1,
+                decoration: BoxDecoration(
+                    color: greyColor,
+                    borderRadius: BorderRadius.circular(5)),
+                child: MyText(
+                  text: "${percentage.round()} %",
+                )
+            ),
+        )  );
+  }
 
 }

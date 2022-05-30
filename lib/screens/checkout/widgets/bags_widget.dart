@@ -30,7 +30,9 @@ class _BagsWidgetState extends State<BagsWidget> {
     list = new List<int?>.generate(widget.product_numbers!, (i) => i + 1);    super.initState();
     list.add(0);
     list.sort();
+
   }
+
   @override
   Widget build(BuildContext context) {
     return  BlocListener<BagsBloc,AppState>(
@@ -109,4 +111,6 @@ class _BagsWidgetState extends State<BagsWidget> {
       ),
     );
   }
+
+
 }
