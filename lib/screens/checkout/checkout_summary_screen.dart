@@ -22,7 +22,6 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io' show Platform;
-import 'package:almajidoud/screens/Payment/apple_pay/apple_pay_screen.dart';
 import 'package:pay/pay.dart';
 
 class CheckoutSummaryScreen extends StatefulWidget {

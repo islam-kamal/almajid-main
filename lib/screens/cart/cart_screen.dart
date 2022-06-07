@@ -6,6 +6,7 @@ import 'package:almajidoud/Model/CartModel/cart_details_model.dart';
 import 'package:almajidoud/Model/CartModel/cart_details_model.dart'
 as cart_details_model;
 import 'package:almajidoud/Model/ShipmentAddressModel/client/address_model.dart';
+import 'package:almajidoud/Provider/cart_provider.dart';
 import 'package:almajidoud/Repository/CartRepo/cart_repository.dart';
 import 'package:almajidoud/Widgets/cart_screen_app_bar.dart';
 import 'package:almajidoud/Widgets/customText.dart';
@@ -21,6 +22,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class CartScreen extends StatefulWidget {
   @override
@@ -425,6 +427,11 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
       item_id: cart_item_id,
     );
     if (response!) {
+      var cart_provider = Provider.of<CartProvider>(context,listen:false);
+
+      cart_provider.update_cart_grand_total (
+          grand: cart_provider.cart_grand_total! - 50
+      );
       shoppingCartBloc.add(GetCartDetailsEvent());
     } else {
     }
@@ -815,6 +822,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin{
                   color: Colors.white,
                 ),
                 onPressed: () => {
+
                   delete_cart_item(cart_item_id: itemId),
                 }),
           ),

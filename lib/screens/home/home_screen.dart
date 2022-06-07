@@ -29,19 +29,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+    GlobalKey<ScaffoldState> _homedrawerKey = GlobalKey();
+    GlobalKey<ScaffoldState> _homeKey = GlobalKey();
 
     FocusNode fieldNode = FocusNode();
     return NetworkIndicator(
       child: PageContainer(
+        name: "HomeScreen",
         child: Directionality(
           textDirection: translator.activeLanguageCode == 'ar' ? TextDirection.rtl : TextDirection.ltr,
-
+key:_homeKey ,
           child: WillPopScope(
             onWillPop: ()async=>false,
             child: Scaffold(
               backgroundColor: whiteColor,
-              key: _drawerKey,
+              key: _homedrawerKey,
               body: GestureDetector(
                   onTap: (){
                     FocusScopeNode currentFocus = FocusScope.of(context);
@@ -60,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Column(
                                   children: [
                                     responsiveSizedBox(context: context, percentageOfHeight: .11),
+
                                     HomeSlider(
                                         gallery:StaticData.slider),
 
@@ -69,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     responsiveSizedBox(context: context, percentageOfHeight: .02),
                                     HomeListProducts(
                                       type: "New Arrivals",
-                                      homeScaffoldKey: _drawerKey,
+                                      homeScaffoldKey: _homedrawerKey,
                                     ),
                                     responsiveSizedBox(context: context, percentageOfHeight: .015),
                                     banner(
@@ -89,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                     HomeListProducts(
                                       type: "best-seller",
-                                      homeScaffoldKey: _drawerKey,
+                                      homeScaffoldKey: _homedrawerKey,
 
                                     ),
                                     responsiveSizedBox(context: context, percentageOfHeight: .015),
@@ -109,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     responsiveSizedBox(context: context, percentageOfHeight: .02),
                                     HomeListProducts(
                                       type: "weekly-deal",
-                                      homeScaffoldKey: _drawerKey,
+                                      homeScaffoldKey: _homedrawerKey,
 
                                     ),
                                     responsiveSizedBox(context: context, percentageOfHeight: .015),
@@ -129,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     responsiveSizedBox(context: context, percentageOfHeight: .02),
                                     HomeListProducts(
                                       type: "testahel-collection",
-                                      homeScaffoldKey: _drawerKey,
+                                      homeScaffoldKey: _homedrawerKey,
 
                                     ),
                                     responsiveSizedBox(context: context, percentageOfHeight: .015),
@@ -145,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 ScreenAppBar(
                                   onTapCategoryDrawer: () {
-                                    _drawerKey.currentState!.openDrawer();
+                                    _homedrawerKey.currentState!.openDrawer();
                                   },
                                   home_logo: true,
 

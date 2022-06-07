@@ -1,9 +1,11 @@
 import 'package:almajidoud/Bloc/WishList_Bloc/wishlist_bloc.dart';
 import 'package:almajidoud/Model/CartModel/add_cart_model.dart';
+import 'package:almajidoud/Provider/cart_provider.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class AddProductToCartWidget extends StatefulWidget {
   var product_quantity, product_sku, instock_status,btn_width,btn_height,text_size ,
@@ -39,9 +41,9 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
  late AnimationController _loginButtonController;
   bool isLoading = false;
   bool _isLoading = false;
-
   @override
   void initState() {
+
     _loginButtonController = AnimationController(
         duration: const Duration(milliseconds: 3000), vsync: this);
     super.initState();
@@ -82,10 +84,19 @@ class AddProductToCartWidgetState extends State<AddProductToCartWidget>
               fontSize: 16.0);
 
           state = null!;
-        } else if (state is DoneProductAdded &&
+        }
+        else if (state is DoneProductAdded &&
             state.indicator == 'detail_add_to_cart' &&
             widget.product_sku == state.sku) {
+          var data = state.model as AddCartModel?;
+         var cart_provider = Provider.of<CartProvider>(context,listen:false);
+         cart_provider.update_cart_grand_total (
+             grand: cart_provider.cart_grand_total! + data?.price
+         );
           _isLoading = false;
+
+
+
           Fluttertoast.showToast(
               msg: translator.translate("product added suceesfully to cart" ),
               toastLength: Toast.LENGTH_SHORT,

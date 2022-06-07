@@ -11,6 +11,7 @@ import 'package:almajidoud/screens/auth/widgets/top_header.dart';
 import 'package:almajidoud/screens/home/home_screen.dart';
 import 'package:almajidoud/utils/file_export.dart';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter/rendering.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -64,85 +65,92 @@ class _SignInScreenState extends State<SignInScreen>
 
   @override
   Widget build(BuildContext context) {
-    return NetworkIndicator(
-        child: PageContainer(
-            child: Scaffold(
-              key: _drawerKey,
-              backgroundColor: whiteColor,
-      body:  BlocListener<SigninBloc, AppState>(
-        bloc: signIn_bloc,
-        listener: (context, state) {
-      if (state is Loading) {
-        _playAnimation();
-      }
-      else if (state is ErrorLoading) {
-        _stopAnimation();
-        Flushbar(
-          messageText:  Text(
-            translator.translate(
-                "account sign-in was incorrect or your account is disabled temporarily."),
-            textDirection: TextDirection.rtl,
-            style: TextStyle(color: whiteColor),
-          ),
-          maxWidth: MediaQuery.of(context).size.width,
-          flushbarPosition: FlushbarPosition.BOTTOM,
-          backgroundColor: redColor,
-          flushbarStyle: FlushbarStyle.FLOATING,
-          duration: Duration(seconds: 6),
-        )..show(_drawerKey.currentState!.context);
-      }
-      else if (state is Done) {
-        var data = state.general_value;
-        _stopAnimation();
-        customPushNamedNavigation(context,GetStartedScreen(
-          token: data,
-          route: 'SignInScreen',
-        ));
-      }
-    },
-    child:Container(
-        height: height(context),
-        width: width(context),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              topHeader(context: context),
-              responsiveSizedBox(context: context, percentageOfHeight: .002),
-              topAuthButtons(context: context, isSignUp: false),
-              responsiveSizedBox(context: context, percentageOfHeight: .1),
-              responsiveSizedBox(context: context, percentageOfHeight: .06),
-          Form(
-            key: _formKey,
-            child:Column(
-              children: [
-                emailTextField(
-                  context: context,
-                  hint: "Email",
-                ),
-                responsiveSizedBox(context: context, percentageOfHeight: .02),
-                passwordTextField(
-                    context: context,
-                    hint: "Password",
-                    isPasswordField: true,
-                    containPrefixIcon: true,
-                    prefixIcon: Icons.lock_outline),
-              ],
-            ),
-          ),
+    return new Semantics(
+      container: true,
+      button: true,
+      enabled: true,
+      child:  NetworkIndicator(
+            child: PageContainer(
+                child: Scaffold(
+                  key: _drawerKey,
+                  backgroundColor: whiteColor,
+                  body:  BlocListener<SigninBloc, AppState>(
+                      bloc: signIn_bloc,
+                      listener: (context, state) {
+                        if (state is Loading) {
+                          _playAnimation();
+                        }
+                        else if (state is ErrorLoading) {
+                          _stopAnimation();
+                          Flushbar(
+                            messageText:  Text(
+                              translator.translate(
+                                  "account sign-in was incorrect or your account is disabled temporarily."),
+                              textDirection: TextDirection.rtl,
+                              style: TextStyle(color: whiteColor),
+                            ),
+                            maxWidth: MediaQuery.of(context).size.width,
+                            flushbarPosition: FlushbarPosition.BOTTOM,
+                            backgroundColor: redColor,
+                            flushbarStyle: FlushbarStyle.FLOATING,
+                            duration: Duration(seconds: 6),
+                          )..show(_drawerKey.currentState!.context);
+                        }
+                        else if (state is Done) {
+                          var data = state.general_value;
+                          _stopAnimation();
+                          customPushNamedNavigation(context,GetStartedScreen(
+                            token: data,
+                            route: 'SignInScreen',
+                          ));
+                        }
+                      },
+                      child:Container(
+                        height: height(context),
+                        width: width(context),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              topHeader(context: context),
+                              responsiveSizedBox(context: context, percentageOfHeight: .002),
+                              topAuthButtons(context: context, isSignUp: false),
+                              responsiveSizedBox(context: context, percentageOfHeight: .1),
+                              responsiveSizedBox(context: context, percentageOfHeight: .06),
+                              Form(
+                                key: _formKey,
+                                child:Column(
+                                  children: [
+                                    emailTextField(
+                                      context: context,
+                                      hint: "Email",
+                                    ),
+                                    responsiveSizedBox(context: context, percentageOfHeight: .02),
+                                    passwordTextField(
+                                        context: context,
+                                        hint: "Password",
+                                        isPasswordField: true,
+                                        containPrefixIcon: true,
+                                        prefixIcon: Icons.lock_outline),
+                                  ],
+                                ),
+                              ),
 
-              responsiveSizedBox(context: context, percentageOfHeight: .02),
-              forgetPasswordButton(context: context),
-              responsiveSizedBox(context: context, percentageOfHeight: .05),
-              signButton(context: context, isSignUp: false),
-              responsiveSizedBox(context: context, percentageOfHeight: .01),
-              loginUsingPhoneText,
-              responsiveSizedBox(context: context, percentageOfHeight: .03),
-              alreadyHaveAnAccount(context: context, isSignUp: false),
-            ],
-          ),
-        ),
-    ) ),
-    )));
+                              responsiveSizedBox(context: context, percentageOfHeight: .02),
+                              forgetPasswordButton(context: context),
+                              responsiveSizedBox(context: context, percentageOfHeight: .05),
+                              signButton(context: context, isSignUp: false),
+                              responsiveSizedBox(context: context, percentageOfHeight: .01),
+                              loginUsingPhoneText,
+                              responsiveSizedBox(context: context, percentageOfHeight: .03),
+                              alreadyHaveAnAccount(context: context, isSignUp: false),
+                            ],
+                          ),
+                        ),
+                      ) ),
+                ))),
+
+    );
+
   }
 
   emailTextField({BuildContext? context, String? hint,}) {
@@ -284,6 +292,7 @@ class _SignInScreenState extends State<SignInScreen>
         buttonController: _loginButtonController,
         btn_width: width(context) * .7,
         onTap: () {
+
     if (_formKey.currentState!.validate() ) {
       signIn_bloc.add(click());
     }

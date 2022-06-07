@@ -24,7 +24,6 @@ class StaticData {
   static String? discount_amount;
   static int? selectedIndex = 0;
   static int? chossed_address_id;
-
   //excluded product from app
  static List<dynamic>? excludedIds;
 
@@ -34,6 +33,8 @@ class StaticData {
   static String card_security_code = "";
   static String expiry_date = "";
 
+  //shiping ads
+  static double? cart_grand_total = 0;
 //reviews
   static var review_product_sku;
   static int product_qty = 1;

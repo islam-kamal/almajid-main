@@ -25,16 +25,20 @@ class _CartBadgeState extends State<CartBadge> {
       builder: (context, state) {
         if (state is Loading) {
           _isLoading = true;
-        } else if (state is Done) {
+        }
+        else if (state is Done) {
           _isLoading = false;
           var data = state.model as CartDetailsModel;
+
           if (data.message?.isEmpty != null || data.items ==null) {
             _count = 0;
           } else {
             _count = 0;
+            StaticData.cart_grand_total = data.grandTotal;
             data.items!.forEach((element) => _count += int.parse(element.qty.toString()));
           }
-        }else {
+        }
+        else {
           _isLoading = false;
         }
 

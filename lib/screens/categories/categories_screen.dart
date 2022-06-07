@@ -1,6 +1,7 @@
 import 'package:almajidoud/Bloc/Category_Bloc/category_bloc.dart';
 import 'package:almajidoud/Model/CategoryModel/category_model.dart';
 import 'package:almajidoud/utils/file_export.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SettingsDrawer extends StatefulWidget {
@@ -98,6 +99,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                                                           return Center(
                                                             child:  InkWell(
                                                                 onTap: (){
+
                                                                   var parentItem = snapshot.data!.childrenData![i];
                                                                   customAnimatedPushNavigation(
                                                                       context,

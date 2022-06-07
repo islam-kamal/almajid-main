@@ -51,8 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return NetworkIndicator(
-      child: PageContainer(
-        child: Scaffold(
+      child:  Scaffold(
             backgroundColor: blackColor,
             body: Center(child: Stack(children: [
               Container(width: width(context), height: height(context),
@@ -66,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         "assets/icons/logo.png", fit: BoxFit.contain,)),
                 ),),
             ],))),
-      ),
+
     );
   }
 

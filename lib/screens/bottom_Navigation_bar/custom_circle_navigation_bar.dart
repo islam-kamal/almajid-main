@@ -65,6 +65,7 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
         textDirection: MyApp.app_langauge  == 'ar' ? ui.TextDirection.rtl : ui.TextDirection.ltr,
         child: _pages[currentPage],
       ),
+
       bottomNavigationBar: BottomNavyBar(
         selectedIndex: currentPage,
         showElevation: true,
@@ -76,7 +77,9 @@ class _CustomCircleNavigationBarState extends State<CustomCircleNavigationBar> {
           MyApp.app_langauge  == 'en'
               ?   BottomNavyBarItem(
             icon: Icon(Icons.menu,color: currentPage==0? whiteColor :  blackColor ,),
-            title: Text("My Account".tr(),style: TextStyle(color: currentPage==0?  whiteColor :blackColor ),),
+            title: Text("My Account".tr(),
+              semanticsLabel: "My Account",
+              style: TextStyle(color: currentPage==0?  whiteColor :blackColor ),),
             activeColor: Colors.black,
             textAlign: TextAlign.center,
           ) :
